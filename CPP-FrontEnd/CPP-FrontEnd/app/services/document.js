@@ -20,7 +20,7 @@ angular.module('cpp.services').
                 return $resource(serviceBasePath + "contractModification/getContractModificationData/:programId");
             },
             getModificationByModificationId: function (modificationId) {
-                return $resource(serviceBasePath + "contractModification/getContractModificationData/:programId");
+                return $resource(serviceBasePath + "contractModification/getContractModificationData/null/:modificationId");
             }
             //============================================================================================================
 

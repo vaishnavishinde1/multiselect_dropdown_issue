@@ -35,6 +35,7 @@ namespace WebAPI.Models
         public int ProjectTypeID { get; set; }
         public int ProjectClassID { get; set; }
         public string ProjectNumber { get; set; }
+        public string ProgramElementNumber { get; set; }
         public string ContractNumber { get; set; }
         public string ProjectStartDate { get; set; }
         public DateTime ProjectNTPDate { get; set; }   //Manasi 23-10-2020
@@ -259,6 +260,12 @@ namespace WebAPI.Models
                         }
                         pgmElt.ProjectNumber = maxProjectNumber.ToString();
 
+
+                        string yyyyFormat = pgmElt.ProjectStartDate.ToString().Split('/')[2].ToString();
+                        string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
+
+                        pgmElt.ProgramElementNumber = pgmElt.ProjectClassID.ToString("D2") + yyFormat + maxProjectNumber.ToString();
+
                         ProjectNumber projectNumber = new ProjectNumber();
                         projectNumber.projectNumber = pgmElt.ProjectNumber;
                         projectNumber.projectElementNumber = "0";
@@ -317,7 +324,7 @@ namespace WebAPI.Models
                             ctx.SaveChanges();
                         }
 
-                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber;  // Jignesh-19-03-2021
+                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber + "," +pm.ProgramElementNumber;  // Jignesh-19-03-2021
                     }
                     else
                     {
@@ -373,7 +380,7 @@ namespace WebAPI.Models
 
                                 pgmElt.ProjectClassID = program_element.ProjectClassID;
                                 pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                                pgmElt.ProjectNumber = program_element.ProjectNumber;
+                                pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
                                 pgmElt.ContractNumber = program_element.ContractNumber;
 
 								pgmElt.ClientProjectManager = program_element.ClientProjectManager;
@@ -387,8 +394,10 @@ namespace WebAPI.Models
                                 pgmElt.VicePresidentID = program_element.VicePresidentID;
                                 pgmElt.FinancialAnalystID = program_element.FinancialAnalystID;
                                 pgmElt.CapitalProjectAssistantID = program_element.CapitalProjectAssistantID;
-
+                                string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
+                                string yyFormat = yyyyFormat.Substring(yyyyFormat.Length-2);
                                 pgmElt.ProjectStartDate = program_element.ProjectStartDate;
+                                pgmElt.ProgramElementNumber = program_element.ProjectClassID.ToString("D2") + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                                 //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
                                 pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture); // Jignesh 20-11-2020
 
@@ -449,7 +458,7 @@ namespace WebAPI.Models
 
                             pgmElt.ProjectClassID = program_element.ProjectClassID;
                             pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                            pgmElt.ProjectNumber = program_element.ProjectNumber;
+                            pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
                             pgmElt.ContractNumber = program_element.ContractNumber;
 
                             pgmElt.ClientID = program_element.ClientID;
@@ -478,6 +487,11 @@ namespace WebAPI.Models
                             pgmElt.ProgramElementSponsor = program_element.ProgramElementSponsor;
                             pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                             pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
+
+                            string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
+                            string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
+
+                            pgmElt.ProgramElementNumber = program_element.ProjectClassID + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
                             ctx.SaveChanges();
                             result = "Success";
                         }

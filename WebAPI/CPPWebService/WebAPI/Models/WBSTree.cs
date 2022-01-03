@@ -467,6 +467,8 @@ namespace WebAPI.Models
         [DataMember]
         public String ProgramElementName;
         [DataMember]
+        public string ProgramElementNumber;
+        [DataMember]
         public String ProgramID;
         [DataMember]
         public String ProgramElementManager;
@@ -574,6 +576,7 @@ namespace WebAPI.Models
             name = wbspe.ProgramElementName;//Drew
             ProgramElementName = wbspe.ProgramElementName;
             ClientProjectManager = wbspe.ClientProjectManager;
+            ProgramElementNumber = wbspe.ProgramElementNumber;
 
             // Jignesh-25-02-2021
             ProjectPStartDate = (wbspe.ProjectPStartDate != null ? wbspe.ProjectPStartDate.Value.ToString("yyyy-MM-dd") : "");

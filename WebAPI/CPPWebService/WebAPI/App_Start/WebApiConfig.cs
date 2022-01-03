@@ -1738,7 +1738,7 @@ namespace WebAPI
             //Jignesh 28-10-2020
             config.Routes.MapHttpRoute(
                  name: "GetContractModification",
-                 routeTemplate: "contractModification/getContractModificationData/{programId}",
+                 routeTemplate: "contractModification/getContractModificationData/{programId}/{modId}",
                  defaults: new { controller = "ContractModification", action = "Get", programId = RouteParameter.Optional, modId = RouteParameter.Optional }
              );
             //Jignesh 05-11-2020

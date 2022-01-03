@@ -1721,6 +1721,7 @@ angular.module('cpp.controllers').
             //====================================== Jignesh-24-03-2021 Modification Changes =======================================
 
             $('#btnSaveModification').unbind('click').on('click', function ($files) {
+                var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedProgramID();
                 var createdBy = wbsTree.getSelectedProgramElementID();
                 //var modNumber = $('#modification_number').val();
@@ -1731,7 +1732,7 @@ angular.module('cpp.controllers').
                 var modType = $('#ddModificationType').val();
                 var pgmcurrentstartdate = $('#program_current_start_date').val();
                 var pgmcurrentenddate = $('#program_current_end_date').val();
-                
+
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
                 var scheduleImpact = $('#schedule_impact').val();
@@ -1758,7 +1759,7 @@ angular.module('cpp.controllers').
                 if (pgmcurrentenddate == "" || pgmcurrentenddate.length == 0) {
                     dhtmlx.alert('Enter Contract End Date.');
                     return;
-                    
+
                 }
                 //if (_selectedNode.CurrentEndDate == "") {
                 //    _selectedNode.CurrentEndDate = pgmcurrentenddate;
@@ -1808,6 +1809,7 @@ angular.module('cpp.controllers').
 
                 var contractModification = {
                     //ModificationNo: modNumber,
+                    Operation: operation,
                     Title: title,
                     Reason: reason,
                     Description: description,
@@ -1820,6 +1822,45 @@ angular.module('cpp.controllers').
                     ScheduleImpact: scheduleImpact
                 };
 
+                if (operation == 2) {
+                    contractModification.Id = $('#primaryKeyId').val();
+                    contractModification.ModificationNo = $('#txtModNum').val();
+                }
+
+                PerformOperationOnContractModification(contractModification);
+
+                $('#btnDeleteConModification').attr('disabled', 'disabled');
+                $('#btnEditConModification').attr('disabled', 'disabled');
+            });
+
+            $('#btnDeleteConModification').unbind().on('click', function () {
+                $("#gridModificationList tbody").find('input[name="rbModHistory"]').each(function () {
+                    if ($(this).is(":checked")) {
+                        var modID = $(this).parents("tr").attr('id');//
+                        if ($(this).closest("tr").find("td:eq(1)").text() == 0) {
+                            $('input[name="rbModHistory"]').prop('checked', false);
+                            $('#btnDeleteConModification').attr('disabled', 'disabled');
+                            $('#btnEditConModification').attr('disabled', 'disabled');
+                            dhtmlx.alert('Original Contract Value can not be deleted.');
+                            return;
+                        }
+                        wbsTree.setContractModificationOperation(3);
+                        var contractModification = {
+                            Operation: 3,
+                            Id: $(this).parents("tr").attr('id'),
+                            ProgramID: wbsTree.getSelectedProgramID()
+                        };
+                        PerformOperationOnContractModification(contractModification);
+
+                        $('input[name="rbModHistory"]').prop('checked', false);
+                        $('#btnDeleteConModification').attr('disabled', 'disabled');
+                        $('#btnEditConModification').attr('disabled', 'disabled');
+                    }
+                });
+            });
+
+            function PerformOperationOnContractModification(contractModification) {
+                
                 var request = {
                     method: 'POST',
                     url: serviceBasePath + 'contractModification/saveContractModification',
@@ -1828,6 +1869,17 @@ angular.module('cpp.controllers').
 
                 $http(request).then(function success(d) {
                     if (d.data.result == "success") {
+                        wbsTree.getContractModificationOperation();
+                        if (wbsTree.getContractModificationOperation() == 1) {
+                            dhtmlx.alert("Modification Added Successfully!!!.");
+                        }
+                        else if (wbsTree.getContractModificationOperation() == 2) {
+                            dhtmlx.alert("Modification Updated Successfully!!!.");
+                        }
+                        else if (wbsTree.getContractModificationOperation() == 3) {
+                            dhtmlx.alert("Modification Deleted Successfully!!!.");
+                        }
+                        wbsTree.setContractModificationOperation(1);
                         //$('#modification_number').val('');
                         $('#modification_title').val('');
                         $('#modification_reason').val('');
@@ -1835,6 +1887,8 @@ angular.module('cpp.controllers').
                         $('#modification_value').val('');
                         $('#modification_description').val('');
                         $('#schedule_impact').val('');
+                        $('#divModificationValue').show();
+                        $('#divModDurationDate').hide();
                         //$('#duration_date').val('');
                         var updatedContractEndDate = "";
                         _modificationList = d.data.data;
@@ -1852,7 +1906,7 @@ angular.module('cpp.controllers').
                                 _modificationList[x].ModificationType == 0 ? 'NA' :
                                     _modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
 
-                            gridModification.append('<tr id="' + _modificationList[x].Id + '">' +'<td style="width: 20px">' +
+                            gridModification.append('<tr id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
                                 '<input id=rb' + _modificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
                                 '</td >' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -1871,8 +1925,8 @@ angular.module('cpp.controllers').
                         }
 
                         $('input[name=rbModHistory]').on('click', function (event) {
-                                $('#btnDeleteConModification').removeAttr('disabled');
-                                $('#btnEditConModification').removeAttr('disabled');
+                            $('#btnDeleteConModification').removeAttr('disabled');
+                            $('#btnEditConModification').removeAttr('disabled');
                         });
                         //============================ Jignesh-24-02-2021 ===================================
                         if (_modificationList.length > 0) {
@@ -1909,7 +1963,22 @@ angular.module('cpp.controllers').
                         //}
                     }
                 });
+            }
 
+            $('#btnClearModification').unbind('click').on('click', function () {
+                wbsTree.setContractModificationOperation(1);
+                $('#modification_title').val('');
+                $('#modification_date').val('');
+                $('#modification_reason').val('');
+                $('#modification_description').val('');
+                $('#ddModificationType').val(1);
+                $('#schedule_impact').val('');
+                $('#modification_value').val('');
+                $('#divModificationValue').show(); 
+                $('#divModDurationDate').hide(); 
+                $('input[name="rbModHistory"]').prop('checked', false);
+                $('#btnDeleteConModification').attr('disabled', 'disabled');
+                $('#btnEditConModification').attr('disabled', 'disabled');
             });
             //====================================================================================================================
 

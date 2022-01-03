@@ -12,7 +12,18 @@ namespace WebAPI.Controllers
     {
         public HttpResponseMessage Post([FromBody] ContractModification contractModification)
         {
-            ContractModification.SaveModificationData(contractModification);
+            if (contractModification.Operation == 1)
+            {
+                ContractModification.SaveModificationData(contractModification);
+            }
+            else if (contractModification.Operation == 2)
+            {
+                ContractModification.UpdateContractModification(contractModification);
+            }
+            else if (contractModification.Operation == 3)
+            {
+                ContractModification.DeleteContractModification(contractModification);
+            }
             List<ContractModification> contractModificationList = ContractModification.GetContractModificationList(contractModification.ProgramID);
             var jsonNew = new
             {
@@ -34,7 +45,7 @@ namespace WebAPI.Controllers
                 };
                 return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
             }
-            else if (programId != null)
+            else if (modId != null)
             {
                 ContractModification contractModification = ContractModification.GetContractModification((int)modId);
                 var jsonNew = new

@@ -55,6 +55,7 @@ WBSTree = (function ($) {
         var originalCategory = null;
         var lineWidth = 0;
         var modificationTypeData = null; // jignesh-m
+        _ContractModificationOperation = 1;
         _duration = 750;
         _path = null;
         _angularscope = null;
@@ -188,7 +189,12 @@ WBSTree = (function ($) {
 
         function createSomething(request) {
         }
-
+        obj.prototype.getContractModificationOperation = function () {
+            return _ContractModificationOperation;
+        }
+        obj.prototype.setContractModificationOperation = function (Id) {
+            _ContractModificationOperation = Id;
+        }
         obj.prototype.setTrendId = function (trendID) {
             _TrendId = trendID;
         }
@@ -3982,7 +3988,9 @@ WBSTree = (function ($) {
 
                             //selectedNode.CurrentCost="1111";
                             console.log(selectedNode);
-                            selectedNode.name = selectedNode.ProjectNumber + ". " + selectedNode.name; // Jignesh-19-03-2021
+                            selectedNode.name = selectedNode.ProjectNumber.substr(selectedNode.ProjectNumber.length - 3) + ". " + selectedNode.name; // Jignesh-19-03-2021
+                            //selectedNode.ProjectClassID
+                            selectedNode.ProgramElementNumber = ('0' + selectedNode.ProjectClassID).slice(-2) + selectedNode.ProjectStartDate.substr(selectedNode.ProjectPStartDate.length - 2) + selectedNode.ProjectNumber.substr(selectedNode.ProjectNumber.length - 3)
                             wbsTree.updateTreeNodes(selectedNode);
 
                             //wbsTree.updateTreeNodes(selectedNode);
@@ -4506,6 +4514,7 @@ WBSTree = (function ($) {
 
                             $('#ProgramElementModal').modal('hide');
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
+                            selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
                             if (!selectedNode._children && !selectedNode.children) {//Empty parent
                                 selectedNode._children = [newNode];
@@ -9635,11 +9644,11 @@ WBSTree = (function ($) {
                         wbsTree.getProjectNumber().get({ OrganizationID: orgId }, function (response) {
                             console.log(response);
                             selectedNode.ProjectNumber = response.result;
-                            modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
+                            modal.find('.modal-body #project_number').val(selectedNode.ProgramElementNumber);
                             dhtmlx.alert('This project previously had no project #. A project # was auto-generated, please remember to save.');
                         });
                     } else {
-                        modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
+                        modal.find('.modal-body #project_number').val(selectedNode.ProgramElementNumber);
                     }
                     console.log(selectedNode);
                     modal.find('.modal-title').text('Project: ' + selectedNode.ProgramElementName);	//luan eats
@@ -11113,7 +11122,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
             $('#btnModification').on('click', function () {
-
+                _ContractModificationOperation = 1;
                 $("#ProgramModal").css({ "opacity": "0.4" });  //Manasi 22-02-2021
                 $('#DeleteUploadContModification').attr('disabled', 'disabled');
                 $('#ViewUploadFileContModification').attr('disabled', 'disabled');
@@ -11296,7 +11305,40 @@ WBSTree = (function ($) {
                 $("#gridModificationList tbody").find('input[name="rbModHistory"]').each(function () {
                     var modData = _ModificationList;
                     if ($(this).is(":checked")) {
-                        var modID = $(this).parents("tr").attr('id');
+                        var modID = $(this).parents("tr").attr('id');//
+                        if ($(this).closest("tr").find("td:eq(1)").text() == 0) {
+                            dhtmlx.alert('Original Contract Value is not editable from here');
+                            return;
+                        }
+                        _Document.getModificationByModificationId().get({ modificationId: modID }, function (response) {
+                            var data = response;
+                            _ContractModificationOperation = 2;
+                            $('#primaryKeyId').val(response.data.Id);
+                            $('#txtModNum').val(response.data.ModificationNo);
+                            $('#modification_title').val(response.data.Title);
+                            $('#modification_date').val(moment(response.data.Date).format('MM/DD/YYYY'));
+                            $('#modification_reason').val(response.data.Reason);
+                            $('#modification_description').val(response.data.Description);
+                            $('#ddModificationType').val(response.data.ModificationType);
+                            if (response.data.ModificationType == 1) {
+                                $('#modification_value').val(response.data.Value);
+                                $('#schedule_impact').val('');
+                                $('#divModificationValue').show();
+                                $('#divModDurationDate').hide();
+                            }
+                            else if (response.data.ModificationType == 2) {
+                                $('#modification_value').val('');
+                                $('#schedule_impact').val('$'+response.data.ScheduleImpact);
+                                $('#divModificationValue').hide();
+                                $('#divModDurationDate').show();
+                            }
+                            else if (response.data.ModificationType == 3) {
+                                $('#modification_value').val('$' +response.data.Value);
+                                $('#schedule_impact').val(response.data.ScheduleImpact);
+                                $('#divModificationValue').show();
+                                $('#divModDurationDate').show();
+                            }
+                        });
                     }
                 });
             });
@@ -12356,7 +12398,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_description').val(selectedNode.ProjectDescription.replace('u000a', '\r\n'));
 
                     //luan here
-                    modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
+                    modal.find('.modal-body #project_number').val(selectedNode.parent.ProgramElementNumber);
                     modal.find('.modal-body #contract_number').val(selectedNode.ContractNumber);
                     modal.find('.modal-body #element_start_date').val(selectedNode.ProjectStartDate);   //datepicker - project
                     modal.find('.modal-body #element_end_date').val(selectedNode.ContractStartDate);		//datepicker - project
@@ -12789,7 +12831,7 @@ WBSTree = (function ($) {
 
                     modal.find('.modal-title').text('New Project Element');
                     modal.find('.modal-body #project_name').val('');
-                    modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
+                    modal.find('.modal-body #project_number').val(selectedNode.ProgramElementNumber);
                     modal.find('.modal-body #project_element_name').val('');
                     modal.find('.modal-body #project_manager').val('');
                     modal.find('.modal-body #project_sponsor').val('');
@@ -14034,7 +14076,7 @@ WBSTree = (function ($) {
             modal.find('.modal-body #labor_rate_id').val('');
             modal.find('.modal-body #project_lob').val('');
             //luan here - code here does nothing?
-            modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
+            modal.find('.modal-body #project_number').val(selectedNode.ProgramElementNumber);
             modal.find('.modal-body #contract_number').val(selectedNode.ContractNumber);
 
             //luan here - find the project class name given the id

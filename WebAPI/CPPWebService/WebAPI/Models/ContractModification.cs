@@ -5,13 +5,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using WebAPI.Helper;
 
 namespace WebAPI.Models
 {
     [Table("contract_modification")]
     public class ContractModification
     {
-        public int Id { get; set; }
+		[NotMapped]
+		public int Operation;
+		public int Id { get; set; }
         public string ModificationNo { get; set; } //Jignesh-ModificationPopUpChanges
 		public string Title { get; set; }
         public string Reason { get; set; }
@@ -73,6 +76,65 @@ namespace WebAPI.Models
 			}
 			finally
 			{
+			}
+		}
+
+		public static void UpdateContractModification(ContractModification contractModification)
+		{
+			try
+			{
+				using (var ctx = new CPPDbContext())
+				{
+					ContractModification retreivedConMod = new ContractModification();
+					retreivedConMod = ctx.ContractModification.Where(x => x.Id == contractModification.Id).FirstOrDefault();
+
+					if (retreivedConMod != null)
+					{
+						CopyUtil.CopyFields<ContractModification>(contractModification, retreivedConMod);
+						ctx.Entry(retreivedConMod).State = System.Data.Entity.EntityState.Modified;
+						ctx.SaveChanges();
+					}
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var stackTrace = new StackTrace(ex, true);
+				var line = stackTrace.GetFrame(0).GetFileLineNumber();
+				Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+			}
+			finally
+			{
+
+			}
+		}
+
+		public static void DeleteContractModification(ContractModification contractModification)
+		{
+			try
+			{
+				using (var ctx = new CPPDbContext())
+				{
+					ContractModification retreivedConMod = new ContractModification();
+					retreivedConMod = ctx.ContractModification.Where(x => x.Id == contractModification.Id).FirstOrDefault();
+
+					if (retreivedConMod != null)
+					{
+						ctx.ContractModification.Remove(retreivedConMod);
+						ctx.SaveChanges();
+					}
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var stackTrace = new StackTrace(ex, true);
+				var line = stackTrace.GetFrame(0).GetFileLineNumber();
+				Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+			}
+			finally
+			{
+
 			}
 		}
 
