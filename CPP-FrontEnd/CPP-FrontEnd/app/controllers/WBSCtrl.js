@@ -5,13 +5,13 @@ angular.module('cpp.controllers').
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
         'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'Client', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
-        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC',
+        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -63,7 +63,7 @@ angular.module('cpp.controllers').
                 }
                 //================= Jignesh-03-03-2021 ==================================
                 if (!docTypeID) {
-                    dhtmlx.alert('Please choose a Doument Type.');
+                    dhtmlx.alert('Please choose a Document Type.');
                     return;
                 }
                 if (!g_editelementdocument) {
@@ -394,6 +394,9 @@ angular.module('cpp.controllers').
 
                 //$('#cancel_doc_update_modal_xPrgElm').trigger('click');
             });
+
+            //====================== Tanmay ===================================================
+            //=================================================================================
 
             //====================================== Jignesh-TDM-06-01-2020 =======================================
             $('#uploadDocBtnTrend').unbind('click').on('click', function ($files) {
@@ -1718,10 +1721,156 @@ angular.module('cpp.controllers').
             });
             //=======================================================================================================
 
+            //======================================= Tanmay-AddNewClientModal-29/12/2021 ==========================================
+            $('#btnSaveClient').unbind('click').on('click', function ($files) {
+                var clientName = $('#txtClientName').val();
+                var clientPhone = $('#txtClientPhone').val();
+                var clientEmail = $('#txtClientEmail').val();
+                var clientAddressLine1 = $('#txtClientAddressLine1').val();
+                var clientAddressLine2 = $('#txtClientAddressLine2').val();
+                var clientCity = $('#txtClientCity').val();
+                var clientState = $('#txtClientState').val();
+                var clientPONo = $('#txtClientPONo').val();
+                var uniqueIdentityNumber = $('#txtUniqueIdentityNumber').val();
+
+                if (clientName == "" || clientName.length == 0) {
+                    dhtmlx.alert('Enter Client Name');
+                    return;
+                }
+                if (clientPhone != null) {
+                    if (clientPhone.length > 0) {
+                        if (clientPhone.length != 10) {
+                            dhtmlx.alert('Enter valid 10 digit Client Phone.');
+                            isFilled = false;
+                            return true;
+                        }
+                    }
+                }
+                if (clientEmail != null) {
+                    if (clientEmail.length > 0) {
+                        var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+                        if (!testEmail.test(clientEmail)) {
+                            dhtmlx.alert('Please enter valid Email Address.');
+                            isFilled = false;
+                            return;
+                        }
+                    }
+                }
+                if (clientAddressLine1 == "" || clientAddressLine1.length == 0) {
+                    dhtmlx.alert('Enter Address Line 1');
+                    return;
+                }
+                if (clientAddressLine2 == "" || clientAddressLine2.length == 0) {
+                    dhtmlx.alert('Enter Address Line 2');
+                    return;
+                }
+                if (clientCity == "" || clientCity.length == 0) {
+                    dhtmlx.alert('Enter City');
+                    return;
+                }
+                if (clientState == "" || clientState.length == 0) {
+                    dhtmlx.alert('Enter State');
+                    return;
+                }
+                if (clientPONo == "" || clientPONo.length == 0) {
+                    dhtmlx.alert('Enter Zip Code');
+                    return;
+                }
+                if (clientName == "" || uniqueIdentityNumber == "") {
+                    dhtmlx.alert({
+                        text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
+                        width: "400px"
+                    });
+                    okToExit = false;
+                    isFilled = false;
+                    return;
+                }
+
+                
+
+                var listToSave = [];
+                var dataObj = {
+                    Operation: '1',
+                    ClientName: clientName,
+                    ClientPhone: clientPhone,
+                    ClientEmail: clientEmail,
+                    ClientAddressLine1: clientAddressLine1,
+                    ClientAddressLine2: clientAddressLine2,
+                    ClientCity: clientCity,
+                    ClientState: clientState,
+                    ClientPONo: clientPONo,
+                    UniqueIdentityNumber: uniqueIdentityNumber
+                }
+                listToSave.push(dataObj);
+                var url = serviceBasePath + 'response/Client/';
+                $http({
+                    url: url,
+                    method: "POST",
+                    data: JSON.stringify(listToSave),
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(function success(response) {
+                    debugger;
+                    response.data.result.replace(/[\r]/g, '\n');
+                    if (response.data.result) {
+                        Client.get({}, function (response) {
+                            debugger;
+                            wbsTree.setClientList(response.result);
+                            var clientDropDownProgram;
+                            debugger;
+                            var clientList = wbsTree.getClientList();
+                            clientDropDownProgram = modal.find('.modal-body #program_client_poc');
+                            clientDropDownProgram.empty();
+                            // Jignesh-25-03-2021
+                            if (wbsTree.getLocalStorage().role === "Admin") {
+                                clientDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
+                            }
+                            for (var x = 0; x < clientList.length; x++) {
+                                if (clientList[x].ClientName == clientName) {
+                                    clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '" selected> ' + clientList[x].ClientName + '</option>');
+                                }
+                                else {
+                                    clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '"> ' + clientList[x].ClientName + '</option>');
+                                }
+                            }
+                        });
+                        //$http({
+                        //    url: serviceBasePath + "Request/Client",
+                        //    method: "GET"
+                        //}).then(function success(response) {
+                        //    wbsTree.setClientList(response.data.result);
+                        //    var clientDropDownProgram;
+                            
+                        //    var clientList = wbsTree.getClientList();
+                        //    clientDropDownProgram = modal.find('.modal-body #program_client_poc');
+                        //    clientDropDownProgram.empty();
+                        //    // Jignesh-25-03-2021
+                        //    if (wbsTree.getLocalStorage().role === "Admin") {
+                        //        clientDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
+                        //    }
+                        //    for (var x = 0; x < clientList.length; x++) {
+                        //        if (clientList[x].ClientName == clientName) {
+                        //            clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '" selected> ' + clientList[x].ClientName + '</option>');
+                        //        }
+                        //        else {
+                        //            clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '"> ' + clientList[x].ClientName + '</option>');
+                        //        }
+                        //    }
+                        //});
+                        $('#cancel_addNewClientModal_x').trigger('click');
+                        dhtmlx.alert(response.data.result);
+                    } else {
+                        dhtmlx.alert('No changes to be saved.');
+                    }
+                    //$state.reload();
+                }, function error(response) {
+                    dhtmlx.alert("Failed to save. Please contact your Administrator.");
+                });
+            });
+            //=======================================================================================================
+
             //====================================== Jignesh-24-03-2021 Modification Changes =======================================
 
             $('#btnSaveModification').unbind('click').on('click', function ($files) {
-                var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedProgramID();
                 var createdBy = wbsTree.getSelectedProgramElementID();
                 //var modNumber = $('#modification_number').val();
@@ -1732,7 +1881,7 @@ angular.module('cpp.controllers').
                 var modType = $('#ddModificationType').val();
                 var pgmcurrentstartdate = $('#program_current_start_date').val();
                 var pgmcurrentenddate = $('#program_current_end_date').val();
-
+                
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
                 var scheduleImpact = $('#schedule_impact').val();
@@ -1759,7 +1908,7 @@ angular.module('cpp.controllers').
                 if (pgmcurrentenddate == "" || pgmcurrentenddate.length == 0) {
                     dhtmlx.alert('Enter Contract End Date.');
                     return;
-
+                    
                 }
                 //if (_selectedNode.CurrentEndDate == "") {
                 //    _selectedNode.CurrentEndDate = pgmcurrentenddate;
@@ -1809,7 +1958,6 @@ angular.module('cpp.controllers').
 
                 var contractModification = {
                     //ModificationNo: modNumber,
-                    Operation: operation,
                     Title: title,
                     Reason: reason,
                     Description: description,
@@ -1822,45 +1970,6 @@ angular.module('cpp.controllers').
                     ScheduleImpact: scheduleImpact
                 };
 
-                if (operation == 2) {
-                    contractModification.Id = $('#primaryKeyId').val();
-                    contractModification.ModificationNo = $('#txtModNum').val();
-                }
-
-                PerformOperationOnContractModification(contractModification);
-
-                $('#btnDeleteConModification').attr('disabled', 'disabled');
-                $('#btnEditConModification').attr('disabled', 'disabled');
-            });
-
-            $('#btnDeleteConModification').unbind().on('click', function () {
-                $("#gridModificationList tbody").find('input[name="rbModHistory"]').each(function () {
-                    if ($(this).is(":checked")) {
-                        var modID = $(this).parents("tr").attr('id');//
-                        if ($(this).closest("tr").find("td:eq(1)").text() == 0) {
-                            $('input[name="rbModHistory"]').prop('checked', false);
-                            $('#btnDeleteConModification').attr('disabled', 'disabled');
-                            $('#btnEditConModification').attr('disabled', 'disabled');
-                            dhtmlx.alert('Original Contract Value can not be deleted.');
-                            return;
-                        }
-                        wbsTree.setContractModificationOperation(3);
-                        var contractModification = {
-                            Operation: 3,
-                            Id: $(this).parents("tr").attr('id'),
-                            ProgramID: wbsTree.getSelectedProgramID()
-                        };
-                        PerformOperationOnContractModification(contractModification);
-
-                        $('input[name="rbModHistory"]').prop('checked', false);
-                        $('#btnDeleteConModification').attr('disabled', 'disabled');
-                        $('#btnEditConModification').attr('disabled', 'disabled');
-                    }
-                });
-            });
-
-            function PerformOperationOnContractModification(contractModification) {
-                
                 var request = {
                     method: 'POST',
                     url: serviceBasePath + 'contractModification/saveContractModification',
@@ -1869,17 +1978,6 @@ angular.module('cpp.controllers').
 
                 $http(request).then(function success(d) {
                     if (d.data.result == "success") {
-                        wbsTree.getContractModificationOperation();
-                        if (wbsTree.getContractModificationOperation() == 1) {
-                            dhtmlx.alert("Modification Added Successfully!!!.");
-                        }
-                        else if (wbsTree.getContractModificationOperation() == 2) {
-                            dhtmlx.alert("Modification Updated Successfully!!!.");
-                        }
-                        else if (wbsTree.getContractModificationOperation() == 3) {
-                            dhtmlx.alert("Modification Deleted Successfully!!!.");
-                        }
-                        wbsTree.setContractModificationOperation(1);
                         //$('#modification_number').val('');
                         $('#modification_title').val('');
                         $('#modification_reason').val('');
@@ -1887,8 +1985,6 @@ angular.module('cpp.controllers').
                         $('#modification_value').val('');
                         $('#modification_description').val('');
                         $('#schedule_impact').val('');
-                        $('#divModificationValue').show();
-                        $('#divModDurationDate').hide();
                         //$('#duration_date').val('');
                         var updatedContractEndDate = "";
                         _modificationList = d.data.data;
@@ -1906,9 +2002,9 @@ angular.module('cpp.controllers').
                                 _modificationList[x].ModificationType == 0 ? 'NA' :
                                     _modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
 
-                            gridModification.append('<tr id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
-                                '<input id=rb' + _modificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
-                                '</td >' +
+                            gridModification.append('<tr id="' + _modificationList[x].Id + '">' +//<td style="width: 20px">' +
+                                //'<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
+                                //'</td >' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '><a>' + _modificationList[x].ModificationNo + '</a></td> ' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;" ' +
@@ -1923,11 +2019,6 @@ angular.module('cpp.controllers').
                                 '<td>' + moment(_modificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                 '<tr > ');
                         }
-
-                        $('input[name=rbModHistory]').on('click', function (event) {
-                            $('#btnDeleteConModification').removeAttr('disabled');
-                            $('#btnEditConModification').removeAttr('disabled');
-                        });
                         //============================ Jignesh-24-02-2021 ===================================
                         if (_modificationList.length > 0) {
                             $('#updateDMBtnContModification').removeAttr('disabled');
@@ -1963,22 +2054,7 @@ angular.module('cpp.controllers').
                         //}
                     }
                 });
-            }
 
-            $('#btnClearModification').unbind('click').on('click', function () {
-                wbsTree.setContractModificationOperation(1);
-                $('#modification_title').val('');
-                $('#modification_date').val('');
-                $('#modification_reason').val('');
-                $('#modification_description').val('');
-                $('#ddModificationType').val(1);
-                $('#schedule_impact').val('');
-                $('#modification_value').val('');
-                $('#divModificationValue').show(); 
-                $('#divModDurationDate').hide(); 
-                $('input[name="rbModHistory"]').prop('checked', false);
-                $('#btnDeleteConModification').attr('disabled', 'disabled');
-                $('#btnEditConModification').attr('disabled', 'disabled');
             });
             //====================================================================================================================
 
