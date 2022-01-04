@@ -1737,6 +1737,10 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Client Name');
                     return;
                 }
+                if (clientPhone == "" || clientPhone.length == 0) {
+                    dhtmlx.alert('Enter Phone Number.');
+                    return;
+                }
                 if (clientPhone != null) {
                     if (clientPhone.length > 0) {
                         if (clientPhone.length != 10) {
@@ -1745,6 +1749,10 @@ angular.module('cpp.controllers').
                             return true;
                         }
                     }
+                }
+                if (clientEmail == "" || clientEmail.length == 0) {
+                    dhtmlx.alert('Enter Email Address.');
+                    return;
                 }
                 if (clientEmail != null) {
                     if (clientEmail.length > 0) {
