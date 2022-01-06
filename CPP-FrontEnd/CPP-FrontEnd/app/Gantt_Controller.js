@@ -6393,7 +6393,15 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true }, // align: "center" Manasi
+                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                    return 'N/A';
+                                else
+                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                            }
+ 
+
+			}, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6466,7 +6474,13 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true }, // align: "center" Manasi
+                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                    return 'N/A';
+                                else
+                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                            }
+			 }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6528,7 +6542,13 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true }, // align: "center" Manasi
+                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                    return 'N/A';
+                                else
+                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                            }
+			 }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6602,7 +6622,13 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true }, // align: "center" Manasi
+                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true,  template: function (obj) {     //Manasi 16-07-2020
+                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                    return 'N/A';
+                                else
+                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                            }
+			}, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6677,7 +6703,13 @@ angular.module('xenon.Gantt_Controller', []).
                     { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center"  Manasi
                     //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                     //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, //align: "center" Manasi
-                    { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
+                    { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                    return 'N/A';
+                                else
+                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                            }
+		 }, //align: "center" Manasi
                     {
                         //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                         name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) { //Manasi
