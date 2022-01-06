@@ -3596,6 +3596,39 @@ WBSTree = (function ($) {
                     selectedNode.ClientProjectManager = $('#ProgramElementModal').find('.modal-body #program_element_client_pm').val();
                     selectedNode.ClientPhoneNumber = $('#ProgramElementModal').find('.modal-body #program_element_client_phone').val();
 
+                    // Nivedita - Add Billing POC Details 30-12-2021
+
+                    selectedNode.BillingPOC = $('#ProgramElementModal').find('.modal-body #program_billing_poc1').val();
+                    selectedNode.BillingPOCPhone1 = $('#ProgramElementModal').find('.modal-body #program_billing_poc_phone_11').val();
+                    selectedNode.BillingPOCPhone2 = $('#ProgramElementModal').find('.modal-body #program_billing_poc_phone_21').val();
+
+
+                    selectedNode.BillingPOCAddress = $('#ProgramElementModal').find('.modal-body #program_billing_poc_address1').val();
+                    selectedNode.BillingPOCAddressLine1 = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_address_line1').val();
+                    selectedNode.BillingPOCAddressLine2 = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_address_line2').val();
+                    selectedNode.BillingPOCCity = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_city').val();
+                    selectedNode.BillingPOCState = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_state').val();
+                    selectedNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
+
+                    selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
+
+                    selectedNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
+
+
+                    //Check
+                    var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
+                    var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
+                    var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
+                    var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
+                    var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
+
+                    selectedNode.TMBilling = program_tm_billing_checked ? 1 : 0;
+                    selectedNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
+                    selectedNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
+                    selectedNode.Lumpsum = program_Lumpsum ? 1 : 0;
+                    selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
+                    //----------------------------------------------------------------------------------------------------------------
 
                     //luan here
                     selectedNode.ProjectNumber = $('#ProgramElementModal').find('.modal-body #project_number').val();
@@ -3867,6 +3900,11 @@ WBSTree = (function ($) {
                     }
                     //===================================================================
 
+                    if (!selectedNode.BillingPOC) {
+                        dhtmlx.alert('Billing POC is a required field.');
+                        return;
+                    }
+
                     var modifiedName = selectedNode.name;
                     var modifiedClientPONumber = selectedNode.ClientPONumber;
                     var modifiedAmount = selectedNode.Amount;
@@ -3977,7 +4015,25 @@ WBSTree = (function ($) {
 
                         //------------------------------------------------------------------------------------------------------
 
-
+                        //Add Billing POC 03-01-2021
+                        "BillingPOC": selectedNode.BillingPOC,
+                        "BillingPOCPhone1": selectedNode.BillingPOCPhone1,
+                        "BillingPOCPhone2": selectedNode.BillingPOCPhone2,
+                        //"BillingPOCAddress": selectedNode.BillingPOCAddress,
+                        "BillingPOCAddressLine1": selectedNode.BillingPOCAddressLine1,
+                        "BillingPOCAddressLine2": selectedNode.BillingPOCAddressLine2,
+                        "BillingPOCCity": selectedNode.BillingPOCCity,
+                        "BillingPOCState": selectedNode.BillingPOCState,
+                        "BillingPOCPONo": selectedNode.BillingPOCPONo,
+                        "BillingPOCEmail": selectedNode.BillingPOCEmail,
+                        "BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction,
+                        "TMBilling": selectedNode.TMBilling,
+                        "SOVBilling": selectedNode.SOVBilling,
+                        "MonthlyBilling": selectedNode.MonthlyBilling,
+                        "Lumpsum": selectedNode.Lumpsum,
+                        "CertifiedPayroll": selectedNode.CertifiedPayroll,
+                        "ClientPONumber": selectedNode.ClientPONumber,
+                        //------------------------------------------------------------------------------------------------------
                         "ApproversDetails": approversDetails
                     };
                     console.log(objToSave);
@@ -4074,6 +4130,36 @@ WBSTree = (function ($) {
                     newNode.ProjectValueContract = $('#ProgramElementModal').find('.modal-body #program_element_contract_value').val();
                     newNode.ProjectValueTotal = $('#ProgramElementModal').find('.modal-body #program_element_total_value').val();
                     newNode.LocationName = $('#ProgramElementModal').find('.modal-body #program_element_location_name').val();
+
+
+                    //Nivedita 0401
+                    newNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
+                    newNode.BillingPOC = $('#ProgramElementModal').find('.modal-body #program_billing_poc1').val();
+                    newNode.BillingPOCPhone1 = $('#ProgramElementModal').find('.modal-body #program_billing_poc_phone_11').val();
+                    newNode.BillingPOCPhone2 = $('#ProgramElementModal').find('.modal-body #program_billing_poc_phone_21').val();
+
+                    newNode.BillingPOCAddress = $('#ProgramElementModal').find('.modal-body #program_billing_poc_address1').val();
+                    newNode.BillingPOCAddressLine1 = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_address_line1').val();
+                    newNode.BillingPOCAddressLine2 = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_address_line2').val();
+                    newNode.BillingPOCCity = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_city').val();
+                    newNode.BillingPOCState = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_state').val();
+                    newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
+                    //==================================================
+                    newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
+                    newNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+
+                    // Check
+                    var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
+                    var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
+                    var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
+                    var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
+                    var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
+
+                    newNode.TMBilling = program_tm_billing_checked ? 1 : 0;
+                    newNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
+                    newNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
+                    newNode.Lumpsum = program_Lumpsum ? 1 : 0;
+                    newNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
 
                     //luan here - Find the contract id
                     var contractList = wbsTree.getContractList();
@@ -4304,6 +4390,11 @@ WBSTree = (function ($) {
                         return;
                     }
 
+                    if (!newNode.BillingPOC) {
+                        dhtmlx.alert('Billing POC is a required field');
+                        return;
+                    }
+
                     // -----------------------------------------------------------------------------------------------------
                     //================== Jignesh-01-03-2021 =============================
                     if (newNode.ClientPhoneNumber.length > 0) {
@@ -4397,7 +4488,26 @@ WBSTree = (function ($) {
                         "ProjectPEndDate": selectedNode.ProjectPEndDate,
 
                         //------------------------------------------------------------------------------------------------------
+                        "BillingPOC": newNode.BillingPOC,
+                        "BillingPOCPhone1": newNode.BillingPOCPhone1,
+                        "BillingPOCPhone2": newNode.BillingPOCPhone2,
 
+                        //"BillingPOCAddress": newNode.BillingPOCAddress,
+                        "BillingPOCAddressLine1": newNode.BillingPOCAddressLine1,
+                        "BillingPOCAddressLine2": newNode.BillingPOCAddressLine2,
+                        "BillingPOCCity": newNode.BillingPOCCity,
+                        "BillingPOCState": newNode.BillingPOCState,
+                        "BillingPOCPONo": newNode.BillingPOCPONo,
+
+                        "BillingPOCEmail": newNode.BillingPOCEmail,
+                        "BillingPOCSpecialInstruction": newNode.BillingPOCSpecialInstruction,
+
+                        "TMBilling": newNode.TMBilling,
+                        "SOVBilling": newNode.SOVBilling,
+                        "MonthlyBilling": newNode.MonthlyBilling,
+                        "Lumpsum": newNode.Lumpsum,
+                        "CertifiedPayroll": newNode.CertifiedPayroll,
+                        "ClientPONumber": selectedNode.ClientPONumber,
 
                         "ApproversDetails": approversDetails
 
@@ -4701,44 +4811,46 @@ WBSTree = (function ($) {
 
                     //project element
                     selectedNode.ProjectElementNumber = $('#ProjectModal').find('.modal-body #project_element_number').val();
-                    selectedNode.ClientPONumber = $('#ProjectModal').find('.modal-body #project_element_po_number').val();
+                    //Nivedita 04-01-2021
+                    //selectedNode.ClientPONumber = $('#ProjectModal').find('.modal-body #project_element_po_number').val();
                     selectedNode.Amount = $('#ProjectModal').find('.modal-body #project_element_amount').val();
                     selectedNode.QuickbookJobNumber = $('#ProjectModal').find('.modal-body #project_element_quickbookJobNumber').val();
                     selectedNode.LocationName = $('#ProjectModal').find('.modal-body #project_element_locationName').val();
                     selectedNode.Location = $('#ProjectModal').find('.modal-body #project_element_location').val();
                     selectedNode.ProjectDescription = $('#ProjectModal').find('.modal-body #project_element_description').val();
 
+                     // Nivedita - Remove Billing POC Details 29-12-2021
                     // Billing POC Pritesh 28jul2020
 
-                    selectedNode.BillingPOC = $('#ProjectModal').find('.modal-body #program_billing_poc1').val();
-                    selectedNode.BillingPOCPhone1 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_11').val();
-                    selectedNode.BillingPOCPhone2 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_21').val();
+                    //selectedNode.BillingPOC = $('#ProjectModal').find('.modal-body #program_billing_poc1').val();
+                    //selectedNode.BillingPOCPhone1 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_11').val();
+                    //selectedNode.BillingPOCPhone2 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_21').val();
 
-                    //====== Jignesh-AddAddressField-21-01-2021 =======
-                    selectedNode.BillingPOCAddress = $('#ProjectModal').find('.modal-body #program_billing_poc_address1').val();
-                    selectedNode.BillingPOCAddressLine1 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line1').val();
-                    selectedNode.BillingPOCAddressLine2 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line2').val();
-                    selectedNode.BillingPOCCity = $('#ProjectModal').find('.modal-body #program1_billing_poc_city').val();
-                    selectedNode.BillingPOCState = $('#ProjectModal').find('.modal-body #program1_billing_poc_state').val();
-                    selectedNode.BillingPOCPONo = $('#ProjectModal').find('.modal-body #program1_billing_poc_po_num').val();
-                    //==================================================
-                    selectedNode.BillingPOCEmail = $('#ProjectModal').find('.modal-body #program_billing_poc_email1').val();
-                    selectedNode.BillingPOCSpecialInstruction = $('#ProjectModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    ////====== Jignesh-AddAddressField-21-01-2021 =======
+                    //selectedNode.BillingPOCAddress = $('#ProjectModal').find('.modal-body #program_billing_poc_address1').val();
+                    //selectedNode.BillingPOCAddressLine1 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line1').val();
+                    //selectedNode.BillingPOCAddressLine2 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line2').val();
+                    //selectedNode.BillingPOCCity = $('#ProjectModal').find('.modal-body #program1_billing_poc_city').val();
+                    //selectedNode.BillingPOCState = $('#ProjectModal').find('.modal-body #program1_billing_poc_state').val();
+                    //selectedNode.BillingPOCPONo = $('#ProjectModal').find('.modal-body #program1_billing_poc_po_num').val();
+                    ////==================================================
+                    //selectedNode.BillingPOCEmail = $('#ProjectModal').find('.modal-body #program_billing_poc_email1').val();
+                    //selectedNode.BillingPOCSpecialInstruction = $('#ProjectModal').find('.modal-body #program_billing_poc_special_instruction1').val();
 
 
-                    // Check
-                    var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
-                    var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
-                    var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
-                    var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
-                    var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
+                    //// Check
+                    //var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
+                    //var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
+                    //var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
+                    //var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
+                    //var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
 
-                    selectedNode.TMBilling = program_tm_billing_checked ? 1 : 0;
-                    selectedNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
-                    selectedNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
-                    selectedNode.Lumpsum = program_Lumpsum ? 1 : 0;
-                    selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
-
+                    //selectedNode.TMBilling = program_tm_billing_checked ? 1 : 0;
+                    //selectedNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
+                    //selectedNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
+                    //selectedNode.Lumpsum = program_Lumpsum ? 1 : 0;
+                    //selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
+                    ////==================================================
 
                     //luan here
                     selectedNode.ProjectNumber = $('#ProjectModal').find('.modal-body #project_number').val();
@@ -4921,32 +5033,32 @@ WBSTree = (function ($) {
                         dhtmlx.alert('Project Element # field is required. Contact your administrator.'); // Jignesh-02-03-2021
                         return;
                     }
-                    if (!selectedNode.BillingPOC) {
-                        dhtmlx.alert('Billing POC is a required field.');
-                        return;
-                    }
+                    //if (!selectedNode.BillingPOC) {
+                    //    dhtmlx.alert('Billing POC is a required field.');
+                    //    return;
+                    //}
                     //================================ Jignesh-18-02-2021 ====================================
-                    if (selectedNode.BillingPOCEmail.length > 0) {
-                        var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-                        if (!testEmail.test(selectedNode.BillingPOCEmail)) {
-                            dhtmlx.alert('Please enter valid Email Address for Billing POC.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
+                    //if (selectedNode.BillingPOCEmail.length > 0) {
+                    //    var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+                    //    if (!testEmail.test(selectedNode.BillingPOCEmail)) {
+                    //        dhtmlx.alert('Please enter valid Email Address for Billing POC.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
                     //========================================================================================
                     //================================ Jignesh-01-03-2021 ====================================
-                    if (selectedNode.BillingPOCPhone1.length > 0) {
-                        if (selectedNode.BillingPOCPhone1.length != 12) {
-                            dhtmlx.alert('Enter valid 10 Billing POC Phone # 1.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-                    if (selectedNode.BillingPOCPhone2.length > 0) {
-                        if (selectedNode.BillingPOCPhone2.length != 12) {
-                            dhtmlx.alert('Enter valid 10 Billing POC Phone # 2.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
+                    //if (selectedNode.BillingPOCPhone1.length > 0) {
+                    //    if (selectedNode.BillingPOCPhone1.length != 12) {
+                    //        dhtmlx.alert('Enter valid 10 Billing POC Phone # 1.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
+                    //if (selectedNode.BillingPOCPhone2.length > 0) {
+                    //    if (selectedNode.BillingPOCPhone2.length != 12) {
+                    //        dhtmlx.alert('Enter valid 10 Billing POC Phone # 2.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
                     //========================================================================================
                     var modifiedName = selectedNode.ProjectName;
                     var modifiedClientPONumber = selectedNode.ClientPONumber;
@@ -5068,28 +5180,28 @@ WBSTree = (function ($) {
                         //-------------------------------------------------------------------------------------------------------
                         "LocationID": selectedNode.LocationID,
 
-                        // Biiling POC PRitesh 28jul2020
+                        //// Biiling POC PRitesh 28jul2020
 
-                        "BillingPOC": selectedNode.BillingPOC,
-                        "BillingPOCPhone1": selectedNode.BillingPOCPhone1,
-                        "BillingPOCPhone2": selectedNode.BillingPOCPhone2,
+                        //"BillingPOC": selectedNode.BillingPOC,
+                        //"BillingPOCPhone1": selectedNode.BillingPOCPhone1,
+                        //"BillingPOCPhone2": selectedNode.BillingPOCPhone2,
 
-                        //====== Jignesh-AddAddressField-21-01-2021 =======
-                        //"BillingPOCAddress": selectedNode.BillingPOCAddress,
-                        "BillingPOCAddressLine1": selectedNode.BillingPOCAddressLine1,
-                        "BillingPOCAddressLine2": selectedNode.BillingPOCAddressLine2,
-                        "BillingPOCCity": selectedNode.BillingPOCCity,
-                        "BillingPOCState": selectedNode.BillingPOCState,
-                        "BillingPOCPONo": selectedNode.BillingPOCPONo,
-                        //==================================================
-                        "BillingPOCEmail": selectedNode.BillingPOCEmail,
-                        "BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction,
+                        ////====== Jignesh-AddAddressField-21-01-2021 =======
+                        ////"BillingPOCAddress": selectedNode.BillingPOCAddress,
+                        //"BillingPOCAddressLine1": selectedNode.BillingPOCAddressLine1,
+                        //"BillingPOCAddressLine2": selectedNode.BillingPOCAddressLine2,
+                        //"BillingPOCCity": selectedNode.BillingPOCCity,
+                        //"BillingPOCState": selectedNode.BillingPOCState,
+                        //"BillingPOCPONo": selectedNode.BillingPOCPONo,
+                        ////==================================================
+                        //"BillingPOCEmail": selectedNode.BillingPOCEmail,
+                        //"BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction,
 
-                        "TMBilling": selectedNode.TMBilling,
-                        "SOVBilling": selectedNode.SOVBilling,
-                        "MonthlyBilling": selectedNode.MonthlyBilling,
-                        "Lumpsum": selectedNode.Lumpsum,
-                        "CertifiedPayroll": selectedNode.CertifiedPayroll,
+                        //"TMBilling": selectedNode.TMBilling,
+                        //"SOVBilling": selectedNode.SOVBilling,
+                        //"MonthlyBilling": selectedNode.MonthlyBilling,
+                        //"Lumpsum": selectedNode.Lumpsum,
+                        //"CertifiedPayroll": selectedNode.CertifiedPayroll,
 
 
                         "ProjectNumber": _selectedProgramElement.ProjectNumber,
@@ -5099,7 +5211,7 @@ WBSTree = (function ($) {
 
                         //project element
                         "ProjectElementNumber": selectedNode.ProjectElementNumber,
-                        "ClientPONumber": selectedNode.ClientPONumber,
+                        //"ClientPONumber": selectedNode.ClientPONumber,
                         "Amount": selectedNode.Amount,
                         "QuickbookJobNumber": selectedNode.QuickbookJobNumber,
                         "LocationName": selectedNode.LocationName,
@@ -5203,40 +5315,40 @@ WBSTree = (function ($) {
 
                     //project element
                     newNode.ProjectElementNumber = $('#ProjectModal').find('.modal-body #project_element_number').val();
-                    newNode.ClientPONumber = $('#ProjectModal').find('.modal-body #project_element_po_number').val();
+                    //newNode.ClientPONumber = $('#ProjectModal').find('.modal-body #project_element_po_number').val();
                     newNode.Amount = $('#ProjectModal').find('.modal-body #project_element_amount').val();
                     newNode.QuickbookJobNumber = $('#ProjectModal').find('.modal-body #project_element_quickbookJobNumber').val();
                     newNode.LocationName = $('#ProjectModal').find('.modal-body #project_element_locationName').val();
                     newNode.Location = $('#ProjectModal').find('.modal-body #project_element_location').val();
                     newNode.ProjectDescription = $('#ProjectModal').find('.modal-body #project_element_description').val();
+                    //Nivedita 04-01-2021
+                    //// Billing POC Pritesh 28jul2020
+                    //newNode.BillingPOC = $('#ProjectModal').find('.modal-body #program_billing_poc1').val();
+                    //newNode.BillingPOCPhone1 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_11').val();
+                    //newNode.BillingPOCPhone2 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_21').val();
+                    ////====== Jignesh-AddAddressField-21-01-2021 =======
+                    //newNode.BillingPOCAddress = $('#ProjectModal').find('.modal-body #program_billing_poc_address1').val();
+                    //newNode.BillingPOCAddressLine1 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line1').val();
+                    //newNode.BillingPOCAddressLine2 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line2').val();
+                    //newNode.BillingPOCCity = $('#ProjectModal').find('.modal-body #program1_billing_poc_city').val();
+                    //newNode.BillingPOCState = $('#ProjectModal').find('.modal-body #program1_billing_poc_state').val();
+                    //newNode.BillingPOCPONo = $('#ProjectModal').find('.modal-body #program1_billing_poc_po_num').val();
+                    ////==================================================
+                    //newNode.BillingPOCEmail = $('#ProjectModal').find('.modal-body #program_billing_poc_email1').val();
+                    //newNode.BillingPOCSpecialInstruction = $('#ProjectModal').find('.modal-body #program_billing_poc_special_instruction1').val();
 
-                    // Billing POC Pritesh 28jul2020
-                    newNode.BillingPOC = $('#ProjectModal').find('.modal-body #program_billing_poc1').val();
-                    newNode.BillingPOCPhone1 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_11').val();
-                    newNode.BillingPOCPhone2 = $('#ProjectModal').find('.modal-body #program_billing_poc_phone_21').val();
-                    //====== Jignesh-AddAddressField-21-01-2021 =======
-                    newNode.BillingPOCAddress = $('#ProjectModal').find('.modal-body #program_billing_poc_address1').val();
-                    newNode.BillingPOCAddressLine1 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line1').val();
-                    newNode.BillingPOCAddressLine2 = $('#ProjectModal').find('.modal-body #program1_billing_poc_address_line2').val();
-                    newNode.BillingPOCCity = $('#ProjectModal').find('.modal-body #program1_billing_poc_city').val();
-                    newNode.BillingPOCState = $('#ProjectModal').find('.modal-body #program1_billing_poc_state').val();
-                    newNode.BillingPOCPONo = $('#ProjectModal').find('.modal-body #program1_billing_poc_po_num').val();
-                    //==================================================
-                    newNode.BillingPOCEmail = $('#ProjectModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProjectModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    //// Check
+                    //var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
+                    //var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
+                    //var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
+                    //var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
+                    //var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
 
-                    // Check
-                    var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
-                    var program_sov_billing_checked = document.getElementById("program_sov_billing1").checked;
-                    var program_monthly_billing_checked = document.getElementById("program_monthly_billing1").checked;
-                    var program_Lumpsum = document.getElementById("program_Lumpsum1").checked;
-                    var program_certified_payroll_checked = document.getElementById("program_certified_payroll1").checked;
-
-                    newNode.TMBilling = program_tm_billing_checked ? 1 : 0;
-                    newNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
-                    newNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
-                    newNode.Lumpsum = program_Lumpsum ? 1 : 0;
-                    newNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
+                    //newNode.TMBilling = program_tm_billing_checked ? 1 : 0;
+                    //newNode.SOVBilling = program_sov_billing_checked ? 1 : 0;
+                    //newNode.MonthlyBilling = program_monthly_billing_checked ? 1 : 0;
+                    //newNode.Lumpsum = program_Lumpsum ? 1 : 0;
+                    //newNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
 
 
 
@@ -5421,35 +5533,35 @@ WBSTree = (function ($) {
                     //    dhtmlx.alert('Project element # field is required. Contact your administrator.');
                     //    return;
                     //}
+                    //Nivedita 04-01-2021
+                    //if (!newNode.BillingPOC) {
+                    //    dhtmlx.alert('Billing POC is a required field');
+                    //    return;
+                    //}
 
-                    if (!newNode.BillingPOC) {
-                        dhtmlx.alert('Billing POC is a required field');
-                        return;
-                    }
-
-                    //================================ Jignesh-18-02-2021 ====================================
-                    if (newNode.BillingPOCEmail.length > 0) {
-                        var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-                        if (!testEmail.test(newNode.BillingPOCEmail)) {
-                            dhtmlx.alert('Please enter valid Email Address for Billing POC.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-                    //========================================================================================
-                    //================================ Jignesh-01-03-2021 ====================================
-                    if (newNode.BillingPOCPhone1.length > 0) {
-                        if (newNode.BillingPOCPhone1.length != 12) {
-                            dhtmlx.alert('Enter valid 10 Billing POC Phone # 1.'); //Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-                    if (newNode.BillingPOCPhone2.length > 0) {
-                        if (newNode.BillingPOCPhone2.length != 12) {
-                            dhtmlx.alert('Enter valid 10 Billing POC Phone # 2.'); //Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-                    //========================================================================================
+                    ////================================ Jignesh-18-02-2021 ====================================
+                    //if (newNode.BillingPOCEmail.length > 0) {
+                    //    var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+                    //    if (!testEmail.test(newNode.BillingPOCEmail)) {
+                    //        dhtmlx.alert('Please enter valid Email Address for Billing POC.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
+                    ////========================================================================================
+                    ////================================ Jignesh-01-03-2021 ====================================
+                    //if (newNode.BillingPOCPhone1.length > 0) {
+                    //    if (newNode.BillingPOCPhone1.length != 12) {
+                    //        dhtmlx.alert('Enter valid 10 Billing POC Phone # 1.'); //Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
+                    //if (newNode.BillingPOCPhone2.length > 0) {
+                    //    if (newNode.BillingPOCPhone2.length != 12) {
+                    //        dhtmlx.alert('Enter valid 10 Billing POC Phone # 2.'); //Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
+                    ////========================================================================================
 
                     newNode.level = "Project";
                     newNode.CurrentCost = 0;
@@ -5515,27 +5627,27 @@ WBSTree = (function ($) {
                         "ExecSteeringComm": selectedNode.ExecSteeringComm,
                         "VicePresident": selectedNode.VicePresident,
                         "FinancialAnalyst": selectedNode.FinancialAnalyst,
+                        //Nivedita 04-01-2021
+                        //// Pritesh Billing POC 
+                        //"BillingPOC": newNode.BillingPOC,
+                        //"BillingPOCPhone1": newNode.BillingPOCPhone1,
+                        //"BillingPOCPhone2": newNode.BillingPOCPhone2,
+                        ////====== Jignesh-AddAddressField-21-01-2021 =======
+                        ////"BillingPOCAddress": newNode.BillingPOCAddress,
+                        //"BillingPOCAddressLine1": newNode.BillingPOCAddressLine1,
+                        //"BillingPOCAddressLine2": newNode.BillingPOCAddressLine2,
+                        //"BillingPOCCity": newNode.BillingPOCCity,
+                        //"BillingPOCState": newNode.BillingPOCState,
+                        //"BillingPOCPONo": newNode.BillingPOCPONo,
+                        ////==================================================
+                        //"BillingPOCEmail": newNode.BillingPOCEmail,
+                        //"BillingPOCSpecialInstruction": newNode.BillingPOCSpecialInstruction,
 
-                        // Pritesh Billing POC 
-                        "BillingPOC": newNode.BillingPOC,
-                        "BillingPOCPhone1": newNode.BillingPOCPhone1,
-                        "BillingPOCPhone2": newNode.BillingPOCPhone2,
-                        //====== Jignesh-AddAddressField-21-01-2021 =======
-                        //"BillingPOCAddress": newNode.BillingPOCAddress,
-                        "BillingPOCAddressLine1": newNode.BillingPOCAddressLine1,
-                        "BillingPOCAddressLine2": newNode.BillingPOCAddressLine2,
-                        "BillingPOCCity": newNode.BillingPOCCity,
-                        "BillingPOCState": newNode.BillingPOCState,
-                        "BillingPOCPONo": newNode.BillingPOCPONo,
-                        //==================================================
-                        "BillingPOCEmail": newNode.BillingPOCEmail,
-                        "BillingPOCSpecialInstruction": newNode.BillingPOCSpecialInstruction,
-
-                        "TMBilling": newNode.TMBilling,
-                        "SOVBilling": newNode.SOVBilling,
-                        "MonthlyBilling": newNode.MonthlyBilling,
-                        "Lumpsum": newNode.Lumpsum,
-                        "CertifiedPayroll": newNode.CertifiedPayroll,
+                        //"TMBilling": newNode.TMBilling,
+                        //"SOVBilling": newNode.SOVBilling,
+                        //"MonthlyBilling": newNode.MonthlyBilling,
+                        //"Lumpsum": newNode.Lumpsum,
+                        //"CertifiedPayroll": newNode.CertifiedPayroll,
 
 
                         //luan here
@@ -5566,7 +5678,7 @@ WBSTree = (function ($) {
 
                         //project element
                         "ProjectElementNumber": selectedNode.ProjectElementNumber,
-                        "ClientPONumber": selectedNode.ClientPONumber,
+                        //"ClientPONumber": selectedNode.ClientPONumber,
                         "Amount": selectedNode.Amount,
                         "QuickbookJobNumber": selectedNode.QuickbookJobNumber,
                         "LocationName": selectedNode.LocationName,
@@ -9365,7 +9477,7 @@ WBSTree = (function ($) {
                
                 
                 var selectedNode = wbsTree.getSelectedNode();
-                
+                //Employee list for edit project
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 var angularHttp = wbsTree.getAngularHttp();
@@ -9392,28 +9504,28 @@ WBSTree = (function ($) {
                 employeeList = newEmployeeList;
 
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
-                    
-                    var userList = wbsTree.getUserList();
-                    var newEmployeeList = [];
-                    for (var x = 0; x < employeeList.length; x++) {
-                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                            newEmployeeList.push(employeeList[x]);
-                            break;
-                        }
-                    }
+                    //////////////////Nivedita24-12-2021
+                    //var userList = wbsTree.getUserList();
+                    //var newEmployeeList = [];
+                    //for (var x = 0; x < employeeList.length; x++) {
+                    //    if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                    //        newEmployeeList.push(employeeList[x]);
+                    //        break;
+                    //    }
+                    //}
 
-                    for (var x = 0; x < userList.length; x++) {
-                        for (var y = 0; y < employeeList.length; y++) {
-                            if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                newEmployeeList.push(employeeList[y]);
-                                break;
-                            }
-                        }
-                    }
-                    employeeList = newEmployeeList;
-                    employeeList.sort(function (a, b) {
-                       return a.Name.localeCompare(b.Name);
-                    });
+                    //for (var x = 0; x < userList.length; x++) {
+                    //    for (var y = 0; y < employeeList.length; y++) {
+                    //        if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                    //            newEmployeeList.push(employeeList[y]);
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+                    //employeeList = newEmployeeList;
+                    //employeeList.sort(function (a, b) {
+                    //   return a.Name.localeCompare(b.Name);
+                    //});
                     
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
                   //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
@@ -9438,7 +9550,44 @@ WBSTree = (function ($) {
                                     var labelText = approvers[currentNum].Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
                                     var dbid = approvers[currentNum].Id;
-                                    
+
+                                    //------------------------------Nivedita24-12-2021------------
+                                    var userList = wbsTree.getUserList();
+                                    var employeeList = wbsTree.getEmployeeList();
+                                    var newEmployeeList = [];
+                                    for (var x = 0; x < employeeList.length; x++) {
+                                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                            newEmployeeList.push(employeeList[x]);
+                                            break;
+                                        }
+                                    }
+
+                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                        var key = Object.keys(t)[0];
+                                        return s[key] == t[key]
+                                    }));
+                                    //for (var x = 0; x < userList.length; x++) {
+                                    //    for (var y = 0; y < employeeList.length; y++) {
+                                    //        if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD') && userList[x].role == approvers[currentNum].Role) {
+                                    //            newEmployeeList.push(employeeList[y]);
+                                    //            break;
+                                    //        }
+                                    //    }
+                                    //}
+                                    for (var x = 0; x < roleWiseUserList.length; x++) {
+                                        for (var y = 0; y < employeeList.length; y++) {
+                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                newEmployeeList.push(employeeList[y]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    employeeList = newEmployeeList;
+                                    employeeList.sort(function (a, b) {
+                                        return a.Name.localeCompare(b.Name);
+                                    });
+                                    //--------------------------------------------------------------------------------
                                     //if (j == 0) {
                                     //    append += "<div class='col-xs-6' style='padding-left: 0;'>" +
                                     //        "<label class='control-label _bold required'>" + labelText + "</label>" +
@@ -10071,6 +10220,31 @@ WBSTree = (function ($) {
 
                         projApproverDetails = response.data.result[0].ApproversDetails;
 
+                        //Nivedita - Add Billing POC Details at project Level 29-12-2021
+
+                        modal.find('.modal-body #program_billing_poc1').val(selectedNode.BillingPOC);
+                        modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.BillingPOCPhone1);
+                        modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.BillingPOCPhone2);
+                        modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.BillingPOCEmail);
+                        modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.BillingPOCAddressLine1)
+                        modal.find('.modal-body #program1_billing_poc_address_line2').val(response.data.result[0].BillingPOCAddressLine2);
+                        modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.BillingPOCCity);
+                        modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.BillingPOCState);
+                        modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.BillingPOCPONo);
+
+                        if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
+                            modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                        }
+
+                        document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
+                        document.getElementById("program_sov_billing1").checked = selectedNode.SOVBilling ? true : false;
+                        document.getElementById("program_monthly_billing1").checked = selectedNode.MonthlyBilling ? true : false;
+                        document.getElementById("program_Lumpsum1").checked = selectedNode.Lumpsum ? true : false;
+                        document.getElementById("program_certified_payroll1").checked = selectedNode.CertifiedPayroll ? true : false;
+
+                        modal.find('.modal-body #project_element_po_number').val(selectedNode.ClientPONumber);
+
+                    //---------------------------------------------------------------------------------------------------------------------------
                         var employeeList = wbsTree.getEmployeeList();
                         var userList = wbsTree.getUserList();
                         var newEmployeeList = [];
@@ -10128,6 +10302,31 @@ WBSTree = (function ($) {
                     //} else {
                     //    modal.find('.modal-body #project_number').val(selectedNode.ProjectNumber);
                     //}
+
+
+                    //Nivedita - Add Billing POC Details at project Level 29-12-2021
+
+                    modal.find('.modal-body #program_billing_poc1').val(selectedNode.BillingPOC);
+                    modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.BillingPOCPhone1);
+                    modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.BillingPOCPhone2);
+                    modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.BillingPOCEmail);
+                    modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.BillingPOCAddressLine1)
+                    modal.find('.modal-body #program1_billing_poc_address_line2').val(selectedNode.BillingPOCAddressLine2);
+                    modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.BillingPOCCity);
+                    modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.BillingPOCState);
+                    modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.BillingPOCPONo);
+
+                    if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
+                        modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                    }
+
+                    document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
+                    document.getElementById("program_sov_billing1").checked = selectedNode.SOVBilling ? true : false;
+                    document.getElementById("program_monthly_billing1").checked = selectedNode.MonthlyBilling ? true : false;
+                    document.getElementById("program_Lumpsum1").checked = selectedNode.Lumpsum ? true : false;
+                    document.getElementById("program_certified_payroll1").checked = selectedNode.CertifiedPayroll ? true : false;
+
+                    //---------------------------------------------------------------------------------------------------------------------------
                     $("#new_program_element_change_order").attr('disabled', 'disabled');
                     $("#edit_program_element_change_order").attr('disabled', 'disabled');
                     $("#delete_program_element").attr('disabled', 'disabled');  //Manasi 24-02-2021
@@ -10218,6 +10417,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #scope_quality_description').val('');
                     modal.find('.modal-body #labor_rate_id').val('');
                     modal.find('.modal-body #labor_rate').val('');
+                    modal.find('.modal-body #project_element_po_number').val('');
                     //luan here
 
                     modal.find('.modal-body #contract_number').val('');
@@ -11735,29 +11935,29 @@ WBSTree = (function ($) {
                 var angularHttp = wbsTree.getAngularHttp();
                 return angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
 
-                    var employeeList = wbsTree.getEmployeeList();
-                    var userList = wbsTree.getUserList();
-                    var newEmployeeList = [];
-                    for (var x = 0; x < employeeList.length; x++) {
-                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                            newEmployeeList.push(employeeList[x]);
-                            break;
-                        }
-                    }
+                    //var employeeList = wbsTree.getEmployeeList();
+                    //var userList = wbsTree.getUserList();
+                    //var newEmployeeList = [];
+                    //for (var x = 0; x < employeeList.length; x++) {
+                    //    if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                    //        newEmployeeList.push(employeeList[x]);
+                    //        break;
+                    //    }
+                    //}
 
-                    for (var x = 0; x < userList.length; x++) {
-                        for (var y = 0; y < employeeList.length; y++) {
-                            if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                newEmployeeList.push(employeeList[y]);
-                                break;
-                            }
-                        }
-                    }
-                    employeeList = newEmployeeList;
-                    //employeeList.sort();
-                    employeeList.sort(function (a, b) {
-                        return a.Name.localeCompare(b.Name);
-                    })
+                    //for (var x = 0; x < userList.length; x++) {
+                    //    for (var y = 0; y < employeeList.length; y++) {
+                    //        if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                    //            newEmployeeList.push(employeeList[y]);
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+                    //employeeList = newEmployeeList;
+                    ////employeeList.sort();
+                    //employeeList.sort(function (a, b) {
+                    //    return a.Name.localeCompare(b.Name);
+                    //})
                     $('#divProjectElememtApprovers').html('');
                     var approvers = approversData.data.result;
                     if (approvers != null && approvers.length > 0) {
@@ -11780,6 +11980,38 @@ WBSTree = (function ($) {
                                     var labelText = approvers[currentNum].Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
                                     var dbid = approvers[currentNum].Id;
+
+                                    //------------------------------Nivedita24-12-2021------------
+                                    var userList = wbsTree.getUserList();
+                                    var employeeList = wbsTree.getEmployeeList();
+                                    var newEmployeeList = [];
+                                    for (var x = 0; x < employeeList.length; x++) {
+                                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                            newEmployeeList.push(employeeList[x]);
+                                            break;
+                                        }
+                                    }
+
+                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                        var key = Object.keys(t)[0];
+                                        return s[key] == t[key]
+                                    }));
+
+                                    for (var x = 0; x < roleWiseUserList.length; x++) {
+                                        for (var y = 0; y < employeeList.length; y++) {
+                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                newEmployeeList.push(employeeList[y]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    employeeList = newEmployeeList;
+                                    employeeList.sort(function (a, b) {
+                                        return a.Name.localeCompare(b.Name);
+                                    });
+                                //--------------------------------------------------------------------------------
+
                                     if (j == 0) {
                                         append += "<div class='col-xs-6' style='padding-left: 0;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
@@ -12319,21 +12551,21 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #labor_rate').val('');
 
 
-                    // Pritesh Billing POC 
-                    modal.find('.modal-body #program_billing_poc1').val(selectedNode.BillingPOC);
-                    modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.BillingPOCPhone1);
-                    modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.BillingPOCPhone2);
-                    modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.BillingPOCEmail);
+                    //// Pritesh Billing POC 
+                    //modal.find('.modal-body #program_billing_poc1').val(selectedNode.BillingPOC);
+                    //modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.BillingPOCPhone1);
+                    //modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.BillingPOCPhone2);
+                    //modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.BillingPOCEmail);
 
                     
 
-                    //===================== Jignesh-AddAddressField-21-01-2021 =================================
-                    //modal.find('.modal-body #program_billing_poc_address1').val(selectedNode.BillingPOCAddress);
-                    modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.BillingPOCAddressLine1);
-                    modal.find('.modal-body #program1_billing_poc_address_line2').val(selectedNode.BillingPOCAddressLine2);
-                    modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.BillingPOCCity);
-                    modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.BillingPOCState);
-                    modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.BillingPOCPONo);
+                    ////===================== Jignesh-AddAddressField-21-01-2021 =================================
+                    ////modal.find('.modal-body #program_billing_poc_address1').val(selectedNode.BillingPOCAddress);
+                    //modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.BillingPOCAddressLine1);
+                    //modal.find('.modal-body #program1_billing_poc_address_line2').val(selectedNode.BillingPOCAddressLine2);
+                    //modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.BillingPOCCity);
+                    //modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.BillingPOCState);
+                    //modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.BillingPOCPONo);
 
 
                     //===================== Nivedita-Billing POC-12-11-2021 =================================
@@ -12354,19 +12586,19 @@ WBSTree = (function ($) {
                     ////----------------------------------------------------------------------------------------
 
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
-                    if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
-                        modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                    }
+                    //if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
+                    //    modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                    //}
                     
-                    document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
-                    document.getElementById("program_sov_billing1").checked = selectedNode.parent.parent.SOVBilling ? true : false;
-                    document.getElementById("program_monthly_billing1").checked = selectedNode.parent.parent.MonthlyBilling ? true : false;
-                    document.getElementById("program_Lumpsum1").checked = selectedNode.parent.parent.Lumpsum ? true : false;
-                    document.getElementById("program_certified_payroll1").checked = selectedNode.parent.parent.CertifiedPayroll ? true : false;
+                    //document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
+                    //document.getElementById("program_sov_billing1").checked = selectedNode.parent.parent.SOVBilling ? true : false;
+                    //document.getElementById("program_monthly_billing1").checked = selectedNode.parent.parent.MonthlyBilling ? true : false;
+                    //document.getElementById("program_Lumpsum1").checked = selectedNode.parent.parent.Lumpsum ? true : false;
+                    //document.getElementById("program_certified_payroll1").checked = selectedNode.parent.parent.CertifiedPayroll ? true : false;
 
 
                     //project element
-                    modal.find('.modal-body #project_element_po_number').val(selectedNode.ClientPONumber);
+                    //modal.find('.modal-body #project_element_po_number').val(selectedNode.ClientPONumber);
                     modal.find('.modal-body #project_element_amount').val(selectedNode.Amount);
                     modal.find('.modal-body #project_element_quickbookJobNumber').val(selectedNode.QuickbookJobNumber);
                     modal.find('.modal-body #project_element_locationName').val(selectedNode.LocationName);
@@ -12826,52 +13058,52 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_lob').val('');
                     //luan here
 
-                    // Pritesh Billing POC 
+                    ////// Pritesh Billing POC 
                     
-                    //modal.find('.modal-body #program_billing_poc1').val('');
-                    //modal.find('.modal-body #program_billing_poc_phone_11').val('');
-                    //modal.find('.modal-body #program_billing_poc_phone_21').val('');
-                    //modal.find('.modal-body #program_billing_poc_email1').val('');
+                    //////modal.find('.modal-body #program_billing_poc1').val('');
+                    //////modal.find('.modal-body #program_billing_poc_phone_11').val('');
+                    //////modal.find('.modal-body #program_billing_poc_phone_21').val('');
+                    //////modal.find('.modal-body #program_billing_poc_email1').val('');
 
-                    ////===================== Jignesh-AddAddressField-21-01-2021 =================================
-                    ////modal.find('.modal-body #program_billing_poc_address1').val('');
-                    //modal.find('.modal-body #program1_billing_poc_address_line1').val('');
-                    //modal.find('.modal-body #program1_billing_poc_address_line2').val('');
-                    //modal.find('.modal-body #program1_billing_poc_city').val('');
-                    //modal.find('.modal-body #program1_billing_poc_state').val('');
-                    //modal.find('.modal-body #program1_billing_poc_po_num').val('');
-                    //===========================================================================================
-                    //===============================================/Nivedita Billing POC Details 16/11/2021 ===============================================
-                    modal.find('.modal-body #program_billing_poc1').val(selectedNode.parent.BillingPOC);
-                    modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.parent.BillingPOCPhone1);
-                    modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.parent.BillingPOCPhone2);
-                    modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.parent.BillingPOCEmail);
-                    modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.parent.BillingPOCAddressLine1)
-                    modal.find('.modal-body #program1_billing_poc_address_line2').val(selectedNode.parent.BillingPOCAddressLine2);
-                    modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.parent.BillingPOCCity);
-                    modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.parent.BillingPOCState);
-                    modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.parent.BillingPOCPONo);
+                    ////////===================== Jignesh-AddAddressField-21-01-2021 =================================
+                    ////////modal.find('.modal-body #program_billing_poc_address1').val('');
+                    //////modal.find('.modal-body #program1_billing_poc_address_line1').val('');
+                    //////modal.find('.modal-body #program1_billing_poc_address_line2').val('');
+                    //////modal.find('.modal-body #program1_billing_poc_city').val('');
+                    //////modal.find('.modal-body #program1_billing_poc_state').val('');
+                    //////modal.find('.modal-body #program1_billing_poc_po_num').val('');
+                    //////===========================================================================================
+                    //////===============================================/Nivedita Billing POC Details 16/11/2021 ===============================================
+                    ////modal.find('.modal-body #program_billing_poc1').val(selectedNode.parent.BillingPOC);
+                    ////modal.find('.modal-body #program_billing_poc_phone_11').val(selectedNode.parent.BillingPOCPhone1);
+                    ////modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.parent.BillingPOCPhone2);
+                    ////modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.parent.BillingPOCEmail);
+                    ////modal.find('.modal-body #program1_billing_poc_address_line1').val(selectedNode.parent.BillingPOCAddressLine1)
+                    ////modal.find('.modal-body #program1_billing_poc_address_line2').val(selectedNode.parent.BillingPOCAddressLine2);
+                    ////modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.parent.BillingPOCCity);
+                    ////modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.parent.BillingPOCState);
+                    ////modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.parent.BillingPOCPONo);
                     
-                    if (selectedNode.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.BillingPOCSpecialInstruction != "") {
-                        modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                    }
+                    ////if (selectedNode.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.BillingPOCSpecialInstruction != "") {
+                    ////    modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                    ////}
 
-                    document.getElementById("program_tm_billing1").checked = selectedNode.parent.TMBilling ? true : false;
-                    document.getElementById("program_sov_billing1").checked = selectedNode.parent.SOVBilling ? true : false;
-                    document.getElementById("program_monthly_billing1").checked = selectedNode.parent.MonthlyBilling ? true : false;
-                    document.getElementById("program_Lumpsum1").checked = selectedNode.parent.Lumpsum ? true : false;
-                    document.getElementById("program_certified_payroll1").checked = selectedNode.parent.CertifiedPayroll ? true : false;
-                    //========================================================================================================================
-                    //// Check
-                    //document.getElementById("program_tm_billing1").checked = false;
-                    //document.getElementById("program_sov_billing1").checked = false;
-                    //document.getElementById("program_monthly_billing1").checked = false;
-                    //document.getElementById("program_Lumpsum1").checked = false;
-                    //document.getElementById("program_certified_payroll1").checked = false;
+                    ////document.getElementById("program_tm_billing1").checked = selectedNode.parent.TMBilling ? true : false;
+                    ////document.getElementById("program_sov_billing1").checked = selectedNode.parent.SOVBilling ? true : false;
+                    ////document.getElementById("program_monthly_billing1").checked = selectedNode.parent.MonthlyBilling ? true : false;
+                    ////document.getElementById("program_Lumpsum1").checked = selectedNode.parent.Lumpsum ? true : false;
+                    ////document.getElementById("program_certified_payroll1").checked = selectedNode.parent.CertifiedPayroll ? true : false;
+                    //////========================================================================================================================
+                    //////// Check
+                    //////document.getElementById("program_tm_billing1").checked = false;
+                    //////document.getElementById("program_sov_billing1").checked = false;
+                    //////document.getElementById("program_monthly_billing1").checked = false;
+                    //////document.getElementById("program_Lumpsum1").checked = false;
+                    //////document.getElementById("program_certified_payroll1").checked = false;
 
 
-                    //project element
-                    modal.find('.modal-body #project_element_po_number').val('');
+                    ////project element
+                    //modal.find('.modal-body #project_element_po_number').val('');
                     modal.find('.modal-body #project_element_number').val('');
                     modal.find('.modal-body #project_element_amount').val('');
                     modal.find('.modal-body #project_element_quickbookJobNumber').val('');

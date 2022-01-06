@@ -35,7 +35,6 @@ namespace WebAPI.Models
         public int ProjectTypeID { get; set; }
         public int ProjectClassID { get; set; }
         public string ProjectNumber { get; set; }
-        public string ProgramElementNumber { get; set; }
         public string ContractNumber { get; set; }
         public string ProjectStartDate { get; set; }
         public DateTime ProjectNTPDate { get; set; }   //Manasi 23-10-2020
@@ -62,6 +61,24 @@ namespace WebAPI.Models
         public string CostDescription { get; set; }
         public string ScheduleDescription { get; set; }
         public string ScopeQualityDescription { get; set; }
+        //====== Nivedita--30-12-2021 =======
+        public string BillingPOC { get; set; }
+        public string BillingPOCPhone1 { get; set; }
+        public string BillingPOCPhone2 { get; set; }
+        public string BillingPOCEmail { get; set; }
+        public string BillingPOCAddressLine1 { get; set; }
+        public string BillingPOCAddressLine2 { get; set; }
+        public string BillingPOCCity { get; set; }
+        public string BillingPOCState { get; set; }
+        public string BillingPOCPONo { get; set; }
+        public string BillingPOCSpecialInstruction { get; set; }
+        public byte TMBilling { get; set; }
+        public byte SOVBilling { get; set; }
+        public byte MonthlyBilling { get; set; }
+        public byte CertifiedPayroll { get; set; }
+        public byte Lumpsum { get; set; }
+        public string ClientPONumber { get; set; }
+        //=================================================
 
         [ForeignKey("ProjectTypeID")]
         public virtual ProjectType ProjectType { get; set; }
@@ -260,12 +277,6 @@ namespace WebAPI.Models
                         }
                         pgmElt.ProjectNumber = maxProjectNumber.ToString();
 
-
-                        string yyyyFormat = pgmElt.ProjectStartDate.ToString().Split('/')[2].ToString();
-                        string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
-
-                        pgmElt.ProgramElementNumber = pgmElt.ProjectClassID.ToString("D2") + yyFormat + maxProjectNumber.ToString();
-
                         ProjectNumber projectNumber = new ProjectNumber();
                         projectNumber.projectNumber = pgmElt.ProjectNumber;
                         projectNumber.projectElementNumber = "0";
@@ -324,7 +335,7 @@ namespace WebAPI.Models
                             ctx.SaveChanges();
                         }
 
-                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber + "," +pm.ProgramElementNumber;  // Jignesh-19-03-2021
+                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber;  // Jignesh-19-03-2021
                     }
                     else
                     {
@@ -380,7 +391,7 @@ namespace WebAPI.Models
 
                                 pgmElt.ProjectClassID = program_element.ProjectClassID;
                                 pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                                pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                                pgmElt.ProjectNumber = program_element.ProjectNumber;
                                 pgmElt.ContractNumber = program_element.ContractNumber;
 
 								pgmElt.ClientProjectManager = program_element.ClientProjectManager;
@@ -394,10 +405,8 @@ namespace WebAPI.Models
                                 pgmElt.VicePresidentID = program_element.VicePresidentID;
                                 pgmElt.FinancialAnalystID = program_element.FinancialAnalystID;
                                 pgmElt.CapitalProjectAssistantID = program_element.CapitalProjectAssistantID;
-                                string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
-                                string yyFormat = yyyyFormat.Substring(yyyyFormat.Length-2);
+
                                 pgmElt.ProjectStartDate = program_element.ProjectStartDate;
-                                pgmElt.ProgramElementNumber = program_element.ProjectClassID.ToString("D2") + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                                 //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
                                 pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture); // Jignesh 20-11-2020
 
@@ -429,7 +438,24 @@ namespace WebAPI.Models
                                 pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                                 pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
 
-                                
+                                //====== Nivedita--30-12-2021 =======
+                                pgmElt.BillingPOC = program_element.BillingPOC;
+                                pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
+                                pgmElt.BillingPOCPhone2 = program_element.BillingPOCPhone2;
+                                pgmElt.BillingPOCAddressLine1 = program_element.BillingPOCAddressLine1;
+                                pgmElt.BillingPOCAddressLine2 = program_element.BillingPOCAddressLine2;
+                                pgmElt.BillingPOCCity = program_element.BillingPOCCity;
+                                pgmElt.BillingPOCState = program_element.BillingPOCState;
+                                pgmElt.BillingPOCPONo = program_element.BillingPOCPONo;
+                                pgmElt.BillingPOCEmail = program_element.BillingPOCEmail;
+                                pgmElt.BillingPOCSpecialInstruction = program_element.BillingPOCSpecialInstruction;
+                                pgmElt.TMBilling = program_element.TMBilling;
+                                pgmElt.SOVBilling = program_element.SOVBilling;
+                                pgmElt.MonthlyBilling = program_element.MonthlyBilling;
+                                pgmElt.Lumpsum = program_element.Lumpsum;
+                                pgmElt.ClientPONumber = program_element.ClientPONumber;
+                                //=================================================
+
                                 ctx.SaveChanges();
                                 
                                 ctx.ProjectApproversDetails.RemoveRange(ApproversDetails);
@@ -458,7 +484,7 @@ namespace WebAPI.Models
 
                             pgmElt.ProjectClassID = program_element.ProjectClassID;
                             pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                            pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                            pgmElt.ProjectNumber = program_element.ProjectNumber;
                             pgmElt.ContractNumber = program_element.ContractNumber;
 
                             pgmElt.ClientID = program_element.ClientID;
@@ -488,10 +514,23 @@ namespace WebAPI.Models
                             pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                             pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
 
-                            string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
-                            string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
-
-                            pgmElt.ProgramElementNumber = program_element.ProjectClassID + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                            //====== Nivedita--30-12-2021 =======
+                            pgmElt.BillingPOC = program_element.BillingPOC;
+                            pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
+                            pgmElt.BillingPOCPhone2 = program_element.BillingPOCPhone2;
+                            pgmElt.BillingPOCAddressLine1 = program_element.BillingPOCAddressLine1;
+                            pgmElt.BillingPOCAddressLine2 = program_element.BillingPOCAddressLine2;
+                            pgmElt.BillingPOCCity = program_element.BillingPOCCity;
+                            pgmElt.BillingPOCState = program_element.BillingPOCState;
+                            pgmElt.BillingPOCPONo = program_element.BillingPOCPONo;
+                            pgmElt.BillingPOCEmail = program_element.BillingPOCEmail;
+                            pgmElt.BillingPOCSpecialInstruction = program_element.BillingPOCSpecialInstruction;
+                            pgmElt.TMBilling = program_element.TMBilling;
+                            pgmElt.SOVBilling = program_element.SOVBilling;
+                            pgmElt.MonthlyBilling = program_element.MonthlyBilling;
+                            pgmElt.Lumpsum = program_element.Lumpsum;
+                            pgmElt.ClientPONumber = program_element.ClientPONumber;
+                            //=================================================
                             ctx.SaveChanges();
                             result = "Success";
                         }

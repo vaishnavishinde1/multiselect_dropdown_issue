@@ -467,8 +467,6 @@ namespace WebAPI.Models
         [DataMember]
         public String ProgramElementName;
         [DataMember]
-        public string ProgramElementNumber;
-        [DataMember]
         public String ProgramID;
         [DataMember]
         public String ProgramElementManager;
@@ -541,6 +539,7 @@ namespace WebAPI.Models
         public String ProjectPODate;
         [DataMember]
         public String ProjectPEndDate;
+
         //================================
 
         [DataMember]
@@ -558,6 +557,44 @@ namespace WebAPI.Models
         [DataMember]
         public String ProjectValueTotal;
 
+        [DataMember]
+        public string BillingPOC;
+        [DataMember]
+        public string BillingPOCPhone1;
+        [DataMember]
+        public string BillingPOCPhone2;
+        [DataMember]
+        public string BillingPOCAddress;
+       
+        [DataMember]
+        public string BillingPOCAddressLine1;
+        [DataMember]
+        public string BillingPOCAddressLine2;
+        [DataMember]
+        public string BillingPOCCity;
+        [DataMember]
+        public string BillingPOCState;
+        [DataMember]
+        public string BillingPOCPONo;
+       
+        [DataMember]
+        public string BillingPOCEmail;
+        [DataMember]
+        public string BillingPOCSpecialInstruction;
+        [DataMember]
+        public byte TMBilling;
+        [DataMember]
+        public byte SOVBilling;
+        [DataMember]
+        public byte MonthlyBilling;
+        [DataMember]
+        public byte CertifiedPayroll;
+        [DataMember]
+        public byte Lumpsum;
+        //=================================================
+        //Nivedita 04-01-2021
+        [DataMember]
+        public String ClientPONumber;
 
         [DataMember]
         public List<ProjectWBSTree> children = new List<ProjectWBSTree>();
@@ -576,7 +613,6 @@ namespace WebAPI.Models
             name = wbspe.ProgramElementName;//Drew
             ProgramElementName = wbspe.ProgramElementName;
             ClientProjectManager = wbspe.ClientProjectManager;
-            ProgramElementNumber = wbspe.ProgramElementNumber;
 
             // Jignesh-25-02-2021
             ProjectPStartDate = (wbspe.ProjectPStartDate != null ? wbspe.ProjectPStartDate.Value.ToString("yyyy-MM-dd") : "");
@@ -589,6 +625,25 @@ namespace WebAPI.Models
             ForecastStartDate = (wbspe.ForecastStartDate != null ? wbspe.ForecastStartDate.Value.ToString("yyyy-MM-dd") : "");
             ForecastEndDate = (wbspe.ForecastEndDate != null ? wbspe.ForecastEndDate.Value.ToString("yyyy-MM-dd") : "");
             CurrentCost = wbspe.CurrentCost; ForecastCost = wbspe.ForecastCost;
+            BillingPOC = wbspe.BillingPOC;
+            BillingPOCPhone1 = wbspe.BillingPOCPhone1;
+            BillingPOCPhone2 = wbspe.BillingPOCPhone2;
+            
+            BillingPOCAddressLine1 = wbspe.BillingPOCAddressLine1;
+            BillingPOCAddressLine2 = wbspe.BillingPOCAddressLine2;
+            BillingPOCCity = wbspe.BillingPOCCity;
+            BillingPOCState = wbspe.BillingPOCState;
+            BillingPOCPONo = wbspe.BillingPOCPONo;
+            
+            BillingPOCEmail = wbspe.BillingPOCEmail;
+            BillingPOCSpecialInstruction = wbspe.BillingPOCSpecialInstruction;
+            TMBilling = wbspe.TMBilling;
+            SOVBilling = wbspe.SOVBilling;
+            MonthlyBilling = wbspe.MonthlyBilling;
+            CertifiedPayroll = wbspe.CertifiedPayroll;
+            Lumpsum = wbspe.Lumpsum;
+
+            ClientPONumber = wbspe.ClientPONumber;
 
             // Jignesh-21-10-2021
             List<ProjectAccessControl> projectAccessControlsList = ProjectAccessControl.GetContractModificationList(uId);

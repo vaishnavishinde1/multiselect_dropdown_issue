@@ -99,9 +99,7 @@ namespace WebAPI.Models
         public byte CertifiedPayroll { get; set; }
         public byte Lumpsum { get; set; }
         public bool IsDeleted { get; set; }
-
         public DateTime? DeletedDate { get; set; }
-
         public string DeletedBy { get; set; }
 
         [ForeignKey("ProjectTypeID")]

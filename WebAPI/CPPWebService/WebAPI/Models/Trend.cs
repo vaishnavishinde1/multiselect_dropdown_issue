@@ -762,8 +762,14 @@ namespace WebAPI.Models
 
                         //}
 
+                        
                         nextApproverEmployeeID = elementApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
 
+                        if (nextApproverEmployeeID == 0)
+                        {
+                            string nextApproverName = approvalMatrixList.Where(a => a.Id == lowestApprovalMatrixId).Select(a => a.Role).FirstOrDefault();
+                            return nextApproverName + " set to TBD. \n Please update the details in the Element Setup page and submit the trend again.";
+                        }
 
                         //if (lowestApproverRole == "Project Manager")
                         //    nextApproverEmployeeID = pr.ProjectManagerID;
@@ -796,6 +802,7 @@ namespace WebAPI.Models
 
                         //Get associated employee
                         User requestingUser = ctx.User.First(p => p.UserID == trend.UserID);  //Get associated requesting user
+                        
                         User targetedUser = ctx.User.First(p => p.EmployeeID == nextApproverEmployeeID);  //Get associated targeted user
                         Employee targetedEmployee = ctx.Employee.First(p => p.ID == nextApproverEmployeeID);
 

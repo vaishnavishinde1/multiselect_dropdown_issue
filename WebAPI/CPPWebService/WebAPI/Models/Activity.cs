@@ -5616,7 +5616,7 @@ namespace WebAPI.Models
                     {
                         id = Convert.ToInt16(ProjectID);
                     }
-                    
+
                     if (TrendNumber == "2000") //Forecast not stored in the database
                     {
                         //------------Manasi 29-07-2020-----------------------------
@@ -5626,7 +5626,7 @@ namespace WebAPI.Models
                             aID1 = Convert.ToInt16(ActivityID);
                         if (PhaseCode != null && PhaseCode != "null")
                             pID1 = Convert.ToInt16(PhaseCode);
-                        
+
                         MatchedActivityList = ctx.Database.SqlQuery<Activity>("call get_forecast_activities_ForRollUp(@ProjectID)",
                                                  new MySql.Data.MySqlClient.MySqlParameter("@ProjectID", ProjectID)).ToList();
 
@@ -5638,9 +5638,9 @@ namespace WebAPI.Models
                         {
                             MatchedActivityList = MatchedActivityList.Where(a => a.PhaseCode == pID1).ToList();
                         }
-                        
+
                         MatchedActivityList = processCostForRollUp(MatchedActivityList, TrendNumber, ProjectID, PhaseCode, BudgetCategory, BudgetSubCategory);
-                        
+
                     }
 
                     else if (TrendNumber == "3000")
@@ -5697,7 +5697,7 @@ namespace WebAPI.Models
                                 MatchedActivityList = MatchedActivityList.Where(a => a.TrendNumber == "1000").ToList();
 
                             MatchedActivityList = processCost(MatchedActivityList, TrendNumber, ProjectID, PhaseCode, BudgetCategory, BudgetSubCategory);
-                            
+
                         }
                         else
                         if (ActivityID != "null")

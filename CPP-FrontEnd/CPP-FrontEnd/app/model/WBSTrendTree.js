@@ -271,21 +271,22 @@ WBSTrendTree = (function ($) {
                 });
 
                 //---------------------------------------- Swapnil 30/11/2020 ---------------------------------------------
-                //var xx = g.setNode(states.result.CurrentProjectList.level, {
-                //    metadata: states.result.CurrentProjectList,
-                //    label: "Current",
-                //    class: "CurrentProject",
-                //    shape: "iconCurrent",
-                //    labelStyle: "font-size:14px;font-weight:bold;"
-                //});
-
+                //Nivedita22-12-2021
                 var xx = g.setNode(states.result.CurrentProjectList.level, {
                     metadata: states.result.CurrentProjectList,
-                    label: "Budget vs Actual",
+                    label: "Current",
                     class: "CurrentProject",
                     shape: "iconCurrent",
                     labelStyle: "font-size:14px;font-weight:bold;"
                 });
+
+                //var xx = g.setNode(states.result.CurrentProjectList.level, {
+                //    metadata: states.result.CurrentProjectList,
+                //    label: "Budget vs Actual",
+                //    class: "CurrentProject",
+                //    shape: "iconCurrent",
+                //    labelStyle: "font-size:14px;font-weight:bold;"
+                //});
                 //----------------------------------------------------------------------------------------------------
 
                 var yy = g.setNode(states.result.ForecastProjectList.level, {
@@ -605,8 +606,10 @@ WBSTrendTree = (function ($) {
                     }
                     else if (node.metadata.level == "CurrentProject") {
                         // window.location.href = "#/app/current-project/" + node.metadata.ProjectID + "/" + node.metadata.OrganizationID + "/" + "week";
-                        window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/1000/" + node.metadata.OrganizationID;
-                    } else if (node.metadata.level == "ForecastProject") {
+                        //window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/1000/" + node.metadata.OrganizationID;
+                        //Nivedita22-12-2021
+                        window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/3000/" + node.metadata.OrganizationID;
+                    }  else if (node.metadata.level == "ForecastProject") {
                         // window.location.href = "#/app/future-project/" + node.metadata.ProjectID + "/" + node.metadata.OrganizationID + "/" + "week";
                         window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/2000/" + node.metadata.OrganizationID;
                     }

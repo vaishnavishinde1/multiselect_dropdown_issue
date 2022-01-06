@@ -162,17 +162,43 @@ namespace WebAPI.Models
                     query = "INSERT INTO user_roles VALUES";
                     query += " (";
                     query += "@Role,";
-                    for (int i = 0; i < AccessControlList.Length; i++)
-                        strAccessControlList +=  AccessControlList[i] + " ," ;
-
-                    strAccessControlList = strAccessControlList.Remove(strAccessControlList.Length - 1, 1);
-                    query += "@AccessControlList)";
+                    query += "@ViewProgram,";
+                    query += "@ModifyProgram,";
+                    query += "@ViewProgramElement,";
+                    query += "@ModifyProgramElement,";
+                    query += "@ViewProject,";
+                    query += "@ModifyProject,";
+                    query += "@ViewTrend,";
+                    query += "@ModifyTrend,";
+                    query += "@ViewActivity,";
+                    query += "@ModifyActivity,";
+                    query += "@MemberManagement,";
+                    query += "@RoleManagement,";
+                    query += "@LookupsManagement,";
+                    query += "@ViewReports,";
+                    query += "@ViewCharts,";
+                    query += "@ViewLabor)";
 
                     logger.Debug(string.Format("Query to insert new role \n {0}", query));
 
                     command = new MySqlCommand(query, conn);
                     command.Parameters.AddWithValue("@Role", Role);
-                    command.Parameters.AddWithValue("@AccessControlList", strAccessControlList);
+                    command.Parameters.AddWithValue("@ViewProgram", Convert.ToBoolean(Convert.ToInt32(AccessControlList[0].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProgram", Convert.ToBoolean(Convert.ToInt32(AccessControlList[1].ToString())));
+                    command.Parameters.AddWithValue("@ViewProgramElement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[2].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProgramElement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[3].ToString())));
+                    command.Parameters.AddWithValue("@ViewProject", Convert.ToBoolean(Convert.ToInt32(AccessControlList[4].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProject", Convert.ToBoolean(Convert.ToInt32(AccessControlList[5].ToString())));
+                    command.Parameters.AddWithValue("@ViewTrend", Convert.ToBoolean(Convert.ToInt32(AccessControlList[6].ToString())));
+                    command.Parameters.AddWithValue("@ModifyTrend", Convert.ToBoolean(Convert.ToInt32(AccessControlList[7].ToString())));
+                    command.Parameters.AddWithValue("@ViewActivity", Convert.ToBoolean(Convert.ToInt32(AccessControlList[8].ToString())));
+                    command.Parameters.AddWithValue("@ModifyActivity", Convert.ToBoolean(Convert.ToInt32(AccessControlList[9].ToString())));
+                    command.Parameters.AddWithValue("@MemberManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[10].ToString())));
+                    command.Parameters.AddWithValue("@RoleManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[11].ToString())));
+                    command.Parameters.AddWithValue("@LookupsManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[12].ToString())));
+                    command.Parameters.AddWithValue("@ViewReports", Convert.ToBoolean(Convert.ToInt32(AccessControlList[13].ToString())));
+                    command.Parameters.AddWithValue("@ViewCharts", Convert.ToBoolean(Convert.ToInt32(AccessControlList[14].ToString())));
+                    command.Parameters.AddWithValue("@ViewLabor", Convert.ToBoolean(Convert.ToInt32(AccessControlList[15].ToString())));
                     command.ExecuteNonQuery();
 
                     register_result += Role + " has been created successfully.\n";
@@ -251,44 +277,44 @@ namespace WebAPI.Models
                     conn.Open();
                     query = "UPDATE user_roles Set";
                     //query += " Role = " + Role + ",";
-                    query += " ViewProgram = " + AccessControlList[0] + ",";
-                    query += " ModifyProgram = " + AccessControlList[1] + ",";
-                    query += " ViewProgramElement = " + AccessControlList[2] + ",";
+                    query += " ViewProgram = @ViewProgram,";// + AccessControlList[0] + ",";
+                    query += " ModifyProgram = @ModifyProgram,";// + AccessControlList[1] + ",";
+                    query += " ViewProgramElement = @ViewProgramElement,";// + AccessControlList[2] + ",";
 
-                    query += " ModifyProgramElement = " + AccessControlList[3] + ",";
-                    query += " ViewProject = " + AccessControlList[4] + ",";
-                    query += " ModifyProject = " + AccessControlList[5] + ",";
+                    query += " ModifyProgramElement = @ModifyProgramElement,";// + AccessControlList[3] + ",";
+                    query += " ViewProject = @ViewProject,";// + AccessControlList[4] + ",";
+                    query += " ModifyProject = @ModifyProject,";// + AccessControlList[5] + ",";
 
-                    query += " ViewTrend = " + AccessControlList[6] + ",";
-                    query += " ModifyTrend = " + AccessControlList[7] + ",";
-                    query += " ViewActivity = " + AccessControlList[8] + ",";
+                    query += " ViewTrend = @ViewTrend,";// + AccessControlList[6] + ",";
+                    query += " ModifyTrend = @ModifyTrend,";// + AccessControlList[7] + ",";
+                    query += " ViewActivity = @ViewActivity,";// + AccessControlList[8] + ",";
 
-                    query += " ModifyActivity = " + AccessControlList[9] + ",";
-                    query += " MemberManagement = " + AccessControlList[10] + ",";
-                    query += " RoleManagement = " + AccessControlList[11] + ",";
+                    query += " ModifyActivity = @ModifyActivity,";// + AccessControlList[9] + ",";
+                    query += " MemberManagement = @MemberManagement,";// + AccessControlList[10] + ",";
+                    query += " RoleManagement = @RoleManagement,";// + AccessControlList[11] + ",";
 
-                    query += " LookupsManagement = " + AccessControlList[12] + ",";
-                    query += " ViewReports = " + AccessControlList[13] + ",";
-                    query += " ViewCharts = " + AccessControlList[14] + ",";
-                    query += " ViewLabor = " + AccessControlList[15];
+                    query += " LookupsManagement = @LookupsManagement,";// + AccessControlList[12] + ",";
+                    query += " ViewReports = @ViewReports,";// + AccessControlList[13] + ",";
+                    query += " ViewCharts = @ViewCharts,";// + AccessControlList[14] + ",";
+                    query += " ViewLabor = @ViewLabor";// + AccessControlList[15];
                     query += " where role = @Role";
                     command = new MySqlCommand(query, conn);
-                    command.Parameters.AddWithValue("@ViewProgram", AccessControlList[0]);
-                    command.Parameters.AddWithValue("@ModifyProgram", AccessControlList[1]);
-                    command.Parameters.AddWithValue("@ViewProgramElement", AccessControlList[2]);
-                    command.Parameters.AddWithValue("@ModifyProgramElement", AccessControlList[3]);
-                    command.Parameters.AddWithValue("@ViewProject", AccessControlList[4]);
-                    command.Parameters.AddWithValue("@ModifyProject", AccessControlList[5]);
-                    command.Parameters.AddWithValue("@ViewTrend", AccessControlList[6]);
-                    command.Parameters.AddWithValue("@ModifyTrend", AccessControlList[7]);
-                    command.Parameters.AddWithValue("@ViewActivity", AccessControlList[8]);
-                    command.Parameters.AddWithValue("@ModifyActivity", AccessControlList[9]);
-                    command.Parameters.AddWithValue("@MemberManagement", AccessControlList[10]);
-                    command.Parameters.AddWithValue("@RoleManagement", AccessControlList[11]);
-                    command.Parameters.AddWithValue("@LookupsManagement", AccessControlList[12]);
-                    command.Parameters.AddWithValue("@ViewReports", AccessControlList[13]);
-                    command.Parameters.AddWithValue("@ViewCharts", AccessControlList[14]);
-                    command.Parameters.AddWithValue("@ViewLabor", AccessControlList[15]);
+                    command.Parameters.AddWithValue("@ViewProgram", Convert.ToBoolean(Convert.ToInt32(AccessControlList[0].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProgram", Convert.ToBoolean(Convert.ToInt32(AccessControlList[1].ToString())));
+                    command.Parameters.AddWithValue("@ViewProgramElement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[2].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProgramElement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[3].ToString())));
+                    command.Parameters.AddWithValue("@ViewProject", Convert.ToBoolean(Convert.ToInt32(AccessControlList[4].ToString())));
+                    command.Parameters.AddWithValue("@ModifyProject", Convert.ToBoolean(Convert.ToInt32(AccessControlList[5].ToString())));
+                    command.Parameters.AddWithValue("@ViewTrend", Convert.ToBoolean(Convert.ToInt32(AccessControlList[6].ToString())));
+                    command.Parameters.AddWithValue("@ModifyTrend", Convert.ToBoolean(Convert.ToInt32(AccessControlList[7].ToString())));
+                    command.Parameters.AddWithValue("@ViewActivity", Convert.ToBoolean(Convert.ToInt32(AccessControlList[8].ToString())));
+                    command.Parameters.AddWithValue("@ModifyActivity", Convert.ToBoolean(Convert.ToInt32(AccessControlList[9].ToString())));
+                    command.Parameters.AddWithValue("@MemberManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[10].ToString())));
+                    command.Parameters.AddWithValue("@RoleManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[11].ToString())));
+                    command.Parameters.AddWithValue("@LookupsManagement", Convert.ToBoolean(Convert.ToInt32(AccessControlList[12].ToString())));
+                    command.Parameters.AddWithValue("@ViewReports", Convert.ToBoolean(Convert.ToInt32(AccessControlList[13].ToString())));
+                    command.Parameters.AddWithValue("@ViewCharts", Convert.ToBoolean(Convert.ToInt32(AccessControlList[14].ToString())));
+                    command.Parameters.AddWithValue("@ViewLabor", Convert.ToBoolean(Convert.ToInt32(AccessControlList[15].ToString())));
                     command.Parameters.AddWithValue("@Role", Role);
                     command.ExecuteNonQuery();
 

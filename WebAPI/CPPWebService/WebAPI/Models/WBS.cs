@@ -269,6 +269,39 @@ namespace WebAPI.Models
         public String CurrentCost;
         [DataMember]
         public String ForecastCost;
+
+        //====== Nivedita-30-12-2021 =======
+        [DataMember]
+        public string BillingPOC;
+        [DataMember]
+        public string BillingPOCPhone1;
+        [DataMember]
+        public string BillingPOCPhone2;
+        [DataMember]
+        public string BillingPOCAddressLine1;
+        [DataMember]
+        public string BillingPOCAddressLine2;
+        [DataMember]
+        public string BillingPOCCity;
+        [DataMember]
+        public string BillingPOCState;
+        [DataMember]
+        public string BillingPOCPONo;
+        [DataMember]
+        public string BillingPOCEmail;
+        [DataMember]
+        public string BillingPOCSpecialInstruction;
+        [DataMember]
+        public byte TMBilling;
+        [DataMember]
+        public byte SOVBilling;
+        [DataMember]
+        public byte MonthlyBilling;
+        [DataMember]
+        public byte Lumpsum;
+
+        //=================================================
+
         [DataMember]
         public String level = "ProgramElement";
 
@@ -286,6 +319,23 @@ namespace WebAPI.Models
             ForecastStartDate = (wbspe.ForecastStartDate != null ? wbspe.ForecastStartDate.Value.ToString("yyyy-MM-dd") : "");
             ForecastEndDate = (wbspe.ForecastEndDate != null ? wbspe.ForecastEndDate.Value.ToString("yyyy-MM-dd") : "");
             CurrentCost = wbspe.CurrentCost; ForecastCost = wbspe.ForecastCost; children = prj;
+
+            //====== Nivedita-30-12-2021 =======
+            BillingPOC = wbspe.BillingPOC;
+            BillingPOCPhone1 = wbspe.BillingPOCPhone1;
+            BillingPOCPhone2 = wbspe.BillingPOCPhone2;
+            BillingPOCEmail = wbspe.BillingPOCEmail;
+            BillingPOCAddressLine1 = wbspe.BillingPOCAddressLine1;
+            BillingPOCAddressLine2 = wbspe.BillingPOCAddressLine2;
+            BillingPOCCity = wbspe.BillingPOCCity;
+            BillingPOCState = wbspe.BillingPOCState;
+            BillingPOCPONo = wbspe.BillingPOCPONo;
+            BillingPOCSpecialInstruction = wbspe.BillingPOCSpecialInstruction;
+            TMBilling = wbspe.TMBilling;
+            SOVBilling = wbspe.SOVBilling;
+            MonthlyBilling = wbspe.MonthlyBilling;
+            Lumpsum = wbspe.Lumpsum;
+            //=================================================
         }
     }
     [DataContract]
