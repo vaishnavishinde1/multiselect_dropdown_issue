@@ -293,6 +293,12 @@
                             {{filterProject.ProjectName}}
                         </option>
                     </select>
+                    <!-- <select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
+                         <option value="">Select Managing Department</option>
+                         <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
+                             {{filterDepartment.ProjectClassName}}
+                         </option>
+                     </select>-->
                 </div>
             </div>
             <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
@@ -1896,19 +1902,29 @@
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr class="table-background">
                                                 <td style="width: 20px; padding-left:5px;"></td>
-
+                                                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Number (#)
+                                                </td>
                                                 <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
                                                     style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
                                                     Title
                                                 </td>
-                                                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                                                    Document Name
-                                                </td>
+
 
                                                 <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
                                                     style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
                                                     Change Order Type
+                                                </td>
+
+                                                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Value
+                                                </td>
+
+                                                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Schedule Impact
                                                 </td>
 
                                                 <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
@@ -2355,7 +2371,7 @@
                                     <input type="text" class="form-control" id="project_element_po_number">
                                 </div>-->
                                 <div class="col-xs-6" style="padding-left: 0; padding-right: 0;">
-                                    <label for="program_element_class" class="control-label _bold">Amount</label>
+                                    <label for="program_element_class" class="control-label _bold">Amount1</label>
                                     <input type="text" class="form-control" id="project_element_amount" data-type="currency">
                                 </div>
                             </div>
@@ -5233,11 +5249,16 @@
         displayMap = !displayMap;
         if (displayMap) {
             $('#mindmap').show();
+           // $('#selectProject').show();
             $('#wbsGridView').hide();
+            // $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             $('#mindmap').hide();
+           // $('#selectProject').hide();
             $('#wbsGridView').show();
+            //  $('#selectManagingDepartment').show();
+
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }
         x.classList.toggle("fa-sitemap");

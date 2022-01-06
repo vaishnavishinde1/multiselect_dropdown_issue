@@ -2731,21 +2731,22 @@ WBSTree = (function ($) {
                             var changeOrderType = singeChangeOrder.ModificationTypeId == 1 ? 'Value' :
                                 singeChangeOrder.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact'
 
+                            var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             $('#program_element_change_order_table_id').append(
                                 '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                                 ' <td style="width: 20px">' +
                                 '<input id=rbCo' + singeChangeOrder.ChangeOrderID + ' type="radio" name="rbChangeOrder" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeChangeOrder.DocumentID + '" />' +
                                 '</td >' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
+                                '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
                                 '</td >' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
+                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges
-                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
-                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderAmount + '</td>' +
-                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderDate + '</td>' +
-                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderScheduleChange + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderAmount + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 '<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.ChangeOrderID + '</span></td>' +
                                 '</tr>'
@@ -4689,7 +4690,7 @@ WBSTree = (function ($) {
                     selectedNode.employeeAllowedList = $('#ProjectModal').find('.modal-body #emp_class').val();
                     console.log("Employee vIsibility==>");
                     console.log(selectedNode.employeeAllowedList);
-                   
+
 
 
                     //-----------------------------------------------------------------------------------------------------------------
@@ -4909,7 +4910,7 @@ WBSTree = (function ($) {
                         return;
                     }
                     if (!selectedNode.ProjectClassID) {	//luan eats
-                        dhtmlx.alert('Services is a required field.'); 
+                        dhtmlx.alert('Services is a required field.');
                         return;
                     }
                     console.log(selectedNode.CostOverheadTypeID, !selectedNode.CostOverheadTypeID);
@@ -5045,7 +5046,7 @@ WBSTree = (function ($) {
                         "ProjectTypeID": _selectedProgramElement.ProjectTypeID,
                         //"ProjectClassID": _selectedProgramElement.ProjectClassID,
                         "ProjectClassID": selectedNode.ProjectClassID,   //Jignesh 02-12-2020
-                       // "ProjectClassID": selectedNode.ServiceClassID,
+                        // "ProjectClassID": selectedNode.ServiceClassID,
                         "LocationID": _selectedProgramElement.LocationID,
                         "LineOfBusinessID": selectedNode.LineOfBusinessID,
                         "ClientID": _selectedProgramElement.ClientID,
@@ -5541,7 +5542,7 @@ WBSTree = (function ($) {
                         //luan here
                         "ProjectTypeID": _selectedProgramElement.ProjectTypeID,
                         "ProjectClassID": selectedNode.ProjectClassID,
-                       //"ProjectClassID": selectedNode.ServiceClassID,
+                        //"ProjectClassID": selectedNode.ServiceClassID,
                         "LocationID": selectedNode.LocationID,
 
                         //------------------------ Swapnil 03-09-2020 ----------------------------------------------------
@@ -6888,7 +6889,7 @@ WBSTree = (function ($) {
                         "ChangeOrderNumber": updatedChangeOrder.ChangeOrderNumber,
                         "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
-                        "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                        "ProgramElementID": selectedNode.ProgramElementID,
                         "OrderType": updatedChangeOrder.OrderType,
                         "OrderDate": updatedChangeOrder.OrderDate,
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -6925,7 +6926,8 @@ WBSTree = (function ($) {
 
                         $('#ProgramElementChangeOrderModal').modal('hide');
                         $("#ProgramElementModal").css({ "opacity": "1" });
-                        populateProgramElementChangeOrderTable(wbsTree.getSelectedProgramElementID());
+                        debugger;
+                        populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
 
                         g_selectedProgramElementChangeOrder = null; 	//Manasi
                         //$('#uploadBtnProgramelmtCOspinRow').hide()     //Manasi 20-08-2020
@@ -6958,7 +6960,7 @@ WBSTree = (function ($) {
                         "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
                         "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
-                        "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                        "ProgramElementID": selectedNode.ProgramElementID,
                         "OrderType": newChangeOrder.OrderType,
                         "OrderDate": newChangeOrder.OrderDate, //.replace(/\//g, ""),
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7045,7 +7047,8 @@ WBSTree = (function ($) {
                                     var angularHttp = wbsTree.getAngularHttp();
                                     angularHttp(request).then(function success(d) {
                                         console.log(d);
-                                        populateProgramElementChangeOrderTable(wbsTree.getSelectedProgramElementID());  //Manasi
+                                        debugger;
+                                        populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);  //Manasi
                                         $('#program_element_change_order_file_name').empty();
 
                                         document.getElementById("fileUploadProgramElementChangeOrderModal").value = "";
@@ -7071,7 +7074,8 @@ WBSTree = (function ($) {
                             }
                             $('#ProgramElementChangeOrderModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
-                            populateProgramElementChangeOrderTable(wbsTree.getSelectedProgramElementID());
+                            debugger;
+                            populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
 
                             g_selectedProgramElementChangeOrder = null; 	//Manasi
                             //  $('#program_element_change_order_file_name').empty(); // manasi 7 jul 2020
@@ -7249,7 +7253,8 @@ WBSTree = (function ($) {
                                     $('#ProgramElementChangeOrderModal').modal('hide');
                                     $("#ProgramElementModal").css({ "opacity": "1" });
                                 }
-                                populateProgramElementChangeOrderTable(wbsTree.getSelectedProgramElementID());
+                                debugger;
+                                populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
 
                             });
                         g_selectedProgramElementChangeOrder = null; 	//Manasi
@@ -7401,7 +7406,7 @@ WBSTree = (function ($) {
                 else if (nodeData.level == "ProgramElement") {
                     window.location.href = "#/app/view-gantt-Project/" + nodeData.ProgramElementID + "/0/" + $("#selectOrg").val();
                 }
-                
+
             });
             $('#edit_program_element_change_order').unbind().on('click', function (event) {
                 $('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 
@@ -7428,7 +7433,7 @@ WBSTree = (function ($) {
 
                 $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
-               // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+                // $("#edit_program_element_change_order").attr('disabled', 'disabled');
             });
 
             //Manasi
@@ -7589,7 +7594,7 @@ WBSTree = (function ($) {
                     var clientList = wbsTree.getClientList();
                     // clientDropDown.empty();
 
-                    if(wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role === "Admin") {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -8484,7 +8489,7 @@ WBSTree = (function ($) {
                     byteArray = new Uint8Array(byteNumbers);
 
                     saveByteArray(byteArray, d.fileName);
-                    
+
                     //$('#ExportToMPP').prop('disabled', false);
                     //document.getElementById("loading").style.display = "none";
                     dhtmlx.alert("File downloaded successfully.");
@@ -8538,7 +8543,7 @@ WBSTree = (function ($) {
                     byteArray = new Uint8Array(byteNumbers);
 
                     saveByteArray(byteArray, d.fileName);
-                    
+
                     //$('#ExportToMPP').prop('disabled', false);
                     //document.getElementById("loading").style.display = "none";
                     dhtmlx.alert("File downloaded successfully.");
@@ -8702,7 +8707,7 @@ WBSTree = (function ($) {
                     byteArray = new Uint8Array(byteNumbers);
 
                     saveByteArray(byteArray, d.fileName);
-                    
+
                     //$('#ExportToMPP').prop('disabled', false);
                     //document.getElementById("loading").style.display = "none";
                     dhtmlx.alert("File downloaded successfully.");
@@ -9362,17 +9367,17 @@ WBSTree = (function ($) {
             $('#ProgramElementModal').unbind().on('show.bs.modal', function (event) {
                 defaultModalPosition();
                 //using on('click','li') will activate on li's click
-               
-                
+
+
                 var selectedNode = wbsTree.getSelectedNode();
-                
+
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 var angularHttp = wbsTree.getAngularHttp();
                 //--------------------Swapnil 25-10-2020---------------------------------------------------------------
                 var employeeList = wbsTree.getEmployeeList();
                 var userList = wbsTree.getUserList();
-               
+
                 var newEmployeeList = [];
                 for (var x = 0; x < employeeList.length; x++) {
                     if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
@@ -9392,7 +9397,7 @@ WBSTree = (function ($) {
                 employeeList = newEmployeeList;
 
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
-                    
+
                     var userList = wbsTree.getUserList();
                     var newEmployeeList = [];
                     for (var x = 0; x < employeeList.length; x++) {
@@ -9412,11 +9417,11 @@ WBSTree = (function ($) {
                     }
                     employeeList = newEmployeeList;
                     employeeList.sort(function (a, b) {
-                       return a.Name.localeCompare(b.Name);
+                        return a.Name.localeCompare(b.Name);
                     });
-                    
+
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
-                  //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
+                    //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
                     $('#divProjectApprovers').html('');
                     var approvers = approversData.data.result;
                     if (approvers != null && approvers.length > 0) {
@@ -9438,7 +9443,7 @@ WBSTree = (function ($) {
                                     var labelText = approvers[currentNum].Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
                                     var dbid = approvers[currentNum].Id;
-                                    
+
                                     //if (j == 0) {
                                     //    append += "<div class='col-xs-6' style='padding-left: 0;'>" +
                                     //        "<label class='control-label _bold required'>" + labelText + "</label>" +
@@ -9592,7 +9597,7 @@ WBSTree = (function ($) {
                     // ProgramElement Update
                     modal_mode = 'Update';
                     $("#new_program_element_change_order").removeAttr('disabled');
-                   // $("#edit_program_element_change_order").removeAttr('disabled');
+                    // $("#edit_program_element_change_order").removeAttr('disabled');
                     $('#divChangeOrder').removeAttr('title');   //Manasi 23-02-2021
                     $("#delete_program_element").removeAttr('disabled');  //Manasi 24-02-2021
                     $('#documentUploadProgramNewPrg').removeAttr('title')  //Manasi 23-02-2021
@@ -9601,7 +9606,8 @@ WBSTree = (function ($) {
                     wbsTree.setIsProgramElementNew(false);
                     _Is_Program_Element_New = false;
                     populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());
-                    populateProgramElementChangeOrderTable(wbsTree.getSelectedProgramElementID()); // pritho
+                    debugger;//this is used
+                    populateProgramElementChangeOrderTable(selectedNode.ProgramElementID); // pritho
                     //Populate Client PM, Client Phone #
                     var employeeList = wbsTree.getEmployeeList();
                     //------------------ Swapnil commented unused code 26/10/2020 ---------------------------------------------
@@ -10108,8 +10114,8 @@ WBSTree = (function ($) {
                                 }
                             }
                         }
-                       
-                     
+
+
                     });
                     //--------------------------------------------------------------------------------------
                 }
@@ -10237,7 +10243,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_class').val('');
 
                     modal.find('.modal-body #program_element_Start_Date').val('');   //Manasi 23-10-2020
-                      
+
                     //----------------------------- Add start date end date po date 21-01-2021--------------------
 
                     modal.find('.modal-body #program_element_PO_Date').val('');
@@ -10479,7 +10485,7 @@ WBSTree = (function ($) {
                     if (selectedNode.level == "ProgramElement") {
                         // Edit
                         $("#new_program_element_change_order").removeAttr('disabled');
-                      //  $("#edit_program_element_change_order").removeAttr('disabled');
+                        //  $("#edit_program_element_change_order").removeAttr('disabled');
                         $('#updateBtnProgramPrg').removeAttr('disabled');
                     } else {
                         // Add
@@ -10497,7 +10503,7 @@ WBSTree = (function ($) {
                 var projectEditMap = new ProjectMap();
                 window.setTimeout(function () {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
-                    var offsetHeight = $('#divProjectApprovers').css("height"); 
+                    var offsetHeight = $('#divProjectApprovers').css("height");
                     document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
                     var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 100;
                     document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
@@ -11086,7 +11092,7 @@ WBSTree = (function ($) {
                 isFieldValueChanged = true;
             });
             $('#cancel_project,#cancel_project_x').unbind('click').on('click', function () {
-                
+
                 if (isFieldValueChanged) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
@@ -11096,7 +11102,7 @@ WBSTree = (function ($) {
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
-                              //  $("#emp_class").selectedIndex = -1;
+                                //  $("#emp_class").selectedIndex = -1;
                                 $("#ProjectModal").modal('toggle');
                             }
                             //$("#emp_class").selectedIndex = -1;
@@ -11111,15 +11117,15 @@ WBSTree = (function ($) {
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
-                       
+
                         $("#ProjectModal").modal('toggle');
                     }
-                   
+
                 }
 
-               
+
                 //$("#emp_class").multiselect('refresh');
-                    //$("#emp_class").multipleSelect('refresh');
+                //$("#emp_class").multipleSelect('refresh');
             });
             //=============================================================================================================
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
@@ -11181,7 +11187,7 @@ WBSTree = (function ($) {
                                 var modificationType = _ModificationList[x].ModificationType == 1 ? 'Value' :
                                     _ModificationList[x].ModificationType == 0 ? 'NA' :
                                         _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
-                               
+
 
                                 gridModification.append('<tr id="' + _ModificationList[x].Id + '">' +//<td style="width: 20px">' +
                                     //'<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
@@ -11286,7 +11292,7 @@ WBSTree = (function ($) {
                     $('#divModDurationDate').show();
                 }
             });
-            
+
             $('#updateDMBtnContModification').unbind().on('click', function (event) {
                 $('#DocUpdateModalContModification').modal({ show: true, backdrop: 'static' });
             });
@@ -11341,7 +11347,7 @@ WBSTree = (function ($) {
                     //        'CategoryID': 0
                     //}, function (response) {
                     //        $('#txtUniqueIdentityNumber').val(response.result);
-   
+
                     //    });
                     $('#addNewClientModal').modal({ show: true, backdrop: 'static' });
                     $('#txtClientName').val('');
@@ -11817,7 +11823,7 @@ WBSTree = (function ($) {
                         }
 
                     }
-                    
+
                 });
             }
             //luan quest 3/22 - ON SHOW PROJECT ELEMENT
@@ -11849,7 +11855,7 @@ WBSTree = (function ($) {
                             });
                         }
                     }
-                    
+
 
                 }
 
@@ -12218,7 +12224,7 @@ WBSTree = (function ($) {
                 else {
                     if (type != "ProgramElement") {
 
-                    if (SelectedProjectId) {
+                        if (SelectedProjectId) {
 
                         }
                     }
@@ -12295,7 +12301,7 @@ WBSTree = (function ($) {
                     $('#updateBtnProgramPrgElm').removeAttr('disabled');
 
                     var path = serviceBasePath + 'Request/VersionDetails/1/' + selectedNode.ProjectID + '/0';
-                    
+
                     angularHttp.get(path).then(function (response) {
                         var data = response.data.result[0];
                         modal.find('.modal-title').text('Project Element: ' + selectedNode.ProjectName + '  ' + ' / WBS vesrion: ' + data.description);
@@ -12325,7 +12331,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_billing_poc_phone_21').val(selectedNode.BillingPOCPhone2);
                     modal.find('.modal-body #program_billing_poc_email1').val(selectedNode.BillingPOCEmail);
 
-                    
+
 
                     //===================== Jignesh-AddAddressField-21-01-2021 =================================
                     //modal.find('.modal-body #program_billing_poc_address1').val(selectedNode.BillingPOCAddress);
@@ -12357,7 +12363,7 @@ WBSTree = (function ($) {
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     }
-                    
+
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
                     document.getElementById("program_sov_billing1").checked = selectedNode.parent.parent.SOVBilling ? true : false;
                     document.getElementById("program_monthly_billing1").checked = selectedNode.parent.parent.MonthlyBilling ? true : false;
@@ -12443,7 +12449,7 @@ WBSTree = (function ($) {
                     //Populate employee classes for dropdown 
                     //Find the employee selected names given the id
                     var employeeDetails = [];
-                   
+
                     console.log("EMployee list==");
                     console.log(employeeList);
                     // $("#emp_class").val(employeeDetails);
@@ -12469,21 +12475,21 @@ WBSTree = (function ($) {
                     }
                     employeeList = newEmployeeList;
                     var employeeClassList = employeeList;
-              
-                    
-                   
+
+
+
                     employeeClassDropDown.empty();
-                    
-                  
+
+
                     var dataarray = [];
                     var empList = [];
-                   /* for (a = 0; a < selectedNode.employeeAllowedList.length; a++) {
-                        empList.push(parseInt(selectedNode.employeeAllowedList[a]));
-                    }*/
+                    /* for (a = 0; a < selectedNode.employeeAllowedList.length; a++) {
+                         empList.push(parseInt(selectedNode.employeeAllowedList[a]));
+                     }*/
 
                     angular.forEach(selectedNode.employeeAllowedList, function (item) {
                         empList.push(parseInt(item));
-                            //total += parseFloat(item.CurrentCost);
+                        //total += parseFloat(item.CurrentCost);
                     });
 
                     for (var x = 0; x < employeeClassList.length; x++) {
@@ -12491,13 +12497,13 @@ WBSTree = (function ($) {
                         fullName = employeeClassList[x].FirstName + " " + employeeClassList[x].LastName;
                         var empId = parseInt(employeeClassList[x].Id);
                         if (empList != undefined && empList.includes(empId)) {
-                               // empClassName = employeeClassList[x].Name;
-                             dataarray.push(empId);
-                               employeeClassDropDown.append('<option value=' + employeeClassList[x].Id + ' selected="true">' + fullName + '</option>');
-                               
-                        }         else {
-                        
-                                 employeeClassDropDown.append('<option value=' + employeeClassList[x].Id + '>' + fullName + '</option>');
+                            // empClassName = employeeClassList[x].Name;
+                            dataarray.push(empId);
+                            employeeClassDropDown.append('<option value=' + employeeClassList[x].Id + ' selected="true">' + fullName + '</option>');
+
+                        } else {
+
+                            employeeClassDropDown.append('<option value=' + employeeClassList[x].Id + '>' + fullName + '</option>');
 
                         }
 
@@ -12723,58 +12729,58 @@ WBSTree = (function ($) {
 
                     //-------------------------Swapnil 27-10-2020-------------------------------------------------------------
                     var projEleApproverDetails = null;
-                  
-                        angularHttp.get(serviceBasePath + 'Request/Project/null/null/' + selectedNode.ProjectID).then(function (response) {
 
-                            const processApprovalMatirx = async () => {
-                                const result = await getApprovalMatrix();
-                                console.log(result);
-                                projEleApproverDetails = response.data.result[0].ApproversDetails;
-                                console.log("asf");
-                                selectedNode.ProjectElementNumber = response.data.result[0].ProjectElementNumber;
+                    angularHttp.get(serviceBasePath + 'Request/Project/null/null/' + selectedNode.ProjectID).then(function (response) {
 
-                                modal.find('.modal-body #project_element_number').val(selectedNode.ProjectElementNumber);
+                        const processApprovalMatirx = async () => {
+                            const result = await getApprovalMatrix();
+                            console.log(result);
+                            projEleApproverDetails = response.data.result[0].ApproversDetails;
+                            console.log("asf");
+                            selectedNode.ProjectElementNumber = response.data.result[0].ProjectElementNumber;
 
-                                var employeeList = wbsTree.getEmployeeList();
-                                var userList = wbsTree.getUserList();
-                                var newEmployeeList = [];
+                            modal.find('.modal-body #project_element_number').val(selectedNode.ProjectElementNumber);
 
-                                for (var x = 0; x < employeeList.length; x++) {
-                                    if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                                        newEmployeeList.push(employeeList[x]);
+                            var employeeList = wbsTree.getEmployeeList();
+                            var userList = wbsTree.getUserList();
+                            var newEmployeeList = [];
+
+                            for (var x = 0; x < employeeList.length; x++) {
+                                if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                    newEmployeeList.push(employeeList[x]);
+                                    break;
+                                }
+                            }
+
+                            for (var x = 0; x < userList.length; x++) {
+                                for (var y = 0; y < employeeList.length; y++) {
+                                    if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                        newEmployeeList.push(employeeList[y]);
                                         break;
                                     }
                                 }
+                            }
+                            employeeList = newEmployeeList;
+                            var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
-                                for (var x = 0; x < userList.length; x++) {
-                                    for (var y = 0; y < employeeList.length; y++) {
-                                        if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                            newEmployeeList.push(employeeList[y]);
-                                            break;
-                                        }
+                            for (var i = 0; i < approversDdl.length; i++) {
+                                var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                                for (var j = 0; j < projEleApproverDetails.length; j++) {
+                                    if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
+
+                                        $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
+                                        break;
                                     }
                                 }
-                                employeeList = newEmployeeList;
-                                var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                            }
+                        };
 
-                                for (var i = 0; i < approversDdl.length; i++) {
-                                    var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
-                                    for (var j = 0; j < projEleApproverDetails.length; j++) {
-                                        if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
+                        processApprovalMatirx();
 
-                                            $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
-                                            break;
-                                        }
-                                    }
-                                }
-                            };
 
-                            processApprovalMatirx();
-                          
 
-                           
-                        });
-                    
+                    });
+
                     //--------------------------------------------------------------------------------------
 
                 }
@@ -12802,7 +12808,7 @@ WBSTree = (function ($) {
                     $('#delete_project').attr('disabled', 'disabled');  //Manasi 24-02-2021
                     $('#spnBtndelete_project').attr('title', "A project element needs to be saved before it can be deleted");  //Manasi 24-02-2021
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');   //Manasi
-                   // updateBtnProgramPrgElm
+                    // updateBtnProgramPrgElm
                     // For ProjectAccessControl
                     $('#emp_classDiv').hide(); // Multiselect
 
@@ -12827,7 +12833,7 @@ WBSTree = (function ($) {
                     //luan here
 
                     // Pritesh Billing POC 
-                    
+
                     //modal.find('.modal-body #program_billing_poc1').val('');
                     //modal.find('.modal-body #program_billing_poc_phone_11').val('');
                     //modal.find('.modal-body #program_billing_poc_phone_21').val('');
@@ -12851,7 +12857,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.parent.BillingPOCCity);
                     modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.parent.BillingPOCState);
                     modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.parent.BillingPOCPONo);
-                    
+
                     if (selectedNode.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     }
@@ -12948,22 +12954,22 @@ WBSTree = (function ($) {
                     //    serviceClassIDFromProgram = response.result[0].ProjectClassID;
 
                     //    //selectedNode.ProjectClassID = projectClassIDFromProgram;    // Jignesh 24-11-2020
-                        var serviceClassDropDown = modal.find('.modal-body #service_class');
-                        var serviceClassList = wbsTree.getServiceClassList();
-                         var serviceClassName = '';
-                        serviceClassDropDown.empty();
+                    var serviceClassDropDown = modal.find('.modal-body #service_class');
+                    var serviceClassList = wbsTree.getServiceClassList();
+                    var serviceClassName = '';
+                    serviceClassDropDown.empty();
 
-                        for (var x = 0; x < serviceClassList.length; x++) {
-                            if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
-                                serviceClassName = serviceClassList[x].Description
-                            }
-
-                            if (serviceClassList[x].Description == null) {
-                                continue;
-                            }
-                            serviceClassDropDown.append('<option selected="false">' + serviceClassList[x].Description + '</option>');
+                    for (var x = 0; x < serviceClassList.length; x++) {
+                        if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                            serviceClassName = serviceClassList[x].Description
                         }
-                             serviceClassDropDown.val(serviceClassName);
+
+                        if (serviceClassList[x].Description == null) {
+                            continue;
+                        }
+                        serviceClassDropDown.append('<option selected="false">' + serviceClassList[x].Description + '</option>');
+                    }
+                    serviceClassDropDown.val(serviceClassName);
 
 
                     //    //projectClassDropDown.attr('disabled', false);
@@ -13048,7 +13054,7 @@ WBSTree = (function ($) {
                             }
                         }
                         employeeList = newEmployeeList;
-                        
+
                         var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
                         for (var i = 0; i < approversDdl.length; i++) {
