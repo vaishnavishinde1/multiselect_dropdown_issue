@@ -3159,10 +3159,14 @@ WBSTree = (function ($) {
                             selectedNode.name = temp_node.name;
                             selectedNode.ProgramManager = temp_node.ProgramManager;
                             selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.result == '' || response.result == null || response.result == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
                         }
 
                     });
@@ -3534,8 +3538,10 @@ WBSTree = (function ($) {
                                 selectedNode.ProgramManager = temp_node.ProgramManager;
                                 selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
 
-
-                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                if (response.result == '' || response.result == null || response.result == undefined)
+                                    dhtmlx.alert('Something went wrong. Please try again..');
+                                else
+                                    dhtmlx.alert({ text: response.result, width: '500px' });
                                 //  $('#ProgramModal').modal('hide');
                             }
                         });
@@ -4647,11 +4653,14 @@ WBSTree = (function ($) {
                                 $('#ProjectModal').modal('hide');
                             }
                             else {
-
-                                dhtmlx.alert({
-                                    text: response.result,
-                                    width: '500px'
-                                });
+                                if (response.result == '' || response.result == null || response.result == undefined)
+                                    dhtmlx.alert('Something went wrong. Please try again..');
+                                else {
+                                    dhtmlx.alert({
+                                        text: response.result,
+                                        width: '500px'
+                                    });
+                                }
 
 
                             }
@@ -4662,10 +4671,14 @@ WBSTree = (function ($) {
                             selectedNode.ProgramElementName = temp_node.ProgramElementName;	//luan eats
                             selectedNode.ProgramElementManager = temp_node.ProgramElementManager;
                             selectedNode.ProgramElementSponsor = temp_node.ProgramElementSponsor;
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.result == '' || response.result == null || response.result == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
                             //  wbsTree.setSelectedNode(temp_node);
                         }
                     });
@@ -5849,10 +5862,15 @@ WBSTree = (function ($) {
                             //    text: 'Failed to save',
                             //    width: '500px'
                             //});
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.alert == '' || response.alert == null || response.alert == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
+                            
                         }
                     });
 
@@ -6237,10 +6255,14 @@ WBSTree = (function ($) {
                         if (response.result.split(',')[0].trim() === "Success") {
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.result == '' || response.result == null || response.result == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
                         }
 
                         $('#ProjectElementMilestoneModal').modal('hide');
@@ -6300,7 +6322,10 @@ WBSTree = (function ($) {
                                 $("#ProjectModal").css({ "opacity": "1" });
 
                             } else {
-                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                if (response.result == '' || response.result == null || response.result == undefined)
+                                    dhtmlx.alert('Something went wrong. Please try again..');
+                                else
+                                    dhtmlx.alert({ text: response.result, width: '500px' });
                                 $('#ProjectElementMilestoneModal').modal('hide');
                                 $("#ProjectModal").css({ "opacity": "1" });
                             }
@@ -6404,7 +6429,10 @@ WBSTree = (function ($) {
                                         $("#ProjectModal").css({ "opacity": "1" });
                                     }
                                     else {
-                                        dhtmlx.alert({ text: response.result, width: '500px' });
+                                        if (response.result == '' || response.result == null || response.result == undefined)
+                                            dhtmlx.alert('Something went wrong. Please try again..');
+                                        else
+                                            dhtmlx.alert({ text: response.result, width: '500px' });
                                         $('#ProjectElementMilestoneModal').modal('hide');
                                         $("#ProjectModal").css({ "opacity": "1" });
                                         populateProjectElementMilestoneTable(wbsTree.getSelectedProjectID()); //Manasi
@@ -6575,10 +6603,14 @@ WBSTree = (function ($) {
                         if (response.result.split(',')[0].trim() === "Success") {
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.result == '' || response.result == null || response.result == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
                         }
 
                         $('#ProgramElementMilestoneModal').modal('hide');
@@ -6637,7 +6669,10 @@ WBSTree = (function ($) {
                                 $("#ProgramElementModal").css({ "opacity": "1" });
 
                             } else {
-                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                if (response.result == '' || response.result == null || response.result == undefined)
+                                    dhtmlx.alert('Something went wrong. Please try again..');
+                                else
+                                    dhtmlx.alert({ text: response.result, width: '500px' });
                                 $('#ProgramElementMilestoneModal').modal('hide');
                                 $("#ProgramElementModal").css({ "opacity": "1" });
                             }
@@ -6742,7 +6777,10 @@ WBSTree = (function ($) {
                                         $("#ProgramElementModal").css({ "opacity": "1" });
                                     }
                                     else {
-                                        dhtmlx.alert({ text: response.result, width: '500px' });
+                                        if (response.result == '' || response.result == null || response.result == undefined)
+                                            dhtmlx.alert('Something went wrong. Please try again..');
+                                        else
+                                            dhtmlx.alert({ text: response.result, width: '500px' });
                                         $('#ProgramElementMilestoneModal').modal('hide');
                                         $("#ProgramElementModal").css({ "opacity": "1" });
 
@@ -7029,10 +7067,15 @@ WBSTree = (function ($) {
                             $("#ProgramElementModal").css({ "opacity": "1" });
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            dhtmlx.alert({
-                                text: response.result,
-                                width: '500px'
-                            });
+                            if (response.result == '' || response.result == null || response.result == undefined)
+                                dhtmlx.alert('Something went wrong. Please try again..');
+                            else {
+                                dhtmlx.alert({
+                                    text: response.result,
+                                    width: '500px'
+                                });
+                            }
+                            
                             return;  //Manasi
                         }
 
@@ -7179,7 +7222,11 @@ WBSTree = (function ($) {
                             } else {
                                 //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
                                 document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
-                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                if (response.result == '' || response.result == null || response.result == undefined)
+                                    dhtmlx.alert('Something went wrong. Please try again..');
+                                else {
+                                    dhtmlx.alert({ text: response.result, width: '500px' });
+                                }
                                 //$('#ProgramElementChangeOrderModal').modal('hide');  Manasi
                                 //$("#ProgramElementModal").css({ "opacity": "1" });
                                 return; //Manasi
@@ -7361,9 +7408,14 @@ WBSTree = (function ($) {
                                     //$('#ProgramModal').modal('hide');
 
                                 } else {
-                                    dhtmlx.alert({ text: response.result, width: '500px' });
-                                    $('#ProgramElementChangeOrderModal').modal('hide');
-                                    $("#ProgramElementModal").css({ "opacity": "1" });
+                                    if (response.result == '' || response.result == null || response.result == undefined)
+                                        dhtmlx.alert('Something went wrong. Please try again..');
+                                    else 
+                                        dhtmlx.alert({ text: response.result, width: '500px' });
+
+                                        $('#ProgramElementChangeOrderModal').modal('hide');
+                                        $("#ProgramElementModal").css({ "opacity": "1" });
+                                    
                                 }
                                 debugger;
                                 populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
