@@ -9713,27 +9713,27 @@ WBSTree = (function ($) {
 
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
                     
-                    var userList = wbsTree.getUserList();
-                    var newEmployeeList = [];
-                    for (var x = 0; x < employeeList.length; x++) {
-                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                            newEmployeeList.push(employeeList[x]);
-                            break;
-                        }
-                    }
+                    //var userList = wbsTree.getUserList();
+                    //var newEmployeeList = [];
+                    //for (var x = 0; x < employeeList.length; x++) {
+                    //    if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                    //        newEmployeeList.push(employeeList[x]);
+                    //        break;
+                    //    }
+                    //}
 
-                    for (var x = 0; x < userList.length; x++) {
-                        for (var y = 0; y < employeeList.length; y++) {
-                            if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                newEmployeeList.push(employeeList[y]);
-                                break;
-                            }
-                        }
-                    }
-                    employeeList = newEmployeeList;
-                    employeeList.sort(function (a, b) {
-                       return a.Name.localeCompare(b.Name);
-                    });
+                    //for (var x = 0; x < userList.length; x++) {
+                    //    for (var y = 0; y < employeeList.length; y++) {
+                    //        if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                    //            newEmployeeList.push(employeeList[y]);
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+                    //employeeList = newEmployeeList;
+                    //employeeList.sort(function (a, b) {
+                    //   return a.Name.localeCompare(b.Name);
+                    //});
                     
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
                     //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
@@ -9758,7 +9758,34 @@ WBSTree = (function ($) {
                                     var labelText = approvers[currentNum].Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
                                     var dbid = approvers[currentNum].Id;
-                                    
+
+                                    var userList = wbsTree.getUserList();
+                                    var employeeList = wbsTree.getEmployeeList();
+                                    var newEmployeeList = [];
+                                    for (var x = 0; x < employeeList.length; x++) {
+                                        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                            newEmployeeList.push(employeeList[x]);
+                                            break;
+                                        }
+                                    }
+
+                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                        var key = Object.keys(t)[0];
+                                        return s[key] == t[key]
+                                    }));
+                                    for (var x = 0; x < roleWiseUserList.length; x++) {
+                                        for (var y = 0; y < employeeList.length; y++) {
+                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                newEmployeeList.push(employeeList[y]);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    employeeList = newEmployeeList;
+                                    employeeList.sort(function (a, b) {
+                                        return a.Name.localeCompare(b.Name);
+                                    });
                                     //if (j == 0) {
                                     //    append += "<div class='col-xs-6' style='padding-left: 0;'>" +
                                     //        "<label class='control-label _bold required'>" + labelText + "</label>" +
