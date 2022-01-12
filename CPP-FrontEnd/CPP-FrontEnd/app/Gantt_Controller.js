@@ -6359,7 +6359,7 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.costGanttInstance.config.drag_progress = false;
             $scope.costGanttInstance.config.fit_tasks = false;
             $scope.costGanttInstance.config.scroll_on_click = false;
-            $scope.costGanttInstance.config.min_column_width = 120;
+            $scope.costGanttInstance.config.min_column_width = 75; // Jignesh-05-01-2021
             $scope.costGanttInstance.config.initial_scroll = false;
             $scope.costGanttInstance.config.drag_move = false;
             $scope.costGanttInstance.config.prevent_default_scroll = true;
@@ -6471,7 +6471,7 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
                         { name: "employee_id", label: "Name", width: 210, align: "left", resize: true }, //align: "center" Manasi
-                        { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
+                        { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
                         { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
@@ -6503,21 +6503,21 @@ angular.module('xenon.Gantt_Controller', []).
                         },
                         //-------------------Manasi 16-07-2020-----------------------------------------
                         {
-                            name: "total_budget", label: "Budget", width: 150, align: "right", resize: true, template: function (obj) {   //Manasi 08-03-2021 Change width from 100 to 120
+                            name: "total_budget", label: "Budget", width: 140, align: "right", resize: true, template: function (obj) {   //Manasi 08-03-2021 Change width from 100 to 120
                                 if (obj.total_budget === "") {
                                     return '';
                                 }
 
                                 //return $filter('currency')(obj.total_budget, '$', formatCurrency(obj.total_budget)); // Pritesh Commented added below to make consistent in Current view on 25jul2020
-                                return $filter('currency')(obj.total_budget, '$', 2);
+                                return $filter('currency')(obj.total_budget, '$', 0);
                             }
                         },
                         {
-                            name: "total_cost", label: "EAC", width: 150, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                            name: "total_cost", label: "EAC", width: 140, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
                                 if (obj.total_cost === "") {
                                     return '';
                                 }
-                                return $filter('currency')(obj.total_cost, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                return $filter('currency')(obj.total_cost, '$', 0);  // Pritesh 25Jul2020 to make it consistent
                             }
                         }
                     ];
@@ -6539,7 +6539,7 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
                         { name: "employee_id", label: "Name", width: 220, align: "left", resize: true }, //align: "center" Manasi
-                        { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
+                        { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
                         { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
@@ -6619,7 +6619,7 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 200, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
                         { name: "employee_id", label: "Name", width: 210, align: "left", resize: true }, //align: "center" Manasi
-                        { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
+                        { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
                         { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true,  template: function (obj) {     //Manasi 16-07-2020
@@ -6657,7 +6657,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 }
 
                                 //return $filter('currency')(obj.total_budget, '$', formatCurrency(obj.total_budget)); // Pritesh Commented added below to make consistent in Current view on 25jul2020
-                                return $filter('currency')(obj.total_budget, '$', 2);
+                                return $filter('currency')(obj.total_budget, '$', 0);
                             }
                         },
                         //{
@@ -6700,7 +6700,7 @@ angular.module('xenon.Gantt_Controller', []).
                     { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                     { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },    //Replace "Type with category"  Manasi 24-07-2020
                     { name: "employee_id", label: "Name", width: 185, align: "left", resize: true },  //align: "center" Manasi
-                    { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center"  Manasi
+                    { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center"  Manasi
                     //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                     //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, //align: "center" Manasi
                     { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
@@ -6709,10 +6709,10 @@ angular.module('xenon.Gantt_Controller', []).
                                 else
                                     return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
                             }
-		 }, //align: "center" Manasi
+		            }, //align: "center" Manasi
                     {
                         //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
-                        name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) { //Manasi
+                        name: "total_units", label: "# Of Units", width: 70, align: "right", resize: true, template: function (obj) { //Manasi
                             if (obj.text.indexOf("Material") >= 0 || obj.text.indexOf("Labor") >= 0) {
                                 //console.log(obj.total_units);
                                 return roundToTwo(Number(obj.total_units));
@@ -6746,7 +6746,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 return '';
                             }
                             // return $filter('currency')(obj.total_budget, '$', formatCurrency(obj.total_budget));  Pritesh Commented on 25Jul2020 as to keept the format consistent
-                            return $filter('currency')(obj.total_budget, '$', 2);
+                            return $filter('currency')(obj.total_budget, '$', 0);
                         }
                     }
 
@@ -12036,7 +12036,7 @@ angular.module('xenon.Gantt_Controller', []).
                 $scope.scheduleGanttInstance.config.drag_progress = false;
                 $scope.scheduleGanttInstance.config.fit_tasks = true;
                 $scope.scheduleGanttInstance.config.scroll_on_click = false;
-                $scope.scheduleGanttInstance.config.min_column_width = 120;
+                $scope.scheduleGanttInstance.config.min_column_width = 75; // Jignesh-05-01-2021
                 $scope.scheduleGanttInstance.config.initial_scroll = false;
                 $scope.scheduleGanttInstance.config.drag_move = false;
                 $scope.scheduleGanttInstance.config.autoSize = 'xy';
@@ -12051,30 +12051,66 @@ angular.module('xenon.Gantt_Controller', []).
                 if (isCurrentTrend) {     //in current view
                     $scope.scheduleGanttInstance.config.columns = [
                         { name: "add", label: "", width: 30, class: "gantt_add" },
-                        { name: "text", label: "Category", tree: true, width: 395, resize: true },
+                        { name: "text", label: "Category", tree: true, width: 450, resize: true },
                         //{ name: "originalStartDate", label: "Orig. Start", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
                         {  //Manasi 23-02-2021
-                            name: "originalStartDate", width: 120, label: "Orig. Start", align: "center", resize: true, template: function (obj) {
-                                return obj.originalStartDate != 'N/A' ? moment(obj.originalStartDate).format('MM/DD/YYYY') : 'N/A';
+                            name: "originalStartDate", width: 95, label: "Orig. Start", align: "center", resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.originalStartDate != 'N/A') {
+                                    var date = new Date(obj.originalStartDate);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.originalStartDate != 'N/A' ? dateString : 'N/A';
+                                //return obj.originalStartDate != 'N/A' ? moment(obj.originalStartDate).format('MM/DD/YYYY') : 'N/A';
                             }
                         },  //Manasi 22-02-2021   change width to 120
                         //{ name: "originalEndDate", label: "Orig. End", align: "center", width: 120, resize: true },   //Manasi 22-02-2021   change width to 120
                         {   //Manasi 23-02-2021
-                            name: "originalEndDate", width: 125, label: "Orig. End", align: "center", resize: true, template: function (obj) {
-                                return obj.originalEndDate != 'N/A' ? moment(obj.originalEndDate).format('MM/DD/YYYY') : 'N/A';
+                            name: "originalEndDate", width: 95, label: "Orig. End", align: "center", resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.originalEndDate != 'N/A') {
+                                    var date = new Date(obj.originalEndDate);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.originalEndDate != 'N/A' ? dateString : 'N/A';
+                                //return obj.originalEndDate != 'N/A' ? moment(obj.originalEndDate).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
                         //{ name: "start_date", label: "Cur. Start", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
                         {    //Manasi 23-02-2021
-                            name: "start_date", width: 125, label: "Cur. Start", align: "center", resize: true, template: function (obj) {
-                                return obj.start_date != 'N/A' ? moment(obj.start_date).format('MM/DD/YYYY') : 'N/A';
+                            name: "start_date", width: 95, label: "Cur. Start", align: "center", resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.start_date != 'N/A') {
+                                    var date = new Date(obj.start_date);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.start_date != 'N/A' ? dateString : 'N/A';
+                                //return obj.start_date != 'N/A' ? moment(obj.start_date).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
                         //{ name: "end_date", label: "Cur. End", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
 
                         {  //Manasi 23-02-2021
-                            name: "end_date", width: 125, label: "Cur. End", align: "center", resize: true, template: function (obj) {
-                                return obj.end_date != 'N/A' ? moment(obj.end_date).format('MM/DD/YYYY') : 'N/A';
+                            name: "end_date", width: 95, label: "Cur. End", align: "center", resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.end_date != 'N/A') {
+                                    var date = new Date(obj.end_date);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.end_date != 'N/A' ? dateString : 'N/A';
+                                //return obj.end_date != 'N/A' ? moment(obj.end_date).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
 
@@ -12088,14 +12124,14 @@ angular.module('xenon.Gantt_Controller', []).
                         {
                             name: "totalBudget", width: 130, label: "Budget", align: "right", resize: true, template: function (obj) {  //Manasi 22-02-2021   change width to 120
                                 // return $filter('currency')(obj.totalBudget, '$', formatCurrency(obj.totalBudget));
-                                return $filter('currency')(obj.totalBudget, '$', 2);// Pritesh added for keeping the format of decimals 13aug202
+                                return $filter('currency')(obj.totalBudget, '$', 0);// Pritesh added for keeping the format of decimals 13aug202
                             }
                         },
                         {
                             //name: "totalCostActualForecast", width: 100, label: "Forecast", align: "right", resize: true, template: function (obj) {
                             name: "totalCostActualForecast", width: 130, label: "EAC", align: "right", resize: true, template: function (obj) {  //Manasi 22-02-2021   change width to 120
                                 // return $filter('currency')(obj.totalCostActualForecast, '$', formatCurrency(obj.totalCostActualForecast));// Pritesh Commented on 25Jul2020 as to keept the format consistent
-                                return $filter('currency')(obj.totalCostActualForecast, '$', 2);// Pritesh added for keeping the format of decimals 13aug202
+                                return $filter('currency')(obj.totalCostActualForecast, '$', 0);// Pritesh added for keeping the format of decimals 13aug202
                                 //return $filter('currency')(0, '$', 2);
                             }
                         },
@@ -12111,29 +12147,64 @@ angular.module('xenon.Gantt_Controller', []).
                 } else {    //not current view
                     $scope.scheduleGanttInstance.config.columns = [
                         { name: "add", label: "", width: 30, class: "gantt_add", resize: true },
-                        { name: "text", label: "Category", tree: true, width: 395, resize: true },
+                        { name: "text", label: "Category", tree: true, width: 450, resize: true },
                         //{ name: "originalStartDate", label: "Orig. Start", align: "center", width: 113, resize: true },
                         {  //Manasi 23-02-2021
-                            name: "originalStartDate", label: "Orig. Start", align: "center", width: 120, resize: true, template: function (obj) {
-                                return obj.originalStartDate != 'N/A' ? moment(obj.originalStartDate).format('MM/DD/YYYY') : 'N/A';
+                            name: "originalStartDate", label: "Orig. Start", align: "center", width: 90, resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.originalStartDate != 'N/A') {
+                                    var date = new Date(obj.originalStartDate);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.originalStartDate != 'N/A' ? dateString : 'N/A';
                             }
                         },
                         //{ name: "originalEndDate", label: "Orig. End", align: "center", width: 113, resize: true },
                         {   //Manasi 23-02-2021
-                            name: "originalEndDate", label: "Orig. End", align: "center", width: 120, resize: true, template: function (obj) {
-                                return obj.originalEndDate != 'N/A' ? moment(obj.originalEndDate).format('MM/DD/YYYY') : 'N/A';
+                            name: "originalEndDate", label: "Orig. End", align: "center", width: 90, resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.originalEndDate != 'N/A') {
+                                    var date = new Date(obj.originalEndDate);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.originalEndDate != 'N/A' ? dateString : 'N/A';
+                                //return obj.originalEndDate != 'N/A' ? moment(obj.originalEndDate).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
                         //{ name: "start_date", label: "Cur. Start", align: "center", width: 113, resize: true },
                         {   //Manasi 23-02-2021
-                            name: "start_date", label: "Cur. Start", align: "center", width: 120, resize: true, template: function (obj) {
-                                return obj.start_date != 'N/A' ? moment(obj.start_date).format('MM/DD/YYYY') : 'N/A';
+                            name: "start_date", label: "Cur. Start", align: "center", width: 90, resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.start_date != 'N/A') {
+                                    var date = new Date(obj.start_date);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.start_date != 'N/A' ? dateString : 'N/A';
+                                //return obj.start_date != 'N/A' ? moment(obj.start_date).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
                         //{ name: "end_date", width: 113, label: "Cur. End", align: "center", resize: true },
                         {    //Manasi 23-02-2021
-                            name: "end_date", label: "Cur. End", align: "center", width: 120, resize: true, template: function (obj) {
-                                return obj.end_date != 'N/A' ? moment(obj.end_date).format('MM/DD/YYYY') : 'N/A';
+                            name: "end_date", label: "Cur. End", align: "center", width: 90, resize: true, template: function (obj) {
+                                // Jignesh-05-01-2021 to format date like MM/DD/YY
+                                if (obj.end_date != 'N/A') {
+                                    var date = new Date(obj.end_date);
+                                    var formattedDate = ('0' + date.getDate()).slice(-2);
+                                    var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
+                                    var formattedYear = date.getFullYear().toString().substr(2, 2);
+                                    var dateString = formattedMonth + '/' + formattedDate + '/' + formattedYear;
+                                }
+                                return obj.end_date != 'N/A' ? dateString : 'N/A';
+                                //return obj.end_date != 'N/A' ? moment(obj.end_date).format('MM/DD/YYYY') : 'N/A';
                             }
                         },
                         //-------------Commented by Manasi----------------------
@@ -12145,8 +12216,9 @@ angular.module('xenon.Gantt_Controller', []).
                         //----------------------------------------------------------
                         {
                             name: "totalBudget", width: 165, label: "Budget", align: "right", resize: true, template: function (obj) {
-                                //  return $filter('currency')(obj.totalBudget, '$', formatCurrency(obj.totalBudget));
-                                return $filter('currency')(obj.totalBudget, '$', 2);// Pritesh added for keeping the format of decimals 13aug202
+                                //return $filter('currency')(obj.totalBudget, '$', formatCurrency(obj.totalBudget));
+                                //return $filter('currency')(obj.totalBudget, '$', 2);// Pritesh added for keeping the format of decimals 13aug202
+                                return $filter('currency')(obj.totalBudget, '$', 0);
                             }
                         },
                     ];
