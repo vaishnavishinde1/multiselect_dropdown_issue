@@ -24,6 +24,7 @@ WBSTree = (function ($) {
         };
         var scrollOffset = 0;
         var progelem_scheduleImp = 0;
+
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
         });
