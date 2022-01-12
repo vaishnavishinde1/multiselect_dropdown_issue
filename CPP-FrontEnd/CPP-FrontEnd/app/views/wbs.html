@@ -1730,7 +1730,7 @@
                 <div class="row">
                     <div class="col-md-6">
 
-                        <form style="height: 555px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
+                        <form style="height: 620px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
                             <!--css changes by shweta-->
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
                                 <!--css changes by shweta-->
@@ -1747,15 +1747,15 @@
                             </div>
 
                             <!--div class="_form-group" style="margin-top:5px; margin-bottom: 143px;">
-                                <div class="col-xs-6" style="padding-left: 0;">
-                                    <label for="program_element_sponsor" class="control-label _bold">Contract Start Date</label>
-                                    <input disabled type="text" class="form-control" id="program_element_contract_start_date">
-                                </div>
-                                <div class="col-xs-6" style="padding-left: 0;">
-                                    <label for="program_element_sponsor" class="control-label _bold">Contract End Date</label>
-                                    <input disabled type="text" class="form-control" id="program_element_contract_end_date">
-                                </div>
-                            </div-->
+        <div class="col-xs-6" style="padding-left: 0;">
+            <label for="program_element_sponsor" class="control-label _bold">Contract Start Date</label>
+            <input disabled type="text" class="form-control" id="program_element_contract_start_date">
+        </div>
+        <div class="col-xs-6" style="padding-left: 0;">
+            <label for="program_element_sponsor" class="control-label _bold">Contract End Date</label>
+            <input disabled type="text" class="form-control" id="program_element_contract_end_date">
+        </div>
+    </div-->
 
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 150px;">
                                 <!--css changes by shweta-->
@@ -1787,100 +1787,116 @@
                                     <label for="program_element_sponsor" class="control-label _bold">Project Value</label>
                                     <input type="text" class="form-control" id="program_element_total_value" data-type="currency">
                                 </div>
+                                <!--Manu   -->
+                                <div class="col-xs-4" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Total Modifications</label>
+                                    <input type="text" class="form-control" disabled id="program_element_total_modifications" data-type="currency">
+                                </div>
+                                <div class="col-xs-4" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Project Current Value</label>
+                                    <input type="text" class="form-control" disabled id="program_element_total_current_value" data-type="currency">
+                                </div>
+                                <!---->
+                            </div>
+
+                            <div class="_form-group" style="margin-top:5px; margin-bottom: 360px;">
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold required">Project NTP Date</label>
                                     <input type="text" class="form-control" id="program_element_Start_Date" autocomplete="off">
                                 </div>
-                                <div class="col-xs-4" style="padding-left: 0;padding-right:0;">
+                                <div class="col-xs-4" style="padding-left: 0;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold">Project PO Date</label>
                                     <input type="text" class="form-control" id="program_element_PO_Date" autocomplete="off">
                                 </div>
-                            </div>
-                            <div class="_form-group" style="margin-top:5px; margin-bottom: 350px;">
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <label for="program_element_sponsor" class="control-label _bold required">Project Start Date</label>
                                     <input type="text" class="form-control" id="program_element_PStart_Date" autocomplete="off">
                                 </div>
-                                <div class="col-xs-4" style="padding-left: 0; margin-bottom: 15px;">
+                            </div>
+
+                                <div class="_form-group" style="margin-top:5px; margin-bottom: 435px;">
+                                   
+                                    <div class="col-xs-4" style="padding-left: 0; margin-bottom: 15px;">
+                                        <!--hidden-->
+                                        <label for="program_element_sponsor" class="control-label _bold required">Project End Date</label>
+                                        <input type="text" class="form-control" id="program_element_PEnd_Date" autocomplete="off">
+                                    </div>
+                                    <!--changes by Nivedita 03-01-2021-->
+                                    <div class="col-xs-4" style="padding-left: 0;">
+                                        <label for="program_element_type" class="control-label _bold">Client PO#</label>
+                                        <input type="text" class="form-control" id="project_element_po_number">
+                                    </div>
+                                </div>
+                                <!---------------------------------------------------------->
+                                <div class="_form-group" style="margin-top:5px; margin-bottom: 225px;">
+                                    <!--css changes by shweta-->
+                                    <div class="col-xs-6" style="padding-left: 0; margin-bottom: 15px;">
+                                        <label for="program_element_sponsor" class="control-label _bold">Client Project Manager</label>
+                                        <input type="text" class="form-control" id="program_element_client_pm">
+                                    </div>
+                                    <div class="col-xs-6" style="padding-left: 0;">
+                                        <label for="program_element_sponsor" class="control-label _bold">Client Phone #</label>
+                                        <input type="text" maxlength="12" class="form-control" id="program_element_client_phone" placeholder="xxx-xxx-xxxx"> <!--Jignesh-01-03-2021-->
+                                    </div>
+                                </div>
+
+                                <!--<div class="_form-group" >
+        </div>-->
+                                <!--Project Scope of Work-->
+                                <div class="clearfix"></div>
+                                <div class="_form-group" style="height: 70px;">
+                                    <!--css changes by shweta-->
+                                    <label for="program_element_name" class="control-label _bold">Scope of Work</label> <!--css changes by shweta-->
+                                    <textarea type="text" class="form-control" id="scope_quality_description" style="height: 100%;"></textarea>
+                                </div>
+
+                                <!--Client PM / Client Phone #-->
+                                <!--SELECT DROP DOWNS FOR PEOPLE-->
+                                <div class="_form-group" style="display:none;">
                                     <!--hidden-->
-                                    <label for="program_element_sponsor" class="control-label _bold required">Project End Date</label>
-                                    <input type="text" class="form-control" id="program_element_PEnd_Date" autocomplete="off">
+                                    <label for="program_element_class" class="control-label _bold required">Client</label>
+                                    <select type="text" class="form-control" id="client"></select>
                                 </div>
-                                <!--changes by Nivedita 03-01-2021-->
-                                <div class="col-xs-4" style="padding-left: 0;">
-                                    <label for="program_element_type" class="control-label _bold">Client PO#</label>
-                                    <input type="text" class="form-control" id="project_element_po_number">
+                                <div class="_form-group" style="display:none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold required">Location</label>
+                                    <select type="text" class="form-control" id="location"></select>
                                 </div>
-                            </div>
-                            <!---------------------------------------------------------->
-                            <div class="_form-group" style="margin-top:5px; margin-bottom: 225px;">
-                                <!--css changes by shweta-->
-                                <div class="col-xs-6" style="padding-left: 0;">
-                                    <label for="program_element_sponsor" class="control-label _bold">Client Project Manager</label>
-                                    <input type="text" class="form-control" id="program_element_client_pm">
+                                <div class="_form-group" style="display: none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold">Director</label>
+                                    <select type="text" class="form-control" id="director_id"></select>
                                 </div>
-                                <div class="col-xs-6" style="padding-left: 0;margin-bottom: 15px;padding-right:0;">
-                                    <label for="program_element_sponsor" class="control-label _bold">Client Phone #</label>
-                                    <input type="text" maxlength="12" class="form-control" id="program_element_client_phone" placeholder="xxx-xxx-xxxx"> <!--Jignesh-01-03-2021-->
+                                <div class="_form-group" style="display: none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold">Scheduler</label>
+                                    <select type="text" class="form-control" id="scheduler_id"></select>
                                 </div>
-                            </div>
+                                <div class="_form-group" style="display: none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold">Vice President</label>
+                                    <select type="text" class="form-control" id="vice_president_id"></select>
+                                </div>
+                                <div class="_form-group" style="display: none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold">Financial Analyst</label>
+                                    <select type="text" class="form-control" id="financial_analyst_id"></select>
+                                </div>
+                                <div class="_form-group" style="display: none;">
+                                    <!--hidden-->
+                                    <label for="program_element_class" class="control-label _bold">Capital Project Assistant</label>
+                                    <select type="text" class="form-control" id="capital_project_assistant_id"></select>
+                                </div>
 
-                            <!--<div class="_form-group" >
-                            </div>-->
-                            <!--Project Scope of Work-->
-                            <div class="_form-group" style="height: 70px;">
-                                <!--css changes by shweta-->
-                                <label for="program_element_name" class="control-label _bold">Scope of Work</label> <!--css changes by shweta-->
-                                <textarea type="text" class="form-control" id="scope_quality_description" style="height: 100%;"></textarea>
-                            </div>
-
-                            <!--Client PM / Client Phone #-->
-                            <!--SELECT DROP DOWNS FOR PEOPLE-->
-                            <div class="_form-group" style="display:none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold required">Client</label>
-                                <select type="text" class="form-control" id="client"></select>
-                            </div>
-                            <div class="_form-group" style="display:none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold required">Location</label>
-                                <select type="text" class="form-control" id="location"></select>
-                            </div>
-                            <div class="_form-group" style="display: none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold">Director</label>
-                                <select type="text" class="form-control" id="director_id"></select>
-                            </div>
-                            <div class="_form-group" style="display: none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold">Scheduler</label>
-                                <select type="text" class="form-control" id="scheduler_id"></select>
-                            </div>
-                            <div class="_form-group" style="display: none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold">Vice President</label>
-                                <select type="text" class="form-control" id="vice_president_id"></select>
-                            </div>
-                            <div class="_form-group" style="display: none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold">Financial Analyst</label>
-                                <select type="text" class="form-control" id="financial_analyst_id"></select>
-                            </div>
-                            <div class="_form-group" style="display: none;">
-                                <!--hidden-->
-                                <label for="program_element_class" class="control-label _bold">Capital Project Assistant</label>
-                                <select type="text" class="form-control" id="capital_project_assistant_id"></select>
-                            </div>
-
-                            <div class="_form-group" style="margin-bottom:325px; display: none;">
-                                <!--hidden-->
-                                <div class="col-xs-6" style="padding-left: 0;">
-                                    <label for="program_element_sponsor" class="control-label _bold">Project Contract Value</label>
-                                    <input type="text" class="form-control" id="program_element_contract_value">
+                                <div class="_form-group" style="margin-bottom:325px; display: none;">
+                                    <!--hidden-->
+                                    <div class="col-xs-6" style="padding-left: 0;">
+                                        <label for="program_element_sponsor" class="control-label _bold">Project Contract Value</label>
+                                        <input type="text" class="form-control" id="program_element_contract_value">
+                                    </div>
                                 </div>
-                            </div>
                         </form>
 
                         <div class="" id="divProjectApprovers" style="border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;margin-top:15px; padding-top:10px; /*height:245px;*/margin-right: 5px; display:grid;">
@@ -1890,7 +1906,7 @@
                             <!--css changes by shweta-->
                             <label for="program_element_milestone_name" class="control-label _bold" style="font-family: Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Key Project Milestones</label> <!--Key Program Element Milestones--> <!--css changes by shweta-->
                             <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                <div class="panel-body" style="overflow: scroll;height : 235px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
+                                <div class="panel-body" style="overflow: scroll;height : 170px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
                                     <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
                                         <thead style="height:5%; position: sticky; top: 0; background: #FFF">
                                             <tr class="table-background">

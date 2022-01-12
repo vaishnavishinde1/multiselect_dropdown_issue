@@ -23,6 +23,7 @@ WBSTree = (function ($) {
             myFunc.bind(this, document.getElementById("wbs-tree"));
         };
         var scrollOffset = 0;
+        var progelem_scheduleImp = 0;
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
         });
@@ -2721,6 +2722,8 @@ WBSTree = (function ($) {
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
 
+                    var totalmod = 0;
+                    var schImp = 0;
                     for (var x = 0; x < changeOrderList.length; x++) {
                         console.log(changeOrderList[x].ProgramElementID, programElementID);
 
@@ -2738,6 +2741,10 @@ WBSTree = (function ($) {
                                 singeChangeOrder.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact'
 
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
+
+                            //Manu 11/01/2022
+                            totalmod = totalmod + parseInt(changeOrderAmount);
+                            schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id').append(
                                 '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
@@ -2776,6 +2783,11 @@ WBSTree = (function ($) {
                     }
                     // }, 3000);
 
+                    //Manu 11/01/2022
+                    console.log('TotalMod == ' + totalmod + ';' + 'SchImpact ==' + schImp);
+                    $('#program_element_total_modifications').val('$' + totalmod);
+                    var projvalue = parseFloat($('#program_element_total_value').val());
+                    $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -7074,6 +7086,14 @@ WBSTree = (function ($) {
                             //-------Manasi
                             $('#ProgramElementChangeOrderModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
+
+                            //Manu: 11/01/2022 
+                            var curendt = new Date($('#program_element_PEnd_Date').val());
+                            curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+
+
                             //$('#ProgramModal').modal('hide');
                         } else {
                             if (response.result == '' || response.result == null || response.result == undefined)
@@ -7227,6 +7247,13 @@ WBSTree = (function ($) {
                                 populateProgramElementChangeOrderTableNew(); //Manasi
                                 $('#ProgramElementChangeOrderModal').modal('hide');
                                 $("#ProgramElementModal").css({ "opacity": "1" });
+
+                                //Manu: 11/01/2022
+                                var curendt = new Date($('#program_element_PEnd_Date').val());
+                                curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                                curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                                //
 
                             } else {
                                 //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
@@ -7507,6 +7534,7 @@ WBSTree = (function ($) {
 
             // CLICK ADD PROGRAM ELEMENT CHANGE ORDER LEGACY
             $('#new_program_element_change_order').unbind().on('click', function (event) {
+                progelem_scheduleImp = 0;
                 g_newProgramElementChangeOrder = true;
                 $('#ProgramElementChangeOrderModal').modal({ show: true, backdrop: 'static' });
                 $('#delete_program_element_change_order_modal').hide();
@@ -7597,6 +7625,9 @@ WBSTree = (function ($) {
                 console.log(g_selectedProgramElementChangeOrder);
                 $('#fileUploadProgramElementChangeOrderModal').val(''); // Jignesh-01-03-2021
                 $('#ProgramElementChangeOrderModal').modal({ show: true, backdrop: 'static' });
+
+                progelem_scheduleImp = parseInt($('#program_element_change_order_schedule_impact').val());
+
                 $('#delete_program_element_change_order_modal').show();
                 $("#ChangeOrderDate").datepicker();
                 $("#program_element_change_order_duration_date").datepicker(); //  Jignesh-ChangeOrderPopUpChanges
@@ -11277,6 +11308,17 @@ WBSTree = (function ($) {
             $(progmPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
+
+            $('#program_element_total_value').on('change', function () {
+                
+                var progval = $('#program_element_total_value').val().replace("$", "").replaceAll(",", "");
+                var modval = $('#program_element_total_modifications').val().replace("$", "");
+                var totalcurvalue = parseFloat(progval) + parseFloat(modval);
+                $('#program_element_total_current_value').val(totalcurvalue);
+                $('#program_element_total_current_value').focus(); // Manu 01-10-2022
+                $('#program_element_total_current_value').blur(); // Manu 01-10-2022
+            });
+
             $('#cancel_program_element,#cancel_program_element_x').unbind('click').on('click', function () {
                 if (isFieldValueChanged) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
