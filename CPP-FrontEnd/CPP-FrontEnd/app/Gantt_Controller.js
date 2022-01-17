@@ -6397,7 +6397,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
-                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;  // Pritesh 25Jul2020 to make it consistent
                             }
  
 
@@ -6478,7 +6478,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
-                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
 			 }, // align: "center" Manasi
                         {
@@ -6546,7 +6546,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
-                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
 			 }, // align: "center" Manasi
                         {
@@ -6626,7 +6626,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
-                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
 			}, // align: "center" Manasi
                         {
@@ -6707,7 +6707,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
-                                    return $filter('currency')(obj.unit_budget, '$', 2);  // Pritesh 25Jul2020 to make it consistent
+                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
 		            }, //align: "center" Manasi
                     {
@@ -12057,7 +12057,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "originalStartDate", width: 95, label: "Orig. Start", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalStartDate != 'N/A') {
-                                    var date = new Date(obj.originalStartDate);
+                                    var date = (obj.originalStartDate != undefined) ? new Date(obj.originalStartDate) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12072,7 +12072,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "originalEndDate", width: 95, label: "Orig. End", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalEndDate != 'N/A') {
-                                    var date = new Date(obj.originalEndDate);
+                                    var date = (obj.originalEndDate != undefined) ? new Date(obj.originalEndDate) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12087,7 +12087,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "start_date", width: 95, label: "Cur. Start", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.start_date != 'N/A') {
-                                    var date = new Date(obj.start_date);
+                                    var date = (obj.start_date != undefined) ? new Date(obj.start_date) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12103,7 +12103,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "end_date", width: 95, label: "Cur. End", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.end_date != 'N/A') {
-                                    var date = new Date(obj.end_date);
+                                    var date = (obj.end_date != undefined) ? new Date(obj.end_date) : new Date(); 
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12153,7 +12153,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "originalStartDate", label: "Orig. Start", align: "center", width: 90, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalStartDate != 'N/A') {
-                                    var date = new Date(obj.originalStartDate);
+                                    var date = (obj.originalStartDate != undefined) ? new Date(obj.originalStartDate) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12167,7 +12167,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "originalEndDate", label: "Orig. End", align: "center", width: 90, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalEndDate != 'N/A') {
-                                    var date = new Date(obj.originalEndDate);
+                                    var date = (obj.originalEndDate != undefined) ? new Date(obj.originalEndDate) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12182,7 +12182,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "start_date", label: "Cur. Start", align: "center", width: 90, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.start_date != 'N/A') {
-                                    var date = new Date(obj.start_date);
+                                    var date = (obj.start_date != undefined) ? new Date(obj.start_date) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12197,7 +12197,7 @@ angular.module('xenon.Gantt_Controller', []).
                             name: "end_date", label: "Cur. End", align: "center", width: 90, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.end_date != 'N/A') {
-                                    var date = new Date(obj.end_date);
+                                    var date = (obj.end_date != undefined) ? new Date(obj.end_date) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);

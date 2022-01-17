@@ -1878,7 +1878,7 @@ angular.module('cpp.controllers').
 
             //====================================== Jignesh-24-03-2021 Modification Changes =======================================
 
-            $('#btnSaveModification').unbind('click').on('click', function ($files) {
+            $('#btnSaveModification').unbind().on('click', function (event) {
                 var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedProgramID();
                 var createdBy = wbsTree.getSelectedProgramElementID();
@@ -1989,6 +1989,7 @@ angular.module('cpp.controllers').
 
                 $('#btnDeleteConModification').attr('disabled', 'disabled');
                 $('#btnEditConModification').attr('disabled', 'disabled');
+                return;
             });
 
             $('#btnDeleteConModification').unbind().on('click', function () {
@@ -2123,7 +2124,7 @@ angular.module('cpp.controllers').
                 });
             }
 
-            $('#btnClearModification').unbind('click').on('click', function () {
+            $('#btnClearModification').unbind().on('click', function (event) {
                 wbsTree.setContractModificationOperation(1);
                 $('#modification_title').val('');
                 $('#modification_date').val('');
@@ -2137,6 +2138,7 @@ angular.module('cpp.controllers').
                 $('input[name="rbModHistory"]').prop('checked', false);
                 $('#btnDeleteConModification').attr('disabled', 'disabled');
                 $('#btnEditConModification').attr('disabled', 'disabled');
+                return;
             });
             //====================================================================================================================
 

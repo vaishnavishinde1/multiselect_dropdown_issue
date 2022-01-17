@@ -620,12 +620,12 @@
                             </div>
                             <div class="col-md-1 text-right" style="padding-left: 0;margin-top:30px;padding-right:120px;">
 
-                                <button id="btnSaveModification" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
+                                <button type="button" id="btnSaveModification" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
 
                             </div>
                             <div class="col-md-1 text-right" style="padding-left: 0;margin-top:30px;padding-right:50px;">
 
-                                <button id="btnClearModification" class="btn btn-primary c-btn-save" style="width:100px;">Clear</button>
+                                <button type="button" id="btnClearModification" class="btn btn-primary c-btn-save" style="width:100px;">Clear</button>
 
                             </div>
                             <!--=================================================================================================-->
@@ -1730,7 +1730,7 @@
                 <div class="row">
                     <div class="col-md-6">
 
-                        <form style="height: 555px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
+                        <form style="height: 620px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
                             <!--css changes by shweta-->
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
                                 <!--css changes by shweta-->
@@ -1787,6 +1787,19 @@
                                     <label for="program_element_sponsor" class="control-label _bold">Project Value</label>
                                     <input type="text" class="form-control" id="program_element_total_value" data-type="currency">
                                 </div>
+                                <!--Manu   -->
+                                <div class="col-xs-4" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Total Change Order</label>
+                                    <input type="text" class="form-control" disabled id="program_element_total_modifications" data-type="currency">
+                                </div>
+                                <div class="col-xs-4" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Current Project Value</label>
+                                    <input type="text" class="form-control" disabled id="program_element_total_current_value" data-type="currency">
+                                </div>
+                                <!---->
+                            </div>
+
+                            <div class="_form-group" style="margin-top:5px; margin-bottom: 360px;">
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold required">Project NTP Date</label>
@@ -1889,8 +1902,9 @@
 
                             <!--css changes by shweta-->
                             <label for="program_element_milestone_name" class="control-label _bold" style="font-family: Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Key Project Milestones</label> <!--Key Program Element Milestones--> <!--css changes by shweta-->
-                            <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                <div class="panel-body" style="overflow: scroll;height : 235px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
+                            <!--Nivedita 14-01-2022 -->
+                            <div id="divmilestone" class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
+                                <div class="panel-body" style="overflow: scroll;height : 170px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
                                     <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
                                         <thead style="height:5%; position: sticky; top: 0; background: #FFF">
                                             <tr class="table-background">
