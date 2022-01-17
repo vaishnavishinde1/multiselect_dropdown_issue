@@ -22,8 +22,6 @@ namespace WebAPI.Models
         [NotMapped]
         public int Operation;
         public bool isModified;
-        public bool IsDeleted { get; set; }
-        public string DeletedBy { get; set; }
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProgramElementID { get; set; }
 
@@ -61,24 +59,6 @@ namespace WebAPI.Models
         public string CostDescription { get; set; }
         public string ScheduleDescription { get; set; }
         public string ScopeQualityDescription { get; set; }
-        //====== Nivedita--30-12-2021 =======
-        public string BillingPOC { get; set; }
-        public string BillingPOCPhone1 { get; set; }
-        public string BillingPOCPhone2 { get; set; }
-        public string BillingPOCEmail { get; set; }
-        public string BillingPOCAddressLine1 { get; set; }
-        public string BillingPOCAddressLine2 { get; set; }
-        public string BillingPOCCity { get; set; }
-        public string BillingPOCState { get; set; }
-        public string BillingPOCPONo { get; set; }
-        public string BillingPOCSpecialInstruction { get; set; }
-        public byte TMBilling { get; set; }
-        public byte SOVBilling { get; set; }
-        public byte MonthlyBilling { get; set; }
-        public byte CertifiedPayroll { get; set; }
-        public byte Lumpsum { get; set; }
-        public string ClientPONumber { get; set; }
-        //=================================================
 
         [ForeignKey("ProjectTypeID")]
         public virtual ProjectType ProjectType { get; set; }
@@ -160,7 +140,7 @@ namespace WebAPI.Models
                     ctx.Database.Log = msg => Trace.WriteLine(msg);
                     if (ProgramID != "null" && ProgramID != null){
                         int pgmId = int.Parse(ProgramID);
-                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramID == pgmId && p.IsDeleted == false);
+                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramID == pgmId);
                         MatchedProgramElementList = programElements.ToList<ProgramElement>();
 
 
@@ -168,7 +148,7 @@ namespace WebAPI.Models
                     else if (ProgramElementID != "null" && ProgramElementID != null)
                     {
                         int pgmEltId = int.Parse(ProgramElementID);
-                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramElementID == pgmEltId && p.IsDeleted == false);
+                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramElementID == pgmEltId);
                         MatchedProgramElementList = programElements.ToList<ProgramElement>();
                         for (int i = 0; i < MatchedProgramElementList.Count; i++)
                         {
@@ -178,12 +158,12 @@ namespace WebAPI.Models
                     }
                     else if (KeyStroke != "null" && KeyStroke != null)
                     {
-                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramElementName.Contains(KeyStroke) && p.IsDeleted == false);
+                        IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramElementName.Contains(KeyStroke));
                         MatchedProgramElementList = programElements.ToList<ProgramElement>();
                     }
                     else 
                     {
-                        IQueryable<ProgramElement> programs = ctx.ProgramElement.Include("Program").Where(p=>p.IsDeleted == false);
+                        IQueryable<ProgramElement> programs = ctx.ProgramElement.Include("Program");
                         MatchedProgramElementList = programs.ToList<ProgramElement>();
                     }
                     
@@ -438,24 +418,7 @@ namespace WebAPI.Models
                                 pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                                 pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
 
-                                //====== Nivedita--30-12-2021 =======
-                                pgmElt.BillingPOC = program_element.BillingPOC;
-                                pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
-                                pgmElt.BillingPOCPhone2 = program_element.BillingPOCPhone2;
-                                pgmElt.BillingPOCAddressLine1 = program_element.BillingPOCAddressLine1;
-                                pgmElt.BillingPOCAddressLine2 = program_element.BillingPOCAddressLine2;
-                                pgmElt.BillingPOCCity = program_element.BillingPOCCity;
-                                pgmElt.BillingPOCState = program_element.BillingPOCState;
-                                pgmElt.BillingPOCPONo = program_element.BillingPOCPONo;
-                                pgmElt.BillingPOCEmail = program_element.BillingPOCEmail;
-                                pgmElt.BillingPOCSpecialInstruction = program_element.BillingPOCSpecialInstruction;
-                                pgmElt.TMBilling = program_element.TMBilling;
-                                pgmElt.SOVBilling = program_element.SOVBilling;
-                                pgmElt.MonthlyBilling = program_element.MonthlyBilling;
-                                pgmElt.Lumpsum = program_element.Lumpsum;
-                                pgmElt.ClientPONumber = program_element.ClientPONumber;
-                                //=================================================
-
+                                
                                 ctx.SaveChanges();
                                 
                                 ctx.ProjectApproversDetails.RemoveRange(ApproversDetails);
@@ -513,24 +476,6 @@ namespace WebAPI.Models
                             pgmElt.ProgramElementSponsor = program_element.ProgramElementSponsor;
                             pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                             pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
-
-                            //====== Nivedita--30-12-2021 =======
-                            pgmElt.BillingPOC = program_element.BillingPOC;
-                            pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
-                            pgmElt.BillingPOCPhone2 = program_element.BillingPOCPhone2;
-                            pgmElt.BillingPOCAddressLine1 = program_element.BillingPOCAddressLine1;
-                            pgmElt.BillingPOCAddressLine2 = program_element.BillingPOCAddressLine2;
-                            pgmElt.BillingPOCCity = program_element.BillingPOCCity;
-                            pgmElt.BillingPOCState = program_element.BillingPOCState;
-                            pgmElt.BillingPOCPONo = program_element.BillingPOCPONo;
-                            pgmElt.BillingPOCEmail = program_element.BillingPOCEmail;
-                            pgmElt.BillingPOCSpecialInstruction = program_element.BillingPOCSpecialInstruction;
-                            pgmElt.TMBilling = program_element.TMBilling;
-                            pgmElt.SOVBilling = program_element.SOVBilling;
-                            pgmElt.MonthlyBilling = program_element.MonthlyBilling;
-                            pgmElt.Lumpsum = program_element.Lumpsum;
-                            pgmElt.ClientPONumber = program_element.ClientPONumber;
-                            //=================================================
                             ctx.SaveChanges();
                             result = "Success";
                         }
@@ -716,9 +661,8 @@ namespace WebAPI.Models
 
             }
         }
-        public static String deleteProgramElement(ProgramElement programElement)
+        public static String deleteProgramElement(int ProgramElementID)
         {
-            int ProgramElementID = programElement.ProgramElementID;
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
@@ -780,8 +724,7 @@ namespace WebAPI.Models
                                 Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
                             }
 
-                            //Nivedita 02-12-2021
-                            /*deleteCost(activityList);
+                            deleteCost(activityList);
                             if (activityList.Count > 0)
                             {
                                 foreach (var act in activityList)
@@ -797,15 +740,15 @@ namespace WebAPI.Models
                                     command.ExecuteNonQuery();
 
                                 }
-                            }*/
+                            }
                         }
-                        /*if (trendList.Count > 0)
+                        if (trendList.Count > 0)
                         {
                             foreach (var tr in trendList)
                             {
                                 Trend.deleteTrend(tr);
                             }
-                        }*/
+                        }
                     }
                     conn = ConnectionManager.getConnection();
                     conn.Open();
@@ -813,21 +756,17 @@ namespace WebAPI.Models
                     {
                         foreach (var p in projectList)
                         {
-                            p.DeletedBy = programElement.DeletedBy;
-                            Project.deleteProject(p);
+                            Project.deleteProject(p.ProjectID);
                         }
                     }
-                    //Nivedita 02-12-2021
-                    // var query1 = "delete from program_element where 1=1 and ProgramElementID = ProgramElementID";
-                    var query1 = "Update program_element set IsDeleted=1, DeletedDate=@DeletedDate, DeletedBy=@DeletedBy where ProgramElementID = @ProgramElementID";
+
+                    var query1 = "delete from program_element where 1=1 and ProgramElementID = ProgramElementID";
                     MySqlCommand command1 = new MySqlCommand(query1, conn);
                     command1.Parameters.AddWithValue("@ProgramElementID", ProgramElementID);
-                    command1.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
-                    command1.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
                     command1.ExecuteNonQuery();
-                  //  updateCostOnProgramElementDelete(pgmElt.ProgramID);
-                  ////  ctx.ProgramElement.Remove(pgmElt);
-                  //  //ctx.SaveChanges();
+                    updateCostOnProgramElementDelete(pgmElt.ProgramID);
+                  //  ctx.ProgramElement.Remove(pgmElt);
+                    //ctx.SaveChanges();
                     result = "Success";
                 }
             }

@@ -5,13 +5,13 @@ angular.module('cpp.controllers').
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
         'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'Client', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
-        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber',
+        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -63,7 +63,7 @@ angular.module('cpp.controllers').
                 }
                 //================= Jignesh-03-03-2021 ==================================
                 if (!docTypeID) {
-                    dhtmlx.alert('Please choose a Document Type.');
+                    dhtmlx.alert('Please choose a Doument Type.');
                     return;
                 }
                 if (!g_editelementdocument) {
@@ -394,9 +394,6 @@ angular.module('cpp.controllers').
 
                 //$('#cancel_doc_update_modal_xPrgElm').trigger('click');
             });
-
-            //====================== Tanmay ===================================================
-            //=================================================================================
 
             //====================================== Jignesh-TDM-06-01-2020 =======================================
             $('#uploadDocBtnTrend').unbind('click').on('click', function ($files) {
@@ -1721,161 +1718,6 @@ angular.module('cpp.controllers').
             });
             //=======================================================================================================
 
-            //======================================= Tanmay-AddNewClientModal-29/12/2021 ==========================================
-            $('#btnSaveClient').unbind('click').on('click', function ($files) {
-                var clientName = $('#txtClientName').val();
-                var clientPhone = $('#txtClientPhone').val();
-                var clientEmail = $('#txtClientEmail').val();
-                var clientAddressLine1 = $('#txtClientAddressLine1').val();
-                var clientAddressLine2 = $('#txtClientAddressLine2').val();
-                var clientCity = $('#txtClientCity').val();
-                var clientState = $('#txtClientState').val();
-                var clientPONo = $('#txtClientPONo').val();
-                var uniqueIdentityNumber = $('#txtUniqueIdentityNumber').val();
-
-                if (clientName == "" || clientName.length == 0) {
-                    dhtmlx.alert('Enter Client Name');
-                    return;
-                }
-                if (clientPhone == "" || clientPhone.length == 0) {
-                    dhtmlx.alert('Enter Phone Number.');
-                    return;
-                }
-                if (clientPhone != null) {
-                    if (clientPhone.length > 0) {
-                        if (clientPhone.length != 10) {
-                            dhtmlx.alert('Enter valid 10 digit Client Phone.');
-                            isFilled = false;
-                            return true;
-                        }
-                    }
-                }
-                if (clientEmail == "" || clientEmail.length == 0) {
-                    dhtmlx.alert('Enter Email Address.');
-                    return;
-                }
-                if (clientEmail != null) {
-                    if (clientEmail.length > 0) {
-                        var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-                        if (!testEmail.test(clientEmail)) {
-                            dhtmlx.alert('Please enter valid Email Address.');
-                            isFilled = false;
-                            return;
-                        }
-                    }
-                }
-                if (clientAddressLine1 == "" || clientAddressLine1.length == 0) {
-                    dhtmlx.alert('Enter Address Line 1');
-                    return;
-                }
-                if (clientAddressLine2 == "" || clientAddressLine2.length == 0) {
-                    dhtmlx.alert('Enter Address Line 2');
-                    return;
-                }
-                if (clientCity == "" || clientCity.length == 0) {
-                    dhtmlx.alert('Enter City');
-                    return;
-                }
-                if (clientState == "" || clientState.length == 0) {
-                    dhtmlx.alert('Enter State');
-                    return;
-                }
-                if (clientPONo == "" || clientPONo.length == 0) {
-                    dhtmlx.alert('Enter Zip Code');
-                    return;
-                }
-                if (clientName == "" || uniqueIdentityNumber == "") {
-                    dhtmlx.alert({
-                        text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
-                        width: "400px"
-                    });
-                    okToExit = false;
-                    isFilled = false;
-                    return;
-                }
-
-                
-
-                var listToSave = [];
-                var dataObj = {
-                    Operation: '1',
-                    ClientName: clientName,
-                    ClientPhone: clientPhone,
-                    ClientEmail: clientEmail,
-                    ClientAddressLine1: clientAddressLine1,
-                    ClientAddressLine2: clientAddressLine2,
-                    ClientCity: clientCity,
-                    ClientState: clientState,
-                    ClientPONo: clientPONo,
-                    UniqueIdentityNumber: uniqueIdentityNumber
-                }
-                listToSave.push(dataObj);
-                var url = serviceBasePath + 'response/Client/';
-                $http({
-                    url: url,
-                    method: "POST",
-                    data: JSON.stringify(listToSave),
-                    headers: { 'Content-Type': 'application/json' }
-                }).then(function success(response) {
-                    debugger;
-                    response.data.result.replace(/[\r]/g, '\n');
-                    if (response.data.result) {
-                        Client.get({}, function (response) {
-                            debugger;
-                            wbsTree.setClientList(response.result);
-                            var clientDropDownProgram;
-                            debugger;
-                            var clientList = wbsTree.getClientList();
-                            clientDropDownProgram = modal.find('.modal-body #program_client_poc');
-                            clientDropDownProgram.empty();
-                            // Jignesh-25-03-2021
-                            if (wbsTree.getLocalStorage().role === "Admin") {
-                                clientDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
-                            }
-                            for (var x = 0; x < clientList.length; x++) {
-                                if (clientList[x].ClientName == clientName) {
-                                    clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '" selected> ' + clientList[x].ClientName + '</option>');
-                                }
-                                else {
-                                    clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '"> ' + clientList[x].ClientName + '</option>');
-                                }
-                            }
-                        });
-                        //$http({
-                        //    url: serviceBasePath + "Request/Client",
-                        //    method: "GET"
-                        //}).then(function success(response) {
-                        //    wbsTree.setClientList(response.data.result);
-                        //    var clientDropDownProgram;
-                            
-                        //    var clientList = wbsTree.getClientList();
-                        //    clientDropDownProgram = modal.find('.modal-body #program_client_poc');
-                        //    clientDropDownProgram.empty();
-                        //    // Jignesh-25-03-2021
-                        //    if (wbsTree.getLocalStorage().role === "Admin") {
-                        //        clientDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
-                        //    }
-                        //    for (var x = 0; x < clientList.length; x++) {
-                        //        if (clientList[x].ClientName == clientName) {
-                        //            clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '" selected> ' + clientList[x].ClientName + '</option>');
-                        //        }
-                        //        else {
-                        //            clientDropDownProgram.append('<option value="' + clientList[x].ClientID + '"> ' + clientList[x].ClientName + '</option>');
-                        //        }
-                        //    }
-                        //});
-                        $('#cancel_addNewClientModal_x').trigger('click');
-                        dhtmlx.alert(response.data.result);
-                    } else {
-                        dhtmlx.alert('No changes to be saved.');
-                    }
-                    //$state.reload();
-                }, function error(response) {
-                    dhtmlx.alert("Failed to save. Please contact your Administrator.");
-                });
-            });
-            //=======================================================================================================
-
             //====================================== Jignesh-24-03-2021 Modification Changes =======================================
 
             $('#btnSaveModification').unbind('click').on('click', function ($files) {
@@ -3104,46 +2946,12 @@ angular.module('cpp.controllers').
                         var str = "<table class='gridView'>" +
                             "<tr><th>Organization</th><th>Contract</th><th>Project</th><th>Project Element</th></tr>";
                         var currentProgramCost, currentProjectCost, currentProjectElementCost;
-                       
-                        for (programI = 0; programI < organization.children.length; programI++)
-                        {
-                            var CalCulateProgramCost = 0;
-                            //Nivedita
+                        for (programI = 0; programI < organization.children.length; programI++) {
                             var program = organization.children[programI];
                             if (program.CurrentCost == null || program.CurrentCost == "" || program.CurrentCost == 0 || isNaN(program.CurrentCost)) {
                                 currentProgramCost = "";
                             } else {
-                                for (var i = 0; i < program.children.length; i++) {
-                                    var CalCulateProjectCost = 0;
-                                    var project = program.children[i];
-                                    for (var j = 0; j < project.children.length; j++) {
-                                        var projectElement = project.children[j];
-                                        CalCulateProjectCost += Number(projectElement.CurrentCost);
-                                       // CalCulateProgramCost += Number(projectElement.CurrentCost);
-                                        //alert(program.ProgramID + 'Cost=' + CalCulateProgramCost);
-                                        //CalCulateProjectCost += CalCulateProgramCost;
-                                        //alert(CalCulateProjectCost);
-                                    }
-                                    CalCulateProgramCost += Number(CalCulateProjectCost);
-                                    if (CalCulateProjectCost == 0) {
-                                        currentProjectCost = "";
-                                        project.CurrentCost = 0;
-                                    }
-                                    else {
-                                        project.CurrentCost = CalCulateProjectCost;
-                                    }
-                                    
-                                }
-                                if (CalCulateProgramCost == 0) {
-                                    currentProgramCost = "";
-                                    program.CurrentCost = 0;
-                                }
-                                else {
-                                    currentProgramCost = CalCulateProgramCost;
-                                    program.CurrentCost = CalCulateProgramCost;
-                                   currentProgramCost = "$" + addCommas(currentProgramCost);
-                                }
-                                
+                                currentProgramCost = "$" + addCommas(program.CurrentCost);
                             }
 
                             if (program.children.length == 0) {
