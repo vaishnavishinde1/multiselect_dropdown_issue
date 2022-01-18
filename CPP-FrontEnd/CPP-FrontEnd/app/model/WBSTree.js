@@ -1566,7 +1566,7 @@ WBSTree = (function ($) {
                     }
                     wbsTree.dblclick(wbsTree, d);
                 });
-            
+
             // Enter any new nodes at the parent's previous position.
             var nodeEnter = node.enter().append("g")
                 //.call(dragListener)
@@ -2920,7 +2920,6 @@ WBSTree = (function ($) {
                     if (orgName != modifiedName) {
                         isModified = true;
                     }
-
                     selectedNode.ProgramManager = $('#ProgramModal').find('.modal-body #program_manager').val();
                     selectedNode.ProgramSponsor = $('#ProgramModal').find('.modal-body #program_sponsor').val();
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
@@ -3261,7 +3260,7 @@ WBSTree = (function ($) {
                     //    dhtmlx.alert('Job number is a required field.');
                     //    return;
                     //}
-                    //selectedNode = newNode;
+
                     //API to Insert/Update
                     wbsTree.getProgram().persist().save({
                         "Operation": 2,
@@ -3329,16 +3328,13 @@ WBSTree = (function ($) {
 
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
-                            if (response.result.split(',')[0].trim() === "Success") {
-                                //selectedNode = newNode.parent;
+                        if (response.result.split(',')[0].trim() === "Success") {
                             g_contract_draft_list = [];
                             angular.forEach(fundToBeAdded, function (item) {
                                 console.log(item);
                                 if (item.ProgramID == "") {
                                     item.ProgramID = selectedNode.ProgramID;
-                                    //item.ProgramID = newNode.ProgramID;
                                 }
-
                             })
                             wbsTree.setOrgProgramFund(fundToBeAdded);
                             wbsTree.setOrgProgramCategory(categoryToBeAdded);
@@ -3346,14 +3342,10 @@ WBSTree = (function ($) {
                                 console.log(item);
                                 if (item.ProgramID == "") {
                                     item.ProgramID = selectedNode.ProgramID;
-                                    //item.ProgramID = newNode.ProgramID;
                                 }
                             })
 
-                           // wbsTree.setSelectedNode(selectedNode);
-                                wbsTree.updateTreeNodes(selectedNode);
-                                //wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
-                            //wbsTree.updateTreeNodes(newNode);
+                            wbsTree.updateTreeNodes(selectedNode);
                             $('#ProgramModal').modal('hide');
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
@@ -3782,9 +3774,6 @@ WBSTree = (function ($) {
 
 
                 if (modal_mode == 'Update') {   //luan here
-                    //var newNode = { name: "Update Project Element" };
-                    //newNode.name = $('#ProgramElementModal').find('.modal-body #project_name').val();
-                    //newNode.ProjectID = programElementID;
                     selectedNode.name = $('#ProgramElementModal').find('.modal-body #project_name').val();
                     //Nivedita 13-01-2022
                     //selectedNode.ProgramElementName = $('#ProgramElementModal').find('.modal-body #project_name').val();	//luan eats
@@ -3815,18 +3804,7 @@ WBSTree = (function ($) {
                     selectedNode.ScheduleDescription = $('#ProgramElementModal').find('.modal-body #schedule_description').val();
                     selectedNode.ProgramElementManager = $('#ProgramElementModal').find('.modal-body #program_element_manager_name').val();
                     selectedNode.ClientProjectManager = $('#ProgramElementModal').find('.modal-body #program_element_client_pm').val();
-
-                    var ClientPhoneNumber = $('#ProgramElementModal').find('.modal-body #program_element_client_phone').val();
-                    if (ClientPhoneNumber.length > 0) {
-                        if (ClientPhoneNumber.length != 12) {
-                            dhtmlx.alert('Enter valid 10 digit Client Phone #.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                        else {
-                            selectedNode.ClientPhoneNumber = $('#ProgramElementModal').find('.modal-body #program_element_client_phone').val();
-                        }
-                    }
-                    
+                    selectedNode.ClientPhoneNumber = $('#ProgramElementModal').find('.modal-body #program_element_client_phone').val();
 
                     //Nivedita 13-01-2022
                     //selectedNode.ClientPhoneNumber = $('#ProgramElementModal').find('.modal-body #program_element_client_phone').val();
@@ -3934,10 +3912,6 @@ WBSTree = (function ($) {
                     //luan here - Find the project class id
                     var projectClassList = wbsTree.getProjectClassList();
                     var selectedProjectClass = $('#ProgramElementModal').find('.modal-body #project_class');
-                    if (!selectedProjectClass.val()) {
-                        dhtmlx.alert('Select Managing Department as it is required field.');
-                        return;
-                    }
                     console.log(selectedProjectClass, selectedProjectClass.val());
                     selectedNode.ProjectClassID = 0;
                     for (var x = 0; x < projectClassList.length; x++) {
@@ -3946,8 +3920,6 @@ WBSTree = (function ($) {
                             selectedNode.ProjectClassID = projectClassList[x].ProjectClassID;
                         }
                     }
-
-                   
 
                     //luan here - Find the client id
                     // var clientList = wbsTree.getClientList();
@@ -3966,10 +3938,6 @@ WBSTree = (function ($) {
                     // Find location id
                     var locationList = wbsTree.getLocationList();
                     var selectedLocation = $('#ProgramElementModal').find('.modal-body #location');
-                    if (!selectedLocation.val()) {
-                        dhtmlx.alert('Location is a required field.');
-                        return;
-                    }
                     selectedNode.LocationID = 0;
                     for (var x = 0; x < locationList.length; x++) {
                         console.log(locationList[x].LocationName, selectedLocation.val());
@@ -4120,9 +4088,16 @@ WBSTree = (function ($) {
                     //}
                     //------------------------------------------------------------------------------------
 
-                    
+                    if (!selectedProjectClass.val()) {
+                        dhtmlx.alert('Select Managing Department as it is required field.');
+                        return;
+                    }
                     //============================== Jignesh-19-02-2021 ====================
-                   
+                    // Removed from the Top and placed here
+                    if (!selectedNode.ProgramElementName) {
+                        dhtmlx.alert('Project Title cannot be empty.'); // Jignesh-02-03-2021
+                        return;
+                    }
                     //======================================================================
                     //if (!selectedNode.ProgramElementName) {
                     //    dhtmlx.alert('Project name is a required field.');
@@ -4138,7 +4113,10 @@ WBSTree = (function ($) {
                     //}
 
 
-                    
+                    if (!selectedLocation.val()) {
+                        dhtmlx.alert('Location is a required field.');
+                        return;
+                    }
 
                     // if (!selectedProjectManager.val()) {
                     //       dhtmlx.alert('Project Manager is a required field.');
@@ -4148,9 +4126,16 @@ WBSTree = (function ($) {
                     //    dhtmlx.alert('Labor rate is a required field.');
                     //    return;
                     //}
-                    
+                    if (!/^\d+$/.test(selectedNode.ProjectNumber)) {
+                        dhtmlx.alert('Project # field is required. Contact your administrator.');
+                        return;
+                    }
 
-                    
+                    if (!selectedNode.ProjectStartDate) {
+                        dhtmlx.alert('Project NTP Date cannot be empty.'); // Jignesh-02-03-2021
+                        return;
+                    }
+
                     // --------------------- Add start date end date po date 21-01-2021 Swapnil --------------------------------------------------
 
                     //if (!selectedNode.ProjectPODate) {
@@ -4158,16 +4143,31 @@ WBSTree = (function ($) {
                     //    return;
                     //}
 
-                    
+                    if (!selectedNode.ProjectPStartDate) {
+                        dhtmlx.alert('Project Start Date cannot be empty.'); // Jignesh-02-03-2021
+                        return;
+                    }
 
-                    
+                    if (!selectedNode.ProjectPEndDate) {
+                        dhtmlx.alert('Project End Date cannot be empty.'); // Jignesh-02-03-2021
+                        return;
+                    }
 
                     // -----------------------------------------------------------------------
                     //================== Jignesh-01-03-2021 =============================
-                    
+                    //if (selectedNode.ClientPhoneNumber.length > 0) {
+                    //    if (selectedNode.ClientPhoneNumber.length != 12) {
+                    //        dhtmlx.alert('Enter valid 10 digit Client Phone #.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}
                     //===================================================================
 
-                    
+                    if (!selectedNode.BillingPOC) {
+                        dhtmlx.alert('Billing POC is a required field.');
+                        return;
+                    }
+
                     var modifiedName = selectedNode.name;
                     var modifiedClientPONumber = selectedNode.ClientPONumber;
                     var modifiedAmount = selectedNode.Amount;
@@ -4208,8 +4208,7 @@ WBSTree = (function ($) {
                     }
                     console.log("Program element update");
                     console.log(selectedNode);
-                    //newNode.parent = selectedNode;
-                    //selectedNode = newNode;
+
                     var objToSave = {
                         "Operation": 2,
                         "ProjectID": selectedNode.ProjectID,
@@ -4249,7 +4248,7 @@ WBSTree = (function ($) {
                         "ContractNumber": selectedNode.ContractNumber,
                         "ProjectStartDate": selectedNode.ProjectStartDate,		//datepicker - program element
                         "ContractStartDate": selectedNode.ContractStartDate,    //datepicker - program element
-                        
+
                         "CostDescription": selectedNode.CostDescription,
                         "ScheduleDescription": selectedNode.ScheduleDescription,
                         "ScopeQualityDescription": selectedNode.ScopeQualityDescription,
@@ -5051,14 +5050,6 @@ WBSTree = (function ($) {
                     return;
                 }
                 if (modal_mode == 'Update') {   //luan here
-                    if (!($('#ProjectModal').find('.modal-body #project_element_name').val())) {
-                        dhtmlx.alert('Project Element Name is a required field.'); // Jignesh-02-03-2021
-                        return;
-                    }
-                    else {
-                        selectedNode.ProjectName = $('#ProjectModal').find('.modal-body #project_element_name').val();	//luan eats
-                    }
-                    
                     selectedNode.name = $('#ProjectModal').find('.modal-body #project_element_name').val();
                     //Nivedita 13-01-2022
                     //selectedNode.ProjectName = $('#ProjectModal').find('.modal-body #project_element_name').val();	//luan eats
@@ -5328,7 +5319,10 @@ WBSTree = (function ($) {
                         dhtmlx.alert('Labor rate is a required field.');
                         return;
                     }
-                    
+                    if (!/^\d+$/.test(selectedNode.ProjectElementNumber)) {
+                        dhtmlx.alert('Project Element # field is required. Contact your administrator.'); // Jignesh-02-03-2021
+                        return;
+                    }
                     //if (!selectedNode.BillingPOC) {
                     //    dhtmlx.alert('Billing POC is a required field.');
                     //    return;
