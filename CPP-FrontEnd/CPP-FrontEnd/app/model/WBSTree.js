@@ -6138,7 +6138,7 @@ WBSTree = (function ($) {
                             //    text: 'Failed to save',
                             //    width: '500px'
                             //});
-                            if (response.alert == '' || response.alert == null || response.alert == undefined)
+                            if (response.result == '' || response.result == null || response.result == undefined)
                                 dhtmlx.alert('Something went wrong. Please try again..');
                             else {
                                 dhtmlx.alert({
