@@ -1176,6 +1176,15 @@ html {
     border: 1px solid black !important;
     color: black;
 }
+/*gantt-grid-input-border-changes21-1-2022*/
+.gantt_task_content .costBox input {
+    border: 1px solid transparent;
+}
+
+.gantt_task_content .costBox {
+    border: 1px solid #ebebeb !important;
+    border-top: 0 !important;
+}
 
 .costBar {
     border: none !important;

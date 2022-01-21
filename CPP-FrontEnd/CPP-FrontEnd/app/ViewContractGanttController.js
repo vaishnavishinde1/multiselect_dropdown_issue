@@ -6167,9 +6167,9 @@ angular.module('xenon.ViewContractGanttController', []).
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { //ACTUAL COST
 
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#98FB98;' />"
+                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;' />"
                         } else if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION) {
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFDAB9;' />"
+                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;' />"
                         } else {
                             costBoxes += "<input onClick='this.select();'    ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
                         }
@@ -6183,11 +6183,11 @@ angular.module('xenon.ViewContractGanttController', []).
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { // ACTUAL COST
 
-                            costBoxes += "<input  onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#98FB98;' />"
+                            costBoxes += "<input  onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;' />"
                         } else if ($scope.CostTrackTypes[id] &&
                             (($scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION))
                         ) {
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFDAB9;' />"
+                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;' />"
                         }
                         else
                             costBoxes += "<input onClick='this.select();'  disabled = true ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' TABINDEX=" + s + " ng-model='textBoxValues[" + id + "][" + i + "]' ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"

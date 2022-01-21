@@ -180,7 +180,9 @@ angular.module('xenon.Gantt_Controller', []).
             setTimeout(function () {
                 $("<h6 style='color: black; font-weight: 1000; opacity: .75; padding-bottom: 5px'>WBS</h5>").insertBefore($("#schedule-gantt"));
                 //$("<h6 style='margin-top:15px;color: black; font-weight: 1000; opacity: .75; padding-bottom: 5px;display:inline-block;'>Cost Line Items</h6>").insertBefore($("#cost-gantt")); // Jignesh-22-03-2021
-                $("<div style='margin-top:15px;margin-bottom:15px;display: inline-block; float: right;margin-right:3%'><div style='background-color: #73c9db; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 100px; display: inline-block'></div><span id='budget' style='font-weight:bold;'> : Budget</span><div style = 'background-color: #98FB98; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block' ></div > <span id='actual' style='font-weight:bold;'> : Actual</span><div style='background-color: #FFDAB9; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block'></div> <span id='forecast' style='font-weight:bold;'> : Forecast</span></div>").insertBefore($("#cost-gantt"));  //Manasi 01-04-2021 Legend Budget Actual Forecast
+                //$("<div style='margin-top:15px;margin-bottom:15px;display: inline-block; float: right;margin-right:3%'><div style='background-color: #73c9db; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 100px; display: inline-block'></div><span id='budget' style='font-weight:bold;'> : Budget</span><div style = 'background-color: #98FB98; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block' ></div > <span id='actual' style='font-weight:bold;'> : Actual</span><div style='background-color: #FFDAB9; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block'></div> <span id='forecast' style='font-weight:bold;'> : Forecast</span></div>").insertBefore($("#cost-gantt"));  //Manasi 01-04-2021 Legend Budget Actual Forecast
+                //Nivedita 17-01-2022
+                $("<div style='margin-top:15px;margin-bottom:15px;display: inline-block; float: right;margin-right:3%'><div style='background-color: #097392; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 100px; display: inline-block'></div><span id='budget' style='font-weight:bold;'> : Budget</span><div style = 'background-color: #83B4B3; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block' ></div > <span id='actual' style='font-weight:bold;'> : Actual</span><div style='background-color: #FFF0CE; width: 25px; border: 1px solid #000000; height:12px; margin-left: 30px; display:inline-block'></div> <span id='forecast' style='font-weight:bold;'> : Forecast</span></div>").insertBefore($("#cost-gantt"));  //Manasi 01-04-2021 Legend Budget Actual Forecast
                 //$('div:contains("Category"):not(:has(div))').css('margin-left', '2%');
                 //$("div[style='width: 313px;']").css('margin-left', '2%');
             }, 100);
@@ -1578,9 +1580,11 @@ angular.module('xenon.Gantt_Controller', []).
                 }
                                 
                 if ($scope.method[id] === "F" && $scope.textBoxValues[id][i] > 1 && checkForFTE == true) {
-                    dhtmlx.alert('FTE value for labor can not be greater than 1');
-                    $scope.textBoxValues[id][i] = "0";
+                    //dhtmlx.alert('FTE value for labor can not be greater than 1');
+                    //$scope.textBoxValues[id][i] = "0";
                     //return true;
+                    strCellId = "costCell" + id + i;
+                    $('#' + strCellId).css('color', 'red');
                 }
                 //--------------- X --------------- X --------------- X --------------- X --------------- 
                 $scope.ChangeText = false;   //Manasi 04-09-2020
@@ -6382,6 +6386,16 @@ angular.module('xenon.Gantt_Controller', []).
                 if (auth.role == "Executive Manager") {
                     $scope.costGanttInstance.config.columns = [
                         { name: "delete", label: "", width: 30, align: "center" },
+                        //{
+                        //    name: "flag", label: "", width: 30, align: "center", resize: true, template: function (obj) {
+                        //        if (obj.cost_type == 'F') {
+                        //            return 'Yes';
+                        //        }
+                        //        else {
+                        //            return 'No';
+                        //        }
+                        //    }
+                        //},
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
@@ -6463,6 +6477,16 @@ angular.module('xenon.Gantt_Controller', []).
                 } else {
                     $scope.costGanttInstance.config.columns = [
                         { name: "delete", label: "", width: 30, align: "center" },
+                        //{
+                        //    name: "flag", label: "", width: 30, align: "center", resize: true, template: function (obj) {
+                        //        if (obj.cost_type == 'F') {
+                        //            return 'Yes';
+                        //        }
+                        //        else {
+                        //            return 'No';
+                        //        }
+                        //    }
+                        //},
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
@@ -6531,6 +6555,16 @@ angular.module('xenon.Gantt_Controller', []).
                 if (auth.role == "Executive Manager") {
                     $scope.costGanttInstance.config.columns = [
                         { name: "delete", label: "", width: 30, align: "center" },
+                        //{
+                        //    name: "flag", label: "", width: 30, align: "center", resize: true, template: function (obj) {
+                        //        if (obj.cost_type == 'F') {
+                        //            return 'Yes';
+                        //        }
+                        //        else {
+                        //            return 'No';
+                        //        }
+                        //    }
+                        //},
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
@@ -6611,6 +6645,16 @@ angular.module('xenon.Gantt_Controller', []).
                 else {
                     $scope.costGanttInstance.config.columns = [
                         { name: "delete", label: "", width: 30, align: "center" },
+                        //{
+                        //    name: "flag", label: "", width: 30, align: "center", resize: true, template: function (obj) {
+                        //        if (obj.cost_type == 'F') {
+                        //            return 'Yes';
+                        //        }
+                        //        else {
+                        //            return 'No';
+                        //        }
+                        //    }
+                        //},
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
@@ -6692,6 +6736,16 @@ angular.module('xenon.Gantt_Controller', []).
             } else {
                 $scope.costGanttInstance.config.columns = [
                     { name: "delete", label: "", width: 30, align: "center" },
+                    //{
+                    //    name: "flag", label: "", width: 30, align: "center", resize: true, template: function (obj) {
+                    //        if (obj.cost_type == 'F') {
+                    //            return 'Yes';
+                    //        }
+                    //        else {
+                    //            return 'No';
+                    //        }
+                    //    }
+                    //},
                     //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true },
                     //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                     // Swapnil 30/11/2020
@@ -6792,7 +6846,8 @@ angular.module('xenon.Gantt_Controller', []).
                 if (isCurrentTrend)
                     bbb = cells.get(1);
                 //activate tooltip on first mouseover
-
+                //Nivedita 21-01-2022
+                //cells[1].ariaLabel = "";
                 $(bbb).on('mouseover', function () {
                     $(this).addClass('hover');
                     if ($scope.trend.TrendNumber == "1000") {
@@ -10182,13 +10237,13 @@ angular.module('xenon.Gantt_Controller', []).
                         s = parseInt(s) + parseInt(id.toString() + '000'); // Jignesh-06-05-2021
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { //ACTUAL COST
-
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#98FB98;' />"
+                            //Nivedita 17-01-2022
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;' />"
                         } else if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION) {
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFDAB9;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;' />" //Nivedita 17-01-2022
                         }
                         else {
-                            costBoxes += "<input onClick='this.select();'  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
                         }
                     }
                 }
@@ -10201,12 +10256,12 @@ angular.module('xenon.Gantt_Controller', []).
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { //ACTUAL COST
 
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#98FB98;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;' />"
                         } else if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION) {
-                            costBoxes += "<input onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFDAB9;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;' />" //Nivedita 17-01-2022
                         }
                         else {
-                            costBoxes += "<input onClick='this.select();' disabled = true ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' TABINDEX=" + s + " ng-model='textBoxValues[" + id + "][" + i + "]' ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();' disabled = true ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' TABINDEX=" + s + " ng-model='textBoxValues[" + id + "][" + i + "]' ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
                         }
                     }
                 }
