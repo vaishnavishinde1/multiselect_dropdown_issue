@@ -92,8 +92,16 @@ namespace WebAPI.Models
             CostLineItemList = ctx.CostFte.Where(z=>z.CostLineItemID == CostLineItemID).ToList();
             return CostLineItemList;
         }
-        
-         public static void updateIsExportedFlag(int Id)
+
+        public static List<CostFTE> getCostLineItemForInsperity(string CostLineItemID)
+        {
+            List<CostFTE> CostLineItemList = new List<CostFTE>();
+            var ctx = new CPPDbContext();
+            CostLineItemList = ctx.CostFte.Where(z => z.CostLineItemID.Contains(CostLineItemID)).ToList();
+            return CostLineItemList;
+        }
+
+        public static void updateIsExportedFlag(int Id)
         {
             var ctx = new CPPDbContext();
             ctx.Database.ExecuteSqlCommand("call SpUpdateIsExportedFlag(@Id)",
