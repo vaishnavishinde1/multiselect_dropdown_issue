@@ -1743,7 +1743,7 @@ angular.module('cpp.controllers').
                 }
                 if (clientPhone != null) {
                     if (clientPhone.length > 0) {
-                        if (clientPhone.length != 10) {
+                        if (clientPhone.length != 12) {
                             dhtmlx.alert('Enter valid 10 digit Client Phone.');
                             isFilled = false;
                             return true;
