@@ -11937,7 +11937,7 @@ WBSTree = (function ($) {
             //=======================================================================================================
 
             //======================================= Jignesh-23-02-2021 this code is there just update ==========================================
-            var idList = '#program_client_phone,#program_project_manager_phone,#program_billing_poc_phone_1,#program_billing_poc_phone_2,#program_element_client_phone,#program_billing_poc_phone_11,#program_billing_poc_phone_21';
+            var idList = '#program_client_phone,#program_project_manager_phone,#program_billing_poc_phone_1,#program_billing_poc_phone_2,#program_element_client_phone,#program_billing_poc_phone_11,#program_billing_poc_phone_21,#txtClientPhone';
             //$(idList).unbind().on('input blur paste', function () {
             //    $(this).val($(this).val().replace(/\D/g, ''));
             //});
