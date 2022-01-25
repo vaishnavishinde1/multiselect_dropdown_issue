@@ -1583,8 +1583,20 @@ angular.module('xenon.Gantt_Controller', []).
                     //dhtmlx.alert('FTE value for labor can not be greater than 1');
                     //$scope.textBoxValues[id][i] = "0";
                     //return true;
-                    strCellId = "costCell" + id + i;
+                    var strCellId = "costCell" + id + i;
+                    var strFlagId = "imgflag" + id;
+
                     $('#' + strCellId).css('color', 'red');
+                    
+                    $('#' + strFlagId).removeAttr('style');
+                }
+                else {
+                    var strCellId = "costCell" + id + i;
+                    var strFlagId = "imgflag" + id;
+
+                    $('#' + strCellId).css('color', 'black');
+
+                    $('#' + strFlagId).css('display', 'none');
                 }
                 //--------------- X --------------- X --------------- X --------------- X --------------- 
                 $scope.ChangeText = false;   //Manasi 04-09-2020
@@ -6399,7 +6411,37 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
-                        { name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true },
+                        {
+                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                                debugger;
+                                var data = $scope.CostData;
+                                var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
+                                var CurCostData = data.filter(s => filters.every(t => {
+                                    var key = Object.keys(t)[0];
+                                    return s[key] == t[key]
+                                }));
+
+                                if (obj.cost_type == 'F') {
+                                    var isExtraHours = false;
+                                    var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
+                                    for (var i = 0; i < TextBoxArr.length; i++) {
+                                        if (TextBoxArr[i] > 1) {
+                                            isExtraHours = true;
+                                        }
+                                    }
+                                    if (isExtraHours) {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    }
+                                    else {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    }
+
+                                }
+                                else {
+                                    return obj.newCostLineItemId;
+                                }
+                            }
+                        },
                         { name: "cost_track_type", label: "", width: 40, hide: false, align: "center" },  //Manasi 09-03-2021 change width to 40 from 30
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
@@ -6490,7 +6532,37 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
-                        { name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true },
+                        {
+                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                                debugger;
+                                var data = $scope.CostData;
+                                var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
+                                var CurCostData = data.filter(s => filters.every(t => {
+                                    var key = Object.keys(t)[0];
+                                    return s[key] == t[key]
+                                }));
+
+                                if (obj.cost_type == 'F') {
+                                    var isExtraHours = false;
+                                    var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
+                                    for (var i = 0; i < TextBoxArr.length; i++) {
+                                        if (TextBoxArr[i] > 1) {
+                                            isExtraHours = true;
+                                        }
+                                    }
+                                    if (isExtraHours) {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    }
+                                    else {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    }
+
+                                }
+                                else {
+                                    return obj.newCostLineItemId;
+                                }
+                            }
+                        },
                         { name: "cost_track_type", label: "", width: 40, hide: false, align: "center" },   //Manasi 09-03-2021 change width to 40 from 30
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
@@ -6568,7 +6640,37 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
-                        { name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true },
+                        {
+                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                                debugger;
+                                var data = $scope.CostData;
+                                var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
+                                var CurCostData = data.filter(s => filters.every(t => {
+                                    var key = Object.keys(t)[0];
+                                    return s[key] == t[key]
+                                }));
+
+                                if (obj.cost_type == 'F') {
+                                    var isExtraHours = false;
+                                    var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
+                                    for (var i = 0; i < TextBoxArr.length; i++) {
+                                        if (TextBoxArr[i] > 1) {
+                                            isExtraHours = true;
+                                        }
+                                    }
+                                    if (isExtraHours) {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    }
+                                    else {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    }
+
+                                }
+                                else {
+                                    return obj.newCostLineItemId;
+                                }
+                            }
+                        },
                         //{ name: "cost_track_type", label: "", width: 30, hide: false, align: "center" },
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
@@ -6658,7 +6760,37 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true }, 
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
-                        { name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true },
+                        {
+                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                                debugger;
+                                var data = $scope.CostData;
+                                var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
+                                var CurCostData = data.filter(s => filters.every(t => {
+                                    var key = Object.keys(t)[0];
+                                    return s[key] == t[key]
+                                }));
+
+                                if (obj.cost_type == 'F') {
+                                    var isExtraHours = false;
+                                    var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
+                                    for (var i = 0; i < TextBoxArr.length; i++) {
+                                        if (TextBoxArr[i] > 1) {
+                                            isExtraHours = true;
+                                        }
+                                    }
+                                    if (isExtraHours) {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    }
+                                    else {
+                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    }
+
+                                }
+                                else {
+                                    return obj.newCostLineItemId;
+                                }
+                            }
+                        },
                         //{ name: "cost_track_type", label: "", width: 30, hide: false, align: "center" },
                         { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                         { name: "description", label: "Cost Type Category", width: 200, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
@@ -6749,7 +6881,37 @@ angular.module('xenon.Gantt_Controller', []).
                     //{ name: "costLineItemIdNew", label: "#", width: 200, align: "left", resize: true },
                     //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                     // Swapnil 30/11/2020
-                    { name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true },
+                    {
+                        name: "newCostLineItemId", label: "#", width: 60, align: "right", resize: true, template: function (obj) {
+                            debugger; 
+                            var data = $scope.CostData;
+                            var filters = [{ CostLineItemID: obj.CostLineItemID }, {CostID: obj.cost_id }];
+                            var CurCostData = data.filter(s => filters.every(t => {
+                                var key = Object.keys(t)[0];
+                                return s[key] == t[key]
+                            }));
+                            
+                            if (obj.cost_type == 'F') {
+                                var isExtraHours = false;
+                                var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
+                                for (var i = 0; i < TextBoxArr.length; i++) {
+                                    if (TextBoxArr[i] > 1) {
+                                        isExtraHours = true;
+                                    }
+                                }
+                                if (isExtraHours) {
+                                    return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                }
+                                else {
+                                    return '<img id=imgflag' + obj.id +' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                }
+                                
+                            }
+                            else {
+                                return  obj.newCostLineItemId;
+                            }
+                        }
+                    },
                     { name: "ABCD", label: "", width: 30, hide: true },
                     { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
                     { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },    //Replace "Type with category"  Manasi 24-07-2020
@@ -7054,7 +7216,7 @@ angular.module('xenon.Gantt_Controller', []).
                 else if ($scope.scheduleScale === "year")
                     numberOfBoxes = moment(e).format('YYYY') - moment(s).format('YYYY') + 1;
                 var widthOfTextBox = sizes.width / numberOfBoxes;
-                return renderCostBoxes(widthOfTextBox, numberOfBoxes, task.id);
+                return renderCostBoxes(widthOfTextBox, numberOfBoxes, task.id, task.cost_type);
             };
 
             $scope.costGanttInstance.attachEvent("onBeforeTaskDisplay", function (id, task) {
@@ -10218,10 +10380,10 @@ angular.module('xenon.Gantt_Controller', []).
                 return buf;
             }
 
-            function renderCostBoxes(widthOfTextBox, numberOfBoxes, id) {
+            function renderCostBoxes(widthOfTextBox, numberOfBoxes, id, costType) {
                 //console.log(numberOfBoxes);
                 $scope.numberOfBoxes[id] = numberOfBoxes;
-
+                
                 var relWidth = 33;
                 var cssClass = "costBox " + id.toString() + "_cost";
                 var costBoxes = '';
@@ -10250,18 +10412,25 @@ angular.module('xenon.Gantt_Controller', []).
                 else {
                     var datatxt = $scope.textBoxValues;
                     for (var i = 0; i < numberOfBoxes; i++) {
+                        var strColorTxt = '';
+                        if (costType == 'F') {
+                            if (datatxt[id][i] > 1) {
+                                strColorTxt = "color:red;";
+                            }
+                        }
+                        
                         var s = i.toString(); // Jignesh-06-05-2021  id.toString() + '0' + i.toString();
                         //s = parseInt(s) + 5;
                         s = parseInt(s) + parseInt(id.toString() + '000'); // Jignesh-06-05-2021
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { //ACTUAL COST
 
-                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;" + strColorTxt+"' />"
                         } else if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION) {
-                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;' />" //Nivedita 17-01-2022
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;" + strColorTxt + "' />" //Nivedita 17-01-2022
                         }
                         else {
-                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();' disabled = true ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' TABINDEX=" + s + " ng-model='textBoxValues[" + id + "][" + i + "]' ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();' disabled = true ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' TABINDEX=" + s + " ng-model='textBoxValues[" + id + "][" + i + "]' ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;" + strColorTxt + "' />"
                         }
                     }
                 }
