@@ -3,13 +3,13 @@ angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
-        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'Client', 'Location', 'ProjectNumber',
+        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId','ProjectClassByProgramElementId', 'Client', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
         'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
-            ProjectType, ProjectClass, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
+            ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
             UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber) {
             Page.setTitle('Program Navigation');
@@ -31,6 +31,7 @@ angular.module('cpp.controllers').
             var formdata = new FormData();
             $scope.deleteDoc = [];
             var _modificationList = null;
+            var _wbsTreeData = null; 
             $('#fileUploadProject').change(function (ev) {
                 console.log(fileUploadProject.files);
                 $("#document_name_project").val(fileUploadProject.files[0].name);
@@ -3124,7 +3125,7 @@ angular.module('cpp.controllers').
                 $scope.SearchText = sreachTxt;
                 localStorage.setItem('SearchText', sreachTxt);
                 
-                var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1');
+                var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1', null);
             });
             $scope.FilterTrend = function (e) {
                 var oldsvg = d3.select("#wbs-tree");
@@ -3132,15 +3133,15 @@ angular.module('cpp.controllers').
                 var orgId = myLocalStorage.get('userSelectedOrgId');
 
                 if ($("#FilterTrend").prop('checked') == true) {
-                    $scope.loadWBSData(orgId, null, null, null,null, '0');
+                    $scope.loadWBSData(orgId, null, null, null,null, '0',null);
                 } else {
-                    $scope.loadWBSData(orgId, null, null, null, null, '1');
+                    $scope.loadWBSData(orgId, null, null, null, null, '1',null);
                 }
 
             }
        
-            $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData) {
-
+            $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID) {
+                debugger;
                 searchText = myLocalStorage.get('SearchText');
                 $scope.SearchText = searchText;
                 var pagedata = Page;
@@ -3163,11 +3164,12 @@ angular.module('cpp.controllers').
                 }
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
-                WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData).get({})
+                WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
                     .$promise.then(function (response) {
                        
 
                         console.log(response);
+                        _wbsTreeData = response;
                         var treeData = response;
                         $scope.getDefaultFirstProjectElement(treeData);
                         $scope.treeData = treeData;
@@ -3177,8 +3179,35 @@ angular.module('cpp.controllers').
                         //$rootScope.fromWBS = true;
                         // Rename the project and project element nodes to include project number and project element number.
                         var organization = response;
-                        var str = "<table class='gridView'>" +
-                            "<tr><th>Organization</th><th>Contract</th><th>Project</th><th>Project Element</th></tr>";
+                        var str = "<div class='row row-padding'>"+
+                            "<div class='gadget color-my' style = 'height: 733px;' >"+
+                              //  "<div class='gadget-head' style='display: block'>"+
+                                   // "<h3 style='margin-top:1px;'>"+
+                                  //   "   Interface Definition"+
+                                    //"<small style='color:white;' ng-show='data.length' class='page-title-subtle-white'>[ {{ data.length }}  Records(s) ]</small>"+
+                                 //   "</h3>"+
+
+                                    
+                             //   "<input class='wild-card-search pull-right' ng-model='SearchValue'>"+
+                             //    "           <span class='pull-right' style='margin-right:5px;font-weight:bold;'>Search:</span>"+
+                                  
+                           // "</div>"+
+                                   " <div class='gadget-content' style='height: 91%;'>"+
+                                    "    <table class='table  table-condensed'>  <thead>" +
+                            "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>"+
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Department</th>" +
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project Element</th>" +
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Service</th>" +
+                            "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Value</th>" +
+                            "</tr>  <thead><tfoot></tfoot> " +
+                            " <tbody>" +
+                            "<tr style = 'background-color:white !important;'>" +
+                            "    <td colspan='7'>" +
+                            "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
+                            "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                            "             <tbody>" ;
                         var currentProgramCost, currentProjectCost, currentProjectElementCost;
                        
                         for (programI = 0; programI < organization.children.length; programI++)
@@ -3221,13 +3250,20 @@ angular.module('cpp.controllers').
                                 }
                                 
                             }
+                            debugger;
+                            console.log("Check program details===>");
+                            console.log(program);
 
                             if (program.children.length == 0) {
-                                str += "<tr>" +
-                                    "<td><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                    "<td><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                                    "<td ></td>" +
-                                    "<td></td></tr >";
+                                str += 
+                                    "<tr class='fade-selection-animation'> " +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td></tr >";
                             }
                             for (projectI = 0; projectI < program.children.length; projectI++) {
                                 var project = program.children[projectI];
@@ -3236,12 +3272,33 @@ angular.module('cpp.controllers').
                                 } else {
                                     currentProjectCost = "$" + addCommas(project.CurrentCost);
                                 }
+
+                              
+                               
+
+                                //organization --- contract -- project
+                                debugger;
+                                console.log("Project Details====>");
+                                console.log(project);
                                 if (project.children.length == 0) {
-                                    str += "<tr>" +
-                                        "<td><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                        "<td><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                                        "<td><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
-                                        "<td></td></tr >";
+                                    var projectClassName = '';
+                                   // ProjectClass.get({}, function (Projectresponse) {
+                                      //  console.log(Projectresponse);
+                                        var projectClassList = wbsTree.getProjectClassList();
+                                        for (var x = 0; x < projectClassList.length; x++) {
+                                            if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
+                                                projectClassName = projectClassList[x].ProjectClassName
+                                            }
+                                        }
+                                    //});
+                                    str += "<tr class='fade-selection-animation'>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID+">" + project.ProjectClassName + "</td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;' ></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'></td></tr>";
                                 }
                                 project.name = project.ProjectNumber + ". " + project.name;
                                 for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
@@ -3251,11 +3308,34 @@ angular.module('cpp.controllers').
                                     } else {
                                         currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
                                     }
-                                    str += "<tr>" +
-                                        "<td><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                        "<td><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                                        "<td><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
-                                        "<td><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td></tr>";
+
+                                    debugger;
+                                    console.log("Project Element Details====>");
+                                    console.log(projectElement);
+                                    var projectServiceName = '';
+                                    ServiceClass.get({}, function (response) {
+                                        console.log(response);
+                                        
+                                        var serviceClassList = response.result;
+
+                                        for (var x = 0; x < serviceClassList.length; x++) {
+                                            if (serviceClassList[x].ID == projectElement.ProjectClassID) {
+                                                projectServiceName = serviceClassList[x].Description
+                                            }
+                                        }
+                                       
+                                       
+                                    });
+                                    str += "<tr class='fade-selection-animation'>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
+                                        "<td class='my-word-wrap' style='width: 14.60%;'><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td>" +
+                                        "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName+"</td>" +
+                                        "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost +"</td></tr>";
+
+
                                     projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
                                     if (!isProjectIdSet) {
 
@@ -3323,16 +3403,20 @@ angular.module('cpp.controllers').
                         //    return table;
                         //}
 
-
+                        str += "</tbody></table ></div ></td ></tr > </tbody ></table ></div></div></div>";
                         $('#wbsGridView').append(str);
 
                         var column1 = $('#wbsGridView Table td:first-child');
                         var column2 = $('#wbsGridView Table td:nth-child(2)');
                         var column3 = $('#wbsGridView Table td:nth-child(3)');
+                        var column4 = $('#wbsGridView Table td:nth-child(4)');
 
-                        modifyTableFirstColumnRowspan(column1, column2);
-                        modifyTableRowspan(column2);
-                        modifyTableRowspan(column3);
+                        //modifyTableFirstColumnRowspan(column1, column2);
+
+                        modifyTableRowspan(column1);
+                        //modifyTableRowspan(column2);
+                      //  modifyTableRowspan(column3);
+                       // modifyTableRowspan(column4);
 
                         function modifyTableRowspan(column) {
 
@@ -3824,7 +3908,7 @@ angular.module('cpp.controllers').
                                     console.log(testobj);
                                     $scope.filterProject = (testobj.ProjectID).toString();
                                     console.log('ProjectId--' + $scope.filterProject);
-                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null,'1');
+                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null,'1',null);
                                 });
                             });
                         });
@@ -3843,7 +3927,7 @@ angular.module('cpp.controllers').
                                 console.log(testobj);
                                 $scope.filterProgramElement = (testobj.ProgramElementID).toString();
                                 console.log('PrgmElmnt:' + $scope.filterProgramElement);
-                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null,'1');
+                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null,'1',null);
                                 Project.lookup().get({ ProgramID: $scope.filterProgramId, ProgramElementID: $scope.filterProgramElement }, function (projectData) {
                                     $scope.projectList = projectData.result;
                                 });
@@ -3857,7 +3941,7 @@ angular.module('cpp.controllers').
                             $scope.programList = programData.result;
                             var testobj = ($scope.programList.find(elem => elem.ProgramID == parseInt(localStorage.getItem('pgmId'))));
                             $scope.filterProgramId = (testobj.ProgramID).toString();
-                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null,'1');
+                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null,'1',null);
                             ProgramElement.lookup().get({ ProgramID: $scope.filterProgramId }, function (programElementData) {
                                 $scope.programElementList = programElementData.result;
                                 $("#selectProgramElement").val("");
@@ -3867,7 +3951,7 @@ angular.module('cpp.controllers').
                     }
 
                     else
-                        $scope.loadWBSData(orgId, null, null, null, null,'1');
+                        $scope.loadWBSData(orgId, null, null, null, null,'1',null);
 
                 });
 
@@ -4028,7 +4112,7 @@ angular.module('cpp.controllers').
                         }
 
                     });
-                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null,'1');
+                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null,'1',null);
 
             }
 
@@ -4054,9 +4138,18 @@ angular.module('cpp.controllers').
                         $scope.programElementList = programElementData.result;
                         $("#selectProgramElement").val("");
                     });
+
+                    debugger;
+
+                    ProjectClassByProgramId.get({ programID: pgmId }, function (response) {
+                        debugger;
+                        var data = response;
+                        $scope.projectClassListDD = response.result;
+                        //$("#selectProgramElement").val("");
+                    });
                 }
                 console.log($scope.programElementList);
-
+                var treedataaaa = _wbsTreeData;
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
                 console.log(pgmId);
@@ -4095,7 +4188,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgram $http.get pgmId:' + pgmId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, null, null, null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null,null);
 
                         });
                 }
@@ -4118,7 +4211,7 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                            $scope.loadWBSData(orgId, pgmId, null, null, null,'1');
+                            $scope.loadWBSData(orgId, pgmId, null, null, null,'1',null);
 
                         });
                 }
@@ -4129,6 +4222,8 @@ angular.module('cpp.controllers').
                 console.log('Called program element');
                 $scope.filterProject = "";
                 $scope.projectList = "";
+                $scope.projectClassListDD = "";
+                $scope.filterDepartment = "";
                 var orgId = $("#selectOrg").val();
                 var pgmId = $("#selectProgram").val();
                 var pgmEltId = $("#selectProgramElement").val();
@@ -4142,8 +4237,16 @@ angular.module('cpp.controllers').
                     Project.lookup().get({ ProgramID: pgmId, ProgramElementID: pgmEltId }, function (projectData) {
                         $scope.projectList = projectData.result;
                     });
+                    ProjectClassByProgramElementId.get({ programElemID: pgmEltId }, function (response) {
+                        var data = response;
+                        $scope.projectClassListDD = response.result;
+                    });
                 }
-
+                else if (pgmId != null && pgmId != "") {
+                    ProjectClassByProgramId.get({ programID: pgmId }, function (response) {
+                        $scope.projectClassListDD = response.result;
+                    });
+                }
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
                 if (pgmEltId != "") {
@@ -4184,7 +4287,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId + ' pgmEltId:' + pgmEltId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1');
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1',null);
                         });
                 } else {
                     $http.get(serviceBasePath + "Request/Project/" + pgmEltId)
@@ -4205,9 +4308,31 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId);
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1');
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1',null);
                         });
                 }
+                //filterChangeProject();
+
+            }
+
+            $scope.filterChangeDepartment = function () {
+                
+                var orgId = $("#selectOrg").val();
+                var pgmId = $("#selectProgram").val();
+                var pgmEltId = $("#selectProgramElement").val();
+                var deptEltId = $("#selectManagingDepartment").val();
+
+                localStorage.removeItem('pgmEltId');
+                localStorage.removeItem('projId');
+                localStorage.removeItem('SearchText');
+
+                if (pgmEltId == null || pgmEltId == "") {
+                    pgmEltId = null;
+                }
+
+                var oldsvg = d3.select("#wbs-tree");
+                oldsvg.selectAll("*").remove();
+                $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', deptEltId);
                 //filterChangeProject();
 
             }
@@ -4268,7 +4393,7 @@ angular.module('cpp.controllers').
                         });
                 }
 
-                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null,'1');
+                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null,'1',null);
 
             }
 

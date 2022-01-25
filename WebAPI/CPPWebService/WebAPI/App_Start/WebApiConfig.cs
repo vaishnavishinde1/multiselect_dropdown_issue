@@ -452,13 +452,15 @@ namespace WebAPI
 
             config.Routes.MapHttpRoute(
             name: "RequestWBS",
-            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}",
+            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}/{DeptID}",
 
             //Returns: Complex/Nested JSON Object. NOTE: use string.replace("\\","") before parsing the returned JSON
             defaults: new { controller = "RequestWBS", OrganizationID = RouteParameter.Optional, ProgramID = RouteParameter.Optional, ProgramElementID = RouteParameter.Optional, ProjectID = RouteParameter.Optional,
                 TrendNumber = RouteParameter.Optional, PhaseCode = RouteParameter.Optional, ActivityID = RouteParameter.Optional,
                 BudgetCategory = RouteParameter.Optional, BudgetSubCategory = RouteParameter.Optional, SearchText = RouteParameter.Optional,
-                AllData = RouteParameter.Optional }
+                AllData = RouteParameter.Optional,
+                DeptID = RouteParameter.Optional
+            }
         );
 
             config.Routes.MapHttpRoute(
@@ -1391,6 +1393,18 @@ namespace WebAPI
              );
 
             config.Routes.MapHttpRoute(
+                  name: "RequestProjectClassByProgramId",
+                  routeTemplate: "Request/ProjectClassByProgramId/{programID}",
+                 defaults: new { controller = "RequestProjectClassByProgramId" }
+             );
+
+            config.Routes.MapHttpRoute(
+                  name: "RequestProjectClassByProgramElemId",
+                  routeTemplate: "Request/ProjectClassByProgramElemId/{programElemID}",
+                 defaults: new { controller = "RequestProjectClassByProgramElemId" }
+             );
+
+            config.Routes.MapHttpRoute(
                  name: "RegisterProjectClass",
                  routeTemplate: "Response/ProjectClass",
                  defaults: new { controller = "RegisterProjectClass" }
@@ -1709,6 +1723,12 @@ namespace WebAPI
            routeTemplate: "Request/ExportCostCodeToExcel",
            defaults: new { controller = "RequestExportCostCodeToExcel" }
             );
+
+            config.Routes.MapHttpRoute(
+    name: "RequestExportInsperityCostCodeToExcel",
+    routeTemplate: "Request/ExportInsperityCostCodeToExcel",
+    defaults: new { controller = "RequestExportInsperityCostCodeToExcel" }
+     );
 
             ////Swapnil 20-10-2020
             config.Routes.MapHttpRoute(

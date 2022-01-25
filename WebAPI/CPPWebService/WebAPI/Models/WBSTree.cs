@@ -283,7 +283,9 @@ namespace WebAPI.Models
         [DataMember]
         public int ProjectTypeID;
         [DataMember]
-        public int ProjectClassID;
+        public int ProjectClassID; //ServiceID
+        [DataMember]
+        public string ServiceName;
         [DataMember]
         public String ProjectNumber;
         [DataMember]
@@ -400,6 +402,7 @@ namespace WebAPI.Models
             projectScopes = wbspj.projectScopes.ToList();
             children = trn;
             ProjectClassID = wbspj.ProjectClassID;
+            ServiceName = ServiceClass.getServiceById(wbspj.ProjectClassID).Description.ToString();
             ProjectTypeID = wbspj.ProjectTypeID;
             ProjectNumber = wbspj.ProjectNumber;
             name = wbspj.ProjectName;
@@ -502,6 +505,8 @@ namespace WebAPI.Models
         public int ProjectTypeID;
         [DataMember]
         public int ProjectClassID;
+        [DataMember]
+        public string ProjectClassName;
         [DataMember]
         public String ProjectNumber;
         [DataMember]
@@ -615,6 +620,7 @@ namespace WebAPI.Models
             name = wbspe.ProgramElementName;//Drew
             ProgramElementName = wbspe.ProgramElementName;
             ClientProjectManager = wbspe.ClientProjectManager;
+			ProjectClassName = ProjectClass.getProjectClassById(wbspe.ProjectClassID).ProjectClassName.ToString();
             ProgramElementNumber = wbspe.ProgramElementNumber;
 
             // Jignesh-25-02-2021
@@ -851,7 +857,7 @@ namespace WebAPI.Models
         }
 
         public static List<ProgramWBSTree> getWBSTreeDetails(int uId, String OrganizationID, String ProgramID, String ProgramElementID, String ProjectID,
-            String TrendNumber, String PhaseCode, String ActivityID, String BudgetCategory, String BudgetSubCategory,string AllData = "null")
+            String TrendNumber, String PhaseCode, String ActivityID, String BudgetCategory, String BudgetSubCategory,string AllData = "null", String DeptID = "null")
         {
             List<ProgramWBSTree> matchedWBSTree = new List<ProgramWBSTree>();
             List<ProjectWBSTree> ProjectList = new List<ProjectWBSTree>();
@@ -905,9 +911,19 @@ namespace WebAPI.Models
                     List<ProgramElement> returnedProgramElements = new List<ProgramElement>();//ProgramElement.getProgramElement(tempProgram.ProgramID.ToString(), "null", "null");
                     foreach(ProgramElement pe in allProgramElements)
                     {
-                        if(pe.ProgramID == tempProgram.ProgramID)
+                        if (DeptID != "null" && DeptID != "undefined")
                         {
-                            returnedProgramElements.Add(pe);
+                            if (pe.ProgramID == tempProgram.ProgramID && pe.ProjectClassID == Convert.ToInt32(DeptID))
+                            {
+                                returnedProgramElements.Add(pe);
+                            }
+                        }
+                        else
+                        {
+                            if (pe.ProgramID == tempProgram.ProgramID)
+                            {
+                                returnedProgramElements.Add(pe);
+                            }
                         }
                     }
                     // List<Project> returnProjects = Project.getProject(ProjectList[0].ProgramID, ProjectList[0].ProgramElementID, ProjectList[0].ProjectID, "null");

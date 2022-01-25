@@ -253,52 +253,65 @@
     <div class="col-sm-8" id="program_navigation">
 
         <div id="tree-container" style="height:800px;">
-            <div class="row" ng-init="loadOrganizations()" style="margin-top:-30px;">
-                <div class="form-group col-md-2 wbs-col-heading">
-                    <!--<label>Organization</label>
-                    <br/>-->
-                    <select class="input-medium form-control" ng-change="filterChangeOrg()" ng-model="filterOrgId" id="selectOrg">
-                        <!--<option value="">Select Organization</option>-->
-                        <option data-ng-repeat="filterOrg in organizationList" value={{filterOrg.OrganizationID}}>
-                            {{filterOrg.OrganizationName}}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2 wbs-col-heading">
-                    <!--<label>Program</label>
-                    <br/>-->
-                    <select class="input-medium form-control" ng-change="filterChangeProgram()" ng-model="filterProgramId" id="selectProgram">
-                        <option value="">Select Contract</option>
-                        <option data-ng-repeat="filterProgram in programList" value={{filterProgram.ProgramID}}>
-                            {{filterProgram.ProgramName}}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2 wbs-col-heading">
-                    <!--<label>Program Element</label>
-                    <br/>-->
-                    <select class="input-medium form-control" ng-change="filterChangeProgramElement()" ng-model="filterProgramElement" id="selectProgramElement">
-                        <option value="">Select Project</option>
-                        <option data-ng-repeat="filterProgramElement in programElementList" value={{filterProgramElement.ProgramElementID}}>
-                            {{filterProgramElement.ProgramElementName}}
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4 wbs-col-heading">
-                    <!--<label>Project</label>
-                    <br/>-->
-                    <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject">
-                        <option value="">Select Element</option>
-                        <option data-ng-repeat="filterProject in projectList" value={{filterProject.ProjectID}}>
-                            {{filterProject.ProjectName}}
-                        </option>
-                    </select>
-                    <!-- <select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
-                         <option value="">Select Managing Department</option>
-                         <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
-                             {{filterDepartment.ProjectClassName}}
-                         </option>
-                     </select>-->
+            <div class=""> <!--row row-padding-->
+                <div class="gadget color-my" ng-init="loadOrganizations()" style="height: 106px;margin-left:-10px">
+                    <div class="gadget-head" style="display: block">
+                        <h3 style="margin-top:1px;">Filter</h3>
+                        <!--      <a href="#" class="refresh">Refresh</a>-->
+                        <!--<button class="btn btn-success btn-xs widget-add" style="width:55px"
+                    ng-click="resetFilter()">
+                <span class=""></span> Reset
+            </button>-->
+                    </div>
+                    <div class="gadget-content">
+                        <div class="form-group col-md-2 wbs-col-heading">
+                            <!--<label>Organization</label>
+                <br/>-->
+                            <select class="input-medium form-control" ng-change="filterChangeOrg()" ng-model="filterOrgId" id="selectOrg">
+                                <!--<option value="">Select Organization</option>-->
+                                <option data-ng-repeat="filterOrg in organizationList" value={{filterOrg.OrganizationID}}>
+                                    {{filterOrg.OrganizationName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2 wbs-col-heading">
+                            <!--<label>Program</label>
+                <br/>-->
+                            <select class="input-medium form-control" ng-change="filterChangeProgram()" ng-model="filterProgramId" id="selectProgram">
+                                <option value="">Select Contract</option>
+                                <option data-ng-repeat="filterProgram in programList" value={{filterProgram.ProgramID}}>
+                                    {{filterProgram.ProgramName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2 wbs-col-heading">
+                            <!--<label>Program Element</label>
+                <br/>-->
+                            <select class="input-medium form-control" ng-change="filterChangeProgramElement()" ng-model="filterProgramElement" id="selectProgramElement">
+                                <option value="">Select Project</option>
+                                <option data-ng-repeat="filterProgramElement in programElementList" value={{filterProgramElement.ProgramElementID}}>
+                                    {{filterProgramElement.ProgramElementName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 wbs-col-heading">
+                            <!--<label>Project</label>
+                <br/>-->
+                            <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject">
+                                <option value="">Select Element</option>
+                                <option data-ng-repeat="filterProject in projectList" value={{filterProject.ProjectID}}>
+                                    {{filterProject.ProjectName}}
+                                </option>
+                            </select>
+                            <select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
+                                <option value="">Select Managing Department</option>
+                                <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
+                                    {{filterDepartment.ProjectClassName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
@@ -5528,19 +5541,19 @@
     }
     var displayMap = true;
     function toggle(x) {
-        debugger
+        debugger;
         displayMap = !displayMap;
         if (displayMap) {
             $('#mindmap').show();
-            // $('#selectProject').show();
+            $('#selectProject').show();
             $('#wbsGridView').hide();
-            // $('#selectManagingDepartment').hide();
+             $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             $('#mindmap').hide();
-            // $('#selectProject').hide();
+            $('#selectProject').hide();
             $('#wbsGridView').show();
-            //  $('#selectManagingDepartment').show();
+             $('#selectManagingDepartment').show();
 
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }

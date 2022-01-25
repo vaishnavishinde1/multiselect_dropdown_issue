@@ -640,7 +640,7 @@ namespace WebAPI.Services
                 NetworkCred.Password = password;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = NetworkCred;
-                smtp.Timeout = 10000;
+                smtp.Timeout = 1000000;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //smtp.Credentials = NetworkCred;
                 smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
