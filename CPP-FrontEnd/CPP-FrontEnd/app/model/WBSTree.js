@@ -5404,6 +5404,7 @@ WBSTree = (function ($) {
                     for (var i = 0; i < approversDdl.length; i++) {
                         var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                         var EmpId = $('#' + approversDdl[i].id).val();
+                        var UserId = $('#' + approversDdl[i].id).find(':selected').attr('data-userid'); // Jignesh-24-01-2022
                         var EmpName = "";
                         for (var x = 0; x < employeeList.length; x++) {
                             if (employeeList[x].ID == $('#' + approversDdl[i].id).val()) {
@@ -5420,7 +5421,8 @@ WBSTree = (function ($) {
                             ApproverMatrixId: ApproverMatrixId,
                             EmpId: EmpId,
                             EmpName: EmpName,
-                            ProjectElementId: selectedNode.ProjectID
+                            ProjectElementId: selectedNode.ProjectID,
+                            UserId: UserId
                         };
                         approversDetails.push(approver);
                         console.log(approversDetails);
@@ -5879,6 +5881,7 @@ WBSTree = (function ($) {
                         var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                         var EmpId = $('#' + approversDdl[i].id).val();
                         var EmpName = "";
+                        var UserId = $('#' + approversDdl[i].id).find(':selected').attr('data-userid'); // Jignesh-24-01-2022
                         for (var x = 0; x < employeeList.length; x++) {
                             if (employeeList[x].ID == $('#' + approversDdl[i].id).val()) {
                                 EmpName = employeeList[x].Name;
@@ -5894,7 +5897,8 @@ WBSTree = (function ($) {
                             ApproverMatrixId: ApproverMatrixId,
                             EmpId: EmpId,
                             EmpName: EmpName,
-                            ProjectElementId: 0
+                            ProjectElementId: 0,
+                            UserId: UserId
                         };
                         approversDetails.push(approver);
                         console.log(approversDetails);
@@ -11933,7 +11937,7 @@ WBSTree = (function ($) {
             //=======================================================================================================
 
             //======================================= Jignesh-23-02-2021 this code is there just update ==========================================
-            var idList = '#program_client_phone,#program_project_manager_phone,#program_billing_poc_phone_1,#program_billing_poc_phone_2,#program_element_client_phone,#program_billing_poc_phone_11,#program_billing_poc_phone_21';
+            var idList = '#program_client_phone,#program_project_manager_phone,#program_billing_poc_phone_1,#program_billing_poc_phone_2,#program_element_client_phone,#program_billing_poc_phone_11,#program_billing_poc_phone_21,#txtClientPhone';
             //$(idList).unbind().on('input blur paste', function () {
             //    $(this).val($(this).val().replace(/\D/g, ''));
             //});
@@ -12427,7 +12431,10 @@ WBSTree = (function ($) {
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
                                         for (var y = 0; y < employeeList.length; y++) {
                                             if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                employeeList[y].rUserId = roleWiseUserList[x].Id;
                                                 newEmployeeList.push(employeeList[y]);
+                                                //var newEmp = { ID: employeeList[y].ID + ',' + roleWiseUserList[x].Id, Name = employeeList[y].Name };
+                                                //newEmployeeList.push(newEmp);
                                                 break;
                                             }
                                         }
@@ -12444,7 +12451,8 @@ WBSTree = (function ($) {
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
-                                                append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                //append += '<option value="' + employeeList[x].ID + ',' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
+                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId +  '">' + employeeList[x].Name + '</option>';
                                             }
 
                                         }
@@ -12454,7 +12462,7 @@ WBSTree = (function ($) {
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
-                                                append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                             }
 
                                         }

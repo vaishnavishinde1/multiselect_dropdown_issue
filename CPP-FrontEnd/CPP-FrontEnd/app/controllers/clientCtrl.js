@@ -415,7 +415,7 @@
                 //}
                 if (value.ClientPhone != null) {
                     if (value.ClientPhone.length > 0) {
-                        if (value.ClientPhone.length != 10) {
+                        if (value.ClientPhone.length != 12) {
                             dhtmlx.alert('Enter valid 10 digit Client Phone.');
                             isFilled = false;
                             return true;

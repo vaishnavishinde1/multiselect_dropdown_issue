@@ -455,10 +455,10 @@ namespace WebAPI.Models
                                 if (approverUserID != 10000)
                                 {
 
-                                    User userID = ctx.User.Where(u => u.EmployeeID == approverUserID).FirstOrDefault();
+                                    //User userID = ctx.User.Where(u => u.EmployeeID == approverUserID).FirstOrDefault();
 
                                     ProjectAccessControl projectAccessControl1 = new ProjectAccessControl();
-                                    projectAccessControl1.UserId = userID.Id;
+                                    projectAccessControl1.UserId = ApproversDetails[x].UserId;
                                     projectAccessControl1.ProgramElementID = ApproversDetails[x].ProjectElementId;
 
                                     projectAccessControl1.ProgramId = project.ProgramID;
@@ -674,10 +674,11 @@ namespace WebAPI.Models
                                         int approverUserID = prj.ApproversDetails[x].EmpId;
                                         if (approverUserID != 10000) {
 
-                                            User userID = ctx.User.Where(u => u.EmployeeID == approverUserID).FirstOrDefault();
+                                            //User userID = ctx.User.Where(u => u.EmployeeID == approverUserID).FirstOrDefault();
+                                            //User userID = prj.ApproversDetails[x].UserId;
 
                                             ProjectAccessControl projectAccessControl = new ProjectAccessControl();
-                                            projectAccessControl.UserId = userID.Id;
+                                            projectAccessControl.UserId = prj.ApproversDetails[x].UserId;
                                             projectAccessControl.ProgramElementID = prj.ApproversDetails[x].ProjectElementId;
 
                                             projectAccessControl.ProgramId = project.ProgramID;
@@ -687,27 +688,27 @@ namespace WebAPI.Models
                                               && project.ProgramID == p.ProgramId && project.ProjectID == p.ProjectID)
                                               .FirstOrDefault();
 
-                                        if (checkDataExist1 != null)
-                                        {
-                                            projectAccessControl.Id = checkDataExist1.Id;
-                                            checkDataExist1.IsProjectApprover = true;
-                                            projectAccessControl.ProjectID = checkDataExist1.ProjectID;
-                                            projectAccessControl.IsProgramEleCreator = checkDataExist1.IsProgramEleCreator;
-                                            projectAccessControl.IsProjectCreator = checkDataExist1.IsProjectCreator;
-                                            projectAccessControl.IsProgramCreator = checkDataExist1.IsProgramCreator;
-                                            //ctx.ProjectAccessControl.Add(projectAccessControl);
-                                            ctx.SaveChanges();
-                                        }
-                                        else
-                                        {
-                                            projectAccessControl.ProjectID = project.ProjectID;
-                                            projectAccessControl.ProgramElementID = project.ProgramElementID;
-                                            projectAccessControl.IsProjectApprover = true;
-                                            projectAccessControl.ProgramId = project.ProgramID;
-                                            ctx.ProjectAccessControl.Add(projectAccessControl);
-                                            ctx.SaveChanges();
-                                        }
-                                        approverDetailsList.Add(projectAccessControl.UserId);
+                                            if (checkDataExist1 != null)
+                                            {
+                                                projectAccessControl.Id = checkDataExist1.Id;
+                                                checkDataExist1.IsProjectApprover = true;
+                                                projectAccessControl.ProjectID = checkDataExist1.ProjectID;
+                                                projectAccessControl.IsProgramEleCreator = checkDataExist1.IsProgramEleCreator;
+                                                projectAccessControl.IsProjectCreator = checkDataExist1.IsProjectCreator;
+                                                projectAccessControl.IsProgramCreator = checkDataExist1.IsProgramCreator;
+                                                //ctx.ProjectAccessControl.Add(projectAccessControl);
+                                                ctx.SaveChanges();
+                                            }
+                                            else
+                                            {
+                                                projectAccessControl.ProjectID = project.ProjectID;
+                                                projectAccessControl.ProgramElementID = project.ProgramElementID;
+                                                projectAccessControl.IsProjectApprover = true;
+                                                projectAccessControl.ProgramId = project.ProgramID;
+                                                ctx.ProjectAccessControl.Add(projectAccessControl);
+                                                ctx.SaveChanges();
+                                            }
+                                            approverDetailsList.Add(projectAccessControl.UserId);
 
                                         }
                                         
