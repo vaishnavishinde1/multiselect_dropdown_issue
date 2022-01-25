@@ -47,7 +47,7 @@ namespace WebAPI.Models
 
                 using (var ctx = new CPPDbContext())
                 {
-                    User_LicenseMapping = ctx.User_LicenseMapping.OrderBy(a => a.id).ToList();
+                    User_LicenseMapping = ctx.User_LicenseMapping.Where(a => a.expirationDate.Date > DateTime.Now.Date).OrderBy(a => a.id).ToList();
                 }
 
             }
@@ -148,13 +148,22 @@ namespace WebAPI.Models
                     }
                     else if (retreivedUser_LicenseMapping != null)
                     {
-                        retreivedUser_LicenseMapping.licenseKey = user_LicenseMapping.licenseKey;
-                        retreivedUser_LicenseMapping.licenseStatus = user_LicenseMapping.licenseStatus;
-                        if(user_LicenseMapping.expirationDate != null)
-                         retreivedUser_LicenseMapping.expirationDate = user_LicenseMapping.expirationDate;
-                        ctx.SaveChanges();
+                        if (retreivedUser_LicenseMapping.expirationDate.Date > DateTime.Now.Date)
+                        {
+                            retreivedUser_LicenseMapping.licenseKey = user_LicenseMapping.licenseKey;
+                            retreivedUser_LicenseMapping.licenseStatus = user_LicenseMapping.licenseStatus;
+                            if (user_LicenseMapping.expirationDate != null)
+                                retreivedUser_LicenseMapping.expirationDate = user_LicenseMapping.expirationDate;
+                            ctx.SaveChanges();
 
-                        result += user_LicenseMapping.licenseKey + " has been updated successfully.\n";
+                            result += user_LicenseMapping.licenseKey + " has been updated successfully.\n";
+                        }
+                        else
+                        {
+                            retreivedUser_LicenseMapping.licenseStatus = "LICENSE_EXPIRED";
+                            ctx.SaveChanges();
+                            result += user_LicenseMapping.licenseKey + " license Key expired.\n";
+                        }
                     }
                     else
                     {
@@ -228,6 +237,7 @@ namespace WebAPI.Models
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
 
             List<User_LicenseMapping> User_LicenseMapping = new List<User_LicenseMapping>();
+            User_LicenseMapping userMapping = new User_LicenseMapping();
             try
             {
 
@@ -240,7 +250,16 @@ namespace WebAPI.Models
                         Employee emp = ctx.Employee.Where(e => e.ID == userId.EmployeeID).FirstOrDefault();
                         userID = ctx.User.Where(u => u.UserID == emp.CreatedBy).FirstOrDefault().Id;
                     }
-                    
+                    userMapping = ctx.User_LicenseMapping.Where(l => l.userId == userID && l.licenseStatus == "LICENSE_VALID").FirstOrDefault();
+                    if (userMapping != null)
+                    {
+                        if (userMapping.expirationDate.Date < DateTime.Now.Date)
+                        {
+                            userMapping.licenseStatus = "LICENSE_EXPIRED";
+                            ctx.SaveChanges();
+                        }
+                    }
+
                     User_LicenseMapping = ctx.User_LicenseMapping.Where(l => l.userId == userID && l.licenseStatus == "LICENSE_VALID").
                         OrderByDescending(u =>u.id).ToList();
 

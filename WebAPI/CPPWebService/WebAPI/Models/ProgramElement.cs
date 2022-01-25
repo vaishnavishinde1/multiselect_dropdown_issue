@@ -198,6 +198,7 @@ namespace WebAPI.Models
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
                 Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                var innerEx = ex.InnerException.ToString();
             }
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Exit Point", Logger.logLevel.Debug);
             return MatchedProgramElementList;

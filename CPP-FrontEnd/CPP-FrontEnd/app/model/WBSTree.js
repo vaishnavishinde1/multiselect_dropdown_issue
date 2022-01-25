@@ -191,6 +191,641 @@ WBSTree = (function ($) {
 
         function createSomething(request) {
         }
+		
+		  //Added by Amruta
+
+        function displayMenu(type, e, d) {
+            debugger;
+            console.log(d);
+            $("#contextMenu").attr('contextType', type);
+
+            var contextMenuAddText;
+            var contextMenuEditText;
+
+            $("#contextMenuAdd").parent().hide();
+            $("#contextMenuEdit").parent().hide();
+            $("#contextMenuDelete").parent().hide();
+            $("#contextMenuViewGantt").parent().hide();
+            // Pritesh change all acl index on 4th to 5th Aug as it was not properly  mapped with DB record
+            if (type == "Root") {
+                if (wbsTree.getLocalStorage().acl[1] == 1) {
+                    contextMenuAddText = "Add Contract";
+                    contextMenuEditText = "Edit/Open Organization";
+
+                    $("#contextMenuEdit").parent().hide();
+                    $("#contextMenuAdd").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+                }
+            }
+            else if (type == "Program") {
+                if (wbsTree.getLocalStorage().acl[3] == 1) {
+                    contextMenuAddText = "Add Project";
+                    $("#contextMenuAdd").parent().show();
+                }
+                if (wbsTree.getLocalStorage().acl[0] == 1) {
+                    contextMenuEditText = "Open Contract";
+                    $("#contextMenuEdit").parent().show();
+
+                }
+                if (wbsTree.getLocalStorage().acl[1] == 1) {
+                    contextMenuEditText = "Edit/Open Contract";
+                    $("#contextMenuEdit").parent().show();
+                    $("#contextMenuDelete").parent().show();
+                }
+            }
+            else if (type == "ProgramElement") {
+                if (wbsTree.getLocalStorage().acl[5] == 1) {
+                    contextMenuAddText = "Add Element";
+                    $("#contextMenuAdd").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+                }
+                if (wbsTree.getLocalStorage().acl[2] == 1) {
+                    contextMenuEditText = "Open Project";
+                    $("#contextMenuEdit").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+
+                }
+                if (wbsTree.getLocalStorage().acl[3] == 1) {
+                    contextMenuEditText = "Edit/Open Project";
+                    $("#contextMenuEdit").parent().show();
+                    $("#contextMenuDelete").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+                }
+            }
+            else if (type == "Project") {
+                if (wbsTree.getLocalStorage().acl[7] == 1) {
+                    contextMenuAddText = "Add Trend";
+                    $("#contextMenuAdd").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+                }
+                if (wbsTree.getLocalStorage().acl[4] == 1) {
+                    contextMenuEditText = "Open Element";
+                    $("#contextMenuEdit").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+
+                }
+                if (wbsTree.getLocalStorage().acl[5] == 1) {
+                    contextMenuEditText = "Edit/Open Element";
+                    $("#contextMenuEdit").parent().show();
+                    $("#contextMenuDelete").parent().show();
+                    $("#contextMenuViewGantt").parent().hide();
+                }
+            }
+            //else {
+            //    contextMenuAddText = "Add New";
+            //    contextMenuEditText = "Edit/Open";
+            //}
+
+            if (contextMenuAddText) $("#contextMenuAdd").html(contextMenuAddText);
+            if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
+
+
+            if (type == "Root") {
+                //$("#contextMenuAdd").parent().show();
+
+                $("#contextMenuDelete").parent().hide();
+                $("#contextMenuScope").parent().hide();
+                $("#contextMenuMap").parent().show();
+                //$("#contextMenuProjectScope").parent().hide();
+            } else {
+                //$("#contextMenuAdd").parent().show();
+
+                if (type == "Project") {
+                    $("#contextMenuScope").parent().show();
+                    //$("#contextMenuProjectScope").parent().hide();
+                }
+                else
+                    $("#contextMenuScope").parent().hide();
+                //$("#contextMenuEdit").parent().show();
+                //$("#contextMenuDelete").parent().show();
+                $("#contextMenuMap").parent().hide();
+            }
+
+            /*var svg_graph = d3.select("#wbsGridView").selectAll("table td");
+            var svg_rect = svg_graph[0][0].getBoundingClientRect();
+            var zoom = d3.behavior.zoom();
+            var g_scale = zoom.scale();
+
+            var xOffset = svg_rect.x;
+            var yOffset = svg_rect.y;
+
+
+            var pageY = d.x0 + 200 - (yOffset * g_scale);
+            var pageX = d.y0 - 50 - (xOffset * g_scale);*/
+
+            //var div = document.getElementById("wbsGridView");
+            //var rect = div.getBoundingClientRect();
+            //var x = e.clientX + 200 - (rect.left * 2);
+            //var y = e.clientY - 50 - (rect.top * 2);
+            var element = d3.select(d);
+            console.log(element.node());
+            //var svg_rect = element[0].getBoundingClientRect();
+            //console.log(svg_rect);
+            contextMenu.style.display = 'block';
+            contextMenu.style.position = "absolute";
+            //contextMenu.style.left = e.clientX + "px";
+            //contextMenu.style.top = e.clientY + 100 + "px";
+
+
+            //Get current Browser zoom level
+            var browserZoom = ((window.outerWidth - 10) / window.innerWidth);
+            browserZoom = (browserZoom < 1) ? browserZoom : 1;
+
+            //0.7 and 0.9 zoom level on a 1366 not working properly
+            if (window.outerWidth <= 1366 && (browserZoom >= 0.7 && browserZoom <= 1))
+                browserZoom = 1;
+
+            var mediaZoom = $('html').css('zoom');
+            var scaleX = $('html').css('transform').split(',')[0];
+            var scaleY = $('html').css('transform').split(',')[3];
+            scaleY = (scaleY) ? scaleY.trim() : 1;
+            scaleX = (scaleX) ? scaleX.split('(')[1] : scaleX;
+            scaleX = (scaleX) ? scaleX : 1;
+
+            var currentZoom = ((window.outerWidth - 10) / window.innerWidth);
+            currentZoom = (currentZoom > 1) ? currentZoom : 1;
+            var pageXx = e.pageX;
+            var pageYy = e.pageY;
+            //$("#contextMenu").css({
+            //    display: "block",
+            //    left: (pageXx * currentZoom), //the position of the mouse is different relatvie to the screen based on the brwoser zoom
+            //    top: (pageYy * currentZoom)
+            //left: ((pageXx / mediaZoom) / scaleX) * browserZoom,
+            //    top: (((pageYy / mediaZoom) / scaleY) * browserZoom) + $('body').scrollTop()
+            //});
+
+
+            console.log(e.pageX, e.pageY);
+            console.log(d.x0, d.y0);
+            contextMenu.style.left = (((pageXx / mediaZoom) / scaleX) * browserZoom) + "px",
+                contextMenu.style.top = ((((pageYy / mediaZoom) / scaleY) * browserZoom) + $('body').scrollTop()) + "px";
+            contextMenu.style.marginLeft = "-4%";
+            e.preventDefault();
+
+            return false;
+
+        }
+        obj.prototype.loadContextMenu = function () {
+          //  var wbsTree = this;
+            var gridView = $('#wbsGridView Table td a');
+
+
+            debugger;
+            var contextMenu = document.getElementById("contextMenu");
+            gridView.on('click', function (d) {
+                debugger;
+                console.debug(d);
+                $('svg.trendTree g').show();
+                type = $(this).attr('level');
+                debugger;
+                if (type == "Root") {
+                    SelectedOrganizationId = $(this).attr('OrganizationId');
+                    if (Treedata.OrganizationID == SelectedOrganizationId) {
+                        selectedNode = Contract;
+                        wbsTree.setSelectedNode(selectedNode);
+                        d = selectedNode;
+                    }
+                } else if (type == "Program") {
+                    SelectedProgramId = $(this).attr('ProgramId');
+                    $.each(Treedata.children, function (i, Contract) {
+
+                        if (Contract.ProgramID == SelectedProgramId) {
+                            selectedNode = Contract;
+                            wbsTree.setSelectedNode(selectedNode);
+                            d = selectedNode;
+                        }
+
+                    });
+                } else if (type == "ProgramElement") {
+                    SelectedProgramElementId = $(this).attr('ProgramElementId');
+                    $.each(Treedata.children, function (i, Contract) {
+                        if (Contract.children) {
+                            $.each(Contract.children, function (j, Project) {
+
+                                if (Project.ProgramElementID == SelectedProgramElementId) {
+                                    selectedNode = Project;
+                                    wbsTree.setSelectedNode(selectedNode);
+                                    d = selectedNode;
+                                }
+
+                            });
+                        }
+                    });
+                } else if (type == "Project") {
+                    SelectedProjectId = $(this).attr('ProjectId');
+                    $.each(Treedata.children, function (i, Contract) {
+                        if (Contract.children) {
+                            $.each(Contract.children, function (j, Project) {
+                                if (Project.children) {
+                                    $.each(Project.children, function (k, Element) {
+
+                                        if (Element.ProjectID == SelectedProjectId) {
+                                            selectedNode = Element;
+                                            wbsTree.setSelectedNode(selectedNode);
+                                            d = selectedNode;
+                                        }
+
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+                wbsTree.click(wbsTree, d);
+            })
+                .on('contextmenu', function (d, i) {
+                    console.log(d);
+                    //d3.event.preventDefault();
+                    var e = d;
+                    type = $(this).attr('level');
+                    if (type == "Root") {
+                        SelectedOrganizationId = $(this).attr('OrganizationId');
+                        if (Treedata.organizationID == SelectedOrganizationId) {
+                            selectedNode = Treedata;
+                            wbsTree.setSelectedNode(selectedNode);
+                            d = selectedNode;
+                        }
+                    } else if (type == "Program") {
+                        SelectedProgramId = $(this).attr('ProgramId');
+                        $.each(Treedata.children, function (i, Contract) {
+
+                            if (Contract.ProgramID == SelectedProgramId) {
+                                selectedNode = Contract;
+                                wbsTree.setSelectedNode(selectedNode);
+                                d = selectedNode;
+                            }
+
+                        });
+                    } else if (type == "ProgramElement") {
+                        SelectedProgramElementId = $(this).attr('ProgramElementId');
+                        $.each(Treedata.children, function (i, Contract) {
+                            if (Contract.children) {
+                                $.each(Contract.children, function (j, Project) {
+
+                                    if (Project.ProgramElementID == SelectedProgramElementId) {
+                                        selectedNode = Project;
+                                        wbsTree.setSelectedNode(selectedNode);
+                                        d = selectedNode;
+                                    }
+
+                                });
+                            }
+                        });
+                    } else if (type == "Project") {
+                        SelectedProjectId = $(this).attr('ProjectId');
+                        $.each(Treedata.children, function (i, Contract) {
+                            if (Contract.children) {
+                                $.each(Contract.children, function (j, Project) {
+                                    if (Project.children) {
+                                        $.each(Project.children, function (k, Element) {
+
+                                            if (Element.ProjectID == SelectedProjectId) {
+                                                selectedNode = Element;
+                                                wbsTree.setSelectedNode(selectedNode);
+                                                d = selectedNode;
+                                            }
+
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    //wbsTree.rightclick(wbsTree, d);
+                    debugger;
+                    displayMenu(type, e, d);
+                })
+                .on('dblclick', function (d, i) { // swapnil 28/12/2020
+                    //d3.event.preventDefault();
+                    type = $(this).attr('level');
+                    if (type == "Root") {
+                        SelectedOrganizationId = $(this).attr('OrganizationId');
+                        if (Treedata.organizationID == SelectedOrganizationId) {
+                            selectedNode = Treedata;
+                            wbsTree.setSelectedNode(selectedNode);
+                            d = selectedNode;
+                        }
+                    } else if (type == "Program") {
+                        SelectedProgramId = $(this).attr('ProgramId');
+                        $.each(Treedata.children, function (i, Contract) {
+
+                            if (Contract.ProgramID == SelectedProgramId) {
+                                selectedNode = Contract;
+                                wbsTree.setSelectedNode(selectedNode);
+                                d = selectedNode;
+                            }
+
+                        });
+                    } else if (type == "ProgramElement") {
+                        SelectedProgramElementId = $(this).attr('ProgramElementId');
+                        $.each(Treedata.children, function (i, Contract) {
+                            if (Contract.children) {
+                                $.each(Contract.children, function (j, Project) {
+
+                                    if (Project.ProgramElementID == SelectedProgramElementId) {
+                                        selectedNode = Project;
+                                        wbsTree.setSelectedNode(selectedNode);
+                                        d = selectedNode;
+                                    }
+
+                                });
+                            }
+                        });
+                    } else if (type == "Project") {
+                        SelectedProjectId = $(this).attr('ProjectId');
+                        $.each(Treedata.children, function (i, Contract) {
+                            if (Contract.children) {
+                                $.each(Contract.children, function (j, Project) {
+                                    if (Project.children) {
+                                        $.each(Project.children, function (k, Element) {
+
+                                            if (Element.ProjectID == SelectedProjectId) {
+                                                selectedNode = Element;
+                                                wbsTree.setSelectedNode(selectedNode);
+                                                d = selectedNode;
+                                            }
+
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    wbsTree.dblclick(wbsTree, d);
+                });
+
+        }
+
+
+        obj.prototype.loadFullGridView = function () {
+            var orgId = $("#selectOrg").val();
+            var pgmId = $("#selectProgram").val();
+            var pgmEltId = $("#selectProgramElement").val();
+            var projId = $("#selectProject").val();
+            var deptEltId = $("#selectManagingDepartment").val();
+            var sreachTxt = $('#txtQuickSearch').val();
+            var allData = 1;
+
+            if (pgmId == 'undefined' || pgmId == null || pgmId == '') {
+                pgmId = null;
+            }
+            if (pgmEltId == 'undefined' || pgmEltId == null || pgmEltId == '') {
+                pgmEltId = null;
+            }
+            if (projId == 'undefined' || projId == null || projId == '') {
+                projId = null;
+            }
+            if (deptEltId == 'undefined' || deptEltId == null || deptEltId == '') {
+                deptEltId = null;
+            }
+            if (sreachTxt == 'undefined' || sreachTxt == null || sreachTxt == '') {
+                sreachTxt = null;
+            }
+            if ($("#FilterTrend").prop('checked') == true) {
+                allData = 0;
+            } else {
+                allData = 1;
+            }
+
+            var userList = wbsTree.getUserList();
+            var uName = _localStorage.userName;
+            var uID = 0;
+            $.each(userList, function (i, data) {
+                if (data.UserID == uName) {
+                    uID = data.Id;
+                }
+            });
+            var request = {
+                method: 'GET',
+                //url: serviceBasePath + "Request/WBS/" + uID + "/" + wbsTree.getSelectedOrganizationID() + "/null/null/null/null/null/null/null/null/null/null/null",
+                url: serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + sreachTxt + "/" + allData + "/" + deptEltId,
+                ignore: true,
+                headers: {
+                    'Content-Type': undefined
+                }
+            };
+
+            var angularHttp = wbsTree.getAngularHttp();
+            angularHttp(request).then(function success(response) {
+                $('#wbsGridView').html('');
+                var isProjectIdSet = false;
+                //$rootScope.fromWBS = true;
+                // Rename the project and project element nodes to include project number and project element number.
+                var organization = response.data;
+                var str = "<div class='row row-padding'>" +
+                    "<div class='gadget color-my' style = 'height: 733px;' >" +
+
+                    " <div class='gadget-content' style='height: 91%;'>" +
+                    "    <table class='table  table-condensed'>  <thead>" +
+                    "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Department</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project Element</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Service</th>" +
+                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Value</th>" +
+                    "</tr>  <thead><tfoot></tfoot> " +
+                    " <tbody>" +
+                    "<tr style = 'background-color:white !important;'>" +
+                    "    <td colspan='7'>" +
+                    "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
+                    "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                    "             <tbody>";
+                var currentProgramCost, currentProjectCost, currentProjectElementCost;
+
+                for (programI = 0; programI < organization.children.length; programI++) {
+                    var CalCulateProgramCost = 0;
+                    //Nivedita
+                    var program = organization.children[programI];
+                    if (program.CurrentCost == null || program.CurrentCost == "" || program.CurrentCost == 0 || isNaN(program.CurrentCost)) {
+                        currentProgramCost = "";
+                    } else {
+                        for (var i = 0; i < program.children.length; i++) {
+                            var CalCulateProjectCost = 0;
+                            var project = program.children[i];
+                            for (var j = 0; j < project.children.length; j++) {
+                                var projectElement = project.children[j];
+                                CalCulateProjectCost += Number(projectElement.CurrentCost);
+
+                            }
+                            CalCulateProgramCost += Number(CalCulateProjectCost);
+                            if (CalCulateProjectCost == 0) {
+                                currentProjectCost = "";
+                                project.CurrentCost = 0;
+                            }
+                            else {
+                                project.CurrentCost = CalCulateProjectCost;
+                            }
+
+                        }
+                        if (CalCulateProgramCost == 0) {
+                            currentProgramCost = "";
+                            program.CurrentCost = 0;
+                        }
+                        else {
+                            currentProgramCost = CalCulateProgramCost;
+                            program.CurrentCost = CalCulateProgramCost;
+                            currentProgramCost = "$" + addCommas(currentProgramCost);
+                        }
+
+                    }
+                    //debugger;
+                    console.log("Check program details===>");
+                    console.log(program);
+
+                    if (program.children.length == 0) {
+                        str +=
+                            "<tr class='fade-selection-animation'> " +
+                            "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                            "<td class='my-word-wrap' style='width: 14.28%;'></td></tr >";
+                    }
+                    for (projectI = 0; projectI < program.children.length; projectI++) {
+                        var project = program.children[projectI];
+                        if (project.CurrentCost == null || project.CurrentCost == "" || project.CurrentCost == 0 || isNaN(project.CurrentCost)) {
+                            currentProjectCost = "";
+                        } else {
+                            currentProjectCost = "$" + addCommas(project.CurrentCost);
+                        }
+
+
+
+
+                        //organization --- contract -- project
+                        //debugger;
+                        console.log("Project Details====>");
+                        console.log(project);
+                        if (project.children.length == 0) {
+                            var projectClassName = '';
+                            // ProjectClass.get({}, function (Projectresponse) {
+                            //  console.log(Projectresponse);
+                            var projectClassList = wbsTree.getProjectClassList();
+                            for (var x = 0; x < projectClassList.length; x++) {
+                                if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
+                                    projectClassName = projectClassList[x].ProjectClassName
+                                }
+                            }
+                            //});
+                            str += "<tr class='fade-selection-animation'>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td></tr>";
+                        }
+                        project.name = project.ProjectNumber + ". " + project.name;
+                        for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
+                            var projectElement = project.children[projectElementI];
+                            if (projectElement.CurrentCost == null || projectElement.CurrentCost == "" || projectElement.CurrentCost == 0 || isNaN(projectElement.CurrentCost)) {
+                                currentProjectElementCost = "";
+                            } else {
+                                currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
+                            }
+
+                            //debugger;
+                            //console.log("Project Element Details====>");
+                            //console.log(projectElement);
+                            //var projectServiceName = '';
+                            //ServiceClass.get({}, function (response) {
+                            //    console.log(response);
+
+                            //    var serviceClassList = response.result;
+
+                            //    for (var x = 0; x < serviceClassList.length; x++) {
+                            //        if (serviceClassList[x].ID == projectElement.ProjectClassID) {
+                            //            projectServiceName = serviceClassList[x].Description
+                            //        }
+                            //    }
+
+
+                            //});
+                            str += "<tr class='fade-selection-animation'>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
+                                "<td class='my-word-wrap' style='width: 14.60%;'><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName + "</td>" +
+                                "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost + "</td></tr>";
+
+
+                            projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
+                            if (!isProjectIdSet) {
+
+                                if (projectElementI == 0) {
+
+                                    wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
+                                    isProjectIdSet = true;
+                                    //$rootScope.fromWBS = false;
+                                    wbsTree.getWBSTrendTree().trendGraph(true);
+
+                                }
+
+                            }
+
+
+                        }
+
+                    }
+                }
+
+                str += "</tbody></table></div></td></tr></tbody></table></div></div></div>";
+                $('#wbsGridView').append(str);
+
+                debugger;
+                wbsTree.loadContextMenu();
+
+                var column1 = $('#wbsGridView Table td:first-child');
+                var column2 = $('#wbsGridView Table td:nth-child(2)');
+                var column3 = $('#wbsGridView Table td:nth-child(3)');
+                var column4 = $('#wbsGridView Table td:nth-child(4)');
+
+                //modifyTableFirstColumnRowspan(column1, column2);
+
+                modifyTableRowspan(column1);
+                //modifyTableRowspan(column2);
+                //  modifyTableRowspan(column3);
+                // modifyTableRowspan(column4);
+
+                function modifyTableRowspan(column) {
+
+                    var topMatchTd;
+                    var previousValue = "";
+                    var rowSpan = 1;
+                    column.each(function () {
+                        if ($(this).text() != "") {
+
+                            if ($(this).text() == previousValue) {
+                                rowSpan++;
+                                $(topMatchTd).attr('rowspan', rowSpan);
+                                $(this).remove();
+                            }
+                            else {
+                                topMatchTd = $(this);
+                                rowSpan = 1;
+                            }
+
+                        }
+
+
+                        previousValue = $(this).text();
+                    });
+
+                }
+            });
+
+          
+
+            
+        }
+		
+		
         obj.prototype.getContractModificationOperation = function () {
             return _ContractModificationOperation;
         }
@@ -1216,176 +1851,9 @@ WBSTree = (function ($) {
 
             var contextMenu = document.getElementById("contextMenu");
 
-            function displayMenu(type, e, d) {
-                console.log(d);
-                $("#contextMenu").attr('contextType', type);
+           
 
-                var contextMenuAddText;
-                var contextMenuEditText;
-
-                $("#contextMenuAdd").parent().hide();
-                $("#contextMenuEdit").parent().hide();
-                $("#contextMenuDelete").parent().hide();
-                $("#contextMenuViewGantt").parent().hide();
-                // Pritesh change all acl index on 4th to 5th Aug as it was not properly  mapped with DB record
-                if (type == "Root") {
-                    if (wbsTree.getLocalStorage().acl[1] == 1) {
-                        contextMenuAddText = "Add Contract";
-                        contextMenuEditText = "Edit/Open Organization";
-
-                        $("#contextMenuEdit").parent().hide();
-                        $("#contextMenuAdd").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-                    }
-                }
-                else if (type == "Program") {
-                    if (wbsTree.getLocalStorage().acl[3] == 1) {
-                        contextMenuAddText = "Add Project";
-                        $("#contextMenuAdd").parent().show();
-                    }
-                    if (wbsTree.getLocalStorage().acl[0] == 1) {
-                        contextMenuEditText = "Open Contract";
-                        $("#contextMenuEdit").parent().show();
-
-                    }
-                    if (wbsTree.getLocalStorage().acl[1] == 1) {
-                        contextMenuEditText = "Edit/Open Contract";
-                        $("#contextMenuEdit").parent().show();
-                        $("#contextMenuDelete").parent().show();
-                    }
-                }
-                else if (type == "ProgramElement") {
-                    if (wbsTree.getLocalStorage().acl[5] == 1) {
-                        contextMenuAddText = "Add Element";
-                        $("#contextMenuAdd").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-                    }
-                    if (wbsTree.getLocalStorage().acl[2] == 1) {
-                        contextMenuEditText = "Open Project";
-                        $("#contextMenuEdit").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-
-                    }
-                    if (wbsTree.getLocalStorage().acl[3] == 1) {
-                        contextMenuEditText = "Edit/Open Project";
-                        $("#contextMenuEdit").parent().show();
-                        $("#contextMenuDelete").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-                    }
-                }
-                else if (type == "Project") {
-                    if (wbsTree.getLocalStorage().acl[7] == 1) {
-                        contextMenuAddText = "Add Trend";
-                        $("#contextMenuAdd").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-                    }
-                    if (wbsTree.getLocalStorage().acl[4] == 1) {
-                        contextMenuEditText = "Open Element";
-                        $("#contextMenuEdit").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-
-                    }
-                    if (wbsTree.getLocalStorage().acl[5] == 1) {
-                        contextMenuEditText = "Edit/Open Element";
-                        $("#contextMenuEdit").parent().show();
-                        $("#contextMenuDelete").parent().show();
-                        $("#contextMenuViewGantt").parent().hide();
-                    }
-                }
-                //else {
-                //    contextMenuAddText = "Add New";
-                //    contextMenuEditText = "Edit/Open";
-                //}
-
-                if (contextMenuAddText) $("#contextMenuAdd").html(contextMenuAddText);
-                if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
-
-
-                if (type == "Root") {
-                    //$("#contextMenuAdd").parent().show();
-
-                    $("#contextMenuDelete").parent().hide();
-                    $("#contextMenuScope").parent().hide();
-                    $("#contextMenuMap").parent().show();
-                    //$("#contextMenuProjectScope").parent().hide();
-                } else {
-                    //$("#contextMenuAdd").parent().show();
-
-                    if (type == "Project") {
-                        $("#contextMenuScope").parent().show();
-                        //$("#contextMenuProjectScope").parent().hide();
-                    }
-                    else
-                        $("#contextMenuScope").parent().hide();
-                    //$("#contextMenuEdit").parent().show();
-                    //$("#contextMenuDelete").parent().show();
-                    $("#contextMenuMap").parent().hide();
-                }
-
-                /*var svg_graph = d3.select("#wbsGridView").selectAll("table td");
-                var svg_rect = svg_graph[0][0].getBoundingClientRect();
-                var zoom = d3.behavior.zoom();
-                var g_scale = zoom.scale();
-
-                var xOffset = svg_rect.x;
-                var yOffset = svg_rect.y;
-
-
-                var pageY = d.x0 + 200 - (yOffset * g_scale);
-                var pageX = d.y0 - 50 - (xOffset * g_scale);*/
-
-                //var div = document.getElementById("wbsGridView");
-                //var rect = div.getBoundingClientRect();
-                //var x = e.clientX + 200 - (rect.left * 2);
-                //var y = e.clientY - 50 - (rect.top * 2);
-                var element = d3.select(d);
-                console.log(element.node());
-                //var svg_rect = element[0].getBoundingClientRect();
-                //console.log(svg_rect);
-                contextMenu.style.display = 'block';
-                contextMenu.style.position = "absolute";
-                //contextMenu.style.left = e.clientX + "px";
-                //contextMenu.style.top = e.clientY + 100 + "px";
-
-
-                //Get current Browser zoom level
-                var browserZoom = ((window.outerWidth - 10) / window.innerWidth);
-                browserZoom = (browserZoom < 1) ? browserZoom : 1;
-
-                //0.7 and 0.9 zoom level on a 1366 not working properly
-                if (window.outerWidth <= 1366 && (browserZoom >= 0.7 && browserZoom <= 1))
-                    browserZoom = 1;
-
-                var mediaZoom = $('html').css('zoom');
-                var scaleX = $('html').css('transform').split(',')[0];
-                var scaleY = $('html').css('transform').split(',')[3];
-                scaleY = (scaleY) ? scaleY.trim() : 1;
-                scaleX = (scaleX) ? scaleX.split('(')[1] : scaleX;
-                scaleX = (scaleX) ? scaleX : 1;
-
-                var currentZoom = ((window.outerWidth - 10) / window.innerWidth);
-                currentZoom = (currentZoom > 1) ? currentZoom : 1;
-                var pageXx = e.pageX;
-                var pageYy = e.pageY;
-                //$("#contextMenu").css({
-                //    display: "block",
-                //    left: (pageXx * currentZoom), //the position of the mouse is different relatvie to the screen based on the brwoser zoom
-                //    top: (pageYy * currentZoom)
-                //left: ((pageXx / mediaZoom) / scaleX) * browserZoom,
-                //    top: (((pageYy / mediaZoom) / scaleY) * browserZoom) + $('body').scrollTop()
-                //});
-
-
-                console.log(e.pageX, e.pageY);
-                console.log(d.x0, d.y0);
-                contextMenu.style.left = (((pageXx / mediaZoom) / scaleX) * browserZoom) + "px",
-                    contextMenu.style.top = ((((pageYy / mediaZoom) / scaleY) * browserZoom) + $('body').scrollTop()) + "px";
-                contextMenu.style.marginLeft = "-4%";
-                e.preventDefault();
-
-                return false;
-
-            }
+           
 
 
             gridView.on('click', function (d) {
@@ -2384,6 +2852,8 @@ WBSTree = (function ($) {
                                     //$scope.init();
                                     //console.log("-------DELETED ORGANIZATION--------");
                                     //wbsTree.updateTreeNodes(selectedNode);
+                                    wbsTree.loadFullGridView();
+                                    //wbsTree.loadContextMenu();
                                     rootScope.modalInstance.close();
                                     //wbsTree.getWBSTrendTree().trendGraph();
                                 }
@@ -2409,8 +2879,10 @@ WBSTree = (function ($) {
                                     if ($('#ProgramModal').hasClass('in'))
                                         $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
                                     wbsTree.updateTreeNodes(selectedNode.parent);
-
-                                    wbsTree.getWBSTrendTree().trendGraph();
+                                        wbsTree.loadFullGridView();
+                                        wbsTree.getWBSTrendTree().trendGraph();
+                                      
+                                       // wbsTree.loadContextMenu();
                                     //window.location.reload();   //Manasi 28-07-2020
                                 });
                             } else if (selectedNode.level === "ProgramElement") {
@@ -2439,13 +2911,17 @@ WBSTree = (function ($) {
                                         wbsTree.updateTreeNodes(selectedNode.parent);
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
+                                        wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
+                                       // wbsTree.loadFullGridView();
 
                                         //window.location.reload();   //Manasi 28-07-2020
                                     });
                                     if ($('#ProgramElementModal').hasClass('in'))
-                                        $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
-                                    wbsTree.getWBSTrendTree().trendGraph();
+                                            $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+                                        wbsTree.loadFullGridView();
+                                        wbsTree.getWBSTrendTree().trendGraph();
+                                       // wbsTree.loadFullGridView();
 
                                 })
                             } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
@@ -2486,7 +2962,7 @@ WBSTree = (function ($) {
 
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
-
+                                        wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         console.log(wbsTree.getWBSTrendTree().getTrendNumber());
                                         //set the project location to organization's locaion on delete project
@@ -2985,7 +3461,7 @@ WBSTree = (function ($) {
                         selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
                     }
                     selectedNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
-                    selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
+                    //selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
 					//Nivedita 13-01-2022
                     //selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
 					if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
@@ -3347,6 +3823,7 @@ WBSTree = (function ($) {
 
                             wbsTree.updateTreeNodes(selectedNode);
                             $('#ProgramModal').modal('hide');
+                            wbsTree.loadFullGridView();
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
                             selectedNode.name = temp_node.name;
@@ -3724,6 +4201,7 @@ WBSTree = (function ($) {
                                 }
                                 wbsTree.setSelectedNode(selectedNode);
                                 wbsTree.updateTreeNodes(selectedNode);
+                                wbsTree.loadFullGridView();
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                             } else {
@@ -3760,7 +4238,7 @@ WBSTree = (function ($) {
                 var orgProjectDescription = wbsTree.getOrgProjectDescription;
                 var isModified = false;
                 var temp_node = jQuery.extend({}, selectedNode);
-                var programElementID = wbsTree.getSelectedProgramElementID();
+                var programElementID = selectedNode.ProgramElementID;//wbsTree.getSelectedProgramElementID();
                 if (wbsTree.getSelectedOrganizationID() == null) {
                     wbsTree.setSelectedOrganizationID($("#selectOrg").val());
                 }
@@ -4316,7 +4794,8 @@ WBSTree = (function ($) {
                             wbsTree.updateTreeNodes(selectedNode);
 
                             //wbsTree.updateTreeNodes(selectedNode);
-
+                            debugger;// for update
+                            wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProgramElementModal').modal('hide');
@@ -4887,7 +5366,9 @@ WBSTree = (function ($) {
 
                             apiRegisterProgramElementChangeOrder();
 
-
+                            debugger;
+                            /////////aaa
+                           // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
@@ -4923,6 +5404,8 @@ WBSTree = (function ($) {
 
 
                             }
+                            debugger;
+                            wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
                         } else {
@@ -5552,7 +6035,8 @@ WBSTree = (function ($) {
                             wbsTree.updateTreeNodes(selectedNode);
 
                             //wbsTree.updateTreeNodes(selectedNode);
-
+                            debugger;
+                            wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
@@ -6113,7 +6597,8 @@ WBSTree = (function ($) {
                             if (projectNumber == 1) {
                                 wbsTree.getWBSTrendTree().trendGraph(true);
                             }
-
+                            debugger;
+                            wbsTree.loadFullGridView();
                             //-----------------------------------------------------------------------
 
                             //Parameterize JSON
@@ -6156,6 +6641,8 @@ WBSTree = (function ($) {
 
                     wbsTree.updateTreeNodes(selectedNode);
                     wbsTree.getWBSTrendTree().trendGraph();
+                    debugger;
+                    wbsTree.loadFullGridView();
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                     //var uploadBtnProject = modal.find('.modal-body #uploadBtnProject');
@@ -7319,7 +7806,7 @@ WBSTree = (function ($) {
                         "ChangeOrderNumber": updatedChangeOrder.ChangeOrderNumber,
                         "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
-                        "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                        "ProgramElementID": selectedNode.ProgramElementID,
                         "OrderType": updatedChangeOrder.OrderType,
                         "OrderDate": updatedChangeOrder.OrderDate,
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7696,7 +8183,7 @@ WBSTree = (function ($) {
 
                         var listToSave = [];
                         listToSave.push(obj);
-                        var ProgramElementId = wbsTree.getSelectedProgramElementID();
+                        var ProgramElementId = selectedNode.ProgramElementID;
                         wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
                             function (response) {
                                 if (response.result.split(',')[0].trim() === "Success") {
@@ -8132,19 +8619,21 @@ WBSTree = (function ($) {
                     var gridUploadedDocumentProgram = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocumentProgram tbody');
                     gridUploadedDocumentProgram.empty();
                     //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
                         //wbsTree.setDocumentList(response.result);
                         var _documentList = response.result;
-                        _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                        _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID }, function (response) {
                             var _modificationList = response.data;
                             var moda2 = $('#ProgramModal');
                             var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
                             gridUploadedContDocument.empty();
                             for (var x = 0; x < _documentList.length; x++) {
                                 var modificatioTitle = "";
-                                for (var i = 0; i < _modificationList.length; i++) {
-                                    if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
-                                        modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
+                                if (_modificationList!= undefined) {
+                                    for (var i = 0; i < _modificationList.length; i++) {
+                                        if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
+                                            modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
+                                        }
                                     }
                                 }
                                 gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
@@ -8188,7 +8677,7 @@ WBSTree = (function ($) {
                     $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                     var gridViewAllUploadedDocumentProgram = $("#gridViewAllDocumentInContract")// Jignesh-SearchField-05022021
                     gridViewAllUploadedDocumentProgram.empty();
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
 
@@ -8245,15 +8734,17 @@ WBSTree = (function ($) {
                         var totalValue = 0;
                         var totalDaysOfScheduleImpact = 0;
                         var updatedContractEndDate = "";
-                        var mod2 = _ModificationList.reverse();
-                        for (var x = 1; x < mod2.length; x++) {
-                            if (_ModificationList[x].Id != 0 && _ModificationList[x].Id != null) {
-                                totalValue = totalValue + parseFloat(_ModificationList[x].Value.replace(/,/g, ''));
+                        if (_ModificationList != undefined) {
+                            var mod2 = _ModificationList.reverse();
+                            for (var x = 1; x < mod2.length; x++) {
+                                if (_ModificationList[x].Id != 0 && _ModificationList[x].Id != null) {
+                                    totalValue = totalValue + parseFloat(_ModificationList[x].Value.replace(/,/g, ''));
+                                }
+                                totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_ModificationList[x].ScheduleImpact);
+                                //if (_ModificationList[x].DurationDate != "" && _ModificationList[x].DurationDate != null) {
+                                //    updatedContractEndDate = _ModificationList[x].DurationDate;
+                                //}
                             }
-                            totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_ModificationList[x].ScheduleImpact);
-                            //if (_ModificationList[x].DurationDate != "" && _ModificationList[x].DurationDate != null) {
-                            //    updatedContractEndDate = _ModificationList[x].DurationDate;
-                            //}
                         }
                         $('#total_modification').val('$' + totalValue);
                         //$('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
@@ -9778,10 +10269,10 @@ WBSTree = (function ($) {
                                         console.log(response);
                                         if (response.result == "Deleted") {
                                             wbsTree.setDeleteDocIDs(null);
-                                            _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
+                                            _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
                                                 //wbsTree.setDocumentList(response.result);
                                                 var _documentList = response.result;
-                                                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                                                _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID}, function (response) {
                                                     var _modificationList = response.data;
                                                     var moda2 = $('#ProgramModal');
                                                     var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
@@ -10101,8 +10592,12 @@ WBSTree = (function ($) {
                     g_newProgramElement = false;
                     wbsTree.setIsProgramElementNew(false);
                     _Is_Program_Element_New = false;
-                    populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());
+                    populateProgramElementMilestoneTable(selectedNode.ProgramElementID);
                     debugger;//this is used
+                    if (_selectedProgramElementID == null) {
+                        _selectedProgramElementID = selectedNode.ProgramElementID;
+                    }
+
                     populateProgramElementChangeOrderTable(selectedNode.ProgramElementID); // pritho
                     //Populate Client PM, Client Phone #
                     var employeeList = wbsTree.getEmployeeList();
@@ -10204,7 +10699,7 @@ WBSTree = (function ($) {
                     $('#ViewUploadFileInViewAllProject').attr('disabled', 'disabled');
                     $('#downloadBtnInViewAllProject').attr('disabled', 'disabled');
 
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: _selectedProgramElementID }, function (response) {
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: selectedNode.ProgramElementID }, function (response) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
                             // Edited by Jignesh (29/10/2020)
@@ -10255,7 +10750,7 @@ WBSTree = (function ($) {
                     });
 
                     //---------------------------------------------------------------------------------------
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'ProgramElement', ProjectID: _selectedProgramElementID }, function (response) {
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'ProgramElement', ProjectID: selectedNode.ProgramElementID }, function (response) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
                             // Edited by Jignesh (29/10/2020)
@@ -11220,7 +11715,7 @@ WBSTree = (function ($) {
                 var gridViewAllUploadedDocumentProgramElement = $('#gridViewAllDocumentInProject');
                 gridViewAllUploadedDocumentProgramElement.empty();
 
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: _selectedProgramElementID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: selectedNode.ProgramElementID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
                         var viewBtnId = _documentList[x].ChangeOrderName ? "viewAllOrderDetail" : "viewDocumentDetail"; // Jignesh-01-03-2021
@@ -11283,7 +11778,7 @@ WBSTree = (function ($) {
                 $('#searchCont').val(''); // Jignesh-24-02-2021
 
                 //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
                     //wbsTree.setDocumentList(response.result);
                     var _documentList = response.result;
                     _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
@@ -11802,7 +12297,7 @@ WBSTree = (function ($) {
                         //===================================================================================
                     }
                 });
-                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
                     var modId = null;
