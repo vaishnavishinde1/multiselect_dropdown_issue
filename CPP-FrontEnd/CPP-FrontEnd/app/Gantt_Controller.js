@@ -6412,7 +6412,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6533,7 +6533,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6641,7 +6641,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6761,7 +6761,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
