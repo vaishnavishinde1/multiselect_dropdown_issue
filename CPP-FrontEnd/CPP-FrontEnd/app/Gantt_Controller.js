@@ -6430,10 +6430,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6551,10 +6551,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + ' ' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6659,10 +6659,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6779,10 +6779,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6900,10 +6900,10 @@ angular.module('xenon.Gantt_Controller', []).
                                     }
                                 }
                                 if (isExtraHours) {
-                                    return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                 }
                                 else {
-                                    return '<img id=imgflag' + obj.id +' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    return '<img id=imgflag' + obj.id +' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                 }
                                 
                             }
