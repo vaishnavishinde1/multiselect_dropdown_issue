@@ -2985,7 +2985,7 @@ WBSTree = (function ($) {
                         selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
                     }
                     selectedNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
-                    selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
+                    //selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
 					//Nivedita 13-01-2022
                     //selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
 					if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
