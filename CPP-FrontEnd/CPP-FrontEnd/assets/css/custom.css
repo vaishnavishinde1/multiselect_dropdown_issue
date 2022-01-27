@@ -357,7 +357,8 @@ label input[type="checkbox"] {
     width: 180px;
     position: relative;
     text-align: center;
-    height: 50px;
+    height: 45px;
+    margin-bottom:0;
 }
 
 .c-btn-save {
@@ -390,7 +391,6 @@ label input[type="checkbox"] {
     width: 230px;
     font-weight: bold;
     margin-top: 15px !important;
-    margin-top: 22px !important;
 }
 
 #address-bar {
