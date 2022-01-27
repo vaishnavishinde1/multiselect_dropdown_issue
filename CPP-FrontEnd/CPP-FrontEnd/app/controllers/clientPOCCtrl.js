@@ -26,7 +26,16 @@
                 angular.forEach($scope.ClientCollection, function (item, index) {
                     $scope.checkList[index + 1] = false;
                     item.checkbox = false;
+                    for (var x = 0; x < $scope.ClientDropdownCollection.length; x++) {
+
+                        if ($scope.ClientDropdownCollection[x].ClientID == item.ClientID) {
+                            item.ClientName = $scope.ClientDropdownCollection[x].ClientName;
+                            //$scope.userCollection.EmployeeID = item.EmployeeID;
+                            //$scope.userCollection.EmployeeName = item.EmployeeName;
+                        }
+                    }
                 });
+                
                 $scope.gridOptions.data = $scope.ClientCollection;
             });
 
@@ -139,7 +148,7 @@
                         cellClass: 'c-col-Num' //Manasi
                     },
                     {
-                        field: 'ClientID',      //Tanmay-D
+                        field: 'ClientName',      //Tanmay-D
                         name: 'Client Name',
                         enableCellEdit: true,
                         editableCellTemplate: 'ui-grid/dropdownEditor',

@@ -2890,12 +2890,12 @@ angular.module('xenon.Gantt_Controller', []).
                 InsertCost.save(costListToSave, function (response) {
                     //console.log(response);
                     isCostSaving = false;
+                    $('#saveCost').prop('disabled', false);
                     if (response.result) {
                         dhtmlx.alert(response.result);
                     } else {
                         $scope.ChangeText = false;
                         dhtmlx.alert('All costs saved successfully!');
-                        $('#saveCost').prop('disabled', false);
                     }
                     //console.log('luan success');
                     //Update phase total and activity total
