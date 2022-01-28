@@ -1277,7 +1277,7 @@ angular.module('cpp.controllers').
                 }
 
                 console.log('get files', $files);
-                var x = wbsTree.getSelectedProgramID();
+                var x = wbsTree.getSelectedNode().ProgramID;
                 console.log(x)
                 var docTypeID = $("#document_type_program option").filter(":selected").val();
 
@@ -1394,10 +1394,10 @@ angular.module('cpp.controllers').
 
                     var request = {
                         method: 'POST',
-                        //  url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID,    
-                        //url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID),
-                        // url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation),
-                        url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
+                        //  url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID,    
+                        //url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID),
+                        // url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation),
+                        url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
                         data: formdata, //fileUploadProject.files, //$scope.
                         ignore: true,
                         headers: {
@@ -1425,11 +1425,11 @@ angular.module('cpp.controllers').
 
 
 
-                        $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedProgramID())
+                        $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedNode().ProgramID)
                             .then(function success(response) {
                                 console.log(response);
                                 wbsTree.setDocumentList(response.data.result);
-                                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedNode().ProgramID }, function (response) {
                                     var _modificationList = response.data;
 
                                     for (var x = 0; x < _documentList.length; x++) {
@@ -1518,8 +1518,8 @@ angular.module('cpp.controllers').
                         noFile = true;
                     var request = {
                         method: 'POST',
-                        //  url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID,    
-                        url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + encodeURIComponent(noFile),
+                        //  url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID,    
+                        url: serviceBasePath + '/uploadFilesnew/Postnew/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + encodeURIComponent(noFile),
                         data: formdata, //fileUploadProject.files, //$scope.
                         ignore: true,
                         headers: {
@@ -1547,11 +1547,11 @@ angular.module('cpp.controllers').
 
 
 
-                        $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedProgramID())
+                        $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedNode().ProgramID)
                             .then(function success(response) {
                                 console.log(response);
                                 wbsTree.setDocumentList(response.data.result);
-                                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedNode().ProgramID }, function (response) {
                                     var _modificationList = response.data;
 
                                     for (var x = 0; x < _documentList.length; x++) {
@@ -1881,7 +1881,7 @@ angular.module('cpp.controllers').
 
             $('#btnSaveModification').unbind().on('click', function (event) {
                 var operation = wbsTree.getContractModificationOperation();
-                var programId = wbsTree.getSelectedProgramID();
+                var programId = wbsTree.getSelectedNode().ProgramID;
                 var createdBy = wbsTree.getSelectedProgramElementID();
                 //var modNumber = $('#modification_number').val();
                 var title = $('#modification_title').val();
@@ -2008,7 +2008,7 @@ angular.module('cpp.controllers').
                         var contractModification = {
                             Operation: 3,
                             Id: $(this).parents("tr").attr('id'),
-                            ProgramID: wbsTree.getSelectedProgramID()
+                            ProgramID: wbsTree.getSelectedNode().ProgramID
                         };
                         PerformOperationOnContractModification(contractModification);
 
@@ -2222,7 +2222,7 @@ angular.module('cpp.controllers').
                 // Jignesh-24-02-2021 Remove ''&ExecutionDate=' + ExecutionDate.replace(/\//g, "") +' from url from below request.
                 var request = {
                     method: 'POST',
-                    url: serviceBasePath + 'uploadModificationDoc/Post/' + wbsTree.getSelectedProgramID() + '/' + moddID + '/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
+                    url: serviceBasePath + 'uploadModificationDoc/Post/' + wbsTree.getSelectedNode().ProgramID + '/' + moddID + '/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
                     data: formdata, //fileUploadTrend.files, //$scope.
                     ignore: true,
                     headers: {
@@ -2243,7 +2243,7 @@ angular.module('cpp.controllers').
                     //var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
                     //gridUploadedModDocument.empty();
 
-                    $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedProgramID())
+                    $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedNode().ProgramID)
                         .then(function success(response) {
                             console.log(response);
                             wbsTree.setDocumentList(response.data.result);
@@ -2256,7 +2256,7 @@ angular.module('cpp.controllers').
                             gridUploadedModDocument.empty();
                             var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
                             gridUploadedContDocument.empty();
-                            _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                            _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedNode().ProgramID }, function (response) {
                                 _modificationList = response.data;
                                 for (var x = 0; x < _documentList.length; x++) {
                                     if (_documentList[x].ModificationNumber >= 0 && _documentList[x].ModificationNumber != null) {
@@ -2410,7 +2410,7 @@ angular.module('cpp.controllers').
                 }
 
                 console.log('get files', $files);
-                var x = wbsTree.getSelectedProgramID();
+                var x = wbsTree.getSelectedNode().ProgramID;
                 console.log(x)
                 var docTypeID = $("#document_type_program option").filter(":selected").val();
                 var files = fileUploadProgram.files;
@@ -2478,7 +2478,7 @@ angular.module('cpp.controllers').
 
                 var request = {
                     method: 'POST',
-                    url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedProgramID() + '/0/0/' + docTypeID,
+                    url: serviceBasePath + '/uploadFiles/Post/Program/0/0/' + wbsTree.getSelectedNode().ProgramID + '/0/0/' + docTypeID,
                     data: formdata, //fileUploadProject.files, //$scope.
                     ignore: true,
                     headers: {
@@ -2498,7 +2498,7 @@ angular.module('cpp.controllers').
                     //    for (var x = 0; x < _documentList.length; x++) {
                     //        gridUploadedDocument.append('<tr><td style="width: 20px"><input type="checkbox" name="record"></td><td style="display:none">' + _documentList[x].DocumentID + '</td><td><a href="' + serviceBasePath + '/Request/DocumentByDocID/' + _documentList[x].DocumentID + '" download>' + _documentList[x].DocumentName + '</a></td><td>' + _documentList[x].DocumentTypeName + '</td><tr>');
                     //    }
-                    $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedProgramID())
+                    $http.get(serviceBasePath + "Request/Document/Program/" + wbsTree.getSelectedNode().ProgramID)
                         .then(function success(response) {
                             console.log(response);
                             wbsTree.setDocumentList(response.data.result);
