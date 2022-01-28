@@ -9,6 +9,8 @@
             $scope.checkedRow = [];
             $scope.gridOPtions = {};
             $scope.myExternalScope = $scope;
+            var url = serviceBasePath + 'response/ClientPOC/'; 
+
             Client.get({}, function (clients) {
                 $scope.ClientDropdownCollection = clients.result;
                 console.log(clients.result);
@@ -16,28 +18,28 @@
                 angular.forEach(clients.result, function (item) {
                     ClientArray.push({ ID: item.ClientID, Value: item.ClientName });
                 });
-            });
-            var url = serviceBasePath + 'response/ClientPOC/';      //Tanmay
-            ClientPOC.get({}, function (response) {
-                $scope.checkList = [];
-                $scope.ClientCollection = response.result;      //Tanmay-D
-                $scope.orgClientCollection = angular.copy(response.result);
-                addIndex($scope.ClientCollection);
-                angular.forEach($scope.ClientCollection, function (item, index) {
-                    $scope.checkList[index + 1] = false;
-                    item.checkbox = false;
-                    for (var x = 0; x < $scope.ClientDropdownCollection.length; x++) {
+                ClientPOC.get({}, function (response) {
+                    $scope.checkList = [];
+                    $scope.ClientCollection = response.result;      //Tanmay-D
+                    $scope.orgClientCollection = angular.copy(response.result);
+                    addIndex($scope.ClientCollection);
+                    angular.forEach($scope.ClientCollection, function (item, index) {
+                        $scope.checkList[index + 1] = false;
+                        item.checkbox = false;
+                        for (var x = 0; x < $scope.ClientDropdownCollection.length; x++) {
 
-                        if ($scope.ClientDropdownCollection[x].ClientID == item.ClientID) {
-                            item.ClientName = $scope.ClientDropdownCollection[x].ClientName;
-                            //$scope.userCollection.EmployeeID = item.EmployeeID;
-                            //$scope.userCollection.EmployeeName = item.EmployeeName;
+                            if ($scope.ClientDropdownCollection[x].ClientID == item.ClientID) {
+                                item.ClientName = $scope.ClientDropdownCollection[x].ClientName;
+                                //$scope.userCollection.EmployeeID = item.EmployeeID;
+                                //$scope.userCollection.EmployeeName = item.EmployeeName;
+                            }
                         }
-                    }
+                    });
+
+                    $scope.gridOptions.data = $scope.ClientCollection;
                 });
-                
-                $scope.gridOptions.data = $scope.ClientCollection;
-            });
+            });     //Tanmay
+            
 
             var addIndex = function (data) {
                 var i = 1;
