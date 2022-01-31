@@ -2890,12 +2890,12 @@ angular.module('xenon.Gantt_Controller', []).
                 InsertCost.save(costListToSave, function (response) {
                     //console.log(response);
                     isCostSaving = false;
+                    $('#saveCost').prop('disabled', false);
                     if (response.result) {
                         dhtmlx.alert(response.result);
                     } else {
                         $scope.ChangeText = false;
                         dhtmlx.alert('All costs saved successfully!');
-                        $('#saveCost').prop('disabled', false);
                     }
                     //console.log('luan success');
                     //Update phase total and activity total
@@ -6412,7 +6412,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6430,10 +6430,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6533,7 +6533,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6551,10 +6551,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + ' ' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6641,7 +6641,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6659,10 +6659,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6761,7 +6761,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "newCostLineItemId", label: "#", width: 200, align: "left", resize: true },
                         // Swapnil 30/11/2020
                         {
-                            name: "newCostLineItemId", label: "#", width: 40, align: "left", resize: true, template: function (obj) {
+                            name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
                                 debugger;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
@@ -6779,10 +6779,10 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
                                     }
                                     if (isExtraHours) {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                     }
                                     else {
-                                        return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                        return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                     }
 
                                 }
@@ -6900,10 +6900,10 @@ angular.module('xenon.Gantt_Controller', []).
                                     }
                                 }
                                 if (isExtraHours) {
-                                    return '<img id=imgflag' + obj.id + ' src="../../assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
+                                    return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                 }
                                 else {
-                                    return '<img id=imgflag' + obj.id +' src="../../assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    return '<img id=imgflag' + obj.id +' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                 }
                                 
                             }
