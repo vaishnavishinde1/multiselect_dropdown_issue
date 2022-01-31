@@ -1563,13 +1563,14 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.textBoxStyles = [];
             $scope.changedCost = function (id, i) {
                 // Nivedita - Check FTE should not greater than 1
+
+
                 var checkForFTE = false;
                 var strCostTrackType;
                 if ($scope.isBaseline == true) {
                     checkForFTE = true;
                 }
-                else if (delayedData[3] == 1000 )
-                {
+                else if (delayedData[3] == 1000) {
                     strCostTrackType = $scope.CostTrackTypes[id][i];
                     if (strCostTrackType == 4) {
                         checkForFTE = true;
@@ -1578,26 +1579,40 @@ angular.module('xenon.Gantt_Controller', []).
                 else if (delayedData[3] == 1) {
                     checkForFTE = true;
                 }
-                                
-                if ($scope.method[id] === "F" && $scope.textBoxValues[id][i] > 1 && checkForFTE == true) {
-                    //dhtmlx.alert('FTE value for labor can not be greater than 1');
-                    //$scope.textBoxValues[id][i] = "0";
-                    //return true;
-                    var strCellId = "costCell" + id + i;
-                    var strFlagId = "imgflag" + id;
 
-                    $('#' + strCellId).css('color', 'red');
-                    
-                    $('#' + strFlagId).removeAttr('style');
-                }
-                else {
-                    var strCellId = "costCell" + id + i;
-                    var strFlagId = "imgflag" + id;
+                //if ($scope.method[id] === "F" && $scope.textBoxValues[id][i] > 1 && checkForFTE == true) {
+                //    //dhtmlx.alert('FTE value for labor can not be greater than 1');
+                //    var strCellId = "costCell" + id + i;
+                //    var strFlagId = "imgflag" + id;
+                //    $('#' + strCellId).css('color', 'red');
+                //    //$(this).css('color', 'red');
+                //    //var i = $(this);
+                //    //$scope.textBoxValues[id][i].css("color", "red");
 
-                    $('#' + strCellId).css('color', 'black');
 
-                    $('#' + strFlagId).css('display', 'none');
-                }
+                //    //$('#' + strFlagId).removeAttr('style');
+                //    $('#' + strFlagId).css('display','inline');
+
+                //    //$scope.textBoxValues[id][i] = "0";
+                //    //return true;
+                //}
+                //else {
+                //    if ($scope.method[id] === "F" && $scope.textBoxValues[id][i] > 1) {
+                //        var strCellId = "costCell" + id + i;
+                //        var strFlagId = "imgflag" + id;
+                //        $('#' + strCellId).css('color', 'red');
+                //        $('#' + strFlagId).css('display', 'inline');
+                //    }
+                //    else {
+                //        var strCellId = "costCell" + id + i;
+                //        var strFlagId = "imgflag" + id;
+
+                //        $('#' + strCellId).css('color', 'black');
+
+                //        $('#' + strFlagId).css('display', 'none');
+                //    }
+
+                //}
                 //--------------- X --------------- X --------------- X --------------- X --------------- 
                 $scope.ChangeText = false;   //Manasi 04-09-2020
                 var rx = new RegExp(/^\d*\.?\d{0,8}$/);
@@ -1636,6 +1651,33 @@ angular.module('xenon.Gantt_Controller', []).
                     }, 250);
 
                 }
+
+                var datatxt = $scope.textBoxValues[id];
+                if ($scope.method[id] === "F") {
+                    var isFTEvalueGreater = false;
+                    var strFlagId = "imgflag" + id;
+                    for (var i = 0; i < datatxt.length; i++) {
+                        var strCellId = "costCell" + id + i;
+                        if (datatxt[i] > 1) {
+                            isFTEvalueGreater = true;
+                            $('#' + strCellId).css('color', 'red');
+                            //strColorTxt = "color:red;";
+                        }
+                        else {
+                            $('#' + strCellId).css('color', 'black');
+                        }
+
+                    }//close for loop
+                    if (isFTEvalueGreater) {
+                        $('#' + strFlagId).css('display', 'inline');
+                    }
+                    else {
+                        $('#' + strFlagId).css('display', 'none');
+                    }
+                }
+
+
+
             };
 
             //initialize cost method - FTE, Lumpsum, and unit
@@ -2064,7 +2106,7 @@ angular.module('xenon.Gantt_Controller', []).
                     $state.reload();
                 });
 
-				var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
+                var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
 
                 ////Hide fund allocation
                 //    } else {
@@ -2265,7 +2307,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                     $state.reload();
                 });
-				var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
+                var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
                 //var trendToBeRequestForApproval = {
                 //    "UserID": authData.userName,
                 //    "Role": authData.role,
@@ -3256,7 +3298,7 @@ angular.module('xenon.Gantt_Controller', []).
                     angular.forEach(MainCategory, function (value, key) {
                         var obj = {};
                         obj.key = value.CategoryDescription;
-                        obj.label = value.CategoryID+' - '+value.CategoryDescription; //Jinesh-T-16/11/2021
+                        obj.label = value.CategoryID + ' - ' + value.CategoryDescription; //Jinesh-T-16/11/2021
                         $scope.MainCategory.push(obj);
                     });
 
@@ -3681,7 +3723,7 @@ angular.module('xenon.Gantt_Controller', []).
                         angular.forEach(MainCategory, function (value, key) {
                             var obj = {};
                             obj.key = value.CategoryDescription;
-                            obj.label = value.CategoryID +' - '+ value.CategoryDescription; //Jignesh-T-16/11/2021 (Already created Tasks)
+                            obj.label = value.CategoryID + ' - ' + value.CategoryDescription; //Jignesh-T-16/11/2021 (Already created Tasks)
                             $scope.MainCategory.push(obj);
                         });
 
@@ -3731,7 +3773,7 @@ angular.module('xenon.Gantt_Controller', []).
                             for (var i = 0; i < subCategory.length; i++) {
                                 var obj = {};
                                 obj.key = subCategory[i].SubCategoryDescription;
-                                obj.label = subCategory[i].SubCategoryID+' - '+subCategory[i].SubCategoryDescription; //Jignesh-T-16/11/2021
+                                obj.label = subCategory[i].SubCategoryID + ' - ' + subCategory[i].SubCategoryDescription; //Jignesh-T-16/11/2021
                                 $scope.subCategory.push(obj);
 
                             }
@@ -4070,7 +4112,7 @@ angular.module('xenon.Gantt_Controller', []).
                                     $scope.costGanttInstance.config.start_date = $scope.scheduleGanttInstance.getState().min_date;
                                     $scope.costGanttInstance.config.end_date = $scope.scheduleGanttInstance.getState().max_date;
                                     $scope.costGanttInstance.parse($scope.costs, "json");
-                                   // $scope.costGanttInstance.render();
+                                    // $scope.costGanttInstance.render();
                                     //setTimeout(function () { refreshHtmlDelete(); }, 1000);
                                     return true;
                                 }
@@ -4103,7 +4145,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 //console.log(CostData);
                                 //luan here 4/23
                                 var startTime = performance.now();
-                           
+
                                 $scope.CostData = CostData.CostRow;
 
                                 if ($scope.TrendNumber == "1000") {
@@ -6388,8 +6430,8 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.costGanttInstance.config.show_task_cells = false;
             $scope.costGanttInstance.config.branch_loading = true;
             $scope.costGanttInstance.config.show_progress = false;
-           // $scope.costGanttInstance.config.smart_scales = true;
-           // $scope.costGanttInstance.config.static_background = true;  
+            // $scope.costGanttInstance.config.smart_scales = true;
+            // $scope.costGanttInstance.config.static_background = true;  
 
             //Cofig columns for Cost Chart
             if (isCurrentTrend) {
@@ -6449,15 +6491,16 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 100, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                        {
+                            name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
                                     return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;  // Pritesh 25Jul2020 to make it consistent
                             }
- 
 
-			}, // align: "center" Manasi
+
+                        }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6570,13 +6613,14 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                        {
+                            name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
                                     return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
-			 }, // align: "center" Manasi
+                        }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6678,13 +6722,14 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                        {
+                            name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
                                     return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
-			 }, // align: "center" Manasi
+                        }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6798,13 +6843,14 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
                         //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                         //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, // align: "center" Manasi
-                        { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true,  template: function (obj) {     //Manasi 16-07-2020
+                        {
+                            name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
                                 if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
                                     return 'N/A';
                                 else
                                     return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
                             }
-			}, // align: "center" Manasi
+                        }, // align: "center" Manasi
                         {
                             //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                             name: "total_units", label: "# Of Units", width: 100, align: "right", resize: true, template: function (obj) {
@@ -6883,14 +6929,14 @@ angular.module('xenon.Gantt_Controller', []).
                     // Swapnil 30/11/2020
                     {
                         name: "newCostLineItemId", label: "#", width: 60, align: "right", resize: true, template: function (obj) {
-                            debugger; 
+                            debugger;
                             var data = $scope.CostData;
-                            var filters = [{ CostLineItemID: obj.CostLineItemID }, {CostID: obj.cost_id }];
+                            var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                             var CurCostData = data.filter(s => filters.every(t => {
                                 var key = Object.keys(t)[0];
                                 return s[key] == t[key]
                             }));
-                            
+
                             if (obj.cost_type == 'F') {
                                 var isExtraHours = false;
                                 var TextBoxArr = CurCostData[0].TextBoxValue.split(',');
@@ -6903,12 +6949,12 @@ angular.module('xenon.Gantt_Controller', []).
                                     return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" width="18px" />' + ' ' + obj.newCostLineItemId;
                                 }
                                 else {
-                                    return '<img id=imgflag' + obj.id +' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
+                                    return '<img id=imgflag' + obj.id + ' src="assets/images/flags/Flag-red.png" style="display:none" width="18px"  />' + obj.newCostLineItemId;
                                 }
-                                
+
                             }
                             else {
-                                return  obj.newCostLineItemId;
+                                return obj.newCostLineItemId;
                             }
                         }
                     },
@@ -6919,13 +6965,14 @@ angular.module('xenon.Gantt_Controller', []).
                     { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center"  Manasi
                     //{ name: "unit_cost", label: "Unit Cost", width: 100, align: "right", resize: true }, //align: "center" Manasi
                     //{ name: "unit_budget", label: "Unit Budget", width: 100, align: "right", resize: true }, //align: "center" Manasi
-                    { name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
-                                if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
-                                    return 'N/A';
-                                else
-                                    return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
-                            }
-		            }, //align: "center" Manasi
+                    {
+                        name: "unit_budget", label: "Unit Cost", width: 100, align: "right", resize: true, template: function (obj) {     //Manasi 16-07-2020
+                            if (obj.text.indexOf('Subcontractor') >= 0 || obj.text.indexOf('ODC') >= 0)
+                                return 'N/A';
+                            else
+                                return obj.unit_budget != "" ? $filter('currency')(obj.unit_budget, '$', 2) : obj.unit_budget;
+                        }
+                    }, //align: "center" Manasi
                     {
                         //name: "total_units", label: "# Of Units", width: 100, align: "center", resize: true, template: function (obj) {
                         name: "total_units", label: "# Of Units", width: 70, align: "right", resize: true, template: function (obj) { //Manasi
@@ -8922,7 +8969,7 @@ angular.module('xenon.Gantt_Controller', []).
                     //    item.end_date = moment(item.end_date).format(dateFormat);
                     //})
                     $scope.costGanttInstance.parse({ data: $scope.costs.data, links: [] });
-                   // $scope.costGanttInstance.render();
+                    // $scope.costGanttInstance.render();
                     //setTimeout(function () { refreshHtmlDelete(); }, 1000);
                     //$scope.allCostTotal = $scope.selectedActivity.totalCost;
                     $scope.allCostTotal = $scope.selectedActivity.totalBudget;      //Manasi 15-07-2020
@@ -8995,7 +9042,7 @@ angular.module('xenon.Gantt_Controller', []).
                                     //    item.end_date = moment(item.end_date).format(dateFormat);
                                     //})
                                     $scope.costGanttInstance.parse({ data: $scope.costs.data, links: [] });
-                                   // $scope.costGanttInstance.render();
+                                    // $scope.costGanttInstance.render();
                                     //setTimeout(function () { refreshHtmlDelete(); }, 1000);
                                     //getProjectDurationAndCost();
                                     updateTrendValue($scope.selectedActivity.id); //update Trend value
@@ -9074,12 +9121,12 @@ angular.module('xenon.Gantt_Controller', []).
                                         //$scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
                                         //$scope.showSpinner12 = false;
 
-                                      //  $timeout(function () {
-                                            currentId = -1;
-                                             //alert("Check");
-                                            $scope.scheduleGanttInstance.callEvent('customSelect', [aID, 0, false]);  //Manasi 01-03-2021
-                                            $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
-                                            $scope.showSpinner12 = false;
+                                        //  $timeout(function () {
+                                        currentId = -1;
+                                        //alert("Check");
+                                        $scope.scheduleGanttInstance.callEvent('customSelect', [aID, 0, false]);  //Manasi 01-03-2021
+                                        $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
+                                        $scope.showSpinner12 = false;
                                         //}, 100);
 
                                     });
@@ -9920,7 +9967,7 @@ angular.module('xenon.Gantt_Controller', []).
             onRouteChangeOff = $scope.$on('$locationChangeStart', function (event) {
                 //debugger
                 //console.log('we in there');
-                
+
                 var newUrl = $location.path();
                 var isCostEdited = isCostsEdited();
                 var res;
@@ -9974,7 +10021,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                     }
                 }
-                
+
                 if (res) {
                     //$scope.saveCost();
                     event.preventDefault();
@@ -10035,8 +10082,8 @@ angular.module('xenon.Gantt_Controller', []).
                      if (scope.params.confirm === "back") {
                     //    //do nothing;
                     //}
-                    //else*/ 
-                        $location.path(newUrl);
+                    //else*/
+                    $location.path(newUrl);
                     return;
                     //dhtmlx.alert("Please add cost details.")
                 }
@@ -10383,7 +10430,7 @@ angular.module('xenon.Gantt_Controller', []).
             function renderCostBoxes(widthOfTextBox, numberOfBoxes, id, costType) {
                 //console.log(numberOfBoxes);
                 $scope.numberOfBoxes[id] = numberOfBoxes;
-                
+
                 var relWidth = 33;
                 var cssClass = "costBox " + id.toString() + "_cost";
                 var costBoxes = '';
@@ -10418,14 +10465,14 @@ angular.module('xenon.Gantt_Controller', []).
                                 strColorTxt = "color:red;";
                             }
                         }
-                        
+
                         var s = i.toString(); // Jignesh-06-05-2021  id.toString() + '0' + i.toString();
                         //s = parseInt(s) + 5;
                         s = parseInt(s) + parseInt(id.toString() + '000'); // Jignesh-06-05-2021
 
                         if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ACTUAL) { //ACTUAL COST
 
-                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;" + strColorTxt+"' />"
+                            costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#83B4B3;" + strColorTxt + "' />"
                         } else if ($scope.CostTrackTypes[id] && $scope.CostTrackTypes[id][i] == $scope.costTrackType.ESTIMATE_TO_COMPLETION) {
                             costBoxes += "<input id=" + 'costCell' + id + '' + i + " onClick='this.select();'  disabled = true  ng-style = '{color: textBoxStyles[" + id + "][" + i + "]}' ng-model='textBoxValues[" + id + "][" + i + "]' TABINDEX=" + s + " ng-keyup = 'changedCost(" + id + "," + i + ")' class='" + id.toString() + "_costText' type='text' style='width:" + widthOfTextBox + "px; text-align:center;background-color:#FFF0CE;" + strColorTxt + "' />" //Nivedita 17-01-2022
                         }
@@ -12266,7 +12313,7 @@ angular.module('xenon.Gantt_Controller', []).
                 $scope.scheduleGanttInstance.config.autoSize = 'xy';
                 $scope.scheduleGanttInstance.config.prevent_default_scroll = true;
                 $scope.scheduleGanttInstance.config.task_height = 15;
-                $scope.scheduleGanttInstance.config.row_height = 22;
+                $scope.scheduleGanttInstance.config.row_height = 30;
                 $scope.scheduleGanttInstance.config.grid_width = grid_width;  //luan quest 3 - original 900
                 $scope.scheduleGanttInstance.config.keyboard_navigation = true;
                 $scope.scheduleGanttInstance.config.tooltip_timeout = 10;
@@ -12278,7 +12325,7 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "text", label: "Category", tree: true, width: 450, resize: true },
                         //{ name: "originalStartDate", label: "Orig. Start", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
                         {  //Manasi 23-02-2021
-                            name: "originalStartDate", width: 95, label: "Orig. Start", align: "center", resize: true, template: function (obj) {
+                            name: "originalStartDate", width: 100, label: "Orig. Start", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalStartDate != 'N/A') {
                                     var date = (obj.originalStartDate != undefined) ? new Date(obj.originalStartDate) : new Date();
@@ -12293,7 +12340,7 @@ angular.module('xenon.Gantt_Controller', []).
                         },  //Manasi 22-02-2021   change width to 120
                         //{ name: "originalEndDate", label: "Orig. End", align: "center", width: 120, resize: true },   //Manasi 22-02-2021   change width to 120
                         {   //Manasi 23-02-2021
-                            name: "originalEndDate", width: 95, label: "Orig. End", align: "center", resize: true, template: function (obj) {
+                            name: "originalEndDate", width: 100, label: "Orig. End", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalEndDate != 'N/A') {
                                     var date = (obj.originalEndDate != undefined) ? new Date(obj.originalEndDate) : new Date();
@@ -12308,7 +12355,7 @@ angular.module('xenon.Gantt_Controller', []).
                         },
                         //{ name: "start_date", label: "Cur. Start", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
                         {    //Manasi 23-02-2021
-                            name: "start_date", width: 95, label: "Cur. Start", align: "center", resize: true, template: function (obj) {
+                            name: "start_date", width: 100, label: "Cur. Start", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.start_date != 'N/A') {
                                     var date = (obj.start_date != undefined) ? new Date(obj.start_date) : new Date();
@@ -12324,10 +12371,10 @@ angular.module('xenon.Gantt_Controller', []).
                         //{ name: "end_date", label: "Cur. End", align: "center", width: 120, resize: true },  //Manasi 22-02-2021   change width to 120
 
                         {  //Manasi 23-02-2021
-                            name: "end_date", width: 95, label: "Cur. End", align: "center", resize: true, template: function (obj) {
+                            name: "end_date", width: 100, label: "Cur. End", align: "center", resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.end_date != 'N/A') {
-                                    var date = (obj.end_date != undefined) ? new Date(obj.end_date) : new Date(); 
+                                    var date = (obj.end_date != undefined) ? new Date(obj.end_date) : new Date();
                                     var formattedDate = ('0' + date.getDate()).slice(-2);
                                     var formattedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
                                     var formattedYear = date.getFullYear().toString().substr(2, 2);
@@ -12374,7 +12421,7 @@ angular.module('xenon.Gantt_Controller', []).
                         { name: "text", label: "Category", tree: true, width: 450, resize: true },
                         //{ name: "originalStartDate", label: "Orig. Start", align: "center", width: 113, resize: true },
                         {  //Manasi 23-02-2021
-                            name: "originalStartDate", label: "Orig. Start", align: "center", width: 90, resize: true, template: function (obj) {
+                            name: "originalStartDate", label: "Orig. Start", align: "center", width: 100, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalStartDate != 'N/A') {
                                     var date = (obj.originalStartDate != undefined) ? new Date(obj.originalStartDate) : new Date();
@@ -12388,7 +12435,7 @@ angular.module('xenon.Gantt_Controller', []).
                         },
                         //{ name: "originalEndDate", label: "Orig. End", align: "center", width: 113, resize: true },
                         {   //Manasi 23-02-2021
-                            name: "originalEndDate", label: "Orig. End", align: "center", width: 90, resize: true, template: function (obj) {
+                            name: "originalEndDate", label: "Orig. End", align: "center", width: 100, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.originalEndDate != 'N/A') {
                                     var date = (obj.originalEndDate != undefined) ? new Date(obj.originalEndDate) : new Date();
@@ -12403,7 +12450,7 @@ angular.module('xenon.Gantt_Controller', []).
                         },
                         //{ name: "start_date", label: "Cur. Start", align: "center", width: 113, resize: true },
                         {   //Manasi 23-02-2021
-                            name: "start_date", label: "Cur. Start", align: "center", width: 90, resize: true, template: function (obj) {
+                            name: "start_date", label: "Cur. Start", align: "center", width: 100, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.start_date != 'N/A') {
                                     var date = (obj.start_date != undefined) ? new Date(obj.start_date) : new Date();
@@ -12418,7 +12465,7 @@ angular.module('xenon.Gantt_Controller', []).
                         },
                         //{ name: "end_date", width: 113, label: "Cur. End", align: "center", resize: true },
                         {    //Manasi 23-02-2021
-                            name: "end_date", label: "Cur. End", align: "center", width: 90, resize: true, template: function (obj) {
+                            name: "end_date", label: "Cur. End", align: "center", width: 100, resize: true, template: function (obj) {
                                 // Jignesh-05-01-2021 to format date like MM/DD/YY
                                 if (obj.end_date != 'N/A') {
                                     var date = (obj.end_date != undefined) ? new Date(obj.end_date) : new Date();
@@ -12781,7 +12828,7 @@ angular.module('xenon.Gantt_Controller', []).
                                                 angular.forEach(response.subCategoryData, function (value, key) {
                                                     var obj = {};
                                                     obj.key = value.CategoryDescription;
-                                                    obj.label = value.CategoryID +' - '+ value.CategoryDescription; //Jignesh-T-While adding new Category
+                                                    obj.label = value.CategoryID + ' - ' + value.CategoryDescription; //Jignesh-T-While adding new Category
                                                     $scope.subCategory.push(obj);
                                                     //console.log(value);
                                                 });
@@ -12789,7 +12836,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                                                 var newlyAddedSubcategory = {};
                                                 newlyAddedSubcategory.key = response.objectSaved.SubCategoryDescription;
-                                                newlyAddedSubcategory.label = response.objectSaved.SubCategoryID +' - '+ response.objectSaved.SubCategoryDescription;
+                                                newlyAddedSubcategory.label = response.objectSaved.SubCategoryID + ' - ' + response.objectSaved.SubCategoryDescription;
                                                 $scope.subCategory.push(newlyAddedSubcategory);
 
                                                 //console.log($scope.subCategory);
@@ -13008,11 +13055,11 @@ angular.module('xenon.Gantt_Controller', []).
                                                 for (var i = 0; i < subCategory.length; i++) {
                                                     var obj = {};
                                                     obj.key = subCategory[i].SubCategoryDescription;
-                                                    obj.label = subCategory[i].SubCategoryID +' - '+ subCategory[i].SubCategoryDescription; //Jignesh-T-16/11/2021 (While creating new subCategory in presently created task)
+                                                    obj.label = subCategory[i].SubCategoryID + ' - ' + subCategory[i].SubCategoryDescription; //Jignesh-T-16/11/2021 (While creating new subCategory in presently created task)
                                                     $scope.subCategory.push(obj);
 
                                                     //console.log(obj, response.objectSaved);
-                                                    var savedLabel = response.objectSaved.SubCategoryID +' - '+ response.objectSaved.SubCategoryDescription
+                                                    var savedLabel = response.objectSaved.SubCategoryID + ' - ' + response.objectSaved.SubCategoryDescription
                                                     if (obj.label == savedLabel) {
                                                         selectedSubcategory = obj;
                                                         //console.log(selectedSubcategory);
@@ -13085,7 +13132,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                 });
             }
-            
+
             function updateBuffer(cost) {
                 var textIds = $scope.textBoxValues[1];
                 //if(textIds) {

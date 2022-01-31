@@ -630,6 +630,7 @@
     <Compile Include="Controllers\RequestContractController.cs" />
     <Compile Include="Controllers\RequestCostForGanttAtProjectLevelController.cs" />
     <Compile Include="Controllers\RequestExportCostCodeToExcelController.cs" />
+    <Compile Include="Controllers\RequestExportInsperityCostCodeToExcelController.cs" />
     <Compile Include="Controllers\RequestGanttViewCostController.cs" />
     <Compile Include="Controllers\RequestInventoryController.cs" />
     <Compile Include="Controllers\RequestManufacturerController.cs" />
@@ -850,6 +851,7 @@
     <Compile Include="Models\DocumentData.cs" />
     <Compile Include="Models\EmployeeTimeCard.cs" />
     <Compile Include="Models\ExportCostCode.cs" />
+    <Compile Include="Models\ExportInsperityCostCode.cs" />
     <Compile Include="Models\ExportToMPP\ExportData.cs" />
     <Compile Include="Models\ExportToMPP\ExportProcess.cs" />
     <Compile Include="Models\ExportToMPP\GetGraph.cs" />
@@ -867,6 +869,7 @@
     <Compile Include="Models\ProgramContract.cs" />
     <Compile Include="Models\ProjectAccessControl.cs" />
     <Compile Include="Models\ProjectApproversDetails.cs" />
+    <Compile Include="Models\Quartz\InsperityExportJob.cs" />
     <Compile Include="Models\Quartz\MppNoRespondKillerJob.cs" />
     <Compile Include="Models\Quartz\Scheduler.cs" />
     <Compile Include="Models\ServiceClass.cs" />
