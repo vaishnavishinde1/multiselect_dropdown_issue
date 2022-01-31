@@ -45,6 +45,12 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     clientList = ctx.Client.OrderBy(a => a.UniqueIdentityNumber).ToList();
+                    foreach (var i in clientList)
+                    {
+                        if (i.ClientPhone != null)
+                            i.ClientPhone = i.ClientPhone.Replace("-", "");
+                    }
+
                 }
 
             }
