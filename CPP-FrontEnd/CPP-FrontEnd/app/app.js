@@ -2,7 +2,7 @@
 
 //var serviceBasePath = 'http://localhost:1832/';
 //var serviceBasePath = 'http://192.168.0.19:1832/';
-var serviceBasePath = 'http://localhost:29984/api/';
+var serviceBasePath = 'http://localhost:29981/api/';
 var license4jPath = 'http://172.31.45.102:8091/';
 //var serviceBasePath = 'http://localhost/CPP_API/';
 //var serviceBasePath = 'http://dev.birdi-inc.com/CPP_API/';
