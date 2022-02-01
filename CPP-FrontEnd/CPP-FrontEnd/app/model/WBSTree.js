@@ -7473,7 +7473,8 @@ WBSTree = (function ($) {
                     console.log('applied jquery');
                     $("#program_element_milestone_date_modal").datepicker();	//datepicker - program contract modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY'))
+                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
@@ -7486,7 +7487,8 @@ WBSTree = (function ($) {
                     console.log('applied jquery');
                     $("#program_element_milestone_date_modal").datepicker("destroy");	//datepicker - program element milestone modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY'))
+                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
