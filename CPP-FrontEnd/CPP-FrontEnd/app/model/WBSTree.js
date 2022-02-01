@@ -11718,7 +11718,7 @@ WBSTree = (function ($) {
                 var gridViewAllUploadedDocumentProgramElement = $('#gridViewAllDocumentInProject');
                 gridViewAllUploadedDocumentProgramElement.empty();
 
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: selectedNode.ProgramElementID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: _selectedProgramElementID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
                         var viewBtnId = _documentList[x].ChangeOrderName ? "viewAllOrderDetail" : "viewDocumentDetail"; // Jignesh-01-03-2021
@@ -11781,7 +11781,7 @@ WBSTree = (function ($) {
                 $('#searchCont').val(''); // Jignesh-24-02-2021
 
                 //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
                     //wbsTree.setDocumentList(response.result);
                     var _documentList = response.result;
                     _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
