@@ -120,6 +120,7 @@ WBSTree = (function ($) {
         _ProjectWhiteListService = null;
         _ModificationList = null; // Jignesh 29-10-2020
         _IsRootForModification = false; // Jignesh 23-11-2020
+        _userList = null;
         _program = null;
         _deleteDocIDs = [];
         _TrendId = null;
