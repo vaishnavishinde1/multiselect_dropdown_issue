@@ -7461,6 +7461,8 @@ WBSTree = (function ($) {
                 $('#message_div').hide();
                 defaultModalPosition();
                 var isProgramElementMilestoneUpdate = !g_newProgramElementMilestone;
+                var maxPDate = $('#program_element_PEnd_Date').val();// Aditya
+                var minPDate = $('#program_element_PStart_Date').val();// Aditya
 
                 $("#ProgramElementModal").css({ "opacity": "0.4" });
 
@@ -7474,10 +7476,12 @@ WBSTree = (function ($) {
                 if (isProgramElementMilestoneUpdate) {
                     //luan Jquery - luan here
                     console.log('applied jquery');
-                    $("#program_element_milestone_date_modal").datepicker();	//datepicker - program contract modal
+                    $("#program_element_milestone_date_modal").datepicker("destroy");	//datepicker - program contract modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
-                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
+                        /*maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))*/
+                        maxDate: new Date(moment(maxPDate).format('MM/DD/YYYY')),// Aditya
+                        minDate: new Date(moment(minPDate).format('MM/DD/YYYY'))// Aditya
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
@@ -7490,8 +7494,11 @@ WBSTree = (function ($) {
                     console.log('applied jquery');
                     $("#program_element_milestone_date_modal").datepicker("destroy");	//datepicker - program element milestone modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
-                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
+                        /*maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))*/
+                        maxDate: new Date(moment(maxPDate).format('MM/DD/YYYY')),// Aditya
+                        minDate: new Date(moment(minPDate).format('MM/DD/YYYY'))// Aditya
+                        
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
