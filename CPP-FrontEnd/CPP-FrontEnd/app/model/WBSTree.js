@@ -3315,6 +3315,8 @@ WBSTree = (function ($) {
                         '</tr>'
                     );
 
+                
+
                     //$('#program_element_change_order_table_id').append(
                     //    '<tr id="' + singeChangeOrder.ChangeOrderName + '" class="fade-selection-animation clickable-row">' +
                     //   // '<td class="class-td-LiveView" style="width:20%;">' + singeChangeOrder.DocumentName + '</td>' +
@@ -7840,7 +7842,7 @@ WBSTree = (function ($) {
                             var curendt = new Date($('#program_element_PEnd_Date').val());
                             curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                             curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change(); //Added by Amruta for confirmation popup
 
 
                             //$('#ProgramModal').modal('hide');
@@ -8001,7 +8003,7 @@ WBSTree = (function ($) {
                                 var curendt = new Date($('#program_element_PEnd_Date').val());
                                 curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                                 curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();//Added by Amruta for confirmation popup-1
                                 //
 
                             } else {
@@ -12104,6 +12106,7 @@ WBSTree = (function ($) {
                 }
             });
 
+          //  debugger;
             var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,#program_element_total_value,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
                 '#Accounting_id,#Financial_Analyst_id,#Project_Manager_id,#Director_id,#Capital_Project_Assistant_id,#Vice_President_id,' +
@@ -12124,6 +12127,7 @@ WBSTree = (function ($) {
             });
 
             $('#cancel_program_element,#cancel_program_element_x').unbind('click').on('click', function () {
+               // debugger;
                 if (isFieldValueChanged) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
@@ -12150,6 +12154,8 @@ WBSTree = (function ($) {
                     }
                 }
             });
+
+            debugger;
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number,#project_element_amount,' +
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,' +
