@@ -104,7 +104,7 @@ angular.module('xenon.services', []).
 					admin.addItem('Services', '-/service-class');
 					admin.addItem('Services to Subservices Mapping', '-/service-to-subservice-mapping');
 					admin.addItem('Document Type', '-/document-type');
-					admin.addItem('Location', '-/location'); //territoryCtrl
+					//admin.addItem('Location', '-/location'); //territoryCtrl // Aditya ---hide location from sidebar---
 					admin.addItem('Organization', '-/organization');
 					//admin.addItem('Project Approval Requirements', '-/approval-matrix'); //Manasi
                     admin.addItem('Trend Approval Requirements', '-/approval-matrix'); // Manasi
