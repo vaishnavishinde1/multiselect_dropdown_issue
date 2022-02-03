@@ -93,7 +93,8 @@ namespace WebAPI.Models
                 {
                     ServiceClass retreivedServiceClass = new ServiceClass();
                     retreivedServiceClass = ctx.ServiceClass.Where(u => u.Description == serviceclass.Description
-                                                                        || u.ID == serviceclass.ID).FirstOrDefault();
+                                                                        || u.ID == serviceclass.ID || u.Code==serviceclass.Code).FirstOrDefault();
+                    
 
                     if (retreivedServiceClass == null)
                     {
@@ -104,7 +105,7 @@ namespace WebAPI.Models
                     }
                     else
                     {
-                        result += serviceclass.Description + "' failed to be created, duplicate division or line item # is not allowed.\n";
+                        result += serviceclass.Description + "' failed to be created, duplicate Service is not allowed.\n";
                     }
                 }
 
@@ -138,7 +139,9 @@ namespace WebAPI.Models
                     retreivedServiceClass = ctx.ServiceClass.Where(u => u.ID == serviceclass.ID).FirstOrDefault();
 
                     ServiceClass duplicateserviceClass = ctx.ServiceClass.Where(a => (a.ID != serviceclass.ID
-                                                                                  && (a.Description == serviceclass.Description))).FirstOrDefault();
+                                                                                  && (a.Description == serviceclass.Description))
+                                                                                  || (a.ID != serviceclass.ID
+                                                                                  && (a.Code == serviceclass.Code))).FirstOrDefault();
                                                                                   
 
                     if (retreivedServiceClass != null && retreivedServiceClass.ID!=serviceclass.ID)
@@ -147,7 +150,7 @@ namespace WebAPI.Models
                     }
                     else if (duplicateserviceClass != null)
                     {
-                        result += serviceclass.Description + " failed to be updated, duplicate of services will be created.\n";
+                        result += serviceclass.Description + " failed to be updated, duplicate of services is not allowed.\n";
                     }
                     else if (retreivedServiceClass != null)
                     {
