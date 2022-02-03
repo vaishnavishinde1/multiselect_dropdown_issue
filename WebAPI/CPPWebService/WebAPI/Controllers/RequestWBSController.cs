@@ -76,11 +76,11 @@ namespace WebAPI.Controllers
                     {
                         tempWBSList.Remove(item);
                     }
-
+                    
                     for (int i = 0; i < tempWBSList.Count; i++)
                     {
                         List<ProgramElementWBSTree> tempPrgEleList = new List<ProgramElementWBSTree>();
-                        var data = tempWBSList[i].children.Where(x => x.name.ToLower().Contains(SearchText.ToLower())).ToList();
+                        var data = tempWBSList[i].children.Where(x => x.name.ToLower().Contains(SearchText.ToLower()) || x.ProgramElementNumber.Contains(SearchText)).ToList();
                         foreach (var item in data)
                         {
                             tempPrgEleList.Add(item);

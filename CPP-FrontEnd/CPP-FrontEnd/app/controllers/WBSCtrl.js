@@ -3162,6 +3162,15 @@ angular.module('cpp.controllers').
                 if (searchText == 'undefined' || searchText == null || searchText == '') {
                     searchText = null;
                 }
+                if (pgmId == "" || pgmId == '') {
+                    pgmId = null;
+                }
+                if (pgmEltId == "" || pgmEltId == '') {
+                    pgmEltId = null;
+                }
+                if (projId == "" || projId == '') {
+                    projId = null;
+                }
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
@@ -4188,7 +4197,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgram $http.get pgmId:' + pgmId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, null, null, null,null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null,null,null);
 
                         });
                 }
