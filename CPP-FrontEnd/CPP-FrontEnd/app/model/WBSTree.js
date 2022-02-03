@@ -12114,7 +12114,7 @@ WBSTree = (function ($) {
             });
 
           //  debugger;
-            var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,#program_element_total_value,' +
+            var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
                 '#Accounting_id,#Financial_Analyst_id,#Project_Manager_id,#Director_id,#Capital_Project_Assistant_id,#Vice_President_id,' +
                 '#program_element_client_pm,#program_element_client_phone,#scope_quality_description';
@@ -12124,7 +12124,7 @@ WBSTree = (function ($) {
             });
 
             $('#program_element_total_value').on('change', function () {
-                
+                isFieldValueChanged = true;
                 var progval = $('#program_element_total_value').val().replace("$", "").replaceAll(",", "");
                 var modval = $('#program_element_total_modifications').val().replace("$", "");
                 var totalcurvalue = parseFloat(progval) + parseFloat(modval);
@@ -12164,7 +12164,7 @@ WBSTree = (function ($) {
 
             debugger;
 
-            var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number,#project_element_amount,' +
+            var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,' +
                 '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
@@ -12174,6 +12174,11 @@ WBSTree = (function ($) {
             $(proElePageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
+            $('#project_element_amount').on('change', function () {
+                isFieldValueChanged = true;
+                $('#project_element_amount').val('$' + $('#project_element_amount').val().replace('$', ''));
+
+            })
             $('#cancel_project,#cancel_project_x').unbind('click').on('click', function () {
 
                 if (isFieldValueChanged) {
