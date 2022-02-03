@@ -109,7 +109,7 @@ angular.module('cpp.controllers').
                 ,
                 {
                 field: 'UnitName',
-                name: 'Unit Type',
+                name: 'Unit Type*',
                     enableCellEditOnFocus : true,
                  //   enableCellEdit :true,
               //  editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -117,7 +117,7 @@ angular.module('cpp.controllers').
 
             },{
                 field: 'UnitAbbr',
-                name: 'Unit Abbreviation',
+                name: 'Unit Abbreviation*',
 
               //  editableCellTemplate: $scope.cellInputEditableTemplate,
                 //cellFilter :'mapStatus'

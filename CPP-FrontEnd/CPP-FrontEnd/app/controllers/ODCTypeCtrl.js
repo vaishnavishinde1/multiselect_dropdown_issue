@@ -125,7 +125,7 @@
 
                 }, {
                     field: 'ODCTypeName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     width: 200,
                     //   enableCellEdit :true,
@@ -253,7 +253,9 @@
             var listToSave = [];
             angular.forEach($scope.ODCTypeCollection, function (value, key, obj) {
                 console.log(value);
-                if (value.ODCTypeName == "" || value.ODCDescription == "" || value.UniqueIdentityNumber == ""
+                if (value.ODCTypeName == ""
+                    //|| value.ODCDescription == "" // Aditya 3-2-2022
+                    || value.UniqueIdentityNumber == ""
                     ) {
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",

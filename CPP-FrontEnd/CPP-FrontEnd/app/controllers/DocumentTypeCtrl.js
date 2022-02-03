@@ -105,7 +105,7 @@
                 ,
                 {
                     field: 'DocumentTypeName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     //   enableCellEdit :true,
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -113,7 +113,7 @@
 
                 }, {
                     field: 'DocumentTypeDescription',
-                    name: 'Description',
+                    name: 'Description*',
 
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
                     //cellFilter :'mapStatus'

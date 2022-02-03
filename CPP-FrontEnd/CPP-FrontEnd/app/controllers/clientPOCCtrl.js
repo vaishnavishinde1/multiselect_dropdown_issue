@@ -151,7 +151,7 @@
                     },
                     {
                         field: 'ClientName',      //Tanmay-D
-                        name: 'Client Name',
+                        name: 'Client Name*',
                         enableCellEdit: true,
                         editableCellTemplate: 'ui-grid/dropdownEditor',
                         editDropdownIdLabel: 'ID',
@@ -164,7 +164,7 @@
                     },
                     {
                         field: 'BillingPOC',
-                        name: 'Billing POC',
+                        name: 'Billing POC*',
                         enableCellEditOnFocus: true,
                         widith: 300,
                         filter: {

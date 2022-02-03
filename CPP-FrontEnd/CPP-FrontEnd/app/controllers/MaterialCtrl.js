@@ -191,7 +191,7 @@
                     width: 300
                 }, {
                     field: 'MaterialCategoryName',
-                    name: 'Category',
+                    name: 'Category*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'MaterialCategoryName', //code
                     editDropdownIdLabel: 'MaterialCategoryName',    //phase
@@ -200,7 +200,7 @@
                     width: 170
                 }, {
                     field: 'VendorName',
-                    name: 'Vendor',
+                    name: 'Vendor*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'VendorName', //code
                     editDropdownIdLabel: 'VendorName',    //phase
@@ -224,7 +224,7 @@
                         cellFilter: 'currency' //Manasi
                 }, {
                     field: 'UniqueIdentityNumber',
-                    name: 'Unique Identifier*',
+                    name: 'Unique Identifier',
                         width: 200,
                         enableCellEdit: false,
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
