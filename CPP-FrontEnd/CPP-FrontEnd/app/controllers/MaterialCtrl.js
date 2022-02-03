@@ -183,7 +183,7 @@
                     cellClass: 'c-col-Num' //Manasi
                 }, {
                     field: 'Name',
-                    name: 'Name',
+                    name: 'Name*',
                     width: 200
                 }, {
                     field: 'Description',
@@ -209,7 +209,7 @@
                     width: 180
                 }, {
                     field: 'UnitTypeName',
-                    name: 'Unit Type',
+                    name: 'Unit Type*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'UnitTypeName', //code
                     editDropdownIdLabel: 'UnitTypeName',    //phase
@@ -218,13 +218,13 @@
                     width: 100
                 }, {
                     field: 'Cost',
-                    name: 'Cost',
+                    name: 'Cost*',
                         width: 140,
                         cellClass: 'c-col-Num', //Manasi
                         cellFilter: 'currency' //Manasi
                 }, {
                     field: 'UniqueIdentityNumber',
-                    name: 'Unique Identifier',
+                    name: 'Unique Identifier*',
                         width: 200,
                         enableCellEdit: false,
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -379,7 +379,9 @@
                         dhtmlx.alert('Cost must be a valid number greater than 0 (Row ' + value.displayId + ')');
                         isFilled = false;
                         return;
-                    } else if (value.Description == "" || value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
+                    } else if (
+                        //value.Description == "" ||  // Aditya 3-2-2022
+                        value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
                         ) {
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
