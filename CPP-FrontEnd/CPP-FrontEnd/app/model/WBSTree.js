@@ -4783,14 +4783,17 @@ WBSTree = (function ($) {
                             dhtmlx.alert('Failed to update. Project # already exist');
                             return;
                         } else if (response.result.split(',')[0].trim() === "Success") {
+                            var result = response.result.split(',')[1].trim()
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             originalInfo = objToSave;
-
+                            debugger;
                             //selectedNode.CurrentCost="1111";
                             console.log(selectedNode);
                             selectedNode.name = selectedNode.ProjectNumber.substr(selectedNode.ProjectNumber.length - 3) + ". " + selectedNode.name; // Jignesh-19-03-2021
                             //selectedNode.ProjectClassID
-                            selectedNode.ProgramElementNumber = ('0' + selectedNode.ProjectClassID).slice(-2) + selectedNode.ProjectStartDate.substr(selectedNode.ProjectPStartDate.length - 2) + selectedNode.ProjectNumber.substr(selectedNode.ProjectNumber.length - 3)
+                            //Nivedita 02-02-2022
+                            //selectedNode.ProgramElementNumber = ('0' + selectedNode.ProjectClassID).slice(-2) + selectedNode.ProjectStartDate.substr(selectedNode.ProjectPStartDate.length - 2) + selectedNode.ProjectNumber.substr(selectedNode.ProjectNumber.length - 3)
+                            selectedNode.ProgramElementNumber = result;
                             wbsTree.updateTreeNodes(selectedNode);
 
                             //wbsTree.updateTreeNodes(selectedNode);
@@ -8756,7 +8759,8 @@ WBSTree = (function ($) {
                         $('#current_contract_value').val("$" + totalContractValue);
                         $('#current_contract_value').focus(); // Jignesh 01-12-2020
                         $('#current_contract_value').blur(); // Jignesh 01-12-2020
-                        modal.find('.modal-body #program_current_end_date').val(selectedNode.CurrentEndDate ? moment(selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
+                        //Nivedita 04-02-2022
+                        //modal.find('.modal-body #program_current_end_date').val(selectedNode.CurrentEndDate ? moment(selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
                         //if (updatedContractEndDate != "" && updatedContractEndDate != null && updatedContractEndDate != undefined) {
                         //    modal.find('.modal-body #program_current_end_date').val(updatedContractEndDate ? moment(updatedContractEndDate).format('MM/DD/YYYY') : ""); // Jignesh-02-03-2021
                         //}
@@ -13426,6 +13430,7 @@ WBSTree = (function ($) {
                     $('#project_class').prop('disabled', true);
                     $("#element_start_date").datepicker();	//datepicker - project
                     $("#element_end_date").datepicker();	//datepicker - project
+                    debugger;
                     var orgId = $("#selectOrg").val();
                     if (selectedNode.ProjectNumber == null || selectedNode.ProjectNumber == '') {
                         wbsTree.getProjectElementNumber().get({ ProjectNumber: selectedNode.ProjectNumber, OrganizationID: orgId }, function (response) {

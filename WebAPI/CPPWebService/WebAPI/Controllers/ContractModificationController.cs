@@ -24,11 +24,24 @@ namespace WebAPI.Controllers
             {
                 ContractModification.DeleteContractModification(contractModification);
             }
+            DateTime ProgramCurrentEndDate=DateTime.Now;
             List<ContractModification> contractModificationList = ContractModification.GetContractModificationList(contractModification.ProgramID);
+            //if (contractModification.ModificationType != 1)
+            //{
+                using (var ctx = new CPPDbContext())
+                {
+                    Program objProgram = ctx.Program.Where(p => p.ProgramID == contractModification.ProgramID).FirstOrDefault();
+                    if (objProgram != null)
+                    {
+                        ProgramCurrentEndDate = Convert.ToDateTime(objProgram.CurrentEndDate);
+                    }
+                }
+            //}
             var jsonNew = new
             {
                 result = "success",
-                data = contractModificationList
+                data = contractModificationList,
+                CurrentEndDate= ProgramCurrentEndDate
             };
             return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
         }
