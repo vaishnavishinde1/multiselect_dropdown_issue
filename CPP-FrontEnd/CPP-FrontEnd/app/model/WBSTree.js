@@ -192,8 +192,8 @@ WBSTree = (function ($) {
 
         function createSomething(request) {
         }
-		
-		  //Added by Amruta
+
+        //Added by Amruta
 
         function displayMenu(type, e, d) {
             debugger;
@@ -367,7 +367,7 @@ WBSTree = (function ($) {
 
         }
         obj.prototype.loadContextMenu = function () {
-          //  var wbsTree = this;
+            //  var wbsTree = this;
             var gridView = $('#wbsGridView Table td a');
 
 
@@ -821,12 +821,12 @@ WBSTree = (function ($) {
                 }
             });
 
-          
 
-            
+
+
         }
-		
-		
+
+
         obj.prototype.getContractModificationOperation = function () {
             return _ContractModificationOperation;
         }
@@ -1838,7 +1838,7 @@ WBSTree = (function ($) {
                 // d.y = (d.depth * 500); //500px per level.
             });
 
-            // Update the nodes…
+            // Update the nodesâ€¦
             var node = _svgGroup.selectAll("g.node")
                 .data(nodes, function (d) {
                     return d.id || (d.id = ++nodeIdCounter);
@@ -1852,9 +1852,9 @@ WBSTree = (function ($) {
 
             var contextMenu = document.getElementById("contextMenu");
 
-           
 
-           
+
+
 
 
             gridView.on('click', function (d) {
@@ -2249,7 +2249,7 @@ WBSTree = (function ($) {
             nodeExit.select("text")
                 .style("fill-opacity", 0);
 
-            // Update the links…
+            // Update the linksâ€¦
             var link = _svgGroup.selectAll("path.link")
                 .data(links, function (d) {
                     if (d.target.level == "PastTrend" || d.target.level == "CurrentTrend" || d.target.level == "FutureTrend") {
@@ -2880,10 +2880,10 @@ WBSTree = (function ($) {
                                     if ($('#ProgramModal').hasClass('in'))
                                         $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
                                     wbsTree.updateTreeNodes(selectedNode.parent);
-                                        wbsTree.loadFullGridView();
-                                        wbsTree.getWBSTrendTree().trendGraph();
-                                      
-                                       // wbsTree.loadContextMenu();
+                                    wbsTree.loadFullGridView();
+                                    wbsTree.getWBSTrendTree().trendGraph();
+
+                                    // wbsTree.loadContextMenu();
                                     //window.location.reload();   //Manasi 28-07-2020
                                 });
                             } else if (selectedNode.level === "ProgramElement") {
@@ -2914,15 +2914,15 @@ WBSTree = (function ($) {
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                         wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
-                                       // wbsTree.loadFullGridView();
+                                        // wbsTree.loadFullGridView();
 
                                         //window.location.reload();   //Manasi 28-07-2020
                                     });
                                     if ($('#ProgramElementModal').hasClass('in'))
-                                            $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
-                                        wbsTree.loadFullGridView();
-                                        wbsTree.getWBSTrendTree().trendGraph();
-                                       // wbsTree.loadFullGridView();
+                                        $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+                                    wbsTree.loadFullGridView();
+                                    wbsTree.getWBSTrendTree().trendGraph();
+                                    // wbsTree.loadFullGridView();
 
                                 })
                             } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
@@ -3268,14 +3268,14 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     console.log('TotalMod == ' + totalmod + ';' + 'SchImpact ==' + schImp);
                     $('#program_element_total_modifications').val('$' + totalmod);
-                    var projvalue=0;
+                    var projvalue = 0;
                     if ($('#program_element_total_value').val()) {
                         //dhtmlx.alert($('#program_element_total_value').val());.replace('$', '')
 
                         projvalue = parseFloat($('#program_element_total_value').val().replace(/[^\d\.]/g, ''));
                     }
                     //var projvalue = parseFloat($('#program_element_total_value').val());
-                    $('#program_element_total_current_value').val('$' + (totalmod + projvalue)); 
+                    $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -3315,7 +3315,7 @@ WBSTree = (function ($) {
                         '</tr>'
                     );
 
-                
+
 
                     //$('#program_element_change_order_table_id').append(
                     //    '<tr id="' + singeChangeOrder.ChangeOrderName + '" class="fade-selection-animation clickable-row">' +
@@ -3385,8 +3385,8 @@ WBSTree = (function ($) {
                 if (modal_mode == 'Update') {   //luan here 2
 
                     //selectedNode.name = $('#ProgramModal').find('.modal-body #program_name').val();
-					//Nivedita 13-01-2022
-					if (!$('#ProgramModal').find('.modal-body #program_name').val()) {
+                    //Nivedita 13-01-2022
+                    if (!$('#ProgramModal').find('.modal-body #program_name').val()) {
 
                         dhtmlx.alert('Contract Name is a required field.'); // Jignesh-02-03-2021
                         return;
@@ -3403,8 +3403,8 @@ WBSTree = (function ($) {
                     selectedNode.ProgramSponsor = $('#ProgramModal').find('.modal-body #program_sponsor').val();
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
                     //selectedNode.ClientID = $('#ProgramModal').find('.modal-body #program_client_poc').val();
-					//Nivedita 13-01-2022
-					 if (!$('#ProgramModal').find('.modal-body #program_client_poc').val()) {
+                    //Nivedita 13-01-2022
+                    if (!$('#ProgramModal').find('.modal-body #program_client_poc').val()) {
                         dhtmlx.alert('Client Name is a required field.'); // Jignesh-02-03-2021
                         return;
                     }
@@ -3416,8 +3416,8 @@ WBSTree = (function ($) {
                     console.log(newNode);
                     //selectedNode.ClientPhone = $('#ProgramModal').find('.modal-body #program_client_phone').val();
                     //selectedNode.ClientEmail = $('#ProgramModal').find('.modal-body #program_client_email').val();
-					//Nivedita 13-01-2022
-					 var clientPhone = $('#ProgramModal').find('.modal-body #program_client_phone').val();
+                    //Nivedita 13-01-2022
+                    var clientPhone = $('#ProgramModal').find('.modal-body #program_client_phone').val();
                     if (clientPhone) {
                         if (clientPhone.length > 0) {
                             if (clientPhone.length != 12) {
@@ -3432,7 +3432,7 @@ WBSTree = (function ($) {
 
                     var clientEmail = $('#ProgramModal').find('.modal-body #program_client_email').val();
                     if (clientEmail) {
-                        if (clientEmail.length > 0) { 
+                        if (clientEmail.length > 0) {
                             var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
                             if (!testEmail.test(clientEmail)) {
                                 dhtmlx.alert('Please enter valid Client Email Address.'); // Jignesh-02-03-2021
@@ -3453,10 +3453,10 @@ WBSTree = (function ($) {
                     selectedNode.ClientPONo = $('#ProgramModal').find('.modal-body #program_client_po_num').val();
                     //==================================================
 
-					//Nivedita 13-01-2022
+                    //Nivedita 13-01-2022
                     //selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
-					if (!$('#ProgramModal').find('.modal-body #program_contract_number').val()) {
-                    selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
+                    if (!$('#ProgramModal').find('.modal-body #program_contract_number').val()) {
+                        selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
                         dhtmlx.alert('Contract # is a required field.'); // Jignesh-02-03-2021
                         return;
                     }
@@ -3465,9 +3465,9 @@ WBSTree = (function ($) {
                     }
                     selectedNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
                     //selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
-					//Nivedita 13-01-2022
+                    //Nivedita 13-01-2022
                     //selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
-					if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
+                    if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
                         dhtmlx.alert('Original Contract Value is a required field.'); // Jignesh-02-03-2021
                         return;
                     }
@@ -3476,19 +3476,19 @@ WBSTree = (function ($) {
                     }
                     selectedNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();   //Manasi 04-08-2020
 
-					//Nivedita 13-01-2022
+                    //Nivedita 13-01-2022
                     //selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
-					if (!$('#ProgramModal').find('.modal-body #program_billing_poc').val()) {
-						dhtmlx.alert('Billing POC is a required field.');
-						return;
-					}
-					else {
+                    if (!$('#ProgramModal').find('.modal-body #program_billing_poc').val()) {
+                        dhtmlx.alert('Billing POC is a required field.');
+                        return;
+                    }
+                    else {
                         selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
                     }
-					
-					//Nivedita 13-01-2022
+
+                    //Nivedita 13-01-2022
                     //selectedNode.BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
-					var BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
+                    var BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
                     if (BillingPOCPhone1) {
                         if (BillingPOCPhone1.length > 0) {
                             if (BillingPOCPhone1.length != 12) {
@@ -3501,9 +3501,9 @@ WBSTree = (function ($) {
                         }
                     }
 
-					//Nivedita 13-01-2022
+                    //Nivedita 13-01-2022
                     //selectedNode.BillingPOCPhone2 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_2').val();
-					var BillingPOCPhone2 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_2').val();
+                    var BillingPOCPhone2 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_2').val();
                     if (BillingPOCPhone2) {
                         if (BillingPOCPhone2.length > 0) {
                             if (BillingPOCPhone2.length != 12) {
@@ -3523,10 +3523,10 @@ WBSTree = (function ($) {
                     selectedNode.BillingPOCState = $('#ProgramModal').find('.modal-body #program_billing_poc_state').val();
                     selectedNode.BillingPOCPONo = $('#ProgramModal').find('.modal-body #program_billing_poc_po_num').val();
                     //==================================================
-					//Nivedita 13-01-2022
+                    //Nivedita 13-01-2022
                     //selectedNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
-					var BillingPocEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
-					if (BillingPocEmail) {
+                    var BillingPocEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
+                    if (BillingPocEmail) {
                         if (BillingPocEmail.length > 0) {
                             var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
                             if (!testEmail.test(BillingPocEmail)) {
@@ -3555,12 +3555,12 @@ WBSTree = (function ($) {
                     selectedNode.Lumpsum = program_Lumpsum ? 1 : 0;
                     selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
 
-					//Nivedita 13-01-2022
-					if (!$('#ProgramModal').find('.modal-body #program_project_manager').val()) {
-						dhtmlx.alert('Contract Manager Name is a required field.'); // Jignesh-02-03-2021
-						return;
+                    //Nivedita 13-01-2022
+                    if (!$('#ProgramModal').find('.modal-body #program_project_manager').val()) {
+                        dhtmlx.alert('Contract Manager Name is a required field.'); // Jignesh-02-03-2021
+                        return;
                     }
-					else {
+                    else {
                         selectedNode.ProjectManager = $('#ProgramModal').find('.modal-body #program_project_manager').val();
                     }
 
@@ -3577,8 +3577,8 @@ WBSTree = (function ($) {
                             }
                         }
                     }
-                    
-                
+
+
                     var ProjectManagerEmail = $('#ProgramModal').find('.modal-body #program_project_manager_email').val();
                     if (ProjectManagerEmail) {
                         if (ProjectManagerEmail.length > 0) {
@@ -4263,9 +4263,9 @@ WBSTree = (function ($) {
                         return;
                     }
                     else {
-                    selectedNode.ProgramElementName = $('#ProgramElementModal').find('.modal-body #project_name').val();    //luan eats
-                }
-                
+                        selectedNode.ProgramElementName = $('#ProgramElementModal').find('.modal-body #project_name').val();    //luan eats
+                    }
+
 
                     selectedNode.ProjectManager = $('#ProgramElementModal').find('.modal-body #project_manager').val();
                     selectedNode.ProjectSponsor = $('#ProgramElementModal').find('.modal-body #project_sponsor').val();
@@ -5374,7 +5374,7 @@ WBSTree = (function ($) {
 
                             debugger;
                             /////////aaa
-                           // loadWBSGrid();
+                            // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
@@ -5597,7 +5597,7 @@ WBSTree = (function ($) {
                     selectedNode.Location = $('#ProjectModal').find('.modal-body #project_element_location').val();
                     selectedNode.ProjectDescription = $('#ProjectModal').find('.modal-body #project_element_description').val();
 
-                     // Nivedita - Remove Billing POC Details 29-12-2021
+                    // Nivedita - Remove Billing POC Details 29-12-2021
                     // Billing POC Pritesh 28jul2020
 
                     //selectedNode.BillingPOC = $('#ProjectModal').find('.modal-body #program_billing_poc1').val();
@@ -6641,7 +6641,7 @@ WBSTree = (function ($) {
                                     width: '500px'
                                 });
                             }
-                            
+
                         }
                     });
 
@@ -7501,7 +7501,7 @@ WBSTree = (function ($) {
                         minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))*/
                         maxDate: new Date(moment(maxPDate).format('MM/DD/YYYY')),// Aditya
                         minDate: new Date(moment(minPDate).format('MM/DD/YYYY'))// Aditya
-                        
+
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
@@ -7814,6 +7814,19 @@ WBSTree = (function ($) {
                         return;
                     }
 
+                    debugger;
+                    //update- Added by Amruta to save end date on change order
+
+                    if (updatedChangeOrder.ScheduleImpact != "") {
+                        var curendt = new Date($('#program_element_PEnd_Date').val());
+                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                    }
+                    debugger;
+                    var pendDate = $('#program_element_PEnd_Date').val();
+                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+
                     var obj = {
                         "Operation": 2,
                         "ChangeOrderID": updatedChangeOrder.ChangeOrderID,
@@ -7822,6 +7835,7 @@ WBSTree = (function ($) {
                         "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
+                        "ProjectEndDateCO": projectEndDate,
                         "OrderType": updatedChangeOrder.OrderType,
                         "OrderDate": updatedChangeOrder.OrderDate,
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7849,10 +7863,10 @@ WBSTree = (function ($) {
                             $("#ProgramElementModal").css({ "opacity": "1" });
 
                             //Manu: 11/01/2022 
-                            var curendt = new Date($('#program_element_PEnd_Date').val());
-                            curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change(); //Added by Amruta for confirmation popup
+                            /*  var curendt = new Date($('#program_element_PEnd_Date').val());
+                              curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                              curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                              $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();*/ //Added by Amruta for confirmation popup
 
 
                             //$('#ProgramModal').modal('hide');
@@ -7865,7 +7879,7 @@ WBSTree = (function ($) {
                                     width: '500px'
                                 });
                             }
-                            
+
                             return;  //Manasi
                         }
 
@@ -7897,6 +7911,16 @@ WBSTree = (function ($) {
                     //newChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
                     newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
+                    if (newChangeOrder.ScheduleImpact != "") {
+                        var curendt = new Date($('#program_element_PEnd_Date').val());
+                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
+                        debugger;
+                    }
+
+                    var pendDate = $('#program_element_PEnd_Date').val();
+                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
 
                     var obj = {
                         "Operation": 1,
@@ -7906,6 +7930,7 @@ WBSTree = (function ($) {
                         "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
+                        "ProjectEndDateCO": projectEndDate,
                         "OrderType": newChangeOrder.OrderType,
                         "OrderDate": newChangeOrder.OrderDate, //.replace(/\//g, ""),
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7930,6 +7955,7 @@ WBSTree = (function ($) {
                             "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                             "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                             "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                            "ProjectEndDateCO": projectEndDate,
                             "OrderType": newChangeOrder.OrderType,
                             "OrderDate": newChangeOrder.OrderDate,
                             //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -8010,10 +8036,10 @@ WBSTree = (function ($) {
                                 $("#ProgramElementModal").css({ "opacity": "1" });
 
                                 //Manu: 11/01/2022
-                                var curendt = new Date($('#program_element_PEnd_Date').val());
+                               /* var curendt = new Date($('#program_element_PEnd_Date').val());
                                 curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                                 curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();//Added by Amruta for confirmation popup-1
+                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change()*/;//Added by Amruta for confirmation popup-1
                                 //
 
                             } else {
@@ -8207,12 +8233,12 @@ WBSTree = (function ($) {
                                 } else {
                                     if (response.result == '' || response.result == null || response.result == undefined)
                                         dhtmlx.alert('Something went wrong. Please try again..');
-                                    else 
+                                    else
                                         dhtmlx.alert({ text: response.result, width: '500px' });
 
-                                        $('#ProgramElementChangeOrderModal').modal('hide');
-                                        $("#ProgramElementModal").css({ "opacity": "1" });
-                                    
+                                    $('#ProgramElementChangeOrderModal').modal('hide');
+                                    $("#ProgramElementModal").css({ "opacity": "1" });
+
                                 }
                                 debugger;
                                 //Nivedita 14-01-2022
@@ -8559,6 +8585,9 @@ WBSTree = (function ($) {
                     //modal = $(this);
                     var clientDropDown = modal.find('.modal-body #program_client_poc');
                     var clientList = wbsTree.getClientList();
+                    clientList.sort(function (a, b) {   //vaishnavi
+                        return a.ClientName.localeCompare(b.ClientName);  //vaishnavi
+                    }); //vaishnavi
                     clientDropDown.empty();
                     if (wbsTree.getLocalStorage().role === "Admin") {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
@@ -8644,7 +8673,7 @@ WBSTree = (function ($) {
                             gridUploadedContDocument.empty();
                             for (var x = 0; x < _documentList.length; x++) {
                                 var modificatioTitle = "";
-                                if (_modificationList!= undefined) {
+                                if (_modificationList != undefined) {
                                     for (var i = 0; i < _modificationList.length; i++) {
                                         if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
                                             modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
@@ -8857,6 +8886,9 @@ WBSTree = (function ($) {
                     //modal = $(this);
                     var clientDropDown = modal.find('.modal-body #program_client_poc');
                     var clientList = wbsTree.getClientList();
+                    clientList.sort(function (a, b) {   //vaishnavi
+                        return a.ClientName.localeCompare(b.ClientName);   //vaishnavi
+                    }); //vaishnavi
                     clientDropDown.empty();
                     if (wbsTree.getLocalStorage().role === "Admin") {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
@@ -10288,7 +10320,7 @@ WBSTree = (function ($) {
                                             _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
                                                 //wbsTree.setDocumentList(response.result);
                                                 var _documentList = response.result;
-                                                _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID}, function (response) {
+                                                _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID }, function (response) {
                                                     var _modificationList = response.data;
                                                     var moda2 = $('#ProgramModal');
                                                     var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
@@ -10370,7 +10402,7 @@ WBSTree = (function ($) {
                 employeeList = newEmployeeList;
 
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
-                    
+
                     //var userList = wbsTree.getUserList();
                     //var newEmployeeList = [];
                     //for (var x = 0; x < employeeList.length; x++) {
@@ -10392,7 +10424,7 @@ WBSTree = (function ($) {
                     //employeeList.sort(function (a, b) {
                     //   return a.Name.localeCompare(b.Name);
                     //});
-                    
+
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
                     //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
                     $('#divProjectApprovers').html('');
@@ -10603,7 +10635,7 @@ WBSTree = (function ($) {
                     $('#documentUploadProgramNewPrg').removeAttr('title')  //Manasi 23-02-2021
                     $('#spnBtndelete_program_element').removeAttr('title'); //Manasi 24-02-2021
                     //Nivedita 14-01-2022
-                     $('#new_program_element_milestone').removeAttr('disabled');
+                    $('#new_program_element_milestone').removeAttr('disabled');
                     $('#edit_program_element_milestone').removeAttr('disabled');
                     g_newProgramElement = false;
                     wbsTree.setIsProgramElementNew(false);
@@ -11111,7 +11143,7 @@ WBSTree = (function ($) {
 
                         modal.find('.modal-body #project_element_po_number').val(selectedNode.ClientPONumber);
 
-                    //---------------------------------------------------------------------------------------------------------------------------
+                        //---------------------------------------------------------------------------------------------------------------------------
                         var employeeList = wbsTree.getEmployeeList();
                         var userList = wbsTree.getUserList();
                         var newEmployeeList = [];
@@ -11215,7 +11247,7 @@ WBSTree = (function ($) {
 
                     $('#updateBtnProgramPrg').attr('disabled', 'disabled');  //Manasi
                     modal.find('.modal-body #program_element_Start_Date').removeAttr('disabled');  //Manasi 23-10-2020
-                    
+
                     $('#divmilestone').attr('title', "A project needs to be saved before key project milestones can be added");    //Manasi 23-02-2021
                     $('#divChangeOrder').attr('title', "A project needs to be saved before the change order can be added");    //Manasi 23-02-2021
                     $('#documentUploadProgramNewPrg').attr('title', "A project needs to be saved before the document can be uploaded");   //Manasi 23-02-2021
@@ -11292,7 +11324,7 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     modal.find('.modal-body #program_element_total_current_value').val('');
                     modal.find('.modal-body #project_number').val('');
-                    
+
                     //luan here
 
                     modal.find('.modal-body #contract_number').val('');
@@ -11376,6 +11408,9 @@ WBSTree = (function ($) {
                         selectedNode.ProjectClassID = projectClassIDFromProgram;
                         var projectClassDropDown = modal.find('.modal-body #project_class');
                         var projectClassList = wbsTree.getProjectClassList();
+                        projectClassList.sort(function (a, b) {   //vaishnavi
+                            return a.ProjectClassName.localeCompare(b.ProjectClassName);  //vaishnavi
+                        });  //vaishnavi
                         var projectClassName = '';
                         projectClassDropDown.empty();
 
@@ -11551,7 +11586,7 @@ WBSTree = (function ($) {
                     //$("#delete_program_element").removeAttr('disabled'); //Manasi 24-02-2021
                     $("#update_program_element").removeAttr('disabled');
                     //Nivedita 14-01-2022
-                   // $('#new_program_element_milestone').removeAttr('disabled');
+                    // $('#new_program_element_milestone').removeAttr('disabled');
                     //$('#edit_program_element_milestone').removeAttr('disabled');
                     //  $('#ProgramElementModal :input').removeAttr('disabled');
                     if (selectedNode.level == "ProgramElement") {
@@ -12117,7 +12152,7 @@ WBSTree = (function ($) {
                 }
             });
 
-          //  debugger;
+            //  debugger;
             var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
                 '#Accounting_id,#Financial_Analyst_id,#Project_Manager_id,#Director_id,#Capital_Project_Assistant_id,#Vice_President_id,' +
@@ -12138,7 +12173,7 @@ WBSTree = (function ($) {
             });
 
             $('#cancel_program_element,#cancel_program_element_x').unbind('click').on('click', function () {
-               // debugger;
+                // debugger;
                 if (isFieldValueChanged) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
@@ -12427,12 +12462,12 @@ WBSTree = (function ($) {
                             }
                             else if (response.data.ModificationType == 2) {
                                 $('#modification_value').val('');
-                                $('#schedule_impact').val('$'+response.data.ScheduleImpact);
+                                $('#schedule_impact').val('$' + response.data.ScheduleImpact);
                                 $('#divModificationValue').hide();
                                 $('#divModDurationDate').show();
                             }
                             else if (response.data.ModificationType == 3) {
-                                $('#modification_value').val('$' +response.data.Value);
+                                $('#modification_value').val('$' + response.data.Value);
                                 $('#schedule_impact').val(response.data.ScheduleImpact);
                                 $('#divModificationValue').show();
                                 $('#divModDurationDate').show();
@@ -12963,7 +12998,7 @@ WBSTree = (function ($) {
                                     employeeList.sort(function (a, b) {
                                         return a.Name.localeCompare(b.Name);
                                     });
-                                //--------------------------------------------------------------------------------
+                                    //--------------------------------------------------------------------------------
 
                                     if (j == 0) {
                                         append += "<div class='col-xs-6' style='padding-left: 0;'>" +
@@ -12972,7 +13007,7 @@ WBSTree = (function ($) {
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
                                                 //append += '<option value="' + employeeList[x].ID + ',' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
-                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId +  '">' + employeeList[x].Name + '</option>';
+                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                             }
 
                                         }
@@ -13544,7 +13579,7 @@ WBSTree = (function ($) {
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     }
-                    
+
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
                     document.getElementById("program_sov_billing1").checked = selectedNode.parent.parent.SOVBilling ? true : false;
                     document.getElementById("program_monthly_billing1").checked = selectedNode.parent.parent.MonthlyBilling ? true : false;
@@ -13656,7 +13691,9 @@ WBSTree = (function ($) {
                     }
                     employeeList = newEmployeeList;
                     var employeeClassList = employeeList;
-
+                    employeeClassList.sort(function (a, b) {  //vaishnavi
+                        return a.FirstName.localeCompare(b.FirstName);  //vaishnavi
+                    }); //vaishnavi
 
 
                     employeeClassDropDown.empty();
@@ -14016,7 +14053,7 @@ WBSTree = (function ($) {
                     //luan here
 
                     // Pritesh Billing POC 
-                    
+
                     //modal.find('.modal-body #program_billing_poc1').val('');
                     //modal.find('.modal-body #program_billing_poc_phone_11').val('');
                     //modal.find('.modal-body #program_billing_poc_phone_21').val('');
@@ -14040,7 +14077,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program1_billing_poc_city').val(selectedNode.parent.BillingPOCCity);
                     modal.find('.modal-body #program1_billing_poc_state').val(selectedNode.parent.BillingPOCState);
                     modal.find('.modal-body #program1_billing_poc_po_num').val(selectedNode.parent.BillingPOCPONo);
-                    
+
                     if (selectedNode.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     }
@@ -14139,6 +14176,9 @@ WBSTree = (function ($) {
                     //    //selectedNode.ProjectClassID = projectClassIDFromProgram;    // Jignesh 24-11-2020
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
                     var serviceClassList = wbsTree.getServiceClassList();
+                    serviceClassList.sort(function (a, b) {   //vaishnavi
+                        return a.Description.localeCompare(b.Description);  //vaishnavi
+                    }); //vaishnavi
                     var serviceClassName = '';
                     serviceClassDropDown.empty();
 

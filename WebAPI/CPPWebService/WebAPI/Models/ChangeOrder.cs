@@ -41,6 +41,10 @@ namespace WebAPI.Models
         public string Reason { get; set; } // Jignesh-ChangeOrderPopUpChanges
         public int? ModificationTypeId { get; set; } // Jignesh-ChangeOrderPopUpChanges
 
+        // Added by Amruta
+        [NotMapped]
+        public DateTime ProjectEndDateCO { get; set; }
+
         public static List<ChangeOrder> getChangeOrder()
 		{
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -271,6 +275,15 @@ namespace WebAPI.Models
 
                                 ctx.SaveChanges();
 
+                                //Added by Amruta for saving the project end date on change order creation
+                                ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
+                                if (programElement != null)
+                                {
+                                    programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO;
+                                    ctx.SaveChanges();
+                                }
+
+
                                 result = "Success," + ChangeOrder.ChangeOrderID;
                             }
                             else if(retreivedChangeOrder != null)
@@ -363,6 +376,9 @@ namespace WebAPI.Models
                             }
                             ctx.Entry(retreivedChangeOrder).State = System.Data.Entity.EntityState.Modified;
                             ctx.SaveChanges();
+
+                            WebAPI.Models.ProgramElement.updatePojectEndDateOnChangeOrder(ChangeOrder.ProgramElementID.GetValueOrDefault(), ChangeOrder.ProjectEndDateCO);
+
                             result = ChangeOrder.ChangeOrderName + " has been updated successfully.\n";
                         }
                         else

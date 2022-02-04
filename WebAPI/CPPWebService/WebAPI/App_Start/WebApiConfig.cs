@@ -1898,6 +1898,15 @@ namespace WebAPI
                  routeTemplate: "Response/RegisterUserLicenseMapping",
                  defaults: new { controller = "RegisterUserLicenseMapping" }
              );
+
+            //Poject Element changes by Amruta
+
+            config.Routes.MapHttpRoute(
+                 name: "RegisterProgramElementOnChangeOrder",
+                 routeTemplate: "Request/ProjectEndDateChangeOrder/{projectId}/{ProjectEndDate}",
+                 defaults: new { controller = "RequestProgramElementOnChangeOrder", projectId = RouteParameter.Optional, ProjectEndDate = RouteParameter.Optional }
+             );
+
         }
     }
 }
