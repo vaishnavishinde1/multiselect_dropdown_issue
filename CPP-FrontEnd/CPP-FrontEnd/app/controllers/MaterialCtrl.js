@@ -200,7 +200,7 @@
                     width: 170
                 }, {
                     field: 'VendorName',
-                    name: 'Vendor*',
+                    name: 'Vendor',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'VendorName', //code
                     editDropdownIdLabel: 'VendorName',    //phase
@@ -380,7 +380,8 @@
                         isFilled = false;
                         return;
                     } else if (
-                        //value.Description == "" ||  // Aditya 3-2-2022
+                        //value.Description == "" ||  // Aditya 3-2-2022 
+                        value.MaterialCategoryName == "" ||
                         value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
                         ) {
                         dhtmlx.alert({
