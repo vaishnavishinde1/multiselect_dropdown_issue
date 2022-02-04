@@ -398,7 +398,7 @@
                         }
                     }
 
-                    if (value.ClientID == 0 || value.BillingPOC == "" || value.UniqueIdentityNumber == "") {
+                    if (value.BillingPOC == "" || value.UniqueIdentityNumber == "") {
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "400px"
@@ -642,7 +642,7 @@
                             if (originalCollection[i].ClientPOCID == currentObject.ClientPOCID) {
                                 var originalObject = originalCollection[i];
                                 // compare relevant data
-                                if (originalObject.ClientId !== currentObject.ClientId ||
+                                if (originalObject.ClientName !== currentObject.ClientName ||
                                     originalObject.BillingPOCDescription !== currentObject.BillingPOCDescription ||
                                     originalObject.BillingPOCPhone1 !== currentObject.BillingPOCPhone1 ||
                                     originalObject.BillingPOCPhone2 !== currentObject.BillingPOCPhone2 ||
