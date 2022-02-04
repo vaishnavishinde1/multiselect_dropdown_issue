@@ -2051,9 +2051,7 @@ angular.module('cpp.controllers').
                             dhtmlx.alert("Modification Deleted Successfully!!!.");
                         }
                         wbsTree.setContractModificationOperation(1);
-                        var temp = wbsTree.getSelectedNode();
-                        temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
-                        wbsTree.updateTreeNodes(temp);
+                        
                         //$('#modification_number').val('');
                         $('#modification_title').val('');
                         $('#modification_reason').val('');
@@ -2129,8 +2127,14 @@ angular.module('cpp.controllers').
                         $('#current_contract_value').blur();  // Jignesh 01-12-2020
                         var modal = $('#ProgramModal'); //.format(sqlDateFormat);
                         //Nivedita 03-02-2022
+                        if (contractModification.ModificationType != 1)
+                        {
+                            var temp = wbsTree.getSelectedNode();
+                            temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
+                            wbsTree.updateTreeNodes(temp);
+                            modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
+                        }
                         
-                        modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
                         //modal.find('.modal-body #program_current_end_date').val(_selectedNode.CurrentEndDate ? moment(_selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
                         //if (updatedContractEndDate != "" && updatedContractEndDate != null && updatedContractEndDate != undefined) {
                         //    modal.find('.modal-body #program_current_end_date').val(moment(updatedContractEndDate).format('MM/DD/YYYY'));  // Jignesh-26-02-2021
