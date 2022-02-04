@@ -41,16 +41,16 @@ namespace WebAPI.Models
         public DateTime ProjectNTPDate { get; set; }   //Manasi 23-10-2020
         public string ContractStartDate { get; set; }
 
-		public string ClientProjectManager { get; set; }
-		public string ClientPhoneNumber { get; set; }
+        public string ClientProjectManager { get; set; }
+        public string ClientPhoneNumber { get; set; }
 
-		public string LocationName { get; set; }
-		public string ContractEndDate { get; set; }
-		public string ProjectValueContract { get; set; }
-		public string ProjectValueTotal { get; set; }
-		public int ContractID { get; set; }
+        public string LocationName { get; set; }
+        public string ContractEndDate { get; set; }
+        public string ProjectValueContract { get; set; }
+        public string ProjectValueTotal { get; set; }
+        public int ContractID { get; set; }
 
-		public int ClientID { get; set; }
+        public int ClientID { get; set; }
         public int LocationID { get; set; }
         public int ProjectManagerID { get; set; }
         public int DirectorID { get; set; }
@@ -127,7 +127,7 @@ namespace WebAPI.Models
         public DateTime? ForecastStartDate { get; set; }
         public DateTime? ForecastEndDate { get; set; }
         public string CurrentCost { get; set; }
-        
+
         public string ForecastCost { get; set; }
         public string OrganizationID { get; set; }
 
@@ -159,13 +159,14 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     ctx.Database.Log = msg => Trace.WriteLine(msg);
-                    if (ProgramID != "null" && ProgramID != null){
+                    if (ProgramID != "null" && ProgramID != null)
+                    {
                         int pgmId = int.Parse(ProgramID);
                         IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramID == pgmId && p.IsDeleted == false);
                         MatchedProgramElementList = programElements.ToList<ProgramElement>();
 
 
-                    }   
+                    }
                     else if (ProgramElementID != "null" && ProgramElementID != null)
                     {
                         int pgmEltId = int.Parse(ProgramElementID);
@@ -182,12 +183,12 @@ namespace WebAPI.Models
                         IQueryable<ProgramElement> programElements = ctx.ProgramElement.Include("Program").Where(p => p.ProgramElementName.Contains(KeyStroke) && p.IsDeleted == false);
                         MatchedProgramElementList = programElements.ToList<ProgramElement>();
                     }
-                    else 
+                    else
                     {
-                        IQueryable<ProgramElement> programs = ctx.ProgramElement.Include("Program").Where(p=>p.IsDeleted == false);
+                        IQueryable<ProgramElement> programs = ctx.ProgramElement.Include("Program").Where(p => p.IsDeleted == false);
                         MatchedProgramElementList = programs.ToList<ProgramElement>();
                     }
-                    
+
                 }
 
 
@@ -237,7 +238,7 @@ namespace WebAPI.Models
                             DateTime maxDate = ProjectNTPDate == null ? DateTime.Now : ProjectNTPDate;
                             //String maxStartdate = Convert.ToDateTime(ctx.ProgramElement.Max(a => a.ProjectNTPDate)).ToShortDateString();
                             String maxStartdate = maxDate.ToShortDateString();
-                            maxStartdate = maxStartdate.Replace('-','/'); // Jignesh
+                            maxStartdate = maxStartdate.Replace('-', '/'); // Jignesh
                             int maxYear = Convert.ToInt32(maxStartdate.Split('/')[2].ToString());
 
                             int currentYear = Convert.ToInt32(pgmElt.ProjectStartDate.ToString().Split('/')[2].ToString());
@@ -264,7 +265,7 @@ namespace WebAPI.Models
                                     maxProjectNumber = "001";
                             }
                         }
-                        
+
                         else
                         {
                             maxProjectNumber = "001";
@@ -343,13 +344,13 @@ namespace WebAPI.Models
                             ctx.SaveChanges();
                         }
 
-                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber + "," +pm.ProgramElementNumber;  // Jignesh-19-03-2021
+                        result = "Success" + "," + pm.ProgramElementID + "," + pm.ProgramID + "," + pm.ProjectNumber + "," + pm.ProgramElementNumber;  // Jignesh-19-03-2021
                     }
                     else
                     {
                         result = "Failed to add new project. Project " + pgmElt.ProgramElementName + " already exists.";   //Manasi 13-07-2020
                     }
-                  
+
                 }
             }
             catch (Exception ex)
@@ -362,7 +363,7 @@ namespace WebAPI.Models
             return result;
         }
 
-        
+
         public static String updateProgramElement(ProgramElement program_element)
         {
 
@@ -404,13 +405,13 @@ namespace WebAPI.Models
                                 pgmElt.ProjectClassID = program_element.ProjectClassID;
 
                                 pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                                pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                                pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                                 pgmElt.ContractNumber = program_element.ContractNumber;
 
-								pgmElt.ClientProjectManager = program_element.ClientProjectManager;
-								pgmElt.ClientPhoneNumber = program_element.ClientPhoneNumber;
+                                pgmElt.ClientProjectManager = program_element.ClientProjectManager;
+                                pgmElt.ClientPhoneNumber = program_element.ClientPhoneNumber;
 
-								pgmElt.ClientID = program_element.ClientID;
+                                pgmElt.ClientID = program_element.ClientID;
                                 pgmElt.LocationID = program_element.LocationID;
                                 pgmElt.ProjectManagerID = program_element.ProjectManagerID;
                                 pgmElt.DirectorID = program_element.DirectorID;
@@ -421,25 +422,25 @@ namespace WebAPI.Models
                                 pgmElt.ProjectStartDate = program_element.ProjectStartDate;
                                 pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture); // Jignesh 20-11-2020
                                 string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
-                                string yyFormat = yyyyFormat.Substring(yyyyFormat.Length-2);
+                                string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
                                 string maxProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                                 if (ismodify)
                                 {
-                                    
+
                                     int count = ctx.ProgramElement.Where(b => b.ProjectClassID == pgmElt.ProjectClassID).Count();
                                     int yyYear = Convert.ToInt32(yyyyFormat);
                                     if (count > 0)
                                     {
                                         maxProjectNumber = ctx.ProgramElement.Where(a => a.ProjectNTPDate.Year == yyYear && a.ProjectClassID == pgmElt.ProjectClassID).Max(b => b.ProjectNumber);
                                         maxProjectNumber = (Convert.ToInt32(maxProjectNumber) + 1).ToString();
-                                        
+
                                     }
                                     else
                                     {
                                         maxProjectNumber = "001";
                                     }
                                 }
-                                
+
                                 if (maxProjectNumber.Length < 3)
                                 {
                                     int diff = 3 - maxProjectNumber.Length;
@@ -454,7 +455,7 @@ namespace WebAPI.Models
 
 
                                 //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
-                                
+
 
 
                                 // ------------------ Add start date end date po date 21-01-2021 -----------------------------
@@ -468,13 +469,13 @@ namespace WebAPI.Models
 
                                 pgmElt.ContractStartDate = program_element.ContractStartDate;
 
-								pgmElt.LocationName = program_element.LocationName;
-								pgmElt.ContractEndDate = program_element.ContractEndDate;
-								pgmElt.ContractID = program_element.ContractID;
-								pgmElt.ProjectValueContract = program_element.ProjectValueContract;
-								pgmElt.ProjectValueTotal = program_element.ProjectValueTotal;
+                                pgmElt.LocationName = program_element.LocationName;
+                                pgmElt.ContractEndDate = program_element.ContractEndDate;
+                                pgmElt.ContractID = program_element.ContractID;
+                                pgmElt.ProjectValueContract = program_element.ProjectValueContract;
+                                pgmElt.ProjectValueTotal = program_element.ProjectValueTotal;
 
-								pgmElt.CostDescription = program_element.CostDescription;
+                                pgmElt.CostDescription = program_element.CostDescription;
                                 pgmElt.ScheduleDescription = program_element.ScheduleDescription;
                                 pgmElt.ScopeQualityDescription = program_element.ScopeQualityDescription;
 
@@ -503,7 +504,7 @@ namespace WebAPI.Models
                                 //=================================================
 
                                 ctx.SaveChanges();
-                                
+
                                 ctx.ProjectApproversDetails.RemoveRange(ApproversDetails);
                                 ctx.ProjectApproversDetails.AddRange(program_element.ApproversDetails);
                                 ctx.SaveChanges();
@@ -530,7 +531,7 @@ namespace WebAPI.Models
 
                             pgmElt.ProjectClassID = program_element.ProjectClassID;
                             pgmElt.ProjectTypeID = program_element.ProjectTypeID;
-                            pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                            pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                             pgmElt.ContractNumber = program_element.ContractNumber;
 
                             pgmElt.ClientID = program_element.ClientID;
@@ -545,16 +546,16 @@ namespace WebAPI.Models
                             pgmElt.ProjectStartDate = program_element.ProjectStartDate;
                             pgmElt.ContractStartDate = program_element.ContractStartDate;
 
-							pgmElt.ClientProjectManager = program_element.ClientProjectManager;
-							pgmElt.ClientPhoneNumber = program_element.ClientPhoneNumber;
+                            pgmElt.ClientProjectManager = program_element.ClientProjectManager;
+                            pgmElt.ClientPhoneNumber = program_element.ClientPhoneNumber;
 
-							pgmElt.LocationName = program_element.ProjectStartDate;
-							pgmElt.ContractEndDate = program_element.ContractEndDate;
-							pgmElt.ContractID = program_element.ContractID;
-							pgmElt.ProjectValueContract = program_element.ProjectValueContract;
-							pgmElt.ProjectValueTotal = program_element.ProjectValueTotal;
+                            pgmElt.LocationName = program_element.ProjectStartDate;
+                            pgmElt.ContractEndDate = program_element.ContractEndDate;
+                            pgmElt.ContractID = program_element.ContractID;
+                            pgmElt.ProjectValueContract = program_element.ProjectValueContract;
+                            pgmElt.ProjectValueTotal = program_element.ProjectValueTotal;
 
-							pgmElt.ProgramElementName = program_element.ProgramElementName;
+                            pgmElt.ProgramElementName = program_element.ProgramElementName;
                             pgmElt.ProgramElementManager = program_element.ProgramElementManager;
                             pgmElt.ProgramElementSponsor = program_element.ProgramElementSponsor;
                             pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
@@ -563,7 +564,7 @@ namespace WebAPI.Models
                             string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
                             string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
 
-                            pgmElt.ProgramElementNumber = program_element.ProjectClassID + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
+                            pgmElt.ProgramElementNumber = program_element.ProjectClassID + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
                             //====== Nivedita--30-12-2021 =======
                             pgmElt.BillingPOC = program_element.BillingPOC;
                             pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
@@ -617,7 +618,7 @@ namespace WebAPI.Models
                 {
                     conn = ConnectionManager.getConnection();
                     conn.Open();
-                    var query = "Select * from cost_fte where ActivityID = @ActivityID " ;
+                    var query = "Select * from cost_fte where ActivityID = @ActivityID ";
                     MySqlCommand command = new MySqlCommand(query, conn);
                     command.Parameters.AddWithValue("@ActivityID", act.ActivityID);
                     using (reader = command.ExecuteReader())
@@ -697,7 +698,7 @@ namespace WebAPI.Models
                 {
                     conn = ConnectionManager.getConnection();
                     conn.Open();
-                    var query = "Select * from cost_unitcost where ActivityID =@ActivityID " ;
+                    var query = "Select * from cost_unitcost where ActivityID =@ActivityID ";
                     MySqlCommand command = new MySqlCommand(query, conn);
                     command.Parameters.AddWithValue("@ActivityID", act.ActivityID);
                     using (reader = command.ExecuteReader())
@@ -875,9 +876,9 @@ namespace WebAPI.Models
                     command1.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
                     command1.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
                     command1.ExecuteNonQuery();
-                  //  updateCostOnProgramElementDelete(pgmElt.ProgramID);
-                  ////  ctx.ProgramElement.Remove(pgmElt);
-                  //  //ctx.SaveChanges();
+                    //  updateCostOnProgramElementDelete(pgmElt.ProgramID);
+                    ////  ctx.ProgramElement.Remove(pgmElt);
+                    //  //ctx.SaveChanges();
                     result = "Success";
                 }
             }
@@ -899,7 +900,7 @@ namespace WebAPI.Models
             {
 
                 Program program = ctx.Program.Where(p => p.ProgramID == programID).FirstOrDefault();
-       
+
                 var pID = program.ProgramID;
 
                 MySqlCommand command = null;
