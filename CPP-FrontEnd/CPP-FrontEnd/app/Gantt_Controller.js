@@ -562,7 +562,7 @@ angular.module('xenon.Gantt_Controller', []).
             var authData = getAuthorizationData();
             //--------------------Swapnil 18-09-2020-----------------------------------------------------
             MFAConfiguration.lookup().get(function (response) {
-                ////debugger
+                //////
                 //console.log(response);
                 mfaDetails = response.result;
 
@@ -2085,7 +2085,7 @@ angular.module('xenon.Gantt_Controller', []).
                     if (response.result) {
                         dhtmlx.alert(response.result);
                         if (!response.result.includes('TBD')) { // Swapnil 09-09-2020
-                            //debugger
+                            ////
                             //approval progress bar
                             TrendId.get({
                                 "trendId": delayedData[3],
@@ -2160,7 +2160,7 @@ angular.module('xenon.Gantt_Controller', []).
                         // Multi factor Authentication Working comment on 21 aug 2020 pritesh
                         //  alert(authData.userName);
                         //---------- Swapnil 18-09-2020 --------------------------------------------------------------------
-                        //debugger
+                        ////
                         if (mfaDetails.IsMFAEnabled == "0") {
                             $('#ResendApprovlLinkBtn').show();
                             $('#ApprovalBtn').prop('disabled', true);
@@ -2439,7 +2439,7 @@ angular.module('xenon.Gantt_Controller', []).
 
             //Save Cost
             $scope.saveCost = function () {
-                ////debugger;
+                //////;
                 //console.log('here');
                 if (validateCostFields() == true) {
                     dhtmlx.alert({
@@ -3042,7 +3042,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                     refreshHtmlDelete();
                     //priteshs2
-
+                    
                 });
             }
 
@@ -3326,7 +3326,7 @@ angular.module('xenon.Gantt_Controller', []).
 
             //OnLightbox - get activity task (MainCategory-SubCategory) and display them as selection
             $scope.scheduleGanttInstance.attachEvent("onLightBox", function (id, task, is_new) {
-                //debugger
+                ////
                 //console.log('luan test');
                 $scope.lightBoxTask = $scope.scheduleGanttInstance.getTask(id);
 
@@ -5683,13 +5683,18 @@ angular.module('xenon.Gantt_Controller', []).
                                                 //console.log($scope.schedule.data[x]);
                                             }
                                         }
+                                        var aID = $scope.selectedActivity.id;
+                                        $scope.scheduleGanttInstance.callEvent('customSelect', [aID, 0, false]);
+                                        $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
 
                                         $timeout(function () {
                                             currentId = -1;
                                             // alert("Check");
-                                            $scope.scheduleGanttInstance.callEvent('customSelect', [$scope.selectedActivity.id, 0, false]);
-                                            $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
-                                            $scope.showSpinner12 = false;
+                                            updatePhaseAndProjectDisplay();
+                                            updateTrendDate();
+                                            $scope.scheduleGanttInstance.callEvent('customSelect', [aID, 0, false]);
+                                            $scope.scheduleGanttInstance.selectTask(aID);
+                                            //$scope.showSpinner12 = false;
                                         }, 1000);
 
                                     });
@@ -5698,7 +5703,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         $scope.selectedCost = $scope.costGanttInstance.getTask($scope.selectedCostId);  //Manasi 11-03-2021
                                         updateBuffer($scope.selectedCost); // Jignesh-10-03-2021
                                     }
-                                    $scope.scheduleGanttInstance.callEvent('onTaskSelected', [selectedTask.id]);
+                                    //$scope.scheduleGanttInstance.callEvent('onTaskSelected', [selectedTask.id]);
 
                                     $timeout(function () {
                                         //getProjectDurationAndCost();
@@ -5709,6 +5714,11 @@ angular.module('xenon.Gantt_Controller', []).
                                         var amountInput = delayedData[2].result[0].Amount;
                                         $scope.amount = amountInput - $scope.allCostTotal;
                                         $scope.allEACTotal = $scope.selectedActivity.totalCostActualForecast; // Jignesh-03-05-2021
+                                        updatePhaseAndProjectDisplay();
+                                        updateTrendDate();
+                                        $scope.scheduleGanttInstance.callEvent('customSelect', [$scope.selectedActivity.id, 0, false]);
+                                        $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
+                                        $scope.showSpinner12 = false;
                                         //deactivateSpinner();
                                         $scope.direction = '';
                                     }, 1000);
@@ -5806,6 +5816,8 @@ angular.module('xenon.Gantt_Controller', []).
                         })
                     }
                 }
+                $scope.scheduleGanttInstance.callEvent('customSelect', [$scope.selectedActivity.id, 0, false]);
+                $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);
                 if ($scope.isScaleChanged == true) {
                     $scope.isScaleChanged = false;
                 }
@@ -6455,7 +6467,7 @@ angular.module('xenon.Gantt_Controller', []).
                         // Swapnil 30/11/2020
                         {
                             name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
-                                debugger;
+                                //;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                                 var CurCostData = data.filter(s => filters.every(t => {
@@ -6577,7 +6589,7 @@ angular.module('xenon.Gantt_Controller', []).
                         // Swapnil 30/11/2020
                         {
                             name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
-                                debugger;
+                                //;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                                 var CurCostData = data.filter(s => filters.every(t => {
@@ -6686,7 +6698,7 @@ angular.module('xenon.Gantt_Controller', []).
                         // Swapnil 30/11/2020
                         {
                             name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
-                                debugger;
+                                //;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                                 var CurCostData = data.filter(s => filters.every(t => {
@@ -6807,7 +6819,7 @@ angular.module('xenon.Gantt_Controller', []).
                         // Swapnil 30/11/2020
                         {
                             name: "newCostLineItemId", label: "#", width: 60, align: "left", resize: true, template: function (obj) {
-                                debugger;
+                                //;
                                 var data = $scope.CostData;
                                 var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                                 var CurCostData = data.filter(s => filters.every(t => {
@@ -6929,7 +6941,7 @@ angular.module('xenon.Gantt_Controller', []).
                     // Swapnil 30/11/2020
                     {
                         name: "newCostLineItemId", label: "#", width: 60, align: "right", resize: true, template: function (obj) {
-                            debugger;
+                            //;
                             var data = $scope.CostData;
                             var filters = [{ CostLineItemID: obj.CostLineItemID }, { CostID: obj.cost_id }];
                             var CurCostData = data.filter(s => filters.every(t => {
@@ -7378,8 +7390,8 @@ angular.module('xenon.Gantt_Controller', []).
                                         day = '0' + day;
 
                                     var FormateLoop = [year, month, day].join('-');
-
-                                    StartDateOfEachWeek.push(FormateLoop);
+                                    var formatedDateSW = (moment(FormateLoop).isoWeekday() === 1) ? FormateLoop : moment(FormateLoop).startOf('isoWeek').format(sqlDateFormat);
+                                    StartDateOfEachWeek.push(formatedDateSW);
                                     var newDate = loop.setDate(loop.getDate() + 7);
                                     loop = new Date(newDate);
                                 }
@@ -7424,6 +7436,12 @@ angular.module('xenon.Gantt_Controller', []).
                                             TxtValCountWhenIndividualStartISNull++;
                                         }
                                         else {
+                                            //if ($scope.textBoxValues[task.id].length != 0) {
+                                            //    TextBoxValuesArray.push($scope.textBoxValues[task.id][i]);
+                                            //}
+                                            //else {
+                                            //    TextBoxValuesArray.push('0.00');
+                                            //}
                                             TextBoxValuesArray.push('0.00');
                                         }
                                         //  TextBoxValuesArray.push('0');                                  
@@ -8913,7 +8931,7 @@ angular.module('xenon.Gantt_Controller', []).
                     currentId = -1;
                 }
                 else {
-                    //debugger
+                    ////
                     $scope.isCostEdited[id] = true;
                     for (var i = 0; i < $scope.TotalCostBox; i++) {
 
@@ -9324,7 +9342,7 @@ angular.module('xenon.Gantt_Controller', []).
             //customClick - BEGIN
             $scope.costGanttInstance.attachEvent("customClick", function (id) {
                 // id = id + 1;
-                //debugger
+                ////
                 $scope.newEmployees[id] = [];
                 $scope.newSubcontractors[id] = [];
                 $scope.newMaterials[id] = [];
@@ -9965,7 +9983,7 @@ angular.module('xenon.Gantt_Controller', []).
 
             //-----------------Manasi 11-02-2021------------------------------------------------
             onRouteChangeOff = $scope.$on('$locationChangeStart', function (event) {
-                //debugger
+                ////
                 //console.log('we in there');
 
                 var newUrl = $location.path();
@@ -10288,7 +10306,7 @@ angular.module('xenon.Gantt_Controller', []).
                         byteArray = new Uint8Array(byteNumbers);
 
                         saveByteArray(byteArray, d.data.fileName);
-                        // //debugger;
+                        // ////;
                         $('#ExportToMPP').prop('disabled', false);
                         document.getElementById("loading").style.display = "none";
                         dhtmlx.alert("File generated successfully"); // Jignesh-02-03-2021
@@ -10301,7 +10319,7 @@ angular.module('xenon.Gantt_Controller', []).
                     $http.get(serviceBasePath + 'Request/Delete?fileName=' + fileName)
                         .then(function success(d) {
                             // alert(d.data.result);
-                            ////debugger;
+                            //////;
 
                             dhtmlx.alert(d.data.result);
 
