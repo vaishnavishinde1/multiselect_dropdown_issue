@@ -1050,6 +1050,9 @@ WBSTrendTree = (function ($) {
                     laborRateDropDown.attr('disabled', false);
                     laborRateDropDown.val("");
                     trendStatusCodeList = response.result;
+                    trendStatusCodeList.sort(function (a, b) {   //vaishnavi 
+                        return a.TrendStatusCodeName.localeCompare(b.TrendStatusCodeName);  //vaishnavi 
+                    });  //vaishnavi 
 
                     TRENDSTATUSCODELIST = response.result;
 

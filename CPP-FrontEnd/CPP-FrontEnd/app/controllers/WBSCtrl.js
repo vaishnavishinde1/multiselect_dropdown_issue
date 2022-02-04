@@ -1825,8 +1825,11 @@ angular.module('cpp.controllers').
                             debugger;
                             wbsTree.setClientList(response.result);
                             var clientDropDownProgram;
-                            debugger;
-                            var clientList = wbsTree.getClientList();
+                           
+                            var clientList = wbsTree.getClientList();   
+                            clientList.sort(function (a, b) {                 //vaishnavi
+                                return a.ClientName.localeCompare(b.ClientName); //vaishnavi
+                            });   //vaishnavi
                             clientDropDownProgram = modal.find('.modal-body #program_client_poc');
                             clientDropDownProgram.empty();
                             // Jignesh-25-03-2021
@@ -4165,6 +4168,9 @@ angular.module('cpp.controllers').
                     localStorage.setItem('pgmId', pgmId);
                     ProgramElement.lookup().get({ ProgramID: pgmId }, function (programElementData) {
                         $scope.programElementList = programElementData.result;
+                        $scope.programElementList.sort(function (a, b) {    //vaishnavi
+                            return a.ProgramElementName.localeCompare(b.ProgramElementName);  //vaishnavi
+                        }); //vaishnavi
                         $("#selectProgramElement").val("");
                     });
 
@@ -4265,6 +4271,9 @@ angular.module('cpp.controllers').
                     localStorage.setItem('pgmEltId', pgmEltId);
                     Project.lookup().get({ ProgramID: pgmId, ProgramElementID: pgmEltId }, function (projectData) {
                         $scope.projectList = projectData.result;
+                        $scope.projectList.sort(function (a, b) {    //vaishnavi
+                            return a.ProjectName.localeCompare(b.ProjectName);   //vaishnavi
+                        });  //vaishnavi
                     });
                     ProjectClassByProgramElementId.get({ programElemID: pgmEltId }, function (response) {
                         var data = response;
