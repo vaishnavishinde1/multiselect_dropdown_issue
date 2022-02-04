@@ -20,7 +20,20 @@ namespace WebAPI.Controllers
             }
             else
             {
-                projectVersionDetails = WebAPI.Models.Versionmaster.getVersionDetailsByOrgID(organizationID);
+                if(organizationID != "null")
+                {
+                    if (organizationID != "0")
+                    {
+                        projectVersionDetails = WebAPI.Models.Versionmaster.getVersionDetailsByOrgID(organizationID);
+                    }
+                    else
+                    {
+                        projectVersionDetails = WebAPI.Models.Versionmaster.getVersionDetails();
+                    }
+                }
+                 
+                else
+                    projectVersionDetails = WebAPI.Models.Versionmaster.getVersionDetails();
             }
 
             var jsonNew = new

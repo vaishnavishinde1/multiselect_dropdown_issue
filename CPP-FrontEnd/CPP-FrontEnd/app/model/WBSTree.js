@@ -7816,12 +7816,16 @@ WBSTree = (function ($) {
 
                     debugger;
                     //update- Added by Amruta to save end date on change order
-                    var curendt = new Date($('#program_element_PEnd_Date').val());
-                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                    curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+
+                    if (updatedChangeOrder.ScheduleImpact != "") {
+                        var curendt = new Date($('#program_element_PEnd_Date').val());
+                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                    }
                     debugger;
-                    var projectEndDate = moment(curendt).format('MM/DD/YYYY');
+                    var pendDate = $('#program_element_PEnd_Date').val();
+                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
 
                     var obj = {
                         "Operation": 2,
@@ -7907,13 +7911,16 @@ WBSTree = (function ($) {
                     //newChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
                     newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
+                    if (newChangeOrder.ScheduleImpact != "") {
+                        var curendt = new Date($('#program_element_PEnd_Date').val());
+                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
+                        debugger;
+                    }
 
-                    var curendt = new Date($('#program_element_PEnd_Date').val());
-                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                    curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
-                    debugger;
-                    var projectEndDate = moment(curendt).format('MM/DD/YYYY');
+                    var pendDate = $('#program_element_PEnd_Date').val();
+                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
 
                     var obj = {
                         "Operation": 1,
@@ -8029,10 +8036,10 @@ WBSTree = (function ($) {
                                 $("#ProgramElementModal").css({ "opacity": "1" });
 
                                 //Manu: 11/01/2022
-                                var curendt = new Date($('#program_element_PEnd_Date').val());
+                               /* var curendt = new Date($('#program_element_PEnd_Date').val());
                                 curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                                 curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();//Added by Amruta for confirmation popup-1
+                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change()*/;//Added by Amruta for confirmation popup-1
                                 //
 
                             } else {

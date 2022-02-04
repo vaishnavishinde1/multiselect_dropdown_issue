@@ -42,6 +42,17 @@ namespace WebAPI.Models
                 return versionDetails;
         }
 
+        public static List<Versionmaster> getVersionDetails()
+        {
+            List<Versionmaster> versionDetails = new List<Versionmaster>();
+            using (var ctx = new CPPDbContext())
+            {
+                
+                versionDetails = ctx.VersionMaster.OrderByDescending(x => x.Id).ToList();
+            }
+            return versionDetails;
+        }
+
     }
 
     
