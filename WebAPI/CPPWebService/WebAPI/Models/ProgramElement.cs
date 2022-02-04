@@ -396,8 +396,13 @@ namespace WebAPI.Models
 
                                 pgmElt.ProgramElementName = program_element.ProgramElementName;
                                 pgmElt.ProjectName = program_element.ProjectName;
-
+                                bool ismodify = false;
+                                if (pgmElt.ProjectClassID != program_element.ProjectClassID)
+                                {
+                                    ismodify = true;
+                                }
                                 pgmElt.ProjectClassID = program_element.ProjectClassID;
+
                                 pgmElt.ProjectTypeID = program_element.ProjectTypeID;
                                 pgmElt.ProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length-3);
                                 pgmElt.ContractNumber = program_element.ContractNumber;
@@ -413,12 +418,43 @@ namespace WebAPI.Models
                                 pgmElt.VicePresidentID = program_element.VicePresidentID;
                                 pgmElt.FinancialAnalystID = program_element.FinancialAnalystID;
                                 pgmElt.CapitalProjectAssistantID = program_element.CapitalProjectAssistantID;
+                                pgmElt.ProjectStartDate = program_element.ProjectStartDate;
+                                pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture); // Jignesh 20-11-2020
                                 string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
                                 string yyFormat = yyyyFormat.Substring(yyyyFormat.Length-2);
-                                pgmElt.ProjectStartDate = program_element.ProjectStartDate;
-                                pgmElt.ProgramElementNumber = program_element.ProjectClassID.ToString("D2") + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
+                                string maxProjectNumber = program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
+                                if (ismodify)
+                                {
+                                    
+                                    int count = ctx.ProgramElement.Where(b => b.ProjectClassID == pgmElt.ProjectClassID).Count();
+                                    int yyYear = Convert.ToInt32(yyyyFormat);
+                                    if (count > 0)
+                                    {
+                                        maxProjectNumber = ctx.ProgramElement.Where(a => a.ProjectNTPDate.Year == yyYear && a.ProjectClassID == pgmElt.ProjectClassID).Max(b => b.ProjectNumber);
+                                        maxProjectNumber = (Convert.ToInt32(maxProjectNumber) + 1).ToString();
+                                        
+                                    }
+                                    else
+                                    {
+                                        maxProjectNumber = "001";
+                                    }
+                                }
+                                
+                                if (maxProjectNumber.Length < 3)
+                                {
+                                    int diff = 3 - maxProjectNumber.Length;
+                                    for (int i = 0; i < diff; i++)
+                                    {
+                                        maxProjectNumber = "0" + maxProjectNumber;
+                                    }
+                                }
+                                ////pgmElt.ProgramElementNumber = program_element.ProjectClassID.ToString("D2") + yyFormat + program_element.ProjectNumber.Substring(program_element.ProjectNumber.Length - 3);
+                                pgmElt.ProgramElementNumber = program_element.ProjectClassID.ToString("D2") + yyFormat + maxProjectNumber;
+
+
+
                                 //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
-                                pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture); // Jignesh 20-11-2020
+                                
 
 
                                 // ------------------ Add start date end date po date 21-01-2021 -----------------------------
@@ -471,7 +507,7 @@ namespace WebAPI.Models
                                 ctx.ProjectApproversDetails.RemoveRange(ApproversDetails);
                                 ctx.ProjectApproversDetails.AddRange(program_element.ApproversDetails);
                                 ctx.SaveChanges();
-                                result = "Success";
+                                result = "Success" + "," + pgmElt.ProgramElementNumber;
                             }
                             else
                             {

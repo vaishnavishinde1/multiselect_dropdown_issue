@@ -1911,15 +1911,20 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Date.');
                     return;
                 }
-                if (pgmcurrentstartdate == "" || pgmcurrentstartdate.length == 0) {
-                    dhtmlx.alert('Enter Contract Start Date.');
-                    return;
+                //Nivedita 03-02-2022
+                if (modType != 1)
+                {
+                    //if (pgmcurrentstartdate == "" || pgmcurrentstartdate.length == 0) {
+                    //    dhtmlx.alert('Enter Contract Start Date.');
+                    //    return;
+                    //}
+                    if (pgmcurrentenddate == "" || pgmcurrentenddate.length == 0) {
+                        dhtmlx.alert('Enter Contract End Date.');
+                        return;
+
+                    }
                 }
-                if (pgmcurrentenddate == "" || pgmcurrentenddate.length == 0) {
-                    dhtmlx.alert('Enter Contract End Date.');
-                    return;
-                    
-                }
+                
                 //if (_selectedNode.CurrentEndDate == "") {
                 //    _selectedNode.CurrentEndDate = pgmcurrentenddate;
                 //}
@@ -1979,8 +1984,14 @@ angular.module('cpp.controllers').
                     ProgramID: programId,
                     CreatedBy: createdBy,
                     ScheduleImpact: scheduleImpact
+                    
                 };
-
+                
+                if (modType != 1)
+                {
+                    contractModification.ProgramStartDt = pgmcurrentstartdate;
+                    contractModification.ProgramEndDt = pgmcurrentenddate;
+                }
                 if (operation == 2) {
                     contractModification.Id = $('#primaryKeyId').val();
                     contractModification.ModificationNo = $('#txtModNum').val();
@@ -2020,7 +2031,7 @@ angular.module('cpp.controllers').
             });
 
             function PerformOperationOnContractModification(contractModification) {
-                
+                debugger;
                 var request = {
                     method: 'POST',
                     url: serviceBasePath + 'contractModification/saveContractModification',
@@ -2040,6 +2051,9 @@ angular.module('cpp.controllers').
                             dhtmlx.alert("Modification Deleted Successfully!!!.");
                         }
                         wbsTree.setContractModificationOperation(1);
+                        var temp = wbsTree.getSelectedNode();
+                        temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
+                        wbsTree.updateTreeNodes(temp);
                         //$('#modification_number').val('');
                         $('#modification_title').val('');
                         $('#modification_reason').val('');
@@ -2114,7 +2128,10 @@ angular.module('cpp.controllers').
                         $('#current_contract_value').focus(); // Jignesh 01-12-2020
                         $('#current_contract_value').blur();  // Jignesh 01-12-2020
                         var modal = $('#ProgramModal'); //.format(sqlDateFormat);
-                        modal.find('.modal-body #program_current_end_date').val(_selectedNode.CurrentEndDate ? moment(_selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
+                        //Nivedita 03-02-2022
+                        
+                        modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
+                        //modal.find('.modal-body #program_current_end_date').val(_selectedNode.CurrentEndDate ? moment(_selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
                         //if (updatedContractEndDate != "" && updatedContractEndDate != null && updatedContractEndDate != undefined) {
                         //    modal.find('.modal-body #program_current_end_date').val(moment(updatedContractEndDate).format('MM/DD/YYYY'));  // Jignesh-26-02-2021
                         //}
@@ -3141,7 +3158,7 @@ angular.module('cpp.controllers').
             }
        
             $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID) {
-                debugger;
+                
                 searchText = myLocalStorage.get('SearchText');
                 $scope.SearchText = searchText;
                 var pagedata = Page;
@@ -3259,7 +3276,7 @@ angular.module('cpp.controllers').
                                 }
                                 
                             }
-                            debugger;
+                            
                             console.log("Check program details===>");
                             console.log(program);
 
@@ -3286,7 +3303,7 @@ angular.module('cpp.controllers').
                                
 
                                 //organization --- contract -- project
-                                debugger;
+                                
                                 console.log("Project Details====>");
                                 console.log(project);
                                 if (project.children.length == 0) {
@@ -3318,7 +3335,7 @@ angular.module('cpp.controllers').
                                         currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
                                     }
 
-                                    debugger;
+                                    
                                     console.log("Project Element Details====>");
                                     console.log(projectElement);
                                     var projectServiceName = '';
@@ -3867,10 +3884,13 @@ angular.module('cpp.controllers').
                             $("#selectOrg option[value='" + orgId + "']").attr('selected', true);
                             wbsTree.getProjectMap().initProjectMap(wbsTree.getSelectedNode(), wbsTree.getOrganizationList());
                         }, 500);
-                    }
+                    } 
 
                     Program.lookup().get({ OrganizationID: orgId }, function (programData) {
                         $scope.programList = programData.result;
+                        $scope.programList.sort(function (a, b) {
+                            return a.ProgramName.localeCompare(b.ProgramName);
+                        });
                     });
 
                     console.log($scope.programList);
