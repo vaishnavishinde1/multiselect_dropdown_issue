@@ -88,13 +88,13 @@
 
                 }, {
                     field: 'InventoryName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     //width: 280
 
                 }, {
                     field: 'InventoryDescription',
-                    name: 'Description',
+                    name: 'Description*',
                     //width: 280
 
                 }, {

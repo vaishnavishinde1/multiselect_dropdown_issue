@@ -172,13 +172,13 @@ angular.module('cpp.controllers').
 
                 }, {
                     field: 'UserID',
-                    name: 'User Id'
+                    name: 'User Id*'
                     /*enableCellEditOnFocus: true,
                     editableCellTemplate: $scope.cellInputEditableTemplate*/
 
                 }, {
                     field: 'FirstName',
-                    name: 'First Name'
+                    name: 'First Name*'
                     /*enableCellEditOnFocus: true,
                     editableCellTemplate: $scope.cellInputEditableTemplate*/
 
@@ -194,7 +194,7 @@ angular.module('cpp.controllers').
                     },
                     {
                         field: 'LastName',
-                        name: 'Last Name'
+                        name: 'Last Name*'
                         /*enableCellEditOnFocus: true,
                         editableCellTemplate: $scope.cellInputEditableTemplate*/
 
@@ -202,7 +202,7 @@ angular.module('cpp.controllers').
                     },
                     {
                         field: 'Email',
-                        name: 'Email',
+                        name: 'Email*',
                         /*enableCellEditOnFocus: true,
                         editableCellTemplate: $scope.cellInputEditableTemplate,*/
                         width: 200
@@ -211,7 +211,7 @@ angular.module('cpp.controllers').
                     },
                     {
                         field: 'Role',
-                        name: 'Role',
+                        name: 'Role*',
                         editableCellTemplate: 'ui-grid/dropdownEditor',
                         editDropdownValueLabel: 'Role',
                         editDropdownIdLabel: 'Role',
@@ -224,7 +224,7 @@ angular.module('cpp.controllers').
                     ,
                     {
                         field: 'EmployeeName',
-                        name: 'Employee',
+                        name: 'Employee*',
                         editableCellTemplate: 'ui-grid/dropdownEditor',
                         editDropdownIdLabel: 'ID',
                         editDropdownValueLabel: 'value',
@@ -237,7 +237,7 @@ angular.module('cpp.controllers').
                     },
                     {
                         field: 'PasswordChangeRequiredName',
-                        name: 'Pwd Change',
+                        name: 'Pwd Change*',
                         editableCellTemplate: 'ui-grid/dropdownEditor',
                         editDropdownValueLabel: 'PasswordChangeRequiredName',
                         editDropdownIdLabel: 'PasswordChangeRequiredName',

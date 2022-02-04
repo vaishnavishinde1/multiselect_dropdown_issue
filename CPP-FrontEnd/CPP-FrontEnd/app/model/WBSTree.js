@@ -120,6 +120,7 @@ WBSTree = (function ($) {
         _ProjectWhiteListService = null;
         _ModificationList = null; // Jignesh 29-10-2020
         _IsRootForModification = false; // Jignesh 23-11-2020
+        _userList = null;
         _program = null;
         _deleteDocIDs = [];
         _TrendId = null;
@@ -3313,6 +3314,8 @@ WBSTree = (function ($) {
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderScheduleChange + '</td>' +
                         '</tr>'
                     );
+
+                
 
                     //$('#program_element_change_order_table_id').append(
                     //    '<tr id="' + singeChangeOrder.ChangeOrderName + '" class="fade-selection-animation clickable-row">' +
@@ -7461,6 +7464,8 @@ WBSTree = (function ($) {
                 $('#message_div').hide();
                 defaultModalPosition();
                 var isProgramElementMilestoneUpdate = !g_newProgramElementMilestone;
+                var maxPDate = $('#program_element_PEnd_Date').val();// Aditya
+                var minPDate = $('#program_element_PStart_Date').val();// Aditya
 
                 $("#ProgramElementModal").css({ "opacity": "0.4" });
 
@@ -7474,10 +7479,12 @@ WBSTree = (function ($) {
                 if (isProgramElementMilestoneUpdate) {
                     //luan Jquery - luan here
                     console.log('applied jquery');
-                    $("#program_element_milestone_date_modal").datepicker();	//datepicker - program contract modal
+                    $("#program_element_milestone_date_modal").datepicker("destroy");	//datepicker - program contract modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
-                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
+                        /*maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))*/
+                        maxDate: new Date(moment(maxPDate).format('MM/DD/YYYY')),// Aditya
+                        minDate: new Date(moment(minPDate).format('MM/DD/YYYY'))// Aditya
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
@@ -7490,8 +7497,11 @@ WBSTree = (function ($) {
                     console.log('applied jquery');
                     $("#program_element_milestone_date_modal").datepicker("destroy");	//datepicker - program element milestone modal
                     $('#program_element_milestone_date_modal').datepicker({
-                        maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
-                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))
+                        /*maxDate: new Date(moment(_selectedNode.ProjectPEndDate).format('MM/DD/YYYY')),
+                        minDate: new Date(moment(_selectedNode.ProjectPStartDate).format('MM/DD/YYYY'))*/
+                        maxDate: new Date(moment(maxPDate).format('MM/DD/YYYY')),// Aditya
+                        minDate: new Date(moment(minPDate).format('MM/DD/YYYY'))// Aditya
+                        
                     });
                     //modal.find('.modal-title').text('Program Element Milestone'); Manasi
                     modal.find('.modal-title').text('Key Project Milestone');
@@ -7842,7 +7852,7 @@ WBSTree = (function ($) {
                             var curendt = new Date($('#program_element_PEnd_Date').val());
                             curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                             curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change(); //Added by Amruta for confirmation popup
 
 
                             //$('#ProgramModal').modal('hide');
@@ -8003,7 +8013,7 @@ WBSTree = (function ($) {
                                 var curendt = new Date($('#program_element_PEnd_Date').val());
                                 curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                                 curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();//Added by Amruta for confirmation popup-1
                                 //
 
                             } else {
@@ -11721,7 +11731,7 @@ WBSTree = (function ($) {
                 var gridViewAllUploadedDocumentProgramElement = $('#gridViewAllDocumentInProject');
                 gridViewAllUploadedDocumentProgramElement.empty();
 
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: selectedNode.ProgramElementID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: _selectedProgramElementID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
                         var viewBtnId = _documentList[x].ChangeOrderName ? "viewAllOrderDetail" : "viewDocumentDetail"; // Jignesh-01-03-2021
@@ -11784,7 +11794,7 @@ WBSTree = (function ($) {
                 $('#searchCont').val(''); // Jignesh-24-02-2021
 
                 //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
+                _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
                     //wbsTree.setDocumentList(response.result);
                     var _documentList = response.result;
                     _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
@@ -12107,7 +12117,8 @@ WBSTree = (function ($) {
                 }
             });
 
-            var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,#program_element_total_value,' +
+          //  debugger;
+            var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
                 '#Accounting_id,#Financial_Analyst_id,#Project_Manager_id,#Director_id,#Capital_Project_Assistant_id,#Vice_President_id,' +
                 '#program_element_client_pm,#program_element_client_phone,#scope_quality_description';
@@ -12117,7 +12128,7 @@ WBSTree = (function ($) {
             });
 
             $('#program_element_total_value').on('change', function () {
-                
+                isFieldValueChanged = true;
                 var progval = $('#program_element_total_value').val().replace("$", "").replaceAll(",", "");
                 var modval = $('#program_element_total_modifications').val().replace("$", "");
                 var totalcurvalue = parseFloat(progval) + parseFloat(modval);
@@ -12127,6 +12138,7 @@ WBSTree = (function ($) {
             });
 
             $('#cancel_program_element,#cancel_program_element_x').unbind('click').on('click', function () {
+               // debugger;
                 if (isFieldValueChanged) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
@@ -12154,7 +12166,9 @@ WBSTree = (function ($) {
                 }
             });
 
-            var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number,#project_element_amount,' +
+            debugger;
+
+            var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,' +
                 '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
@@ -12164,6 +12178,11 @@ WBSTree = (function ($) {
             $(proElePageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
+            $('#project_element_amount').on('change', function () {
+                isFieldValueChanged = true;
+                $('#project_element_amount').val('$' + $('#project_element_amount').val().replace('$', ''));
+
+            })
             $('#cancel_project,#cancel_project_x').unbind('click').on('click', function () {
 
                 if (isFieldValueChanged) {

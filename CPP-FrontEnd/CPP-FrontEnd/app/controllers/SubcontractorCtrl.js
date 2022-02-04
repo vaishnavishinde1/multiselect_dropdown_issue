@@ -126,7 +126,7 @@
 
                 }, {
                     field: 'SubcontractorName',
-                    name: 'Name',
+                    name: 'Name*',
                     width: 250
                 }, {
                     field: 'SubcontractorDescription',
@@ -134,7 +134,7 @@
                     width: 400
                 }, {
                     field: 'SubcontractorTypeName',
-                    name: 'Category',
+                    name: 'Category*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'SubcontractorTypeName', //code
                     editDropdownIdLabel: 'SubcontractorTypeName',    //phase
@@ -277,7 +277,9 @@
                         }
                     }
 
-                    if (value.SubcontractorDescription == "" || value.SubcontractorTypeID == "" || value.SubcontractorName == "" || value.UniqueIdentityNumber == ""
+                    if (
+                        //value.SubcontractorDescription == "" || // Aditya 3-2-2022
+                        value.SubcontractorTypeID == "" || value.SubcontractorName == "" || value.UniqueIdentityNumber == ""
                         ) {
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
