@@ -266,7 +266,7 @@ angular.module('cpp.controllers').
                 {
                 	field: 'FirstName',
                 	name: 'FirstName',
-                	displayName: 'First Name'
+                	displayName: 'First Name*'
                 	/*enableCellEditOnFocus: true,
                     editableCellTemplate: $scope.cellInputEditableTemplate*/
 
@@ -276,7 +276,7 @@ angular.module('cpp.controllers').
                 {
                 	field: 'LastName',
                 	name: 'LastName',
-                	displayName: 'Last Name'
+                	displayName: 'Last Name*'
                 	/*enableCellEditOnFocus: true,
                     editableCellTemplate: $scope.cellInputEditableTemplate*/
 
@@ -297,7 +297,7 @@ angular.module('cpp.controllers').
 
                     field: 'FTEPositionID',
                     name: 'FTEPositionID',
-                    displayName: 'FTE Position',
+                    displayName: 'FTE Position*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     cellFilter: 'customFilter:this',
                     editDropdownIdLabel: 'ID',
@@ -309,7 +309,7 @@ angular.module('cpp.controllers').
                 {
                     field: 'HourlyRate',
                     name: 'HourlyRate',
-                    displayName: 'Hourly Rate',
+                    displayName: 'Hourly Rate*',
                     enableCellEdit: true,
                     type: 'text',
                     cellFilter: 'currency',

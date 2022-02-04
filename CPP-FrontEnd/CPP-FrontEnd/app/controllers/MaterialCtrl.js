@@ -191,7 +191,7 @@
                     width: 300
                 }, {
                     field: 'MaterialCategoryName',
-                    name: 'Category',
+                    name: 'Category*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'MaterialCategoryName', //code
                     editDropdownIdLabel: 'MaterialCategoryName',    //phase
@@ -224,7 +224,7 @@
                         cellFilter: 'currency' //Manasi
                 }, {
                     field: 'UniqueIdentityNumber',
-                    name: 'Unique Identifier*',
+                    name: 'Unique Identifier',
                         width: 200,
                         enableCellEdit: false,
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -380,7 +380,8 @@
                         isFilled = false;
                         return;
                     } else if (
-                        //value.Description == "" ||  // Aditya 3-2-2022
+                        //value.Description == "" ||  // Aditya 3-2-2022 
+                        value.MaterialCategoryName == "" ||
                         value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
                         ) {
                         dhtmlx.alert({

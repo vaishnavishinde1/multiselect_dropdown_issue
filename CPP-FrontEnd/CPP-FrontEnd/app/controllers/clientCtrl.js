@@ -158,7 +158,7 @@
 
                 },{
                     field: 'ClientName',
-                    name: 'Name',
+                    name: 'Name*',
                     enableCellEditOnFocus: true,
                     widith: 300,
                     filter: {

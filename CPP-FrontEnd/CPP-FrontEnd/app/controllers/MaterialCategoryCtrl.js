@@ -126,7 +126,7 @@
                 ,
                 {
                     field: 'Name',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     width: 322
                     //   enableCellEdit :true,
@@ -256,7 +256,7 @@
             angular.forEach($scope.MaterialCategoryCollection, function (value, key, obj) {
 
                 if (value.Name == ""
-                    || value.Description == ""
+                    //|| value.Description == "" // Aditya 3-2-2022
                     //|| value.UniqueIdentityNumber == ""
                     ) {
                     dhtmlx.alert({

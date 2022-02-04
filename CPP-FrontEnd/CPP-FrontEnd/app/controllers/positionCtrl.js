@@ -137,7 +137,7 @@ angular.module('cpp.controllers').
                     {
                     field: 'PositionDescription',
                     /*displayName: 'Position Description',*/
-                        name: 'Position Description',
+                        name: 'Position Description*',
                         enableCellEdit: true,
                         width: 350
                         /*editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -164,7 +164,7 @@ angular.module('cpp.controllers').
                 //},
                 {
                     field:'CurrentHourlyRate',
-                    name:'Current Hourly Rate',
+                    name:'Current Hourly Rate*',
                     enableCellEdit: true,
                     cellFilter: 'currency',
                     cellClass: 'c-col-Num' //Manasi

@@ -88,13 +88,13 @@
 
                 }, {
                     field: 'ManufacturerName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     //width: 280
 
                 }, {
                     field: 'ManufacturerDescription',
-                    name: 'Description',
+                    name: 'Description*',
                     //width: 280
 
                 }, {

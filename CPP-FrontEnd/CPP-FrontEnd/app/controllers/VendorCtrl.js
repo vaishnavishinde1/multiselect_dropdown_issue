@@ -108,7 +108,7 @@
 
                 }, {
                     field: 'VendorName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     width: 280
 
@@ -225,7 +225,7 @@
             angular.forEach($scope.VendorCollection, function (value, key, obj) {
 
                 if (value.VendorName == ""
-                    || value.VendorDescription == ""
+                    //|| value.VendorDescription == "" // Aditya 3-2-2022
                     || value.UniqueIdentityNumber == ""
                     ) {
                     dhtmlx.alert({

@@ -29,13 +29,17 @@ namespace WebAPI.Models
         public string UpdatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
 		public int ScheduleImpact { get; set; }
-
+		[NotMapped]
+		public DateTime ProgramStartDt { get; set; }
+		[NotMapped]
+		public DateTime ProgramEndDt { get; set; }
 		public static void SaveModificationData(ContractModification contractModification)
 		{
 
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
 			List<ContractModification> contractModificationsList = new List<ContractModification>();
+			 
 			try
 			{
 				using (var ctx = new CPPDbContext())
@@ -66,6 +70,18 @@ namespace WebAPI.Models
 					ctx.ContractModification.Add(contractModification);
 					ctx.SaveChanges();
 
+					if (contractModification.ModificationType!= 1)
+                    {
+						Program objProgram = ctx.Program.Where(p => p.ProgramID == contractModification.ProgramID).FirstOrDefault();
+                        if (objProgram!= null)
+                        {
+							objProgram.CurrentStartDate = contractModification.ProgramStartDt;
+							objProgram.CurrentEndDate = contractModification.ProgramEndDt.AddDays(contractModification.ScheduleImpact);
+							ctx.SaveChanges();
+						}
+					}
+					
+
 				}
 			}
 			catch (Exception ex)
@@ -88,11 +104,32 @@ namespace WebAPI.Models
 					ContractModification retreivedConMod = new ContractModification();
 					retreivedConMod = ctx.ContractModification.Where(x => x.Id == contractModification.Id).FirstOrDefault();
 
+					int ScheduleImpact;
 					if (retreivedConMod != null)
 					{
+                        if (retreivedConMod.ScheduleImpact > contractModification.ScheduleImpact)
+                        {
+							ScheduleImpact = (retreivedConMod.ScheduleImpact - contractModification.ScheduleImpact) * (-1);
+
+						}
+                        else
+                        {
+							ScheduleImpact = (contractModification.ScheduleImpact - retreivedConMod.ScheduleImpact);
+
+						}
 						CopyUtil.CopyFields<ContractModification>(contractModification, retreivedConMod);
 						ctx.Entry(retreivedConMod).State = System.Data.Entity.EntityState.Modified;
 						ctx.SaveChanges();
+						if (contractModification.ModificationType != 1)
+						{
+							Program objProgram = ctx.Program.Where(p => p.ProgramID == contractModification.ProgramID).FirstOrDefault();
+							if (objProgram != null)
+							{
+								objProgram.CurrentStartDate = contractModification.ProgramStartDt;
+								objProgram.CurrentEndDate = contractModification.ProgramEndDt.AddDays(ScheduleImpact);
+								ctx.SaveChanges();
+							}
+						}
 					}
 				}
 
@@ -120,8 +157,20 @@ namespace WebAPI.Models
 
 					if (retreivedConMod != null)
 					{
+						if (contractModification.ModificationType != 1)
+						{
+							Program objProgram = ctx.Program.Where(p => p.ProgramID == contractModification.ProgramID).FirstOrDefault();
+							if (objProgram != null)
+							{
+								contractModification.ProgramEndDt = Convert.ToDateTime(objProgram.CurrentEndDate);
+								//objProgram.CurrentStartDate = contractModification.ProgramStartDt;
+								objProgram.CurrentEndDate = contractModification.ProgramEndDt.AddDays(retreivedConMod.ScheduleImpact * (-1));
+								ctx.SaveChanges();
+							}
+						}
 						ctx.ContractModification.Remove(retreivedConMod);
 						ctx.SaveChanges();
+						
 					}
 				}
 

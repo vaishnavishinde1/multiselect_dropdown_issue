@@ -150,7 +150,7 @@
 
                 }, {
                     field: 'ProjectClassName',
-                    name: 'Service',
+                    name: 'Service*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'ProjectClassName', //code
                     editDropdownIdLabel: 'ProjectClassName',    //phase
@@ -159,7 +159,7 @@
                     width: 300
                 }, {
                     field: 'PhaseCodeName',
-                    name: 'Subservice',
+                    name: 'Subservice*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'PhaseCodeName', //code
                     editDropdownIdLabel: 'PhaseCodeName',    //phase
@@ -168,7 +168,7 @@
                     width: 400
                 }, {
                     field: 'Order',
-                    name: 'Order',
+                    name: 'Order*',
                     width: 75,
                     cellClass: 'c-col-Num' //Manasi
 

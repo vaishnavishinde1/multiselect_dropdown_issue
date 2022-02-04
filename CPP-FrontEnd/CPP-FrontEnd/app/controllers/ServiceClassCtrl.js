@@ -104,7 +104,7 @@
                     
                     {
                         field: 'Code',
-                        name: 'Code',
+                        name: 'Code*',
                         enableCellEditOnFocus: true,
                         //   enableCellEdit :true,
                         //  editableCellTemplate: $scope.cellInputEditableTemplate,
@@ -112,7 +112,7 @@
 
                     }, {
                         field: 'Description',
-                        name: 'Description',
+                        name: 'Description*',
 
                         //  editableCellTemplate: $scope.cellInputEditableTemplate,
                         //cellFilter :'mapStatus'

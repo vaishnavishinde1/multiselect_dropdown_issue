@@ -125,7 +125,7 @@
                 ,
                 {
                     field: 'SubcontractorTypeName',
-                    name: 'Type',
+                    name: 'Type*',
                     enableCellEditOnFocus: true,
                     width: 322
                     //   enableCellEdit :true,
@@ -254,7 +254,8 @@
             var listToSave = [];
             angular.forEach($scope.SubcontractorTypeCollection, function (value, key, obj) {
 
-                if (value.SubcontractorTypeName == "" || value.SubcontractorTypeDescription == ""
+                if (value.SubcontractorTypeName == ""
+                    //||value.SubcontractorTypeDescription == "" // Aditya 3-2-2022
                     //|| value.UniqueIdentityNumber == ""
                     ) {
                     dhtmlx.alert({
