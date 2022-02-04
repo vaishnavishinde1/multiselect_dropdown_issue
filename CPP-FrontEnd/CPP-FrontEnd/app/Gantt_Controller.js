@@ -5683,6 +5683,9 @@ angular.module('xenon.Gantt_Controller', []).
                                                 //console.log($scope.schedule.data[x]);
                                             }
                                         }
+
+                                        updatePhaseAndProjectDisplay();
+                                        updateTrendDate();
                                         var aID = $scope.selectedActivity.id;
                                         $scope.scheduleGanttInstance.callEvent('customSelect', [aID, 0, false]);
                                         $scope.scheduleGanttInstance.selectTask($scope.selectedActivity.id);

@@ -8578,6 +8578,9 @@ WBSTree = (function ($) {
                     //modal = $(this);
                     var clientDropDown = modal.find('.modal-body #program_client_poc');
                     var clientList = wbsTree.getClientList();
+                    clientList.sort(function (a, b) {   //vaishnavi
+                        return a.ClientName.localeCompare(b.ClientName);  //vaishnavi
+                    }); //vaishnavi
                     clientDropDown.empty();
                     if (wbsTree.getLocalStorage().role === "Admin") {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
@@ -8876,6 +8879,9 @@ WBSTree = (function ($) {
                     //modal = $(this);
                     var clientDropDown = modal.find('.modal-body #program_client_poc');
                     var clientList = wbsTree.getClientList();
+                    clientList.sort(function (a, b) {   //vaishnavi
+                        return a.ClientName.localeCompare(b.ClientName);   //vaishnavi
+                    }); //vaishnavi
                     clientDropDown.empty();
                     if (wbsTree.getLocalStorage().role === "Admin") {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
@@ -11395,6 +11401,9 @@ WBSTree = (function ($) {
                         selectedNode.ProjectClassID = projectClassIDFromProgram;
                         var projectClassDropDown = modal.find('.modal-body #project_class');
                         var projectClassList = wbsTree.getProjectClassList();
+                        projectClassList.sort(function (a, b) {   //vaishnavi
+                            return a.ProjectClassName.localeCompare(b.ProjectClassName);  //vaishnavi
+                        });  //vaishnavi
                         var projectClassName = '';
                         projectClassDropDown.empty();
 
@@ -13675,7 +13684,9 @@ WBSTree = (function ($) {
                     }
                     employeeList = newEmployeeList;
                     var employeeClassList = employeeList;
-
+                    employeeClassList.sort(function (a, b) {  //vaishnavi
+                        return a.FirstName.localeCompare(b.FirstName);  //vaishnavi
+                    }); //vaishnavi
 
 
                     employeeClassDropDown.empty();
@@ -14158,6 +14169,9 @@ WBSTree = (function ($) {
                     //    //selectedNode.ProjectClassID = projectClassIDFromProgram;    // Jignesh 24-11-2020
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
                     var serviceClassList = wbsTree.getServiceClassList();
+                    serviceClassList.sort(function (a, b) {   //vaishnavi
+                        return a.Description.localeCompare(b.Description);  //vaishnavi
+                    }); //vaishnavi
                     var serviceClassName = '';
                     serviceClassDropDown.empty();
 
