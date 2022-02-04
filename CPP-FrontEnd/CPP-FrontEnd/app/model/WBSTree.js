@@ -7811,6 +7811,15 @@ WBSTree = (function ($) {
                         return;
                     }
 
+                    debugger;
+                    //update- Added by Amruta to save end date on change order
+                    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                    debugger;
+                    var projectEndDate = moment(curendt).format('MM/DD/YYYY');
+
                     var obj = {
                         "Operation": 2,
                         "ChangeOrderID": updatedChangeOrder.ChangeOrderID,
@@ -7819,6 +7828,7 @@ WBSTree = (function ($) {
                         "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
+                        "ProjectEndDateCO": projectEndDate,
                         "OrderType": updatedChangeOrder.OrderType,
                         "OrderDate": updatedChangeOrder.OrderDate,
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7846,10 +7856,10 @@ WBSTree = (function ($) {
                             $("#ProgramElementModal").css({ "opacity": "1" });
 
                             //Manu: 11/01/2022 
-                            var curendt = new Date($('#program_element_PEnd_Date').val());
+                          /*  var curendt = new Date($('#program_element_PEnd_Date').val());
                             curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
                             curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change(); //Added by Amruta for confirmation popup
+                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();*/ //Added by Amruta for confirmation popup
 
 
                             //$('#ProgramModal').modal('hide');
@@ -7895,6 +7905,13 @@ WBSTree = (function ($) {
                     newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
 
+                    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
+                    debugger;
+                    var projectEndDate = moment(curendt).format('MM/DD/YYYY');
+
                     var obj = {
                         "Operation": 1,
                         "ChangeOrderID": 0,
@@ -7903,6 +7920,7 @@ WBSTree = (function ($) {
                         "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
+                        "ProjectEndDateCO": projectEndDate,
                         "OrderType": newChangeOrder.OrderType,
                         "OrderDate": newChangeOrder.OrderDate, //.replace(/\//g, ""),
                         //================== Jignesh-ChangeOrderPopUpChanges ====================================
@@ -7927,6 +7945,7 @@ WBSTree = (function ($) {
                             "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                             "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                             "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                            "ProjectEndDateCO": projectEndDate,
                             "OrderType": newChangeOrder.OrderType,
                             "OrderDate": newChangeOrder.OrderDate,
                             //================== Jignesh-ChangeOrderPopUpChanges ====================================

@@ -908,5 +908,48 @@ namespace WebAPI.Models
 
             }
         }
+
+        //Added by Amruta to update project end date on change order save
+        public static String updatePojectEndDateOnChangeOrder(int programELementID, DateTime projectEndDate)
+        {
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            String result = "";
+
+
+
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    ProgramElement programElementRetrieved = new ProgramElement();
+                    programElementRetrieved = ctx.ProgramElement.Where(pe => pe.ProgramElementID == programELementID).FirstOrDefault();
+
+                    if (programElementRetrieved != null)
+                    {
+                        programElementRetrieved.ProjectPEndDate = projectEndDate;
+                        ctx.SaveChanges();
+                    }
+
+
+                    /* ProgramElement programElement = new ProgramElement();
+                     //programElement.ProgramElementID = programELementID;
+                     programElement.ProjectPEndDate = projectEndDate;
+                     CopyUtil.CopyFields<ProgramElement>(programElement, programElementRetrieved);
+
+                     // ctx.ProgramElement.Add(programElement);
+                     ctx.Entry(programElement).State = System.Data.Entity.EntityState.Modified;
+                     ctx.SaveChanges();*/
+                    result = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            return result;
+        }
     }
 }
