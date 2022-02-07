@@ -557,276 +557,279 @@ WBSTree = (function ($) {
 
         }
 
+        if (!displayMap) {
 
-        obj.prototype.loadFullGridView = function () {
-            var orgId = $("#selectOrg").val();
-            var pgmId = $("#selectProgram").val();
-            var pgmEltId = $("#selectProgramElement").val();
-            var projId = $("#selectProject").val();
-            var deptEltId = $("#selectManagingDepartment").val();
-            var sreachTxt = $('#txtQuickSearch').val();
-            var allData = 1;
 
-            if (pgmId == 'undefined' || pgmId == null || pgmId == '') {
-                pgmId = null;
-            }
-            if (pgmEltId == 'undefined' || pgmEltId == null || pgmEltId == '') {
-                pgmEltId = null;
-            }
-            if (projId == 'undefined' || projId == null || projId == '') {
-                projId = null;
-            }
-            if (deptEltId == 'undefined' || deptEltId == null || deptEltId == '') {
-                deptEltId = null;
-            }
-            if (sreachTxt == 'undefined' || sreachTxt == null || sreachTxt == '') {
-                sreachTxt = null;
-            }
-            if ($("#FilterTrend").prop('checked') == true) {
-                allData = 0;
-            } else {
-                allData = 1;
-            }
 
-            var userList = wbsTree.getUserList();
-            var uName = _localStorage.userName;
-            var uID = 0;
-            $.each(userList, function (i, data) {
-                if (data.UserID == uName) {
-                    uID = data.Id;
+            obj.prototype.loadFullGridView = function () {
+                var orgId = $("#selectOrg").val();
+                var pgmId = $("#selectProgram").val();
+                var pgmEltId = $("#selectProgramElement").val();
+                var projId = $("#selectProject").val();
+                var deptEltId = $("#selectManagingDepartment").val();
+                var sreachTxt = $('#txtQuickSearch').val();
+                var allData = 1;
+
+                if (pgmId == 'undefined' || pgmId == null || pgmId == '') {
+                    pgmId = null;
                 }
-            });
-            var request = {
-                method: 'GET',
-                //url: serviceBasePath + "Request/WBS/" + uID + "/" + wbsTree.getSelectedOrganizationID() + "/null/null/null/null/null/null/null/null/null/null/null",
-                url: serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + sreachTxt + "/" + allData + "/" + deptEltId,
-                ignore: true,
-                headers: {
-                    'Content-Type': undefined
+                if (pgmEltId == 'undefined' || pgmEltId == null || pgmEltId == '') {
+                    pgmEltId = null;
                 }
-            };
+                if (projId == 'undefined' || projId == null || projId == '') {
+                    projId = null;
+                }
+                if (deptEltId == 'undefined' || deptEltId == null || deptEltId == '') {
+                    deptEltId = null;
+                }
+                if (sreachTxt == 'undefined' || sreachTxt == null || sreachTxt == '') {
+                    sreachTxt = null;
+                }
+                if ($("#FilterTrend").prop('checked') == true) {
+                    allData = 0;
+                } else {
+                    allData = 1;
+                }
 
-            var angularHttp = wbsTree.getAngularHttp();
-            angularHttp(request).then(function success(response) {
-                $('#wbsGridView').html('');
-                var isProjectIdSet = false;
-                //$rootScope.fromWBS = true;
-                // Rename the project and project element nodes to include project number and project element number.
-                var organization = response.data;
-                var str = "<div class='row row-padding'>" +
-                    "<div class='gadget color-my' style = 'height: 733px;' >" +
+                var userList = wbsTree.getUserList();
+                var uName = _localStorage.userName;
+                var uID = 0;
+                $.each(userList, function (i, data) {
+                    if (data.UserID == uName) {
+                        uID = data.Id;
+                    }
+                });
+                var request = {
+                    method: 'GET',
+                    //url: serviceBasePath + "Request/WBS/" + uID + "/" + wbsTree.getSelectedOrganizationID() + "/null/null/null/null/null/null/null/null/null/null/null",
+                    url: serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + sreachTxt + "/" + allData + "/" + deptEltId,
+                    ignore: true,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                };
 
-                    " <div class='gadget-content' style='height: 91%;'>" +
-                    "    <table class='table  table-condensed'>  <thead>" +
-                    "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Department</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project Element</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Service</th>" +
-                    "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Value</th>" +
-                    "</tr>  <thead><tfoot></tfoot> " +
-                    " <tbody>" +
-                    "<tr style = 'background-color:white !important;'>" +
-                    "    <td colspan='7'>" +
-                    "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
-                    "          <table class='table striped table-condensed table-responsive table-bordered'>" +
-                    "             <tbody>";
-                var currentProgramCost, currentProjectCost, currentProjectElementCost;
+                var angularHttp = wbsTree.getAngularHttp();
+                angularHttp(request).then(function success(response) {
+                    $('#wbsGridView').html('');
+                    var isProjectIdSet = false;
+                    //$rootScope.fromWBS = true;
+                    // Rename the project and project element nodes to include project number and project element number.
+                    var organization = response.data;
+                    var str = "<div class='row row-padding'>" +
+                        "<div class='gadget color-my' style = 'height: 733px;' >" +
 
-                for (programI = 0; programI < organization.children.length; programI++) {
-                    var CalCulateProgramCost = 0;
-                    //Nivedita
-                    var program = organization.children[programI];
-                    if (program.CurrentCost == null || program.CurrentCost == "" || program.CurrentCost == 0 || isNaN(program.CurrentCost)) {
-                        currentProgramCost = "";
-                    } else {
-                        for (var i = 0; i < program.children.length; i++) {
-                            var CalCulateProjectCost = 0;
-                            var project = program.children[i];
-                            for (var j = 0; j < project.children.length; j++) {
-                                var projectElement = project.children[j];
-                                CalCulateProjectCost += Number(projectElement.CurrentCost);
+                        " <div class='gadget-content' style='height: 91%;'>" +
+                        "    <table class='table  table-condensed'>  <thead>" +
+                        "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Department</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project Element</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Service</th>" +
+                        "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Value</th>" +
+                        "</tr>  <thead><tfoot></tfoot> " +
+                        " <tbody>" +
+                        "<tr style = 'background-color:white !important;'>" +
+                        "    <td colspan='7'>" +
+                        "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
+                        "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                        "             <tbody>";
+                    var currentProgramCost, currentProjectCost, currentProjectElementCost;
 
-                            }
-                            CalCulateProgramCost += Number(CalCulateProjectCost);
-                            if (CalCulateProjectCost == 0) {
-                                currentProjectCost = "";
-                                project.CurrentCost = 0;
-                            }
-                            else {
-                                project.CurrentCost = CalCulateProjectCost;
-                            }
-
-                        }
-                        if (CalCulateProgramCost == 0) {
+                    for (programI = 0; programI < organization.children.length; programI++) {
+                        var CalCulateProgramCost = 0;
+                        //Nivedita
+                        var program = organization.children[programI];
+                        if (program.CurrentCost == null || program.CurrentCost == "" || program.CurrentCost == 0 || isNaN(program.CurrentCost)) {
                             currentProgramCost = "";
-                            program.CurrentCost = 0;
-                        }
-                        else {
-                            currentProgramCost = CalCulateProgramCost;
-                            program.CurrentCost = CalCulateProgramCost;
-                            currentProgramCost = "$" + addCommas(currentProgramCost);
-                        }
-
-                    }
-                    //debugger;
-                    console.log("Check program details===>");
-                    console.log(program);
-
-                    if (program.children.length == 0) {
-                        str +=
-                            "<tr class='fade-selection-animation'> " +
-                            "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                            "<td class='my-word-wrap' style='width: 14.28%;'></td></tr >";
-                    }
-                    for (projectI = 0; projectI < program.children.length; projectI++) {
-                        var project = program.children[projectI];
-                        if (project.CurrentCost == null || project.CurrentCost == "" || project.CurrentCost == 0 || isNaN(project.CurrentCost)) {
-                            currentProjectCost = "";
                         } else {
-                            currentProjectCost = "$" + addCommas(project.CurrentCost);
-                        }
+                            for (var i = 0; i < program.children.length; i++) {
+                                var CalCulateProjectCost = 0;
+                                var project = program.children[i];
+                                for (var j = 0; j < project.children.length; j++) {
+                                    var projectElement = project.children[j];
+                                    CalCulateProjectCost += Number(projectElement.CurrentCost);
 
-
-
-
-                        //organization --- contract -- project
-                        //debugger;
-                        console.log("Project Details====>");
-                        console.log(project);
-                        if (project.children.length == 0) {
-                            var projectClassName = '';
-                            // ProjectClass.get({}, function (Projectresponse) {
-                            //  console.log(Projectresponse);
-                            var projectClassList = wbsTree.getProjectClassList();
-                            for (var x = 0; x < projectClassList.length; x++) {
-                                if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
-                                    projectClassName = projectClassList[x].ProjectClassName
                                 }
-                            }
-                            //});
-                            str += "<tr class='fade-selection-animation'>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'></td></tr>";
-                        }
-                        project.name = project.ProjectNumber + ". " + project.name;
-                        for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
-                            var projectElement = project.children[projectElementI];
-                            if (projectElement.CurrentCost == null || projectElement.CurrentCost == "" || projectElement.CurrentCost == 0 || isNaN(projectElement.CurrentCost)) {
-                                currentProjectElementCost = "";
-                            } else {
-                                currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
-                            }
-
-                            //debugger;
-                            //console.log("Project Element Details====>");
-                            //console.log(projectElement);
-                            //var projectServiceName = '';
-                            //ServiceClass.get({}, function (response) {
-                            //    console.log(response);
-
-                            //    var serviceClassList = response.result;
-
-                            //    for (var x = 0; x < serviceClassList.length; x++) {
-                            //        if (serviceClassList[x].ID == projectElement.ProjectClassID) {
-                            //            projectServiceName = serviceClassList[x].Description
-                            //        }
-                            //    }
-
-
-                            //});
-                            str += "<tr class='fade-selection-animation'>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
-                                "<td class='my-word-wrap' style='width: 14.60%;'><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName + "</td>" +
-                                "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost + "</td></tr>";
-
-
-                            projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
-                            if (!isProjectIdSet) {
-
-                                if (projectElementI == 0) {
-
-                                    wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
-                                    isProjectIdSet = true;
-                                    //$rootScope.fromWBS = false;
-                                    wbsTree.getWBSTrendTree().trendGraph(true);
-
+                                CalCulateProgramCost += Number(CalCulateProjectCost);
+                                if (CalCulateProjectCost == 0) {
+                                    currentProjectCost = "";
+                                    project.CurrentCost = 0;
+                                }
+                                else {
+                                    project.CurrentCost = CalCulateProjectCost;
                                 }
 
                             }
-
-
-                        }
-
-                    }
-                }
-
-                str += "</tbody></table></div></td></tr></tbody></table></div></div></div>";
-                $('#wbsGridView').append(str);
-
-                debugger;
-                wbsTree.loadContextMenu();
-
-                var column1 = $('#wbsGridView Table td:first-child');
-                var column2 = $('#wbsGridView Table td:nth-child(2)');
-                var column3 = $('#wbsGridView Table td:nth-child(3)');
-                var column4 = $('#wbsGridView Table td:nth-child(4)');
-
-                //modifyTableFirstColumnRowspan(column1, column2);
-
-                modifyTableRowspan(column1);
-                //modifyTableRowspan(column2);
-                //  modifyTableRowspan(column3);
-                // modifyTableRowspan(column4);
-
-                function modifyTableRowspan(column) {
-
-                    var topMatchTd;
-                    var previousValue = "";
-                    var rowSpan = 1;
-                    column.each(function () {
-                        if ($(this).text() != "") {
-
-                            if ($(this).text() == previousValue) {
-                                rowSpan++;
-                                $(topMatchTd).attr('rowspan', rowSpan);
-                                $(this).remove();
+                            if (CalCulateProgramCost == 0) {
+                                currentProgramCost = "";
+                                program.CurrentCost = 0;
                             }
                             else {
-                                topMatchTd = $(this);
-                                rowSpan = 1;
+                                currentProgramCost = CalCulateProgramCost;
+                                program.CurrentCost = CalCulateProgramCost;
+                                currentProgramCost = "$" + addCommas(currentProgramCost);
                             }
 
                         }
+                        //debugger;
+                        console.log("Check program details===>");
+                        console.log(program);
+
+                        if (program.children.length == 0) {
+                            str +=
+                                "<tr class='fade-selection-animation'> " +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'></td></tr >";
+                        }
+                        for (projectI = 0; projectI < program.children.length; projectI++) {
+                            var project = program.children[projectI];
+                            if (project.CurrentCost == null || project.CurrentCost == "" || project.CurrentCost == 0 || isNaN(project.CurrentCost)) {
+                                currentProjectCost = "";
+                            } else {
+                                currentProjectCost = "$" + addCommas(project.CurrentCost);
+                            }
 
 
-                        previousValue = $(this).text();
-                    });
-
-                }
-            });
 
 
+                            //organization --- contract -- project
+                            //debugger;
+                            console.log("Project Details====>");
+                            console.log(project);
+                            if (project.children.length == 0) {
+                                var projectClassName = '';
+                                // ProjectClass.get({}, function (Projectresponse) {
+                                //  console.log(Projectresponse);
+                                var projectClassList = wbsTree.getProjectClassList();
+                                for (var x = 0; x < projectClassList.length; x++) {
+                                    if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
+                                        projectClassName = projectClassList[x].ProjectClassName
+                                    }
+                                }
+                                //});
+                                str += "<tr class='fade-selection-animation'>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'></td></tr>";
+                            }
+                            project.name = project.ProjectNumber + ". " + project.name;
+                            for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
+                                var projectElement = project.children[projectElementI];
+                                if (projectElement.CurrentCost == null || projectElement.CurrentCost == "" || projectElement.CurrentCost == 0 || isNaN(projectElement.CurrentCost)) {
+                                    currentProjectElementCost = "";
+                                } else {
+                                    currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
+                                }
 
+                                //debugger;
+                                //console.log("Project Element Details====>");
+                                //console.log(projectElement);
+                                //var projectServiceName = '';
+                                //ServiceClass.get({}, function (response) {
+                                //    console.log(response);
+
+                                //    var serviceClassList = response.result;
+
+                                //    for (var x = 0; x < serviceClassList.length; x++) {
+                                //        if (serviceClassList[x].ID == projectElement.ProjectClassID) {
+                                //            projectServiceName = serviceClassList[x].Description
+                                //        }
+                                //    }
+
+
+                                //});
+                                str += "<tr class='fade-selection-animation'>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
+                                    "<td class='my-word-wrap' style='width: 14.60%;'><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName + "</td>" +
+                                    "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost + "</td></tr>";
+
+
+                                projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
+                                if (!isProjectIdSet) {
+
+                                    if (projectElementI == 0) {
+
+                                        wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
+                                        isProjectIdSet = true;
+                                        //$rootScope.fromWBS = false;
+                                        wbsTree.getWBSTrendTree().trendGraph(true);
+
+                                    }
+
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+                    str += "</tbody></table></div></td></tr></tbody></table></div></div></div>";
+                    $('#wbsGridView').append(str);
+
+                    debugger;
+                    wbsTree.loadContextMenu();
+
+                    var column1 = $('#wbsGridView Table td:first-child');
+                    var column2 = $('#wbsGridView Table td:nth-child(2)');
+                    var column3 = $('#wbsGridView Table td:nth-child(3)');
+                    var column4 = $('#wbsGridView Table td:nth-child(4)');
+
+                    //modifyTableFirstColumnRowspan(column1, column2);
+
+                    modifyTableRowspan(column1);
+                    //modifyTableRowspan(column2);
+                    //  modifyTableRowspan(column3);
+                    // modifyTableRowspan(column4);
+
+                    function modifyTableRowspan(column) {
+
+                        var topMatchTd;
+                        var previousValue = "";
+                        var rowSpan = 1;
+                        column.each(function () {
+                            if ($(this).text() != "") {
+
+                                if ($(this).text() == previousValue) {
+                                    rowSpan++;
+                                    $(topMatchTd).attr('rowspan', rowSpan);
+                                    $(this).remove();
+                                }
+                                else {
+                                    topMatchTd = $(this);
+                                    rowSpan = 1;
+                                }
+
+                            }
+
+
+                            previousValue = $(this).text();
+                        });
+
+                    }
+                });
+
+
+
+
+            }
 
         }
-
-
         obj.prototype.getContractModificationOperation = function () {
             return _ContractModificationOperation;
         }
@@ -2853,6 +2856,7 @@ WBSTree = (function ($) {
                                     //$scope.init();
                                     //console.log("-------DELETED ORGANIZATION--------");
                                     //wbsTree.updateTreeNodes(selectedNode);
+                                    if (!displayMap)
                                     wbsTree.loadFullGridView();
                                     //wbsTree.loadContextMenu();
                                     rootScope.modalInstance.close();
@@ -2879,7 +2883,8 @@ WBSTree = (function ($) {
                                     console.log("-------DELETED PROGRAM--------");
                                     if ($('#ProgramModal').hasClass('in'))
                                         $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
-                                    wbsTree.updateTreeNodes(selectedNode.parent);
+                                        wbsTree.updateTreeNodes(selectedNode.parent);
+                                        if (!displayMap)
                                     wbsTree.loadFullGridView();
                                     wbsTree.getWBSTrendTree().trendGraph();
 
@@ -2912,6 +2917,7 @@ WBSTree = (function ($) {
                                         wbsTree.updateTreeNodes(selectedNode.parent);
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
+                                        if (!displayMap)
                                         wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         // wbsTree.loadFullGridView();
@@ -2920,7 +2926,8 @@ WBSTree = (function ($) {
                                     });
                                     if ($('#ProgramElementModal').hasClass('in'))
                                         $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
-                                    wbsTree.loadFullGridView();
+                                        if (!displayMap)
+                                        wbsTree.loadFullGridView();
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     // wbsTree.loadFullGridView();
 
@@ -2963,6 +2970,7 @@ WBSTree = (function ($) {
 
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
+                                        if (!displayMap)
                                         wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         console.log(wbsTree.getWBSTrendTree().getTrendNumber());
@@ -3826,6 +3834,7 @@ WBSTree = (function ($) {
 
                             wbsTree.updateTreeNodes(selectedNode);
                             $('#ProgramModal').modal('hide');
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
@@ -4204,6 +4213,7 @@ WBSTree = (function ($) {
                                 }
                                 wbsTree.setSelectedNode(selectedNode);
                                 wbsTree.updateTreeNodes(selectedNode);
+                                if (!displayMap)
                                 wbsTree.loadFullGridView();
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
@@ -4801,6 +4811,7 @@ WBSTree = (function ($) {
 
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;// for update
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
@@ -5411,6 +5422,7 @@ WBSTree = (function ($) {
 
                             }
                             debugger;
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
@@ -6042,6 +6054,7 @@ WBSTree = (function ($) {
 
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
@@ -6604,6 +6617,7 @@ WBSTree = (function ($) {
                                 wbsTree.getWBSTrendTree().trendGraph(true);
                             }
                             debugger;
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             //-----------------------------------------------------------------------
 
@@ -6648,6 +6662,7 @@ WBSTree = (function ($) {
                     wbsTree.updateTreeNodes(selectedNode);
                     wbsTree.getWBSTrendTree().trendGraph();
                     debugger;
+                    if (!displayMap)
                     wbsTree.loadFullGridView();
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
@@ -8720,7 +8735,7 @@ WBSTree = (function ($) {
                     $('#ViewUploadFileInViewAllContracts').attr('disabled', 'disabled');
                     $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                     var gridViewAllUploadedDocumentProgram = $("#gridViewAllDocumentInContract")// Jignesh-SearchField-05022021
-                    gridViewAllUploadedDocumentProgram.empty();
+                    gridViewAllUploadedDocumentProgram.empty(); 
                     _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
@@ -12201,7 +12216,7 @@ WBSTree = (function ($) {
                 }
             });
 
-            debugger;
+            
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,' +
@@ -12356,8 +12371,8 @@ WBSTree = (function ($) {
                         }
                         //===================================================================================
                     }
-                });
-                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
+                });//selectedNode.ProgramID
+                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
                     var modId = null;

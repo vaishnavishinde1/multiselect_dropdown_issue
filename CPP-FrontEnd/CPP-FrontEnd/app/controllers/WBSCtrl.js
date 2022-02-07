@@ -3346,10 +3346,11 @@ angular.module('cpp.controllers').
                                     console.log("Project Element Details====>");
                                     console.log(projectElement);
                                     var projectServiceName = '';
-                                    ServiceClass.get({}, function (response) {
-                                        console.log(response);
+                                   // ServiceClass.get({}, function (response) {
+                                      //  console.log(response);
                                         
-                                        var serviceClassList = response.result;
+                                       // var serviceClassList = response.result;
+                                    var serviceClassList = wbsTree.getServiceClassList();
 
                                         for (var x = 0; x < serviceClassList.length; x++) {
                                             if (serviceClassList[x].ID == projectElement.ProjectClassID) {
@@ -3358,7 +3359,7 @@ angular.module('cpp.controllers').
                                         }
                                        
                                        
-                                    });
+                                   // });
                                     str += "<tr class='fade-selection-animation'>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
