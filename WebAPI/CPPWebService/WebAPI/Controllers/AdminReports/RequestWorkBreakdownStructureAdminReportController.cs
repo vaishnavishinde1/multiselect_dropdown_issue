@@ -107,8 +107,9 @@ namespace WebAPI.Controllers
 			param3.Name = "PhaseCode";
 			param3.Value = "\"" + PhaseCode + "\"";
 
+
             SsrsReportService.ParameterValue param4 = new SsrsReportService.ParameterValue();
-            param4.Name = "Version";
+            param4.Name = "VersionId";
             param4.Value = "\"" + Version + "\"";
 
             reportHistoryParameters[0] = param1;
