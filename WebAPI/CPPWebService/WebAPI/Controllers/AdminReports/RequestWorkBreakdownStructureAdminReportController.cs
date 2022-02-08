@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
             string mimeType;
             string extension;
             SsrsReportService.Warning[] warnings = null;
-            SsrsReportService.ParameterValue[] reportHistoryParameters = new SsrsReportService.ParameterValue[3];
+            SsrsReportService.ParameterValue[] reportHistoryParameters = new SsrsReportService.ParameterValue[4];
 
             SsrsReportService.ParameterValue param1 = new SsrsReportService.ParameterValue();
             param1.Name = "OrgID";

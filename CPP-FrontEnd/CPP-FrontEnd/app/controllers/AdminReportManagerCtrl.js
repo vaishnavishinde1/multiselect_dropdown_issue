@@ -301,14 +301,14 @@
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
-                        + '&Version=' + allFilters.version
+                        + '&VersionId=' + allFilters.version
                         + '&FileType=' + 'PDF';
 
                     var excelUrl = baseUrl
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
-                        + '&Version=' + allFilters.version
+                        + '&VersionId=' + allFilters.version
                         + '&FileType=' + 'excel';
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
