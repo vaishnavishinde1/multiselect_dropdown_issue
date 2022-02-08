@@ -198,6 +198,24 @@
             </ui-select>
         </div>
 
+
+        <div ng-show="(reportTypeFilter.filterName=='Work Breakdown Structure Admin Report')
+             && selectedOrganization" class="form-group required" style="padding-left:0;padding-right:0;"
+             ng-class="{ 'has-error' : reportManagerForm.projectFilter.$error.required}">
+
+            <label class="control-label">Version </label>
+            <ui-select ng-model="$item" name="versionFilter" on-select="selectVersion($item)" required>
+                <ui-select-match allow-clear="true">
+                    <span ng-bind="selectedVersion.description"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item.description as item in (versionList | filter: $select.search) track by item.Id">
+                    <span ng-bind="item.description"></span>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+
+
         <!--Trends-->
         <div ng-show="(reportTypeFilter.filterName=='Sales Order Report'
              || reportTypeFilter.filterName=='Purchase Order Report')
@@ -288,36 +306,34 @@
 
         <!--Project Class-->
         <!--<div ng-show="reportTypeFilter.filterName=='Work Breakdown Structure Admin Report' && selectedOrganization"
-             class="form-group required" style="padding-left:0;padding-right:0;"
-             ng-class="{ 'has-error' : reportManagerForm.projectClassFilter.$error.required}">
+         class="form-group required" style="padding-left:0;padding-right:0;"
+         ng-class="{ 'has-error' : reportManagerForm.projectClassFilter.$error.required}">
 
-            <label class="control-label">Division </label>
-            <ui-select ng-model="selectedProjectClass.ProjectClassID" name="projectClassFilter" on-select="selectProjectClass($item)" required>
-                <ui-select-match allow-clear="true">
-                    <span ng-bind="$select.selected.ProjectClassName"></span>
-                </ui-select-match>
-                <ui-select-choices repeat="item.ProjectClassID as item in (allProjectClassList | filter: $select.search) track by item.ProjectClassID">
-                    <span ng-bind="item.ProjectClassName"></span>
-                </ui-select-choices>
-            </ui-select>
-        </div>-->
-
-
+        <label class="control-label">Division </label>
+        <ui-select ng-model="selectedProjectClass.ProjectClassID" name="projectClassFilter" on-select="selectProjectClass($item)" required>
+            <ui-select-match allow-clear="true">
+                <span ng-bind="$select.selected.ProjectClassName"></span>
+            </ui-select-match>
+            <ui-select-choices repeat="item.ProjectClassID as item in (allProjectClassList | filter: $select.search) track by item.ProjectClassID">
+                <span ng-bind="item.ProjectClassName"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>-->
         <!--Phase Codes-->
         <!--<div ng-show="reportTypeFilter.filterName=='Work Breakdown Structure Admin Report' && selectedProjectClass"
-             class="form-group required" style="padding-left:0;padding-right:0;"
-             ng-class="{ 'has-error' : reportManagerForm.phaseFilter.$error.required}">
+         class="form-group required" style="padding-left:0;padding-right:0;"
+         ng-class="{ 'has-error' : reportManagerForm.phaseFilter.$error.required}">
 
-            <label class="control-label">Phase Code </label>
-            <ui-select ng-model="selectedPhase.PhaseID" name="phaseFilter" on-select="selectPhase($item)" required>
-                <ui-select-match allow-clear="true">
-                    <span ng-bind="$select.selected.Code"></span>
-                </ui-select-match>
-                <ui-select-choices repeat="item.PhaseID as item in (currentPhaseList | filter: $select.search) track by item.PhaseID">
-                    <span ng-bind="item.Code"></span>
-                </ui-select-choices>
-            </ui-select>
-        </div>-->
+        <label class="control-label">Phase Code </label>
+        <ui-select ng-model="selectedPhase.PhaseID" name="phaseFilter" on-select="selectPhase($item)" required>
+            <ui-select-match allow-clear="true">
+                <span ng-bind="$select.selected.Code"></span>
+            </ui-select-match>
+            <ui-select-choices repeat="item.PhaseID as item in (currentPhaseList | filter: $select.search) track by item.PhaseID">
+                <span ng-bind="item.Code"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>-->
 
     </div>
 
