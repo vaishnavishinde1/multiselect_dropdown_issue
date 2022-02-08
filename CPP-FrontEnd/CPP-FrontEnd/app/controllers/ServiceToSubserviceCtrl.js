@@ -258,6 +258,7 @@
                     row.entity.checkbox = false;
                 }
             }
+            
 
             $scope.applicableCheck = function (row, col) {
                 if (row.entity.IsApplicable == false) {
@@ -328,7 +329,12 @@
                         return;
                     }
                     //New Item
-                    if ($scope.projectClassPhaseCollection[i].new === true) {
+                    if ($scope.listToDelete != undefined) {
+                        if ($scope.listToDelete.length > 0) {
+
+                        }
+                    }
+                    else if ($scope.projectClassPhaseCollection[i].new === true) {
                         //console.log(value);
                         isReload = true;
                         console.log("#selectOrg");
@@ -344,6 +350,7 @@
                         }
                         console.log(dataObj);
                         listToSave.push(dataObj);
+                        $scope.projectClassPhaseCollection[i].new = false;
                     }
                     else {
                         isChanged = false;
@@ -428,7 +435,8 @@
                             dhtmlx.alert('No changes to be saved.');
                         }
 
-                        //$state.reload();
+                        $state.reload();
+                        
                         ServiceToSubserviceMapping.get({}, function (projectClassPhaseData) {
                             $scope.checkList = [];
                             $scope.projectClassPhaseCollection = projectClassPhaseData.result;
@@ -470,6 +478,7 @@
                 var listToSave = [];
                 var selectedRow = false;
                 $scope.listToDelete = [];
+                
                 var newList = [];
                 angular.forEach($scope.projectClassPhaseCollection, function (item) {
                     if (item.checkbox == true) {
