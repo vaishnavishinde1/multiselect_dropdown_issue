@@ -10,6 +10,7 @@ namespace WebAPI.Models
     [Table("versionmaster")]
     public class Versionmaster : Audit
     {
+
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
