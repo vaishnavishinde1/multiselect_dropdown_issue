@@ -95,10 +95,11 @@ angular.module('cpp.services').
 
             $http(req).then(function success(response) {
                 console.log(response);
-                localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, role: response.data.role, acl: response.data.acl, threshold: response.data.threshold, employeeID: response.data.employeeID, passwordChangeRequired: response.data.passwordChangeRequired });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName, userId: response.data.userId, role: response.data.role, acl: response.data.acl, threshold: response.data.threshold, employeeID: response.data.employeeID, passwordChangeRequired: response.data.passwordChangeRequired });
 
                 _authentication.isAuth = true;
                 _authentication.userName = loginData.userName;
+                _authentication.userId = response.data.userId;
 
                 localStorage.removeItem('pgmId');
                 localStorage.removeItem('projId');
@@ -135,6 +136,7 @@ angular.module('cpp.services').
             if (authData) {
                 _authentication.isAuth = true;
                 _authentication.userName = authData.userName;
+                _authentication.userId = authData.userId;
             }
 
         }

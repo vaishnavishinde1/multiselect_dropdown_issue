@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
                                     }
                                     tempWBSList[i].children.Add(tempProgEleList[j]);
                                     
-                                    tempWBSList[i].children[j].children = tempProjectList;
+                                    tempWBSList[i].children[0].children = tempProjectList;
                                     WBSList.Add(tempWBSList[i]);
                                 }
                             }

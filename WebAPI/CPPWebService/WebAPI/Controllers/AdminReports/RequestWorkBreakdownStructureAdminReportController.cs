@@ -14,6 +14,7 @@ namespace WebAPI.Controllers
     {
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+
         public HttpResponseMessage GetReport(String OrganizationID, String ProjectClassID, String PhaseCode, String Version, String FileType)
         {
             //http://devapps2.birdi-inc.io/ReportServer/Pages/ReportViewer.aspx?%2fIMS%2finterface2rdl&rs:Command=Render

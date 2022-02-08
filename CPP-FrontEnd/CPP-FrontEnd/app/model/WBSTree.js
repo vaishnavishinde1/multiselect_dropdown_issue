@@ -593,12 +593,13 @@ WBSTree = (function ($) {
 
                 var userList = wbsTree.getUserList();
                 var uName = _localStorage.userName;
-                var uID = 0;
-                $.each(userList, function (i, data) {
-                    if (data.UserID == uName) {
-                        uID = data.Id;
-                    }
-                });
+                var uID = _localStorage.userId;
+                //$.each(userList, function (i, data) {
+                //    if (data.UserID == uName) {
+                //        uID = data.Id;
+                //    }
+                //});
+                //alert(uID);
                 var request = {
                     method: 'GET',
                     //url: serviceBasePath + "Request/WBS/" + uID + "/" + wbsTree.getSelectedOrganizationID() + "/null/null/null/null/null/null/null/null/null/null/null",
@@ -11715,6 +11716,10 @@ WBSTree = (function ($) {
 
                 $('#downloadBtnInViewAllProgramElement').attr('disabled', 'disabled');
                 $('#ViewUploadFileInViewAllProgramElement').attr('disabled', 'disabled');
+
+                if (modal_mode == 'Create') {
+                    _selectedProjectID = 0;
+                }
 
                 _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectElementViewAll', ProjectID: _selectedProjectID }, function (response) {
                     wbsTree.setDocumentList(response.result);
