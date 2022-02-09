@@ -1914,6 +1914,16 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Date.');
                     return;
                 }
+
+                //Vaishnavi 08-02-2022
+                if (date) {
+
+                    var testDate = moment(date, 'MM/DD/YYYY', true).isValid();
+                    if (!testDate){
+                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        return;
+                    }
+                }
                 //Nivedita 03-02-2022
                 if (modType != 1)
                 {

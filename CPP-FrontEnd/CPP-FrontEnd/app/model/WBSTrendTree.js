@@ -1339,6 +1339,17 @@ WBSTrendTree = (function ($) {
                     dhtmlx.alert('Enter Trend Title.');
                     return false;
                 }
+
+                //Vaishnavi 08-02-2022
+                var testapproval_date = modal.find('.modal-body #approval_date').val();
+                if (testapproval_date) {
+
+                    var testDate = moment(testapproval_date, 'MM/DD/YYYY', true).isValid();
+                    if (!testDate) {
+                        dhtmlx.alert('Approval Needed By Date Should be in MM/DD/YYYY Format.');
+                        return false;
+                    }
+                }
                 if (modal_mode == 'Update') {
                     //luan here - Find the trend status code id
                     var trendStatusCodeList = TRENDSTATUSCODELIST;
@@ -1542,6 +1553,16 @@ WBSTrendTree = (function ($) {
                 if (TrendTileCheck == "" || TrendTileCheck.length == 0) {
                     dhtmlx.alert('Enter Trend Title.');
                     return false;
+                }
+                //Vaishnavi 08-02-2022
+                var testapproval_date = modal.find('.modal-body #pasttrend_client_approved_date').val();
+                if (testapproval_date) {
+
+                    var testDate = moment(testapproval_date, 'MM/DD/YYYY', true).isValid();
+                    if (!testDate) {
+                        dhtmlx.alert('Approved Date Should be in MM/DD/YYYY Format.');
+                        return false;
+                    }
                 }
                 var pastTrendNumber = metadata.TrendNumber;
                 if (modal_mode == 'Update') {
