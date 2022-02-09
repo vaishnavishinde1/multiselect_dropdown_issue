@@ -3741,8 +3741,10 @@ WBSTree = (function ($) {
                         }
                     }
                     //Vaishnavi 08-02-2022
-                    if (selectedNode.CurrentEndDate) {
-                        var testDate = moment(selectedNode.CurrentEndDate, 'MM/DD/YYYY', true).isValid();
+                    selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
+                    if (selectedNode.CurrentEndDate1) {
+
+                        var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
                             return;
