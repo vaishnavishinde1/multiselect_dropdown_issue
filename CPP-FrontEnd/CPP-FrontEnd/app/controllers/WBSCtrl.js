@@ -3185,14 +3185,14 @@ angular.module('cpp.controllers').
                 $('#spin').addClass('fademe');
                 $('#spinTrend').removeClass('fademe');
                 //********** Jignesh-18-10-2021 ************
-                var userList = wbsTree.getUserList();
-                var uName = _localStorage.userName;
-                var uID = 0;
-                $.each(userList, function (i, data) {
-                    if (data.UserID == uName) {
-                        uID = data.Id; 
-                    }
-                });
+                //var userList = wbsTree.getUserList();
+                //var uName = _localStorage.userName;
+                var uID = _localStorage.userId;
+                //$.each(userList, function (i, data) {
+                //    if (data.UserID == uName) {
+                //        uID = data.Id; 
+                //    }
+                //});
                 if (searchText == 'undefined' || searchText == null || searchText == '') {
                     searchText = null;
                 }
@@ -3889,8 +3889,8 @@ angular.module('cpp.controllers').
                     console.log($scope.organizationList);
                     if (orgId == null) {
                         orgId = $scope.organizationList[0].OrganizationID;
-                        $scope.filterOrgId = orgId;
                         myLocalStorage.set('userSelectedOrgId', orgId);
+                        $scope.filterOrgId = myLocalStorage.get('userSelectedOrgId');
                     } else {
                         var checkIfExisted = isOrgExisted(orgId, $scope.organizationList);
                         if (checkIfExisted == false)

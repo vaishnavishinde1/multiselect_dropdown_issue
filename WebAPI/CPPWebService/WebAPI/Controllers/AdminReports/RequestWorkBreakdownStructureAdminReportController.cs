@@ -14,6 +14,7 @@ namespace WebAPI.Controllers
     {
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+
         public HttpResponseMessage GetReport(String OrganizationID, String ProjectClassID, String PhaseCode, String Version, String FileType)
         {
             //http://devapps2.birdi-inc.io/ReportServer/Pages/ReportViewer.aspx?%2fIMS%2finterface2rdl&rs:Command=Render
@@ -92,7 +93,7 @@ namespace WebAPI.Controllers
             string mimeType;
             string extension;
             SsrsReportService.Warning[] warnings = null;
-            SsrsReportService.ParameterValue[] reportHistoryParameters = new SsrsReportService.ParameterValue[3];
+            SsrsReportService.ParameterValue[] reportHistoryParameters = new SsrsReportService.ParameterValue[4];
 
             SsrsReportService.ParameterValue param1 = new SsrsReportService.ParameterValue();
             param1.Name = "OrgID";
@@ -106,8 +107,9 @@ namespace WebAPI.Controllers
 			param3.Name = "PhaseCode";
 			param3.Value = "\"" + PhaseCode + "\"";
 
+
             SsrsReportService.ParameterValue param4 = new SsrsReportService.ParameterValue();
-            param4.Name = "Version";
+            param4.Name = "VersionId";
             param4.Value = "\"" + Version + "\"";
 
             reportHistoryParameters[0] = param1;

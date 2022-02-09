@@ -1,6 +1,6 @@
 ﻿angular.module('cpp.controllers').
-    controller('AdminReportManagerCtrl', ['$scope', '$timeout', '$uibModal', '$rootScope', '$http', 'Program', 'ProgramElement', 'Page', 'Project', 'Trend', 'MaterialCategory', 'SubcontractorType', 'fteposition', 'Organization', 'PhaseCode', 'ProjectClass', 'ProjectClassPhase',
-        function ($scope, $timeout, $uibModal, $rootScope, $http, Program, ProgramElement, Page, Project, Trend, MaterialCategory, SubcontractorType, fteposition, Organization, PhaseCode, ProjectClass, ProjectClassPhase) {
+    controller('AdminReportManagerCtrl', ['$scope', '$timeout', '$uibModal', '$rootScope', '$http', 'Program', 'ProgramElement', 'Page', 'Project', 'Trend', 'MaterialCategory', 'SubcontractorType', 'fteposition', 'Organization', 'PhaseCode', 'ProjectClass', 'ProjectClassPhase', 'VersionDetails', 'Category',
+        function ($scope, $timeout, $uibModal, $rootScope, $http, Program, ProgramElement, Page, Project, Trend, MaterialCategory, SubcontractorType, fteposition, Organization, PhaseCode, ProjectClass, ProjectClassPhase, VersionDetails, Category) {
 
             Page.setTitle('Admin Report Manager');
 
@@ -24,6 +24,7 @@
             $scope.selectedSubcontractorType = {};
             $scope.selectedPosition = {};
 
+            $scope.allVersionList = [];
             $scope.allOrganizationList = [];
             $scope.allProgramList = [];
             $scope.allProgramElementList = [];
@@ -300,12 +301,14 @@
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
+                        + '&VersionId=' + allFilters.version
                         + '&FileType=' + 'PDF';
 
                     var excelUrl = baseUrl
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
+                        + '&VersionId=' + allFilters.version
                         + '&FileType=' + 'excel';
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
@@ -395,9 +398,12 @@
                 $scope.selectedProgramElement = undefined;
                 $scope.selectedProject = undefined;
                 $scope.selectedTrend = undefined;
+                $scope.selectedVersion = undefined;
 
                 //get new list of program elements
                 $scope.currentProgramElementList = filterProgramElementsByOrganizationID(organization.OrganizationID);
+                $scope.versionList = filterVersionByOrganizationID(organization.OrganizationID);
+
                 console.log($scope.currentProgramElementList);
             }
 
@@ -414,6 +420,12 @@
                 //get new list of program elements
                 $scope.currentProgramElementList = filterProgramElementsByProgramID(program.ProgramID);
                 console.log($scope.currentProgramElementList);
+            }
+            //Select version
+            $scope.selectVersion = function (version) {
+                $scope.selectedVersion = version;
+
+
             }
 
             //Select programelementid
@@ -543,7 +555,8 @@
                     positionID: 0,
                     CostTypeID: 'A',
                     projectClassID: 0,
-                    phaseCode: 'All'
+                    phaseCode: 'All',
+                    version: 0
                 }
 
                 //Process cost type
@@ -558,6 +571,13 @@
                     allFilters.organizationID = $scope.selectedOrganization.OrganizationID;
                 } else {
                     allFilters.organizationID = 0;
+                }
+
+                //Process Version
+                if ($scope.selectedVersion != undefined && $scope.selectedVersion != null && $scope.selectedVersion.Id) {
+                    allFilters.version = $scope.selectedVersion.Id;
+                } else {
+                    allFilters.version = 0;
                 }
 
                 //Process program filter 
@@ -650,6 +670,21 @@
                 for (var x = 0; x < $scope.allProgramElementList.length; x++) {
                     if ($scope.allProgramElementList[x].OrganizationID == organizationID) {
                         tempList.push(angular.copy($scope.allProgramElementList[x]));
+                    }
+                }
+
+                return tempList;
+            }
+
+
+            //Get new list of Version based on Organization
+            function filterVersionByOrganizationID(organizationID) {
+                var tempList = [];
+                debugger;
+
+                for (var x = 0; x < $scope.allVersionList.length; x++) {
+                    if ($scope.allVersionList[x].OrganizationID == organizationID) {
+                        tempList.push(angular.copy($scope.allVersionList[x]));
                     }
                 }
 
@@ -832,6 +867,16 @@
                     $scope.allProgramElementList = response.result;
                     $scope.currentProgramElementList = response.result;
                 });
+
+
+                //initialize list of versions
+                VersionDetails.lookup().get({ operation: '0', programElementID: '0', organizationID: '0' }, function (response) {
+                    console.log(response);
+                    $scope.allVersionList = response.result;
+                    //$scope.currentProgramElementList = response.result;
+                });
+
+
 
                 //initialize list of projects
                 Project.lookup().get({}, function (response) {
