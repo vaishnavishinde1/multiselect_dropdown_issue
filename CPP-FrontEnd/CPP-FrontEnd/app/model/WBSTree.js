@@ -1725,7 +1725,13 @@ WBSTree = (function ($) {
             var yOffset = svg_rect.y;
 
             var g_width = svg_rect.width;
-            var g_height = svg_rect.height + 200;
+            debugger;
+            var g_height = 0;
+            if (svg_rect.height == 0)
+                g_height = svg_rect.height + 882;
+            else
+                g_height = svg_rect.height + 200;
+            //var g_height = svg_rect.height + 200;
             $("#wbs-tree").css("height", g_height + "px");
             //$("#tree-container").css("height", g_height+"px");
 
