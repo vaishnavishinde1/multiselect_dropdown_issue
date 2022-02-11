@@ -5541,7 +5541,7 @@ WBSTree = (function ($) {
 
 
                             }
-                            debugger;
+                            
                             if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
@@ -13651,7 +13651,7 @@ WBSTree = (function ($) {
                     $('#project_class').prop('disabled', true);
                     $("#element_start_date").datepicker();	//datepicker - project
                     $("#element_end_date").datepicker();	//datepicker - project
-                    debugger;
+                    
                     var orgId = $("#selectOrg").val();
                     if (selectedNode.ProjectNumber == null || selectedNode.ProjectNumber == '') {
                         wbsTree.getProjectElementNumber().get({ ProjectNumber: selectedNode.ProjectNumber, OrganizationID: orgId }, function (response) {

@@ -270,7 +270,7 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                    IQueryable<Program> programs = ctx.Program.Where(p => p.OrganizationID == pgm.OrganizationID && p.ProgramName == pgm.ProgramName);
+                    IQueryable<Program> programs = ctx.Program.Where(p => p.OrganizationID == pgm.OrganizationID && p.ProgramName == pgm.ProgramName && p.IsDeleted == false);
                     if (programs.ToList().Count == 0)
                     {
                         ctx.Database.Log = msg => Trace.WriteLine(msg);
@@ -585,7 +585,7 @@ namespace WebAPI.Models
             return result;
         }
 
-        public static void deleteCost(List<Activity> activityList)
+        public static void deleteCost(List<Activity> activityList, string DeletedBy)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
@@ -725,9 +725,12 @@ namespace WebAPI.Models
                 {
                     foreach (var fte in costFTEList)
                     {
-                        var query = "delete from cost_fte where 1=1 and FTECostID = @FTECostID";
+                        //Nivedita 10022022
+                        //var query = "delete from cost_fte where 1=1 and FTECostID = @FTECostID";
+                        var query = "update cost_fte set IsDeleted=true, DeletedDate= NOW(), DeletedBy=@DeletedBy where 1=1 and FTECostID = @FTECostID";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@FTECostID", fte.FTECostID);
+                        command.Parameters.AddWithValue("@DeletedBy", DeletedBy);
                         command.ExecuteNonQuery();
                         // WebAPI.Models.CostFTE.updateCostFTE(fte.Operation, fte.ProgramID, fte.ProgramElementID, fte.ProjectID, fte.TrendNumber, fte.ActivityID, fte.CostID, fte.StartDate, fte.EndDate, fte.Description, fte.TextBoxValue, fte.Base, fte.FTEHours, fte.FTECost, fte.Scale);
                     }
@@ -736,9 +739,12 @@ namespace WebAPI.Models
                 {
                     foreach (var lumpsum in costLumpsumList)
                     {
-                        var query = "delete from cost_lumpsum where 1=1 and LumpsumCostID = @LumpsumCostID";
+                        //Nivedita 10022022
+                        //var query = "delete from cost_lumpsum where 1=1 and LumpsumCostID = @LumpsumCostID";
+                        var query = "update cost_lumpsum set IsDeleted=true, DeletedDate= NOW(), DeletedBy=@DeletedBy where 1=1 and LumpsumCostID = @LumpsumCostID";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@LumpsumCostID", lumpsum.LumpsumCostID);
+                        command.Parameters.AddWithValue("@DeletedBy", DeletedBy);
                         command.ExecuteNonQuery();
                         // WebAPI.Models.CostFTE.updateCostFTE(fte.Operation, fte.ProgramID, fte.ProgramElementID, fte.ProjectID, fte.TrendNumber, fte.ActivityID, fte.CostID, fte.StartDate, fte.EndDate, fte.Description, fte.TextBoxValue, fte.Base, fte.FTEHours, fte.FTECost, fte.Scale);
                     }
@@ -747,9 +753,12 @@ namespace WebAPI.Models
                 {
                     foreach (var unitcost in costUnitList)
                     {
-                        var query = "delete from cost_unitcost where 1=1 and UnitCostID = @UnitCostID";
+                        //Nivedita 10022022
+                        //var query = "delete from cost_unitcost where 1=1 and UnitCostID = @UnitCostID";
+                        var query = "update cost_unitcost set IsDeleted=true, DeletedDate= NOW(), DeletedBy=@DeletedBy where 1=1 and UnitCostID = @UnitCostID";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@UnitCostID", unitcost.UnitCostID);
+                        command.Parameters.AddWithValue("@DeletedBy", DeletedBy);
                         command.ExecuteNonQuery();
                         // WebAPI.Models.CostFTE.updateCostFTE(fte.Operation, fte.ProgramID, fte.ProgramElementID, fte.ProjectID, fte.TrendNumber, fte.ActivityID, fte.CostID, fte.StartDate, fte.EndDate, fte.Description, fte.TextBoxValue, fte.Base, fte.FTEHours, fte.FTECost, fte.Scale);
                     }
@@ -803,7 +812,7 @@ namespace WebAPI.Models
                                     Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
                                 }
                                 //Nivedita 02-12-2021
-                                /*deleteCost(activityList); 
+                                deleteCost(activityList, program.DeletedBy); 
                                 if (activityList.Count > 0)
                                 {
                                     foreach (var act in activityList)
@@ -811,10 +820,10 @@ namespace WebAPI.Models
                                          Activity.deleteActivity(act); 
 
                                     }
-                                }*/
+                                }
                             }
                             //Nivedita 02 - 12 - 2021
-                            /*if (trendList.Count > 0)
+                            if (trendList.Count > 0)
                             {
 
                                 foreach (var tr in trendList)
@@ -822,7 +831,7 @@ namespace WebAPI.Models
                                      Trend.deleteTrend(tr); 
 
                                 }
-                            }*/
+                            }
                         }
                         if (projectList.Count > 0)
                         {
