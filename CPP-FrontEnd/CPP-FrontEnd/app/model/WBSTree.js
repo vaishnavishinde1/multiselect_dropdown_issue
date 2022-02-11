@@ -10892,7 +10892,13 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #contract_start_date').val(selectedNode.ContractStartDate); //datepicker - program element
 
                     modal.find('.modal-body #program_element_contract_value').val(selectedNode.ProjectValueContract);
-                    modal.find('.modal-body #program_element_total_value').val(selectedNode.ProjectValueTotal);
+                    if (selectedNode.ProjectValueTotal == "") {
+
+                        modal.find('.modal-body #program_element_total_value').val('$0');
+                    }
+                    else {
+                        modal.find('.modal-body #program_element_total_value').val(selectedNode.ProjectValueTotal);
+                    }
                     modal.find('.modal-body #program_element_location_name').val(selectedNode.LocationName);
 
                     modal.find('.modal-body #program_element_Start_Date').val(selectedNode.ProjectStartDate);   //Manasi 22-10-2020
