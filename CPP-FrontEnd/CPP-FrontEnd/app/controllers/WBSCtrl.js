@@ -1918,7 +1918,7 @@ angular.module('cpp.controllers').
                 //Vaishnavi 08-02-2022
                 if (date) {
 
-                    var testDate = moment(date, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(date, 'M/D/YYYY', true).isValid();
                     if (!testDate){
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;

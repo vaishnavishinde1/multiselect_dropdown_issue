@@ -45,6 +45,10 @@ namespace WebAPI.Models
         [NotMapped]
         public DateTime ProjectEndDateCO { get; set; }
 
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
+
         public static List<ChangeOrder> getChangeOrder()
 		{
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -425,11 +429,16 @@ namespace WebAPI.Models
 
 						for (int x = 0; x < documentList.Count; x++)
 						{
+                            documentList[x].DeletedBy = ChangeOrder.DeletedBy;
 							Document.deleteDocument(documentList[x]);
 						}
 
-						ctx.ChangeOrder.Remove(retreivedChangeOrder);
-						ctx.SaveChanges();
+                        retreivedChangeOrder.IsDeleted = true;
+                        retreivedChangeOrder.DeletedDate = DateTime.Now;
+                        retreivedChangeOrder.DeletedBy = ChangeOrder.DeletedBy;
+                        
+                        //ctx.ChangeOrder.Remove(retreivedChangeOrder);
+                        ctx.SaveChanges();
 
 						result = ChangeOrder.ChangeOrderName + " has been deleted successfully.\n";
 					}

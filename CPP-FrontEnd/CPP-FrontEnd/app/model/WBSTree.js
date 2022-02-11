@@ -3747,7 +3747,7 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (selectedNode.CurrentStartDate) {
-                        var testDate= moment(selectedNode.CurrentStartDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate= moment(selectedNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -3757,7 +3757,7 @@ WBSTree = (function ($) {
                     selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     if (selectedNode.CurrentEndDate1) {
 
-                        var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(selectedNode.CurrentEndDate1, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4022,7 +4022,7 @@ WBSTree = (function ($) {
                     }
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
-                       var testDate = moment(newNode.CurrentStartDate,'MM/DD/YYYY',true).isValid();
+                       var testDate = moment(newNode.CurrentStartDate,'M/D/YYYY',true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4031,7 +4031,7 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentEndDate) {
-                        var testDate = moment(newNode.CurrentEndDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4683,7 +4683,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectNTPDate) {
 
-                        var testDate = moment(selectedNode.ProjectNTPDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4693,7 +4693,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPODate) {
 
-                        var testDate = moment(selectedNode.ProjectPODate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4703,7 +4703,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPStartDate) {
 
-                        var testDate = moment(selectedNode.ProjectPStartDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -4713,7 +4713,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPEndDate) {
 
-                        var testDate = moment(selectedNode.ProjectPEndDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -5230,7 +5230,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectStartDate) {
 
-                        var testDate = moment(newNode.ProjectStartDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -5241,7 +5241,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPODate) {
 
-                        var testDate = moment(newNode.ProjectPODate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -5251,7 +5251,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPStartDate) {
 
-                        var testDate = moment(newNode.ProjectPStartDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -5262,7 +5262,7 @@ WBSTree = (function ($) {
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPEndDate) {
 
-                        var testDate = moment(newNode.ProjectPEndDate, 'MM/DD/YYYY', true).isValid();
+                        var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
                         if (!testDate) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
@@ -7137,7 +7137,7 @@ WBSTree = (function ($) {
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
 
-                    var testDate = moment(MilestoneDate, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
                     if (!testDate) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
@@ -7494,7 +7494,7 @@ WBSTree = (function ($) {
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
 
-                    var testDate = moment(MilestoneDate, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
                     if (!testDate) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
@@ -7880,7 +7880,7 @@ WBSTree = (function ($) {
                 //Vaishnavi 08-02-2022
                 if (OrderDte) {
 
-                    var testDate = moment(OrderDte, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
                     if (!testDate) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
@@ -10902,7 +10902,13 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #contract_start_date').val(selectedNode.ContractStartDate); //datepicker - program element
 
                     modal.find('.modal-body #program_element_contract_value').val(selectedNode.ProjectValueContract);
-                    modal.find('.modal-body #program_element_total_value').val(selectedNode.ProjectValueTotal);
+                    if (selectedNode.ProjectValueTotal == "") {
+
+                        modal.find('.modal-body #program_element_total_value').val('$0');
+                    }
+                    else {
+                        modal.find('.modal-body #program_element_total_value').val(selectedNode.ProjectValueTotal);
+                    }
                     modal.find('.modal-body #program_element_location_name').val(selectedNode.LocationName);
 
                     modal.find('.modal-body #program_element_Start_Date').val(selectedNode.ProjectStartDate);   //Manasi 22-10-2020
@@ -13674,7 +13680,7 @@ WBSTree = (function ($) {
                     $('#project_class').prop('disabled', true);
                     $("#element_start_date").datepicker();	//datepicker - project
                     $("#element_end_date").datepicker();	//datepicker - project
-                    debugger;
+                    
                     var orgId = $("#selectOrg").val();
                     if (selectedNode.ProjectNumber == null || selectedNode.ProjectNumber == '') {
                         wbsTree.getProjectElementNumber().get({ ProjectNumber: selectedNode.ProjectNumber, OrganizationID: orgId }, function (response) {

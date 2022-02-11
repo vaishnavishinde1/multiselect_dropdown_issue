@@ -75,6 +75,11 @@ namespace WebAPI.Models
 
         public String ActualBudget { get; set; }    //Swapnil 24-11-2020
 
+        //Nivedita 10022022
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
+
         //[ForeignKey("EmployeeID")]
         //public virtual Employee Employee { get; set; }
         //public CostFTE(String id, String st_date, String end_date, String pos, String val, String rate, String hours, String cost)
@@ -89,7 +94,7 @@ namespace WebAPI.Models
         {
             List<CostFTE> CostLineItemList = new List<CostFTE>();
             var ctx = new CPPDbContext();
-            CostLineItemList = ctx.CostFte.Where(z=>z.CostLineItemID == CostLineItemID).ToList();
+            CostLineItemList = ctx.CostFte.Where(z=>z.CostLineItemID == CostLineItemID && z.IsDeleted==false).ToList();
             return CostLineItemList;
         }
 
@@ -97,7 +102,7 @@ namespace WebAPI.Models
         {
             List<CostFTE> CostLineItemList = new List<CostFTE>();
             var ctx = new CPPDbContext();
-            CostLineItemList = ctx.CostFte.Where(z => z.CostLineItemID.Contains(CostLineItemID)).ToList();
+            CostLineItemList = ctx.CostFte.Where(z => z.CostLineItemID.Contains(CostLineItemID) && z.IsDeleted == false).ToList();
             return CostLineItemList;
         }
 
@@ -122,7 +127,7 @@ namespace WebAPI.Models
 
                     List<CostFTE> MatchedCostList = new List<CostFTE>();
                     var aID = Convert.ToInt16(ActivityID);
-                    Activity act = ctx.Activity.Where(a => a.ActivityID == aID).FirstOrDefault();
+                    Activity act = ctx.Activity.Where(a => a.ActivityID == aID && a.IsDeleted==false).FirstOrDefault();
                     
                     DateTime cutOffDate = DateUtility.getCutOffDate(Granularity);
                     if (TrendNumber == "1000") //Actual, Estimate to completion cost
@@ -206,7 +211,7 @@ namespace WebAPI.Models
                         }
                     }
                     else
-                         MatchedCostList = ctx.CostFte.Where(f => f.ActivityID == aID && f.Granularity == Granularity).OrderBy(x => x.FTEStartDate).ToList();
+                         MatchedCostList = ctx.CostFte.Where(f => f.ActivityID == aID && f.Granularity == Granularity && p.IsDeleted == false).OrderBy(x => x.FTEStartDate).ToList();
                     //Split CostID into ActivityID, RowID, TextBoxID
                     foreach (var MatchedFTECost in MatchedCostList)
                     {
@@ -1405,6 +1410,10 @@ namespace WebAPI.Models
         public String CostLineItemID { get; set; }
         public String OriginalCost { get; set; }
         public String ActualBudget { get; set; } // swapnil 24-11-2020
+        //Nivedita 10022022
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
 
         [ForeignKey("SubcontractorID")]
         public virtual Subcontractor Subcontractor { get; set; }
@@ -2527,6 +2536,10 @@ namespace WebAPI.Models
         public virtual Activity Activity { get; set; }
         [ForeignKey("ODCTypeID")]
         public virtual ODCType ODCType { get; set;}
+        //Nivedita 10022022
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
         //public String CreatedBy { get; set; }
         //public String LastUpdatedBy { get; set; }
         //public DateTime CreatedDate { get; set; }
@@ -3725,6 +3738,11 @@ namespace WebAPI.Models
         public virtual UnitType UnitTypes { get; set; }
 
         public static String SQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+        //Nivedita 10022022
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
         //[ForeignKey("MaterialID")]
         //public virtual Material Material { get; set; }
         //public CostUnit(String id, String st_date, String end_date, String desc, String qty, String price, String cost, String type)
@@ -5107,6 +5125,10 @@ namespace WebAPI.Models
         public Double PercentageBasisCost { get; set; }
         public int OrganizationID { get; set; }
         public int BudgetID { get; set; }
+        //Nivedita 10022022
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
 
         //Navigation properties
         [ForeignKey("BudgetID")]
@@ -6452,7 +6474,11 @@ namespace WebAPI.Models
                         {
                             CostLineItemTracker.removeCostLine("F", projectClass.Code.ToString(), project.ProjectNumber,project.ProjectElementNumber, phaseCode.ActivityPhaseCode.ToString(), category.CategoryID, category.SubCategoryID,
                                                              fte.FTEPositionID.ToString(), fte.EmployeeID.ToString(), null, null, null, null, null, fte.CostLineItemID);
-                            ctx.CostFte.Remove(fte);
+                            //Nivedita 10022022
+                            fte.IsDeleted = true;
+                            fte.DeletedDate = DateTime.Now;
+                            fte.DeletedBy = "";
+                            //ctx.CostFte.Remove(fte);
                             ctx.SaveChanges();
                         }
 
@@ -6462,7 +6488,11 @@ namespace WebAPI.Models
                         {
                             CostLineItemTracker.removeCostLine("L", projectClass.Code.ToString(), project.ProjectNumber,project.ProjectElementNumber, phaseCode.ActivityPhaseCode.ToString(), category.CategoryID, category.SubCategoryID,
                                                            null,null,lump.SubcontractorTypeID.ToString(),lump.SubcontractorID.ToString(),null,null,null, lump.CostLineItemID);
-                            ctx.CostLumpsum.Remove(lump);
+                            //Nivedita 10022022
+                            lump.IsDeleted = true;
+                            lump.DeletedDate = DateTime.Now;
+                            lump.DeletedBy = "";
+                            //ctx.CostLumpsum.Remove(lump);
                             ctx.SaveChanges();
                         }
 
@@ -6472,7 +6502,11 @@ namespace WebAPI.Models
                         {
                             CostLineItemTracker.removeCostLine("U", projectClass.Code.ToString(), project.ProjectNumber,project.ProjectElementNumber, phaseCode.ActivityPhaseCode.ToString(), category.CategoryID, category.SubCategoryID,
                                                            null,null,null,null,null,unit.MaterialCategoryID.ToString(),unit.MaterialID.ToString(),unit.CostLineItemID);
-                            ctx.CostUnit.Remove(unit);
+                            //Nivedita 10022022
+                            unit.IsDeleted = true;
+                            unit.DeletedDate = DateTime.Now;
+                            unit.DeletedBy = "";
+                            //ctx.CostUnit.Remove(unit);
                             ctx.SaveChanges();
                         }
 
@@ -6483,7 +6517,11 @@ namespace WebAPI.Models
                         {
                             CostLineItemTracker.removeCostLine("ODC", projectClass.Code.ToString(), project.ProjectNumber,project.ProjectElementNumber, phaseCode.ActivityPhaseCode.ToString(), category.CategoryID, category.SubCategoryID,
                                                            null, null, null,null, cost.ODCTypeID.ToString(), null, null, cost.CostLineItemID);
-                            ctx.CostODC.Remove(cost);
+                            //Nivedita 10022022
+                            cost.IsDeleted = true;
+                            cost.DeletedDate = DateTime.Now;
+                            cost.DeletedBy = "";
+                            //ctx.CostODC.Remove(cost);
                             ctx.SaveChanges();
                         }
 
@@ -6496,7 +6534,11 @@ namespace WebAPI.Models
                         //}
 
                         //Delete Activity
-                        ctx.Activity.Remove(retrievedActivity);
+                        //Nivedita 10022022
+                        retrievedActivity.IsDeleted = true;
+                        retrievedActivity.DeletedDate = DateTime.Now;
+                        retrievedActivity.DeletedBy = "";
+                        //ctx.Activity.Remove(retrievedActivity);
                         ctx.SaveChanges();
                         String s = updateTrend(Convert.ToInt16(activity.ProjectID), activity.TrendNumber);
                         delete_result = "Success";
