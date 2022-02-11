@@ -85,6 +85,7 @@ angular.module('xenon.services', []).
 
 		this.prepareSidebarMenu = function() {
 			var wbs = this.addItem('Program Navigation', '/app/wbs', 'linecons-database');
+			//var userReports = this.addItem('userReports', '/app/user-report', 'linecons-desktop');
 			//add dashboard back if we need it
 		//	var dashboard    = this.addItem('Dashboard','/app/dashboard','linecons-note');
 			//var baseline_project = this.addItem('Baseline Project','/app/baseline-project/105/1/13', 'linecons-note');

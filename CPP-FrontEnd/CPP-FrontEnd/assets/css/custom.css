@@ -873,9 +873,9 @@ body {
 /*shweta -3-9-2021*/
 /*purchase order details modal css*/
 #AddContractBtn {
-    float: left;
+   /* float: left;
     margin-bottom: 0;
-    margin-top: 5px;
+    margin-top: 5px;*/
 }
 .filterCheckBoxWrap {
     display: inline-block;

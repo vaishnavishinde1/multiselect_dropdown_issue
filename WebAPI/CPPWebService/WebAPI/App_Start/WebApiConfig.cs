@@ -961,6 +961,12 @@ namespace WebAPI
                 );
             #endregion
 
+            config.Routes.MapHttpRoute( //luan here - Work Breakdown Structure Admin Report
+              name: "ContractReport",
+              routeTemplate: "Request/ContractReport",
+              defaults: new { controller = "RequestContractReport" }
+              );
+
             config.Routes.MapHttpRoute(
                 name: "RequestProjectDurationAndCost",
                 routeTemplate: "Request/ProjectDurationAndCost/{ProjectID}/{TrendID}",
