@@ -127,7 +127,7 @@
                     var excelUrl = baseUrl
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ClientId=' + allFilters.clientID
-                        + '&FileType=' + 'PDF';
+                        + '&FileType=' + 'excel';
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
