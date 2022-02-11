@@ -211,7 +211,7 @@ namespace WebAPI.Models
                         }
                     }
                     else
-                         MatchedCostList = ctx.CostFte.Where(f => f.ActivityID == aID && f.Granularity == Granularity && p.IsDeleted == false).OrderBy(x => x.FTEStartDate).ToList();
+                         MatchedCostList = ctx.CostFte.Where(f => f.ActivityID == aID && f.Granularity == Granularity && f.IsDeleted == false).OrderBy(x => x.FTEStartDate).ToList();
                     //Split CostID into ActivityID, RowID, TextBoxID
                     foreach (var MatchedFTECost in MatchedCostList)
                     {
