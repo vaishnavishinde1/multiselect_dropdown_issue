@@ -2064,17 +2064,7 @@ angular.module('cpp.controllers').
                             dhtmlx.alert("Modification Deleted Successfully!!!.");
                         }
                         wbsTree.setContractModificationOperation(1);
-                        
-                        //$('#modification_number').val('');
-                        $('#modification_title').val('');
-                        $('#modification_reason').val('');
-                        $('#modification_date').val('');
-                        $('#modification_value').val('');
-                        $('#modification_description').val('');
-                        $('#schedule_impact').val('');
-                        $('#divModificationValue').show();
-                        $('#divModDurationDate').hide();
-                        //$('#duration_date').val('');
+                        ResetContModificationFields();
                         var updatedContractEndDate = "";
                         _modificationList = d.data.data;
                         var gridModification = $("#gridModificationList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
@@ -2124,7 +2114,7 @@ angular.module('cpp.controllers').
                         var totalValue = 0;
                         var totalDaysOfScheduleImpact = 0;
                         for (var x = 1; x < _modificationList.length; x++) {
-                            totalValue = totalValue + parseFloat(_modificationList[x].Value);
+                            totalValue = totalValue + parseFloat((_modificationList[x].ModificationNo != "0" ? (_modificationList[x].Value != "" ? _modificationList[x].Value : 0 ) : 0 ));
                             totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_modificationList[x].ScheduleImpact);
                             //if (_modificationList[x].DurationDate != "" && _modificationList[x].DurationDate != null) {
                             //    updatedContractEndDate = _modificationList[x].DurationDate;
@@ -2161,6 +2151,10 @@ angular.module('cpp.controllers').
 
             $('#btnClearModification').unbind().on('click', function (event) {
                 wbsTree.setContractModificationOperation(1);
+                ResetContModificationFields();
+                return;
+            });
+            function ResetContModificationFields() {
                 $('#modification_title').val('');
                 $('#modification_date').val('');
                 $('#modification_reason').val('');
@@ -2168,13 +2162,12 @@ angular.module('cpp.controllers').
                 $('#ddModificationType').val(1);
                 $('#schedule_impact').val('');
                 $('#modification_value').val('');
-                $('#divModificationValue').show(); 
-                $('#divModDurationDate').hide(); 
+                $('#divModificationValue').show();
+                $('#divModDurationDate').hide();
                 $('input[name="rbModHistory"]').prop('checked', false);
                 $('#btnDeleteConModification').attr('disabled', 'disabled');
                 $('#btnEditConModification').attr('disabled', 'disabled');
-                return;
-            });
+            }
             //====================================================================================================================
 
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
