@@ -1344,7 +1344,7 @@ WBSTrendTree = (function ($) {
                 var testapproval_date = modal.find('.modal-body #approval_date').val();
                 if (testapproval_date) {
 
-                    var testDate = moment(testapproval_date, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(testapproval_date, 'M/D/YYYY', true).isValid();
                     if (!testDate) {
                         dhtmlx.alert('Approval Needed By Date Should be in MM/DD/YYYY Format.');
                         return false;
@@ -1558,7 +1558,7 @@ WBSTrendTree = (function ($) {
                 var testapproval_date = modal.find('.modal-body #pasttrend_client_approved_date').val();
                 if (testapproval_date) {
 
-                    var testDate = moment(testapproval_date, 'MM/DD/YYYY', true).isValid();
+                    var testDate = moment(testapproval_date, 'M/D/YYYY', true).isValid();
                     if (!testDate) {
                         dhtmlx.alert('Approved Date Should be in MM/DD/YYYY Format.');
                         return false;
