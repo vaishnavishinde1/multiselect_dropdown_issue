@@ -117,6 +117,7 @@ namespace WebAPI.Models
 							ScheduleImpact = (contractModification.ScheduleImpact - retreivedConMod.ScheduleImpact);
 
 						}
+						
 						CopyUtil.CopyFields<ContractModification>(contractModification, retreivedConMod);
 						ctx.Entry(retreivedConMod).State = System.Data.Entity.EntityState.Modified;
 						ctx.SaveChanges();

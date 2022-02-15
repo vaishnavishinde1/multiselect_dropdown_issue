@@ -557,7 +557,7 @@ WBSTree = (function ($) {
 
         }
 
-        if (!displayMap) {
+        //if (!displayMap) {
 
 
 
@@ -761,18 +761,25 @@ WBSTree = (function ($) {
 
 
                                 projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
-                                if (!isProjectIdSet) {
+                                //if (!isProjectIdSet) {
 
-                                    if (projectElementI == 0) {
+                                //    if (projectElementI == 0) {
 
-                                        wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
-                                        isProjectIdSet = true;
-                                        //$rootScope.fromWBS = false;
-                                        wbsTree.getWBSTrendTree().trendGraph(true);
+                                //        wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
+                                //        isProjectIdSet = true;
+                                //        //$rootScope.fromWBS = false;
+                                //        wbsTree.getWBSTrendTree().trendGraph(true);
 
-                                    }
+                                //    }
 
-                                }
+                                //}
+                                //if (projectElementI == (project.children.length - 1)) {
+                                //    wbsTree.setSelectedProjectID(project.children[projectElementI].ProjectID);
+                                //    isProjectIdSet = true;
+                                //    //$rootScope.fromWBS = false;
+                                //    wbsTree.getWBSTrendTree().trendGraph(true);
+                                //}
+                                
 
 
                             }
@@ -830,7 +837,7 @@ WBSTree = (function ($) {
 
             }
 
-        }
+        //}
         obj.prototype.getContractModificationOperation = function () {
             return _ContractModificationOperation;
         }
@@ -2863,7 +2870,7 @@ WBSTree = (function ($) {
                                     //$scope.init();
                                     //console.log("-------DELETED ORGANIZATION--------");
                                     //wbsTree.updateTreeNodes(selectedNode);
-                                    if (!displayMap)
+                                    //if (!displayMap)
                                     wbsTree.loadFullGridView();
                                     //wbsTree.loadContextMenu();
                                     rootScope.modalInstance.close();
@@ -2891,7 +2898,7 @@ WBSTree = (function ($) {
                                     if ($('#ProgramModal').hasClass('in'))
                                         $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
                                         wbsTree.updateTreeNodes(selectedNode.parent);
-                                        if (!displayMap)
+                                        ////if (!displayMap)
                                     wbsTree.loadFullGridView();
                                     wbsTree.getWBSTrendTree().trendGraph();
 
@@ -2924,7 +2931,7 @@ WBSTree = (function ($) {
                                         wbsTree.updateTreeNodes(selectedNode.parent);
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
-                                        if (!displayMap)
+                                        //if (!displayMap)
                                         wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         // wbsTree.loadFullGridView();
@@ -2933,7 +2940,7 @@ WBSTree = (function ($) {
                                     });
                                     if ($('#ProgramElementModal').hasClass('in'))
                                         $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
-                                        if (!displayMap)
+                                        //if (!displayMap)
                                         wbsTree.loadFullGridView();
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     // wbsTree.loadFullGridView();
@@ -2977,7 +2984,7 @@ WBSTree = (function ($) {
 
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
-                                        if (!displayMap)
+                                        //if (!displayMap)
                                         wbsTree.loadFullGridView();
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         console.log(wbsTree.getWBSTrendTree().getTrendNumber());
@@ -3479,7 +3486,7 @@ WBSTree = (function ($) {
                         selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
                     }
                     selectedNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
-                    //selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
+                    selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     //Nivedita 13-01-2022
                     //selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
                     if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
@@ -3863,7 +3870,7 @@ WBSTree = (function ($) {
 
                             wbsTree.updateTreeNodes(selectedNode);
                             $('#ProgramModal').modal('hide');
-                            if (!displayMap)
+                            //if (!displayMap)
                             wbsTree.loadFullGridView();
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
@@ -4259,7 +4266,7 @@ WBSTree = (function ($) {
                                 }
                                 wbsTree.setSelectedNode(selectedNode);
                                 wbsTree.updateTreeNodes(selectedNode);
-                                if (!displayMap)
+                                //if (!displayMap)
                                 wbsTree.loadFullGridView();
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
@@ -4896,7 +4903,7 @@ WBSTree = (function ($) {
 
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;// for update
-                            if (!displayMap)
+                            //if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
@@ -5549,8 +5556,8 @@ WBSTree = (function ($) {
 
 
                             }
-                            
-                            if (!displayMap)
+                            debugger;
+                            //if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
@@ -6182,7 +6189,7 @@ WBSTree = (function ($) {
 
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;
-                            if (!displayMap)
+                            //if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
@@ -6741,11 +6748,13 @@ WBSTree = (function ($) {
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             //---------- task 2184  swapnil 25/01/2021 ---------------------------------------
 
-                            if (projectNumber == 1) {
+                            //if (projectNumber == 1) {
+                            // Jignesh-10-02-2021
+                            //Commented condition because it was not rendering the currently added element
                                 wbsTree.getWBSTrendTree().trendGraph(true);
-                            }
+                            //}
                             debugger;
-                            if (!displayMap)
+                            //if (!displayMap)
                             wbsTree.loadFullGridView();
                             //-----------------------------------------------------------------------
 
@@ -6790,7 +6799,7 @@ WBSTree = (function ($) {
                     wbsTree.updateTreeNodes(selectedNode);
                     wbsTree.getWBSTrendTree().trendGraph();
                     debugger;
-                    if (!displayMap)
+                    //if (!displayMap)
                     wbsTree.loadFullGridView();
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
@@ -8953,7 +8962,8 @@ WBSTree = (function ($) {
                             var mod2 = _ModificationList.reverse();
                             for (var x = 1; x < mod2.length; x++) {
                                 if (_ModificationList[x].Id != 0 && _ModificationList[x].Id != null) {
-                                    totalValue = totalValue + parseFloat(_ModificationList[x].Value.replace(/,/g, ''));
+                                    totalValue = totalValue + parseFloat((_ModificationList[x].Value != "" ? _ModificationList[x].Value.replace(/,/g, '') : 0));
+                                    //totalValue = totalValue + parseFloat(_ModificationList[x].Value.replace(/,/g, ''));
                                 }
                                 totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_ModificationList[x].ScheduleImpact);
                                 //if (_ModificationList[x].DurationDate != "" && _ModificationList[x].DurationDate != null) {
@@ -11483,6 +11493,7 @@ WBSTree = (function ($) {
 
                     modal.find('.modal-title').text('New Project');
                     modal.find('.modal-body #project_name').val('');
+                    modal.find('.modal-body #program_element_total_modifications').val('0');
                     modal.find('.modal-body #project_manager').val('');
                     modal.find('.modal-body #program_element_manager_name').val('');
                     modal.find('.modal-body #project_sponsor').val('');
@@ -11946,7 +11957,9 @@ WBSTree = (function ($) {
 
                 var gridViewAllUploadedDocumentProgramElement = $('#gridViewAllDocumentInProject');
                 gridViewAllUploadedDocumentProgramElement.empty();
-
+                if (modal_mode == 'Create') {
+                    _selectedProgramElementID = 0;
+                }
                 _Document.getDocumentByProjID().get({ DocumentSet: 'ProjectViewAll', ProjectID: _selectedProgramElementID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
@@ -12008,7 +12021,9 @@ WBSTree = (function ($) {
                 $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                 //===============================================================================
                 $('#searchCont').val(''); // Jignesh-24-02-2021
-
+                if (modal_mode == 'Create') {
+                    _selectedProgramID = 0;
+                }
                 //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
                 _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
                     //wbsTree.setDocumentList(response.result);
@@ -12643,7 +12658,7 @@ WBSTree = (function ($) {
                             }
                             else if (response.data.ModificationType == 2) {
                                 $('#modification_value').val('');
-                                $('#schedule_impact').val('$' + response.data.ScheduleImpact);
+                                $('#schedule_impact').val(response.data.ScheduleImpact);
                                 $('#divModificationValue').hide();
                                 $('#divModDurationDate').show();
                             }

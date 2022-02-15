@@ -300,8 +300,8 @@ namespace WebAPI.Models
                         int pgmId = pgmElt.ProgramID;
                         Program pgm = ctx.Program.First(p => p.ProgramID == pgmId);
                         pgmElt.Program = pgm;
-                        //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
-                        pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture);   //Jignesh 20-11-2020
+                        pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
+                        //pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture);   //Jignesh 20-11-2020
                         ctx.ProgramElement.Add(pgmElt);
                         ctx.SaveChanges();
                         ProgramElement pm = ctx.ProgramElement.OrderByDescending(progElm => progElm.ProgramElementID).FirstOrDefault();

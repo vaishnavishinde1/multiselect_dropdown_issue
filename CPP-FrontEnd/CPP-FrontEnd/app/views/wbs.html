@@ -343,8 +343,28 @@
             </div>
         </div>-->
 
-        <div class="row" style="margin-top:-5px;margin-bottom:15px;">
-            <button type="button" class="btn btn-black w-auto" id="AddContractBtn">Add Contract</button>
+        <div class="row" style="margin-top:-5px;margin-bottom:15px;text-align:left">
+            <!--<button type="button" class="btn btn-black w-auto" id="AddContractBtn">Add Contract</button>-->
+
+            <!--Changes by Amruta-->
+            <div class="dropdown" style="display:inline-block;">
+                <!--Shweta  -->
+                <button type ="button" class="btn btn-black w-auto dropdown-toggle" id="AddContractBtnLbl"
+                            data-toggle="dropdown" style="width: 140px;margin: -25px 0 0 0;">
+                    <!---->
+                   Actions
+                    <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu" >
+                        <li><a id="AddContractBtn">Add Contract</a></li>
+                        <li><a ng-href="/#/app/user-report">Contract Report</a></li>
+
+                    </ul>
+
+            </div>
+
+            <!--Changes by Amruta-->
             <!--<button type="button" class="btn btn-black w-auto" ng-click="ClearCache()" id="testCache">Clear Cache</button>-->
             <div class="filterCheckBoxWrap">
                 <label><input type="checkbox" id="FilterTrend" ng-click="FilterTrend(this)" value="Unapproved Trends" style="margin-right: 6px; vertical-align: sub;">Unapproved Trends</label>
@@ -352,7 +372,7 @@
             </div>
             <div class="quicksearchwrap">
                 <!--<input type="text" id="txtQuickSearch">
-                <button type="button" class="btn btn-black w-auto" id="btnQuickSearch">Search</button>-->
+        <button type="button" class="btn btn-black w-auto" id="btnQuickSearch">Search</button>-->
                 <form class="quickSearch">
                     <input type="text" id="txtQuickSearch" placeholder="Search.." ng-model="SearchText" name="search2">
                     <button type="button" id="btnQuickSearch"><i class="fa fa-search"></i></button>

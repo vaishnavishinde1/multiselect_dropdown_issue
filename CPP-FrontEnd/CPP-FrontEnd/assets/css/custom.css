@@ -857,7 +857,8 @@ body {
 }
 .filterCheckBoxWrap {
     display: inline-block;
-    float: left;
+    /*float: left;*/
+    vertical-align:top;
     padding: 5px 10px;
 }
 .filterCheckBoxWrap label{padding-top:3px;}
@@ -873,18 +874,9 @@ body {
 /*shweta -3-9-2021*/
 /*purchase order details modal css*/
 #AddContractBtn {
-    float: left;
+   /* float: left;
     margin-bottom: 0;
-    margin-top: 5px;
-}
-.filterCheckBoxWrap {
-    display: inline-block;
-    float: left;
-    padding: 5px 10px;
-}
-
-.filterCheckBoxWrap label {
-    padding-top: 3px;
+    margin-top: 5px;*/
 }
 .quicksearchwrap {
     display: inline-block;
