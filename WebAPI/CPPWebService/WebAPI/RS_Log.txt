@@ -18109,3 +18109,169 @@ LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CP
 ------------------------------------------------------------------------------------------
 LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A1 Git Project\11-01-2022\cppv3\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
 ------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+getUserListOfApprovalInput string was not in a correct format.	WebAPI.Models.User	0
+------------------------------------------------------------------------------------------
+getUserListOfApprovalInput string was not in a correct format.	WebAPI.Models.User	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+getUserListOfApprovalInput string was not in a correct format.	WebAPI.Models.User	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+getUserListOfApprovalInput string was not in a correct format.	WebAPI.Models.User	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------
+LogDebugThe process cannot access the file 'D:\JigneshProject\Project_2\Birdi_CPP\A2 Git Hash Commit\12-02-2022\WebAPI\CPPWebService\WebAPI\RS_Log.txt' because it is being used by another process.	WebAPI.Models.Logger	0
+------------------------------------------------------------------------------------------

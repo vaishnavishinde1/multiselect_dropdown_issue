@@ -52,11 +52,6 @@ namespace WebAPI.Models
         public virtual CostOverhead CostOverhead{ get; set; }
 
 
-        //Nivedita 10022022
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public string DeletedBy { get; set; }
-
         public static List<TrendCostOverhead> getTrendCustomCostOverhead(int trendID)
         {
             List<TrendCostOverhead> trendCostOverheads = new List<TrendCostOverhead>();
@@ -113,7 +108,7 @@ namespace WebAPI.Models
                                                 on co.CostRateTypeID equals crt.ID
 
                                 where tr.TrendID == trendID
-                                    && crt.RateType == "Custom" && tr.IsDeleted==false
+                                    && crt.RateType == "Custom"
 
                                 select tco
                             )  as DbQuery<TrendCostOverhead>) //Convert to DBQuery so that it can use the Include method

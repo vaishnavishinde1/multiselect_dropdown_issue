@@ -452,13 +452,15 @@ namespace WebAPI
 
             config.Routes.MapHttpRoute(
             name: "RequestWBS",
-            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}",
+            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}/{DeptID}",
 
             //Returns: Complex/Nested JSON Object. NOTE: use string.replace("\\","") before parsing the returned JSON
             defaults: new { controller = "RequestWBS", OrganizationID = RouteParameter.Optional, ProgramID = RouteParameter.Optional, ProgramElementID = RouteParameter.Optional, ProjectID = RouteParameter.Optional,
                 TrendNumber = RouteParameter.Optional, PhaseCode = RouteParameter.Optional, ActivityID = RouteParameter.Optional,
                 BudgetCategory = RouteParameter.Optional, BudgetSubCategory = RouteParameter.Optional, SearchText = RouteParameter.Optional,
-                AllData = RouteParameter.Optional }
+                AllData = RouteParameter.Optional,
+                DeptID = RouteParameter.Optional
+            }
         );
 
             config.Routes.MapHttpRoute(
@@ -505,6 +507,28 @@ namespace WebAPI
             {
                 controller = "RequestCost",
                 ProjectID = RouteParameter.Optional,
+                TrendNumber = RouteParameter.Optional,
+                PhaseCode = RouteParameter.Optional,
+                ActivityID = RouteParameter.Optional,
+                Granularity = RouteParameter.Optional,
+                ViewLabor = RouteParameter.Optional,
+                BudgetID = RouteParameter.Optional,
+                BudgetCategory = RouteParameter.Optional,
+                BudgetSubCategory = RouteParameter.Optional
+
+            }
+            );
+            config.Routes.MapHttpRoute(
+            name: "RequestGanttViewCost",
+            routeTemplate: "Request/GanttViewCost/{ContractID}/{ProjectID}/{ElementID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{Granularity}/{ViewLabor}/{BudgetID}/{BudgetCategory}/{BudgetSubCategory}",
+            //Returns: 
+
+            defaults: new
+            {
+                controller = "RequestGanttViewCost",
+                ContractID = RouteParameter.Optional,
+                ProjectID = RouteParameter.Optional,
+                ElementID = RouteParameter.Optional,
                 TrendNumber = RouteParameter.Optional,
                 PhaseCode = RouteParameter.Optional,
                 ActivityID = RouteParameter.Optional,
@@ -1369,6 +1393,18 @@ namespace WebAPI
              );
 
             config.Routes.MapHttpRoute(
+                  name: "RequestProjectClassByProgramId",
+                  routeTemplate: "Request/ProjectClassByProgramId/{programID}",
+                 defaults: new { controller = "RequestProjectClassByProgramId" }
+             );
+
+            config.Routes.MapHttpRoute(
+                  name: "RequestProjectClassByProgramElemId",
+                  routeTemplate: "Request/ProjectClassByProgramElemId/{programElemID}",
+                 defaults: new { controller = "RequestProjectClassByProgramElemId" }
+             );
+
+            config.Routes.MapHttpRoute(
                  name: "RegisterProjectClass",
                  routeTemplate: "Response/ProjectClass",
                  defaults: new { controller = "RegisterProjectClass" }
@@ -1688,6 +1724,12 @@ namespace WebAPI
            defaults: new { controller = "RequestExportCostCodeToExcel" }
             );
 
+            config.Routes.MapHttpRoute(
+    name: "RequestExportInsperityCostCodeToExcel",
+    routeTemplate: "Request/ExportInsperityCostCodeToExcel",
+    defaults: new { controller = "RequestExportInsperityCostCodeToExcel" }
+     );
+
             ////Swapnil 20-10-2020
             config.Routes.MapHttpRoute(
            name: "RegisterImportCoAdData",
@@ -1716,8 +1758,8 @@ namespace WebAPI
             //Jignesh 28-10-2020
             config.Routes.MapHttpRoute(
                  name: "GetContractModification",
-                 routeTemplate: "contractModification/getContractModificationData/{programId}",
-                 defaults: new { controller = "ContractModification", action = "Get", programId = RouteParameter.Optional }
+                 routeTemplate: "contractModification/getContractModificationData/{programId}/{modId}",
+                 defaults: new { controller = "ContractModification", action = "Get", programId = RouteParameter.Optional, modId = RouteParameter.Optional }
              );
             //Jignesh 05-11-2020
             config.Routes.MapHttpRoute(
@@ -1856,6 +1898,15 @@ namespace WebAPI
                  routeTemplate: "Response/RegisterUserLicenseMapping",
                  defaults: new { controller = "RegisterUserLicenseMapping" }
              );
+
+            //Poject Element changes by Amruta
+
+            config.Routes.MapHttpRoute(
+                 name: "RegisterProgramElementOnChangeOrder",
+                 routeTemplate: "Request/ProjectEndDateChangeOrder/{projectId}/{ProjectEndDate}",
+                 defaults: new { controller = "RequestProgramElementOnChangeOrder", projectId = RouteParameter.Optional, ProjectEndDate = RouteParameter.Optional }
+             );
+
         }
     }
 }

@@ -215,7 +215,7 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                    IQueryable<ProgramElement> programElements = ctx.ProgramElement.Where(p => p.ProgramID == pgmElt.ProgramID && p.ProgramElementName == pgmElt.ProgramElementName & p.IsDeleted==false);
+                    IQueryable<ProgramElement> programElements = ctx.ProgramElement.Where(p => p.ProgramID == pgmElt.ProgramID && p.ProgramElementName == pgmElt.ProgramElementName);
 
                     //ProgramElement retreivedPrgramElement = ctx.ProgramElement.Where(f => f.ProjectNumber == pgmElt.ProjectNumber).FirstOrDefault();
 
@@ -735,9 +735,7 @@ namespace WebAPI.Models
                 {
                     foreach (var fte in costFTEList)
                     {
-                        //Nivedita 10022022
-                        //var query = "delete from cost_fte where 1=1 and FTECostID = @FTECostID";
-                        var query = "update cost_fte set IsDeleted=true, DeletedDate= NOW(), DeletedBy='' where 1=1 and FTECostID = @FTECostID";
+                        var query = "delete from cost_fte where 1=1 and FTECostID = @FTECostID";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@FTECostID", fte.FTECostID);
                         command.ExecuteNonQuery();
@@ -748,9 +746,7 @@ namespace WebAPI.Models
                 {
                     foreach (var lumpsum in costLumpsumList)
                     {
-                        //Nivedita 10022022
-                        //var query = "delete from cost_lumpsum where 1=1 and LumpsumCostID = @LumpsumCostID ";
-                        var query = "update cost_lumpsum set IsDeleted=true, DeletedDate= NOW(), DeletedBy='' where 1=1 and LumpsumCostID = @LumpsumCostID";
+                        var query = "delete from cost_lumpsum where 1=1 and LumpsumCostID = @LumpsumCostID ";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@LumpsumCostID", lumpsum.LumpsumCostID);
                         command.ExecuteNonQuery();
@@ -761,9 +757,7 @@ namespace WebAPI.Models
                 {
                     foreach (var unitcost in costUnitList)
                     {
-                        //Nivedita 10022022
-                        //var query = "delete from cost_unitcost where 1=1 and UnitCostID = @UnitCostID";
-                        var query = "update cost_unitcost set IsDeleted=true, DeletedDate= NOW(), DeletedBy='' where 1=1 and UnitCostID = @UnitCostID";
+                        var query = "delete from cost_unitcost where 1=1 and UnitCostID = @UnitCostID";
                         MySqlCommand command = new MySqlCommand(query, conn);
                         command.Parameters.AddWithValue("@UnitCostID", unitcost.UnitCostID);
                         command.ExecuteNonQuery();
@@ -788,35 +782,12 @@ namespace WebAPI.Models
                     ctx.Database.Log = msg => Trace.WriteLine(msg);
                     int pgmEltId = ProgramElementID;
                     ProgramElement pgmElt = ctx.ProgramElement.First(p => p.ProgramElementID == pgmEltId);
-                    List<Document> documents = ctx.Document.Where(a => a.ProgramElementID ==ProgramElementID ).ToList();
+
                     List<Project> projectList = ctx.Project.Where(p => p.ProgramElementID == ProgramElementID).Select(proj => proj).ToList();
-                    foreach (Document doc in documents)
-                    {
-                        //Nivedita 10022022
-                        //ctx.Entry(doc).State = System.Data.Entity.EntityState.Deleted;
-                        doc.IsDeleted = true;
-                        doc.DeletedDate = DateTime.Now;
-                        doc.DeletedBy = programElement.DeletedBy;
-                        ctx.SaveChanges();
-                    }
-
-                    List<ChangeOrder> changeOrderList = ctx.ChangeOrder.Where(tr => tr.ProgramElementID == ProgramElementID).ToList();
-
-                    foreach (var order in changeOrderList)
-                    {
-                        order.DeletedBy = programElement.DeletedBy;
-                        ChangeOrder.deleteChangeOrder(order);
-                    }
-
-
-                    ctx.SaveChanges();
                     foreach (var project in projectList)
                     {
 
                         List<Trend> trendList = ctx.Trend.Where(tr => tr.ProjectID == project.ProjectID).Select(trendItem => trendItem).ToList();
-
-                        //Nivedita11022022
-                        
                         foreach (var trend in trendList)
                         {
                             List<Activity> activityList = new List<Activity>();
@@ -861,7 +832,7 @@ namespace WebAPI.Models
                             }
 
                             //Nivedita 02-12-2021
-                            deleteCost(activityList);
+                            /*deleteCost(activityList);
                             if (activityList.Count > 0)
                             {
                                 foreach (var act in activityList)
@@ -871,24 +842,21 @@ namespace WebAPI.Models
                                         conn = ConnectionManager.getConnection();
                                         conn.Open();
                                     }
-                                    //Nivedita 10022022
-                                    var query = "update activity set IsDeleted=true, DeletedDate= NOW(), DeletedBy=@DeletedBy where 1=1 and ActivityID = @ActivityID";
-                                    //var query = "delete from activity where 1=1 and ActivityID = @ActivityID";
+                                    var query = "delete from activity where 1=1 and ActivityID = @ActivityID";
                                     MySqlCommand command = new MySqlCommand(query, conn);
                                     command.Parameters.AddWithValue("@ActivityID", act.ActivityID);
-                                    command.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
                                     command.ExecuteNonQuery();
 
                                 }
-                            }
+                            }*/
                         }
-                        if (trendList.Count > 0)
+                        /*if (trendList.Count > 0)
                         {
                             foreach (var tr in trendList)
                             {
                                 Trend.deleteTrend(tr);
                             }
-                        }
+                        }*/
                     }
                     conn = ConnectionManager.getConnection();
                     conn.Open();
@@ -908,7 +876,7 @@ namespace WebAPI.Models
                     command1.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
                     command1.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
                     command1.ExecuteNonQuery();
-                      updateCostOnProgramElementDelete(pgmElt.ProgramID);
+                    //  updateCostOnProgramElementDelete(pgmElt.ProgramID);
                     ////  ctx.ProgramElement.Remove(pgmElt);
                     //  //ctx.SaveChanges();
                     result = "Success";

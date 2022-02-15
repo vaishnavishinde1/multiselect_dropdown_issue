@@ -819,6 +819,7 @@
     <Compile Include="Controllers\RegisterCustomCostOverheadController.cs" />
     <Compile Include="Controllers\TimesheetUploadController.cs" />
     <Compile Include="Controllers\TranslateQuickbooksBillController.cs" />
+    <Compile Include="Controllers\UserReports\RequestContractReportController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\ViewProgramElementGanttController.cs" />
     <Compile Include="CPPDbContext.cs" />

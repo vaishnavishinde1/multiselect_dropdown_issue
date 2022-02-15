@@ -85,11 +85,6 @@ namespace WebAPI.Models
 
         public DateTime? NextApproverEmailDate { get; set; }
 
-        //Nivedita 10022022
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public string DeletedBy { get; set; }
-
         //From RequestProgramElementController
         public static List<Trend> getTrend(String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String KeyStroke)
         {
@@ -107,36 +102,36 @@ namespace WebAPI.Models
                     if (TrendNumber != "null")
                     {
                         string trendNum = TrendNumber;
-                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.TrendNumber == trendNum && p.IsDeleted==false);//Do not display Current Trend
+                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.TrendNumber == trendNum);//Do not display Current Trend
                         MatchedTrendList = trends.ToList<Trend>();
                     }
                     else if (ProjectID != "null")
                     {
                         int projId = int.Parse(ProjectID);
-                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.ProjectID == projId && p.TrendNumber != "1000" && p.IsDeleted == false);//Do not display Current Trend
+                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.ProjectID == projId && p.TrendNumber != "1000");//Do not display Current Trend
                         MatchedTrendList = trends.ToList<Trend>();
                     }
                     else if (ProgramElementID != "null")
                     {
                         int pgmEltId = int.Parse(ProgramElementID);
-                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.ProgramElement.ProgramElementID == pgmEltId && p.TrendNumber != "1000" && p.IsDeleted == false);//Do not display Current Trend
+                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.ProgramElement.ProgramElementID == pgmEltId && p.TrendNumber != "1000");//Do not display Current Trend
                         MatchedTrendList = trends.ToList<Trend>();
                     }
                     else if (ProgramID != "null")
                     {
                         int pgmId = int.Parse(ProgramID);
-                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.Program.ProgramID == pgmId && p.TrendNumber != "1000" && p.IsDeleted == false);//Do not display Current Trend
+                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p => p.Project.Program.ProgramID == pgmId && p.TrendNumber != "1000");//Do not display Current Trend
                         MatchedTrendList = trends.ToList<Trend>();
 
                     }
                     else if (KeyStroke != "null")
                     {
-                        IQueryable<Trend> trends = ctx.Trend.Where(p => p.TrendDescription.Contains(KeyStroke) && p.IsDeleted == false);
+                        IQueryable<Trend> trends = ctx.Trend.Where(p => p.TrendDescription.Contains(KeyStroke));
                         MatchedTrendList = trends.ToList<Trend>();
                     }
                     else
                     {
-                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus").Where(p=> p.IsDeleted == false);
+                        IQueryable<Trend> trends = ctx.Trend.Include("Project").Include("TrendStatus");
                         MatchedTrendList = trends.ToList<Trend>();
                     }
 
@@ -1218,9 +1213,9 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     List<Activity> activityList = new List<Activity>();
-                    Project project = ctx.Project.Where(p => p.ProjectID == trend.ProjectID && p.IsDeleted == false).FirstOrDefault();
+                    Project project = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
 
-                    activityList = ctx.Activity.Where(a => a.TrendNumber == trend.TrendNumber && a.ProjectID == trend.ProjectID && a.IsDeleted==false).ToList();
+                    activityList = ctx.Activity.Where(a => a.TrendNumber == trend.TrendNumber && a.ProjectID == trend.ProjectID).ToList();
                     List<TrendCostOverhead> trendCostOverheads = ctx.TrendCostOverhead.Where(a => a.TrendID == trend.TrendID).ToList();
                     if (activityList.Count > 0)
                     {
@@ -1271,19 +1266,10 @@ namespace WebAPI.Models
                         //Remove Trend_cost_overhead
                         foreach (var tco in trendCostOverheads)
                         {
-                            //Nivedita 10022022
-                            //ctx.CostLineItemTracker.Remove(costLineItem);
-                            tco.IsDeleted = true;
-                            tco.DeletedDate = DateTime.Now;
-                            tco.DeletedBy = "";
-                            //ctx.TrendCostOverhead.Remove(tco);
+                            ctx.TrendCostOverhead.Remove(tco);
                             ctx.SaveChanges();
                         }
-                        //Nivedita 10022022
-                        //DbCtx.Trend.Remove(tr);
-                        tr.IsDeleted = true;
-                        tr.DeletedDate = DateTime.Now;
-                        tr.DeletedBy = "";
+                        DbCtx.Trend.Remove(tr);
                         DbCtx.SaveChanges();
                         updateCostOnApproval(project.ProjectID);
                         result = "Success";

@@ -273,7 +273,7 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                    IQueryable<Project> projects = ctx.Project.Where(p => p.ProgramElementID == project.ProgramElementID && p.ProjectName == project.ProjectName && p.IsDeleted == false);
+                    IQueryable<Project> projects = ctx.Project.Where(p => p.ProgramElementID == project.ProgramElementID && p.ProjectName == project.ProjectName);
 
                     //    Project retreivedProject = ctx.Project.Where(f => f.ProjectNumber == project.ProjectNumber && f.ProjectElementNumber == project.ProjectElementNumber).FirstOrDefault();
                     ////  ProjectNumber retreivedProject = ctx.ProjectNumber.Where(f => f.projectNumber == project.ProjectNumber).FirstOrDefault();
@@ -924,7 +924,7 @@ namespace WebAPI.Models
                     List<Document> documents = ctx.Document.Where(a => a.ProjectID == ProjectID).ToList();
 
                     //Nivedita 02 - 12 - 2021
-                    if (trendList.Count > 0)
+                    /*if (trendList.Count > 0)
                     {
                         foreach (var trend in trendList)
                         {
@@ -933,24 +933,15 @@ namespace WebAPI.Models
                     }
                     foreach (var scope in projectScopes)
                     {
-                        //Nivedita 10022022
-                        //ctx.ProjectScope.Remove(scope);
-                        scope.IsDeleted = true;
-                        scope.DeletedDate = DateTime.Now;
-                        scope.DeletedBy = proj.DeletedBy;
+                        ctx.ProjectScope.Remove(scope);
                         ctx.SaveChanges();
                     }
                     //Remove all documents
                     foreach(Document doc in documents)
                     {
-                        //Nivedita 10022022
-                        //ctx.Entry(doc).State = System.Data.Entity.EntityState.Deleted;
-                        doc.IsDeleted = true;
-                        doc.DeletedDate = DateTime.Now;
-                        doc.DeletedBy = proj.DeletedBy;
-                        ctx.SaveChanges();
+                        ctx.Entry(doc).State = System.Data.Entity.EntityState.Deleted;
                     }
-                    ctx.SaveChanges();
+                    ctx.SaveChanges();*/
 
                     //using different context to delete Project
                     using (var DbCtx = new CPPDbContext())
@@ -964,7 +955,7 @@ namespace WebAPI.Models
                         projectToBeDeleted.DeletedBy = proj.DeletedBy;
                         //DbCtx.Project.Remove(projectToBeDeleted); 
                         DbCtx.SaveChanges();
-                        updateCostOnProjectDelete(programElement.ProgramElementID);
+                        //updateCostOnProjectDelete(programElement.ProgramElementID);
                         result = "Success";
                     }
 

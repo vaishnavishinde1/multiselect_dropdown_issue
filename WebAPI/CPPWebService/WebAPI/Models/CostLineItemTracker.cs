@@ -40,10 +40,6 @@ namespace WebAPI.Models
         public String MaterialID { get; set; }
 
         public String lineItemNumber { get; set; }
-        //Nivedita 10022022
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public string DeletedBy { get; set; }
 
         public static CostLineItemTracker save(String ProjectClassID, String ProjectID, String ProjectNumber,String ProjectElementNumber, String TrendNumber, String PhaseCode, String CategoryID,
                                     String SubCategoryID, String CostType, String FTEPositionID, String EmployeeID, String SubcontractorTypeID, String SubcontractorID, 
@@ -127,11 +123,7 @@ namespace WebAPI.Models
                                                   ).FirstOrDefault();
                     if (costLineItem != null)
                     {
-                        //Nivedita 10022022
-                        //ctx.CostLineItemTracker.Remove(costLineItem);
-                        costLineItem.IsDeleted = true;
-                        costLineItem.DeletedDate = DateTime.Now;
-                        costLineItem.DeletedBy = "";
+                        ctx.CostLineItemTracker.Remove(costLineItem);
                         ctx.SaveChanges();
                     }
                 }else if(CostType == "L")
@@ -146,11 +138,7 @@ namespace WebAPI.Models
                                                 ).FirstOrDefault();
                     if (costLineItem != null)
                     {
-                        //Nivedita 10022022
-                        //ctx.CostLineItemTracker.Remove(costLineItem);
-                        costLineItem.IsDeleted = true;
-                        costLineItem.DeletedDate = DateTime.Now;
-                        costLineItem.DeletedBy = "";
+                        ctx.CostLineItemTracker.Remove(costLineItem);
                         ctx.SaveChanges();
                     }
                 }else if(CostType == "ODC")
@@ -165,11 +153,7 @@ namespace WebAPI.Models
                                               ).FirstOrDefault();
                     if (costLineItem != null)
                     {
-                        //Nivedita 10022022
-                        //ctx.CostLineItemTracker.Remove(costLineItem);
-                        costLineItem.IsDeleted = true;
-                        costLineItem.DeletedDate = DateTime.Now;
-                        costLineItem.DeletedBy = "";
+                        ctx.CostLineItemTracker.Remove(costLineItem);
                         ctx.SaveChanges();
                     }
                 }else if(CostType == "U")
@@ -184,11 +168,7 @@ namespace WebAPI.Models
                                               ).FirstOrDefault();
                     if (costLineItem != null)
                     {
-                        //Nivedita 10022022
-                        //ctx.CostLineItemTracker.Remove(costLineItem);
-                        costLineItem.IsDeleted = true;
-                        costLineItem.DeletedDate = DateTime.Now;
-                        costLineItem.DeletedBy = "";
+                        ctx.CostLineItemTracker.Remove(costLineItem);
                         ctx.SaveChanges();
                     }
                 }

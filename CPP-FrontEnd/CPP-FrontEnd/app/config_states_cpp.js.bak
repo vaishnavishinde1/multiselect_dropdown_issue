@@ -113,7 +113,7 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
                         isBaseline = false;
                     }
 
-                    return $q.all([ActivityData.$promise, PhaseData.$promise, Project.$promise, $stateParams.TrendNumber, isBaseline, $stateParams.OrganizationID, Materials.$promise, Employees.$promise, ProgramElement.$promise, Program.$promise]);  //, CostOverhead.$promise
+                    return $q.all([ActivityData.$promise, PhaseData.$promise, Project.$promise, $stateParams.TrendNumber, isBaseline, $stateParams.OrganizationID, Materials.$promise, Employees.$promise, ProgramElement.$promise, Program.$promise, $stateParams.ProgramID]);  //, CostOverhead.$promise
                 }
             }
         }).

@@ -3261,7 +3261,8 @@ WBSTree = (function ($) {
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderAmount + '</td>' +
+                                // $sign added by Amruta -14022022
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 '<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.ChangeOrderID + '</span></td>' +
@@ -4718,6 +4719,12 @@ WBSTree = (function ($) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
                         }
+                        // Aditya 14-02-2022-----------------//
+                        if (moment(selectedNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(selectedNode.ProjectPStartDate, 'MM/DD/YYYY')) {
+                            dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
+                            return;
+                        }
+                        //------------------------------------//
                     }
                     // --------------------- Add start date end date po date 21-01-2021 Swapnil --------------------------------------------------
 
@@ -4903,7 +4910,7 @@ WBSTree = (function ($) {
 
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;// for update
-                            //if (!displayMap)
+                            if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
@@ -5267,6 +5274,12 @@ WBSTree = (function ($) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
                         }
+                        // Aditya 14-02-2022-----------------//
+                        if (moment(newNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(newNode.ProjectPStartDate, 'MM/DD/YYYY')) {
+                            dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
+                            return;
+                        }
+                        //------------------------------//
                     }
 
                     // --------------------- Add start date end date po date 21-01-2021 Swapnil --------------------------------------------------
@@ -7783,6 +7796,14 @@ WBSTree = (function ($) {
             // CLICK ADD PROGRAM ELEMENT MILESTONE LEGACY
             $('#new_program_element_milestone').unbind().on('click', function (event) {  //Manasi
                 event.preventDefault();   //Manasi 08-03-2021
+                /* Aditya 14-02-2022------Do NOT UNCOMMENT--//
+                var maxPDate = $('#program_element_PEnd_Date').val();
+                var minPDate = $('#program_element_PStart_Date').val();
+                if (moment(maxPDate, 'MM/DD/YYYY') < moment(minPDate, 'MM/DD/YYYY')) {
+                    dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
+                    return;
+                }
+                //------------------------*/
                 g_newProgramElementMilestone = true;
                 $('#ProgramElementMilestoneModal').modal({ show: true, backdrop: 'static' });
                 $('#delete_program_element_milestone_modal').hide();
@@ -7799,6 +7820,14 @@ WBSTree = (function ($) {
             // CLICK EDIT PROGRAM ELEMENT MIELSTONE LEGACY
             $('#edit_program_element_milestone').unbind().on('click', function (event) { //Manasi
                 event.preventDefault();    //Manasi 09-03-2021
+                /* Aditya 14-02-2022---DO NOT UNCOMMENT---//
+                var maxPDate = $('#program_element_PEnd_Date').val();
+                var minPDate = $('#program_element_PStart_Date').val();
+                if (moment(maxPDate,'MM/DD/YYYY') < moment(minPDate,'MM/DD/YYYY')) {
+                    dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
+                    return;
+                }
+                //------------------------*/
                 g_newProgramElementMilestone = false;
                 //$('#delete_program_contract_modal').show();
                 $('#delete_program_element_milestone_modal').show();
@@ -8034,6 +8063,9 @@ WBSTree = (function ($) {
                         //alert(response.result.split(',')[0]); //Manasi
                         //if (response.result.split(',')[0].trim() === "Success") {successfully
                         if (response.result.indexOf('successfully') >= 0) {  //Manasi
+                            //Added by Amruta for populating the end date post exit modal -1
+                            selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+                            wbsTree.updateTreeNodes(selectedNode);
                             dhtmlx.alert({
                                 text: response.result,
                                 width: '500px'
@@ -8091,6 +8123,8 @@ WBSTree = (function ($) {
                     //newChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
                     newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
+                    var orgendt = new Date($('#program_element_PEnd_Date').val());
+                    
                     if (newChangeOrder.ScheduleImpact != "") {
                         var curendt = new Date($('#program_element_PEnd_Date').val());
                         curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
@@ -8162,7 +8196,9 @@ WBSTree = (function ($) {
                             console.log(response);
                             //var newChangeOrderID = response.result.split(',')[1].trim();
                             if (response.result.split(',')[0].trim() === "Success") {
-
+                                //Added by Amruta for populating the end date post exit modal -2
+                                selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+                                wbsTree.updateTreeNodes(selectedNode);
                                 var newChangeOrderID = response.result.split(',')[1].trim();
 
                                 //Upload draft documents
@@ -8225,8 +8261,12 @@ WBSTree = (function ($) {
                             } else {
                                 //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
                                 document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
-                                if (response.result == '' || response.result == null || response.result == undefined)
+                                debugger;
+                                if (response.result == '' || response.result == null || response.result == undefined) {
+                                    $('#program_element_PEnd_Date').val(moment(orgendt).format('MM/DD/YYYY'));
                                     dhtmlx.alert('Something went wrong. Please try again..');
+                                }
+                                    
                                 else {
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 }
@@ -10911,7 +10951,8 @@ WBSTree = (function ($) {
                     }
                     modal.find('.modal-body #program_element_location_name').val(selectedNode.LocationName);
 
-                    modal.find('.modal-body #program_element_Start_Date').val(selectedNode.ProjectStartDate);   //Manasi 22-10-2020
+                    //modal.find('.modal-body #program_element_Start_Date').val(selectedNode.ProjectStartDate);   //Manasi 22-10-2020
+                    modal.find('.modal-body #program_element_Start_Date').val(moment(selectedNode.ProjectStartDate).format('MM/DD/YYYY')); // Vaishnavi 14-02-2022
                     modal.find('.modal-body #program_element_Start_Date').attr('disabled', 'disabled');  //Manasi 22-10-2020
 
                     // --------------------- Add start date end date po date 21-01-2021 --------------------------------------------------
@@ -12400,7 +12441,7 @@ WBSTree = (function ($) {
             
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
-                '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,' +
+                '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,#emp_class,' +
                 '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
                 '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,#program_billing_poc_special_instruction1,' +
