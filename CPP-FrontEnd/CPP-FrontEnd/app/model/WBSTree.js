@@ -7872,7 +7872,7 @@ WBSTree = (function ($) {
             $('#update_program_element_change_order_modal').unbind('click').on('click', function () {
                 $('#fileUploadProgramElementChangeOrderModal').prop('disabled', false);  //Manasi 20-08-2020
                 //$('#uploadBtnProgramelmtCOspinRow').show();   //Manasi 20-08-2020
-
+                debugger;
                 var selectedNode = wbsTree.getSelectedNode();
                 if (selectedNode.level == "Program") {
                     dhtmlx.alert('Change Order only work in edit mode.');
@@ -8073,6 +8073,7 @@ WBSTree = (function ($) {
                             //-------Manasi
                             $('#ProgramElementChangeOrderModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
+                        
 
                             //Manu: 11/01/2022 
                             /*  var curendt = new Date($('#program_element_PEnd_Date').val());
@@ -8110,7 +8111,7 @@ WBSTree = (function ($) {
                 if (g_newProgramElementChangeOrder) {
                     var newNode = { name: "New Program Element Change Order" };
                     var newChangeOrder = {};
-
+                    debugger;
                     newChangeOrder.ChangeOrderName = modal.find('.modal-body #program_element_change_order_name_modal').val();
                     newChangeOrder.ChangeOrderNumber = modal.find('.modal-body #program_element_change_order_number_modal').val();
                     newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
@@ -8194,6 +8195,7 @@ WBSTree = (function ($) {
                     wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
                         function (response) {
                             console.log(response);
+                            debugger;
                             //var newChangeOrderID = response.result.split(',')[1].trim();
                             if (response.result.split(',')[0].trim() === "Success") {
                                 //Added by Amruta for populating the end date post exit modal -2
@@ -8258,7 +8260,8 @@ WBSTree = (function ($) {
                                 $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change()*/;//Added by Amruta for confirmation popup-1
                                 //
 
-                            } else {
+                            }  else {
+                                debugger;
                                 //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
                                 document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
                                 debugger;
@@ -10594,7 +10597,8 @@ WBSTree = (function ($) {
                 defaultModalPosition();
                 //using on('click','li') will activate on li's click
 
-
+                debugger;
+               
                 var selectedNode = wbsTree.getSelectedNode();
                 //Employee list for edit project
                 console.log(selectedNode);
@@ -10848,6 +10852,7 @@ WBSTree = (function ($) {
                 //activateModalDragging();
                 if (selectedNode.level == "ProgramElement") {
                     // ProgramElement Update
+                    debugger;
                     modal_mode = 'Update';
                     $("#new_program_element_change_order").removeAttr('disabled');
                     // $("#edit_program_element_change_order").removeAttr('disabled');
@@ -10960,6 +10965,7 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #program_element_PO_Date').val(moment(selectedNode.ProjectPODate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
                     modal.find('.modal-body #program_element_PO_Date').val(selectedNode.ProjectPODate ? moment(selectedNode.ProjectPODate).format('MM/DD/YYYY') : ""); // Tanmay 09-11-2021
                     modal.find('.modal-body #program_element_PStart_Date').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
+                    debugger;
                     modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
 
                     //------------------------------------------------------------------------------------------------------
@@ -12447,6 +12453,7 @@ WBSTree = (function ($) {
                 '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,#program_billing_poc_special_instruction1,' +
                 '#program_tm_billing1,#program_sov_billing1,#program_monthly_billing1,#program_Lumpsum1';
 
+            debugger;
             $(proElePageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
