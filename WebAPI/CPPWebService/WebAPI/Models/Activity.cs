@@ -83,6 +83,8 @@ namespace WebAPI.Models
 
         //From RequestFTECostController
 
+        public bool IsDeleted { get; set; }
+
         public static String SQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
         public static List<CostFTE> getCostLineItem(string CostLineItemID)
@@ -1417,6 +1419,8 @@ namespace WebAPI.Models
         public String CostLineItemID { get; set; }
         public String OriginalCost { get; set; }
         public String ActualBudget { get; set; } // swapnil 24-11-2020
+
+        public bool IsDeleted { get; set; }
 
         [ForeignKey("SubcontractorID")]
         public virtual Subcontractor Subcontractor { get; set; }
@@ -3736,6 +3740,8 @@ namespace WebAPI.Models
         [ForeignKey("UnitType_ID")]
         public virtual UnitType UnitTypes { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public static String SQL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         //[ForeignKey("MaterialID")]
         //public virtual Material Material { get; set; }
@@ -5138,7 +5144,8 @@ namespace WebAPI.Models
         //ODC
         public virtual ICollection<CostODC> ODCCosts { get; set; }
 
-        
+        public bool IsDeleted { get; set; }
+
 
         //From RequestActivityController
         //Activity Details

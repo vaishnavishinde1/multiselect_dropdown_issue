@@ -3154,7 +3154,7 @@ WBSTree = (function ($) {
 
             //Program element milestone
             function populateProgramElementMilestoneTable(programElementID) {
-
+                debugger;
                 wbsTree.getMilestone().get({}, function (milestoneData) {
                     var milestoneList = milestoneData.result;
                     wbsTree.setMilestoneList(milestoneList);
@@ -7486,7 +7486,7 @@ WBSTree = (function ($) {
             //===================================================================================== PROGRAM ELEMENT MILESTONE START ===================================================================
             // UPDATE PROGRAM ELEMENT MILESTONE MODAL LEGACY
             $('#update_program_element_milestone_modal').unbind('click').on('click', function () {
-
+                debugger;
                 var MileStoneTile = modal.find('.modal-body #program_element_milestone_name_modal').val();
                 var MilestoneDescp = modal.find('.modal-body #program_element_milestone_description_modal').val();
                 var MilestoneDate = modal.find('.modal-body #program_element_milestone_date_modal').val();
@@ -7547,7 +7547,7 @@ WBSTree = (function ($) {
                         "MilestoneName": updatedMilestone.MilestoneName,
                         "MilestoneDescription": updatedMilestone.MilestoneDescription,
                         "MilestoneDate": updatedMilestone.MilestoneDate,
-                        "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                        "ProgramElementID": _selectedNode.ProgramElementID,// wbsTree.getSelectedProgramElementID(),
                         "ProjectID": 0,
                     }
 
@@ -7571,7 +7571,8 @@ WBSTree = (function ($) {
 
                         $('#ProgramElementMilestoneModal').modal('hide');
                         $("#ProgramElementModal").css({ "opacity": "1" });
-                        populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());
+                        debugger;
+                        populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //wbsTree.getSelectedProgramElementID()
 
                         g_selectedProgramElementMilestone = null; 	//Manasi
                     });
@@ -7590,7 +7591,7 @@ WBSTree = (function ($) {
                         "MilestoneName": newMilestone.MilestoneName,
                         "MilestoneDescription": newMilestone.MilestoneDescription,
                         "MilestoneDate": newMilestone.MilestoneDate,
-                        "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                        "ProgramElementID": _selectedNode.ProgramElementID, //wbsTree.getSelectedProgramElementID(),
                         "ProjectID": 0,
                     }
 
@@ -7634,7 +7635,10 @@ WBSTree = (function ($) {
                             }
                             $('#ProgramElementMilestoneModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
-                            populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());
+
+                            debugger;
+                            console.log(_selectedNode);
+                            populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //wbsTree.getSelectedProgramElementID()
 
                             g_selectedProgramElementMilestone = null; 	//Manasi
                         });
@@ -7709,7 +7713,7 @@ WBSTree = (function ($) {
                                 "MilestoneName": g_selectedProgramElementMilestone.MilestoneName,
                                 "MilestoneDescription": g_selectedProgramElementMilestone.MilestoneDescription,
                                 "MilestoneDate": g_selectedProgramElementMilestone.MilestoneDate,
-                                "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                                "ProgramElementID": _selectedNode.ProgramElementID, // wbsTree.getSelectedProgramElementID(),
                                 "ProjectID": 0
                             }
 
@@ -7749,7 +7753,7 @@ WBSTree = (function ($) {
                                         $('#ProgramElementMilestoneModal').modal('hide');
                                         $("#ProgramElementModal").css({ "opacity": "1" });
 
-                                        populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID()); //Manasi
+                                        populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //Manasi wbsTree.getSelectedProgramElementID()
                                     }
                                     //populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());  --Manasi
 
@@ -7763,6 +7767,8 @@ WBSTree = (function ($) {
 
             // CLICK PROGRAM ELEMENT MILESTONE TABLE ROW LEGACY
             $('#program_element_milestone_table_id').on('click', '.clickable-row', function (event) {
+
+                debugger;
                 var foundProgramElementMilestone = {};
 
                 if (g_newProgramElement) {
@@ -8886,10 +8892,11 @@ WBSTree = (function ($) {
                     var gridUploadedDocumentProgram = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocumentProgram tbody');
                     gridUploadedDocumentProgram.empty();
                     //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
+                    debugger;
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
                         //wbsTree.setDocumentList(response.result);
                         var _documentList = response.result;
-                        _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID }, function (response) {
+                        _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
                             var _modificationList = response.data;
                             var moda2 = $('#ProgramModal');
                             var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
@@ -8944,7 +8951,7 @@ WBSTree = (function ($) {
                     $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                     var gridViewAllUploadedDocumentProgram = $("#gridViewAllDocumentInContract")// Jignesh-SearchField-05022021
                     gridViewAllUploadedDocumentProgram.empty(); 
-                    _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: selectedNode.ProgramID }, function (response) {
+                    _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedNode.ProgramID }, function (response) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
 
@@ -8996,7 +9003,7 @@ WBSTree = (function ($) {
 
                     //====================================== Created By Jignesh 28-10-2020 =======================================
 
-                    _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                    _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //Amruta 15022022 wbsTree.getSelectedProgramID()
                         _ModificationList = response.data;
                         var totalValue = 0;
                         var totalDaysOfScheduleImpact = 0;
@@ -10541,10 +10548,12 @@ WBSTree = (function ($) {
                                         console.log(response);
                                         if (response.result == "Deleted") {
                                             wbsTree.setDeleteDocIDs(null);
-                                            _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: selectedNode.ProgramID }, function (response) {
+                                            _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
+                                                wbsTree.getSelectedProgramID()
                                                 //wbsTree.setDocumentList(response.result);
                                                 var _documentList = response.result;
-                                                _Document.getModificationByProgramId().get({ programId: selectedNode.ProgramID }, function (response) {
+                                                _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                                                    wbsTree.getSelectedProgramID()
                                                     var _modificationList = response.data;
                                                     var moda2 = $('#ProgramModal');
                                                     var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
@@ -12075,7 +12084,7 @@ WBSTree = (function ($) {
                 _Document.getDocumentByProjID().get({ DocumentSet: 'ContractViewAll', ProjectID: _selectedProgramID }, function (response) {
                     //wbsTree.setDocumentList(response.result);
                     var _documentList = response.result;
-                    _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                    _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {  //AMruta 15022022 wbsTree.getSelectedProgramID() 
                         var _modificationList = response.data;
                         //var moda2 = $('#ProgramModal');
                         var gridViewAllUploadedDocumentProgram = $("#gridViewAllDocumentInContract");
@@ -12542,7 +12551,9 @@ WBSTree = (function ($) {
                     }
 
                 });
-                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+
+                debugger;
+                _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //wbsTree.getSelectedProgramID() 
                     _ModificationList = response.data;
                     $('#mdlContractModification').modal({ show: true, backdrop: 'static' });
                     var gridModification = $("#gridModificationList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
@@ -12601,7 +12612,8 @@ WBSTree = (function ($) {
                         //===================================================================================
                     }
                 });//selectedNode.ProgramID
-                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
+
+                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
                     wbsTree.setDocumentList(response.result);
                     var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
                     var modId = null;
@@ -12861,8 +12873,8 @@ WBSTree = (function ($) {
                     docTypeDropDownProgram.append('<option value="' + docTypeList[x].DocumentTypeID + '"> ' + docTypeList[x].DocumentTypeName + '</option>');
                 }
                 docTypeDropDownProgram.val('');
-
-                _Document.getModificationByProgramId().get({ programId: wbsTree.getSelectedProgramID() }, function (response) {
+                debugger;
+                _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //wbsTree.getSelectedProgramID() 
                     var modificationDropDown = modal.find('.modal-body #ddModificationType');
                     modificationDropDown.empty();
                     _ModificationList = response.data;

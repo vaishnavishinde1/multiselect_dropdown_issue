@@ -745,7 +745,7 @@ angular.module('cpp.controllers').
                 }
 
                 console.log('get files', $files);
-                var x = wbsTree.getSelectedProgramElementID();
+                var x = _selectedNode.ProgramElementID;
                 console.log(x)
                 var docTypeID = $("#document_type_program_element  option").filter(":selected").val();
                 var files = fileUploadProgramElement.files;
@@ -810,7 +810,7 @@ angular.module('cpp.controllers').
 
                 var request = {
                     method: 'POST',
-                    url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + wbsTree.getSelectedProgramElementID() + '/0/0/0/' + docTypeID,
+                    url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID,
                     data: formdata, //fileUploadProject.files, //$scope.
                     ignore: true,
                     headers: {
@@ -830,7 +830,7 @@ angular.module('cpp.controllers').
                     //    for (var x = 0; x < _documentList.length; x++) {
                     //        gridUploadedDocument.append('<tr><td style="width: 20px"><input type="checkbox" name="record"></td><td style="display:none">' + _documentList[x].DocumentID + '</td><td><a href="' + serviceBasePath + '/Request/DocumentByDocID/' + _documentList[x].DocumentID + '" download>' + _documentList[x].DocumentName + '</a></td><td>' + _documentList[x].DocumentTypeName + '</td><tr>');
                     //    }
-                    $http.get(serviceBasePath + "Request/Document/ProgramElement/" + wbsTree.getSelectedProgramElementID())
+                    $http.get(serviceBasePath + "Request/Document/ProgramElement/" + _selectedNode.ProgramElementID)
                         .then(function success(response) {
                             console.log(response);
                             wbsTree.setDocumentList(response.data.result);
@@ -883,7 +883,7 @@ angular.module('cpp.controllers').
 
             // Pritesh new code for save 2 pop up Project
             $('#uploadBtnProgramElement').unbind('click').on('click', function ($files) {
-                debugger
+                debugger;
                 //alert('Ready to Uplaod. Missing reference $http');
                 //return;
                 if (wbsTree.getIsProgramElementNew()) {
@@ -892,8 +892,10 @@ angular.module('cpp.controllers').
                     return;
                 }
 
+                console.log(_selectedNode.ProgramElementID);
                 console.log('get files', $files);
-                var x = wbsTree.getSelectedProgramElementID();
+               // var x = wbsTree.getSelectedProgramElementID();
+                var x = _selectedNode.ProgramElementID;
                 console.log(x)
                 var docTypeID = $("#document_type_programPrg  option").filter(":selected").val();
                 var files = fileUploadProgramElement.files;
@@ -1006,8 +1008,8 @@ angular.module('cpp.controllers').
                     // Jignesh-24-02-2021 Remove ''&ExecutionDate=' + ExecutionDate.replace(/\//g, "") +' from url from below request.
                     var request = {
                         method: 'POST',
-                        url: serviceBasePath + '/uploadFilesnew/Postnew/ProgramElement/0/' + wbsTree.getSelectedProgramElementID() + '/0/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
-                        // url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + wbsTree.getSelectedProgramElementID() + '/0/0/0/' + docTypeID,
+                        url: serviceBasePath + '/uploadFilesnew/Postnew/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName),
+                        // url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID,
                         data: formdata, //fileUploadProject.files, //$scope.
                         ignore: true,
                         headers: {
@@ -1033,7 +1035,7 @@ angular.module('cpp.controllers').
                         //    for (var x = 0; x < _documentList.length; x++) {
                         //        gridUploadedDocument.append('<tr><td style="width: 20px"><input type="checkbox" name="record"></td><td style="display:none">' + _documentList[x].DocumentID + '</td><td><a href="' + serviceBasePath + '/Request/DocumentByDocID/' + _documentList[x].DocumentID + '" download>' + _documentList[x].DocumentName + '</a></td><td>' + _documentList[x].DocumentTypeName + '</td><tr>');
                         //    }
-                        $http.get(serviceBasePath + "Request/Document/ProgramElement/" + wbsTree.getSelectedProgramElementID())
+                        $http.get(serviceBasePath + "Request/Document/ProgramElement/" + _selectedNode.ProgramElementID)
                             .then(function success(response) {
                                 console.log(response);
                                 wbsTree.setDocumentList(response.data.result);
@@ -1125,8 +1127,8 @@ angular.module('cpp.controllers').
 
                     var request = {
                         method: 'POST',
-                        url: serviceBasePath + '/uploadFilesnew/Postnew/ProgramElement/0/' + wbsTree.getSelectedProgramElementID() + '/0/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + encodeURIComponent(noFile),
-                        // url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + wbsTree.getSelectedProgramElementID() + '/0/0/0/' + docTypeID,
+                        url: serviceBasePath + '/uploadFilesnew/Postnew/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + encodeURIComponent(noFile),
+                        // url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID,
                         data: formdata, //fileUploadProject.files, //$scope.
                         ignore: true,
                         headers: {
@@ -1150,7 +1152,7 @@ angular.module('cpp.controllers').
                         //    for (var x = 0; x < _documentList.length; x++) {
                         //        gridUploadedDocument.append('<tr><td style="width: 20px"><input type="checkbox" name="record"></td><td style="display:none">' + _documentList[x].DocumentID + '</td><td><a href="' + serviceBasePath + '/Request/DocumentByDocID/' + _documentList[x].DocumentID + '" download>' + _documentList[x].DocumentName + '</a></td><td>' + _documentList[x].DocumentTypeName + '</td><tr>');
                         //    }
-                        $http.get(serviceBasePath + "Request/Document/ProgramElement/" + wbsTree.getSelectedProgramElementID())
+                        $http.get(serviceBasePath + "Request/Document/ProgramElement/" + _selectedNode.ProgramElementID)
                             .then(function success(response) {
                                 console.log(response);
                                 wbsTree.setDocumentList(response.data.result);
@@ -1885,7 +1887,7 @@ angular.module('cpp.controllers').
             $('#btnSaveModification').unbind().on('click', function (event) {
                 var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedNode().ProgramID;
-                var createdBy = wbsTree.getSelectedProgramElementID();
+                var createdBy = _selectedNode.ProgramElementID;
                 //var modNumber = $('#modification_number').val();
                 var title = $('#modification_title').val();
                 var date = $('#modification_date').val();
