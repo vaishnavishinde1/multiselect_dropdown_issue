@@ -641,8 +641,8 @@
                             }
                             if (originalCollection[i].ClientPOCID == currentObject.ClientPOCID) {
                                 var originalObject = originalCollection[i];
-                                // compare relevant data
-                                if (originalObject.ClientName !== currentObject.ClientName ||
+                                // compare relevant data    //originalObject.ClientName !== currentObject.ClientName //vaishnavi 21-02-2022
+                                if (originalObject.ClientID !== currentObject.ClientID ||
                                     originalObject.BillingPOCDescription !== currentObject.BillingPOCDescription ||
                                     originalObject.BillingPOCPhone1 !== currentObject.BillingPOCPhone1 ||
                                     originalObject.BillingPOCPhone2 !== currentObject.BillingPOCPhone2 ||

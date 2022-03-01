@@ -253,20 +253,21 @@
     <div class="col-sm-8" id="program_navigation">
 
         <div id="tree-container" style="height:800px;">
-            <div class="row row-padding"> <!--row row-padding-->
+            <div class="row row-padding">
+                <!--row row-padding-->
                 <div ng-init="loadOrganizations()" style="margin-left: -10px; padding: 0; margin-top: -20px; margin-bottom: 0;">
                     <!--<div class="gadget-head" style="display: block">
                         <h3 style="margin-top:1px;">Filter</h3>-->
-                        <!--      <a href="#" class="refresh">Refresh</a>-->
-                        <!--<button class="btn btn-success btn-xs widget-add" style="width:55px"
-                    ng-click="resetFilter()">
-                <span class=""></span> Reset
-            </button>-->
+                    <!--      <a href="#" class="refresh">Refresh</a>-->
+                    <!--<button class="btn btn-success btn-xs widget-add" style="width:55px"
+                            ng-click="resetFilter()">
+                        <span class=""></span> Reset
+                    </button>-->
                     <!--</div>-->
                     <div class="gadget-content">
                         <div class="form-group col-md-2 wbs-col-heading">
                             <!--<label>Organization</label>
-                <br/>-->
+                            <br/>-->
                             <select class="input-medium form-control" ng-change="filterChangeOrg()" ng-model="filterOrgId" id="selectOrg">
                                 <!--<option value="">Select Organization</option>-->
                                 <option data-ng-repeat="filterOrg in organizationList" value={{filterOrg.OrganizationID}}>
@@ -276,7 +277,7 @@
                         </div>
                         <div class="form-group col-md-2 wbs-col-heading">
                             <!--<label>Program</label>
-                <br/>-->
+                            <br/>-->
                             <select class="input-medium form-control" ng-change="filterChangeProgram()" ng-model="filterProgramId" id="selectProgram">
                                 <option value="">Select Contract</option>
                                 <option data-ng-repeat="filterProgram in programList" value={{filterProgram.ProgramID}}>
@@ -286,7 +287,7 @@
                         </div>
                         <div class="form-group col-md-2 wbs-col-heading">
                             <!--<label>Program Element</label>
-                <br/>-->
+                            <br/>-->
                             <select class="input-medium form-control" ng-change="filterChangeProgramElement()" ng-model="filterProgramElement" id="selectProgramElement">
                                 <option value="">Select Project</option>
                                 <option data-ng-repeat="filterProgramElement in programElementList" value={{filterProgramElement.ProgramElementID}}>
@@ -296,7 +297,7 @@
                         </div>
                         <div class="form-group col-md-4 wbs-col-heading">
                             <!--<label>Project</label>
-                <br/>-->
+                            <br/>-->
                             <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject">
                                 <option value="">Select Element</option>
                                 <option data-ng-repeat="filterProject in projectList" value={{filterProject.ProjectID}}>
@@ -345,22 +346,21 @@
 
         <div class="row" style="margin-top:-5px;margin-bottom:15px;text-align:left">
             <!--<button type="button" class="btn btn-black w-auto" id="AddContractBtn">Add Contract</button>-->
-
             <!--Changes by Amruta-->
             <div class="dropdown" style="display:inline-block;">
                 <!--Shweta  -->
-                <button type ="button" class="btn btn-black w-auto dropdown-toggle" id="AddContractBtnLbl"
-                            data-toggle="dropdown" style="width: 140px;margin: -25px 0 0 0;">
+                <button type="button" class="btn btn-black w-auto dropdown-toggle" id="AddContractBtnLbl"
+                        data-toggle="dropdown" style="width: 140px;margin: -25px 0 0 0;">
                     <!---->
-                   Actions
+                    Actions
                     <span class="caret"></span>
-                    </button>
+                </button>
 
-                    <ul class="dropdown-menu" >
-                        <li><a id="AddContractBtn">Add Contract</a></li>
-                        <li><a ng-href="/#/app/user-report">Contract Report</a></li>
+                <ul class="dropdown-menu">
+                    <li><a id="AddContractBtn">Add Contract</a></li>
+                    <li><a ng-href="/cpptest/#/app/user-report">Contract Report</a></li>
 
-                    </ul>
+                </ul>
 
             </div>
 
@@ -372,7 +372,7 @@
             </div>
             <div class="quicksearchwrap">
                 <!--<input type="text" id="txtQuickSearch">
-        <button type="button" class="btn btn-black w-auto" id="btnQuickSearch">Search</button>-->
+                <button type="button" class="btn btn-black w-auto" id="btnQuickSearch">Search</button>-->
                 <form class="quickSearch">
                     <input type="text" id="txtQuickSearch" placeholder="Search.." ng-model="SearchText" name="search2">
                     <button type="button" id="btnQuickSearch"><i class="fa fa-search"></i></button>
@@ -613,8 +613,8 @@
                                 <input type="text" class="form-control" id="modification_title">
                             </div>
                             <div class="col-md-3" style="padding-left: 0;">
-                                <label for="program_element_project_number" class="control-label _bold required">Effective Date</label>
-                                <input type="text" class="form-control" id="modification_date" autocomplete="off">
+                                <label for="program_element_project_number" class="control-label _bold required">Date</label>
+                                <input type="text" class="form-control" id="modification_date" autocomplete="off" placeholder="MM/DD/YYYY">
                             </div>
                         </div>
 
@@ -671,7 +671,7 @@
                         <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Modification History</h4>
                         <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
                             <table id="gridModificationList" class="table table-striped table-bordered">
-                                <thead tyle="height: 5%; position: sticky; top: 0; background: #FFF">   //Vaishnavi 14-02-2022
+                                <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                     <tr>
                                         <td style="width: 20px; padding-left:5px;"></td>
                                         <td style="font-weight:900;"> No #</td>
@@ -774,31 +774,48 @@
                         </div>-->
 
                         <div class="_form-group" style="margin-top:5px;">
-                            <div class="col-xs-12" style="padding-left: 0;padding-right: 0;">
+                            <div class="col-xs-6" style="padding-left: 0;padding-right: 0;">
+                                <!--Aditya ogDate--->
                                 <label for="program_element_contract_number" class="control-label _bold required">Contract Name</label>
                                 <input type="text" class="form-control" id="program_name">
                             </div>
-                            <!--Jignesh 13-11-2020-->
-                            <div class="col-xs-4" style="padding-left: 0;display:none;">
-                                <label for="program_element_class" class="control-label _bold required">Division</label>
-                                <select type="text" class="form-control" id="program_project_class"></select>
-                            </div>
-                        </div>
-
-                        <div class="_form-group" style="margin-bottom:135px; margin-top:80px;">
-                            <div class="col-md-4" style="padding-left: 0;">
+                            <!--Aditya ogDate--->
+                            <div class="col-md-6" style="padding-left: 5px;">
                                 <label for="program_element_project_number" class="control-label _bold required">Contract #</label>
                                 <input type="text" class="form-control" id="program_contract_number">
                             </div>
+                            <!--Jignesh 13-11-2020
+                            <div class="col-xs-4" style="padding-left: 0;display:none;">
+                                <label for="program_element_class" class="control-label _bold required">Division</label>
+                                <select type="text" class="form-control" id="program_project_class"></select>
+                            </div>-->
+                        </div>
+
+                        <div class="_form-group" style="margin-bottom:135px; margin-top:80px;">
                             <!--Here moved by Jignesh 28-10-2020-->
                             <div class="col-md-4" style="padding-left: 0;">
                                 <label for="program_element_project_number" class="control-label _bold">Contract Start Date</label>
-                                <input type="text" class="form-control" id="program_current_start_date" autocomplete="off">
+                                <input type="text" class="form-control" id="program_current_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
                             </div>
+
+                            <!--Aditya ogDate--->
+                            <div class="col-md-4" style="padding-left: 0;">
+                                <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
+                                <input type="text" class="form-control" id="program_original_end_date" autocomplete="off" placeholder="MM/DD/YYYY"><!--Aditya: This is original End Date-->
+                            </div>
+
                             <div class="col-md-4" style="padding-left: 0; padding-right: 0;">
-                                <label for="program_element_contract_number" class="control-label _bold">Contract End Date</label>
-                                <input type="text" class="form-control" id="program_current_end_date" autocomplete="off">
+                                <label for="program_element_contract_number" class="control-label _bold">Current Contract End Date</label>
+                                <input type="text" class="form-control" id="program_current_end_date" autocomplete="off"> <!--This Current End Date which is modified by Schedule impact-->
                             </div>
+                            <!--<div class="col-md-4" style="padding-left: 0;">
+                            <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
+                            <input type="text" class="form-control" id="program_original_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                        <div class="col-md-4" style="padding-left: 0; padding-right: 0;">
+                                            <label for="program_element_contract_number" class="control-label _bold">Contract End Date</label>
+                                            <input type="text" class="form-control" id="program_current_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>-->
                             <!--Commented by Jignesh 28-10-2020-->
                             <!--<div class="col-md-4" style="padding-left: 0; padding-right: 0;">
                                 <label for="program_element_class" class="control-label _bold required">Division</label>
@@ -1461,7 +1478,7 @@
                             <div class="col-xs-12 m-b-15" style="padding-left: 0;padding-right: 0;">
                                 <!--css changes by shweta-->
                                 <label for="" class="control-label _bold required">Date</label>
-                                <input type="text" class="form-control" id="program_element_milestone_date_modal" autocomplete="off">
+                                <input type="text" class="form-control" id="program_element_milestone_date_modal" autocomplete="off" placeholder="MM/DD/YYYY">
                             </div>
                         </div>
                     </form>
@@ -1526,7 +1543,7 @@
                             <div class="col-xs-6 m-b-10" style="padding-left: 0; padding-right: 0;">
                                 <!--css changes by shweta-->
                                 <label for="program_element_contract_Date" class="control-label _bold required">Date</label>
-                                <input type="text" class="form-control" id="ChangeOrderDate" autocomplete="off">
+                                <input type="text" class="form-control" id="ChangeOrderDate" autocomplete="off" placeholder="MM/DD/YYYY">
                             </div>
                         </div>
 
@@ -1680,7 +1697,7 @@
                             <div class="col-xs-6 m-b-10" style="padding-left: 0;margin-top:10px;">
                                 <!--css changes by shweta-->
                                 <label for="program_element_contract_number" class="control-label _bold required"> Date</label>
-                                <input type="text" class="form-control" id="change_order_view_date_modal" disabled>
+                                <input type="text" class="form-control" id="change_order_view_date_modal" placeholder="MM/DD/YYYY" disabled>
                             </div>
                         </div>
 
@@ -1780,15 +1797,15 @@
                             </div>
 
                             <!--div class="_form-group" style="margin-top:5px; margin-bottom: 143px;">
-        <div class="col-xs-6" style="padding-left: 0;">
-            <label for="program_element_sponsor" class="control-label _bold">Contract Start Date</label>
-            <input disabled type="text" class="form-control" id="program_element_contract_start_date">
-        </div>
-        <div class="col-xs-6" style="padding-left: 0;">
-            <label for="program_element_sponsor" class="control-label _bold">Contract End Date</label>
-            <input disabled type="text" class="form-control" id="program_element_contract_end_date">
-        </div>
-    </div-->
+                                <div class="col-xs-6" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Contract Start Date</label>
+                                    <input disabled type="text" class="form-control" id="program_element_contract_start_date">
+                                </div>
+                                <div class="col-xs-6" style="padding-left: 0;">
+                                    <label for="program_element_sponsor" class="control-label _bold">Contract End Date</label>
+                                    <input disabled type="text" class="form-control" id="program_element_contract_end_date">
+                                </div>
+                            </div-->
 
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 150px;">
                                 <!--css changes by shweta-->
@@ -1818,7 +1835,7 @@
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 290px;">
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <label for="program_element_sponsor" class="control-label _bold">Project Value</label>
-                                    <input type="text" onkeypress="return event.charCode >= 48"  min="1"  class="form-control" id="program_element_total_value" data-type="currency">
+                                    <input type="text" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="program_element_total_value" data-type="currency">
                                 </div>
                                 <!--Manu   -->
                                 <!--Manu   -->
@@ -1837,23 +1854,23 @@
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold required">Project NTP Date</label>
-                                    <input type="text" class="form-control" id="program_element_Start_Date" autocomplete="off">
+                                    <input type="text" class="form-control" id="program_element_Start_Date" autocomplete="off" placeholder="MM/DD/YYYY">
                                 </div>
                                 <div class="col-xs-4" style="padding-left: 0;padding-right:0;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold">Project PO Date</label>
-                                    <input type="text" class="form-control" id="program_element_PO_Date" autocomplete="off">
+                                    <input type="text" class="form-control" id="program_element_PO_Date" autocomplete="off" placeholder="MM/DD/YYYY">
                                 </div>
                             </div>
                             <div class="_form-group" style="margin-top:5px; margin-bottom: 350px;">
                                 <div class="col-xs-4" style="padding-left: 0;">
                                     <label for="program_element_sponsor" class="control-label _bold required">Project Start Date</label>
-                                    <input type="text" class="form-control" id="program_element_PStart_Date" autocomplete="off">
+                                    <input type="text" class="form-control" id="program_element_PStart_Date" autocomplete="off" placeholder="MM/DD/YYYY">
                                 </div>
                                 <div class="col-xs-4" style="padding-left: 0; margin-bottom: 15px;">
                                     <!--hidden-->
                                     <label for="program_element_sponsor" class="control-label _bold required">Project End Date</label>
-                                    <input type="text" class="form-control" id="program_element_PEnd_Date" autocomplete="off">
+                                    <input type="text" class="form-control" id="program_element_PEnd_Date" autocomplete="off" placeholder="MM/DD/YYYY">
                                 </div>
                                 <!--changes by Nivedita 03-01-2021-->
                                 <div class="col-xs-4" style="padding-left: 0;">
@@ -2542,7 +2559,7 @@
                             <div class="col-xs-12" style="padding-left: 0;padding-right: 0; margin-bottom:10px;">
                                 <!--css changes by shweta-->
                                 <label for="" class="control-label _bold required">Date</label>
-                                <input type="text" class="form-control" id="project_element_milestone_date_modal" autocomplete="off">
+                                <input type="text" class="form-control" id="project_element_milestone_date_modal" autocomplete="off" placeholder="MM/DD/YYYY">
                             </div>
                         </div>
                     </form>
@@ -2584,13 +2601,13 @@
                 <button type="button" class="exit-button" aria-label="Close" id="cancel_project_x" style="width:25px;height:25px;"><span aria-hidden="true">X</span></button>
                 <h4 class="modal-title" id="modal_heading"></h4>
             </div>
-            <div class="modal-body" style="height:800px;overflow-y:scroll; overflow-x:hidden">
+            <div class="modal-body" style="height:805px;overflow-y:auto; overflow-x:hidden">
 
 
                 <div class="row">
                     <div class="col-md-6">
 
-                        <form style="height: 500px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
+                        <form style="height: 490px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; background-color: #fbfbfb;">
                             <!--css changes by shweta-->
                             <div class="_form-group">
                                 <label for="program_element_name" class="control-label _bold required">Project Element Name</label>
@@ -2663,7 +2680,7 @@
                                 <!--css changes by shweta-->
                                 <div class="col-xs-12" style="padding-left: 0; padding-right:0;margin-top:15px;">
                                     <label for="program_element_project_number" class="control-label _bold">Scope of Work</label>
-                                    <textarea style="height:80px;" type="text" class="form-control" id="project_element_description"></textarea>  <!--css changes by shweta-->
+                                    <textarea style="height:75px;" type="text" class="form-control" id="project_element_description"></textarea>  <!--css changes by shweta-->
                                 </div>
                             </div>
 
@@ -2816,7 +2833,7 @@
                         <form style="border: .5px solid #a9a9a9; margin-right: 16px;margin-left: 0; padding: 5px; margin-bottom:15px;">
                             <label for="program_element_milestone_name" class="control-label _bold" style="font-family: Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Key Project Element Milestones</label>
                             <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                <div class="panel-body" style="overflow: scroll;height : 224px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
+                                <div class="panel-body" style="overflow: scroll;height : 215px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
                                     <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
                                         <thead style="height: 5%; position:sticky; top:0; background:#FFF">
                                             <tr class="table-background">
@@ -3458,7 +3475,7 @@
                         <div class="col-sm-6" class="_form-group" style="margin-top:12px; margin-bottom:12px; display:none;" id="secPastTrendApprovedDate">
                             <!--Jignesh-19-02-2021-->
                             <label for="pasttrend_client_approved_date" class="control-label _bold">Approved Date</label>
-                            <input type="text" class="form-control" id="pasttrend_client_approved_date" /> <!--Jignesh-26-02-2021-->
+                            <input type="text" class="form-control" id="pasttrend_client_approved_date" placeholder="MM/DD/YYYY" /> <!--Jignesh-26-02-2021-->
                         </div>
                     </div>
                     <!--============================================================================================================-->
@@ -3468,7 +3485,7 @@
                             <div class="col-sm-6">
                                 <!--Jignesh-19-02-2021-->
                                 <label for="pasttrend_approval_date" class="control-label _bold">Approval Needed By  Date</label>
-                                <input type="text" class="form-control" id="pasttrend_approval_date" disabled /> <!--Jignesh-26-02-2021-->
+                                <input type="text" class="form-control" id="pasttrend_approval_date" placeholder="MM/DD/YYYY" disabled /> <!--Jignesh-26-02-2021-->
                             </div>
 
                             <div class="col-sm-6">
@@ -3632,7 +3649,7 @@
                             <div class="col-sm-6" class="_form-group" style="margin-top:12px; display:none;" id="secApprovedDate">
                                 <!--Jignesh-19-02-2021-->
                                 <label for="client_approved_date" class="control-label _bold">Approved Date</label>
-                                <input type="text" class="form-control" id="client_approved_date" autocomplete="off" /> <!--Jignesh-26-02-2021-->
+                                <input type="text" class="form-control" id="client_approved_date" autocomplete="off" placeholder="MM/DD/YYYY" /> <!--Jignesh-26-02-2021-->
                             </div>
                         </div>
 
@@ -3644,7 +3661,7 @@
                             <div class="col-sm-6">
                                 <!--Jignesh-19-02-2021-->
                                 <label for="approval_date" class="control-label _bold">Approval Needed By  Date</label>
-                                <input type="text" class="form-control" id="approval_date" autocomplete="off" /> <!--Jignesh-26-02-2021-->
+                                <input type="text" class="form-control" id="approval_date" autocomplete="off" placeholder="MM/DD/YYYY" /> <!--Jignesh-26-02-2021-->
                             </div>
 
                             <div class="col-sm-6">
@@ -3911,7 +3928,7 @@
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; padding-right: 0; margin-bottom: 10px">
                                 <label for="" class="control-label _bold required">Uploaded Date</label>
-                                <input type="text" class="form-control" id="txtUploadDateViewModelMod" disabled>
+                                <input type="text" class="form-control" id="txtUploadDateViewModelMod" placeholder="MM/DD/YYYY" disabled>
                             </div>
                         </div>
 
@@ -5567,13 +5584,13 @@
             $('#mindmap').show();
             $('#selectProject').show();
             $('#wbsGridView').hide();
-             $('#selectManagingDepartment').hide();
+            $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
-             $('#selectManagingDepartment').show();
+            $('#selectManagingDepartment').show();
 
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }

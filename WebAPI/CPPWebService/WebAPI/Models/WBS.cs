@@ -162,6 +162,8 @@ namespace WebAPI.Models
         [DataMember]
         public String CurrentEndDate;
         [DataMember]
+        public String originalEndDate;// Aditya
+        [DataMember]
         public String ForecastStartDate;
         [DataMember]
         public String ForecastEndDate;
@@ -427,6 +429,8 @@ namespace WebAPI.Models
         [DataMember]
         public String CurrentEndDate;
         [DataMember]
+        public String originalEndDate;// Aditya
+        [DataMember]
         public String ForecastStartDate;
         [DataMember]
         public String ForecastEndDate;
@@ -483,6 +487,7 @@ namespace WebAPI.Models
 
             CurrentStartDate = wbsprg.CurrentStartDate.Value.ToString("yyyy-MM-dd");
             CurrentEndDate = wbsprg.CurrentEndDate.Value.ToString("yyyy-MM-dd");
+            originalEndDate = wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd"); //Aditya
             ForecastStartDate = wbsprg.ForecastStartDate.Value.ToString("yyyy-MM-dd");
             ForecastEndDate = wbsprg.ForecastEndDate.Value.ToString("yyyy-MM-dd");
             CurrentCost = String.Format("{0:#,###0}", wbsprg.CurrentCost);

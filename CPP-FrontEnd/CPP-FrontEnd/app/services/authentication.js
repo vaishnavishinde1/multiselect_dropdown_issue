@@ -125,6 +125,7 @@ angular.module('cpp.services').
             localStorage.removeItem('projId');
             localStorage.removeItem('pgmEltId');
             localStorage.removeItem('SearchText');
+			localStorage.removeItem('ls.directUrlPath');
             _authentication.isAuth = false;
             _authentication.userName = "";
 

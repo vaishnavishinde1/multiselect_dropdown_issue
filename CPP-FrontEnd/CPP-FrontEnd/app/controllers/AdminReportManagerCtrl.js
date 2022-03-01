@@ -297,18 +297,28 @@
                 else if ($scope.reportTypeFilter.filterName == 'Work Breakdown Structure Admin Report') {            //Work Breakdown Structure Admin Report - MySQL
                     baseUrl = serviceBasePath + 'Request/WorkBreakdownStructureAdminReport';
 
+                    if (!allFilters.organizationID) {
+                        dhtmlx.alert('Must select an organization for Work Breakdown Structure Admin Report');
+                        return;
+                    }
+
+                    if (!allFilters.version) {
+                        dhtmlx.alert('Must select a Version for Work Breakdown Structure Admin Report');
+                        return;
+                    }
+
                     var pdfUrl = baseUrl
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
-                        + '&VersionId=' + allFilters.version
+                        + '&Version=' + allFilters.version
                         + '&FileType=' + 'PDF';
 
                     var excelUrl = baseUrl
                         + '?OrganizationID=' + allFilters.organizationID
                         + '&ProjectClassID=' + allFilters.projectClassID
                         + '&PhaseCode=' + allFilters.phaseCode
-                        + '&VersionId=' + allFilters.version
+                        + '&Version=' + allFilters.version
                         + '&FileType=' + 'excel';
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);

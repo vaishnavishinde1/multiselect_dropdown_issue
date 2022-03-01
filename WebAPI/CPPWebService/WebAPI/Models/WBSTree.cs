@@ -785,6 +785,9 @@ namespace WebAPI.Models
         public String CurrentCost;
         [DataMember]
         public String ForecastCost;
+        //Aditya 21022022
+        [DataMember]
+        public String originalEndDate;
         [DataMember]
         public String level = "Program";
         [DataMember]
@@ -845,6 +848,7 @@ namespace WebAPI.Models
             ContractValue = wbsprg.ContractValue;   //Manasi 14-07-2020
             JobNumber = wbsprg.JobNumber;   //Manasi  04-08-2020
 
+            originalEndDate = (wbsprg.originalEndDate != null ? wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd") : ""); // Aditya 21022022
             ProgramManagerID = wbsprg.ProgramManagerID; ProgramSponsorID = wbsprg.ProgramSponsorID; ProjectClassID = wbsprg.ProjectClassID;
             CurrentStartDate = (wbsprg.CurrentStartDate != null ? wbsprg.CurrentStartDate.Value.ToString("yyyy-MM-dd") : "");
             CurrentEndDate = (wbsprg.CurrentEndDate != null ? wbsprg.CurrentEndDate.Value.ToString("yyyy-MM-dd") : "");

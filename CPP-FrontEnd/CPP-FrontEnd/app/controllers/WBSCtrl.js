@@ -883,7 +883,7 @@ angular.module('cpp.controllers').
 
             // Pritesh new code for save 2 pop up Project
             $('#uploadBtnProgramElement').unbind('click').on('click', function ($files) {
-                debugger;
+                debugger
                 //alert('Ready to Uplaod. Missing reference $http');
                 //return;
                 if (wbsTree.getIsProgramElementNew()) {
@@ -892,7 +892,6 @@ angular.module('cpp.controllers').
                     return;
                 }
 
-                console.log(_selectedNode.ProgramElementID);
                 console.log('get files', $files);
                // var x = wbsTree.getSelectedProgramElementID();
                 var x = _selectedNode.ProgramElementID;
@@ -1896,6 +1895,7 @@ angular.module('cpp.controllers').
                 var modType = $('#ddModificationType').val();
                 var pgmcurrentstartdate = $('#program_current_start_date').val();
                 var pgmcurrentenddate = $('#program_current_end_date').val();
+                var pgmogenddate = $('#program_original_end_date').val();
                 
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
@@ -1933,8 +1933,8 @@ angular.module('cpp.controllers').
                     //    dhtmlx.alert('Enter Contract Start Date.');
                     //    return;
                     //}
-                    if (pgmcurrentenddate == "" || pgmcurrentenddate.length == 0) {
-                        dhtmlx.alert('Enter Contract End Date.');
+                    if (pgmogenddate == "" || pgmogenddate.length == 0) {
+                        dhtmlx.alert('Enter Original Contract End Date.');
                         return;
 
                     }
@@ -1998,7 +1998,8 @@ angular.module('cpp.controllers').
                     //DurationDate: durationDate,
                     ProgramID: programId,
                     CreatedBy: createdBy,
-                    ScheduleImpact: scheduleImpact
+                    ScheduleImpact: scheduleImpact,
+                    originalEndDate: pgmogenddate
                     
                 };
                 

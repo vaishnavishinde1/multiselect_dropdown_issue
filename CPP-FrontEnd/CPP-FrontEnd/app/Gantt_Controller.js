@@ -322,12 +322,15 @@ angular.module('xenon.Gantt_Controller', []).
 
                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
                 var employeeID = $scope.localStorageSrevice.get('authorizationData').employeeID;
+                var userName = $scope.localStorageSrevice.get('authorizationData').userName;
+                var userRole = $scope.localStorageSrevice.get('authorizationData').role;
 
 
                 $http.get(serviceBasePath + 'Request/Project/null/null/' + delayedData[2].result[0].ProjectID).then(function (response) {
 
 
                     var projEleApproverDetails = response.data.result[0].ApproversDetails;
+                    var elementCreatedBy = response.data.result[0].CreatedBy;
                     var matrixId = 0;
 
                     ApprovalMatrix.get({}, function (approvalMatrixData) {
@@ -336,16 +339,26 @@ angular.module('xenon.Gantt_Controller', []).
 
                         for (var j = 0; j < matrixData.length; j++) {
 
-                            if (matrixData[j].Role == "Project Manager") {
-                                matrixId = matrixData[j].Id;
-                                break;
+
+
+                            if (matrixData[j].Role == "Project Manager" || matrixData[j].Role === "Element Manager") {
+                                if (matrixData[j].Role === userRole) {
+                                    matrixId = matrixData[j].Id;
+                                    break;
+                                }
                             }
 
+
+
+                        }
+                        $('#PurchaseOrderID').hide();
+                        if (userName === elementCreatedBy) {
+                            $('#PurchaseOrderID').show();
                         }
                         if (matrixId != 0) {
                             for (var i = 0; i < projEleApproverDetails.length; i++) {
-                                if (projEleApproverDetails[i].EmpId == employeeID
-                                    && projEleApproverDetails[i].ApproverMatrixId == matrixId) {
+                                if (userName === elementCreatedBy || (projEleApproverDetails[i].EmpId == employeeID
+                                    && projEleApproverDetails[i].ApproverMatrixId == matrixId)) {
                                     $('#PurchaseOrderID').show();
                                     break;
                                 } else {
@@ -2104,6 +2117,7 @@ angular.module('xenon.Gantt_Controller', []).
                         }
                     }
                     $state.reload();
+                    var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
                 });
 
                 var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
@@ -2306,6 +2320,7 @@ angular.module('xenon.Gantt_Controller', []).
                     }
 
                     $state.reload();
+                    var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
                 });
                 var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
                 //var trendToBeRequestForApproval = {
@@ -6010,14 +6025,18 @@ angular.module('xenon.Gantt_Controller', []).
                     var first = false;
                     $scope.scheduleGanttInstance.eachTask(function (task) {
                         if (!task.update_id && !first) {
-                            $scope.scheduleGanttInstance.selectTask($scope.first_task_id);
+                            //$scope.scheduleGanttInstance.selectTask($scope.first_task_id);
                             first = true;
 
                         }
                     });
                     $scope.screenLoad = false;
                 }
-            }, 2000);
+				$scope.scheduleGanttInstance.selectTask($scope.first_task_id);
+				var s = $scope.scheduleGanttInstance.callEvent("customClick", [$scope.first_task_id]);
+				//var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
+				//$scope.scheduleGanttInstance.selectTask($scope.first_task_id);
+            }, 1000);
 
             $scope.scheduleGanttInstance.attachEvent('onGanttRender', function () {
                 $('div.gantt_grid_head_cell.gantt_grid_head_add').css('opacity', '0');   //Manasi 10-08-2020
@@ -7877,7 +7896,8 @@ angular.module('xenon.Gantt_Controller', []).
 
             });
             ////////------------------------ Pritesh New Logic  End added on 2 Jul 2020------------------------------------------
-            var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
+            //var s = $scope.scheduleGanttInstance.callEvent("onTaskSelected", [$scope.first_task_id]);
+			//var s = $scope.scheduleGanttInstance.callEvent("customClick", [$scope.first_task_id]);
 
             /////// -------------------Pritesh commented old logic on 2 july 2020 only kept for reference if it get affected anywhere ------------------------
             //$scope.costGanttInstance.attachEvent("onGanttRender", function () {
