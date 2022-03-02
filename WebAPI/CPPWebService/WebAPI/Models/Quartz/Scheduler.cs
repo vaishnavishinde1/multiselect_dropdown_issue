@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Models.Quartz;
 
 namespace WebAPI.Models
 {
@@ -15,6 +16,7 @@ namespace WebAPI.Models
         private static String mppNoRespondKillerFrequency = ConfigurationManager.AppSettings["MppNoRespondKillerFrequency"]; // ConfigurationManager.AppSettings["GET_INCIDENT_FREQUENCY_IN_SECONDS"];
         private static String exportInsperityFrequency = ConfigurationManager.AppSettings["InsperityExportFrequency"];
         private static String exportInsperityCronExpression = ConfigurationManager.AppSettings["InsperityExportCronExp"];
+        private static String exportMailCronExpression = ConfigurationManager.AppSettings["MailExportCronExp"]; // Aditya-Narayan 01032022
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void start()
@@ -72,6 +74,32 @@ namespace WebAPI.Models
             .Build();
                 schedulerInsperity.ScheduleJob(jobInsperity, triggerInsperity);
                 schedulerInsperity.Start();
+
+
+                //-----------------------------------------Aditya-Narayan 01032022-----------------------------------------------------------------//
+
+                //mail scheduler
+
+                ISchedulerFactory schedulerMailFactory = new StdSchedulerFactory();
+                //get a scheduler
+                IScheduler schedulerMailContract = schedulerMailFactory.GetScheduler();
+                schedulerMailContract.Start();
+
+                //Job
+                IJobDetail jobMail = JobBuilder.Create<MailExportJob>()
+                .WithIdentity("exportMailFrequencyInSecond", "group2")
+                .Build();
+
+                //Trigger
+                ITrigger triggerMail = TriggerBuilder.Create()
+                .ForJob(jobMail)
+                .WithCronSchedule(exportMailCronExpression)//1hr//"0 0/1 * * * ?" - 1 min
+                .WithIdentity("TestTrigger2")
+                .StartNow()
+                .Build();
+                schedulerMailContract.ScheduleJob(jobMail, triggerMail);
+                schedulerMailContract.Start();
+                //------------------------------------------------------------------------------------------------------------------------//
             }
             catch (Exception ex)
             {

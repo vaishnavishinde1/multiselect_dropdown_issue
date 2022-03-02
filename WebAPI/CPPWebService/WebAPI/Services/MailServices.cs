@@ -15,29 +15,29 @@ namespace WebAPI.Services
 {
     public class MailServices
     {
-       static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
-        public static void  SendApprovalEmail(string RequestingUser, string TargetedUser, string Role, string TrendId,string ProjectId, string toEmail, string sub = "CPP - APPROVAL REQUEST NOTIFICATION")
+        public static void SendApprovalEmail(string RequestingUser, string TargetedUser, string Role, string TrendId, string ProjectId, string toEmail, string sub = "CPP - APPROVAL REQUEST NOTIFICATION")
         {
-          
+
             int ProjectID = Convert.ToInt32(ProjectId);
             Trend trend = Models.Trend.getTrendById(TrendId, ProjectID);
             List<Project> projects = Models.Project.getProject("null", "null", ProjectId, "null");
             Project project = projects.Find(e => e.ProjectID == ProjectID);
-            List < ProgramElement> pes = Models.ProgramElement.getProgramElement("null", "null","null");
+            List<ProgramElement> pes = Models.ProgramElement.getProgramElement("null", "null", "null");
             ProgramElement pe = pes.Find(e => e.ProgramElementID == project.ProgramElementID);
             List<Program> ps = Models.Program.getProgram("null", "null", "null");
             Program p = ps.Find(e => e.ProgramID == project.ProgramID);
             List<User> users = Models.User.getUser();
             List<string> to = new List<string>();
-           foreach(User  user in users)
+            foreach (User user in users)
 
             {
                 //if (trend.PostTrendCost != null && user.Threshold != "" && user.Threshold != null && trend.PostTrendCost != "")
-                    //if (Convert.ToDouble(trend.PostTrendCost) < Convert.ToDouble(user.Threshold))
-                        //to.Add(user.Email);
-                        
+                //if (Convert.ToDouble(trend.PostTrendCost) < Convert.ToDouble(user.Threshold))
+                //to.Add(user.Email);
+
             }
             to.Add(toEmail); //luan here
             string localHostUrl = "http://localhost:54364/index.html#/app/cost-gantt/";
@@ -45,24 +45,25 @@ namespace WebAPI.Services
             string testServerUrl = routeInfo + "/app/cost-gantt/";
 
             String subject = sub; // Swapnil 18-09-2020 
-            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + RequestingUser + "</strong> requested for an approval of Element:<strong> "+
-                project.ProjectName +"</strong> Project :<strong>"+ pe.ProgramElementName + "</strong> Contract :<strong>"+p.ProgramName+"</strong> ."
+            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + RequestingUser + "</strong> requested for an approval of Element:<strong> " +
+                project.ProjectName + "</strong> Project :<strong>" + pe.ProgramElementName + "</strong> Contract :<strong>" + p.ProgramName + "</strong> ."
 
-                + "<br><br>Access directly using the following link - " 
-                +"<br><a href='" + testServerUrl + project.ProjectID + "/" + trend.TrendNumber + "/" + p.OrganizationID + "' target='_blank' >"
+                + "<br><br>Access directly using the following link - "
+                + "<br><a href='" + testServerUrl + project.ProjectID + "/" + trend.TrendNumber + "/" + p.OrganizationID + "' target='_blank' >"
                 + testServerUrl + project.ProjectID + "/" + trend.TrendNumber + "/" + p.OrganizationID + "</a>"
                 + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
-            
+
             var sendMailThread = new Task(() => {
 
-               SendMail(to, "", "", subject, message);
-                });
+                SendMail(to, "", "", subject, message);
+            });
             sendMailThread.Start();
         }
 
+
         public static void SendPOApprovalEmail(string PONumber, string RequestingUser, string ProjectId, string sub = "CPP - PO APPROVAL REQUEST NOTIFICATION")
         {
-            
+
             string TargetedUser = "";
             int ProjectID = Convert.ToInt32(ProjectId);
             List<Project> projects = Models.Project.getProject("null", "null", ProjectId, "null");
@@ -71,7 +72,7 @@ namespace WebAPI.Services
             ProgramElement pe = pes.Find(e => e.ProgramElementID == project.ProgramElementID);
             List<Program> ps = Models.Program.getProgram("null", "null", "null");
             Program p = ps.Find(e => e.ProgramID == project.ProgramID);
-            List<User> users = Models.User.getUser().Where(x=>x.Role == "Accounting").ToList();
+            List<User> users = Models.User.getUser().Where(x => x.Role == "Accounting").ToList();
             List<string> to = new List<string>();
             foreach (User user in users)
 
@@ -96,17 +97,17 @@ namespace WebAPI.Services
 
                     //var sendMailThread = new Task(() => {
 
-                        SendMail(to, "", "", subject, message);
-                        to.Remove(user.Email);
+                    SendMail(to, "", "", subject, message);
+                    to.Remove(user.Email);
                     //});
                     //sendMailThread.Start();
-                    
+
                 }
-                
+
 
             }
             //to.Add(toEmail); //luan here
-            
+
         }
 
         public static void SendPOStatusUpdateEmail(string PONumber, string TargetedUser, string RequestingUser, string EMail, string ProjectId, string Status, string reason, string sub = "CPP - PO STATUS")
@@ -122,57 +123,57 @@ namespace WebAPI.Services
             Program p = ps.Find(e => e.ProgramID == project.ProgramID);
             //List<User> users = Models.User.getUser().Where(x => x.Role == "Accounting").ToList();
             List<string> to = new List<string>();
-            
-                //if (trend.PostTrendCost != null && user.Threshold != "" && user.Threshold != null && trend.PostTrendCost != "")
-                //if (Convert.ToDouble(trend.PostTrendCost) < Convert.ToDouble(user.Threshold))
-                if (EMail != "N/A")
+
+            //if (trend.PostTrendCost != null && user.Threshold != "" && user.Threshold != null && trend.PostTrendCost != "")
+            //if (Convert.ToDouble(trend.PostTrendCost) < Convert.ToDouble(user.Threshold))
+            if (EMail != "N/A")
+            {
+                //TargetedUser = user.FirstName + " " + user.LastName;
+                to.Add(EMail);
+                //string localHostUrl = "http://localhost:54364/index.html#/app/cost-gantt/";
+                string routeInfo = ConfigurationManager.AppSettings["RouteInfo"];
+                //string testServerUrl = routeInfo + "/app/po-Approval";
+
+                String subject = sub; // Swapnil 18-09-2020 
+
+                if (Status == "Approved")
+                    subject = "CPP - PO :" + PONumber + " Approved";
+                else
+                    subject = "CPP - PO :" + PONumber + " Rejected";
+
+
+                string message = "";
+
+                if (Status == "Approved")
                 {
-                    //TargetedUser = user.FirstName + " " + user.LastName;
-                    to.Add(EMail);
-                    //string localHostUrl = "http://localhost:54364/index.html#/app/cost-gantt/";
-                    string routeInfo = ConfigurationManager.AppSettings["RouteInfo"];
-                    //string testServerUrl = routeInfo + "/app/po-Approval";
 
-                    String subject = sub; // Swapnil 18-09-2020 
+                    message = "<html>Hello " + RequestingUser + " , <br><br> <strong>" + TargetedUser + "</strong> Approved PO :<strong>" + PONumber + "</strong> Element :<strong> " +
+                    project.ProjectName + "</strong> Project :<strong>" + pe.ProgramElementName + "</strong> Contract :<strong>" + p.ProgramName + "</strong> ."
 
-                    if (Status == "Approved")
-                        subject = "CPP - PO :" + PONumber + " Approved";
-                    else
-                        subject = "CPP - PO :" + PONumber + " Rejected";
-
-
-                    string message = "";
-
-                    if (Status == "Approved")
-                    {
-
-                        message = "<html>Hello " + RequestingUser + " , <br><br> <strong>" + TargetedUser + "</strong> Approved PO :<strong>" + PONumber + "</strong> Element :<strong> " +
-                        project.ProjectName + "</strong> Project :<strong>" + pe.ProgramElementName + "</strong> Contract :<strong>" + p.ProgramName + "</strong> ."
-
-                        // + "<br><br>Access directly using the following link - "
-                        // + "<br><a href='" + testServerUrl + "' target='_blank' >" + testServerUrl + "</a>"
-                        //+ "<br><br>Please log in CPP and respond accordingly."
-                        +"<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
-                    }
-                    else
-                    {
-
-                        message = "<html>Hello " + RequestingUser + " , <br><br> <strong>" + TargetedUser + "</strong> Rejected PO :<strong>" + PONumber + "</strong> Element :<strong> " +
-                        project.ProjectName + "</strong> Project :<strong>" + pe.ProgramElementName + "</strong> Contract :<strong>" + p.ProgramName + "</strong> ."
-                         + "<br><br>Due to - <strong>" + reason + "</strong>"
-                        // + "<br><a href='" + testServerUrl + "' target='_blank' >" + testServerUrl + "</a>"
-                        + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
-                    }
-                    var sendMailThread = new Task(() => {
-
-                        SendMail(to, "", "", subject, message);
-                    });
-                    sendMailThread.Start();
-                    //to = new List<string>();
+                    // + "<br><br>Access directly using the following link - "
+                    // + "<br><a href='" + testServerUrl + "' target='_blank' >" + testServerUrl + "</a>"
+                    //+ "<br><br>Please log in CPP and respond accordingly."
+                    + "<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
                 }
+                else
+                {
+
+                    message = "<html>Hello " + RequestingUser + " , <br><br> <strong>" + TargetedUser + "</strong> Rejected PO :<strong>" + PONumber + "</strong> Element :<strong> " +
+                    project.ProjectName + "</strong> Project :<strong>" + pe.ProgramElementName + "</strong> Contract :<strong>" + p.ProgramName + "</strong> ."
+                     + "<br><br>Due to - <strong>" + reason + "</strong>"
+                    // + "<br><a href='" + testServerUrl + "' target='_blank' >" + testServerUrl + "</a>"
+                    + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+                }
+                var sendMailThread = new Task(() => {
+
+                    SendMail(to, "", "", subject, message);
+                });
+                sendMailThread.Start();
+                //to = new List<string>();
+            }
 
 
-            
+
             //to.Add(toEmail); //luan here
 
         }
@@ -315,7 +316,7 @@ namespace WebAPI.Services
                 if (!IsResend)
                 {
                     //message = message + "<br>Valid for: 30 Minutes";
-                    message = message + "<br>Valid for: " + "<strong>"+mfaDet.ApprovalCodeValidity + " Minutes </strong>"; // Swapnil 17-09-2020
+                    message = message + "<br>Valid for: " + "<strong>" + mfaDet.ApprovalCodeValidity + " Minutes </strong>"; // Swapnil 17-09-2020
                 }
 
                 message = message + "<br><br><strong>Regards,<br><br> CPP Team</strong>";
@@ -335,15 +336,15 @@ namespace WebAPI.Services
             SendRegistrationToAdmin(fullName, userID);
             List<string> to = new List<string>();
             WebAPI.Helper.RegexUtilities regex = new WebAPI.Helper.RegexUtilities();
-            if (regex.IsValidEmail(userEmail)) 
-            to.Add(userEmail);
-          
+            if (regex.IsValidEmail(userEmail))
+                to.Add(userEmail);
+
             String subject = "CPP - USER CONFIRMATION";
-            string message = "<html>Hello " + fullName+","+
+            string message = "<html>Hello " + fullName + "," +
                 "<br><br>Thank you for your registration! We will validate your information and respond back to you to confirm your registration."
                 + "<br><br> Regards,";
-           
-           var sendMailThread = new Task(() => {
+
+            var sendMailThread = new Task(() => {
 
                 SendMail(to, "", "", subject, message);
             });
@@ -390,7 +391,7 @@ namespace WebAPI.Services
         {
 
             var ctx = new CPPDbContext();
-         //   List<User> adminList = Models.User.getUser("null", "null", "null", "Admin");
+            //   List<User> adminList = Models.User.getUser("null", "null", "null", "Admin");
             List<User> adminList = getUser("null", "null", "null", "Admin");
 
             List<string> to = new List<string>();
@@ -398,20 +399,20 @@ namespace WebAPI.Services
             foreach (User user in adminList)
 
             {
-                if (regex.IsValidEmail(user.Email)) 
+                if (regex.IsValidEmail(user.Email))
 
-                to.Add(user.Email);
+                    to.Add(user.Email);
 
             }
             String subject = "CPP - USER REGISTRATION NOTIFICATION";
             string message = "<html>Hello Administrators," +
-                "<br><br> "+fullName+ " just registered ! Please log in CPP to assign a role for the new user."
+                "<br><br> " + fullName + " just registered ! Please log in CPP to assign a role for the new user."
                 + "<br><br> Regards,";
             var sendMailThread = new Task(() => {
 
                 SendMail(to, "", "", subject, message);
             });
-           sendMailThread.Start();
+            sendMailThread.Start();
         }
         public static void SendUserActivation(String UserId, string Role, string TrendId, string ProjectId)
         {
@@ -438,13 +439,58 @@ namespace WebAPI.Services
              project.ProjectName + "</strong> Program Element :<strong>" + pe.ProgramElementName + "</strong> Program :<strong>" + p.ProgramName + "</strong> ."
 
                 + "Please log in CPP and respond accordingly. <br><br> Regards,";
-        // var sendMailThread = new Task(() => {
+            // var sendMailThread = new Task(() => {
 
-                SendMail(to, "", "", subject, message);
-          //  });
+            SendMail(to, "", "", subject, message);
+            //  });
             //sendMailThread.Start();
         }
 
+        // Key Milestone Reminder Mail to Project Manager // Narayan 01-03-2022
+        public static void RemindMilestoneExpire(string TargetedUser, string MilestoneName, string ExpiryDate, string toEmail, string ProjectName, string ContractName, string sub = "CPP - KEY PROJECT MILESTONES EXPIRY NOTICE.")
+        {
+            //int ProjectID = Convert.ToInt32(ProjectId);
+            //Element
+            //List<Project> projects = Models.Project.getProject("null", "null", ProjectId, "null");
+            //Project project = projects.Find(e => e.ProjectID == ProjectID);
+            //Project
+            //List<ProgramElement> pes = Models.ProgramElement.getProgramElement("null", "null", "null");
+            //ProgramElement project = pes.Find(e => e.ProgramElementID == ProjectID);
+            //Contract
+            //List<Program> ps = Models.Program.getProgram("null", "null", "null");
+            //Program contract = ps.Find(e => e.ProgramID == project.ProgramID);
+            //List<User> users = Models.User.getUser();
+            List<string> to = new List<string>();
+            to.Add(toEmail);
+            String subject = sub;
+            /*string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
+                + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";*/
+            string message = "Hello " + TargetedUser + " , <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
+                + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            var sendMailThread = new Task(() =>
+            {
+                SendMail(to, "", "", subject, message);
+            });
+            sendMailThread.Start();
+        }
+
+        //Contract Expiry Mail // Aditya 01-03-2022
+        public static void SendReminderEmailContractExp(string toEmail, string TargetedUser, string ContractName, string ContractNumber, string CurrentEndDate, string sub = "CPP Contract Expiry Notice")
+        {
+            List<string> to = new List<string>();
+          //  string mail = "aditya.kamat@softlabsgroup.com";
+            //to.Add(toEmail); //actual mails go here
+           // to.Add(mail); //use this for testing
+            to.Add(toEmail); //use this for testing
+            String subject = sub;
+            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + ContractName + "</strong>, with contract no " + ContractNumber + " will expire on " + CurrentEndDate + ".<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            System.Diagnostics.Debug.WriteLine(message);
+            var sendMailThread = new Task(() => {
+
+                SendMail(to, "", "", subject, message);
+            });
+            sendMailThread.Start();
+        }
 
         public static void SendMail(List<string> to, string cc, string bcc, string subject, string message)
         {
@@ -465,12 +511,12 @@ namespace WebAPI.Services
 
                 mailMessage.IsBodyHtml = true;
 
-                 List<string> toList = to;
+                List<string> toList = to;
                 WebAPI.Helper.RegexUtilities regex = new WebAPI.Helper.RegexUtilities();
                 foreach (string toEmail in toList)
                 {
-                    if(regex.IsValidEmail(toEmail))
-                    mailMessage.To.Add(new MailAddress(toEmail)); //adding multiple TO Email Id  
+                    if (regex.IsValidEmail(toEmail))
+                        mailMessage.To.Add(new MailAddress(toEmail)); //adding multiple TO Email Id  
                 }
 
 
@@ -515,24 +561,24 @@ namespace WebAPI.Services
                 //}
 
                 //using (SmtpClient smt = new SmtpClient("smtp.gmail.com", 587))
-               // {
-                  //  smt.UseDefaultCredentials = false;
-                 //  smt.Credentials = new NetworkCredential("email@gmail.com", "password");
-                  //  smt.EnableSsl = true;
-                   // smt.Send(mailMessage);
-               // }
-                          smtp.EnableSsl = true;
-                          NetworkCredential NetworkCred = new NetworkCredential();
-                          NetworkCred.UserName = mailMessage.From.Address;
-                          NetworkCred.Password = password;
-                          smtp.UseDefaultCredentials = false;
-                          smtp.Credentials = NetworkCred;
-                          smtp.Timeout = 10000;
-                          smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                          //smtp.Credentials = NetworkCred;
-                          smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString()); 
-                          if(!(mailMessage.To.Count == 0 && mailMessage.Bcc.Count ==0 && mailMessage.CC.Count == 0))
-                          smtp.Send(mailMessage); //sending Email  
+                // {
+                //  smt.UseDefaultCredentials = false;
+                //  smt.Credentials = new NetworkCredential("email@gmail.com", "password");
+                //  smt.EnableSsl = true;
+                // smt.Send(mailMessage);
+                // }
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+               // NetworkCredential NetworkCred = new NetworkCredential(mailMessage.From.Address, password);
+               // NetworkCred.UserName = mailMessage.From.Address;
+                //NetworkCred.Password = password;
+                smtp.Credentials = new NetworkCredential(mailMessage.From.Address, password); ;
+                smtp.Timeout = 1000000;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtp.Credentials = NetworkCred;
+                smtp.Port = Convert.ToInt32(ConfigurationManager.AppSettings["Port"].ToString());
+                if (!(mailMessage.To.Count == 0 && mailMessage.Bcc.Count == 0 && mailMessage.CC.Count == 0))
+                    smtp.Send(mailMessage); //sending Email  
             }
             catch (Exception ex)
             {
@@ -674,7 +720,7 @@ namespace WebAPI.Services
                 conn.Open();
                 String query = "SELECT * FROM user";
                 query += " WHERE Role = '" + Role + "'";
-             //   String query = "SELECT u.Role, u.FirstName, u.MiddleName, u.LastName, u.Email, u.UserID, u.Id,a.Cost, '' as loginPassword FROM user u left outer join approval_matrix  a on u.Role = a.Role";
+                //   String query = "SELECT u.Role, u.FirstName, u.MiddleName, u.LastName, u.Email, u.UserID, u.Id,a.Cost, '' as loginPassword FROM user u left outer join approval_matrix  a on u.Role = a.Role";
                 MySqlCommand command = new MySqlCommand(query, conn);
 
                 using (reader = command.ExecuteReader())
