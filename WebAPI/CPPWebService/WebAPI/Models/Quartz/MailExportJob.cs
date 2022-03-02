@@ -19,7 +19,7 @@ namespace WebAPI.Models.Quartz
             {
 
                 contractExpiredMailCtrl.Get(); // Aditya 01032022
-                //requestMilestoneExpireNotifiy.GetExpierdMilestone(); //Narayan 01032022
+                requestMilestoneExpireNotifiy.GetExpierdMilestone(); //Narayan 01032022
 
             }
             catch (Exception ex)

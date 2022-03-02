@@ -463,10 +463,10 @@ namespace WebAPI.Services
             List<string> to = new List<string>();
             to.Add(toEmail);
             String subject = sub;
-            /*string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
-                + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";*/
-            string message = "Hello " + TargetedUser + " , <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
+            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
                 + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            //string message = "Hello " + TargetedUser + " , <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
+            //    + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
             var sendMailThread = new Task(() =>
             {
                 SendMail(to, "", "", subject, message);
@@ -478,12 +478,11 @@ namespace WebAPI.Services
         public static void SendReminderEmailContractExp(string toEmail, string TargetedUser, string ContractName, string ContractNumber, string CurrentEndDate, string sub = "CPP Contract Expiry Notice")
         {
             List<string> to = new List<string>();
-          //  string mail = "aditya.kamat@softlabsgroup.com";
-            //to.Add(toEmail); //actual mails go here
-           // to.Add(mail); //use this for testing
-            to.Add(toEmail); //use this for testing
+            //string mail = "aditya.kamat@softlabsgroup.com";
+            to.Add(toEmail); //actual mails go here
+           //to.Add(mail); //use this for testing
             String subject = sub;
-            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + ContractName + "</strong>, with contract no " + ContractNumber + " will expire on " + CurrentEndDate + ".<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + ContractName + "</strong>, with contract no " + ContractNumber + " will expire on " + CurrentEndDate + ".<br><br><strong>Regards,</strong><br> CPP Team<br><br>";
             System.Diagnostics.Debug.WriteLine(message);
             var sendMailThread = new Task(() => {
 

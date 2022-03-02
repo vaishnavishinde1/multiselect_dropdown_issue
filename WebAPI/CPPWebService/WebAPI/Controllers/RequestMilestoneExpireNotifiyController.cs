@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
                     milestones = ctx.Milestone.ToList();
                     List<Milestone> milestonesData = ctx.Milestone.Where(m => m.MilestoneDate != "").ToList();
 
-                    for (int i = milestonesData.Count - 1; i <= milestonesData.Count; i++)
+                    for (int i = 0; i <= milestonesData.Count; i++)
                     {
                         DateTime mDate = DateTime.Parse(milestonesData[i].MilestoneDate, DateTimeFormatInfo.InvariantInfo);
                         //DateTime mDate = Convert.ToDateTime(milestonesData[i].MilestoneDate);
@@ -38,15 +38,15 @@ namespace WebAPI.Controllers
                             var projectManagerID = ApproverProjectManager.EmpId;
                             User user = ctx.User.Where(u => u.EmployeeID == projectManagerID).FirstOrDefault();
 
-                            if (user != null)
+                            if (user != null && projectManagerID != 10000)
                             {
                                 ProgramElement project = ctx.ProgramElement.Where(p => p.ProgramElementID == projectID).FirstOrDefault();
                                 Program contract = ctx.Program.Where(c => c.ProgramID == project.ProgramID).FirstOrDefault();
 
 
 
-                                //MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, milestonesData[i].MilestoneName.ToString(), mDate.ToString("dd-MM-yyyy"), user.Email, project.ProgramElementName.ToString(), contract.ProgramName.ToString());
-                                WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, "Test", "31-03-2022", user.Email, "Test element1", "Test program");
+                                 WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, milestonesData[i].MilestoneName.ToString(), mDate.ToString("MM-dd-yyyy"), user.Email, project.ProgramElementName.ToString(), contract.ProgramName.ToString());
+                                //WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, "Test", "31-03-2022", user.Email, "Test element1", "Test program");
                                 //System.Diagnostics.Debug.WriteLine("Send One Mail",mDate.Date);
                             }
 
