@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ namespace WebAPI.Controllers
     public class ContractExpiredMailCtrl : Controller
     {
         DateTime ProgramCurrentDate = DateTime.Now;
+        private static String ContractExpNotifyBefore = ConfigurationManager.AppSettings["ContractExpNotifyBefore"];
         public void Get()
         {
             List<Program> pgList = new List<Program>();
@@ -32,12 +34,13 @@ namespace WebAPI.Controllers
 
                 for (int i = 0; i < currentDateList.Count; i++)
                 {
+                    int expire = Int16.Parse(ContractExpNotifyBefore);
                     var v = currentDateList[i].CurrentEndDate - ProgramCurrentDate;
                     var days = v.Value.Days;
-                    if (days == 30 && currentDateList[i].ProjectManagerEmail != "")
+                    if (days == expire && currentDateList[i].ProjectManagerEmail != "")
                     {
                         to.Add(currentDateList[i].ProjectManagerEmail);
-                        WebAPI.Services.MailServices.SendReminderEmailContractExp(currentDateList[i].ProjectManagerEmail, currentDateList[i].ProjectManager, currentDateList[i].ProgramName, currentDateList[i].ContractNumber, currentDateList[i].CurrentEndDate.Value.ToString("MM-dd-yyyy"), sub);
+                        WebAPI.Services.MailServices.SendReminderEmailContractExp(currentDateList[i].ProjectManagerEmail, currentDateList[i].ProjectManager, currentDateList[i].ProgramName, currentDateList[i].ContractNumber, currentDateList[i].CurrentEndDate.Value.ToString("MM-dd-yyyy"));
                         for (int j = 0; j < projList.Count; j++)
                         {
                             var projectID = projList[j].ProgramElementID;
@@ -47,7 +50,7 @@ namespace WebAPI.Controllers
                                 ProjectApproversDetails ApproverProjectManager = ctx.ProjectApproversDetails.Where(a => a.ApproverMatrixId == 4 && a.ProjectId == projectID).FirstOrDefault();
                                 var projectManagerID = ApproverProjectManager.EmpId;
                                 User user = ctx.User.Where(u => u.EmployeeID == projectManagerID).FirstOrDefault();
-                                WebAPI.Services.MailServices.SendReminderEmailContractExp(user.Email, user.FirstName + " " + user.LastName, currentDateList[i].ProgramName, currentDateList[i].ContractNumber, currentDateList[i].CurrentEndDate.Value.ToString("MM-dd-yyyy"), sub);
+                                WebAPI.Services.MailServices.SendReminderEmailContractExp(user.Email, user.FirstName + " " + user.LastName, currentDateList[i].ProgramName, currentDateList[i].ContractNumber, currentDateList[i].CurrentEndDate.Value.ToString("MM-dd-yyyy"));
                             }
 
                         }

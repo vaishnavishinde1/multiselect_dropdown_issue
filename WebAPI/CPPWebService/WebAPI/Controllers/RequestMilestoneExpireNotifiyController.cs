@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace WebAPI.Controllers
 {
     public class RequestMilestoneExpireNotifiyController //: Controller
     {
+        private static String MilestoneExpireIn = ConfigurationManager.AppSettings["MilestoneNotifyBefore"];
         public void GetExpierdMilestone()
         {
             DateTime CurrentDate = DateTime.Now;
@@ -17,7 +19,6 @@ namespace WebAPI.Controllers
             try
             {
                 List<Milestone> milestones = new List<Milestone>();
-                //List<Milestone> exMilestones = new List<Milestone>();
                 using (var ctx = new CPPDbContext())
                 {
                     List<DateTime> Dates = new List<DateTime>();
@@ -29,7 +30,8 @@ namespace WebAPI.Controllers
                         DateTime mDate = DateTime.Parse(milestonesData[i].MilestoneDate, DateTimeFormatInfo.InvariantInfo);
                         //DateTime mDate = Convert.ToDateTime(milestonesData[i].MilestoneDate);
                         //DateTime mDate = DateTime.ParseExact(milestonesData[i].MilestoneDate, "MM/dd/yyyy", null); ;
-                        DateTime exDate = CurrentDate.AddDays(30);
+                        int expierDays = Int16.Parse(MilestoneExpireIn);
+                        DateTime exDate = CurrentDate.AddDays(expierDays);
                         if (mDate.Date == exDate.Date)
                         {
                             var projectID = milestonesData[i].ProgramElementID;

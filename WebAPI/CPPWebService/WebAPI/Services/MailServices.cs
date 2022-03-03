@@ -449,24 +449,11 @@ namespace WebAPI.Services
         // Key Milestone Reminder Mail to Project Manager // Narayan 01-03-2022
         public static void RemindMilestoneExpire(string TargetedUser, string MilestoneName, string ExpiryDate, string toEmail, string ProjectName, string ContractName, string sub = "CPP - KEY PROJECT MILESTONES EXPIRY NOTICE.")
         {
-            //int ProjectID = Convert.ToInt32(ProjectId);
-            //Element
-            //List<Project> projects = Models.Project.getProject("null", "null", ProjectId, "null");
-            //Project project = projects.Find(e => e.ProjectID == ProjectID);
-            //Project
-            //List<ProgramElement> pes = Models.ProgramElement.getProgramElement("null", "null", "null");
-            //ProgramElement project = pes.Find(e => e.ProgramElementID == ProjectID);
-            //Contract
-            //List<Program> ps = Models.Program.getProgram("null", "null", "null");
-            //Program contract = ps.Find(e => e.ProgramID == project.ProgramID);
-            //List<User> users = Models.User.getUser();
             List<string> to = new List<string>();
             to.Add(toEmail);
             String subject = sub;
             string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
                 + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
-            //string message = "Hello " + TargetedUser + " , <strong>" + MilestoneName + "</strong> Will Expire On : <strong>" + ExpiryDate + "</strong>  Under Project : <strong>" + ProjectName + "</strong> Contract : <strong>" + ContractName + "</strong> ."
-            //    + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
             var sendMailThread = new Task(() =>
             {
                 SendMail(to, "", "", subject, message);
@@ -482,7 +469,7 @@ namespace WebAPI.Services
             to.Add(toEmail); //actual mails go here
            //to.Add(mail); //use this for testing
             String subject = sub;
-            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + ContractName + "</strong>, with contract no " + ContractNumber + " will expire on " + CurrentEndDate + ".<br><br><strong>Regards,</strong><br> CPP Team<br><br>";
+            string message = "<html>Hello " + TargetedUser + " , <br><br> <strong>" + ContractName + "</strong>, with contract no <strong>" + ContractNumber + "</strong> will expire on <strong>" + CurrentEndDate + "</strong>.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
             System.Diagnostics.Debug.WriteLine(message);
             var sendMailThread = new Task(() => {
 
