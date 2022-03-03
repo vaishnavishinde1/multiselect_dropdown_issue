@@ -3080,6 +3080,8 @@ angular.module('cpp.controllers').
 
             $('#btnQuickSearch').unbind('click').on('click', function () {
                 var pagedata = Page;
+                $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
+                $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                 console.log('Called Org...');
                 $scope.filterProgramId = "";
                 $scope.filterProgramElement = "";
@@ -3161,17 +3163,32 @@ angular.module('cpp.controllers').
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
                 var orgId = myLocalStorage.get('userSelectedOrgId');
-
+                $("#FilterTrend").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
+                $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
+                $("#btnQuickSearch").css('background-color', 'darkgrey'); //vaishnavi 02-03-2022
                 if ($("#FilterTrend").prop('checked') == true) {
-                    $scope.loadWBSData(orgId, null, null, null,null, '0',null);
+
+                    $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
+                    $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
+                    $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
+                    $scope.loadWBSData(orgId, null, null, null, null, '0', null);
+                  
+                  
                 } else {
-                    $scope.loadWBSData(orgId, null, null, null, null, '1',null);
+                    $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
+                    $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
+                    $("#btnQuickSearch").css('background-color', 'darkgrey'); //vaishnavi 02-03-2022
+                    $scope.loadWBSData(orgId, null, null, null, null, '1', null);
+                    
+                   
                 }
 
             }
        
             $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID) {
-                
+                $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
+                $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
+                $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
                 searchText = myLocalStorage.get('SearchText');
                 $scope.SearchText = searchText;
                 var pagedata = Page;
@@ -3205,8 +3222,11 @@ angular.module('cpp.controllers').
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
                     .$promise.then(function (response) {
-                       
-
+                        $("#FilterTrend").removeAttr('disabled');   //vaishnavi 02-03-2022
+                        $("#btnQuickSearch").removeAttr('disabled');   //vaishnavi 02-03-2022
+                        $("#btnQuickSearch").css('background-color', 'black');   //vaishnavi 02-03-2022
+                        $('#wbs-tree').html('');    //vaishnavi 02-03-2022
+                        $('#wbsGridView').html('');   //vaishnavi 02-03-2022
                         console.log(response);
                         _wbsTreeData = response;
                         var treeData = response;
@@ -3244,7 +3264,7 @@ angular.module('cpp.controllers').
                             " <tbody>" +
                             "<tr style = 'background-color:white !important;'>" +
                             "    <td colspan='7'>" +
-                            "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
+                            "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
                             "          <table class='table striped table-condensed table-responsive table-bordered'>" +
                             "             <tbody>" ;
                         var currentProgramCost, currentProjectCost, currentProjectElementCost;

@@ -621,7 +621,7 @@ WBSTree = (function ($) {
                         "<div class='gadget color-my' style = 'height: 733px;' >" +
 
                         " <div class='gadget-content' style='height: 91%;'>" +
-                        "    <table class='table  table-condensed'>  <thead>" +
+                        "    <table class='table  table-condensed'>  <thead style='position: sticky; '>" +
                         "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
                         "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
                         "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
@@ -629,11 +629,11 @@ WBSTree = (function ($) {
                         "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project Element</th>" +
                         "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Service</th>" +
                         "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Value</th>" +
-                        "</tr>  <thead><tfoot></tfoot> " +
+                        "</tr>  </thead><tfoot></tfoot> " +
                         " <tbody>" +
                         "<tr style = 'background-color:white !important;'>" +
                         "    <td colspan='7'>" +
-                        "       <div class='scrolable-table' style='overflow:auto;height:580px;overflow-x:hidden;'>" +
+                        "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
                         "          <table class='table striped table-condensed table-responsive table-bordered'>" +
                         "             <tbody>";
                     var currentProgramCost, currentProjectCost, currentProjectElementCost;
@@ -12688,23 +12688,23 @@ WBSTree = (function ($) {
             $('#ddModificationType').on('change', function () {
                 var ddValue = $('#ddModificationType').val();
                 if (ddValue == 1) {
-                    $('#modification_value').val('');
+                    $('#modification_value').val();   //Vaishnavi 24-02-2022
                     /*$('#duration_date').val(''); */
-                    $('#schedule_impact').val('');
+                    $('#schedule_impact').val();      //Vaishnavi 24-02-2022
                     $('#divModificationValue').show();
                     $('#divModDurationDate').hide();
                 }
                 else if (ddValue == 2) {
-                    $('#modification_value').val('');
-                    //$('#duration_date').val('');
-                    $('#schedule_impact').val('');
+                    $('#modification_value').val();   //Vaishnavi 24-02-2022
+                    //$('#duration_date').val('');  
+                    $('#schedule_impact').val();     //Vaishnavi 24-02-2022
                     $('#divModificationValue').hide();
                     $('#divModDurationDate').show();
                 }
                 else if (ddValue == 3) {
-                    $('#modification_value').val('');
+                    $('#modification_value').val();    //Vaishnavi 24-02-2022
                     //$('#duration_date').val('');
-                    $('#schedule_impact').val('');
+                    $('#schedule_impact').val();       //Vaishnavi 24-02-2022
                     $('#divModificationValue').show();
                     $('#divModDurationDate').show();
                 }

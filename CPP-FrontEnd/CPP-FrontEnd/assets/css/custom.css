@@ -50,6 +50,10 @@
     overflow-y: hidden !important;
 }
 
+#tree-container .my-word-wrap a {
+    font-weight: 600 !important;
+}
+
 h5 {
     font-weight: bold;
 }
