@@ -3252,7 +3252,7 @@ angular.module('cpp.controllers').
                                   
                            // "</div>"+
                                    " <div class='gadget-content' style='height: 91%;'>"+
-                                    "    <table class='table  table-condensed'>  <thead>" +
+                                    "    <table class='table  table-condensed'>  <thead style='position: -webkit-sticky;position: sticky;top:0; '>" +
                             "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>"+
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
