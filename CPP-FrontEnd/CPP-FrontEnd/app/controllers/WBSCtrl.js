@@ -1895,7 +1895,9 @@ angular.module('cpp.controllers').
                 var modType = $('#ddModificationType').val();
                 var pgmcurrentstartdate = $('#program_current_start_date').val();
                 var pgmcurrentenddate = $('#program_current_end_date').val();
-                var pgmogenddate = $('#program_original_end_date').val();
+
+
+                var pgmogenddate = $('#program_original_end_date').val(); // Aditya ogDate
                 
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
@@ -1933,6 +1935,7 @@ angular.module('cpp.controllers').
                     //    dhtmlx.alert('Enter Contract Start Date.');
                     //    return;
                     //}
+                    //Aditya ogDate
                     if (pgmogenddate == "" || pgmogenddate.length == 0) {
                         dhtmlx.alert('Enter Original Contract End Date.');
                         return;
@@ -1999,7 +2002,7 @@ angular.module('cpp.controllers').
                     ProgramID: programId,
                     CreatedBy: createdBy,
                     ScheduleImpact: scheduleImpact,
-                    originalEndDate: pgmogenddate
+                    originalEndDate: pgmogenddate // Aditya ogDate
                     
                 };
                 
@@ -2007,6 +2010,8 @@ angular.module('cpp.controllers').
                 {
                     contractModification.ProgramStartDt = pgmcurrentstartdate;
                     contractModification.ProgramEndDt = pgmcurrentenddate;
+                    $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                    $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
                 }
                 if (operation == 2) {
                     contractModification.Id = $('#primaryKeyId').val();
@@ -2021,6 +2026,7 @@ angular.module('cpp.controllers').
             });
 
             $('#btnDeleteConModification').unbind().on('click', function () {
+                var pgmogenddate = $('#program_original_end_date').val(); // Aditya ogDate
                 $("#gridModificationList tbody").find('input[name="rbModHistory"]').each(function () {
                     if ($(this).is(":checked")) {
                         var modID = $(this).parents("tr").attr('id');//
@@ -2035,7 +2041,8 @@ angular.module('cpp.controllers').
                         var contractModification = {
                             Operation: 3,
                             Id: $(this).parents("tr").attr('id'),
-                            ProgramID: wbsTree.getSelectedNode().ProgramID
+                            ProgramID: wbsTree.getSelectedNode().ProgramID,
+                            originalEndDate: pgmogenddate // Aditya ogDate
                         };
                         PerformOperationOnContractModification(contractModification);
 
@@ -2138,6 +2145,9 @@ angular.module('cpp.controllers').
                             var temp = wbsTree.getSelectedNode();
                             temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
                             wbsTree.updateTreeNodes(temp);
+                            $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                            $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
+                            modal.find('.modal-body #program_original_end_date').val(moment(contractModification.originalEndDate).format('MM/DD/YYYY')); // Aditya ogDate
                             modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
                         }
                         
