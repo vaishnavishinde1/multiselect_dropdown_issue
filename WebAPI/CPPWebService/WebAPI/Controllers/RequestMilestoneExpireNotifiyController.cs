@@ -24,13 +24,15 @@ namespace WebAPI.Controllers
                     List<DateTime> Dates = new List<DateTime>();
                     milestones = ctx.Milestone.ToList();
                     List<Milestone> milestonesData = ctx.Milestone.Where(m => m.MilestoneDate != "").ToList();
+                    NotificationDays notificationDays = ctx.NotificationDays.Where(n => n.MailService == "milestoneExpire").FirstOrDefault();
 
                     for (int i = 0; i <= milestonesData.Count; i++)
                     {
                         DateTime mDate = DateTime.Parse(milestonesData[i].MilestoneDate, DateTimeFormatInfo.InvariantInfo);
                         //DateTime mDate = Convert.ToDateTime(milestonesData[i].MilestoneDate);
                         //DateTime mDate = DateTime.ParseExact(milestonesData[i].MilestoneDate, "MM/dd/yyyy", null); ;
-                        int expierDays = Int16.Parse(MilestoneExpireIn);
+                        //int expierDays = Int16.Parse(MilestoneExpireIn);
+                        int expierDays = Int16.Parse(notificationDays.Days);
                         DateTime exDate = CurrentDate.AddDays(expierDays);
                         if (mDate.Date == exDate.Date)
                         {
@@ -47,7 +49,7 @@ namespace WebAPI.Controllers
 
 
 
-                                 WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, milestonesData[i].MilestoneName.ToString(), mDate.ToString("MM-dd-yyyy"), user.Email, project.ProgramElementName.ToString(), contract.ProgramName.ToString());
+                                WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, milestonesData[i].MilestoneName.ToString(), mDate.ToString("MM-dd-yyyy"), user.Email, project.ProgramElementName.ToString(), contract.ProgramName.ToString());
                                 //WebAPI.Services.MailServices.RemindMilestoneExpire(user.FirstName + " " + user.LastName, "Test", "31-03-2022", user.Email, "Test element1", "Test program");
                                 //System.Diagnostics.Debug.WriteLine("Send One Mail",mDate.Date);
                             }
