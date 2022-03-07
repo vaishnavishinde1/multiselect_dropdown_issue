@@ -8597,21 +8597,21 @@ WBSTree = (function ($) {
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
                 if (ddValue == 1) {
-                    $('#program_element_change_order_amount_modal').val('');//
+                    $('#program_element_change_order_amount_modal').val();// vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').show();
                     $('#divDurationDate').hide();
                 }
                 else if (ddValue == 2) {
-                    $('#program_element_change_order_amount_modal').val('');
+                    $('#program_element_change_order_amount_modal').val(); // vaishnavi 04-03-2022
                     //$('#program_element_change_order_duration_date').val('');
-                    $('#program_element_change_order_schedule_impact').val('');
+                    $('#program_element_change_order_schedule_impact').val(); // vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').hide();
                     $('#divDurationDate').show();
                 }
                 else if (ddValue == 3) {
-                    $('#program_element_change_order_amount_modal').val('');
+                    $('#program_element_change_order_amount_modal').val(); // vaishnavi 04-03-2022
                     //$('#program_element_change_order_duration_date').val('');
-                    $('#program_element_change_order_schedule_impact').val('');
+                    $('#program_element_change_order_schedule_impact').val(); // vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').show();
                     $('#divDurationDate').show();
                 }
