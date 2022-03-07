@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,13 +32,16 @@ namespace WebAPI.Controllers
                 pgList = ctx.Program.ToList();
                 projList = ctx.ProgramElement.ToList();
                 List<Program> currentDateList = ctx.Program.Where(p => (p.CurrentEndDate != null) && (p.CurrentEndDate > ProgramCurrentDate)).ToList();
+                NotificationDays notificationDays = ctx.NotificationDays.Where(n => n.MailService == "contractExpire").FirstOrDefault();
 
                 for (int i = 0; i < currentDateList.Count; i++)
-                {
-                    int expire = Int16.Parse(ContractExpNotifyBefore);
-                    var v = currentDateList[i].CurrentEndDate - ProgramCurrentDate;
-                    var days = v.Value.Days;
-                    if (days == expire && currentDateList[i].ProjectManagerEmail != "")
+                {                    
+                    //int expire = Int16.Parse(ContractExpNotifyBefore);
+                    int expire = Int16.Parse(notificationDays.Days);
+                    DateTime expireDate = ProgramCurrentDate.AddDays(expire);
+                    var progDate = currentDateList[i].CurrentEndDate;
+
+                    if (progDate.Value.Date == expireDate.Date && currentDateList[i].ProjectManagerEmail != "")
                     {
                         to.Add(currentDateList[i].ProjectManagerEmail);
                         WebAPI.Services.MailServices.SendReminderEmailContractExp(currentDateList[i].ProjectManagerEmail, currentDateList[i].ProjectManager, currentDateList[i].ProgramName, currentDateList[i].ContractNumber, currentDateList[i].CurrentEndDate.Value.ToString("MM-dd-yyyy"));

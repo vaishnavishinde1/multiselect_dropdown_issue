@@ -203,9 +203,17 @@ WBSTree = (function ($) {
             var contextMenuAddText;
             var contextMenuEditText;
 
+            //Aditya delete option only for Admin
+            if (wbsTree.getLocalStorage().role == "Admin") {
+                $("#contextMenuDelete").parent().show();
+            }
+            else {
+                $("#contextMenuDelete").parent().hide();
+            }
+
             $("#contextMenuAdd").parent().hide();
             $("#contextMenuEdit").parent().hide();
-            $("#contextMenuDelete").parent().hide();
+            //$("#contextMenuDelete").parent().hide(); //Aditya delete option only for Admin
             $("#contextMenuViewGantt").parent().hide();
             // Pritesh change all acl index on 4th to 5th Aug as it was not properly  mapped with DB record
             if (type == "Root") {
@@ -231,7 +239,8 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[1] == 1) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    $("#contextMenuViewGantt").parent().show(); // Aditya view Gantt in Grid view
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
             }
             else if (type == "ProgramElement") {
@@ -249,7 +258,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                     $("#contextMenuViewGantt").parent().hide();
                 }
             }
@@ -268,7 +277,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[5] == 1) {
                     contextMenuEditText = "Edit/Open Element";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                     $("#contextMenuViewGantt").parent().hide();
                 }
             }
@@ -3479,6 +3488,7 @@ WBSTree = (function ($) {
                     //==================================================
 
                     //Nivedita 13-01-2022
+                    selectedNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate 18-02-2022
                     //selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
                     if (!$('#ProgramModal').find('.modal-body #program_contract_number').val()) {
                         selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
@@ -3813,7 +3823,7 @@ WBSTree = (function ($) {
                         "ContractNumber": selectedNode.ContractNumber,
                         "CurrentStartDate": selectedNode.CurrentStartDate,
                         "CurrentEndDate": selectedNode.CurrentEndDate,
-                        "originalEndDate": selectedNode.originalEndDate,
+                        "originalEndDate": selectedNode.originalEndDate, // Aditya ogDate
                         "ContractValue": selectedNode.ContractValue,
                         "JobNumber": selectedNode.JobNumber,   //Manasi 04-08-2020
 
@@ -3939,7 +3949,7 @@ WBSTree = (function ($) {
                     newNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
                     newNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     newNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();      //Manasi 14-07-2020
-                    newNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val();
+                    newNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate
                     newNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();      //Manasi 04-08-2020
 
                     newNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
@@ -4143,7 +4153,7 @@ WBSTree = (function ($) {
                         "ContractNumber": newNode.ContractNumber,
                         "CurrentStartDate": newNode.CurrentStartDate,
                         "CurrentEndDate": newNode.CurrentEndDate,
-                        "originalEndDate": newNode.originalEndDate, //Aditya 17-02-2022
+                        "originalEndDate": newNode.originalEndDate, // Aditya ogDate 17-02-2022
                         "ContractValue": newNode.ContractValue,   //Manasi 14-07-2020
                         "JobNumber": newNode.JobNumber,            //Manasi 04-08-2020
 
@@ -8679,15 +8689,14 @@ WBSTree = (function ($) {
                 $(tr).removeClass('active');
                 g_selectedProgramElementChangeOrder = null; 	//Manasi
             });
-            //Added by Aditya-------------------------//
-            $('#program_original_end_date').on('change', function () {
-                isFieldValueChanged = true;
-                var ogEndDate = $('#program_original_end_date').val();
-                $('#program_current_end_date').val(ogEndDate);
-                $('#program_current_end_date').focus();
-                $('#program_current_end_date').blur(); 
-            });
-            $('#program_current_end_date').attr('disabled', true);
+            //Added by Aditya ogDate-------------------------//
+            //$('#program_original_end_date').on('change', function () {
+            //    isFieldValueChanged = true;
+            //    var ogEndDate = $('#program_original_end_date').val();
+            //    $('#program_current_end_date').val(ogEndDate);
+            //    $('#program_current_end_date').focus();
+            //    $('#program_current_end_date').blur(); 
+            //});
             //----------------------//
             //====================================== Created By Jignesh 28-10-2020 =======================================
             $('#program_contract_value').on('change', function () {
@@ -8773,16 +8782,87 @@ WBSTree = (function ($) {
 
                 if (selectedNode.level == "Program") {
                     modal_mode = 'Update';
-                    if (selectedNode.originalEndDate != "") {
+                    
+                    //----------------------------------Aditya ogDate------------------------------------------//
+                    $('#program_original_end_date').on('change', function () {
+                        isFieldValueChanged = true;
+                        var ogEndDate = $('#program_original_end_date').val();
+                        $('#program_current_end_date').val(ogEndDate);
+                        $('#program_current_end_date').focus();
+                        $('#program_current_end_date').blur();
+                    });
+                    /*if (selectedNode.originalEndDate != "") {
                         if (selectedNode.originalEndDate != selectedNode.CurrentEndDate) {
                             $('#program_current_end_date').attr('disabled', false);
                             $('#program_original_end_date').attr('disabled', true);
                         }
-                    }
-                    else {
+                        if (selectedNode.originalEndDate == selectedNode.CurrentEndDate) {
+                            $('#program_current_end_date').attr('disabled', true);
+                            $('#program_original_end_date').attr('disabled', false);
+                        }
+
+                    }*/
+
+                    //else {
+                    // if (selectedNode.originalEndDate == "" && selectedNode.CurrentEndDate != "")    {
+                    //console.log(totalDaysOfScheduleImpact);
+                    var totalDaysOfScheduleImpact = 0;
+                    var modType = false;
+                    var ogEndDate = "";
+                    _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                        _ModificationList = response.data;
+
+                        if (_ModificationList != undefined && _ModificationList.length != 0) {
+                            var mod2 = _ModificationList.reverse();
+                            for (var x = 1; x < mod2.length; x++) {
+                                if (_ModificationList[x].ModificationType != 1) {
+                                    totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_ModificationList[x].ScheduleImpact);
+                                    modType = true;
+                                }
+                            }
+
+
+                            if (modType == true) {
+                                ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
+                                ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
+                                $('#program_current_end_date').attr('disabled', false);
+                                $('#program_original_end_date').attr('disabled', true);
+                            }
+                            else {
+                                $('#program_original_end_date').val(selectedNode.CurrentEndDate);
+                                $('#program_current_end_date').attr('disabled', true);
+                                $('#program_original_end_date').attr('disabled', false);
+                            }
+
+                        }
+                        else {
+                            if (selectedNode.originalEndDate == '' && selectedNode.CurrentEndDate != '') {
+                                $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
+                            }
+                            else if (selectedNode.originalEndDate != '') {
+                                $('#program_current_end_date').val(moment(selectedNode.originalEndDate).format('MM/DD/YYYY'));
+                                $('#program_current_end_date').attr('disabled', true);
+                                $('#program_original_end_date').attr('disabled', false);
+                            }
+                            else {
+                                $('#program_original_end_date').val('');
+                            }
+                            $('#program_current_end_date').attr('disabled', true);
+                            $('#program_original_end_date').attr('disabled', false);
+                        }
+                    });
+                        //}
+
+                    /*else {
+                        $('#program_current_end_date').val('')
+                        $('#program_original_end_date').val('')
                         $('#program_current_end_date').attr('disabled', true);
                         $('#program_original_end_date').attr('disabled', false);
-                    }
+                    }*/
+
+                    //}
+
+                    //------------------------------------------------------------------------------------------------------//
                     wbsTree.setIsProgramNew(false);
                     _Is_Program_New = false;
                     populateContractTable(selectedNode.ProgramID);
@@ -8815,8 +8895,8 @@ WBSTree = (function ($) {
                     //$('#program_project_class').prop('disabled', true);
                     $("#program_current_start_date").datepicker();	//datepicker - program
                     $("#program_current_end_date").datepicker();	//datepicker - program
+                    $("#program_original_end_date").datepicker(); // Aditya ogDate
                     $("#modification_date").datepicker(); // Jignesh 28-10-2020
-                    $("#program_original_end_date").datepicker();
                     //=============== Jignesh-24-03-2021 Modification Changes ==========================
                     //$('#duration_date').datepicker("destroy");
                     /*$('#program_element_milestone_date_modal').datepicker({
@@ -8875,7 +8955,7 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #program_original_end_date').val(selectedNode.originalEndDate);
                     modal.find('.modal-body #program_current_start_date').val(selectedNode.CurrentStartDate ? moment(selectedNode.CurrentStartDate).format('MM/DD/YYYY') : ""); // Jignesh-02-03-2021
                     modal.find('.modal-body #program_current_end_date').val(selectedNode.CurrentEndDate ? moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY') : ""); // Jignesh-02-03-2021
-                    modal.find('.modal-body #program_original_end_date').val(selectedNode.originalEndDate ? moment(selectedNode.originalEndDate).format('MM/DD/YYYY') : ""); //Aditya 17-02-2022
+                    modal.find('.modal-body #program_original_end_date').val(selectedNode.originalEndDate ? moment(selectedNode.originalEndDate).format('MM/DD/YYYY') : ""); //Aditya ogDate 17-02-2022
                     modal.find('.modal-body #program_contract_value').val(selectedNode.ContractValue);   //Manasi 14-07-2020
                     modal.find('.modal-body #job_number').val(selectedNode.JobNumber);   //Manasi 04-08-2020
 
@@ -9125,10 +9205,17 @@ WBSTree = (function ($) {
                     $('#spnBtndelete_program').attr('title', "A contract needs to be saved before it can be deleted");   //Manasi 24-02-2021
 
                     modal_mode = 'Create';
-                    //                    if (selectedNode.originalEndDate != selectedNode.CurrentEndDate) {
-                    $('#program_current_end_date').attr('disabled', true);  //Aditya
-                    $('#program_original_end_date').attr('disabled', false); // Aditya
-  //                  }
+                    //--------------------------Aditya ogDate------------------------------------------------
+                    $('#program_original_end_date').on('change', function () {
+                        isFieldValueChanged = true;
+                        var ogEndDate = $('#program_original_end_date').val();
+                        $('#program_current_end_date').val(ogEndDate);
+                        $('#program_current_end_date').focus();
+                        $('#program_current_end_date').blur();
+                    });
+                    $('#program_current_end_date').attr('disabled', true);
+                    $('#program_original_end_date').attr('disabled', false);
+                    //-----------------------------------------------------------------------------
                     wbsTree.setIsProgramNew(true);
                     _Is_Program_New = true;
                     g_newProgram = true;
@@ -9172,7 +9259,7 @@ WBSTree = (function ($) {
                     //luan Jquery - luan here
                     $("#program_current_start_date").datepicker();	//datepicker - program
                     $("#program_current_end_date").datepicker();	//datepicker - program
-                    $("#program_original_end_date").datepicker(); //Aditya
+                    $("#program_original_end_date").datepicker(); // Aditya ogDate
                     //$('#program_project_class').prop('disabled', false);
                     console.log('applied jquery');
 
@@ -9203,7 +9290,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_contract_end_date').val('');
                     modal.find('.modal-body #program_current_start_date').val('');
                     modal.find('.modal-body #program_current_end_date').val('');
-                    modal.find('.modal-body #program_original_end_date').val(''); //Aditya
+                    modal.find('.modal-body #program_original_end_date').val(''); // Aditya ogDate
                     modal.find('.modal-body #program_contract_project_class').val('');
                     modal.find('.modal-body #program_contract_value').val('');   //Manasi 14-07-2020
                     modal.find('.modal-body #total_modification').val('0'); //Jignesh 12-11-2020
@@ -14925,10 +15012,16 @@ WBSTree = (function ($) {
 
             var contextMenuAddText;
             var contextMenuEditText;
-
+            //Aditya delete option only for Admin
+            if (wbsTree.getLocalStorage().role == "Admin") {
+                $("#contextMenuDelete").parent().show();
+            }
+            else {
+                $("#contextMenuDelete").parent().hide();
+            }
             $("#contextMenuAdd").parent().hide();
             $("#contextMenuEdit").parent().hide();
-            $("#contextMenuDelete").parent().hide();
+            //$("#contextMenuDelete").parent().hide(); //Aditya delete option only for Admin
             $("#contextMenuViewGantt").parent().hide();
             // Pritesh change all acl index on 4th to 5th Aug as it was not properly  mapped with DB record
             if (type == "Root") {
@@ -14953,7 +15046,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[1] == 1) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                     $("#contextMenuViewGantt").parent().show();
                 }
             }
@@ -14970,7 +15063,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
             }
             else if (type == "Project") {
@@ -14987,7 +15080,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[5] == 1) {
                     contextMenuEditText = "Edit/Open Element";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuDelete").parent().show();
+                    //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
             }
             //else {
