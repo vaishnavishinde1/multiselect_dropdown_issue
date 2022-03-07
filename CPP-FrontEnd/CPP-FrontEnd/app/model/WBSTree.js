@@ -11088,6 +11088,9 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #program_element_PO_Date').val(moment(selectedNode.ProjectPODate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
                     modal.find('.modal-body #program_element_PO_Date').val(selectedNode.ProjectPODate ? moment(selectedNode.ProjectPODate).format('MM/DD/YYYY') : ""); // Tanmay 09-11-2021
                     modal.find('.modal-body #program_element_PStart_Date').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
+                    debugger; 
+                    // Added by Amruta for invalid date issue
+                    if (selectedNode.ProjectPEndDate != "")
                     modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
 
                     //------------------------------------------------------------------------------------------------------
