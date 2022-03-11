@@ -197,25 +197,51 @@ namespace WebAPI.Models
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
 			Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
 			List<ContractModification> contractModificationsList = new List<ContractModification>();
-			List<Program> programList = new List<Program>();
+			ContractModification contractModificationfororiginalvalue = new ContractModification();
+			ContractModification contractModificationforaddoriginalvalue = new ContractModification();
+
+			Program programid = new Program();
 			try
 			{
 				using (var ctx = new CPPDbContext())
 				{
+
 					contractModificationsList = ctx.ContractModification.Where(u => u.ProgramID == programId).OrderByDescending(u => u.ModificationNo).ToList();
-				//	programList = ctx.Program.Where(s => s.ProgramID == programId).ToList();
+					programid = ctx.Program.Where(s => s.ProgramID == programId).FirstOrDefault();
+					contractModificationfororiginalvalue = contractModificationsList.Where(c => c.ModificationNo == "0").FirstOrDefault();
 
-				//List<ContractModification> contractModList = new List<ContractModification>();
-				//	foreach (var plist in programList)
-				//	{
+					if (contractModificationfororiginalvalue == null)
+					{
 
-				//		//var cvalue = plist.ContractValue.Substring(1);
-				//		var cvalue = plist.ContractValue.Trim('$');
+						var cvalue = programid.ContractValue.Trim('$');
 
-				//		contractModList.Add(new ContractModification() { ModificationNo = "0", Title = "Original Contract Value", ModificationType = 0, Value = cvalue.ToString(), ScheduleImpact = 0, Date = plist.CurrentStartDate??DateTime.Now});
-				//	};
+						contractModificationforaddoriginalvalue.ModificationNo = "0";
+						contractModificationforaddoriginalvalue.Title = "Original Contract Value";
+						contractModificationforaddoriginalvalue.ModificationType = 0;
+						contractModificationforaddoriginalvalue.Value = cvalue;
+						contractModificationforaddoriginalvalue.ScheduleImpact = 0;
+						contractModificationforaddoriginalvalue.Date = programid.CurrentStartDate ?? programid.CreatedDate;
+						contractModificationforaddoriginalvalue.ProgramID = programid.ProgramID;
+						contractModificationforaddoriginalvalue.CreatedDate = programid.CreatedDate;
+						contractModificationforaddoriginalvalue.CreatedBy = programid.CreatedBy;
+						ctx.ContractModification.Add(contractModificationforaddoriginalvalue);
+						ctx.SaveChanges();
+					}
 
-				//	contractModificationsList.AddRange(contractModList);
+					contractModificationsList = ctx.ContractModification.Where(u => u.ProgramID == programId).OrderByDescending(u => u.ModificationNo).ToList();
+					//	programList = ctx.Program.Where(s => s.ProgramID == programId).ToList();
+
+					//List<ContractModification> contractModList = new List<ContractModification>();
+					//	foreach (var plist in programList)
+					//	{
+
+					//		//var cvalue = plist.ContractValue.Substring(1);
+					//		var cvalue = plist.ContractValue.Trim('$');
+
+					//		contractModList.Add(new ContractModification() { ModificationNo = "0", Title = "Original Contract Value", ModificationType = 0, Value = cvalue.ToString(), ScheduleImpact = 0, Date = plist.CurrentStartDate??DateTime.Now});
+					//	};
+
+					//	contractModificationsList.AddRange(contractModList);
 
 
 					return contractModificationsList;
