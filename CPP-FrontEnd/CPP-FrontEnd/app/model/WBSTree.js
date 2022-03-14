@@ -261,6 +261,30 @@ WBSTree = (function ($) {
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                     $("#contextMenuViewGantt").parent().hide();
                 }
+                var angularHttp = wbsTree.getAngularHttp(); //vaishnavi 10-03-2022 
+                angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + d.ProgramElementID).then(function (response) {
+
+
+                    if (_localStorage.employeeID == response.data.result[0].ApproversDetails[3].EmpId) {  //&& _localStorage.role=="Department Manager"
+
+                        if (contextMenuEditText == undefined) {
+                            contextMenuEditText = "Open Project";
+                            if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
+                            $("#contextMenuEdit").parent().show();
+                            localStorage.dept = 1;
+                        }
+
+                        /* $('#ProgramElementModal').find('.modal-body #update_program_element').attr('disabled', 'disabled');*/
+                        //if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
+                        //$("#update_program_element").attr('disabled', 'disabled');
+
+                        //  }
+
+                    }
+
+
+
+                });   //vaishnavi 10-03-2022
             }
             else if (type == "Project") {
                 if (wbsTree.getLocalStorage().acl[7] == 1) {
@@ -8607,21 +8631,21 @@ WBSTree = (function ($) {
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
                 if (ddValue == 1) {
-                    $('#program_element_change_order_amount_modal').val('');//
+                    $('#program_element_change_order_amount_modal').val();// vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').show();
                     $('#divDurationDate').hide();
                 }
                 else if (ddValue == 2) {
-                    $('#program_element_change_order_amount_modal').val('');
+                    $('#program_element_change_order_amount_modal').val(); // vaishnavi 04-03-2022
                     //$('#program_element_change_order_duration_date').val('');
-                    $('#program_element_change_order_schedule_impact').val('');
+                    $('#program_element_change_order_schedule_impact').val(); // vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').hide();
                     $('#divDurationDate').show();
                 }
                 else if (ddValue == 3) {
-                    $('#program_element_change_order_amount_modal').val('');
+                    $('#program_element_change_order_amount_modal').val(); // vaishnavi 04-03-2022
                     //$('#program_element_change_order_duration_date').val('');
-                    $('#program_element_change_order_schedule_impact').val('');
+                    $('#program_element_change_order_schedule_impact').val(); // vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').show();
                     $('#divDurationDate').show();
                 }
@@ -11090,6 +11114,9 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #program_element_PO_Date').val(moment(selectedNode.ProjectPODate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
                     modal.find('.modal-body #program_element_PO_Date').val(selectedNode.ProjectPODate ? moment(selectedNode.ProjectPODate).format('MM/DD/YYYY') : ""); // Tanmay 09-11-2021
                     modal.find('.modal-body #program_element_PStart_Date').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
+                    debugger; 
+                    // Added by Amruta for invalid date issue
+                    if (selectedNode.ProjectPEndDate != "")
                     modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
 
                     //------------------------------------------------------------------------------------------------------
@@ -11944,7 +11971,17 @@ WBSTree = (function ($) {
                     $('#edit_program_element_milestone').attr('disabled', 'disabled');
                     $('#cancel_program_element').removeAttr('disabled');
                     $('#cancel_program_element_x').removeAttr('disabled');
+                   
                 }
+                else if (localStorage.dept == 1) {  //vaishnavi 10-03-2022
+                    $("#delete_program_element").attr('disabled', 'disabled');
+                    $("#update_program_element").attr('disabled', 'disabled');
+                    $("#new_program_element_milestone").attr('disabled', 'disabled');
+                    $("#edit_program_element_milestone").attr('disabled', 'disabled');
+                    $("#new_program_element_change_order").attr('disabled', 'disabled');
+                    $("#updateBtnProgramPrg").attr('disabled', 'disabled');
+                    localStorage.dept = "";
+                } //vaishnavi 10-03-2022
                 else {
                     //$("#delete_program_element").removeAttr('disabled'); //Manasi 24-02-2021
                     $("#update_program_element").removeAttr('disabled');
@@ -14872,6 +14909,9 @@ WBSTree = (function ($) {
                     $("#update_project").attr('disabled', 'disabled');
                     // $('#ProjectModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
+                    $('#new_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
+                    $('#edit_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
+
 
                     $('#cancel_project').removeAttr('disabled');
                     $('#cancel_project_x').removeAttr('disabled');
@@ -14879,10 +14919,15 @@ WBSTree = (function ($) {
                     //$("#delete_project").removeAttr('disabled'); //Manasi 24-02-2021
                     $("#update_project").removeAttr('disabled');
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
-
+                    $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                    $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                   
                     if (selectedNode.level == "Project") {
                         // Edit
                         $('#updateBtnProgramPrgElm').removeAttr('disabled');
+                        $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                        $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+
                     } else {
                         $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     }
@@ -15199,6 +15244,8 @@ WBSTree = (function ($) {
 
             var contextMenuAddText;
             var contextMenuEditText;
+
+
             //Aditya delete option only for Admin
             if (wbsTree.getLocalStorage().role == "Admin") {
                 $("#contextMenuDelete").parent().show();
@@ -15252,6 +15299,31 @@ WBSTree = (function ($) {
                     $("#contextMenuEdit").parent().show();
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
+              
+                var angularHttp = wbsTree.getAngularHttp(); //vaishnavi 10-03-2022 
+                angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + node.ProgramElementID).then(function (response) {  
+
+
+                    if (_localStorage.employeeID == response.data.result[0].ApproversDetails[3].EmpId) {  //&& _localStorage.role=="Department Manager"
+                      
+                        if (contextMenuEditText==undefined) {
+                            contextMenuEditText = "Open Project";
+                            if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
+                            $("#contextMenuEdit").parent().show();
+                            localStorage.dept = 1;
+                        }
+                       
+                           /* $('#ProgramElementModal').find('.modal-body #update_program_element').attr('disabled', 'disabled');*/
+                            //if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
+                            //$("#update_program_element").attr('disabled', 'disabled');
+                            
+                      //  }
+                       
+                    }
+                
+                       
+
+                });   //vaishnavi 10-03-2022
             }
             else if (type == "Project") {
                 if (wbsTree.getLocalStorage().acl[7] == 1) {
@@ -15270,6 +15342,8 @@ WBSTree = (function ($) {
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
             }
+
+
             //else {
             //    contextMenuAddText = "Add New";
             //    contextMenuEditText = "Edit/Open";
@@ -15309,6 +15383,8 @@ WBSTree = (function ($) {
                 'margin-left': '-2em',
                 'margin-top': '-5em'
             });
+          
+                
 
         }
 
