@@ -10814,10 +10814,12 @@ WBSTree = (function ($) {
                                         return s[key] == t[key]
                                     }));
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
-                                        for (var y = 0; y < employeeList.length; y++) {
-                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                                newEmployeeList.push(employeeList[y]);
-                                                break;
+                                        if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
+                                            for (var y = 0; y < employeeList.length; y++) {
+                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    newEmployeeList.push(employeeList[y]);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -11526,14 +11528,18 @@ WBSTree = (function ($) {
                             var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
-                                    //    for (var x = 0; x < employeeList.length; x++) {
-                                    //        if (employeeList[x].ID == projApproverDetails[j].EmpId) {  
-                                    //            $('#' + approversDdl[i].id).val(employeeList[x].ID);
-                                    //            break;
-                                    //        }
-                                    //    }
-                                    $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                    break;
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                                            //    for (var x = 0; x < employeeList.length; x++) {
+                                            //        if (employeeList[x].ID == projApproverDetails[j].EmpId) {  
+                                            //            $('#' + approversDdl[i].id).val(employeeList[x].ID);
+                                            //            break;
+                                            //        }
+                                            //    }
+                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -12516,7 +12522,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-
+                        
             //  debugger;
             var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
@@ -12526,6 +12532,164 @@ WBSTree = (function ($) {
             $(progmPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
+
+            //Narayan - onChange for Department Selection in project
+            $("#project_class").change(function (event) {
+                    //alert($('option:selected', this).text());
+                    //var div = $('#ProgramElementModal').find('.modal-body #divProjectApprovers');
+                    //$("#divProjectApprovers").load(location.href + "#divProjectApprovers");
+                    var selectedNode = wbsTree.getSelectedNode();
+                    var projectClassList = wbsTree.getProjectClassList();
+                    var selectedProjectClass = event.target.value;
+                    //console.log(selectedprojectclass, selectedprojectclass.val());
+                    selectedNode.ProjectClassID = 0;
+                    for (var x = 0; x < projectClassList.length; x++) {
+                        //console.log(projectclasslist[x].projectclassname, selectedprojectclass);
+                        if (projectClassList[x].ProjectClassName == selectedProjectClass) {
+                            selectedNode.ProjectClassID = projectClassList[x].ProjectClassID;
+                        }
+                    }
+                    var angularHttp = wbsTree.getAngularHttp();
+                    angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
+
+                        $('#divProjectApprovers').html('');
+                        var approvers = approversData.data.result;
+                        if (approvers != null && approvers.length > 0) {
+
+                            var totalRows = ~~(approvers.length / 2);
+                            var remainderCol = approvers.length % 2;
+                            var append = '';
+
+                            if (remainderCol > 0) {
+                                totalRows++;
+                            }
+                            var currentNum = 0;
+                            if (totalRows > 0) {
+                                //var marginBottom = 150;
+                                for (var i = 0; i < totalRows; i++) {
+                                    //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
+                                    append += "<div class='_form-group'>";
+                                    for (var j = 0; j < 2; j++) {
+                                        var labelText = approvers[currentNum].Role;
+                                        var ddlId = labelText.replace(/ +/g, "_");
+                                        var dbid = approvers[currentNum].Id;
+
+                                        var userList = wbsTree.getUserList();
+                                        var employeeList = wbsTree.getEmployeeList();
+                                        var newEmployeeList = [];
+                                        for (var x = 0; x < employeeList.length; x++) {
+                                            if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                newEmployeeList.push(employeeList[x]);
+                                                break;
+                                            }
+                                        }
+
+                                        var filters = [{ Role: approvers[currentNum].Role }];
+                                        var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                            var key = Object.keys(t)[0];
+                                            return s[key] == t[key]
+                                        }));
+                                        for (var x = 0; x < roleWiseUserList.length; x++) {
+                                            if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
+                                                for (var y = 0; y < employeeList.length; y++) {
+                                                    if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                        newEmployeeList.push(employeeList[y]);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        employeeList = newEmployeeList;
+                                        employeeList.sort(function (a, b) {
+                                            return a.Name.localeCompare(b.Name);
+                                        });
+                                        //if (j == 0) {
+                                        //    append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        //        "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                        //        "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                        //    for (var x = 0; x < employeeList.length; x++) {
+                                        //        if (employeeList[x].Name != null) { //universal
+                                        //            append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                        //        }
+
+                                        //    }
+                                        //} else {
+
+                                        //    append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        //        "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                        //        "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                        //    for (var x = 0; x < employeeList.length; x++) {
+                                        //        if (employeeList[x].Name != null) { //universal
+                                        //            append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                        //        }
+
+                                        //    }
+
+                                        //}
+                                        if (j == 0) {
+                                            append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                                "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                                "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                            for (var x = 0; x < employeeList.length; x++) {
+                                                if (employeeList[x].Name != null) { //universal
+                                                    if (x == 0 ) {
+                                                        append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    }
+                                                    else {
+                                                        append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    }
+
+                                                }
+
+                                            }
+                                        } else {
+
+                                            append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                                "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                                "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                            for (var x = 0; x < employeeList.length; x++) {
+                                                if (employeeList[x].Name != null) { //universal
+                                                    if (x == 0) {
+                                                        append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    }
+                                                    else {
+                                                        append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                        append += "</select>";
+                                        append += "</div>";
+                                        currentNum++;
+                                        if (currentNum == approvers.length) {
+                                            //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
+                                            //    "<label class='control-label _bold required'></label>" +
+                                            //    "<select type='text' class='form-control'>";
+                                            //append += "</select>";
+                                            //append += "</div>";
+                                            break;
+                                        }
+                                    }
+                                    append += "</div>";
+                                    //marginBottom = marginBottom + 70;
+                                }
+                                $('#divProjectApprovers').append(append);
+                                //var approversDdl = $('#ProgramElementModal').find('.modal-body #divProjectApprovers select');
+                                //for (var i = 0; i < approversDdl.length; i++) {
+                                //    $('#'+approversDdl[i].id).val('');
+                                //}
+                            }
+
+                        }
+
+                    });
+                    //$('#ProgramElementModal').modal('hide');
+            });
+
 
             $('#program_element_total_value').on('change', function () {
                 isFieldValueChanged = true;
@@ -13348,15 +13512,24 @@ WBSTree = (function ($) {
                                         var key = Object.keys(t)[0];
                                         return s[key] == t[key]
                                     }));
+                                    //Narayan - Condition for filter out employee by deparments
+                                    var DepartmentId = 0;
+                                    if (selectedNode.level == "Project") {
+                                        DepartmentId = selectedNode.parent.ProjectClassID;
+                                    } else if (selectedNode.level = "ProgramElement") {
+                                        DepartmentId = selectedNode.ProjectClassID;
+                                    }
 
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
-                                        for (var y = 0; y < employeeList.length; y++) {
-                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                                employeeList[y].rUserId = roleWiseUserList[x].Id;
-                                                newEmployeeList.push(employeeList[y]);
-                                                //var newEmp = { ID: employeeList[y].ID + ',' + roleWiseUserList[x].Id, Name = employeeList[y].Name };
-                                                //newEmployeeList.push(newEmp);
-                                                break;
+                                        if (roleWiseUserList[x].DepartmentID == DepartmentId) {
+                                            for (var y = 0; y < employeeList.length; y++) {
+                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    employeeList[y].rUserId = roleWiseUserList[x].Id;
+                                                    newEmployeeList.push(employeeList[y]);
+                                                    //var newEmp = { ID: employeeList[y].ID + ',' + roleWiseUserList[x].Id, Name = employeeList[y].Name };
+                                                    //newEmployeeList.push(newEmp);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -14353,9 +14526,15 @@ WBSTree = (function ($) {
                                 var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                                 for (var j = 0; j < projEleApproverDetails.length; j++) {
                                     if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
-
-                                        $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
-                                        break;
+                                        for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                            if (approversDdl[i].childNodes[k].value == projEleApproverDetails[j].EmpId) {
+                                                $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
+                                                break;
+                                            }
+                                            else {
+                                                $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -14654,8 +14833,16 @@ WBSTree = (function ($) {
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     $('#' + approversDdl[i].id).val('');
-                                    $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                    break;
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                                            break;
+                                        }
+                                        //else if (approversDdl[i].childNodes.length == 1 ) {
+                                        else {
+                                            $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                                        }
+                                    }
                                 }
                             }
                         }
