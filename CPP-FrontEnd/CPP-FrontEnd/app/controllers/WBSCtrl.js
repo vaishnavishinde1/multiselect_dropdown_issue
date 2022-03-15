@@ -3275,7 +3275,7 @@ angular.module('cpp.controllers').
                             "<tr style = 'background-color:white !important;'>" +
                             "    <td colspan='7'>" +
                             "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
-                            "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                            "          <table id='gridTable'; class='table striped table-condensed table-responsive table-bordered'>" +
                             "             <tbody>" ;
                         var currentProgramCost, currentProjectCost, currentProjectElementCost;
                        
@@ -3326,7 +3326,7 @@ angular.module('cpp.controllers').
                             if (program.children.length == 0) {
                                 str += 
                                     "<tr class='fade-selection-animation'> " +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
@@ -3361,7 +3361,7 @@ angular.module('cpp.controllers').
                                         }
                                     //});
                                     str += "<tr class='fade-selection-animation'>" +
-                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                        "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID+">" + project.ProjectClassName + "</td>" +
@@ -3397,7 +3397,7 @@ angular.module('cpp.controllers').
                                        
                                    // });
                                     str += "<tr class='fade-selection-animation'>" +
-                                        "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                        "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +

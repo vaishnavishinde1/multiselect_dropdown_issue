@@ -322,7 +322,7 @@
 
                 </svg>
             </div>
-            <div class="row wbs" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" id="wbsGridView">
+            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
 
@@ -5579,19 +5579,23 @@
     var displayMap = true;
     function toggle(x) {
         debugger;
+        var mode = localStorage.getItem('MODE');
+        if (mode == 'mindmap') displayMap = true
+        else displayMap = false
         displayMap = !displayMap;
         if (displayMap) {
             $('#mindmap').show();
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
+            localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
-
+            localStorage.setItem('MODE', 'gridview');
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }
         x.classList.toggle("fa-sitemap");

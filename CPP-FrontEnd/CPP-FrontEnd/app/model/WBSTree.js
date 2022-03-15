@@ -37,6 +37,33 @@ WBSTree = (function ($) {
             alert('hi');
         }
 
+        //--------------------Aditya----------------------//
+
+        // changes mode on tabclose for mind map view
+        window.onbeforeunload = function () {
+            localStorage.setItem('MODE', '');
+        };
+
+        var view_mode = localStorage.getItem('MODE');
+        if (view_mode == 'gridview') {
+            $('#mindmap').hide();
+            $('#selectProject').hide();
+            $('#wbsGridView').show();
+            $('#selectManagingDepartment').show();
+            $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
+            $('.toggle-btn i').attr('title', 'Go To TreeView');
+            localStorage.setItem('MODE', 'gridview');
+        }
+        else {
+            $('#mindmap').show();
+            $('#selectProject').show();
+            $('#wbsGridView').hide();
+            $('#selectManagingDepartment').hide();
+            $('.toggle-btn i').attr('class', "fa fa-th-large");
+            $('.toggle-btn i').attr('title', 'Go To GridView');
+            localStorage.setItem('MODE', 'mindmap');
+        }
+        //--------------------Aditya----------------------//
 
         //Cost overhead type arrays
         var costOverheadTypes = [{
@@ -196,7 +223,6 @@ WBSTree = (function ($) {
         //Added by Amruta
 
         function displayMenu(type, e, d) {
-            debugger;
             console.log(d);
             $("#contextMenu").attr('contextType', type);
 
@@ -444,7 +470,7 @@ WBSTree = (function ($) {
                 wbsTree.click(wbsTree, d);
             })
                 .on('contextmenu', function (d, i) {
-                    console.log(d);
+                    console.log(d);                     
                     //d3.event.preventDefault();
                     var e = d;
                     type = $(this).attr('level');
@@ -643,7 +669,7 @@ WBSTree = (function ($) {
                         "<tr style = 'background-color:white !important;'>" +
                         "    <td colspan='7'>" +
                         "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
-                        "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                        "          <table id='gridTable'; class='table striped table-condensed table-responsive table-bordered'>" +
                         "             <tbody>";
                     var currentProgramCost, currentProjectCost, currentProjectElementCost;
 
@@ -690,7 +716,7 @@ WBSTree = (function ($) {
                         if (program.children.length == 0) {
                             str +=
                                 "<tr class='fade-selection-animation'> " +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
@@ -725,7 +751,7 @@ WBSTree = (function ($) {
                                 }
                                 //});
                                 str += "<tr class='fade-selection-animation'>" +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
@@ -760,7 +786,7 @@ WBSTree = (function ($) {
 
                                 //});
                                 str += "<tr class='fade-selection-animation'>" +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
@@ -1878,13 +1904,58 @@ WBSTree = (function ($) {
 
             var contextMenu = document.getElementById("contextMenu");
 
+         //------------------------------------Aditya 11032022---------------------------------//
+                    //$('#gridTable tr').on('click', function () {
+                    //    var row = $(this);
+                    //    var cell = $(this.cells);
+                    //    row.each(function () {
+                    //        cell.each(function (j) {
+                    //            cell[j].className = 'my-word-wrap ';
+                    //            $('#gridTable tbody tr td').removeClass('gridRowClass');
+                    //        });
+                    //    });
+                    //});
 
+                    $('#gridTable tr').bind('contextmenu', function () {
+                        var row = $(this);
+                        var cell = $(this.cells);
+                        $('#gridTable tbody tr td').removeClass('gridRowClass');
+                        row.each(function () {
+                            if (row[0].cells.length == 7) {
+                                
+                                cell.each(function (j) {
+                                    if (cell[j].cellIndex != 0) {
+                                        cell[j].className='my-word-wrap gridRowClass';
+                                    }
+                                    else {
+                                        cell[j].className = 'my-word-wrap ';
+                                        $('#gridTable tbody tr td').removeClass('gridRowClass');
+                                    }
+                                })
+                            }
+                            else {
+                                cell.each(function (j) {
+                                    if (cell[j].className != 'my-word-wrap gridRowClass') {
+                                        cell[j].className = 'my-word-wrap gridRowClass';
+                                    }
+                                    else {
+                                        cell[j].className = 'my-word-wrap ';
+                                        $('#gridTable tr').removeClass('gridRowClass');
+                                    }
+                                })
+                            }
+                            
+                        })
+                        
+                    });
+        //------------------------------------Aditya 11032022---------------------------------//
 
 
 
 
             gridView.on('click', function (d) {
                 console.debug(d);
+                //$('#gridTable tbody td tr').removeClass('gridRowClass');
                 $('svg.trendTree g').show();
                 type = $(this).attr('level');
                 if (type == "Root") {
@@ -8995,7 +9066,7 @@ WBSTree = (function ($) {
                     var gridUploadedDocumentProgram = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocumentProgram tbody');
                     gridUploadedDocumentProgram.empty();
                     //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                    debugger;
+                    //debugger;
                     _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
                         //wbsTree.setDocumentList(response.result);
                         var _documentList = response.result;
