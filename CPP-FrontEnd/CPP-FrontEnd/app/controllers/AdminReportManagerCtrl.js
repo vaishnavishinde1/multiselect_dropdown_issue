@@ -99,6 +99,10 @@
                 { filterName: 'Cost Type Report', reportPathName: 'CostTypeReport', fileName: 'Cost Type Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
                 // Jignesh 31-12-2020
                 { filterName: 'Trend Status Report', reportPathName: 'TrendStatusReport', fileName: 'Trend Status Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
+
+                //Added by Amruta 15-03-2022
+                { filterName: 'Procurement Report', reportPathName: 'ProcurementReport', fileName: 'Procurement Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
+
             ]
 
             // Jignesh 21-12-2020
@@ -388,6 +392,24 @@
                         + '&ProgramElementID=' + allFilters.programElementID
                         + '&ProjectID=' + allFilters.projectID
                         + '&Status=' + $scope.selectedTrendStatus
+                        + '&FileType=' + 'excel';
+
+                    openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
+                }
+                    //Added by Amruta 
+                else if ($scope.reportTypeFilter.filterName == 'Procurement Report') {            //Procurement Report - MySQL
+                    baseUrl = serviceBasePath + 'Request/ProcurementReport';
+
+                    var pdfUrl = baseUrl
+                        + '?ProgramID=' + allFilters.programID
+                        + '&ProgramElementID=' + allFilters.programElementID
+                        + '&ProjectID=' + allFilters.projectID
+                        + '&FileType=' + 'PDF';
+
+                    var excelUrl = baseUrl
+                        + '?ProgramID=' + allFilters.programID
+                        + '&ProgramElementID=' + allFilters.programElementID
+                        + '&ProjectID=' + allFilters.projectID
                         + '&FileType=' + 'excel';
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);

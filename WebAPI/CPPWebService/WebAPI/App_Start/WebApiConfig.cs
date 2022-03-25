@@ -959,6 +959,12 @@ namespace WebAPI
                 routeTemplate: "Request/WorkBreakdownStructureAdminReport",
                 defaults: new { controller = "RequestWorkBreakdownStructureAdminReport" }
                 );
+
+            config.Routes.MapHttpRoute( //luan here - Procurement Report
+               name: "ProcurementReport",
+               routeTemplate: "Request/ProcurementReport",
+               defaults: new { controller = "RequestProcurementReport" }
+               );
             #endregion
 
             config.Routes.MapHttpRoute( //luan here - Work Breakdown Structure Admin Report

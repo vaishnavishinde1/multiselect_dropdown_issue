@@ -47,6 +47,7 @@ namespace WebAPI.Models
         public String Threshold { get; set; }
 
         public int EmployeeID { get; set; }
+        public int DepartmentID { get; set; }
 
         public Boolean PasswordChangeRequired { get; set; }
 
@@ -60,7 +61,8 @@ namespace WebAPI.Models
         [NotMapped]
         public List<UserRole> lstUserRole { get; set; }
 
-        public User(String auth, String fName, String mName, String lName, String email, String userid, int id, String loginPassword, int employeeid)
+        
+        public User(String auth, String fName, String mName, String lName, String email, String userid, int id, String loginPassword, int employeeid, int departmentid)
         {
             Role = auth;
             FirstName = fName;
@@ -69,6 +71,7 @@ namespace WebAPI.Models
             Email = email;
             UserID = userid;
             EmployeeID = employeeid;
+            DepartmentID = departmentid;
             Id = id;
             LoginPassword = loginPassword;
         }
@@ -83,6 +86,7 @@ namespace WebAPI.Models
             Email = "N/A";
             UserID = "N/A";
             EmployeeID = 0;
+            DepartmentID = 0;
             Id = 0;
         }
 

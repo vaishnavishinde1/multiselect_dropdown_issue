@@ -272,6 +272,8 @@ namespace WebAPI
         public DbSet<Versionmaster> VersionMaster { get; set; }
         public DbSet<ProjectAccessControl> ProjectAccessControl { get; set; } // Jignesh-18-10-2021
 
+        public DbSet<NotificationDays> NotificationDays { get; set; }   // Narayan - 03-03-2022
+
         public DbSet<UserRoleRelation> UserRoleRelation { get; set; }
 
 
