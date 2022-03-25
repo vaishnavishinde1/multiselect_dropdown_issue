@@ -1699,7 +1699,8 @@ angular.module('cpp.controllers').
                             var docTypeList = wbsTree.getDocTypeList();
                             docTypeDropDownProgram.empty();
                             // Jignesh-25-03-2021
-                            if (wbsTree.getLocalStorage().role === "Admin") {
+                            //if (wbsTree.getLocalStorage().role === "Admin") {
+                            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                                 docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                             }
                             for (var x = 0; x < docTypeList.length; x++) {
@@ -1834,7 +1835,8 @@ angular.module('cpp.controllers').
                             clientDropDownProgram = modal.find('.modal-body #program_client_poc');
                             clientDropDownProgram.empty();
                             // Jignesh-25-03-2021
-                            if (wbsTree.getLocalStorage().role === "Admin") {
+                            //if (wbsTree.getLocalStorage().role === "Admin") {
+                            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                                 clientDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                             }
                             for (var x = 0; x < clientList.length; x++) {
@@ -3900,7 +3902,8 @@ angular.module('cpp.controllers').
                     $scope.organizationList = organizationData.result;
 
                     if ($scope.organizationList.length == 0) {
-                        if (localStorageService.get("authorizationData").role == "Admin") {
+                        //if (localStorageService.get("authorizationData").role == "Admin") {
+                        if (localStorageService.get("authorizationData").role.indexOf('Admin') != -1) {
                             window.location.hash = '#/app/admin-organization';
                         }
                     }
