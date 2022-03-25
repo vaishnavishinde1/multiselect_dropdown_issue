@@ -2410,9 +2410,11 @@ WBSTree = (function ($) {
                             isWhiteListed = true;
                         }
                     }
-
+                    
                     if (!isWhiteListed) {
+                        debugger;
                         var noAccessMsg = '';
+                        
                         switch (wbsTree.getLocalStorage().role) {
                             case 'Admin':
                             case 'Accounting':
@@ -2565,7 +2567,8 @@ WBSTree = (function ($) {
                 var clientDropDown = modal.find('.modal-body #program_client_poc');
                 var clientList = wbsTree.getClientList();
                 clientDropDown.empty();
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 for (var x = 0; x < clientList.length; x++) {
@@ -8839,7 +8842,8 @@ WBSTree = (function ($) {
                         return a.ClientName.localeCompare(b.ClientName);  //vaishnavi
                     }); //vaishnavi
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") { Nivedita 22-03-2022
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -9148,7 +9152,8 @@ WBSTree = (function ($) {
                         return a.ClientName.localeCompare(b.ClientName);   //vaishnavi
                     }); //vaishnavi
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-3-2022
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -9545,7 +9550,8 @@ WBSTree = (function ($) {
                 docTypeDropDownProgram.empty();
 
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-03-2022
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
 
@@ -10092,7 +10098,8 @@ WBSTree = (function ($) {
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-03-2022
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 if (g_editprojectdocument == false) {
@@ -11248,7 +11255,8 @@ WBSTree = (function ($) {
                     var clientList = wbsTree.getClientList();
                     var clientName = '';
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -11702,7 +11710,8 @@ WBSTree = (function ($) {
                     var clientDropDown = modal.find('.modal-body #client');
                     var clientList = wbsTree.getClientList();
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -11911,7 +11920,8 @@ WBSTree = (function ($) {
                 var docTypeDropDownProgram = modal.find('.modal-body #document_type_programPrgElm');
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 if (g_editelementdocument == false) {
@@ -12889,7 +12899,8 @@ WBSTree = (function ($) {
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 for (var x = 0; x < docTypeList.length; x++) {
@@ -14030,7 +14041,8 @@ WBSTree = (function ($) {
                     var clientList = wbsTree.getClientList();
                     var clientName = '';
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -14482,7 +14494,8 @@ WBSTree = (function ($) {
                     var clientDropDown = modal.find('.modal-body #client');
                     var clientList = wbsTree.getClientList();
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {

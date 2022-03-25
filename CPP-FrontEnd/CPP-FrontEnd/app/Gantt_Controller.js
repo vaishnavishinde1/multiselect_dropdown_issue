@@ -943,7 +943,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         position["name"] = '----------Add New----------';
                                         position["value"] = 0;
@@ -1052,7 +1053,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         subcontractorType["name"] = '----------Add New----------';
                                         subcontractorType["value"] = 0;
@@ -1117,7 +1119,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         //luan quest 3/26
                                         materialCategory["name"] = '----------Add New----------';
@@ -1218,7 +1221,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         odcType["name"] = '----------Add New----------';
                                         odcType["value"] = 0;
@@ -1304,7 +1308,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         employee["name"] = '----------Add New----------';
                                         employee["value"] = 0;
@@ -1388,7 +1393,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         subcontractor["name"] = '----------Add New----------';
                                         subcontractor["value"] = 0;
@@ -1462,7 +1468,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                                     // Jignesh-25-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         //luan quest 3/26
                                         material["name"] = '----------Add New----------';
                                         material["value"] = 0;
@@ -3302,7 +3309,8 @@ angular.module('xenon.Gantt_Controller', []).
                     var temp = {};
                     // Jignesh-26-03-2021
                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                    if (authRole === "Admin") {
+                    //if (authRole === "Admin") {
+                    if (authRole.indexOf('Admin') != -1) {
                         temp.key = 'Add New';
                         temp.label = 'Add New';
                         $scope.MainCategory.push(temp);
@@ -3728,7 +3736,8 @@ angular.module('xenon.Gantt_Controller', []).
                         var temp = {};
                         // Jignesh-26-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             temp.key = 'Add New';
                             temp.label = 'Add New';
                             $scope.MainCategory.push(temp);
@@ -3778,7 +3787,8 @@ angular.module('xenon.Gantt_Controller', []).
                             var temp = {};
                             // Jignesh-26-03-2021
                             var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                            if (authRole === "Admin") {
+                            //if (authRole === "Admin") {
+                            if (authRole.indexOf('Admin') != -1) {
                                 temp.key = 'Add New';
                                 temp.label = 'Add New';
                                 $scope.subCategory.push(temp);
@@ -3821,7 +3831,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                     // Jignesh-25-03-2021
                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                    if (authRole === "Admin") {
+                    //if (authRole === "Admin") {
+                    if (authRole.indexOf('Admin') != -1) {
                         //luan quest 3/26
                         position["name"] = '----------Add New----------';
                         position["value"] = 0;
@@ -3851,7 +3862,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                 // Jignesh-25-03-2021
                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                if (authRole === "Admin") {
+                //if (authRole === "Admin") {
+                if (authRole.indexOf('Admin') != -1) {
                     temp["name"] = '----------Add New----------';
                     temp["value"] = 0;
                     $scope.materialCategories.push(temp);
@@ -3883,7 +3895,8 @@ angular.module('xenon.Gantt_Controller', []).
                 var temp = { name: '', value: '' };
                 // Jignesh-25-03-2021
                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                if (authRole === "Admin") {
+                //if (authRole === "Admin") {
+                if (authRole.indexOf('Admin') != -1) {
                     temp["name"] = '----------Add New----------';
                     temp["value"] = 0;
                     $scope.subcontractorTypes.push(temp);
@@ -3937,7 +3950,8 @@ angular.module('xenon.Gantt_Controller', []).
                 var temp = { name: '', value: '' };
                 // Jignesh-25-03-2021
                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                if (authRole === "Admin") {
+                //if (authRole === "Admin") {
+                if (authRole.indexOf('Admin') != -1) {
                     temp["name"] = '----------Add New----------';
                     temp["value"] = 0;
                     $scope.ODCTypes.push(temp);
@@ -10570,7 +10584,9 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -10618,7 +10634,8 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -10668,7 +10685,8 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -10718,7 +10736,8 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -10768,7 +10787,8 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -10815,7 +10835,8 @@ angular.module('xenon.Gantt_Controller', []).
                     if ($scope.description[id].name != '----------Add New----------') {
                         // Jignesh-25-03-2021
                         var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        if (authRole === "Admin") {
+                        //if (authRole === "Admin") {
+                        if (authRole.indexOf('Admin') != -1) {
                             var temp = { name: '----------Add New----------', value: '0' };
                             resultAr.push(temp);
                         }
@@ -12857,7 +12878,8 @@ angular.module('xenon.Gantt_Controller', []).
                                                 var temp = {};
                                                 // Jignesh-26-03-2021
                                                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                                if (authRole === "Admin") {
+                                                //if (authRole === "Admin") {
+                                                if (authRole.indexOf('Admin') != -1) {
                                                     temp.key = 'Add New';
                                                     temp.label = 'Add New';
                                                     $scope.MainCategory.push(temp);
@@ -12958,7 +12980,8 @@ angular.module('xenon.Gantt_Controller', []).
                                     var temp = {};
                                     // Jignesh-26-03-2021
                                     var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    if (authRole === "Admin") {
+                                    //if (authRole === "Admin") {
+                                    if (authRole.indexOf('Admin') != -1) {
                                         temp.key = 'Add New';
                                         temp.label = 'Add New';
                                         $scope.subCategory.push(temp);
@@ -13086,7 +13109,8 @@ angular.module('xenon.Gantt_Controller', []).
                                                 var temp = {};
                                                 // Jignesh-26-03-2021
                                                 var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                                if (authRole === "Admin") {
+                                                //if (authRole === "Admin") {
+                                                if (authRole.indexOf('Admin') != -1) {
                                                     temp.key = 'Add New';
                                                     temp.label = 'Add New';
                                                     $scope.subCategory.push(temp);
