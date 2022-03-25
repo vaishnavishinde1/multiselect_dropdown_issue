@@ -695,7 +695,7 @@ angular.module('cpp.controllers').
                                 Email: user.Email,
                                 EmployeeID: user.EmployeeID,
                                 PasswordChangeRequired: user.PasswordChangeRequired,
-                                DepartmentID: user.DepartmentID
+                                DepartmentID: user.DepartmentID,
                                 lstUserRole: user.lstUserRole
 
                             }
