@@ -230,7 +230,8 @@ WBSTree = (function ($) {
             var contextMenuEditText;
 
             //Aditya delete option only for Admin
-            if (wbsTree.getLocalStorage().role == "Admin") {
+            //if (wbsTree.getLocalStorage().role == "Admin") {
+            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                 $("#contextMenuDelete").parent().show();
             }
             else {
