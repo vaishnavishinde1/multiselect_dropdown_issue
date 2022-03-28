@@ -2517,7 +2517,7 @@ WBSTree = (function ($) {
                     }
                     
                     if (!isWhiteListed) {
-                        debugger;
+                        
                         var noAccessMsg = '';
                         
                         switch (wbsTree.getLocalStorage().role) {
@@ -10911,10 +10911,25 @@ WBSTree = (function ($) {
                                         }
                                     }
 
-                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    var res = (s[key] == t[key]);
+                                    //    return s[key] == t[key]
+                                    //}));
+                                    
+                                    //var adminRoleList = userList.filter(s => filter1.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    var res = s.RoleList.indexOf(t[key]);
+                                    //    return res >= 0
+                                    //}));
+
+                                    
+                                    var filters = [{ RoleList: approvers[currentNum].Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
-                                        return s[key] == t[key]
+                                        var res = s.RoleList.indexOf(t[key]);
+                                        return res >= 0
                                     }));
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
                                         if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
@@ -12703,10 +12718,16 @@ WBSTree = (function ($) {
                                             }
                                         }
 
-                                        var filters = [{ Role: approvers[currentNum].Role }];
+                                        //var filters = [{ Role: approvers[currentNum].Role }];
+                                        //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                        //    var key = Object.keys(t)[0];
+                                        //    return s[key] == t[key]
+                                        //}));
+                                        var filters = [{ RoleList: approvers[currentNum].Role }]
                                         var roleWiseUserList = userList.filter(s => filters.every(t => {
                                             var key = Object.keys(t)[0];
-                                            return s[key] == t[key]
+                                            var res = s.RoleList.indexOf(t[key]);
+                                            return res >= 0
                                         }));
                                         for (var x = 0; x < roleWiseUserList.length; x++) {
                                             if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
@@ -13627,10 +13648,16 @@ WBSTree = (function ($) {
                                         }
                                     }
 
-                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    return s[key] == t[key]
+                                    //}));
+                                    var filters = [{ RoleList: approvers[currentNum].Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
-                                        return s[key] == t[key]
+                                        var res = s.RoleList.indexOf(t[key]);
+                                        return res >= 0
                                     }));
                                     //Narayan - Condition for filter out employee by deparments
                                     var DepartmentId = 0;

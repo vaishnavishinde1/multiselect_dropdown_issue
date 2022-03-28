@@ -469,7 +469,7 @@ angular.module('cpp.controllers').
             $scope.check = function (row, col) {
                 if (row.entity.checkbox == false) {
                     row.entity.checkbox = true;
-                    row.config.enableRowSelection = true;
+                    //row.config.enableRowSelection = true;
                 } else {
                     row.entity.checkbox = false;
                 }
@@ -769,15 +769,15 @@ angular.module('cpp.controllers').
 
 
                                 //Find role for a user
-                                debugger;
-                                for (var x = 0; x < $scope.roleCollection.length; x++) {
-                                    debugger;
-                                    if ($scope.roleCollection[x].RoleId == item.Role) {
-                                        item.Role = $scope.roleCollection[x].Role;
-                                        //$scope.userCollection.EmployeeID = item.EmployeeID;
-                                        //$scope.userCollection.EmployeeName = item.EmployeeName;
-                                    }
-                                }
+                                
+                                //for (var x = 0; x < $scope.roleCollection.length; x++) {
+                                //    debugger;
+                                //    if ($scope.roleCollection[x].RoleId == item.Role) {
+                                //        item.Role = $scope.roleCollection[x].Role;
+                                //        //$scope.userCollection.EmployeeID = item.EmployeeID;
+                                //        //$scope.userCollection.EmployeeName = item.EmployeeName;
+                                //    }
+                                //}
 
 
                                 //Find required password change
@@ -831,7 +831,7 @@ angular.module('cpp.controllers').
                                 EmployeeID: item.EmployeeID,
                                 PasswordChangeRequired: item.PasswordChangeRequired,
                                 displayId: item.displayId,
-                                DepartmentID: user.DepartmentID
+                                DepartmentID: item.DepartmentID
 
                             }
                             listToSave.push(dataObj);
