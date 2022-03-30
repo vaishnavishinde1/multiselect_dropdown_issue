@@ -704,9 +704,12 @@ namespace WebAPI.Services
             {
                 conn = ConnectionManager.getConnection();
                 conn.Open();
-                String query = "SELECT * FROM user";
-                query += " WHERE Role = '" + Role + "'";
-                //   String query = "SELECT u.Role, u.FirstName, u.MiddleName, u.LastName, u.Email, u.UserID, u.Id,a.Cost, '' as loginPassword FROM user u left outer join approval_matrix  a on u.Role = a.Role";
+                //Nivedita 22-03-2022
+                String query = "SELECT * FROM user where Id in (";
+                query += " select UserID from user_role_relation where UserRoleId=(select Id from user_roles WHERE Role = '" + Role + "'))";
+                //String query = "SELECT * FROM user";
+                //query += " WHERE Role = '" + Role + "'";
+                ////   String query = "SELECT u.Role, u.FirstName, u.MiddleName, u.LastName, u.Email, u.UserID, u.Id,a.Cost, '' as loginPassword FROM user u left outer join approval_matrix  a on u.Role = a.Role";
                 MySqlCommand command = new MySqlCommand(query, conn);
 
                 using (reader = command.ExecuteReader())
@@ -719,9 +722,11 @@ namespace WebAPI.Services
                         //UserList.Add(returnedUser);
                         User RetreivedUser = new User(
                                                     );
-                        RetreivedUser.Role = reader.GetValue(7).ToString().Trim();
+                        RetreivedUser.Role = Role;
+                        //RetreivedUser.Role = reader.GetValue(7).ToString().Trim();
                         RetreivedUser.Email = reader.GetValue(8).ToString().Trim();
-                        RetreivedUser.Threshold = reader.GetValue(7).ToString().Trim();
+                        RetreivedUser.Threshold = Role;
+                        //RetreivedUser.Threshold = reader.GetValue(7).ToString().Trim();
                         UserList.Add(RetreivedUser);
                     }
                 }

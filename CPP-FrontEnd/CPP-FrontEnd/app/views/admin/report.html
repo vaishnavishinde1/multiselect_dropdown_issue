@@ -136,7 +136,7 @@
         </div>
 
         <!--Programs aka Super Program Elements-->
-        <div ng-show="(reportTypeFilter.filterName=='Project Element List Admin Report') || reportTypeFilter.filterName=='Trend Status Report'" class="form-group required" style="padding-left:0;padding-right:0;"
+        <div ng-show="(reportTypeFilter.filterName=='Project Element List Admin Report') || (reportTypeFilter.filterName=='Procurement Report') || reportTypeFilter.filterName=='Trend Status Report'" class="form-group required" style="padding-left:0;padding-right:0;"
              ng-class="{ 'has-error' : reportManagerForm.programFilter.$error.required}">
 
             <label class="control-label">Contract </label>  <!--Manasi 16-02-2021-->
@@ -153,6 +153,7 @@
         <!--Program Elements aka Super Projects-->
         <div ng-show="(reportTypeFilter.filterName=='Customer Report' && selectedOrganization)
              || (reportTypeFilter.filterName=='Project Element List Admin Report' && selectedProgram)
+             || (reportTypeFilter.filterName=='Procurement Report' && selectedProgram)
              || reportTypeFilter.filterName=='Sales Order Report'
              || reportTypeFilter.filterName=='Purchase Order Report'
 			 || reportTypeFilter.filterName=='Project Export From CPP Into Jonas'
@@ -177,6 +178,7 @@
         <!--Projects aka Project Elements-->
         <div ng-show="(reportTypeFilter.filterName=='Customer Report'
              || (reportTypeFilter.filterName=='Project Element List Admin Report' && selectedProgramElement)
+             || (reportTypeFilter.filterName=='Procurement Report' && selectedProgramElement)
              || reportTypeFilter.filterName=='Sales Order Report'
              || reportTypeFilter.filterName=='Purchase Order Report'
 			 || reportTypeFilter.filterName=='Baseline Export From CPP Into Jonas'

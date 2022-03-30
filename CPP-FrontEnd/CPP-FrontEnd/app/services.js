@@ -94,7 +94,9 @@ angular.module('xenon.services', []).
 			var s = localStorageService.get('authorizationData');
 			console.log(s);
 			if (s) {
-                if (localStorageService.get('authorizationData').role === "Admin") {
+                //if (localStorageService.get('authorizationData').role === "Admin") {
+				//Nivedita 22-03-2022
+				if (localStorageService.get('authorizationData').role.indexOf('Admin') != -1) {
 					var admin = this.addItem('Administration', '/app/admin', 'linecons-desktop');
 					admin.addItem('Actuals Upload', '-/actuals-upload');
 					admin.addItem('Application Security', '-/access-control'); // "-/" will append parents link
@@ -136,7 +138,8 @@ angular.module('xenon.services', []).
 
                     var statistic = this.addItem('Statistics', '/app/admin-Chart', 'glyphicon glyphicon-signal');   //Manasi 11-09-2020
 				}
-				else if (localStorageService.get('authorizationData').role === "Accounting")
+				//else if (localStorageService.get('authorizationData').role === "Accounting") Nivedita 22-03-2022
+				if (localStorageService.get('authorizationData').role.indexOf('Accounting') != -1)
 				{
 					var accounting = this.addItem('Purchase Order', '/app/po-Approval/', 'linecons-desktop');
 				}
@@ -285,7 +288,8 @@ angular.module('xenon.services', []).
 			//var cost_gantt    = this.addItem('Cost Gantt', 		'/app/cost-gantt', 			'linecons-note');
 			var project_location    = this.addItem('Project Location', 		'/app/project-location', 			'linecons-globe');
 			var const_timeline = this.addItem('Construction Timeline', 		'/app/const-timeline', 			'linecons-params');
-			if (localStorageService.get('authorizationData').role === "Admin")
+			//if (localStorageService.get('authorizationData').role === "Admin")
+			if (localStorageService.get('authorizationData').role.indexOf('Admin') != -1)
 			{
 				var admin    = this.addItem('Administration', 		'/app/admin', 			'linecons-note');
 

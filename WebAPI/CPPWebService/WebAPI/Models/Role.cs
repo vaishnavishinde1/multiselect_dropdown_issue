@@ -18,10 +18,13 @@ namespace WebAPI.Models
     public class UserRole
     {
         readonly static log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        
+        public int Id;
         public int Operation;
         public String Role;
         public String AccessControlList;
         public String DT_RowId;
+        public bool isSelected;
         UserRole(String role, String acl)
         { DT_RowId = role; Role = role; AccessControlList = acl;}
         public UserRole() { }
@@ -66,11 +69,12 @@ namespace WebAPI.Models
                     while (reader.Read())
                     {
                         UserRole RetreivedRole = new UserRole();
-                        RetreivedRole.Role = reader.GetValue(0).ToString().Trim();
+                        RetreivedRole.Id = reader.GetInt32(0);
+                        RetreivedRole.Role = reader.GetValue(1).ToString().Trim();
                         Object[] values = new Object[reader.FieldCount];
                         int fieldCount = reader.GetValues(values);
                         RetreivedRole.AccessControlList = null;
-                        for (int i = 1; i < fieldCount; i++)
+                        for (int i = 2; i < fieldCount; i++)
                             RetreivedRole.AccessControlList += reader.GetValue(i).ToString().Trim();
 
                         MatchedRoleList.Add(RetreivedRole);
@@ -109,6 +113,8 @@ namespace WebAPI.Models
             return MatchedRoleList;
 
         }
+
+
 
 
         public static String registerRole(String Role, String AccessControlList)

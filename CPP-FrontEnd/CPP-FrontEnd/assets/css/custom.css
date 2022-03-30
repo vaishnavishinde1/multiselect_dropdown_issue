@@ -7,6 +7,7 @@
     overflow-anchor: none;
 }
 
+
 #red-square, #green-square {
     width: 10px;
     height: 10px;
@@ -777,7 +778,7 @@ fieldset.scheduler-border {
 }
 
 body {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
     padding-right: 0 !important;
 }
@@ -1290,4 +1291,22 @@ option[value='-1'] {
 .wbs-contextmenu {
     margin-left: -2%;
     margin-top: -5%;
+}
+
+
+/*Aditya 15032022 Hilight selected row*/
+.gridRowClass {
+    background-color: #c9dde1 !important;
+}
+
+.gridWBS tr:hover {
+    background-color: #c9dde1 !important;
+}
+
+.gridWBS tr:hover td.orgcell.my-word-wrap {
+    background: #fff !important;
+}
+
+#tree-container .table-responsive > tbody > tr > td {
+    white-space: normal !important;
 }

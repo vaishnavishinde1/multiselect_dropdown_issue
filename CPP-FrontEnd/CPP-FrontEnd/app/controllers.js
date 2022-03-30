@@ -419,6 +419,7 @@ angular.module('xenon.controllers', []).
     controller('SidebarMenuCtrl', function ($scope, $rootScope, $menuItems, $timeout, $location, $state, $layout, $transitions) {
 
         // Menu Items
+        
         $scope.collapse= function(item){
           console.log($('#main-menu').find('li:eq(1)').hasClass('expanded'));
             var isExpanded = $('#main-menu').find('li:eq(1)').hasClass('expanded');

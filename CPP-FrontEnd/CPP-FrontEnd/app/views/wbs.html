@@ -248,6 +248,45 @@
         #emp_class + .btn-group .checkbox input[type=checkbox] {
             margin-left: -25px;
         }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+         /* Change background color of buttons on hover */
+         .tab button:hover {
+          background-color: #ddd;
+         }
+
+         /* Create an active/current tablink class */
+         .tab button.active {
+            background-color: #ccc;
+          }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+
 </style>
 <div class="row">
     <div class="col-sm-8" id="program_navigation">
@@ -322,7 +361,7 @@
 
                 </svg>
             </div>
-            <div class="row wbs" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" id="wbsGridView">
+            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
 
@@ -1164,10 +1203,39 @@
                         </div>
                     </form>-->
                     <div>
+
+                        <!--<div class="nav nav-pills nav-fill">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" id="viewDocView">Document Management</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="viewInsView">Insurance</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="viewTestView">Test</a>
+        </li>-->
+                        <!--<li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+    </li>-->
+                        <!--</ul>
+
+
+
+    </div>-->
                         <!--style="padding-left: 3%;"-->
                         <!--Pritesh Latest New Code-->
-
-                        <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;">
+                        <div class="tab">
+                            <button class="tablinks" onclick="openTab(event, 'tabGeneral')">General</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabPrelimnaryNotices')">Prelimnary Notices</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabWarrenty')">Warrenty</button>
+                            <button class="tablinks" onclick="openTab(event, 'documentUploadProgramNew')">Document Management</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabCommonNotes')">Common Notes</button>
+                        </div>
+                        <div id="tabGeneral" class="tabcontent"></div>
+                        <div id="tabPrelimnaryNotices" class="tabcontent"></div>
+                        <div id="tabWarrenty" class="tabcontent"></div>
+                        <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;" class="tabcontent">
                             <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Contract Document Management</h4>
                             <div class="panel-body" style="overflow: scroll; padding-top: 0; height: 410px !important;">
                                 <table id="gridUploadedDocumentProgramNew" class="table table-striped">
@@ -1181,7 +1249,7 @@
                                             <td style="font-weight:900;">Document Type</td>
                                             <td style="font-weight:900;">Modification</td> <!--Jignesh-ModificationPopUpChanges-->
                                             <!--<td style="font-weight:900;">Upload Date</td>
-                                            <td style="font-weight:900;">Upload By</td>-->
+                        <td style="font-weight:900;">Upload By</td>-->
                                             <!--Comment by Jignesh-->
                                             <td style="font-weight:900;">Document Details</td> <!--Added by Jignesh-->
                                         </tr>
@@ -1194,7 +1262,7 @@
                             <div class="row" id="buttonRow">
                                 <div class="col-sm-12 text-center">
                                     <!--<button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip"
-                                    data-placement="top" title="Delete Selected Documents"></button>-->
+                data-placement="top" title="Delete Selected Documents"></button>-->
                                     <button id="DeleteUploadProgram" class="btn btn-black" style="margin-top:8px;">Delete</button>  <!-- Shweta 16-07-2020 -->
                                     <button id="updateBtnProgram" class="btn btn-black" style="margin-top:8px;">Upload</button>      <!-- Shweta 16-07-2020 -->
                                     <button id="downloadBtnProgram" class="btn btn-black" style="margin-top:8px;">Download</button>   <!-- Shweta 16-07-2020 -->
@@ -1203,54 +1271,54 @@
                                     <button id="EditBtnProgram" class="btn btn-black" style="margin-top:8px;">Edit</button>
                                 </div>
                                 <!--<div class="col-sm-6" id="bfc-container" style="text-align:right;">
-                                    <button id="new_program_element_milestone">add</button>
-                                    <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
-                                    <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
-                                </div>-->
+                <button id="new_program_element_milestone">add</button>
+                <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
+                <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
+            </div>-->
                                 <!--<div class="col-sm-2" style="text-align: center; padding: 0;">
-                                    <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
-                                </div>-->
+                <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
+            </div>-->
                             </div>
                             <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
                                 <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
                             </div>
                         </div>
-
+                        <div id="tabCommonNotes" class="tabcontent"></div>
 
 
 
 
                         <!--PROGRAM DOCUMENT UPLOAD old working code-->
                         <!--<div id="documentUploadProgram" style="padding:5px; height:250px;width:99.5%;border: #a9a9a9;border-style: solid; border-width: thin;">
-                            <div class="row" id="buttonRow" style="margin-top:0.3%;">
-                                <div class="col-sm-3" style="margin-left:10px;">
-                                    <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
-                                    <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
-                                </div>
-                                <div class="col-sm-6" id="bfc-container" style="text-align:left;">
-                                    <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
-                                </div>
-                                <div class="col-sm-2" style="text-align: center; padding: 0;">
-                                    <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
-                                </div>
-                            </div>
-                            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
-                                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
-                            </div>
-                            <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
-                                <table id="gridUploadedDocumentProgram" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
-                                            <td style="font-weight:900;">Document Name</td>
-                                            <td style="font-weight:900;">Document Type</td>
-                                            <td style="font-weight:900;">Upload Date</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>-->
+        <div class="row" id="buttonRow" style="margin-top:0.3%;">
+            <div class="col-sm-3" style="margin-left:10px;">
+                <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
+                <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
+            </div>
+            <div class="col-sm-6" id="bfc-container" style="text-align:left;">
+                <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
+            </div>
+            <div class="col-sm-2" style="text-align: center; padding: 0;">
+                <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
+            </div>
+        </div>
+        <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
+            <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
+        </div>
+        <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
+            <table id="gridUploadedDocumentProgram" class="table table-striped">
+                <thead>
+                    <tr>
+                        <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
+                        <td style="font-weight:900;">Document Name</td>
+                        <td style="font-weight:900;">Document Type</td>
+                        <td style="font-weight:900;">Upload Date</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>-->
 
 
 
@@ -4508,7 +4576,19 @@
 <script>
     //var formdata = new FormData();
 
-
+    function openTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
     $(function () {
 
 
@@ -5666,19 +5746,23 @@
     var displayMap = true;
     function toggle(x) {
         debugger;
+        var mode = localStorage.getItem('MODE');
+        if (mode == 'mindmap') displayMap = true
+        else displayMap = false
         displayMap = !displayMap;
         if (displayMap) {
             $('#mindmap').show();
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
+            localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
-
+            localStorage.setItem('MODE', 'gridview');
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }
         x.classList.toggle("fa-sitemap");

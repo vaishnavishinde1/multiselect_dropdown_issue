@@ -159,6 +159,7 @@ namespace WebAPI
             modelBuilder.Entity<Versionmaster>().ToTable("versionmaster");
             modelBuilder.Entity<ProjectAccessControl>().ToTable("project_access_control"); // Jignesh-18-10-2021
             modelBuilder.Entity<clientPOC>().ToTable("client_poc");   //Tanmay - 15/12/2021
+            modelBuilder.Entity<UserRoleRelation>().ToTable("user_role_relation");
         }
 
         public DbSet<Program> Program { get; set; }
@@ -186,6 +187,7 @@ namespace WebAPI
         //public DbSet<ProjectScope> ProjectScope { get; set; }
         public DbSet<RandomToken> RandomToken { get; set; }
         public DbSet<User> User { get; set; }
+        
 
         public DbSet<ApprovalMatrix> ApprovalMatrix { get; set; }
         public DbSet<ProgramCategory> ProgramCategory { get; set; }
@@ -271,6 +273,8 @@ namespace WebAPI
         public DbSet<ProjectAccessControl> ProjectAccessControl { get; set; } // Jignesh-18-10-2021
 
         public DbSet<NotificationDays> NotificationDays { get; set; }   // Narayan - 03-03-2022
+
+        public DbSet<UserRoleRelation> UserRoleRelation { get; set; }
 
 
 

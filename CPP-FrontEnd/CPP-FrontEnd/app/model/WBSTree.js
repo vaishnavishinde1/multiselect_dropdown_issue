@@ -37,6 +37,33 @@ WBSTree = (function ($) {
             alert('hi');
         }
 
+        //--------------------Aditya----------------------//
+
+        // changes mode on tabclose for mind map view
+        window.onbeforeunload = function () {
+            localStorage.setItem('MODE', '');
+        };
+
+        var view_mode = localStorage.getItem('MODE');
+        if (view_mode == 'gridview') {
+            $('#mindmap').hide();
+            $('#selectProject').hide();
+            $('#wbsGridView').show();
+            $('#selectManagingDepartment').show();
+            $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
+            $('.toggle-btn i').attr('title', 'Go To TreeView');
+            localStorage.setItem('MODE', 'gridview');
+        }
+        else {
+            $('#mindmap').show();
+            $('#selectProject').show();
+            $('#wbsGridView').hide();
+            $('#selectManagingDepartment').hide();
+            $('.toggle-btn i').attr('class', "fa fa-th-large");
+            $('.toggle-btn i').attr('title', 'Go To GridView');
+            localStorage.setItem('MODE', 'mindmap');
+        }
+        //--------------------Aditya----------------------//
 
         //Cost overhead type arrays
         var costOverheadTypes = [{
@@ -196,7 +223,6 @@ WBSTree = (function ($) {
         //Added by Amruta
 
         function displayMenu(type, e, d) {
-            debugger;
             console.log(d);
             $("#contextMenu").attr('contextType', type);
 
@@ -204,7 +230,8 @@ WBSTree = (function ($) {
             var contextMenuEditText;
 
             //Aditya delete option only for Admin
-            if (wbsTree.getLocalStorage().role == "Admin") {
+            //if (wbsTree.getLocalStorage().role == "Admin") {
+            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                 $("#contextMenuDelete").parent().show();
                 $("#contextMenuClosed").parent().show(); //Vaishnavi 30-03-2022
             }
@@ -569,7 +596,7 @@ WBSTree = (function ($) {
                 wbsTree.click(wbsTree, d);
             })
                 .on('contextmenu', function (d, i) {
-                    console.log(d);
+                    console.log(d);                     
                     //d3.event.preventDefault();
                     var e = d;
                     type = $(this).attr('level');
@@ -768,7 +795,7 @@ WBSTree = (function ($) {
                         "<tr style = 'background-color:white !important;'>" +
                         "    <td colspan='7'>" +
                         "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
-                        "          <table class='table striped table-condensed table-responsive table-bordered'>" +
+                        "          <table id='gridTable'; class='table striped table-condensed table-responsive table-bordered'>" +
                         "             <tbody>";
                     var currentProgramCost, currentProjectCost, currentProjectElementCost;
 
@@ -815,7 +842,7 @@ WBSTree = (function ($) {
                         if (program.children.length == 0) {
                             str +=
                                 "<tr class='fade-selection-animation'> " +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                 "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
@@ -850,7 +877,7 @@ WBSTree = (function ($) {
                                 }
                                 //});
                                 str += "<tr class='fade-selection-animation'>" +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
@@ -885,7 +912,7 @@ WBSTree = (function ($) {
 
                                 //});
                                 str += "<tr class='fade-selection-animation'>" +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
@@ -2003,13 +2030,58 @@ WBSTree = (function ($) {
 
             var contextMenu = document.getElementById("contextMenu");
 
+         //------------------------------------Aditya 11032022---------------------------------//
+                    //$('#gridTable tr').on('click', function () {
+                    //    var row = $(this);
+                    //    var cell = $(this.cells);
+                    //    row.each(function () {
+                    //        cell.each(function (j) {
+                    //            cell[j].className = 'my-word-wrap ';
+                    //            $('#gridTable tbody tr td').removeClass('gridRowClass');
+                    //        });
+                    //    });
+                    //});
 
+                    $('#gridTable tr').bind('contextmenu', function () {
+                        var row = $(this);
+                        var cell = $(this.cells);
+                        $('#gridTable tbody tr td').removeClass('gridRowClass');
+                        row.each(function () {
+                            if (row[0].cells.length == 7) {
+                                
+                                cell.each(function (j) {
+                                    if (cell[j].cellIndex != 0) {
+                                        cell[j].className='my-word-wrap gridRowClass';
+                                    }
+                                    else {
+                                        cell[j].className = 'my-word-wrap ';
+                                        $('#gridTable tbody tr td').removeClass('gridRowClass');
+                                    }
+                                })
+                            }
+                            else {
+                                cell.each(function (j) {
+                                    if (cell[j].className != 'my-word-wrap gridRowClass') {
+                                        cell[j].className = 'my-word-wrap gridRowClass';
+                                    }
+                                    else {
+                                        cell[j].className = 'my-word-wrap ';
+                                        $('#gridTable tr').removeClass('gridRowClass');
+                                    }
+                                })
+                            }
+                            
+                        })
+                        
+                    });
+        //------------------------------------Aditya 11032022---------------------------------//
 
 
 
 
             gridView.on('click', function (d) {
                 console.debug(d);
+                //$('#gridTable tbody td tr').removeClass('gridRowClass');
                 $('svg.trendTree g').show();
                 type = $(this).attr('level');
                 if (type == "Root") {
@@ -2565,9 +2637,11 @@ WBSTree = (function ($) {
                             isWhiteListed = true;
                         }
                     }
-
+                    
                     if (!isWhiteListed) {
+                        
                         var noAccessMsg = '';
+                        
                         switch (wbsTree.getLocalStorage().role) {
                             case 'Admin':
                             case 'Accounting':
@@ -2720,7 +2794,8 @@ WBSTree = (function ($) {
                 var clientDropDown = modal.find('.modal-body #program_client_poc');
                 var clientList = wbsTree.getClientList();
                 clientDropDown.empty();
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 for (var x = 0; x < clientList.length; x++) {
@@ -9066,7 +9141,8 @@ WBSTree = (function ($) {
                         return a.ClientName.localeCompare(b.ClientName);  //vaishnavi
                     }); //vaishnavi
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") { Nivedita 22-03-2022
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -9142,7 +9218,7 @@ WBSTree = (function ($) {
                     var gridUploadedDocumentProgram = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocumentProgram tbody');
                     gridUploadedDocumentProgram.empty();
                     //======================= Jignesh-25-02-2021 Replace the entire block of code ===================================
-                    debugger;
+                    //debugger;
                     _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
                         //wbsTree.setDocumentList(response.result);
                         var _documentList = response.result;
@@ -9382,7 +9458,8 @@ WBSTree = (function ($) {
                         return a.ClientName.localeCompare(b.ClientName);   //vaishnavi
                     }); //vaishnavi
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-3-2022
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -9780,7 +9857,8 @@ WBSTree = (function ($) {
                 docTypeDropDownProgram.empty();
 
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-03-2022
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
 
@@ -10327,7 +10405,8 @@ WBSTree = (function ($) {
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") { //Nivedita 22-03-2022
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 if (g_editprojectdocument == false) {
@@ -10956,16 +11035,33 @@ WBSTree = (function ($) {
                                         }
                                     }
 
-                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    var res = (s[key] == t[key]);
+                                    //    return s[key] == t[key]
+                                    //}));
+                                    
+                                    //var adminRoleList = userList.filter(s => filter1.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    var res = s.RoleList.indexOf(t[key]);
+                                    //    return res >= 0
+                                    //}));
+
+                                    
+                                    var filters = [{ RoleList: approvers[currentNum].Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
-                                        return s[key] == t[key]
+                                        var res = s.RoleList.indexOf(t[key]);
+                                        return res >= 0
                                     }));
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
-                                        for (var y = 0; y < employeeList.length; y++) {
-                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                                newEmployeeList.push(employeeList[y]);
-                                                break;
+                                        if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
+                                            for (var y = 0; y < employeeList.length; y++) {
+                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    newEmployeeList.push(employeeList[y]);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -11486,7 +11582,8 @@ WBSTree = (function ($) {
                     var clientList = wbsTree.getClientList();
                     var clientName = '';
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -11677,14 +11774,18 @@ WBSTree = (function ($) {
                             var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
-                                    //    for (var x = 0; x < employeeList.length; x++) {
-                                    //        if (employeeList[x].ID == projApproverDetails[j].EmpId) {  
-                                    //            $('#' + approversDdl[i].id).val(employeeList[x].ID);
-                                    //            break;
-                                    //        }
-                                    //    }
-                                    $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                    break;
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                                            //    for (var x = 0; x < employeeList.length; x++) {
+                                            //        if (employeeList[x].ID == projApproverDetails[j].EmpId) {  
+                                            //            $('#' + approversDdl[i].id).val(employeeList[x].ID);
+                                            //            break;
+                                            //        }
+                                            //    }
+                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -11940,7 +12041,8 @@ WBSTree = (function ($) {
                     var clientDropDown = modal.find('.modal-body #client');
                     var clientList = wbsTree.getClientList();
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -12159,7 +12261,8 @@ WBSTree = (function ($) {
                 var docTypeDropDownProgram = modal.find('.modal-body #document_type_programPrgElm');
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 if (g_editelementdocument == false) {
@@ -12677,7 +12780,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-
+                        
             //  debugger;
             var progmPageFieldIDs = '#project_class,#project_name,#program_element_location_name,' +
                 '#program_element_Start_Date,#program_element_PO_Date,#program_element_PStart_Date,#program_element_PEnd_Date,' +
@@ -12687,6 +12790,170 @@ WBSTree = (function ($) {
             $(progmPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
             });
+
+            //Narayan - onChange for Department Selection in project
+            $("#project_class").change(function (event) {
+                    //alert($('option:selected', this).text());
+                    //var div = $('#ProgramElementModal').find('.modal-body #divProjectApprovers');
+                    //$("#divProjectApprovers").load(location.href + "#divProjectApprovers");
+                    var selectedNode = wbsTree.getSelectedNode();
+                    var projectClassList = wbsTree.getProjectClassList();
+                    var selectedProjectClass = event.target.value;
+                    //console.log(selectedprojectclass, selectedprojectclass.val());
+                    selectedNode.ProjectClassID = 0;
+                    for (var x = 0; x < projectClassList.length; x++) {
+                        //console.log(projectclasslist[x].projectclassname, selectedprojectclass);
+                        if (projectClassList[x].ProjectClassName == selectedProjectClass) {
+                            selectedNode.ProjectClassID = projectClassList[x].ProjectClassID;
+                        }
+                    }
+                    var angularHttp = wbsTree.getAngularHttp();
+                    angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
+
+                        $('#divProjectApprovers').html('');
+                        var approvers = approversData.data.result;
+                        if (approvers != null && approvers.length > 0) {
+
+                            var totalRows = ~~(approvers.length / 2);
+                            var remainderCol = approvers.length % 2;
+                            var append = '';
+
+                            if (remainderCol > 0) {
+                                totalRows++;
+                            }
+                            var currentNum = 0;
+                            if (totalRows > 0) {
+                                //var marginBottom = 150;
+                                for (var i = 0; i < totalRows; i++) {
+                                    //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
+                                    append += "<div class='_form-group'>";
+                                    for (var j = 0; j < 2; j++) {
+                                        var labelText = approvers[currentNum].Role;
+                                        var ddlId = labelText.replace(/ +/g, "_");
+                                        var dbid = approvers[currentNum].Id;
+
+                                        var userList = wbsTree.getUserList();
+                                        var employeeList = wbsTree.getEmployeeList();
+                                        var newEmployeeList = [];
+                                        for (var x = 0; x < employeeList.length; x++) {
+                                            if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                newEmployeeList.push(employeeList[x]);
+                                                break;
+                                            }
+                                        }
+
+                                        //var filters = [{ Role: approvers[currentNum].Role }];
+                                        //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                        //    var key = Object.keys(t)[0];
+                                        //    return s[key] == t[key]
+                                        //}));
+                                        var filters = [{ RoleList: approvers[currentNum].Role }]
+                                        var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                            var key = Object.keys(t)[0];
+                                            var res = s.RoleList.indexOf(t[key]);
+                                            return res >= 0
+                                        }));
+                                        for (var x = 0; x < roleWiseUserList.length; x++) {
+                                            if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
+                                                for (var y = 0; y < employeeList.length; y++) {
+                                                    if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                        newEmployeeList.push(employeeList[y]);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        employeeList = newEmployeeList;
+                                        employeeList.sort(function (a, b) {
+                                            return a.Name.localeCompare(b.Name);
+                                        });
+                                        //if (j == 0) {
+                                        //    append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        //        "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                        //        "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                        //    for (var x = 0; x < employeeList.length; x++) {
+                                        //        if (employeeList[x].Name != null) { //universal
+                                        //            append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                        //        }
+
+                                        //    }
+                                        //} else {
+
+                                        //    append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        //        "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                        //        "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                        //    for (var x = 0; x < employeeList.length; x++) {
+                                        //        if (employeeList[x].Name != null) { //universal
+                                        //            append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                        //        }
+
+                                        //    }
+
+                                        //}
+                                        if (j == 0) {
+                                            append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                                "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                                "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                            for (var x = 0; x < employeeList.length; x++) {
+                                                if (employeeList[x].Name != null) { //universal
+                                                    if (x == 0 ) {
+                                                        append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    }
+                                                    else {
+                                                        append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    }
+
+                                                }
+
+                                            }
+                                        } else {
+
+                                            append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                                "<label class='control-label _bold required'>" + labelText + "</label>" +
+                                                "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
+                                            for (var x = 0; x < employeeList.length; x++) {
+                                                if (employeeList[x].Name != null) { //universal
+                                                    if (x == 0) {
+                                                        append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    }
+                                                    else {
+                                                        append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                        append += "</select>";
+                                        append += "</div>";
+                                        currentNum++;
+                                        if (currentNum == approvers.length) {
+                                            //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
+                                            //    "<label class='control-label _bold required'></label>" +
+                                            //    "<select type='text' class='form-control'>";
+                                            //append += "</select>";
+                                            //append += "</div>";
+                                            break;
+                                        }
+                                    }
+                                    append += "</div>";
+                                    //marginBottom = marginBottom + 70;
+                                }
+                                $('#divProjectApprovers').append(append);
+                                //var approversDdl = $('#ProgramElementModal').find('.modal-body #divProjectApprovers select');
+                                //for (var i = 0; i < approversDdl.length; i++) {
+                                //    $('#'+approversDdl[i].id).val('');
+                                //}
+                            }
+
+                        }
+
+                    });
+                    //$('#ProgramElementModal').modal('hide');
+            });
+
 
             $('#program_element_total_value').on('change', function () {
                 isFieldValueChanged = true;
@@ -13137,7 +13404,8 @@ WBSTree = (function ($) {
                 var docTypeList = wbsTree.getDocTypeList();
                 docTypeDropDownProgram.empty();
                 // Jignesh-25-03-2021
-                if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                     docTypeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                 }
                 for (var x = 0; x < docTypeList.length; x++) {
@@ -13504,20 +13772,35 @@ WBSTree = (function ($) {
                                         }
                                     }
 
-                                    var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var filters = [{ Role: approvers[currentNum].Role }];
+                                    //var roleWiseUserList = userList.filter(s => filters.every(t => {
+                                    //    var key = Object.keys(t)[0];
+                                    //    return s[key] == t[key]
+                                    //}));
+                                    var filters = [{ RoleList: approvers[currentNum].Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
-                                        return s[key] == t[key]
+                                        var res = s.RoleList.indexOf(t[key]);
+                                        return res >= 0
                                     }));
+                                    //Narayan - Condition for filter out employee by deparments
+                                    var DepartmentId = 0;
+                                    if (selectedNode.level == "Project") {
+                                        DepartmentId = selectedNode.parent.ProjectClassID;
+                                    } else if (selectedNode.level = "ProgramElement") {
+                                        DepartmentId = selectedNode.ProjectClassID;
+                                    }
 
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
-                                        for (var y = 0; y < employeeList.length; y++) {
-                                            if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                                employeeList[y].rUserId = roleWiseUserList[x].Id;
-                                                newEmployeeList.push(employeeList[y]);
-                                                //var newEmp = { ID: employeeList[y].ID + ',' + roleWiseUserList[x].Id, Name = employeeList[y].Name };
-                                                //newEmployeeList.push(newEmp);
-                                                break;
+                                        if (roleWiseUserList[x].DepartmentID == DepartmentId) {
+                                            for (var y = 0; y < employeeList.length; y++) {
+                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    employeeList[y].rUserId = roleWiseUserList[x].Id;
+                                                    newEmployeeList.push(employeeList[y]);
+                                                    //var newEmp = { ID: employeeList[y].ID + ',' + roleWiseUserList[x].Id, Name = employeeList[y].Name };
+                                                    //newEmployeeList.push(newEmp);
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -14278,7 +14561,8 @@ WBSTree = (function ($) {
                     var clientList = wbsTree.getClientList();
                     var clientName = '';
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -14514,9 +14798,15 @@ WBSTree = (function ($) {
                                 var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                                 for (var j = 0; j < projEleApproverDetails.length; j++) {
                                     if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
-
-                                        $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
-                                        break;
+                                        for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                            if (approversDdl[i].childNodes[k].value == projEleApproverDetails[j].EmpId) {
+                                                $('#' + approversDdl[i].id).val(projEleApproverDetails[j].EmpId);
+                                                break;
+                                            }
+                                            else {
+                                                $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -14730,7 +15020,8 @@ WBSTree = (function ($) {
                     var clientDropDown = modal.find('.modal-body #client');
                     var clientList = wbsTree.getClientList();
                     clientDropDown.empty();
-                    if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         clientDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < clientList.length; x++) {
@@ -14815,8 +15106,16 @@ WBSTree = (function ($) {
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     $('#' + approversDdl[i].id).val('');
-                                    $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                    break;
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                                            break;
+                                        }
+                                        //else if (approversDdl[i].childNodes.length == 1 ) {
+                                        else {
+                                            $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                                        }
+                                    }
                                 }
                             }
                         }
