@@ -101,6 +101,7 @@ namespace WebAPI.Models
         public bool IsDeleted { get; set; }
         public DateTime? DeletedDate { get; set; }
         public string DeletedBy { get; set; }
+        public string Status { get; set; }   //----Vaishnavi 30-03-2022----//
 
         [ForeignKey("ProjectTypeID")]
         public virtual ProjectType ProjectType { get; set; }
@@ -354,7 +355,7 @@ namespace WebAPI.Models
 
 
                         project.VersionId = latestVersion.Id.ToString();
-
+                        project.Status= "Active";    //----Vaishnavi 30-03-2022----//
                         ctx.Project.Add(project);
                         ctx.SaveChanges();
 
@@ -963,6 +964,7 @@ namespace WebAPI.Models
                         projectToBeDeleted.IsDeleted = true;
                         projectToBeDeleted.DeletedDate= DateTime.Now;
                         projectToBeDeleted.DeletedBy = proj.DeletedBy;
+                        projectToBeDeleted.Status = "Archived";    //----Vaishnavi 30-03-2022----//
                         //DbCtx.Project.Remove(projectToBeDeleted); 
                         DbCtx.SaveChanges();
                         updateCostOnProjectDelete(programElement.ProgramElementID);
@@ -1032,6 +1034,85 @@ namespace WebAPI.Models
 
             }
         }
+        //----Vaishnavi 30-03-2022----//
+        public static String closeProject(Project proj)
+        {
+            int ProjectID = proj.ProjectID;
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            MySqlConnection conn = null;
+            MySqlDataReader reader = null;
+            ProgramElement programElement = new ProgramElement();
+            String result = "";
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    ctx.Database.Log = msg => Trace.WriteLine(msg);
+                    int projectId = ProjectID;
+                    Project project = ctx.Project.First(p => p.ProjectID == projectId && p.IsDeleted == false);
+                    //List<ProjectScope> projectScopes = new List<ProjectScope>();
+                    //projectScopes = ctx.ProjectScope.Where(ps => ps.ProjectID == ProjectID).ToList();
+                    //programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == project.ProgramElementID).FirstOrDefault();
+                    List<Trend> trendList = ctx.Trend.Where(tr => tr.ProjectID == ProjectID && tr.IsDeleted == false).Select(trendItem => trendItem).ToList();
+                    //List<Document> documents = ctx.Document.Where(a => a.ProjectID == ProjectID).ToList();
 
+                    //Nivedita 02 - 12 - 2021
+                    if (trendList.Count > 0)
+                    {
+                        foreach (var trend in trendList)
+                        {
+                           // trend.DeletedBy = proj.DeletedBy;
+                            Trend.closeTrend(trend); //this will also delete trend Funds assigned to the trend
+                        }
+                    }
+                    //foreach (var scope in projectScopes)
+                    //{
+                    //    //Nivedita 10022022
+                    //    //ctx.ProjectScope.Remove(scope);
+                    //    scope.IsDeleted = true;
+                    //    scope.DeletedDate = DateTime.Now;
+                    //    scope.DeletedBy = proj.DeletedBy;
+                    //    ctx.SaveChanges();
+                    //}
+                    ////Remove all documents
+                    //foreach (Document doc in documents)
+                    //{
+                    //    //Nivedita 10022022
+                    //    //ctx.Entry(doc).State = System.Data.Entity.EntityState.Deleted;
+                    //    doc.IsDeleted = true;
+                    //    doc.DeletedDate = DateTime.Now;
+                    //    doc.DeletedBy = proj.DeletedBy;
+                    //    ctx.SaveChanges();
+                    //}
+                    //ctx.SaveChanges();
+
+                    //using different context to delete Project
+                    using (var DbCtx = new CPPDbContext())
+                    {
+                        //Delete documents
+
+                        //Nivedita 02-12-2021
+                        Project projectToBeDeleted = DbCtx.Project.First(p => p.ProjectID == ProjectID);
+                        //projectToBeDeleted.IsDeleted = true;
+                        //projectToBeDeleted.DeletedDate = DateTime.Now;
+                        //projectToBeDeleted.DeletedBy = proj.DeletedBy;
+                        projectToBeDeleted.Status = "Closed";
+                        //DbCtx.Project.Remove(projectToBeDeleted); 
+                        DbCtx.SaveChanges();
+                        //updateCostOnProjectDelete(programElement.ProgramElementID);
+                        result = "Success";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            return result;
+        }
     }
 }

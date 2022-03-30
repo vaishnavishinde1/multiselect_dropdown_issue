@@ -2592,6 +2592,202 @@ angular.module('cpp.controllers').
                 });
             });
 
+            //----------------------------Vaishnavi 30-03-2022 Start Here-------------------------------------------------//
+            $('#closed_button').unbind('click').on('click', function () {
+                var selectedNode = wbsTree.getSelectedNode();
+                var type = $("#contextMenu").attr('contextType');
+                //if(selectedNode.level === "Root"){ Ivan here
+                //    modal_mode = "Update";
+                //}
+                // business logic...
+                $('#ClosedModal').modal('hide');
+                if (typeof modal_mode == 'undefined') {
+                }
+               
+                if (modal_mode == 'Create') {
+
+                }
+
+                else {
+                    var parentNode = selectedNode.parent;
+
+                    //
+
+                    $('#ClosedModal').appendTo("body");
+                    if (wbsTree.getScope().trend) {
+                        console.log(wbsTree.getScope().trend);
+                        console.log(selectedNode);
+                        if (wbsTree.getScope().trend.metadata.level = "FutureTrend") {
+                            var obj = {
+                                "Operation": 6,
+                                "OrganizationID": wbsTree.getScope().trend.metadata.OrganizationID,
+                                "ProjectID": wbsTree.getScope().trend.metadata.ProjectID,
+                                "ProjectName": wbsTree.getScope().trend.metadata.ProjectName,
+                                "TrendNumber": wbsTree.getScope().trend.metadata.TrendNumber,
+                                //Added by Nivedita on 23022022 for soft delete
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+
+                            };
+                            _Trend.persist().save(obj, function (response) {
+                                //$('#FutureTrendModal').modal('hide');
+                                //$('#DeleteModal').modal('hide');
+
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                    selectedNode.parent.parent.programFunds = response.result;
+                                    if ($('#FutureTrendModal').hasClass('in'))
+                                        $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
+                                    wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
+                                    wbsTree.getScope().trend = null;
+                                   // window.location.reload();
+                                    var pgmId = $("#selectProgram").val();
+                                    var orgId = $("#selectOrg").val();
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+
+                                });
+
+
+                            });
+
+                            //updateTreeNodes(parentNode);
+                        }
+                    }
+                    else {
+                        if (selectedNode.level === "Root") {
+                            console.log(selectedNode);
+                            var s = $("#update_organization");
+                            console.debug("UPDATE", s);
+                            var rootScope = wbsTree.getRootScope();
+                            var Organization = wbsTree.getOrganizationService();
+                            var scope = wbsTree.getScope();
+                            Organization.persist().save({
+                                "Operation": 3,
+                                "OrganizationID": selectedNode.organizationID,
+                                "OrganizationName": selectedNode.name
+                            }).$promise.then(function (response) {
+                                if (response.result === 'Success') {
+                                    //  $scope.organizationList.splice(index,1);
+
+                                    console.log(scope);
+                                    var orgList = wbsTree.getOrganizationList();
+                                    var index = 0;
+                                    for (var i = 0; i < orgList.length; i++) {
+                                        if (orgList[i].OrganizationName == selectedNode.name) {
+                                            index = i;
+
+                                        }
+                                    }
+                                    console.debug("orgList", orgList);
+                                    orgList.splice(index, 1);
+                                    // wbsTree.setOrganizationList(orgList);
+                                    //  $("#selectOrg").val(orgList[0].OrganizationID);
+                                    console.debug("orgList", orgList);
+                                    scope.filterOrg = orgList[0].OrganizationID;
+                                    $("#selectOrg").val(orgList[0].OrganizationID);
+                                    scope.filterChangeOrg();
+                                    //$scope.selectedOrg = null;
+                                    //$scope.init();
+                                    //console.log("-------DELETED ORGANIZATION--------");
+                                    //wbsTree.updateTreeNodes(selectedNode);
+                                    //if (!displayMap)
+                                    wbsTree.loadFullGridView();
+                                    //wbsTree.loadContextMenu();
+                                    rootScope.modalInstance.close();
+                                    //wbsTree.getWBSTrendTree().trendGraph();
+                                }
+                                else {
+                                    dhtmlx.alert("Close failed");
+                                }
+                            });
+
+
+                        } else
+                            if (selectedNode.level === "Program") {
+                                wbsTree.getProgram().persist().save({
+                                    "Operation": 5,
+                                    "ProgramID": selectedNode.ProgramID,
+                                    "ProgramName": selectedNode.name,
+                                    "ProgramManager": selectedNode.ProgramManager,
+                                    "ProgramSponsor": selectedNode.ProgramSponsor,
+                                    "programFunds": selectedNode.programFunds,
+                                    "DeletedBy": wbsTree.getLocalStorage().userName
+
+                                }, function (response) {
+                                    console.log("-------DELETED PROGRAM--------");
+                                    if ($('#ProgramModal').hasClass('in'))
+                                        $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
+                                    // wbsTree.updateTreeNodes(selectedNode.parent);
+                                    ////if (!displayMap)
+                                    //wbsTree.loadFullGridView();
+                                    //wbsTree.getWBSTrendTree().trendGraph();
+
+                                    var pgmId = $("#selectProgram").val();
+                                    var orgId = $("#selectOrg").val();
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                });
+                            } else if (selectedNode.level === "ProgramElement") {
+                                wbsTree.getProgramElement().persist().save({
+                                    "Operation": 5,
+                                    "ProgramID": selectedNode.ProgramID,
+                                    "ProgramElementID": selectedNode.ProgramElementID,
+                                    "ProgramElementName": selectedNode.name,
+                                    "ProgramElementManager": selectedNode.ProgramElementManager,
+                                    "ProgramElementSponsor": selectedNode.ProgramElementSponsor,
+                                    "DeletedBy": wbsTree.getLocalStorage().userName
+
+                                }, function (response) {
+                                    console.log("-------DELETED PROGRAM ELEMENT--------");
+
+
+                                    if ($('#ProgramElementModal').hasClass('in'))
+                                        $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+                                    //if (!displayMap)
+                                    //wbsTree.loadFullGridView();
+                                    //wbsTree.getWBSTrendTree().trendGraph();
+                                    //// wbsTree.loadFullGridView();
+                                    //window.location.reload();
+                                    var pgmId = $("#selectProgram").val();
+                                    var orgId = $("#selectOrg").val();
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+
+                                })
+                            } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
+                                wbsTree.getProject().persist().save({
+                                    "Operation": 5,
+                                    "ProjectID": selectedNode.ProjectID,
+                                    "ProjectName": selectedNode.name,
+                                    "ProjectManager": selectedNode.ProjectManager,
+                                    "ProjectSponsor": selectedNode.ProjectSponsor,
+                                    "LatLong": wbsTree.getProjectMap().getCoordinates(),
+                                    "DeletedBy": wbsTree.getLocalStorage().userName
+                                }, function (response) {
+                                    console.log("-------DELETED PROJECT--------");
+                                    console.log(selectedNode);
+                                   
+                                    var pgmId = $("#selectProgram").val();
+                                    var orgId = $("#selectOrg").val();
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                    var firstGNode = $('#trendSvg').children()[0];
+                                    //$(firstGNode).children().remove();
+                                   // window.location.reload();
+                                });
+                            }
+                        //Find  index of selected node
+                        if (selectedNode.level == "Root") return;
+                        var i = parentNode.children.indexOf(selectedNode);
+                        //Remove selected child index from parent
+                        parentNode.children.splice(i, 1);
+                        var tooltip = d3.select("#toolTip").style("opacity", 0);
+
+                    }
+                }
+                _selectedProjectID = null;
+                //$('#project_name').hide();
+               // $('svg.trendTree g').hide();
+
+            });
+           //----------------------------Vaishnavi 30-03-2022 Ends Here-------------------------------------------------//
+
 
 
 

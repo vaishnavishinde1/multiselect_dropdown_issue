@@ -485,6 +485,19 @@ angular.module('xenon.Gantt_Controller', []).
                             $('#ApprovalBtn').show();  // Swapnil 31-08-2020
                             $('#ResendApprovlLinkBtn').show();
                         }
+                        if (trend.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#customCostOverhead").prop('disabled', true);
+                            $("#reportManagerBtn").prop('disabled', true);
+                            $("#ResendApprovlLinkBtn").prop('disabled', true);
+                            $("#spnApprovalBtn").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                            $("#ApprovalBtn").prop('disabled', true);
+                            $("#submitForApproval").prop('disabled', true);
+                            
+                            
+
+                        } //----Vaishnavi 30-03-2022----//
                     } else if (trend.TrendStatusID == 4) {
                         //TrendStatus.setStatus(status + "Requested for approval");
                         TrendStatus.setStatus("Requested for approval");   //Manasi
@@ -496,6 +509,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                     if ((trend.TrendCost == null || trend.TrendCost <= 0) && trend.TrendStatusID == 3) {  //luan here 
                         $("#submitForApproval").prop('disabled', false);    //luan here
+
                         $("#ApprovalBtn").hide();  // Swapnil 31-08-2020
                         //$("#approveBtn").hide();    //luan here
                         //$('#submitForApproval').html('Submit');  // Swapnil 31-08-2020
@@ -505,12 +519,23 @@ angular.module('xenon.Gantt_Controller', []).
                             $("#submitForApproval").prop('disabled', true);
                             $('#ApprovalBtn').show();
                             $('#ResendApprovlLinkBtn').show();
-                        }
+                        } 
+                        if (trend.Status == "Closed") {  //----Vaishnavi 30-03-2022----//
+                            $("#submitForApproval").prop('disabled', true);
+                        }  //----Vaishnavi 30-03-2022----//
                     }
 
                     // swapnil 02-10-2020
                     if (($scope.trend.TrendStatusID === 3 || $scope.trend.TrendStatusID === 1) && $scope.trend.approvedList_EmployeeID != "" && $scope.trend.approvedList_EmployeeID != null && $scope.trend.approvedList_EmployeeID != "0") {
                         $("#customCostOverhead").prop('disabled', true);
+                        if ($scope.trend.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#reportManagerBtn").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                            
+                            
+                        }
+                         //----Vaishnavi 30-03-2022----//
                     }
 
 
@@ -520,9 +545,22 @@ angular.module('xenon.Gantt_Controller', []).
 
                     if (auth.acl[13] == 1) {
                         $("#reportBtn").prop('disabled', false);
+                        if (trend.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#PurchaseOrderID").prop('disabled', true);
+                            $("#reportManagerBtn").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                            
+                        }  //----Vaishnavi 30-03-2022----//
                     }
                     else {
                         $("#reportBtn").prop('disabled', true);
+                        if (trend.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#PurchaseOrderID").prop('disabled', true);
+                            $("#reportManagerBtn").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                        } //----Vaishnavi 30-03-2022----//
                     }
 
                     //UserRole attribute ModifyProject
@@ -550,6 +588,12 @@ angular.module('xenon.Gantt_Controller', []).
                         $("#submitForApproval").prop('disabled', true);    //luan here
                         $("#ApprovalBtn").prop('disabled', true); // Swapnil 31-08-2020
                         $("#ApprovalBtn").hide(); // Swapnil 31-08-2020
+                        if (delayedData[8].result[0].Trend.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                           
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                            
+                        }   //----Vaishnavi 30-03-2022----//
                         //$("#approveBtn").hide();    //luan here
                     } else if (delayedData[3] == 3000) {//-----------Manasi 10-11-2020
                         Page.setTitle("Project Current");
@@ -563,6 +607,12 @@ angular.module('xenon.Gantt_Controller', []).
                         $("#ApprovalBtn").prop('disabled', true);
                         $("#ApprovalBtn").hide();
                         //$("#approveBtn").hide();    //luan here
+
+                        if (delayedData[2].result[0].Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                            $("#ExportToMPP").prop('disabled', true);
+                            $("#saveCost").prop('disabled', true);
+                            
+                        }  //----Vaishnavi 30-03-2022----//
                     }//---------------------------------------------------------
                     else {
                         Page.setTitle("Project Baseline");

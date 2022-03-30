@@ -426,7 +426,13 @@ WBSTrendTree = (function ($) {
                     ];
                 var shapeSvg = parent.append("image")
                     .attr("xlink:href", function (d) {
-                        return "assets/js/wbs-tree/images/nodeB.png"
+                         //----Vaishnavi 30-03-2022----//
+                        if (node.metadata.Status == "Closed") 
+                            return "assets/js/wbs-tree/images/node.png";
+                        else
+                            return "assets/js/wbs-tree/images/nodeB.png";
+                         //----Vaishnavi 30-03-2022----//
+                       
                     })
                     .attr("x", "-7px")
                     .attr("y", "7px")
@@ -450,7 +456,12 @@ WBSTrendTree = (function ($) {
                     ];
                 var shapeSvg = parent.append("image")
                     .attr("xlink:href", function (d) {
-                        return "assets/js/wbs-tree/images/nodeC.png"
+                         //----Vaishnavi 30-03-2022----//
+                        if (node.metadata.Status == "Closed")
+                            return "assets/js/wbs-tree/images/node.png";
+                        else
+                            return "assets/js/wbs-tree/images/nodeC.png";
+                         //----Vaishnavi 30-03-2022----//
                     })
                     .attr("x", "-7px")
                     .attr("y", "7px")
@@ -643,12 +654,36 @@ WBSTrendTree = (function ($) {
 
                     } else if (node.metadata.level == "FutureTrend") { 
                         $("#contextMenuAdd").parent().hide();
+                         //----Vaishnavi 30-03-2022----//
+                        $("#contextMenuClosed").parent().hide();
+                        if (wbsTree.getLocalStorage().acl[6] == 1 && wbsTree.getLocalStorage().acl[7] != 0) {
+                            $("#contextMenuClosed").parent().show();
+                        }
+                        if (node.metadata.Status == "Closed")
+                        {
+                            $("#contextMenuDelete").parent().hide();
+                            $("#contextMenuClosed").parent().hide();
+                        }
+                        $("#contextMenuViewGantt").parent().hide();
+                         //----Vaishnavi 30-03-2022----//
                         modal_mode = "Update";
                     }
                     //========================= Jignesh-01-04-2021 =====================
                     else if (node.metadata.level == "PastTrend") {
                         $("#contextMenuDelete").parent().hide();
                         $("#contextMenuAdd").parent().hide();
+                         //----Vaishnavi 30-03-2022----//
+                        if (wbsTree.getLocalStorage().acl[6] == 1 && wbsTree.getLocalStorage().acl[7] != 0) {
+                            $("#contextMenuClosed").parent().show();
+                        }
+                        if (node.metadata.Status == "Closed")
+                        {
+                            $("#contextMenuEdit").html("Open Trend");
+                            $("#contextMenuDelete").parent().hide();
+                            $("#contextMenuClosed").parent().hide();
+                        }
+                        $("#contextMenuViewGantt").parent().hide();
+                         //----Vaishnavi 30-03-2022----//
                         modal_mode = "Update";
                     }
                     //==================================================================
@@ -698,6 +733,12 @@ WBSTrendTree = (function ($) {
                 } else {
                     $("#contextMenuEdit").html("Edit/Open Trend");
                 }
+                 //----Vaishnavi 30-03-2022----//
+                if (node.metadata.Status == "Closed") {
+                    $("#contextMenuEdit").html("Open Trend");
+                    
+                }
+                 //----Vaishnavi 30-03-2022----//
 
             }
             // alert("2");
@@ -708,7 +749,9 @@ WBSTrendTree = (function ($) {
                 $("#contextMenuDelete").parent().show();
             } else {
                 $("#contextMenuDelete").parent().hide();
+                
             }
+           
             $("#contextMenuMap").parent().hide();
             //var currentZoom = ((window.outerWidth - 10) / window.innerWidth);
             //currentZoom = (currentZoom > 1) ? currentZoom : 1;
@@ -1147,6 +1190,7 @@ WBSTrendTree = (function ($) {
                     gridUploadedDocument.empty(); // 15-01-2021
                     $('#DeleteUploadTrend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled');
+                    $('#update_trend').removeAttr('disabled');  //----Vaishnavi 30-03-2022----//
                     $('#ViewUploadFileTrend').attr('disabled', 'disabled');
                     $('#EditBtnTrend').attr('disabled', 'disabled');
                     $('#downloadBtnTrend').attr('disabled', 'disabled');
@@ -1304,10 +1348,18 @@ WBSTrendTree = (function ($) {
                     $('#update_trend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled'); // Jignesh-05-03-2021
                 } else {
-                    $('#delete_future_trend').removeAttr('disabled');
+                    $('#delete_future_trend').attr('disabled', 'disabled');  //----Vaishnavi 30-03-2022----//
                     $('#update_trend').removeAttr('disabled');
                     $('#updateDMBtnTrend').removeAttr('disabled'); // Jignesh-05-03-2021
+                   
                 }
+                 //----Vaishnavi 30-03-2022----//
+                if (metadata.Status == "Closed") {
+                    $('#delete_future_trend').attr('disabled', 'disabled');
+                    $('#update_trend').attr('disabled', 'disabled');
+                    $('#updateDMBtnTrend').attr('disabled', 'disabled');
+                }
+                 //----Vaishnavi 30-03-2022----//
 
             });
 

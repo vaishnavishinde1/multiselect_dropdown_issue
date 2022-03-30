@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
+
 namespace WebAPI.Models
 {
     [Table("program_element")]
@@ -24,11 +25,13 @@ namespace WebAPI.Models
         public bool isModified;
         public bool IsDeleted { get; set; }
         public string DeletedBy { get; set; }
+        public string Status { get; set; }   //----Vaishnavi 30-03-2022----//
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProgramElementID { get; set; }
 
         [NotMapped]
         public List<ProjectApproversDetails> ApproversDetails { get; set; }
+
 
         //Super project properties - getting from Project.cs - START
         public string ProjectName { get; set; }
@@ -176,6 +179,8 @@ namespace WebAPI.Models
                         {
                             ProgramElement ele = MatchedProgramElementList[i];
                             ele.ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == pgmEltId).ToList<ProjectApproversDetails>();
+                          
+                            
                         }
                     }
                     else if (KeyStroke != "null" && KeyStroke != null)
@@ -306,6 +311,7 @@ namespace WebAPI.Models
 
                         //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
                         //pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture);   //Jignesh 20-11-2020
+                        pgmElt.Status= "Active";   //----Vaishnavi 30-03-2022----//
                         ctx.ProgramElement.Add(pgmElt);
                         ctx.SaveChanges();
                         ProgramElement pm = ctx.ProgramElement.OrderByDescending(progElm => progElm.ProgramElementID).FirstOrDefault();
@@ -488,7 +494,7 @@ namespace WebAPI.Models
                                 pgmElt.ProgramElementSponsor = program_element.ProgramElementSponsor;
                                 pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                                 pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
-
+                                pgmElt.Status = program_element.Status;   //----Vaishnavi 30-03-2022----//
                                 //====== Nivedita--30-12-2021 =======
                                 pgmElt.BillingPOC = program_element.BillingPOC;
                                 pgmElt.BillingPOCPhone1 = program_element.BillingPOCPhone1;
@@ -564,7 +570,7 @@ namespace WebAPI.Models
                             pgmElt.ProgramElementSponsor = program_element.ProgramElementSponsor;
                             pgmElt.ProgramElementManagerID = program_element.ProgramElementManagerID;
                             pgmElt.ProgramElementSponsorID = program_element.ProgramElementSponsorID;
-
+                            pgmElt.Status = program_element.Status;    //----Vaishnavi 30-03-2022----//
                             string yyyyFormat = program_element.ProjectStartDate.ToString().Split('/')[2].ToString();
                             string yyFormat = yyyyFormat.Substring(yyyyFormat.Length - 2);
 
@@ -903,10 +909,11 @@ namespace WebAPI.Models
                     }
                     //Nivedita 02-12-2021
                     // var query1 = "delete from program_element where 1=1 and ProgramElementID = ProgramElementID";
-                    var query1 = "Update program_element set IsDeleted=1, DeletedDate=@DeletedDate, DeletedBy=@DeletedBy where ProgramElementID = @ProgramElementID";
+                    var query1 = "Update program_element set IsDeleted=1, DeletedDate=@DeletedDate, DeletedBy=@DeletedBy, Status='Archived' where ProgramElementID = @ProgramElementID";   //----Vaishnavi 30-03-2022----//
                     MySqlCommand command1 = new MySqlCommand(query1, conn);
                     command1.Parameters.AddWithValue("@ProgramElementID", pgmElt.ProgramElementID);
                     command1.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
+                    //command1.Parameters.AddWithValue("@Status", programElement.Status);
                     command1.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
                     command1.ExecuteNonQuery();
                       updateCostOnProgramElementDelete(pgmElt.ProgramID);
@@ -1010,6 +1017,151 @@ namespace WebAPI.Models
                      // ctx.ProgramElement.Add(programElement);
                      ctx.Entry(programElement).State = System.Data.Entity.EntityState.Modified;
                      ctx.SaveChanges();*/
+                    result = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            return result;
+        }
+        //----Vaishnavi 30-03-2022----//
+        public static String closeProgramElement(ProgramElement programElement)
+        {
+            int ProgramElementID = programElement.ProgramElementID;
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            MySqlConnection conn = null;
+            MySqlDataReader reader = null;
+            String result = "";
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    ctx.Database.Log = msg => Trace.WriteLine(msg);
+                    int pgmEltId = ProgramElementID;
+                    ProgramElement pgmElt = ctx.ProgramElement.First(p => p.ProgramElementID == pgmEltId && p.IsDeleted == false);
+                    //List<Document> documents = ctx.Document.Where(a => a.ProgramElementID == ProgramElementID && a.IsDeleted == false).ToList();
+                    List<Project> projectList = ctx.Project.Where(p => p.ProgramElementID == ProgramElementID && p.IsDeleted == false).Select(proj => proj).ToList();
+                    //foreach (Document doc in documents)
+                    //{
+                    //    //Nivedita 10022022
+                    //    //ctx.Entry(doc).State = System.Data.Entity.EntityState.Deleted;
+                    //    doc.IsDeleted = true;
+                    //    doc.DeletedDate = DateTime.Now;
+                    //    doc.DeletedBy = programElement.DeletedBy;
+                    //    ctx.SaveChanges();
+                    //}
+                    //List<ChangeOrder> changeOrderList = ctx.ChangeOrder.Where(tr => tr.ProgramElementID == ProgramElementID).ToList();
+                    //foreach (var order in changeOrderList)
+                    //{
+                    //    order.DeletedBy = programElement.DeletedBy;
+                    //    ChangeOrder.deleteChangeOrder(order);
+                    //}
+                    //ctx.SaveChanges();
+                    //foreach (var project in projectList)
+                    //{
+
+                    //    List<Trend> trendList = ctx.Trend.Where(tr => tr.ProjectID == project.ProjectID).Select(trendItem => trendItem).ToList();
+                    //    foreach (var trend in trendList)
+                    //    {
+                    //        List<Activity> activityList = new List<Activity>();
+
+                    //        String delete_result = "";
+                    //        try
+                    //        {
+                    //            if (conn == null)
+                    //            {
+                    //                conn = ConnectionManager.getConnection();
+                    //                conn.Open();
+                    //            }
+                    //            var query = "Select * from activity where TrendNumber = @TrendNumber and ProjectID = @ProjectID";
+                    //            MySqlCommand command = new MySqlCommand(query, conn);
+                    //            command.Parameters.AddWithValue("@TrendNumber", trend.TrendNumber);
+                    //            command.Parameters.AddWithValue("@ProjectID", trend.ProjectID);
+                    //            using (reader = command.ExecuteReader())
+                    //            {
+                    //                while (reader.Read())
+                    //                {
+                    //                    //Activity RetreivedActivity = new Activity();
+                    //                    //RetreivedActivity.ActivityID = reader.GetValue(0).ToString().Trim();
+                    //                    //RetreivedActivity.ProjectID = reader.GetValue(1).ToString().Trim();
+                    //                    //RetreivedActivity.TrendNumber = reader.GetValue(2).ToString().Trim();
+                    //                    //RetreivedActivity.PhaseCode = reader.GetValue(3).ToString().Trim();
+                    //                    //RetreivedActivity.BudgetCategory = reader.GetValue(4).ToString().Trim();
+                    //                    //RetreivedActivity.BudgetSubCategory = reader.GetValue(5).ToString().Trim();
+                    //                    //RetreivedActivity.ActivityStartDate = reader.GetValue(6).ToString().Trim();
+                    //                    //RetreivedActivity.ActivityEndDate = reader.GetValue(7).ToString().Trim();
+                    //                    //RetreivedActivity.FTECost = reader.GetValue(8).ToString().Trim();
+                    //                    //RetreivedActivity.UnitCost = reader.GetValue(9).ToString().Trim();
+                    //                    //RetreivedActivity.PercentageBasisCost = reader.GetValue(10).ToString().Trim();
+                    //                    //activityList.Add(RetreivedActivity);
+                    //                }
+                    //            }
+                    //        }
+                    //        catch (Exception ex)
+                    //        {
+                    //            var stackTrace = new StackTrace(ex, true);
+                    //            var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                    //            Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                    //        }
+
+                    //        //Nivedita 02-12-2021
+                    //        deleteCost(activityList, programElement.DeletedBy);
+                    //        if (activityList.Count > 0)
+                    //        {
+                    //            foreach (var act in activityList)
+                    //            {
+                    //                if (conn == null)
+                    //                {
+                    //                    conn = ConnectionManager.getConnection();
+                    //                    conn.Open();
+                    //                }
+                    //                //Nivedita 10022022
+                    //                var query = "update activity set IsDeleted=true, DeletedDate= NOW(), DeletedBy=@DeletedBy where 1=1 and ActivityID = @ActivityID";
+                    //                //var query = "delete from activity where 1=1 and ActivityID = @ActivityID";
+                    //                MySqlCommand command = new MySqlCommand(query, conn);
+                    //                command.Parameters.AddWithValue("@ActivityID", act.ActivityID);
+                    //                command.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
+                    //                command.ExecuteNonQuery();
+
+                    //            }
+                    //        }
+                    //    }
+                    //    if (trendList.Count > 0)
+                    //    {
+                    //        foreach (var tr in trendList)
+                    //        {
+                    //            tr.DeletedBy = programElement.DeletedBy;
+                    //            Trend.deleteTrend(tr);
+                    //        }
+                    //    }
+                    //}
+                    conn = ConnectionManager.getConnection();
+                    conn.Open();
+                    if (projectList.Count > 0)
+                    {
+                        foreach (var p in projectList)
+                        {
+                          //  p.DeletedBy = programElement.DeletedBy;
+                            Project.closeProject(p);
+                        }
+                    }
+                    //Nivedita 02-12-2021
+                    // var query1 = "delete from program_element where 1=1 and ProgramElementID = ProgramElementID";
+                    var query1 = "Update program_element set Status='Closed' where ProgramElementID = @ProgramElementID";
+                    MySqlCommand command1 = new MySqlCommand(query1, conn);
+                    command1.Parameters.AddWithValue("@ProgramElementID", pgmElt.ProgramElementID);
+                   // command1.Parameters.AddWithValue("@DeletedBy", programElement.DeletedBy);
+                    //command1.Parameters.AddWithValue("@Status", programElement.Status);
+                   // command1.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
+                    command1.ExecuteNonQuery();
+                    //updateCostOnProgramElementDelete(pgmElt.ProgramID);
+                    ////  ctx.ProgramElement.Remove(pgmElt);
+                    //  //ctx.SaveChanges();
                     result = "Success";
                 }
             }

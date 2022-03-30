@@ -80,6 +80,7 @@ namespace WebAPI.Models
         public bool IsDeleted { get; set; }
 
         public string DeletedBy { get; set; }
+        public string Status { get; set; }     //----Vaishnavi 30-03-2022----//
         public int ProgramManagerID { get; set; }
         public int ProgramSponsorID { get; set; }
 
@@ -193,6 +194,8 @@ namespace WebAPI.Models
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
                             var proId = MatchedProgramList[i].ProgramID;
+
+                          
                             //List<ProgramFund> programFunds = ProgramFund.getProgramFund(MatchedProgramList[i].ProgramID);
                             ////MatchedProgramList[i].programCategories = ctx.ProgramCategory.Where(a => a.ProgramID == MatchedProgramList[i].ProgramID).ToList();
                             //List<ProgramCategory> programCategories = ctx.ProgramCategory.Where(a => a.ProgramID == proId).ToList();
@@ -282,6 +285,7 @@ namespace WebAPI.Models
                         pgm.programFunds = null;
                         pgm.programCategories = null;
                         pgm.IsDeleted = false;
+                        pgm.Status = "Active";   //----Vaishnavi 30-03-2022----//
                         ctx.Program.Add(pgm);
                         ctx.SaveChanges();
                         var prog = ctx.Program.OrderByDescending(p => p.ProgramID).FirstOrDefault();
@@ -889,11 +893,153 @@ namespace WebAPI.Models
                         conn.Open();
                     }
                     //var query2 = "delete from program where 1=1 and ProgramID = @ProgramID";
-                    var query2 = "update program set IsDeleted=1, DeletedDate=@DeletedDate, DeletedBy=@DeletedBy where  ProgramID = @ProgramID";
+                    var query2 = "update program set IsDeleted=1, DeletedDate=@DeletedDate, DeletedBy=@DeletedBy, Status='Archived' where  ProgramID = @ProgramID";   //----Vaishnavi 30-03-2022----//
                     MySqlCommand command2 = new MySqlCommand(query2, conn);
                     command2.Parameters.AddWithValue("@ProgramID", pgm.ProgramID);
                     command2.Parameters.AddWithValue("@DeletedBy", program.DeletedBy);
                     command2.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
+                    command2.ExecuteNonQuery();
+                    //ctx.Program.Remove(pgm);
+                    // ctx.SaveChanges();
+                    result = "Success";
+                }
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            finally
+            {
+
+            }
+            return result;
+        }
+        //----Vaishnavi 30-03-2022----//
+        public static String closeProgram(Program program)
+        {
+            int ProgramID = program.ProgramID;
+            String result = "";
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            MySqlConnection conn = null;
+            MySqlDataReader reader = null;
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    ctx.Database.Log = msg => Trace.WriteLine(msg);
+                    int pgmId = ProgramID;
+                    Program pgm = ctx.Program.First(p => p.ProgramID == pgmId && p.IsDeleted == false);
+                    List<ProgramElement> programElementList = ctx.ProgramElement.Where(pe => pe.ProgramID == ProgramID && pe.IsDeleted == false).Select(row => row).ToList();
+                    //IQueryable<Project> projectList = ctx.Project.Where()
+                    //foreach (var peItem in programElementList)
+                    //{
+                    //    List<Project> projectList = ctx.Project.Where(p => p.ProgramElementID == peItem.ProgramElementID && p.IsDeleted == false).Select(proj => proj).ToList();
+                    //    foreach (var project in projectList)
+                    //    {
+                    //        List<Trend> trendList = ctx.Trend.Where(tr => tr.ProjectID == project.ProjectID && tr.IsDeleted == false).Select(trendItem => trendItem).ToList();
+                    //        foreach (var trend in trendList)
+                    //        {
+                    //            List<Activity> activityList = new List<Activity>();
+
+                    //            String delete_result = "";
+                    //            try
+                    //            {
+                    //                if (conn == null)
+                    //                {
+                    //                    conn = ConnectionManager.getConnection();
+                    //                    conn.Open();
+                    //                }
+                    //                activityList = ctx.Activity.Where(a => a.TrendNumber == trend.TrendNumber && a.ProjectID == trend.ProjectID && a.IsDeleted == false).ToList();
+
+                    //            }
+                    //            catch (Exception ex)
+                    //            {
+                    //                var stackTrace = new StackTrace(ex, true);
+                    //                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                    //                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                    //            }
+                    //            //Nivedita 02-12-2021
+                    //            deleteCost(activityList, program.DeletedBy);
+                    //            if (activityList.Count > 0)
+                    //            {
+                    //                foreach (var act in activityList)
+                    //                {
+                    //                    act.DeletedBy = program.DeletedBy;
+                    //                    Activity.deleteActivity(act);
+
+                    //                }
+                    //            }
+                    //        }
+                    //        //Nivedita 02 - 12 - 2021
+                    //        if (trendList.Count > 0)
+                    //        {
+
+                    //            foreach (var tr in trendList)
+                    //            {
+                    //                tr.DeletedBy = program.DeletedBy;
+                    //                Trend.deleteTrend(tr);
+                    //            }
+                    //        }
+                    //    }
+                    //    if (projectList.Count > 0)
+                    //    {
+
+                    //        foreach (var p in projectList)
+                    //        {
+                    //            p.DeletedBy = program.DeletedBy;
+                    //            Project.deleteProject(p);
+                    //        }
+                    //    }
+
+                    //}
+
+
+
+                    if (programElementList.Count > 0)
+                    {
+                        foreach (var pe in programElementList)
+                        {
+                            //ProgramElement.deleteProgramElement(pe.ProgramElementID);
+                            //pe.DeletedBy = program.DeletedBy;
+                            ProgramElement.closeProgramElement(pe);
+                        }
+                    }
+                    ////delete program fund
+                    //if (conn == null)
+                    //{
+                    //    conn = ConnectionManager.getConnection();
+                    //    conn.Open();
+                    //}
+                    //var query1 = "delete from program_fund where 1=1 and ProgramId = @ProgramID" ;
+                    //MySqlCommand command1 = new MySqlCommand(query1, conn);
+                    //command1.Parameters.AddWithValue("@ProgramID", ProgramID);
+                    //command1.ExecuteNonQuery();
+
+                    //Delete Program Category
+                    //if (conn == null)
+                    //{
+                    //    conn = ConnectionManager.getConnection();
+                    //    conn.Open();
+                    //}
+                    //query1 = "delete from program_category where 1=1 and ProgramID = @ProgramID";
+                    //MySqlCommand command3 = new MySqlCommand(query1, conn);
+                    //command3.Parameters.AddWithValue("@ProgramID", ProgramID);
+                    //command3.ExecuteNonQuery();
+                    //finally delete program
+                    if (conn == null)
+                    {
+                        conn = ConnectionManager.getConnection();
+                        conn.Open();
+                    }
+                    //var query2 = "delete from program where 1=1 and ProgramID = @ProgramID";
+                    var query2 = "update program set Status='Closed' where  ProgramID = @ProgramID";
+                    MySqlCommand command2 = new MySqlCommand(query2, conn);
+                    command2.Parameters.AddWithValue("@ProgramID", pgm.ProgramID);
+                    //command2.Parameters.AddWithValue("@DeletedBy", program.DeletedBy);
+                    //command2.Parameters.AddWithValue("@DeletedDate", DateTime.Now);
                     command2.ExecuteNonQuery();
                     //ctx.Program.Remove(pgm);
                     // ctx.SaveChanges();

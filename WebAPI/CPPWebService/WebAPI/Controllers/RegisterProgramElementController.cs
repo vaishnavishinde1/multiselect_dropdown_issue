@@ -45,6 +45,9 @@ namespace WebAPI.Controllers
 
             if (program_element.Operation == 3)
                 status = WebAPI.Models.ProgramElement.deleteProgramElement(program_element);
+            //----Vaishnavi 30-03-2022----//
+            if (program_element.Operation == 5)
+                status = WebAPI.Models.ProgramElement.closeProgramElement(program_element);
 
             if (program_element.Operation == 4)
                 status = "Success";

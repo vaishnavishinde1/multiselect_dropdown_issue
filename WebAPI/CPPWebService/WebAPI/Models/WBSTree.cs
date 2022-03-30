@@ -65,6 +65,8 @@ namespace WebAPI.Models
         public String TrendImpactSchedule;   //Manasi 13-07-2020
         [DataMember]
         public String TrendImpactCostSchedule;   //Manasi 13-07-2020
+        [DataMember]
+        public String Status;    //----Vaishnavi 30-03-2022----//
 
         //[DataMember] 
         //public List<PhaseWBS> children = new List<PhaseWBS>();
@@ -83,6 +85,7 @@ namespace WebAPI.Models
             CostOverheadTypeID = wbst.CostOverheadTypeID;
             TrendImpactSchedule = wbst.TrendImpactSchedule;  //Manasi 13-07-2020
             TrendImpactCostSchedule = wbst.TrendImpactCostSchedule;  //Manasi 13-07-2020
+            TrendImpactCostSchedule = wbst.Status;   //----Vaishnavi 30-03-2022----//
         }
     }
     [DataContract]
@@ -136,6 +139,8 @@ namespace WebAPI.Models
         public String TrendImpactSchedule;   //Manasi 13-07-2020
         [DataMember]
         public String TrendImpactCostSchedule;   //Manasi 13-07-2020
+        [DataMember]
+        public String Status;   //----Vaishnavi 30-03-2022----//
 
         public CurrentTrendWBSTree(Trend wbst, List<FutureTrendWBSTree> phs)
         {
@@ -152,6 +157,7 @@ namespace WebAPI.Models
             children = phs;
             TrendImpactSchedule = wbst.TrendImpactSchedule;  //Manasi 13-07-2020
             TrendImpactCostSchedule = wbst.TrendImpactCostSchedule;  //Manasi 13-07-2020
+            Status= wbst.Status;   //----Vaishnavi 30-03-2022----//
         }
     }
     [DataContract]
@@ -205,6 +211,8 @@ namespace WebAPI.Models
         public String TrendImpactSchedule;   //Manasi 13-07-2020
         [DataMember]
         public String TrendImpactCostSchedule;  //Manasi 13-07-2020
+        [DataMember]
+        public String Status;   //----Vaishnavi 30-03-2022----//
 
         public PastTrendWBSTree(Trend wbst, List<CurrentTrendWBSTree> phs)
         {
@@ -221,6 +229,7 @@ namespace WebAPI.Models
             children = phs;
             TrendImpactSchedule = wbst.TrendImpactSchedule;  //Manasi 13-07-2020
             TrendImpactCostSchedule = wbst.TrendImpactCostSchedule;  //Manasi 13-07-2020
+            Status = wbst.Status;   //----Vaishnavi 30-03-2022----//
         }
     }
 
@@ -381,6 +390,8 @@ namespace WebAPI.Models
         [DataMember]
         public List<Int32> employeeAllowedList;
 
+        [DataMember]
+        public String Status;   //----Vaishnavi 30-03-2022----//
         public ProjectWBSTree(Project wbspj, List<PastTrendWBSTree> trn)
         {
             ProgramID = wbspj.Program.ProgramID.ToString(); ProgramElementID = wbspj.ProgramElement.ProgramElementID.ToString();
@@ -455,6 +466,7 @@ namespace WebAPI.Models
             LineOfBusinessID = wbspj.LineOfBusinessID;
 
             TotalUnapprovedTrends = wbspj.TotalUnapprovedTrends;
+            Status = wbspj.Status;   //----Vaishnavi 30-03-2022----//
         }
     }
     [DataContract]
@@ -481,6 +493,7 @@ namespace WebAPI.Models
         public int ProgramElementManagerID;
         [DataMember]
         public int ProgramElementSponsorID;
+      
         [DataMember]
         public String CurrentStartDate;
         [DataMember]
@@ -602,15 +615,16 @@ namespace WebAPI.Models
         //Nivedita 04-01-2021
         [DataMember]
         public String ClientPONumber;
-
         [DataMember]
         public List<ProjectWBSTree> children = new List<ProjectWBSTree>();
-
+        [DataMember]
+        public String Status;    //----Vaishnavi 30-03-2022----//
         public ProgramElementWBSTree(ProgramElement wbspe, List<ProjectWBSTree> prj, int uId)
         {
             ProgramElementID = wbspe.ProgramElementID.ToString(); name = wbspe.ProgramElementName; ProgramID = wbspe.Program.ProgramID.ToString();
             ProgramElementManager = wbspe.ProgramElementManager; ProgramElementSponsor = wbspe.ProgramElementSponsor;
             ProgramElementManagerID = wbspe.ProgramElementManagerID; ProgramElementSponsorID = wbspe.ProgramElementSponsorID;
+           
             ClientID = wbspe.ClientID; LocationID = wbspe.LocationID; ProjectManagerID = wbspe.ProjectManagerID; DirectorID = wbspe.DirectorID; SchedulerID = wbspe.SchedulerID;
             VicePresidentID = wbspe.VicePresidentID; FinancialAnalystID = wbspe.FinancialAnalystID; CapitalProjectAssistantID = wbspe.CapitalProjectAssistantID;
             CostDescription = wbspe.CostDescription; ScheduleDescription = wbspe.ScheduleDescription; ScopeQualityDescription = wbspe.ScopeQualityDescription;
@@ -653,6 +667,7 @@ namespace WebAPI.Models
             Lumpsum = wbspe.Lumpsum;
 
             ClientPONumber = wbspe.ClientPONumber;
+            Status = wbspe.Status;   //----Vaishnavi 30-03-2022----//
 
             // Jignesh-21-10-2021
             List<ProjectAccessControl> projectAccessControlsList = ProjectAccessControl.GetContractModificationList(uId);
@@ -803,6 +818,9 @@ namespace WebAPI.Models
 
         [DataMember]
         public List<ProgramElementWBSTree> children = new List<ProgramElementWBSTree>();
+
+        [DataMember]
+        public String Status;   //----Vaishnavi 30-03-2022----//
         public ProgramWBSTree(Project proj, Program wbsprg, List<ProgramElementWBSTree> prge)
         {
             ProgramID = wbsprg.ProgramID.ToString();
@@ -858,6 +876,8 @@ namespace WebAPI.Models
             ForecastCost = String.Format("{0:#,###0}", wbsprg.ForecastCost);
             //programFunds = wbsprg.programFunds.ToList(); programCategories = wbsprg.programCategories.ToList();
             children = prge;
+            Status= wbsprg.Status;   //----Vaishnavi 30-03-2022----//
+
         }
 
         public static List<ProgramWBSTree> getWBSTreeDetails(int uId, String OrganizationID, String ProgramID, String ProgramElementID, String ProjectID,
