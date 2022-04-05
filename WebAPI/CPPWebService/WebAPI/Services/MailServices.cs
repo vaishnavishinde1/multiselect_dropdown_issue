@@ -478,6 +478,22 @@ namespace WebAPI.Services
             sendMailThread.Start();
         }
 
+        //Contract Cost Change Mail 
+        public static void NotifyCostChangeToManager(string TargetedUser, string toEmail, string ContractNumber, string ContractName, string ModifiedValue, string CurruntValue, string sub = "CPP - Contract Value Change.")
+        {
+            List<string> to = new List<string>();
+            to.Add(toEmail);
+            String subject = sub;
+            string message = "<html>Hello " + TargetedUser + " , <br><br> Contract Ammount for Contrat - <strong>" + ContractName + "</strong>, with contract no <strong>" + ContractNumber + "</strong> has been modified by <strong>$" + ModifiedValue + "</strong> ."
+                + "<br> Current Contract Value : <strong>$" + CurruntValue + "</strong>"
+                + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            var sendMailThread = new Task(() =>
+            {
+                SendMail(to, "", "", subject, message);
+            });
+            sendMailThread.Start();
+        }
+
         public static void SendMail(List<string> to, string cc, string bcc, string subject, string message)
         {
             //Reading sender Email credential from web.config file  

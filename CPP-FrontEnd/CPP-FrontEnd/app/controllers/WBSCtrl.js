@@ -3290,7 +3290,9 @@ angular.module('cpp.controllers').
                 var pagedata = Page;
                 $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
                 $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
-                console.log('Called Org...');
+                //console.log('Called Org...');
+                var firstGNode = $('#trendSvg').children()[0];
+                $(firstGNode).children().remove();
                 $scope.filterProgramId = "";
                 $scope.filterProgramElement = "";
                 $scope.filterProject = "";
