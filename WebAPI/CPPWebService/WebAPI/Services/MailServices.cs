@@ -478,7 +478,7 @@ namespace WebAPI.Services
             sendMailThread.Start();
         }
 
-        //Contract Cost Change Mail 
+        // Narayan - Contract Cost Change Mail 
         public static void NotifyCostChangeToManager(string TargetedUser, string toEmail, string ContractNumber, string ContractName, string ModifiedValue, string CurruntValue, string sub = "CPP - Contract Value Change.")
         {
             List<string> to = new List<string>();
