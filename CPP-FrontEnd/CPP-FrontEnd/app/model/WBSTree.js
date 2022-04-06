@@ -9072,7 +9072,7 @@ WBSTree = (function ($) {
                             if (modType == true) {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', false);
+                                $('#program_current_end_date').attr('disabled', true); //Aditya 06042022 if schedule impact modification disable current end date
                                 $('#program_original_end_date').attr('disabled', true);
                             }
                             else {
