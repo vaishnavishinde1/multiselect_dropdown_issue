@@ -86,6 +86,12 @@ namespace WebAPI.Models
 
         public int ProjectClassID { get; set; }
 
+        public string IsPPBond { get; set; }
+
+        public string IsCostPartOfContract { get; set; }
+
+        public string PPBondNotes { get; set; }
+
         [ForeignKey("ProgramManagerID")]
         public virtual Employee ProgramManagerObj { get; set; }
 
@@ -420,7 +426,9 @@ namespace WebAPI.Models
                                 pgm.programCategories = null;
                                 List<ProgramCategory> categoryToBeDeleted = program.categoryToBeDeleted.ToList();
                                 pgm.categoryToBeDeleted = null;
-
+                                pgm.IsPPBond = program.IsPPBond;
+                                pgm.IsCostPartOfContract = program.IsCostPartOfContract;
+                                pgm.PPBondNotes = program.PPBondNotes;
                                 ctx.SaveChanges();
 
                                 for (var i = 0; i < fundToBeDeletedList.Count; i++)
@@ -530,7 +538,9 @@ namespace WebAPI.Models
                             pgm.programFunds = null;
                             List<ProgramFund> fundToBeDeletedList = program.fundToBeDeleted.ToList();
                             pgm.fundToBeDeleted = null;
-
+                            pgm.IsPPBond = program.IsPPBond;
+                            pgm.IsCostPartOfContract = program.IsCostPartOfContract;
+                            pgm.PPBondNotes = program.PPBondNotes;
                             //program Categories
                             List<ProgramCategory> programCategoryList = program.programCategories.ToList();
                             pgm.programCategories = null;
