@@ -4375,6 +4375,7 @@
         <li><a tabindex="-1" id="contextMenuViewGantt" href="javascript:void(0);">View Gantt</a></li> <!-- Manasi 14-01-2021 -->
         <!--<li class="divider"></li>-->
         <li><a tabindex="-1" id="contextMenuDelete" href="javascript:void(0);">Delete</a></li>
+        <li><a tabindex="-1" id="contextMenuClosed" href="javascript:void(0);">Closed</a></li>    <!--//----Vaishnavi 30-03-2022----//-->
         <!--<li><a tabindex="-1" id="contextMenuBaseline" href="javascript:void(0);">Baseline View</a></li>
         <li><a tabindex="-1" id="contextMenuCurrent" href="javascript:void(0);">Current View</a></li>
         <li><a tabindex="-1" id="contextMenuForecast" href="javascript:void(0);">Forecast View</a></li>-->
@@ -4407,7 +4408,31 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
-
+<!--//----Vaishnavi 30-03-2022----//-->
+<div class="modal fade modal-md" id="ClosedModal" data-backdrop="static" role="dialog" aria-labelledby="modal_heading" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">-->
+            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            <!--&lt;!&ndash;// <h4 class="modal-title"></h4>&ndash;&gt;-->
+            <!--</div>-->
+            <div class="modal-body">
+                <div style="height:50px;">
+                    <p class="col-sm-12" id="closed_message" style="text-align: center; font-size:large; font-weight:bold;color:black">Are you Sure you want to Closed?</p>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <div class="col-sm-6">
+                        <button id="no_delete" data-dismiss="modal" style="margin-left:25%;" type="button" class="btn btn-primary c-btn-back">No</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" data-dismiss="modal" style="margin-right:25%;" class="btn btn-primary c-btn-delete" id="closed_button">Yes</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+ <!--//----Vaishnavi 30-03-2022----//-->
 <!--Exit Confirmation Modal-->
 <div class="modal modal-md" id="ExitConfirmModal" data-backdrop="static" role="dialog" aria-labelledby="modal_heading" aria-hidden="true">
     <div class="modal-dialog">
@@ -5544,9 +5569,16 @@
 
         //	nhung ma ta
         $("#contextMenuDelete").bind("click", function () {
+            debugger;
             modal_mode = 'Update';
             $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
         });
+         /*//----Vaishnavi 30-03-2022----//*/
+        $("#contextMenuClosed").bind("click", function () {
+            modal_mode = 'Update';
+            $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+        });
+        /* //----Vaishnavi 30-03-2022----//*/
         $("#contextMenuMap").unbind('click').on('click', function () {
             //console.log(wbsTree.getSelectedNode().organizationID);
             $(location).attr('href', '#/app/const-timeline');
@@ -5554,6 +5586,7 @@
             //uses local storage to retrieve organization
         });
         $("#DeleteModal").unbind().on('show.bs.modal', function () {
+            debugger;
             var type = $("#contextMenu").attr('contextType');
             console.log(type);
             console.debug("Before", $('#delete_message').text());
@@ -5601,6 +5634,60 @@
             }
             console.debug("after", $('#delete_message').text());
         });
+         /*//----Vaishnavi 30-03-2022----//*/
+        $("#ClosedModal").unbind().on('show.bs.modal', function () {
+            debugger;
+            var type = $("#contextMenu").attr('contextType');
+            console.log(type);
+            console.debug("Before", $('#delete_message').text());
+
+            if (type === "Root") {
+                //Ivan here
+                $("#DeleteModal").appendTo('body');
+                if (modal_mode == 'Create') {
+                    //Original: $('.modal-body #delete_message').text("Deleting a program will delete its program elements. Are you sure you want to continue?");
+                    //$('.modal-body #delete_message').text("Deleting a program will delete its projects. Are you sure you want to continue?");
+                    $('.modal-body #closed_message').text("Closing a contract will closes its projects. Are you sure you want to continue?");    //Manasi 20-07-2020
+                } else {
+                    $('.modal-body #closed_message').text("Closing an Organization will closes everything. Are you sure you want to continue?");
+                }
+                //$('#orgModal').css({"opacity": "0.4"});
+                var orgModal = $("#orgModal");
+                $(orgModal.parent().parent().parent()).css({ "opacity": "0.4" });
+            } else if (type === "Program") {
+                if (modal_mode == "Create") {
+                    //Original: $('.modal-body #delete_message').text("Deleting a Program Element will delete its projects. Are you sure you want to continue?");
+                    $('.modal-body #closed_message').text("Closing a Project will Closes its project elements. Are you sure you want to continue?");
+                } else {
+                    //Original: $('.modal-body #delete_message').text("Deleting a program will delete its program elements. Are you sure you want to continue?");
+                    $('.modal-body #closed_message').text("Closing a Contract will Closes its projects. Are you sure you want to continue?");
+                }
+
+            } else if (type === "ProgramElement") {
+                if (modal_mode == "Create") {
+                    $('.modal-body #closed_message').text("Closing a project will Closes its trends. Are you sure you want to continue?");
+                } else {
+                    //Original: $('.modal-body #delete_message').text("Deleting a Program Element will delete its projects. Are you sure you want to continue?");
+                    $('.modal-body #closed_message').text("Closing a Project will Closes its project elements. Are you sure you want to continue?");
+                }
+
+            } else if (type === "Project") {
+                if (modal_mode == "Create") {
+                    $('.modal-body #closed_message').text("All information related to this trend will be deleted. Are you sure you want to continue?");
+                } else {
+                    //$('.modal-body #delete_message').text("Deleting a project will delete its trends. Are you sure you want to continue?");
+                    $('.modal-body #closed_message').text("Closing an element will Closes its trends. Are you sure you want to continue?");   //Manasi
+                }
+
+            } else if (type === "FutureTrend") {
+                $('.modal-body #closed_message').text("All information related to this trend will be Closed. Are you sure you want to continue?");
+            }
+            else if (type === "PastTrend") {
+                $('.modal-body #closed_message').text("All information related to this trend will be Closed. Are you sure you want to continue?");
+            }
+            console.debug("after", $('#delete_message').text());
+        });
+         /*//----Vaishnavi 30-03-2022----//*/
         $("#delete_button").unbind('click').on('click', function () {
             $("#DeleteModal").modal('hide');
         });

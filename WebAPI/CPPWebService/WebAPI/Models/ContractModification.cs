@@ -80,7 +80,11 @@ namespace WebAPI.Models
 							ctx.SaveChanges();
 						}
 					}
-					
+
+					if (contractModification.ModificationType == 1 || contractModification.ModificationType == 3)
+					{
+                        ContractValueChangeMail.SendContarctValueMail(contractModification.ProgramID, contractModification.Id, contractModification.Value);
+                    }
 
 				}
 			}
@@ -135,6 +139,10 @@ namespace WebAPI.Models
 								ctx.SaveChanges();
 							}
 						}
+						if(contractModification.ModificationType == 1 || contractModification.ModificationType == 3)
+                        {
+                            ContractValueChangeMail.SendContarctValueMail(contractModification.ProgramID, contractModification.Id, contractModification.Value);
+                        }
 					}
 				}
 
@@ -175,7 +183,21 @@ namespace WebAPI.Models
 						}
 						ctx.ContractModification.Remove(retreivedConMod);
 						ctx.SaveChanges();
-						
+
+						if (retreivedConMod.ModificationType == 1 || retreivedConMod.ModificationType == 3)
+						{
+							string differValue;
+							if (retreivedConMod.Value.Substring(0, 1) == "-")
+                            {
+								differValue = retreivedConMod.Value.Replace("-", "");
+                            }
+                            else
+                            {
+								differValue = retreivedConMod.Value.Insert(0, "-");
+							}
+                            ContractValueChangeMail.SendContarctValueMail(retreivedConMod.ProgramID, retreivedConMod.Id, differValue);
+                        }
+
 					}
 				}
 
