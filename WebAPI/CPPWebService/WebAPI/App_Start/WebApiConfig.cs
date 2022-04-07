@@ -1421,12 +1421,23 @@ namespace WebAPI
                  routeTemplate: "Response/ProjectClass",
                  defaults: new { controller = "RegisterProjectClass" }
              );
+            //Prime
+            config.Routes.MapHttpRoute(
+                  name: "RequestPrime",
+                  routeTemplate: "Request/prime",
+                  defaults: new { controller = "RequestPrime" }
+             );
+            config.Routes.MapHttpRoute(
+                  name: "RegisterPrime",
+                  routeTemplate: "Response/prime",
+                  defaults: new { controller = "RegisterPrime" }
+            );
 
             //Services Class
             config.Routes.MapHttpRoute(
                   name: "RequestServiceClass",
                   routeTemplate: "Request/ServiceClass",
-                 defaults: new { controller = "RequestServiceClass" }
+                  defaults: new { controller = "RequestServiceClass" }
              );
             config.Routes.MapHttpRoute(
                 name: "RegisterServiceClass",

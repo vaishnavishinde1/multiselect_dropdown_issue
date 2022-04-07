@@ -109,6 +109,7 @@ angular.module('xenon.services', []).
 					admin.addItem('Document Type', '-/document-type');
 					//admin.addItem('Location', '-/location'); //territoryCtrl // Aditya ---hide location from sidebar---
 					admin.addItem('Organization', '-/organization');
+					admin.addItem('Prime', '-/prime'); // Prime Aditya 30032022
 					//admin.addItem('Project Approval Requirements', '-/approval-matrix'); //Manasi
                     admin.addItem('Trend Approval Requirements', '-/approval-matrix'); // Manasi
 					admin.addItem('Subservices', '-/phase-code');

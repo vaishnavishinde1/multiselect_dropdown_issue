@@ -3,13 +3,13 @@ angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
-        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId','ProjectClassByProgramElementId', 'Client', 'Location', 'ProjectNumber',
+        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId','ProjectClassByProgramElementId', 'Client', 'Prime', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
         'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
-            ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
+            ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
             UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber) {
             Page.setTitle('Program Navigation');
@@ -1813,6 +1813,7 @@ angular.module('cpp.controllers').
                     UniqueIdentityNumber: uniqueIdentityNumber
                 }
                 listToSave.push(dataObj);
+                
                 var url = serviceBasePath + 'response/Client/';
                 $http({
                     url: url,
@@ -2012,7 +2013,7 @@ angular.module('cpp.controllers').
                 {
                     contractModification.ProgramStartDt = pgmcurrentstartdate;
                     contractModification.ProgramEndDt = pgmcurrentenddate;
-                    $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                    $('#program_current_end_date').attr('disabled', true); // Aditya ogDate
                     $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
                 }
                 if (operation == 2) {
@@ -2147,7 +2148,7 @@ angular.module('cpp.controllers').
                             var temp = wbsTree.getSelectedNode();
                             temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
                             wbsTree.updateTreeNodes(temp);
-                            $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                            $('#program_current_end_date').attr('disabled', true); // Aditya ogDate
                             $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
                             modal.find('.modal-body #program_original_end_date').val(moment(contractModification.originalEndDate).format('MM/DD/YYYY')); // Aditya ogDate
                             modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
@@ -3088,6 +3089,10 @@ angular.module('cpp.controllers').
             ClientPOC.get({}, function (response) {                      //Tanmay - 15/12/2021
                 console.log(response);
                 wbsTree.setClientPOCList(response.result);
+            });
+            Prime.get({}, function (response) {
+                console.log(response);
+                wbsTree.setPrimeList(response.result);
             });
             Location.get({}, function (response) {
                 console.log(response);

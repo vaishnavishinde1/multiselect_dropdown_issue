@@ -430,12 +430,16 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
             templateUrl: appHelper.templatePath('admin/inventory'),
             controller: 'InventoryCtrl'
         }).
-         state('app.admin-location', {
-             url: '/admin-location',
-             templateUrl: appHelper.templatePath('admin/territory'),
-             controller: 'TerritoryCtrl'
+         //state('app.admin-location', {
+         //    url: '/admin-location',
+         //    templateUrl: appHelper.templatePath('admin/territory'),
+         //    controller: 'TerritoryCtrl'
+         //}).
+        state('app.admin-prime', {
+            url: '/admin-prime',
+            templateUrl: appHelper.templatePath('admin/prime'),
+            controller: 'PrimeCtrl'
          }).
-
          state('app.admin-agilegrid', {
              url: '/admin-agilegrid',
              templateUrl: appHelper.templatePath('admin/agilegrid'),

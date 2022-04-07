@@ -1567,6 +1567,13 @@ WBSTree = (function ($) {
             if (clientList)
                 _clientList = clientList;
         }
+        obj.prototype.getPrimeList = function () {   //already in list form of data
+            return _primelist;
+        }
+        obj.prototype.setPrimeList = function (primeList) {   //already in list form of data
+            if (primeList)
+                _primelist = primeList;
+        }
         obj.prototype.getClientPOCList = function () {    //Already in list form of data                 //Tanmay - 15/12/2021
             return _clientPOCList;
         }
@@ -2788,6 +2795,24 @@ WBSTree = (function ($) {
                 var wbstree = wbsTree.getProgramCategory();
                 console.log(wbstree);
 
+                //=====================Aditya 04042022==============//
+                console.log("Prime dd=====>");
+                modal = $(this);
+                var primeDropDown = modal.find('.modal-body #prime_dd');
+                var primeList = wbsTree.getPrimeList();
+                primeDropDown.empty();
+                //if (wbsTree.getLocalStorage().role === "Admin") {
+                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                    primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                }
+                for (var x = 0; x < primeList.length; x++) {
+                    if (primeList[x].Name == null) {
+                        continue;
+                    }
+                    primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    primeDropDown.val('');
+                }
+                //===================================================//
                 //Amruta -- Populate client dropdown for new contract
                 console.log("Client dd=====>");
                 modal = $(this);
@@ -3723,7 +3748,7 @@ WBSTree = (function ($) {
                     selectedNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
                     selectedNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     //Nivedita 13-01-2022
-                    selectedNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); //Aditya 18-02-2022
+                    //selectedNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); //Aditya 18-02-2022
                     //selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
                     if (!$('#ProgramModal').find('.modal-body #program_contract_value').val()) {
                         dhtmlx.alert('Original Contract Value is a required field.'); // Jignesh-02-03-2021
@@ -9043,11 +9068,11 @@ WBSTree = (function ($) {
                                 }
                             }
 
-
+                            //06042022 issue with change current date
                             if (modType == true) {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', false);
+                                $('#program_current_end_date').attr('disabled', true);
                                 $('#program_original_end_date').attr('disabled', true);
                             }
                             else {
@@ -9131,6 +9156,28 @@ WBSTree = (function ($) {
                     //=============================================================
                     console.log('applied jquery');
                     console.log(selectedNode);
+
+                    //======================Aditya 04042022 prime=========================//
+                    console.log("Prime ddupdate=====>");
+                    //modal = $(this);
+                    var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    primeList.sort(function (a, b) {   //vaishnavi
+                        return a.Name.localeCompare(b.Name);  //vaishnavi
+                    }); //vaishnavi
+                    primeDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") { Nivedita 22-03-2022
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].Name == null) {
+                            continue;
+                        }
+                        primeDropDown.append('<option value=' + primeList[x].id + '>' + primeList[x].Name + '</option>');
+                        primeDropDown.val(selectedNode.id);
+                    }
+                    //===============================================================================//
 
                     //Amruta
                     console.log("Client ddupdate=====>");
@@ -9449,6 +9496,27 @@ WBSTree = (function ($) {
                     $('#gridUploadedDocumentProgramNew tbody').empty();
                     $('#gridUploadedDocumentProgramNew > tbody').html("");
 
+                    //Aditya 04042022 prime=================================//
+                    console.log("Prime dd=====>");
+                    var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    primeList.sort(function (a, b) { 
+                        return a.Name.localeCompare(b.Name);   
+                    });
+                    primeDropDown.empty();
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].PrimeName == null) {
+                            continue;
+                        }
+                        primeDropDown.append('<option value=' + primeList[x].id + '>' + primeList[x].Name + '</option>');
+                        primeDropDown.val(selectedNode.id);
+                    }
+
+                    //==========================================================//
+
                     //Amruta
                     console.log("Client dd=====>");
                     //modal = $(this);
@@ -9526,6 +9594,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_project_manager_phone').val('');
                     modal.find('.modal-body #program_project_manager_email').val('');
 
+                    modal.find('.modal-body #prime_dd').val('');
+                    modal.find('.modal-body #prime_subPrime_dd').val('Prime');
                     modal.find('.modal-body #program_billing_poc').val('');
                     modal.find('.modal-body #program_billing_poc_phone_1').val('');
                     modal.find('.modal-body #program_billing_poc_phone_2').val('');
@@ -11576,6 +11646,30 @@ WBSTree = (function ($) {
                     }
                     projectClassDropDown.val(projectClassName);
 
+                    //Aditya 04042022 prime=============================//
+                    //Populate primes for dropdown
+                    //Find the prime name given the id
+                    var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    var Name = '';
+                    primeDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].id == selectedNode.id) {
+                            primeList = primeList[x].Name
+                        }
+
+                        if (primeList[x].Name == null) {
+                            continue;
+                        }
+                        primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    }
+                    primeDropDown.val(Name);
+                    //=====================================================//
+
                     //Populate clients for dropdown
                     //Find the client name given the id
                     var clientDropDown = modal.find('.modal-body #client');
@@ -12036,6 +12130,23 @@ WBSTree = (function ($) {
                         projectClassDropDown.val(projectClassName);
                         projectClassDropDown.attr('disabled', false);
                     });
+                    //Aditya 04042022 prime===========================//
+                    //Populate project primes for dropdown
+                    var priemDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    priemDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        priemDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].Name == null) {
+                            continue;
+                        }
+                        priemDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                        priemDropDown.val('');
+                    }
+                    //===========================================//
 
                     //Populate project client for dropdown
                     var clientDropDown = modal.find('.modal-body #client');
@@ -12748,7 +12859,7 @@ WBSTree = (function ($) {
                 '#program_client_poc,#program_billing_poc,#program_billing_poc_phone_1,#program_billing_poc_phone_2,' +
                 '#program_billing_poc_email,#program_billing_poc_address_line1,#program_billing_poc_address_line2,#program_client_phone,' +
                 '#program_client_email,#program_client_address_line1,#program_client_address_line2,#program_client_city,#program_client_state,' +
-                '#program_client_po_num,#program_project_manager,#program_billing_poc_city,#program_billing_poc_state,#program_billing_poc_po_num,' +
+                '#program_client_po_num,#program_project_manager,#program_billing_poc_city,#program_billing_poc_state,#program_billing_poc_po_num,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_po_num,#program_project_manager,#program_project_manager_phone,#program_project_manager_email,' +
                 '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction';
 
@@ -12998,7 +13109,7 @@ WBSTree = (function ($) {
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,#emp_class,' +
-                '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,' +
+                '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
                 '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,#program_billing_poc_special_instruction1,' +
                 '#program_tm_billing1,#program_sov_billing1,#program_monthly_billing1,#program_Lumpsum1';
@@ -13303,6 +13414,18 @@ WBSTree = (function ($) {
                 }
             });
             //=======================================================================================================
+            //================= Aditya prime dd disable on Prime ========================//
+            $('#prime_subPrime_dd').on('change', function () {
+                if ($(this).val() != "Sub-Prime") {
+                    $('#prime_dd').attr('disabled', 'disabled');
+                    $('#prime_dd').val('');
+                }
+                else {
+                    $('#prime_dd').removeAttr('disabled');
+                    
+                }
+            });
+            //=========================================================================//
 
             $('#program_client_poc').on('change', function () {                     //Tanmay - 15/12/2021
                 if ($(this).val() == "Add New") {
@@ -14553,7 +14676,29 @@ WBSTree = (function ($) {
                     employeeClassDropDown.val(dataarray);
                     employeeClassDropDown.multiselect('refresh');
 
+                    //Aditya 04042022 prime======================================//
+                    //Populate primess for dropdown
+                    //Find the primes name given the id
+                    var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    var Name = '';
+                    primeDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].id == selectedNode.id) {
+                            Name = primeList[x].Name
+                        }
 
+                        if (primeList[x].Name == null) {
+                            continue;
+                        }
+                        primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    }
+                    primeDropDown.val(Name);
+                    //======================================================================//
 
                     //Populate clients for dropdown
                     //Find the client name given the id
@@ -15015,6 +15160,22 @@ WBSTree = (function ($) {
                     //    //projectClassDropDown.attr('disabled', false);
                     //});
 
+
+                    //Populate project client for dropdown
+                    var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeList = wbsTree.getPrimeList();
+                    primeDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
+                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    }
+                    for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].Name == null) {
+                            continue;
+                        }
+                        primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                        primeDropDown.val('');
+                    }
 
                     //Populate project client for dropdown
                     var clientDropDown = modal.find('.modal-body #client');

@@ -115,6 +115,7 @@ namespace WebAPI
             modelBuilder.Entity<ProjectType>().ToTable("project_type");
             modelBuilder.Entity<ProjectClass>().ToTable("project_class");
             modelBuilder.Entity<ServiceClass>().ToTable("services"); //services table
+            modelBuilder.Entity<Prime>().ToTable("primes"); //primes table
             //modelBuilder.Entity<ProjectClassPhase>().ToTable("project_class_phase");
             modelBuilder.Entity<ServiceToSubserviceMapping>().ToTable("project_class_phase");
 
@@ -218,6 +219,7 @@ namespace WebAPI
         public DbSet<ProjectType> ProjectType { get; set; }
         public DbSet<ProjectClass> ProjectClass { get; set; }
         public DbSet<ServiceClass> ServiceClass { get; set; }
+        public DbSet<Prime> Prime { get; set; }
         public DbSet<Contract> Contract { get; set; }
         public DbSet<Milestone> Milestone { get; set; }
         public DbSet<ChangeOrder> ChangeOrder { get; set; }
