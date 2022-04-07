@@ -270,7 +270,7 @@ namespace WebAPI.Models
                                         Object[] values = new Object[reader.FieldCount];
                                         int fieldCount = reader.GetValues(values);
                                         user.AccessControlList = null;
-                                        for (int i = 1; i < fieldCount; i++)
+                                        for (int i = 0; i < fieldCount; i++)
                                             user.AccessControlList += reader.GetValue(i).ToString().Trim();
 
                                     }
@@ -799,28 +799,34 @@ namespace WebAPI.Models
                         CopyUtil.CopyFields<User>(user, retreivedUser);
 
                         var newRoleIds = new List<int> { };
-
-                        for (int i = 0; i < user.lstUserRole.Count; i++)
+                        if (user.lstUserRole != null)
                         {
-                            if (user.lstUserRole[i].isSelected == true)
+                            for (int i = 0; i < user.lstUserRole.Count; i++)
                             {
-                                newRoleIds.Add(user.lstUserRole[i].Id);
-                            }
+                                if (user.lstUserRole[i].isSelected == true)
+                                {
+                                    newRoleIds.Add(user.lstUserRole[i].Id);
+                                }
 
+                            }
                         }
+                        
 
                         //var struser = ctx.User.Include("UserRoleRelation").Single(u => u.Id == user.Id);
                         List<UserRoleRelation> userRoleRelation = new List<UserRoleRelation>();
                         userRoleRelation = ctx.UserRoleRelation.Where(u => u.UserId == user.Id).ToList();
 
-                        
-                        //retreiveduserRoleRelation = ctx.UserRoleRelation.Where(r => newRoleIds.Contains(r.UserRoleId) && r.UserId == user.Id).ToList();
 
-                        foreach (var item in userRoleRelation)
+                        //retreiveduserRoleRelation = ctx.UserRoleRelation.Where(r => newRoleIds.Contains(r.UserRoleId) && r.UserId == user.Id).ToList();
+                        if (newRoleIds.Count > 0)
                         {
-                            ctx.UserRoleRelation.Remove(item);
+                            foreach (var item in userRoleRelation)
+                            {
+                                ctx.UserRoleRelation.Remove(item);
+                            }
+                            ctx.SaveChanges();
                         }
-                        ctx.SaveChanges();
+                        
 
                         
                         

@@ -42,6 +42,7 @@
                         $scope.loginData.UserID = users[x].UserID;
                         $scope.loginData.EmployeeID = users[x].EmployeeID;
                         $scope.loginData.ChangePasswordRequired = 0;
+                        $scope.loginData.DepartmentID = users[x].DepartmentID;
                     }
                 }
 

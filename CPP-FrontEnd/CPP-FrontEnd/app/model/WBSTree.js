@@ -3682,6 +3682,21 @@ WBSTree = (function ($) {
                     }
                     selectedNode.ProgramManager = $('#ProgramModal').find('.modal-body #program_manager').val();
                     selectedNode.ProgramSponsor = $('#ProgramModal').find('.modal-body #program_sponsor').val();
+                    selectedNode.IsPPBond = $('#ProgramModal').find('input[name=PPBond]:checked').val();
+                    selectedNode.IsCostPartOfContract = $('#ProgramModal').find('input[name=costPartQ]:checked').val();
+                    if (selectedNode.IsCostPartOfContract == 'No') {
+                        if (!$('#ProgramModal').find('.modal-body #txtPPNotes').val()) {
+                            dhtmlx.alert('P&P Notes is a required field.'); 
+                            return;
+                        }
+                        selectedNode.PPBondNotes = $('#ProgramModal').find('.modal-body #txtPPNotes').val();
+                    }
+                    else {
+                        selectedNode.PPBondNotes = '';
+                    }
+                    
+                    
+                    
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
                     //selectedNode.ClientID = $('#ProgramModal').find('.modal-body #program_client_poc').val();
                     //Nivedita 13-01-2022
@@ -4109,7 +4124,10 @@ WBSTree = (function ($) {
                         "programCategories": categoryToBeAdded,
                         "categoryToBedeleted": categoryToBeDeleted,
                         "fundToBeDeleted": fundToBeDeleted,
-                        "isModified": isModified
+                        "isModified": isModified,
+                        "IsPPBond": selectedNode.IsPPBond,
+                        "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
+                        "PPBondNotes": selectedNode.PPBondNotes
 
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
@@ -4182,6 +4200,10 @@ WBSTree = (function ($) {
                     }
                     newNode.ClientPhone = $('#ProgramModal').find('.modal-body #program_client_phone').val();
                     newNode.ClientEmail = $('#ProgramModal').find('.modal-body #program_client_email').val();
+
+                    newNode.IsPPBond = $('#ProgramModal').find('input[name=PPBond]:checked').val();
+                    newNode.IsCostPartOfContract = $('#ProgramModal').find('input[name=costPartQ]:checked').val();
+                    newNode.PPBondNotes = $('#ProgramModal').find('.modal-body #txtPPNotes').val();
 
                     //====== Jignesh-AddAddressField-21-01-2021 =======
                     //newNode.ClientAddress = $('#ProgramModal').find('.modal-body #program_client_address').val();
@@ -4435,7 +4457,10 @@ WBSTree = (function ($) {
                         "LocationID": selectedNode.LocationID,
 
                         "programFunds": fundToBeAdded,
-                        "programCategories": categoryToBeAdded
+                        "programCategories": categoryToBeAdded,
+                        "IsPPBond": selectedNode.IsPPBond,
+                        "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
+                        "PPBondNotes": selectedNode.PPBondNotes
                     }
 
 
@@ -9072,7 +9097,7 @@ WBSTree = (function ($) {
                             if (modType == true) {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true);
+                                $('#program_current_end_date').attr('disabled', true); //Aditya 06042022 if schedule impact modification disable current end date
                                 $('#program_original_end_date').attr('disabled', true);
                             }
                             else {
@@ -9124,8 +9149,13 @@ WBSTree = (function ($) {
                         ContractEndDate: '',
                         ProjectClassID: 0
                     }
+                   
+                    
+                    
+                    
                     $('#new_program_contract').prop("disabled", false);
                     $('#edit_program_contract').prop("disabled", false);
+                    $('#btnDocManagement').removeAttr('disabled'); 
                     $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
                     $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
                     $('#documentUploadProgramNew').removeAttr('title');  //Manasi 23-02-2021
@@ -9201,7 +9231,44 @@ WBSTree = (function ($) {
                     }
 
                     var total = appendFundAndReturnTotal(selectedNode, fundTable);
-                    // appendCategory(selectedNode,categoryTable);
+
+                    if (selectedNode.IsPPBond == 'Yes') {
+                        $('#PPBondYes').attr("checked", "checked");
+                        div = document.getElementById('ShowDivCost');
+                        div.style.display = "block";
+                        if (selectedNode.IsCostPartOfContract == 'No') {
+                            $('#costPartQNo').attr("checked", "checked");
+                            div = document.getElementById('PPNotes');
+                            div.style.display = "block";
+                        }
+                        else {
+                            $('#costPartQYes').attr("checked", "checked");
+                        }
+                    }
+                    else if (selectedNode.IsPPBond == 'No'){
+                        $('#PPBondNo').attr("checked", "checked");
+                        div = document.getElementById('ShowDivCost');
+                        div.style.display = "none";
+                        div = document.getElementById('PPNotes');
+                        div.style.display = "none";
+                    }
+                    else {
+                        $('#PPBondYes').prop("checked", false);
+                        $('#PPBondNo').prop("checked", false);
+                        $('#costPartQYes').prop("checked", false);
+                        $('#costPartQNo').prop("checked", false);
+                        div = document.getElementById('ShowDivCost');
+                        div.style.display = "none";
+                        div = document.getElementById('PPNotes');
+                        div.style.display = "none";
+                        modal.find('.modal-body #txtPPNotes').val('');
+                    }
+                    
+                    
+                    
+                    modal.find('.modal-body #txtPPNotes').val(selectedNode.PPBondNotes);
+                    
+
                     modal.find('.modal-body #total').html(filter('currency')(total, '$', 0));
                     modal.find('.modal-title').text('Contract: ' + selectedNode.name);
                     modal.find('.modal-body #program_name').val(selectedNode.name);
@@ -9468,6 +9535,7 @@ WBSTree = (function ($) {
                 }
                 else {
                     $('#btnModification').attr('disabled', 'disabled');   //Manasi 23-02-2021
+                    $('#btnDocManagement').attr('disabled', 'disabled');
                     $('#spnBtnModification').attr('title', "A contract needs to be saved before the modifications can be added");   //Manasi 23-02-2021
                     $('#documentUploadProgramNew').attr('title', "A contract needs to be saved before the document can be added");  //Manasi 23-02-2021
 

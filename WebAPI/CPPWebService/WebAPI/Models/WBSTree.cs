@@ -817,6 +817,13 @@ namespace WebAPI.Models
         public String JobNumber;  //Manasi  04-08-2020
 
         [DataMember]
+        public String IsPPBond;
+        [DataMember]
+        public String IsCostPartOfContract;
+        [DataMember]
+        public String PPBondNotes;
+
+        [DataMember]
         public List<ProgramElementWBSTree> children = new List<ProgramElementWBSTree>();
 
         [DataMember]
@@ -865,6 +872,10 @@ namespace WebAPI.Models
             Lumpsum = wbsprg.Lumpsum;
             ContractValue = wbsprg.ContractValue;   //Manasi 14-07-2020
             JobNumber = wbsprg.JobNumber;   //Manasi  04-08-2020
+
+            IsPPBond = wbsprg.IsPPBond;
+            IsCostPartOfContract = wbsprg.IsCostPartOfContract;
+            PPBondNotes = wbsprg.PPBondNotes;
 
             originalEndDate = (wbsprg.originalEndDate != null ? wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd") : ""); // Aditya 21022022
             ProgramManagerID = wbsprg.ProgramManagerID; ProgramSponsorID = wbsprg.ProgramSponsorID; ProjectClassID = wbsprg.ProjectClassID;
