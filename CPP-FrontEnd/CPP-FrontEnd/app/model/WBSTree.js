@@ -2795,11 +2795,17 @@ WBSTree = (function ($) {
                 var wbstree = wbsTree.getProgramCategory();
                 console.log(wbstree);
 
-                //=====================Aditya 04042022==============//
+                //=====================Aditya 04042022 populate prime dd for new contract ==============//
                 console.log("Prime dd=====>");
                 modal = $(this);
                 var primeDropDown = modal.find('.modal-body #prime_dd');
+                var primeSubPrimeDD = modal.find('.modal-body #prime_subPrime_dd');
+                primeSubPrimeDD.val('Prime');
+                primeDropDown.attr('disabled', true);
                 var primeList = wbsTree.getPrimeList();
+                primeList.sort(function (a, b) {   //vaishnavi
+                    return a.Name.localeCompare(b.Name);  //vaishnavi
+                }); //vaishnavi
                 primeDropDown.empty();
                 //if (wbsTree.getLocalStorage().role === "Admin") {
                 if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
@@ -2809,8 +2815,9 @@ WBSTree = (function ($) {
                     if (primeList[x].Name == null) {
                         continue;
                     }
-                    primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    primeDropDown.append('<option selected="false"value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
                     primeDropDown.val('');
+                    
                 }
                 //===================================================//
                 //Amruta -- Populate client dropdown for new contract
@@ -3749,6 +3756,10 @@ WBSTree = (function ($) {
                     selectedNode.ClientPONo = $('#ProgramModal').find('.modal-body #program_client_po_num').val();
                     //==================================================
 
+                    //Aditya Prime 07042022
+                    selectedNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
+                    selectedNode.PrimeSubPrime = $('#ProgramModal').find('.modal-body #prime_subPrime_dd').val();
+
                     //Nivedita 13-01-2022
                     selectedNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate 18-02-2022
                     //selectedNode.ContractNumber = $('#ProgramModal').find('.modal-body #program_contract_number').val();
@@ -4127,7 +4138,9 @@ WBSTree = (function ($) {
                         "isModified": isModified,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "PrimeParent": selectedNode.PrimeParent,
+                        "PrimeSubPrime": selectedNode.PrimeSubPrime
 
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
@@ -4234,6 +4247,10 @@ WBSTree = (function ($) {
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
                     newNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
+
+                    // Aditya prime
+                    newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
+                    newNode.PrimeSubPrime = $('#ProgramModal').find('.modal-body #prime_subPrime_dd').val();
 
 
                     // Check
@@ -4460,7 +4477,9 @@ WBSTree = (function ($) {
                         "programCategories": categoryToBeAdded,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "PrimeParent": newNode.PrimeParent,
+                        "PrimeSubPrime": newNode.PrimeSubPrime
                     }
 
 
@@ -9189,9 +9208,20 @@ WBSTree = (function ($) {
 
                     //======================Aditya 04042022 prime=========================//
                     console.log("Prime ddupdate=====>");
+                    if (selectedNode.PrimeSubPrime != "Sub-Prime") {
+                        $('#prime_dd').attr('disabled', 'disabled');
+                        $('#prime_dd').val('');
+                    }
+                    else {
+                        $('#prime_dd').removeAttr('disabled');
+
+                    }
                     //modal = $(this);
                     var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeSubPrimeDD = modal.find('.modal-body #prime_subPrime_dd');
                     var primeList = wbsTree.getPrimeList();
+                    var primeName = selectedNode.PrimeParent;
+                    var primeID = '';
                     primeList.sort(function (a, b) {   //vaishnavi
                         return a.Name.localeCompare(b.Name);  //vaishnavi
                     }); //vaishnavi
@@ -9201,12 +9231,16 @@ WBSTree = (function ($) {
                         primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < primeList.length; x++) {
+                        if (primeList[x].Name == primeName) {
+                            primeID=primeList[x].id;
+                        }
                         if (primeList[x].Name == null) {
                             continue;
                         }
                         primeDropDown.append('<option value=' + primeList[x].id + '>' + primeList[x].Name + '</option>');
-                        primeDropDown.val(selectedNode.id);
                     }
+                    primeDropDown.val(primeID);
+                    primeSubPrimeDD.val(selectedNode.PrimeSubPrime);
                     //===============================================================================//
 
                     //Amruta
@@ -9289,6 +9323,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_contract_name').val(selectedNode.ProgramName);
                     modal.find('.modal-body #program_contract_start_date').val(selectedNode.CurrentStartDate);
                     modal.find('.modal-body #program_contract_end_date').val(selectedNode.CurrentEndDate);
+                    modal.find('.modal-body #prime_dd').val(selectedNode.PrimeParent);//Aditya prime 07042022
+                    modal.find('.modal-body #prime_subPrime_dd').val(selectedNode.PrimeSubPrime);//Aditya prime 07042022
                     //modal.find('.modal-body #program_original_end_date').val(selectedNode.originalEndDate);
                     modal.find('.modal-body #program_current_start_date').val(selectedNode.CurrentStartDate ? moment(selectedNode.CurrentStartDate).format('MM/DD/YYYY') : ""); // Jignesh-02-03-2021
                     modal.find('.modal-body #program_current_end_date').val(selectedNode.CurrentEndDate ? moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY') : ""); // Jignesh-02-03-2021
@@ -9566,21 +9602,27 @@ WBSTree = (function ($) {
 
                     //Aditya 04042022 prime=================================//
                     console.log("Prime dd=====>");
+                    modal = $(this);
                     var primeDropDown = modal.find('.modal-body #prime_dd');
+                    var primeSubPrimeDD = modal.find('.modal-body #prime_subPrime_dd');
+                    primeSubPrimeDD.val('Prime');
+                    primeDropDown.attr('disabled', true);
                     var primeList = wbsTree.getPrimeList();
-                    primeList.sort(function (a, b) { 
-                        return a.Name.localeCompare(b.Name);   
-                    });
+                    primeList.sort(function (a, b) {   //vaishnavi
+                        return a.Name.localeCompare(b.Name);  //vaishnavi
+                    }); //vaishnavi
                     primeDropDown.empty();
+                    //if (wbsTree.getLocalStorage().role === "Admin") {
                     if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
                         primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
                     }
                     for (var x = 0; x < primeList.length; x++) {
-                        if (primeList[x].PrimeName == null) {
+                        if (primeList[x].Name == null) {
                             continue;
                         }
-                        primeDropDown.append('<option value=' + primeList[x].id + '>' + primeList[x].Name + '</option>');
-                        primeDropDown.val(selectedNode.id);
+                        primeDropDown.append('<option selected="false"value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                        primeDropDown.val('');
+
                     }
 
                     //==========================================================//
@@ -11717,25 +11759,27 @@ WBSTree = (function ($) {
                     //Aditya 04042022 prime=============================//
                     //Populate primes for dropdown
                     //Find the prime name given the id
-                    var primeDropDown = modal.find('.modal-body #prime_dd');
-                    var primeList = wbsTree.getPrimeList();
-                    var Name = '';
-                    primeDropDown.empty();
-                    //if (wbsTree.getLocalStorage().role === "Admin") {
-                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
-                    }
-                    for (var x = 0; x < primeList.length; x++) {
-                        if (primeList[x].id == selectedNode.id) {
-                            primeList = primeList[x].Name
-                        }
+                    //var primeDropDown = modal.find('.modal-body #prime_dd');
+                    //var primeList = wbsTree.getPrimeList();
+                    //primeList.sort(function (a, b) {   //vaishnavi
+                    //    return a.Name.localeCompare(b.Name);  //vaishnavi
+                    //}); //vaishnavi
+                    //primeDropDown.empty();
+                    ////if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                    //    primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    //}
+                    //for (var x = 0; x < primeList.length; x++) {
+                    //    if (primeList[x].id == selectedNode.id) {
+                    //        primeList = primeList[x].Name
+                    //    }
 
-                        if (primeList[x].Name == null) {
-                            continue;
-                        }
-                        primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
-                    }
-                    primeDropDown.val(Name);
+                    //    if (primeList[x].Name == null) {
+                    //        continue;
+                    //    }
+                    //    primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    //}
+                    //primeDropDown.val(Name);
                     //=====================================================//
 
                     //Populate clients for dropdown
@@ -12200,20 +12244,23 @@ WBSTree = (function ($) {
                     });
                     //Aditya 04042022 prime===========================//
                     //Populate project primes for dropdown
-                    var priemDropDown = modal.find('.modal-body #prime_dd');
-                    var primeList = wbsTree.getPrimeList();
-                    priemDropDown.empty();
-                    //if (wbsTree.getLocalStorage().role === "Admin") {
-                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                        priemDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
-                    }
-                    for (var x = 0; x < primeList.length; x++) {
-                        if (primeList[x].Name == null) {
-                            continue;
-                        }
-                        priemDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
-                        priemDropDown.val('');
-                    }
+                    //var priemDropDown = modal.find('.modal-body #prime_dd');
+                    //var primeList = wbsTree.getPrimeList();
+                    //primeList.sort(function (a, b) {   //vaishnavi
+                    //    return a.Name.localeCompare(b.Name);  //vaishnavi
+                    //}); //vaishnavi
+                    //priemDropDown.empty();
+                    ////if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                    //    priemDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    //}
+                    //for (var x = 0; x < primeList.length; x++) {
+                    //    if (primeList[x].Name == null) {
+                    //        continue;
+                    //    }
+                    //    priemDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
+                    //    priemDropDown.val('');
+                    //}
                     //===========================================//
 
                     //Populate project client for dropdown
@@ -13493,6 +13540,28 @@ WBSTree = (function ($) {
                     
                 }
             });
+            $('#prime_dd').on('change', function () {
+                if ($(this).val() == "Add New") {
+
+                    var thisData = $(this);
+                    //wbsTree.setSelectedDocTypeDropDown(thisData.context.id);
+                    $('#addNewPrimeModal').modal({ show: true, backdrop: 'static' });
+                    $('#txtPrimeName').val('');
+                    return;
+                }
+                var PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
+                var primeName = $('#prime_dd').val();
+                var primeList = wbsTree.getPrimeList();
+                for (var x = 0; x < primeList.length; x++) {
+                    if (primeList[x].id == primeName) {
+                        PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
+                    }
+                    else {
+                        PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                    }
+                }
+            });
+            
             //=========================================================================//
 
             $('#program_client_poc').on('change', function () {                     //Tanmay - 15/12/2021
@@ -14747,25 +14816,29 @@ WBSTree = (function ($) {
                     //Aditya 04042022 prime======================================//
                     //Populate primess for dropdown
                     //Find the primes name given the id
-                    var primeDropDown = modal.find('.modal-body #prime_dd');
-                    var primeList = wbsTree.getPrimeList();
-                    var Name = '';
-                    primeDropDown.empty();
-                    //if (wbsTree.getLocalStorage().role === "Admin") {
-                    if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                        primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
-                    }
-                    for (var x = 0; x < primeList.length; x++) {
-                        if (primeList[x].id == selectedNode.id) {
-                            Name = primeList[x].Name
-                        }
 
-                        if (primeList[x].Name == null) {
-                            continue;
-                        }
-                        primeDropDown.append('<option selected="false">' + primeList[x].Name + '</option>');
-                    }
-                    primeDropDown.val(Name);
+                    //var primeDropDown = modal.find('.modal-body #prime_dd');
+                    //var primeList = wbsTree.getPrimeList();
+                    //var primeID = '';
+                    //primeList.sort(function (a, b) {   //vaishnavi
+                    //    return a.Name.localeCompare(b.Name);  //vaishnavi
+                    //}); //vaishnavi
+                    //primeDropDown.empty();
+                    ////if (wbsTree.getLocalStorage().role === "Admin") {
+                    //if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                    //    primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                    //}
+                    //for (var x = 0; x < primeList.length; x++) {
+                    //    if (primeList[x].Name == selectedNode.PrimeParent) {
+                    //        primeID = primeList[x].id
+                    //    }
+
+                    //    if (primeList[x].Name == null) {
+                    //        continue;
+                    //    }
+                    //    primeDropDown.append('<option selected="false" value= ' + primeList[x].id+'>' + primeList[x].Name + '</option>');
+                    //}
+                    //primeDropDown.val(primeID);
                     //======================================================================//
 
                     //Populate clients for dropdown

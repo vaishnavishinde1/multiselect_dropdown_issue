@@ -88,6 +88,10 @@ namespace WebAPI.Models
 
         public string IsPPBond { get; set; }
 
+        public string PrimeSubPrime { get; set; }
+
+        public string PrimeParent { get; set; }
+
         public string IsCostPartOfContract { get; set; }
 
         public string PPBondNotes { get; set; }
@@ -429,6 +433,8 @@ namespace WebAPI.Models
                                 pgm.IsPPBond = program.IsPPBond;
                                 pgm.IsCostPartOfContract = program.IsCostPartOfContract;
                                 pgm.PPBondNotes = program.PPBondNotes;
+                                pgm.PrimeSubPrime = program.PrimeSubPrime;
+                                pgm.PrimeParent = program.PrimeParent;
                                 ctx.SaveChanges();
 
                                 for (var i = 0; i < fundToBeDeletedList.Count; i++)
@@ -546,6 +552,9 @@ namespace WebAPI.Models
                             pgm.programCategories = null;
                             List<ProgramCategory> categoryToBeDeleted = program.categoryToBeDeleted.ToList();
                             pgm.categoryToBeDeleted = null;
+                            pgm.PrimeSubPrime = program.PrimeSubPrime;
+                            pgm.PrimeParent = program.PrimeParent;
+
                             ctx.SaveChanges();
 
                             for (var i = 0; i < fundToBeDeletedList.Count; i++)

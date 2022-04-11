@@ -819,6 +819,10 @@ namespace WebAPI.Models
         [DataMember]
         public String IsPPBond;
         [DataMember]
+        public String PrimeSubPrime;
+        [DataMember]
+        public String PrimeParent;
+        [DataMember]
         public String IsCostPartOfContract;
         [DataMember]
         public String PPBondNotes;
@@ -876,6 +880,9 @@ namespace WebAPI.Models
             IsPPBond = wbsprg.IsPPBond;
             IsCostPartOfContract = wbsprg.IsCostPartOfContract;
             PPBondNotes = wbsprg.PPBondNotes;
+
+            PrimeSubPrime = wbsprg.PrimeSubPrime;
+            PrimeParent = wbsprg.PrimeParent;
 
             originalEndDate = (wbsprg.originalEndDate != null ? wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd") : ""); // Aditya 21022022
             ProgramManagerID = wbsprg.ProgramManagerID; ProgramSponsorID = wbsprg.ProgramSponsorID; ProjectClassID = wbsprg.ProjectClassID;

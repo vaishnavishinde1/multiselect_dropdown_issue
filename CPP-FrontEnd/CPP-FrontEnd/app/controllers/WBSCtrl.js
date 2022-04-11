@@ -1722,7 +1722,71 @@ angular.module('cpp.controllers').
                 });
             });
             //=======================================================================================================
+            //======================= Aditya 07042022 Prime Add new//
+            $('#btnSavePrime').unbind('click').on('click', function ($files) {
+                var primeName = $('#txtPrimeName').val();
 
+                if (primeName == "" || primeName.length == 0) {
+                    dhtmlx.alert('Enter Prime Name');
+                    return;
+                }
+                
+
+
+
+                var listToSave = [];
+                var dataObj = {
+                    Operation: '1',
+                    Name: primeName,
+                }
+                listToSave.push(dataObj);
+
+                var url = serviceBasePath + 'Response/prime/';
+                $http({
+                    url: url,
+                    method: "POST",
+                    data: JSON.stringify(listToSave),
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(function success(response) {
+                    debugger;
+                    response.data.result.replace(/[\r]/g, '\n');
+                    if (response.data.result) {
+                        Prime.get({}, function (response) {
+                            debugger;
+                            wbsTree.setPrimeList(response.result);
+                            var PrimeDropDownProgram;
+
+                            var primeList = wbsTree.getPrimeList();
+                            primeList.sort(function (a, b) {                 //vaishnavi
+                                return a.Name.localeCompare(b.Name); //vaishnavi
+                            });   //vaishnavi
+                            PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
+                            PrimeDropDownProgram.empty();
+                            // Jignesh-25-03-2021
+                            //if (wbsTree.getLocalStorage().role === "Admin") {
+                            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                                PrimeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
+                            }
+                            for (var x = 0; x < primeList.length; x++) {
+                                if (primeList[x].Name == primeName) {
+                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
+                                }
+                                else {
+                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                                }
+                            }
+                        });
+                        $('#cancel_addNewPrimeModal_x').trigger('click');
+                        dhtmlx.alert(response.data.result);
+                    } else {
+                        dhtmlx.alert('No changes to be saved.');
+                    }
+                    //$state.reload();
+                }, function error(response) {
+                    dhtmlx.alert("Failed to save. Please contact your Administrator.");
+                });
+            });
+            //========================================================//
             //======================================= Tanmay-AddNewClientModal-29/12/2021 ==========================================
             $('#btnSaveClient').unbind('click').on('click', function ($files) {
                 var clientName = $('#txtClientName').val();
