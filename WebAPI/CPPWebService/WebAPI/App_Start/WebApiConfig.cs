@@ -1796,7 +1796,18 @@ namespace WebAPI
                 routeTemplate: "Request/ImportCoAdFile",
                 defaults: new { controller = "CoAdImport", action = "Post" }
             );
-
+            //Narayan - 04/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "PrelimnaryNotice",
+                 routeTemplate: "prelimnaryNotice/savePrelimnaryNotice",
+                 defaults: new { controller = "PrelimnaryNotice", action = "Post" }
+             );
+            //Narayan - 04/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetPrelimnaryNotice",
+                 routeTemplate: "prelimnaryNotice/getPrelimnaryNotice/{programId}",
+                 defaults: new { controller = "PrelimnaryNotice", action = "Get", programId = RouteParameter.Optional}
+             );
             config.Routes.MapHttpRoute(
               name: "DataMigration",
               routeTemplate: "Request/Migration",

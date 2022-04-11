@@ -278,6 +278,7 @@ namespace WebAPI
 
         public DbSet<UserRoleRelation> UserRoleRelation { get; set; }
 
+        public DbSet<PrelimnaryNotice> PrelimnaryNotices { get; set; }   // Narayan - 04-04-2022
 
 
     }
