@@ -249,6 +249,41 @@
             margin-left: -25px;
         }
 
+    #prevailing_wages_select + .btn-group {
+        display: inline-block;
+        width: 100%;
+    }
+
+        #prevailing_wages_select + .btn-group .btn.btn-default {
+            width: 100%;
+            text-align: left;
+            border: 1px solid #ccc;
+            height: 34px;
+            border-radius: 4px;
+        }
+
+            #prevailing_wages_select + .btn-group .btn.btn-default .caret {
+                margin-top: 8px;
+                float: right;
+                border-top: 5px dashed;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+            }
+
+        #prevailing_wages_select + .btn-group label {
+            padding: 7px 20px 7px 40px
+        }
+
+        #prevailing_wages_select + .btn-group .checkbox input[type=checkbox] {
+            margin-left: -25px;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
     /* Style the tab */
     .tab {
         overflow: hidden;
@@ -1292,12 +1327,88 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                         </div>
                         <button class="accordion">Prelimary Notices</button>
-                        <div class="panel">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <!--<div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>-->
+                        <div id="tabPrelimnaryNotices" class="panel">
+                            <form id="prelimnary_notice">
+                                <div class="row" style="">
+
+                                    <div class="col-xs-8">
+                                        <label for="program_element_project_number" class="control-label _bold required">Date of Notice </label>
+                                        <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">
+                                        <!--</div>
+                    <div class="col-xs-8">-->
+                                        <label for="program_element_project_number" class="control-label _bold required">Reason of Notice </label>
+                                        <textarea class="form-control" id="notice_reason" rows="5" cols="30"></textarea>
+                                    </div>
+                                    <div class="text-center col-xs-4" style="margin-top: 158px">
+                                        <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <div>
+                                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
+                                    <table id="gridNoticeList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
+                                                <td style="font-weight:900;" width="500">Reason</td>
+                                                <!--<td style="font-weight:900;">Date of Created</td>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <button class="accordion">Insurance</button>
-                        <div class="panel">
+                        <!--<div class="panel">
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>-->
+                        <div id="tabInsurance" class="panel">
+                            <form id="contract_insurance">
+                                <div class="row" style="">
+                                    <div class="col-xs-6">
+                                        <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
+                                        <select type="text" class="form-control" style="width:50%;" id="insurance_type_select">
+                                            <option value="GL Policy Limits">GL Policy Limits</option>
+                                            <option value="Auto Liability">Auto Liability</option>
+                                            <option value="WC Liability">WC Liability</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="program_element_project_number" class="control-label _bold required">Limit </label>
+                                        <input type="text" class="form-control" id="insurance_limit" autocomplete="off" style="width: 50%;">
+                                    </div>
+                                </div>
+
+                                <div class="text-center" style="margin-top: 10px">
+                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                </div>
+                            </form>
+                            <div>
+                                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
+                                    <table id="gridInsuranceList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 300px;">Type</td>
+                                                <td style="font-weight:900;">Limit</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <button class="accordion">WRAP</button>
                         <div class="panel">
@@ -1312,127 +1423,127 @@
                         <!--style="padding-left: 3%;"-->
                         <!--Pritesh Latest New Code-->
                         <!--<div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'tabGeneral')" id="defaultOpen">General</button>
-            <button class="tablinks" onclick="openTab(event, 'tabPrelimnaryNotices')">Prelimnary Notices</button>
-            <button class="tablinks" onclick="openTab(event, 'tabWarrenty')">Warrenty</button>
-            <button class="tablinks" onclick="openTab(event, 'documentUploadProgramNew')">Document Management</button>
-            <button class="tablinks" onclick="openTab(event, 'tabCommonNotes')">Common Notes</button>
-        </div>-->
+        <button class="tablinks" onclick="openTab(event, 'tabGeneral')" id="defaultOpen">General</button>
+        <button class="tablinks" onclick="openTab(event, 'tabPrelimnaryNotices')">Prelimnary Notices</button>
+        <button class="tablinks" onclick="openTab(event, 'tabWarrenty')">Warrenty</button>
+        <button class="tablinks" onclick="openTab(event, 'documentUploadProgramNew')">Document Management</button>
+        <button class="tablinks" onclick="openTab(event, 'tabCommonNotes')">Common Notes</button>
+    </div>-->
                         <!--<div id="tabGeneral" class="tabcontent">
-            <form style="height:2000px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
-                <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
+        <form style="height:2000px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
+            <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
+                <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
 
-                        <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="yes" name="P&PBond" onclick="ShowDivCost(this)">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="no" name="P&PBond" checked="checked" id="P&PNo">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
-
+                    <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
+                    <div class="radio-inline">
+                        <input type="radio" value="yes" name="P&PBond" onclick="ShowDivCost(this)">
+                        <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
                     </div>
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
-
-                        <label for="program_P&P" class="control-label _bold required">Is it the cost part of the contract?</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="yes" checked="checked" name="costPartQ">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="no" name="costPartQ">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
-
+                    <div class="radio-inline">
+                        <input type="radio" value="no" name="P&PBond" checked="checked" id="P&PNo">
+                        <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
                     </div>
+
                 </div>
-            </form>
-        </div>-->
+                <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
+
+                    <label for="program_P&P" class="control-label _bold required">Is it the cost part of the contract?</label>
+                    <div class="radio-inline">
+                        <input type="radio" value="yes" checked="checked" name="costPartQ">
+                        <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input type="radio" value="no" name="costPartQ">
+                        <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>-->
                         <!--<div id="tabPrelimnaryNotices" class="tabcontent"></div>
-        <div id="tabWarrenty" class="tabcontent"></div>
-        <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;" class="tabcontent">
-            <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Contract Document Management</h4>
-            <div class="panel-body" style="overflow: scroll; padding-top: 0; height: 410px !important;">
-                <table id="gridUploadedDocumentProgramNew" class="table table-striped">
-                    <thead style="position:sticky;top:0; background:#FFF">
-                        <tr>
-                            <td style="width: 20px; padding-left:5px;"></td>
-                            <td style="font-weight:900;"> Name</td>-->
+    <div id="tabWarrenty" class="tabcontent"></div>
+    <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;" class="tabcontent">
+        <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Contract Document Management</h4>
+        <div class="panel-body" style="overflow: scroll; padding-top: 0; height: 410px !important;">
+            <table id="gridUploadedDocumentProgramNew" class="table table-striped">
+                <thead style="position:sticky;top:0; background:#FFF">
+                    <tr>
+                        <td style="width: 20px; padding-left:5px;"></td>
+                        <td style="font-weight:900;"> Name</td>-->
                         <!--<td style="font-weight:900;"> Execution Date</td>--> <!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;"> Special Notes</td>-->
                         <!--<td style="font-weight:900;"> Notes</td>-->  <!--Manasi--><!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;">Document Type</td>
-        <td style="font-weight:900;">Modification</td>-->
+    <td style="font-weight:900;">Modification</td>-->
                         <!--Jignesh-ModificationPopUpChanges-->
                         <!--<td style="font-weight:900;">Upload Date</td>
-        <td style="font-weight:900;">Upload By</td>-->
+    <td style="font-weight:900;">Upload By</td>-->
                         <!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;">Document Details</td>--> <!--Added by Jignesh-->
                         <!--</tr>
-                </thead>
-                <tbody></tbody>
+            </thead>
+            <tbody></tbody>
 
-            </table>
-        </div>
+        </table>
+    </div>
 
-        <div class="row" id="buttonRow">
-            <div class="col-sm-12 text-center">-->
+    <div class="row" id="buttonRow">
+        <div class="col-sm-12 text-center">-->
                         <!--<button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip"
-        data-placement="top" title="Delete Selected Documents"></button>-->
+    data-placement="top" title="Delete Selected Documents"></button>-->
                         <!--<button id="DeleteUploadProgram" class="btn btn-black" style="margin-top:8px;">Delete</button>-->  <!-- Shweta 16-07-2020 -->
                         <!--<button id="updateBtnProgram" class="btn btn-black" style="margin-top:8px;">Upload</button>-->      <!-- Shweta 16-07-2020 -->
                         <!--<button id="downloadBtnProgram" class="btn btn-black" style="margin-top:8px;">Download</button>-->   <!-- Shweta 16-07-2020 -->
                         <!--<button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:8px;width:145px;">View Documents</button>-->  <!-- Shweta 16-07-2020 -->
                         <!--<button id="ViewAllUploadFileContracts" class="btn btn-black" style="margin-top:8px;">View All</button>-->   <!--Swapnil 29-01-2021-->
                         <!--<button id="EditBtnProgram" class="btn btn-black" style="margin-top:8px;">Edit</button>
-        </div>-->
+    </div>-->
                         <!--<div class="col-sm-6" id="bfc-container" style="text-align:right;">
-            <button id="new_program_element_milestone">add</button>
-            <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
-            <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
-        </div>-->
+        <button id="new_program_element_milestone">add</button>
+        <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
+        <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
+    </div>-->
                         <!--<div class="col-sm-2" style="text-align: center; padding: 0;">
-            <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
-        </div>-->
+        <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
+    </div>-->
                         <!--</div>
-            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
-                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
-            </div>
+        <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
+            <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
         </div>
-        <div id="tabCommonNotes" class="tabcontent"></div>-->
+    </div>
+    <div id="tabCommonNotes" class="tabcontent"></div>-->
                         <!--PROGRAM DOCUMENT UPLOAD old working code-->
                         <!--<div id="documentUploadProgram" style="padding:5px; height:250px;width:99.5%;border: #a9a9a9;border-style: solid; border-width: thin;">
-            <div class="row" id="buttonRow" style="margin-top:0.3%;">
-                <div class="col-sm-3" style="margin-left:10px;">
-                    <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
-                    <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
-                </div>
-                <div class="col-sm-6" id="bfc-container" style="text-align:left;">
-                    <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
-                </div>
-                <div class="col-sm-2" style="text-align: center; padding: 0;">
-                    <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
-                </div>
+        <div class="row" id="buttonRow" style="margin-top:0.3%;">
+            <div class="col-sm-3" style="margin-left:10px;">
+                <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
+                <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
             </div>
-            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
-                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
+            <div class="col-sm-6" id="bfc-container" style="text-align:left;">
+                <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
             </div>
-            <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
-                <table id="gridUploadedDocumentProgram" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
-                            <td style="font-weight:900;">Document Name</td>
-                            <td style="font-weight:900;">Document Type</td>
-                            <td style="font-weight:900;">Upload Date</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="col-sm-2" style="text-align: center; padding: 0;">
+                <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
             </div>
-        </div>-->
+        </div>
+        <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
+            <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
+        </div>
+        <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
+            <table id="gridUploadedDocumentProgram" class="table table-striped">
+                <thead>
+                    <tr>
+                        <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
+                        <td style="font-weight:900;">Document Name</td>
+                        <td style="font-weight:900;">Document Type</td>
+                        <td style="font-weight:900;">Upload Date</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>-->
 
 
 

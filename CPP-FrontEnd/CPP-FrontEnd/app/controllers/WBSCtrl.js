@@ -1,4 +1,3 @@
-
 angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
@@ -2012,7 +2011,7 @@ angular.module('cpp.controllers').
                 {
                     contractModification.ProgramStartDt = pgmcurrentstartdate;
                     contractModification.ProgramEndDt = pgmcurrentenddate;
-                    $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                    $('#program_current_end_date').attr('disabled', true); // Aditya ogDate
                     $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
                 }
                 if (operation == 2) {
@@ -2147,7 +2146,7 @@ angular.module('cpp.controllers').
                             var temp = wbsTree.getSelectedNode();
                             temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
                             wbsTree.updateTreeNodes(temp);
-                            $('#program_current_end_date').attr('disabled', false); // Aditya ogDate
+                            $('#program_current_end_date').attr('disabled', true); // Aditya ogDate
                             $('#program_original_end_date').attr('disabled', true); // Aditya ogDate
                             modal.find('.modal-body #program_original_end_date').val(moment(contractModification.originalEndDate).format('MM/DD/YYYY')); // Aditya ogDate
                             modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
@@ -3291,6 +3290,7 @@ angular.module('cpp.controllers').
                 $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
                 $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                 //console.log('Called Org...');
+                //Narayan - clear trend map before search
                 var firstGNode = $('#trendSvg').children()[0];
                 $(firstGNode).children().remove();
                 $scope.filterProgramId = "";

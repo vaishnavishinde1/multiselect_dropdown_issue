@@ -81,6 +81,7 @@ namespace WebAPI.Models
 						}
 					}
 
+					// Narayan - modification mail 
 					if (contractModification.ModificationType == 1 || contractModification.ModificationType == 3)
 					{
                         ContractValueChangeMail.SendContarctValueMail(contractModification.ProgramID, contractModification.Id, contractModification.Value);
@@ -139,7 +140,9 @@ namespace WebAPI.Models
 								ctx.SaveChanges();
 							}
 						}
-						if(contractModification.ModificationType == 1 || contractModification.ModificationType == 3)
+
+						// Narayan - modification mail 
+						if (contractModification.ModificationType == 1 || contractModification.ModificationType == 3)
                         {
                             ContractValueChangeMail.SendContarctValueMail(contractModification.ProgramID, contractModification.Id, contractModification.Value);
                         }
@@ -184,6 +187,7 @@ namespace WebAPI.Models
 						ctx.ContractModification.Remove(retreivedConMod);
 						ctx.SaveChanges();
 
+						// Narayan - modification mail 
 						if (retreivedConMod.ModificationType == 1 || retreivedConMod.ModificationType == 3)
 						{
 							string differValue;
