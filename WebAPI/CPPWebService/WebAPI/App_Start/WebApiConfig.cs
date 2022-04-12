@@ -1434,6 +1434,32 @@ namespace WebAPI
                 defaults: new { controller = "RegisterServiceClass" }
             );
 
+            //certified Payroll
+
+            config.Routes.MapHttpRoute(         //Vaishnavi 12-04-2022
+                name: "RequestCertifiedPayroll",
+                routeTemplate: "Request/CertifiedPayroll",
+               defaults: new { controller = "RequestCertifiedPayroll" }
+           );
+            config.Routes.MapHttpRoute(
+                name: "RegisterCertifiedPayroll",
+                routeTemplate: "Response/CertifiedPayroll",
+                defaults: new { controller = "RegisterCertifiedPayroll" }
+            );
+
+            //Wrap
+
+            config.Routes.MapHttpRoute(
+                name: "RequestWrap",
+                routeTemplate: "Request/Wrap",
+               defaults: new { controller = "RequestWrap" }
+           );
+            config.Routes.MapHttpRoute(
+                name: "RegisterWrap",
+                routeTemplate: "Response/Wrap",
+                defaults: new { controller = "RegisterWrap" }
+            );    //Vaishnavi 12-04-2022
+
             //Project Class Phase
             config.Routes.MapHttpRoute(
                   name: "RequestProjectClassPhase",

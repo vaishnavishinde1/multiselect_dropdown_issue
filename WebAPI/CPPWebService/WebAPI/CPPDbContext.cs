@@ -115,6 +115,13 @@ namespace WebAPI
             modelBuilder.Entity<ProjectType>().ToTable("project_type");
             modelBuilder.Entity<ProjectClass>().ToTable("project_class");
             modelBuilder.Entity<ServiceClass>().ToTable("services"); //services table
+
+            modelBuilder.Entity<CertifiedPayroll>().ToTable("certified_payroll");    //Vaishnavi 12-04-2022
+            modelBuilder.Entity<ProgramCertifiedPayroll>().ToTable("program_certifiedroll");
+            modelBuilder.Entity<ProgramPrevailingWage>().ToTable("program_prevailing_wage");
+            modelBuilder.Entity<Wrap>().ToTable("wrap");
+            modelBuilder.Entity<ProgramWrap>().ToTable("program_wrap");
+            modelBuilder.Entity<ProgramWarranty>().ToTable("program_warranty");    //Vaishnavi 12-04-2022
             //modelBuilder.Entity<ProjectClassPhase>().ToTable("project_class_phase");
             modelBuilder.Entity<ServiceToSubserviceMapping>().ToTable("project_class_phase");
 
@@ -218,6 +225,12 @@ namespace WebAPI
         public DbSet<ProjectType> ProjectType { get; set; }
         public DbSet<ProjectClass> ProjectClass { get; set; }
         public DbSet<ServiceClass> ServiceClass { get; set; }
+        public DbSet<CertifiedPayroll> CertifiedPayroll { get; set; }    //Vaishnavi 12-04-2022
+        public DbSet<ProgramCertifiedPayroll> ProgramCertifiedPayroll { get; set; }
+        public DbSet<ProgramPrevailingWage> ProgramPrevailingWage { get; set; }
+        public DbSet<Wrap> Wrap { get; set; }
+        public DbSet<ProgramWrap> ProgramWrap { get; set; }
+        public DbSet<ProgramWarranty> ProgramWarranty { get; set; }     //Vaishnavi 12-04-2022
         public DbSet<Contract> Contract { get; set; }
         public DbSet<Milestone> Milestone { get; set; }
         public DbSet<ChangeOrder> ChangeOrder { get; set; }

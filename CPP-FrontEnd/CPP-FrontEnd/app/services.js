@@ -118,6 +118,8 @@ angular.module('xenon.services', []).
 					admin.addItem('Vendor', '-/vendor');
 					admin.addItem('Manufacturer', '-/manufacturer');
 					admin.addItem('Inventory', '-/inventory');
+					admin.addItem('Certified Payroll', '-/certified-payroll');   //Vaishnavi 12-04-2022
+					admin.addItem('Wrap', '-/wrap');    //Vaishnavi 12-04-2022
 					admin.addItem('Work Breakdown Structure', '-/budget-categories'); // "-/" will append parents link					
 					//admin.addItem('File Download', '-/filedownload'); Commented Manasi
 					//admin.addItem('Whitelist', '-/whitelist'); Commented by Manasi

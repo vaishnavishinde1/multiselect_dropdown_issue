@@ -4,13 +4,13 @@ angular.module('cpp.controllers').
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
         'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId','ProjectClassByProgramElementId', 'Client', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
-        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber',
+        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber', 'CertifiedPayroll','Wrap',  
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap) {      
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -3108,6 +3108,15 @@ angular.module('cpp.controllers').
             ProjectWhiteList.get({}, function (response) {
                 console.log(response);
                 wbsTree.setProjectWhiteList(response.result);
+            });
+           //vaishnavi 12-04-2022
+            CertifiedPayroll.get({}, function (response) {
+                console.log(response);
+                wbsTree.setCertifiedPayrollList(response.result);
+            });
+            Wrap.get({}, function (response) {
+                console.log(response);
+                wbsTree.setWrapList(response.result);
             });
 
             //Document.get({ ProjectID: localStorage.getItem('selectProjectIdDash') }, function (response) { // _selectedProjectID

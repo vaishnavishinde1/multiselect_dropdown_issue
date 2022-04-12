@@ -1697,7 +1697,23 @@ WBSTree = (function ($) {
         obj.prototype.getDeleteDocIDs = function () {   //Already in list form of data
             return _deleteDocIDs;
         };
+        obj.prototype.getCertifiedPayrollList = function () {   //Already in list form of data   //vaishnavi 12-4-2022
+            return _certifiedPayrollList;
+        }
+        obj.prototype.setCertifiedPayrollList = function (certifiedPayrollList) {   //Already in list form of data
+            if (certifiedPayrollList)
+                _certifiedPayrollList = certifiedPayrollList;
+        }
 
+        obj.prototype.getWrapList = function () {   //Already in list form of data
+            return _wrapList;
+        }
+        obj.prototype.setWrapList = function (wrapList) {   //Already in list form of data
+            if (wrapList)
+                _wrapList = wrapList;
+        }
+
+        //vaishnavi 12-4-2022
         //====================Manasi 27-03-2021=====================================
         //obj.prototype.setNodeXPosition = function (nodeXPosition) {
         //    _nodeXPosition = nodeXPosition;
@@ -3759,6 +3775,45 @@ WBSTree = (function ($) {
                         selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
                     }
 
+                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();  //vaishnavi 12-4-2022
+                    //if (!certified_payrollchecked) {
+                    //    dhtmlx.alert('Certified Payroll is a required field.'); // Jignesh-02-03-2021
+                    //    return;
+                    //}
+                    if (certified_payrollchecked == "Yes") {
+                        var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
+                        if (!SelectedCertifiedPayrollList) {
+                            dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+
+                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    //if (!preivingwagechecked) {
+                    //    dhtmlx.alert('Preiving Wage is a required field.'); // Jignesh-02-03-2021
+                    //    return;
+                    //}
+                    if (preivingwagechecked == "Yes") {
+                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
+                        if (!SelectedPreivingwageList) {
+                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    if (wrapchecked == "Yes") {
+                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
+                        if (!SelectedwrapList) {
+                            dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                        selectedNode.ReportingTo = $('#ProgramModal').find('#reporting_to').val();
+                        
+                        if (!selectedNode.ReportingTo) {
+                            dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }   //vaishnavi 12-4-2022
                     //Nivedita 13-01-2022
                     //selectedNode.BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
                     var BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
@@ -3814,6 +3869,20 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
+                    selectedNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
+                    selectedNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
+                    selectedNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
+
+                    selectedNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
+                    selectedNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
+                    selectedNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
+                    selectedNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
+                    selectedNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
+                    selectedNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
+
+                    selectedNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
+                    selectedNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
+                    selectedNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
@@ -4027,6 +4096,131 @@ WBSTree = (function ($) {
                             return;
                         }
                     }
+
+                    if (selectedNode.LaborStartDate) {   //vaishnavi 12-4-2022
+                        var testDate = moment(selectedNode.LaborStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (selectedNode.LaborEndDate) {
+                        var testDate = moment(selectedNode.LaborEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (selectedNode.MaterialsStartDate) {
+                        var testDate = moment(selectedNode.MaterialsStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (selectedNode.MaterialsEndDate) {
+                        var testDate = moment(selectedNode.MaterialsEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (selectedNode.OtherStartDate) {
+                        var testDate = moment(selectedNode.OtherStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (selectedNode.OtherEndDate) {
+                        var testDate = moment(selectedNode.OtherEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();
+                    if (certified_payrollchecked == "Yes") {
+                        certified = wbsTree.getCertifiedPayrollList();
+                        var newcertifiedArray = [];
+
+                        var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
+                        for (i = 0; i < SelectedCertifiedPayrollList.length; i++) {
+                            for (j = 0; j < certified.length; j++) {
+                                if (SelectedCertifiedPayrollList[i] == certified[j].ID) {
+                                    var a = certified[i].ID;
+                                    var b = certified[i].Description;
+                                    newcertifiedArray.push(SelectedCertifiedPayrollList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    selectedNode.CertifiedPayrollIDS = newcertifiedArray;
+                    selectedNode.IsCertifiedPayrollChecked = certified_payrollchecked;
+
+
+                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    if (preivingwagechecked == "Yes") {
+                        preivingwagelist = [];
+                        preivingwagelist.push("State");
+                        preivingwagelist.push("Federal");
+                        var newpreivingwageArray = [];
+
+                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
+                        for (i = 0; i < SelectedPreivingwageList.length; i++) {
+                            for (j = 0; j < preivingwagelist.length; j++) {
+                                if (SelectedPreivingwageList[i] == preivingwagelist[j]) {
+                                    //var a = certified[i].ID;
+                                    //var b = certified[i].Description;
+                                    //newcertifiedArray.push({ 'ID': a, 'Description': b });
+                                    newpreivingwageArray.push(SelectedPreivingwageList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    selectedNode.ProgramPrevailingWagesList = newpreivingwageArray;
+                    selectedNode.IsPrevailingWageChecked = preivingwagechecked;
+
+
+                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    if (wrapchecked == "Yes") {
+                        var WrapList = wbsTree.getWrapList();
+                        var newwrapArray = [];
+
+                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
+                        for (i = 0; i < SelectedwrapList.length; i++) {
+                            for (j = 0; j < WrapList.length; j++) {
+                                if (SelectedwrapList[i] == WrapList[j].ID) {
+                                    var a = WrapList[i].ID;
+                                    var b = WrapList[i].Description;
+                                    newwrapArray.push(SelectedwrapList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    selectedNode.WrapIDS = newwrapArray;
+                    selectedNode.IsWrapChecked = wrapchecked;   //vaishnavi 12-4-2022
                     //================================================================================
 
                     ////Manasi 04-08-2020
@@ -4063,7 +4257,13 @@ WBSTree = (function ($) {
                         "originalEndDate": selectedNode.originalEndDate, // Aditya ogDate
                         "ContractValue": selectedNode.ContractValue,
                         "JobNumber": selectedNode.JobNumber,   //Manasi 04-08-2020
-
+                        /*"CertifiedPayrollList": newcertifiedstring,*/   //vaishnavi 12-4-2022
+                        "CertifiedPayrollIDS": newcertifiedArray,
+                        "IsCertifiedPayrollChecked": certified_payrollchecked,
+                        "ProgramPrevailingWagesList": newpreivingwageArray,
+                        "IsPrevailingWageChecked": preivingwagechecked,
+                        "WrapIDS": newwrapArray,
+                        "IsWrapChecked": wrapchecked,                  //vaishnavi 12-4-2022
                         "BillingPOC": selectedNode.BillingPOC,
                         "BillingPOCPhone1": selectedNode.BillingPOCPhone1,
                         "BillingPOCPhone2": selectedNode.BillingPOCPhone2,
@@ -4102,7 +4302,31 @@ WBSTree = (function ($) {
                         "isModified": isModified,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+
+                        "LaborWarrantyList": {             //vaishnavi 12-4-2022
+                            "WarrantyDescription": selectedNode.LaborWarranty,
+                            "StartDate": selectedNode.LaborStartDate,
+                            "EndDate": selectedNode.LaborEndDate,
+                            "Description": selectedNode.LaborDescription,
+                            "WarrantyType": "Labor Warranty"
+                        },
+
+                        "MaterialsWarrantyList": {
+                            "WarrantyDescription": selectedNode.MaterialsWarranty,
+                            "StartDate": selectedNode.MaterialsStartDate,
+                            "EndDate": selectedNode.MaterialsEndDate,
+                            "Description": selectedNode.MaterialsDescription,
+                            "WarrantyType": "Materials Warranty"
+                        },
+                        "OtherWarrantyList": {
+                            "WarrantyDescription": selectedNode.OtherWarranty,
+                            "StartDate": selectedNode.OtherStartDate,
+                            "EndDate": selectedNode.OtherEndDate,
+                            "Description": selectedNode.OtherDescription,
+                            "WarrantyType": "Other Warranty"
+                        },
+                        "ReportingTo": selectedNode.ReportingTo          //vaishnavi 12-4-2022
 
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
@@ -4124,6 +4348,15 @@ WBSTree = (function ($) {
                             })
 
                             wbsTree.updateTreeNodes(selectedNode);
+                            $("input:radio[name='certified_payroll']").each(function (i) {      //vaishnavi 12-4-2022
+                                this.checked = false;
+                            });
+                            $("input:radio[name='prevailing_wages']").each(function (i) {
+                                this.checked = false;
+                            });
+                            $("input:radio[name='wrap']").each(function (i) {
+                                this.checked = false;
+                            });//vaishnavi 12-4-2022
                             $('#ProgramModal').modal('hide');
                             //if (!displayMap)
                             wbsTree.loadFullGridView();
@@ -4210,7 +4443,20 @@ WBSTree = (function ($) {
                     newNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
                     newNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
+                    newNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();          //vaishnavi 12-4-2022
+                    newNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
+                    newNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
 
+                    newNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
+                    newNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
+                    newNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
+                    newNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
+                    newNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
+                    newNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
+
+                    newNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
+                    newNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
+                    newNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();        //vaishnavi 12-4-2022
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
                     var program_sov_billing_checked = document.getElementById("program_sov_billing").checked;
@@ -4301,6 +4547,90 @@ WBSTree = (function ($) {
                         dhtmlx.alert('Contract # is a required field.'); // Jignesh-02-03-2021
                         return;
                     }
+
+                    if (newNode.LaborStartDate) {          //vaishnavi 12-4-2022
+                        var testDate = moment(newNode.LaborStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (newNode.LaborEndDate) {
+                        var testDate = moment(newNode.LaborEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (newNode.MaterialsStartDate) {
+                        var testDate = moment(newNode.MaterialsStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (newNode.MaterialsEndDate) {
+                        var testDate = moment(newNode.MaterialsEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (newNode.OtherStartDate) {
+                        var testDate = moment(newNode.OtherStartDate , 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (newNode.OtherEndDate) {
+                        var testDate = moment(newNode.OtherEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+
+                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();
+                    //if (!certified_payrollchecked) {
+                    //    dhtmlx.alert('Certified Payroll is a required field.'); // Jignesh-02-03-2021
+                    //    return;
+                    //}
+                    if (certified_payrollchecked == "Yes") {
+                        var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
+                        if (!SelectedCertifiedPayrollList) {
+                            dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+
+                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    //if (!preivingwagechecked) {
+                    //    dhtmlx.alert('Preiving Wage is a required field.'); // Jignesh-02-03-2021
+                    //    return;
+                    //}
+                    if (preivingwagechecked == "Yes") {
+                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
+                        if (!SelectedPreivingwageList) {
+                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+
+                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    if (wrapchecked == "Yes") {
+                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
+                        if (!SelectedwrapList) {
+                            dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                        newNode.ReportingTo = $('#ProgramModal').find('#reporting_to').val();
+                        if (!newNode.ReportingTo) {
+                            dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }   //vaishnavi 12-4-2022
+
                     if (!newNode.ContractValue) {
                         dhtmlx.alert('Original Contract Value is a required field.'); // Jignesh-02-03-2021
                         return;
@@ -4372,6 +4702,92 @@ WBSTree = (function ($) {
                     //    dhtmlx.alert('Job number is a required field.');
                     //    return;
                     //}
+
+                    //vaishnavi 12-4-2022
+                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();
+                    if (certified_payrollchecked == "Yes") {
+                        certified = wbsTree.getCertifiedPayrollList();
+                        var newcertifiedArray = [];
+
+                        var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
+                        for (i = 0; i < SelectedCertifiedPayrollList.length; i++) {
+                            for (j = 0; j < certified.length; j++) {
+                                if (SelectedCertifiedPayrollList[i] == certified[j].ID) {
+                                    //var a = certified[i].ID;
+                                    //var b = certified[i].Description;
+                                    //newcertifiedArray.push({ 'ID': a, 'Description': b });
+                                    newcertifiedArray.push(SelectedCertifiedPayrollList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    newNode.CertifiedPayrollIDS = newcertifiedArray;
+                    newNode.IsCertifiedPayrollChecked = certified_payrollchecked;
+
+
+
+                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    if (preivingwagechecked == "Yes") {
+                        preivingwagelist = [];
+                        preivingwagelist.push("State");
+                        preivingwagelist.push("Federal");
+                        var newpreivingwageArray = [];
+
+                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
+                        for (i = 0; i < SelectedPreivingwageList.length; i++) {
+                            for (j = 0; j < preivingwagelist.length; j++) {
+                                if (SelectedPreivingwageList[i] == preivingwagelist[j]) {
+                                    //var a = certified[i].ID;
+                                    //var b = certified[i].Description;
+                                    //newcertifiedArray.push({ 'ID': a, 'Description': b });
+                                    newpreivingwageArray.push(SelectedPreivingwageList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    newNode.ProgramPrevailingWagesList = newpreivingwageArray;
+                    newNode.IsPrevailingWageChecked = preivingwagechecked;
+
+
+                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    if (wrapchecked == "Yes") {
+                        var WrapList = wbsTree.getWrapList();
+                        var newwrapArray = [];
+
+                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
+                        for (i = 0; i < SelectedwrapList.length; i++) {
+                            for (j = 0; j < WrapList.length; j++) {
+                                if (SelectedwrapList[i] == WrapList[j].ID) {
+                                    var a = WrapList[i].ID;
+                                    var b = WrapList[i].Description;
+                                    newwrapArray.push(SelectedwrapList[i]);
+
+                                }
+
+                            }
+                        }
+
+                    }
+                    else {
+                        newcertifiedstring = null;
+
+                    }
+                    newNode.WrapIDS = newwrapArray;
+                    newNode.IsWrapChecked = wrapchecked;       //vaishnavi 12-4-2022
                     selectedNode = newNode;
                     var obj = {
                         "Operation": 1,
@@ -4400,7 +4816,13 @@ WBSTree = (function ($) {
                         "originalEndDate": newNode.originalEndDate, // Aditya ogDate 17-02-2022
                         "ContractValue": newNode.ContractValue,   //Manasi 14-07-2020
                         "JobNumber": newNode.JobNumber,            //Manasi 04-08-2020
-
+                        /* "CertifiedPayrollList": newcertifiedstring,*/   //vaishnavi 12-4-2022
+                        "CertifiedPayrollIDS": newcertifiedArray,
+                        "IsCertifiedPayrollChecked": certified_payrollchecked,
+                        "ProgramPrevailingWagesList": newpreivingwageArray,
+                        "IsPrevailingWageChecked": preivingwagechecked,
+                        "WrapIDS": newwrapArray,
+                        "IsWrapChecked": wrapchecked,             //vaishnavi 12-4-2022
                         "BillingPOC": newNode.BillingPOC,
                         "BillingPOCPhone1": newNode.BillingPOCPhone1,
                         "BillingPOCPhone2": newNode.BillingPOCPhone2,
@@ -4435,7 +4857,34 @@ WBSTree = (function ($) {
                         "programCategories": categoryToBeAdded,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+                        
+                       
+                        "LaborWarrantyList": {                 //vaishnavi 12-4-2022
+                            "WarrantyDescription": newNode.LaborWarranty,
+                            "StartDate": newNode.LaborStartDate,
+                            "EndDate": newNode.LaborEndDate,
+                            "Description": newNode.LaborDescription,
+                            "WarrantyType":"Labor Warranty"
+                        },
+
+                        "MaterialsWarrantyList": {
+                            "WarrantyDescription": newNode.MaterialsWarranty,
+                            "StartDate": newNode.MaterialsStartDate,
+                            "EndDate": newNode.MaterialsEndDate,
+                            "Description": newNode.MaterialsDescription,
+                            "WarrantyType": "Materials Warranty"
+                        },
+                        "OtherWarrantyList": {
+                            "WarrantyDescription": newNode.OtherWarranty,
+                            "StartDate": newNode.OtherStartDate,
+                            "EndDate": newNode.OtherEndDate,
+                            "Description": newNode.OtherDescription,
+                            "WarrantyType": "Other Warranty"
+                        },
+                        "ReportingTo": newNode.ReportingTo           //vaishnavi 12-4-2022
+                       
+                       
                     }
 
 
@@ -4449,6 +4898,15 @@ WBSTree = (function ($) {
                                 console.log("-------ADDING A PROGRAM-------");
                                 resultArray = response.result.split(',');
                                 //console.log("ADDED");
+                                $("input:radio[name='certified_payroll']").each(function (i) {        //vaishnavi 12-4-2022
+                                    this.checked = false;
+                                });
+                                $("input:radio[name='prevailing_wages']").each(function (i) {
+                                    this.checked = false;
+                                });
+                                $("input:radio[name='wrap']").each(function (i) {
+                                    this.checked = false;
+                                });          //vaishnavi 12-4-2022
                                 $('#ProgramModal').modal('hide');
                                 newNode.ProgramID = resultArray[1];
 
@@ -8850,6 +9308,38 @@ WBSTree = (function ($) {
                     OrderDate: '',
                 }
             });
+
+            $('#prevailing_wages_options input').on('change', function () {          //vaishnavi 12-4-2022
+                var selOption = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                console.log(selOption);
+                if (selOption == 'Yes') {
+                    $('#prevailing_wages_select_div').show();
+                } else {
+                    $('#prevailing_wages_select_div').hide();
+                }
+            })
+
+            $('#certified_payroll_options input').on('change', function () {
+                var selOption = $("input[type='radio'][name='certified_payroll']:checked").val();
+                console.log(selOption);
+                if (selOption == 'Yes') {
+
+                    $('#certified_payroll_select_div').show();
+                } else {
+                    $('#certified_payroll_select_div').hide();
+                }
+            })
+
+            $('#wrap_options input').on('change', function () {
+                var selOption = $("input[type='radio'][name='wrap']:checked").val();
+                console.log(selOption);
+                if (selOption == 'Yes') {
+
+                    $('#wrap_select_div').show();
+                } else {
+                    $('#wrap_select_div').hide();
+                }
+            })   //vaishnavi 12-4-2022
             //============================= Jignesh-ChangeOrderPopUpChanges ============================================
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
@@ -8961,6 +9451,9 @@ WBSTree = (function ($) {
             //============ Jignesh-24-03-2021 Modification Changes (Added Schedule Impact and removed Duration Date) ============
             //================  Find Schedule Impact changes respectivly ========================================================
             $('#ProgramModal').unbind().on('show.bs.modal', function (event) {
+                $('#certified_payroll_select_div').hide();  //vaishnavi 12-4-2022
+                $('#prevailing_wages_select_div').hide();
+                $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
                 $('#message_div').hide();
                 defaultModalPosition();
 
@@ -9029,7 +9522,228 @@ WBSTree = (function ($) {
 
                 if (selectedNode.level == "Program") {
                     modal_mode = 'Update';
-                    
+
+                    $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
+                        this.checked = false;
+                    });
+
+                    $("input:radio[name='prevailing_wages']").each(function (i) {
+                        this.checked = false;
+                    });
+
+                    $("input:radio[name='wrap']").each(function (i) {
+                        this.checked = false;
+                    });
+                   
+
+                    // $("input[name=certified_payroll][value=" + selectedNode.IsCertifiedPayrollChecked + "]").attr('checked', 'checked');
+                    $('input[name=certified_payroll][value="' + selectedNode.IsCertifiedPayrollChecked + '"]')
+                        .prop('checked', true)
+                        .trigger('change');
+
+                    $('input[name=prevailing_wages][value="' + selectedNode.IsPrevailingWageChecked + '"]')
+                        .prop('checked', true)
+                        .trigger('change');
+
+                    $('input[name=wrap][value="' + selectedNode.IsWrapChecked + '"]')
+                        .prop('checked', true)
+                        .trigger('change');
+
+
+
+                    var dataarray1 = [];
+                    var certifiedpayrollDropDown = $('#ProgramModal').find('#certified_payroll_select');
+                    certifiedpayrollDropDown.empty();
+                    var certifiedPayrollList = wbsTree.getCertifiedPayrollList();
+                    for (var x = 0; x < certifiedPayrollList.length; x++) {
+                        var Name = '';
+                        Name = certifiedPayrollList[x].Description;
+                        var certifiedId = parseInt(certifiedPayrollList[x].ID);
+
+                        certifiedpayrollDropDown.append('<option value=' + certifiedPayrollList[x].ID + '>' + Name + '</option>');
+
+                    }
+
+
+                    if (selectedNode.IsCertifiedPayrollChecked == "No") {
+
+                        $('#certified_payroll_select_div').hide();
+                    }
+
+                    if (selectedNode.IsCertifiedPayrollChecked == "Yes") {
+
+                        $('#certified_payroll_select_div').show();
+
+                        var certifiedlist = [];
+
+                        angular.forEach(selectedNode.CertifiedPayrollIDS, function (item) {
+                            certifiedlist.push(parseInt(item));
+                            //total += parseFloat(item.CurrentCost);
+                        });
+                        certifiedpayrollDropDown.empty();
+                        var certifiedPayrollList = wbsTree.getCertifiedPayrollList();
+                        for (var x = 0; x < certifiedPayrollList.length; x++) {
+                            var Name = '';
+                            Name = certifiedPayrollList[x].Description;
+                            var certifiedId = parseInt(certifiedPayrollList[x].ID);
+                            if (certifiedlist != undefined && certifiedlist.includes(certifiedId)) {
+
+                                dataarray1.push(certifiedId);
+                                certifiedpayrollDropDown.append('<option value=' + certifiedPayrollList[x].ID + ' selected="true">' + Name + '</option>');
+
+                            }
+                            else {
+
+                                certifiedpayrollDropDown.append('<option value=' + certifiedPayrollList[x].ID + '>' + Name + '</option>');
+
+                            }
+
+
+                        }
+                    }
+
+                    var dataarrayPrivingWage = [];
+                    var preivingwageDropDown = $('#ProgramModal').find('.modal-body #prevailing_wages_select');
+                    preivingwageDropDown.empty();
+                    preivingwagelist = [];
+                    preivingwagelist.push("State");
+                    preivingwagelist.push("Federal");
+                    for (var x = 0; x < preivingwagelist.length; x++) {
+                        var Name = '';
+                        Name = preivingwagelist[x];
+
+                        preivingwageDropDown.append('<option value=' + preivingwagelist[x] + '>' + Name + '</option>');
+
+                    }
+
+                    if (selectedNode.IsPrevailingWageChecked == "No") {
+                        $('#prevailing_wages_select_div').hide();
+
+                    }
+
+                    if (selectedNode.IsPrevailingWageChecked == "Yes") {
+                        $('#prevailing_wages_select_div').show();
+
+
+                        var prevailingwageslist = [];
+
+                        angular.forEach(selectedNode.ProgramPrevailingWagesList, function (item) {
+                            prevailingwageslist.push(item);
+                            //total += parseFloat(item.CurrentCost);
+                        });
+                        preivingwageDropDown.empty();
+                        for (var x = 0; x < preivingwagelist.length; x++) {
+                            var Name = '';
+                            Name = preivingwagelist[x];
+
+                            if (prevailingwageslist != undefined && prevailingwageslist.includes(Name)) {
+
+                                dataarrayPrivingWage.push(Name);
+                                preivingwageDropDown.append('<option value=' + preivingwagelist[x] + ' selected="true">' + Name + '</option>');
+
+                            }
+                            else {
+
+                                preivingwageDropDown.append('<option value=' + preivingwagelist[x] + '>' + Name + '</option>');
+
+                            }
+
+
+                        }
+                    }
+
+
+                    var datawrapArray = [];
+                    var wrapDropDown = $('#ProgramModal').find('.modal-body #wrap_select');
+                    wrapDropDown.empty();
+                    var WrapList = wbsTree.getWrapList();
+                    for (var x = 0; x < WrapList.length; x++) {
+                        var Name = '';
+                        Name = WrapList[x].Description;
+                        var certifiedId = parseInt(WrapList[x].ID);
+
+                        wrapDropDown.append('<option value=' + WrapList[x].ID + '>' + Name + '</option>');
+
+                    }
+                    if (selectedNode.IsWrapChecked == "No") {
+
+                        $('#wrap_select_div').hide();
+                    }
+
+                    if (selectedNode.IsWrapChecked == "Yes") {
+
+                        $('#wrap_select_div').show();
+
+                        var wraplist = [];
+
+                        angular.forEach(selectedNode.WrapIDS, function (item) {
+                            wraplist.push(parseInt(item));
+                            //total += parseFloat(item.CurrentCost);
+                        });
+                        wrapDropDown.empty();
+                        var WrapList = wbsTree.getWrapList();
+                        for (var x = 0; x < WrapList.length; x++) {
+                            var Name = '';
+                            Name = WrapList[x].Description;
+                            var wrapId = parseInt(WrapList[x].ID);
+                            if (wraplist != undefined && wraplist.includes(wrapId)) {
+
+                                datawrapArray.push(wrapId);
+                                wrapDropDown.append('<option value=' + WrapList[x].ID + ' selected="true">' + Name + '</option>');
+
+                            }
+                            else {
+
+                                wrapDropDown.append('<option value=' + WrapList[x].ID + '>' + Name + '</option>');
+
+                            }
+
+
+                        }
+                    }
+
+                    $('#prevailing_wages_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+
+                    $('#certified_payroll_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                    $('#wrap_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                    certifiedpayrollDropDown.val(dataarray1);
+                    certifiedpayrollDropDown.multiselect('refresh');
+
+                    preivingwageDropDown.val(dataarrayPrivingWage);
+                    preivingwageDropDown.multiselect('refresh');
+
+                    wrapDropDown.val(datawrapArray);
+                    wrapDropDown.multiselect('refresh');       //vaishnavi 12-4-2022
                     //----------------------------------Aditya ogDate------------------------------------------//
                     $('#program_original_end_date').on('change', function () {
                         isFieldValueChanged = true;
@@ -9146,6 +9860,12 @@ WBSTree = (function ($) {
                     //luan Jquery - luan here
                     //$('#program_project_class').prop('disabled', true);
                     $("#program_current_start_date").datepicker();	//datepicker - program
+                    $("#labor_start_date").datepicker();       //vaishnavi 12-4-2022
+                    $("#labor_end_date").datepicker();
+                    $("#materials_start_date").datepicker();
+                    $("#materials_end_date").datepicker();
+                    $("#other_start_date").datepicker();
+                    $("#other_end_date").datepicker();          //vaishnavi 12-4-2022
                     $("#program_current_end_date").datepicker();	//datepicker - program
                     $("#program_original_end_date").datepicker(); // Aditya ogDate
                     $("#modification_date").datepicker(); // Jignesh 28-10-2020
@@ -9267,6 +9987,22 @@ WBSTree = (function ($) {
                     //===========================================================================================
                     //modal.find('.modal-body #program_billing_poc_special_instruction').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     modal.find('.modal-body #program_billing_poc_special_instruction').val(selectedNode.BillingPOCSpecialInstruction ? selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n') : '');
+
+                    modal.find('.modal-body #reporting_to').val(selectedNode.ReportingTo);           //vaishnavi 12-4-2022
+                    modal.find('.modal-body #labor_warranty').val(selectedNode.LaborWarranty);
+                    modal.find('.modal-body #materials_warranty').val(selectedNode.MaterialsWarranty);
+                    modal.find('.modal-body #other_warranty').val(selectedNode.OtherWarranty);
+                   
+                    modal.find('.modal-body #labor_start_date').val(selectedNode.LaborStartDate ? moment(selectedNode.LaborStartDate).format('MM/DD/YYYY') : "");
+                    modal.find('.modal-body #labor_end_date').val(selectedNode.LaborEndDate ? moment(selectedNode.LaborEndDate).format('MM/DD/YYYY') : "");
+                    modal.find('.modal-body #materials_start_date').val(selectedNode.MaterialsStartDate ? moment(selectedNode.MaterialsStartDate).format('MM/DD/YYYY') : "");
+                    modal.find('.modal-body #materials_end_date').val(selectedNode.MaterialsEndDate ? moment(selectedNode.MaterialsEndDate).format('MM/DD/YYYY') : "");
+                    modal.find('.modal-body #other_start_date').val(selectedNode.OtherStartDate ? moment(selectedNode.OtherStartDate).format('MM/DD/YYYY') : "");
+                    modal.find('.modal-body #other_end_date').val(selectedNode.OtherEndDate ? moment(selectedNode.OtherEndDate).format('MM/DD/YYYY') : "");
+
+                    modal.find('.modal-body #labordescription').val(selectedNode.LaborDescription);
+                    modal.find('.modal-body #materialsdescription').val(selectedNode.MaterialsDescription);
+                    modal.find('.modal-body #otherdescription').val(selectedNode.OtherDescription);        //vaishnavi 12-4-2022
 
                     // Check
                     document.getElementById("program_tm_billing").checked = selectedNode.TMBilling ? true : false;
@@ -9487,6 +10223,105 @@ WBSTree = (function ($) {
                     programSponsorDropDown.val(programSponsorName);
                 }
                 else {
+                   
+                    $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
+                        this.checked = false;
+                    });
+
+                    $("input:radio[name='prevailing_wages']").each(function (i) {
+                        this.checked = false;
+                    });
+                    $("input:radio[name='wrap']").each(function (i) {
+                        this.checked = false;
+                    });
+                    $('#certified_payroll_select').empty();
+                    $('#prevailing_wages_select').empty();
+                    $('#wrap_select').empty();
+
+                    var dataarray1 = [];
+                    var certifiedpayrollDropDown = $('#ProgramModal').find('.modal-body #certified_payroll_select');
+                    certifiedpayrollDropDown.empty();
+                    var certifiedPayrollList = wbsTree.getCertifiedPayrollList();
+                    for (var x = 0; x < certifiedPayrollList.length; x++) {
+                        var Name = '';
+                        Name = certifiedPayrollList[x].Description;
+                        var certifiedId = parseInt(certifiedPayrollList[x].ID);
+
+                        certifiedpayrollDropDown.append('<option value=' + certifiedPayrollList[x].ID + '>' + Name + '</option>');
+
+                    }
+
+                    var dataarrayPrivingWage = [];
+                    var preivingwageDropDown = $('#ProgramModal').find('.modal-body #prevailing_wages_select');
+                    preivingwageDropDown.empty();
+                    preivingwagelist = [];
+                    preivingwagelist.push("State");
+                    preivingwagelist.push("Federal");
+                    for (var x = 0; x < preivingwagelist.length; x++) {
+                        var Name = '';
+                        Name = preivingwagelist[x];
+
+                        preivingwageDropDown.append('<option value=' + preivingwagelist[x] + '>' + Name + '</option>');
+
+                    }
+
+                    var datawrapArray = [];
+                    var wrapDropDown = $('#ProgramModal').find('.modal-body #wrap_select');
+                    wrapDropDown.empty();
+                    var WrapList = wbsTree.getWrapList();
+                    for (var x = 0; x < WrapList.length; x++) {
+                        var Name = '';
+                        Name = WrapList[x].Description;
+                        var certifiedId = parseInt(WrapList[x].ID);
+
+                        wrapDropDown.append('<option value=' + WrapList[x].ID + '>' + Name + '</option>');
+
+                    }
+                    $('#prevailing_wages_select_div').hide();
+                    $('#prevailing_wages_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                    $('#certified_payroll_select_div').hide();
+                    $('#certified_payroll_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                    $('#wrap_select_div').hide();
+                    $('#wrap_select').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                    certifiedpayrollDropDown.val(dataarray1);
+                    certifiedpayrollDropDown.multiselect('refresh');
+
+                    preivingwageDropDown.val(dataarrayPrivingWage);
+                    preivingwageDropDown.multiselect('refresh');
+
+                    wrapDropDown.val(datawrapArray);
+                    wrapDropDown.multiselect('refresh');  //vaishnavi 12-4-2022
+
                     $('#btnModification').attr('disabled', 'disabled');   //Manasi 23-02-2021
                     $('#btnDocManagement').attr('disabled', 'disabled');
                     $('#spnBtnModification').attr('title', "A contract needs to be saved before the modifications can be added");   //Manasi 23-02-2021
@@ -9552,6 +10387,12 @@ WBSTree = (function ($) {
                     $("#program_current_start_date").datepicker();	//datepicker - program
                     $("#program_current_end_date").datepicker();	//datepicker - program
                     $("#program_original_end_date").datepicker(); // Aditya ogDate
+                    $("#labor_start_date").datepicker();   //vaishnavi 12-4-2022
+                    $("#labor_end_date").datepicker();
+                    $("#materials_start_date").datepicker();
+                    $("#materials_end_date").datepicker();
+                    $("#other_start_date").datepicker();
+                    $("#other_end_date").datepicker();     //vaishnavi 12-4-2022
                     //$('#program_project_class').prop('disabled', false);
                     console.log('applied jquery');
 
@@ -9607,6 +10448,26 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_billing_poc_po_num').val('');
                     //===========================================================================================
                     modal.find('.modal-body #program_billing_poc_special_instruction').val('');
+
+
+                    modal.find('.modal-body #labor_warranty').val('');   //vaishnavi 12-4-2022
+                    modal.find('.modal-body #materials_warranty').val('');
+                    modal.find('.modal-body #other_warranty').val('');
+
+                    modal.find('.modal-body #labor_start_date').val('');
+                    modal.find('.modal-body #labor_end_date').val('');
+                    modal.find('.modal-body #materials_start_date').val('');
+                    modal.find('.modal-body #materials_end_date').val('');
+                    modal.find('.modal-body #other_start_date').val('');
+                    modal.find('.modal-body #other_end_date').val('');
+
+                    modal.find('.modal-body #labordescription').val('');
+                    modal.find('.modal-body #materialsdescription').val('');
+                    modal.find('.modal-body #otherdescription').val('');
+
+
+                    modal.find('.modal-body #reporting_to').val('');     //vaishnavi 12-4-2022
+
 
                     // Check
                     document.getElementById("program_tm_billing").checked = false;
@@ -12818,7 +13679,8 @@ WBSTree = (function ($) {
                 '#program_client_email,#program_client_address_line1,#program_client_address_line2,#program_client_city,#program_client_state,' +
                 '#program_client_po_num,#program_project_manager,#program_billing_poc_city,#program_billing_poc_state,#program_billing_poc_po_num,' +
                 '#program_billing_poc_po_num,#program_project_manager,#program_project_manager_phone,#program_project_manager_email,' +
-                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction';
+                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction,#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to' +
+                '#labor_warranty,#materials_warranty,#other_warranty,#labor_start_date,#labor_end_date,#materials_start_date,#materials_end_date,#other_start_date,#other_end_date,#labordescription,#materialsdescription,#otherdescription';
 
             $(contPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
