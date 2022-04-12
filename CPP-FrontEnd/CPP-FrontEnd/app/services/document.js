@@ -15,6 +15,14 @@ angular.module('cpp.services').
                 return $resource(serviceBasePath + "Register/Document/:docIDs");
             },
 
+            getNoticeByProgramId: function (programId) {
+                return $resource(serviceBasePath + "prelimnaryNotice/getPrelimnaryNotice/:programId");
+            },
+
+            getInsuranceByProgramId: function (programId) {
+                return $resource(serviceBasePath + "contractInsurance/getContractInsurance/:programId");
+            },
+
             //====================================== Created By Jignesh 28 - 10 - 2020 =======================================
             getModificationByProgramId: function (programId) {
                 return $resource(serviceBasePath + "contractModification/getContractModificationData/:programId");

@@ -22,7 +22,8 @@ namespace WebAPI.Models
         [NotMapped]
         public int Operation;
         public bool isModified;
-        
+        public bool isNotesModified;
+
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProgramID { get; set; }
         public string ProgramName { get; set; }
@@ -136,6 +137,9 @@ namespace WebAPI.Models
         public ProgramWarranty OtherWarrantyList { get; set; }       //Vaishnavi 12-04-2022
 
         [NotMapped]
+        public string programNote { get; set; }
+
+        [NotMapped]
         public virtual ICollection<ProgramCategory> programCategories { get; set; }
         public virtual ICollection<ProgramCategory> categoryToBeDeleted { get; set; }
         [NotMapped]
@@ -188,6 +192,8 @@ namespace WebAPI.Models
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
                             var proId = MatchedProgramList[i].ProgramID;
+                            
+                            
                             // List<ProgramFund> programFunds = ProgramFund.getProgramFund(MatchedProgramList[i].ProgramID);
                             //MatchedProgramList[i].programCategories = ctx.ProgramCategory.Where(a => a.ProgramID == MatchedProgramList[i].ProgramID).ToList();
                             //List<ProgramCategory> programCategories = ctx.ProgramCategory.Where(a => a.ProgramID == proId).ToList();
@@ -206,6 +212,7 @@ namespace WebAPI.Models
                         //MatchedProgramList = getProgramLookup(OrganizationID,ProgramID,KeyStroke);
                         string orgId = OrganizationID;
                         IQueryable<Program> programs = ctx.Program.Where(p => p.OrganizationID == orgId && p.IsDeleted == false);
+                          
                         MatchedProgramList = programs.ToList<Program>();
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
@@ -227,6 +234,7 @@ namespace WebAPI.Models
                     {
                         int pgmId = int.Parse(ProgramID);
                         IQueryable<Program> programs = ctx.Program.Where(p => p.ProgramID == pgmId && p.IsDeleted == false);
+                            
                         MatchedProgramList = programs.ToList<Program>();
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
@@ -249,6 +257,8 @@ namespace WebAPI.Models
                     else if (KeyStroke != "null")
                     {
                         IQueryable<Program> programs = ctx.Program.Where(p => p.ProgramName.Contains(KeyStroke) && p.IsDeleted == false);
+
+                           
                         MatchedProgramList = programs.ToList<Program>();
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
@@ -268,7 +278,8 @@ namespace WebAPI.Models
                     }
                     else
                     {
-                        IQueryable<Program> programs = ctx.Program.Where(p=> p.IsDeleted == false);
+                        IQueryable<Program> programs = ctx.Program.Where(p => p.IsDeleted == false);
+                            
                         MatchedProgramList = programs.ToList<Program>();
                         for (var i = 0; i < MatchedProgramList.Count; i++)
                         {
@@ -544,6 +555,14 @@ namespace WebAPI.Models
                                         ProgramCategory.registerProgramCategory(category);
                                     }
                                 }
+                                if (program.isNotesModified == true)
+                                {
+                                    ProgramNotes pNotes = new ProgramNotes();
+                                    pNotes.notes_desc = program.programNote;
+                                    pNotes.program_id = program.ProgramID;
+                                    ctx.ProgramNotes.Add(pNotes);
+                                    ctx.SaveChanges();
+                                }
                                 result = "Success";
                             }
                             else
@@ -761,6 +780,14 @@ namespace WebAPI.Models
                                     //register
                                     ProgramCategory.registerProgramCategory(item);
                                 }
+                            }
+                            if (program.isNotesModified == true)
+                            {
+                                ProgramNotes pNotes = new ProgramNotes();
+                                pNotes.notes_desc = program.programNote;
+                                pNotes.program_id = program.ProgramID;
+                                ctx.ProgramNotes.Add(pNotes);
+                                ctx.SaveChanges();
                             }
 
                             result = "Success";

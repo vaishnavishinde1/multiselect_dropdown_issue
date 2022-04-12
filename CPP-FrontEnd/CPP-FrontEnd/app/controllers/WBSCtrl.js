@@ -3299,6 +3299,7 @@ angular.module('cpp.controllers').
                 $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
                 $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                 //console.log('Called Org...');
+                //Narayan - clear trend map before search
                 var firstGNode = $('#trendSvg').children()[0];
                 $(firstGNode).children().remove();
                 $scope.filterProgramId = "";

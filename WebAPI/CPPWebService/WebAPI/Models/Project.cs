@@ -257,7 +257,7 @@ namespace WebAPI.Models
             }
             catch (Exception ex)
             {
-                var stackTrace = new StackTrace(ex, true);
+                var stackTrace = new StackTrace(ex.InnerException, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
             }
             return MatchedProjectList;
