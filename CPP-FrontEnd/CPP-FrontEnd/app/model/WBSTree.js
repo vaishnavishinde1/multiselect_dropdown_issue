@@ -3328,6 +3328,89 @@ WBSTree = (function ($) {
                 }
             }
 
+            function populateNotesHistoryTable(programID) {
+
+                wbsTree.getContract().get({}, function (contractData) {
+
+                    wbsTree.getProgramContract().get({}, function (programContractData) {
+                        var programContractList = programContractData.result;
+                        var contractList = contractData.result;
+                        wbsTree.setProgramContractList(programContractList);
+                        wbsTree.setContractList(contractList);
+
+                        $('#program_element_notes_history_table_id').empty();
+
+                        for (var x = 0; x < programContractList.length; x++) {
+                            console.log(programContractList[x].ProgramID, programID);
+
+                            if (programContractList[x].ProgramID == programID) {
+                                var singleContract = {};
+
+                                for (var y = 0; y < contractList.length; y++) {
+                                    if (programContractList[x].ContractID == contractList[y].ContractID) {
+                                        singleContract = contractList[y];
+                                    }
+                                }
+
+
+                                //luan here - Find the program project class name
+                                var projectClassName = "";
+                                var projectClassList = wbsTree.getProjectClassList();
+                                for (var y = 0; y < projectClassList.length; y++) {
+                                    if (projectClassList[y].ProjectClassID == singleContract.ProjectClassID) {
+                                        projectClassName = projectClassList[y].ProjectClassName;
+                                    }
+                                }
+
+                                console.log(singleContract);
+
+                                $('#program_contract_table_body_id').append(
+                                    '<tr id="' + singleContract.ContractID + '" class="fade-selection-animation clickable-row">' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractNumber + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:30%;">' + singleContract.ContractName + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractStartDate + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractEndDate + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + projectClassName + '</td>' +
+                                    '</tr>'
+                                );
+                            }
+                        }
+                    });
+
+                });
+            }
+
+            function populateNotesHistoryTableNew() {
+                $('#program_contract_table_body_id').empty();
+
+                for (var x = 0; x < g_contract_draft_list.length; x++) {
+                    var singleContract = {};
+
+                    singleContract = g_contract_draft_list[x];
+
+                    //luan here - Find the program project class name
+                    var projectClassName = "";
+                    var projectClassList = wbsTree.getProjectClassList();
+                    for (var y = 0; y < projectClassList.length; y++) {
+                        if (projectClassList[y].ProjectClassID == singleContract.ProjectClassID) {
+                            projectClassName = projectClassList[y].ProjectClassName;
+                        }
+                    }
+
+                    console.log(singleContract);
+
+                    $('#program_contract_table_body_id').append(
+                        '<tr id="' + singleContract.ContractNumber + '" class="fade-selection-animation clickable-row">' +
+                        '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractNumber + '</td>' +
+                        '<td class="class-td-LiveView" style="width:30%;">' + singleContract.ContractName + '</td>' +
+                        '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractStartDate + '</td>' +
+                        '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractEndDate + '</td>' +
+                        '<td class="class-td-LiveView" style="width:17.5%;">' + projectClassName + '</td>' +
+                        '</tr>'
+                    );
+                }
+            }
+
             //Project element milestone
             function populateProjectElementMilestoneTable(projectID) {
 
@@ -3609,6 +3692,7 @@ WBSTree = (function ($) {
                     categoryToBeDeleted = [];
                 }
                 var orgName = selectedNode.name;
+                var orgNotes = selectedNode.ProgramNote;
                 var temp_node = angular.copy(selectedNode);
                 // business logic...
                 //Delete a program
@@ -3670,8 +3754,12 @@ WBSTree = (function ($) {
                         selectedNode.PPBondNotes = '';
                     }
                     
-                    
-                    
+                    selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                    var modifiedNotes = selectedNode.ProgramNote;
+                    var isNotesModified = false;
+                    if (orgNotes != modifiedNotes) {
+                        isNotesModified = true;
+                    }
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
                     //selectedNode.ClientID = $('#ProgramModal').find('.modal-body #program_client_poc').val();
                     //Nivedita 13-01-2022
@@ -4102,7 +4190,9 @@ WBSTree = (function ($) {
                         "isModified": isModified,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "programNote": selectedNode.ProgramNote,
+                        "isNotesModified": isNotesModified
 
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
@@ -4130,6 +4220,7 @@ WBSTree = (function ($) {
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
                             selectedNode.name = temp_node.name;
+                            selectedNode.ProgramNote = temp_node.ProgramNote;
                             selectedNode.ProgramManager = temp_node.ProgramManager;
                             selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
                             if (response.result == '' || response.result == null || response.result == undefined)
@@ -4179,7 +4270,8 @@ WBSTree = (function ($) {
                     newNode.IsPPBond = $('#ProgramModal').find('input[name=PPBond]:checked').val();
                     newNode.IsCostPartOfContract = $('#ProgramModal').find('input[name=costPartQ]:checked').val();
                     newNode.PPBondNotes = $('#ProgramModal').find('.modal-body #txtPPNotes').val();
-
+                    newNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                       
                     //====== Jignesh-AddAddressField-21-01-2021 =======
                     //newNode.ClientAddress = $('#ProgramModal').find('.modal-body #program_client_address').val();
                     newNode.ClientAddressLine1 = $('#ProgramModal').find('.modal-body #program_client_address_line1').val();
@@ -4435,7 +4527,8 @@ WBSTree = (function ($) {
                         "programCategories": categoryToBeAdded,
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes
+                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "programNote": selectedNode.ProgramNote
                     }
 
 
@@ -4536,6 +4629,7 @@ WBSTree = (function ($) {
 
                             } else {
                                 selectedNode.name = temp_node.name;
+                                selectedNode.ProgramNote = temp_node.ProgramNote;
                                 selectedNode.ProgramManager = temp_node.ProgramManager;
                                 selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
 
@@ -9113,6 +9207,7 @@ WBSTree = (function ($) {
                     wbsTree.setIsProgramNew(false);
                     _Is_Program_New = false;
                     populateContractTable(selectedNode.ProgramID);
+                    populateNotesHistoryTable(selectedNode.ProgramID);
                     console.log("contract detailss===");
                     console.log(selectedNode);
 
@@ -9220,8 +9315,11 @@ WBSTree = (function ($) {
                     
                     
                     modal.find('.modal-body #txtPPNotes').val(selectedNode.PPBondNotes);
+                    modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNote);
                     
-
+                   // modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNotes);
+                    
+                    
                     modal.find('.modal-body #total').html(filter('currency')(total, '$', 0));
                     modal.find('.modal-title').text('Contract: ' + selectedNode.name);
                     modal.find('.modal-body #program_name').val(selectedNode.name);
@@ -12616,6 +12714,8 @@ WBSTree = (function ($) {
                 $('#txtUploadDateViewModel').val(moment(docData.CreatedDate).format('MM/DD/YYYY'));
                 $('#txtUploadByViewModel').val(docData.CreatedBy);
                 $('#txtDocNoteViewModel').val(docData.DocumentDescription);
+                $("#ProgramModal").css({ "opacity": "0.4" });
+                $("#documentUploadProgramNewPopup").css({ "opacity": "0.4" });
                 $('#DocViewModalPrg').modal({ show: true, backdrop: 'static' });
             });
 
@@ -13114,6 +13214,86 @@ WBSTree = (function ($) {
 
                 //$("#emp_class").multiselect('refresh');
                 //$("#emp_class").multipleSelect('refresh');
+            });
+            //=============================================================================================================
+            //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
+            $('#btnDocManagement').on('click', function () {
+                $("#ProgramModal").css({ "opacity": "0.4" });
+                $('#documentUploadProgramNewPopup').modal({ show: true, backdrop: 'static' });
+               
+
+                //debugger;
+                _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
+                    //wbsTree.setDocumentList(response.result);
+                    var _documentList = response.result;
+                    _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
+                        var _modificationList = response.data;
+                        //var moda2 = $('#ProgramModal');
+                        var moda2 = $('#documentUploadProgramNewPopup');
+                        
+                        var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
+                        gridUploadedContDocument.empty();
+                        for (var x = 0; x < _documentList.length; x++) {
+                            var modificatioTitle = "";
+                            if (_modificationList != undefined) {
+                                for (var i = 0; i < _modificationList.length; i++) {
+                                    if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
+                                        modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
+                                    }
+                                }
+                            }
+                            gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                // '<input type="radio" group="prgrb" name="record">' +
+                                '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
+                                '</td > <td ' +
+                                'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                '>' + _documentList[x].DocumentTypeName + '</td>' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                '>' + modificatioTitle + '</td>' +
+                                '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                                '<tr > ');   //MM/DD/YYYY h:mm a'
+
+                        }
+                        $('input[name=rbCategories]').on('click', function (event) {
+                            if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
+                                $('#ViewUploadFileProgram').removeAttr('disabled');
+                                $('#EditBtnProgram').removeAttr('disabled');
+                            }
+                            else {
+                                $('#DeleteUploadProgram').removeAttr('disabled');
+                                $('#ViewUploadFileProgram').removeAttr('disabled');
+                                $('#EditBtnProgram').removeAttr('disabled');
+                                $('#downloadBtnProgram').removeAttr('disabled');
+                            }
+                            localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
+                            //g_selectedProjectDocument = null;
+                            //g_selectedProjectDocument = $(this).closest("tr").find(".docId").text();
+                        });
+                    });
+
+                });
+                //_Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedProgramID }, function (response) {
+                //    wbsTree.setDocumentList(response.result);
+                //    for (var x = 0; x < _documentList.length; x++) {
+                //        //==================== Jignesh-11-03-2021 ===========================================================
+                //        if (!_documentList[x].TrendNumber) {
+                //            gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                //                '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
+                //                '</td > <td ' +
+                //                'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                //                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                //                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                //                '>' + _documentList[x].DocumentTypeName + '</td>' +
+                //                '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                //                '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                //                '<tr > ');
+                //        }
+                //        //===================================================================================================
+                //    }
+                //});
             });
             //=============================================================================================================
             //=========================  Jignesh-ModificationPopUpChanges =====================================================

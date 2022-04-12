@@ -822,12 +822,19 @@ namespace WebAPI.Models
         public String IsCostPartOfContract;
         [DataMember]
         public String PPBondNotes;
+        [DataMember]
+        public String ProgramNote;
+
+        [DataMember]
+        public  List<ProgramNotes> programnotesList;
 
         [DataMember]
         public List<ProgramElementWBSTree> children = new List<ProgramElementWBSTree>();
 
         [DataMember]
         public String Status;   //----Vaishnavi 30-03-2022----//
+
+       
         public ProgramWBSTree(Project proj, Program wbsprg, List<ProgramElementWBSTree> prge)
         {
             ProgramID = wbsprg.ProgramID.ToString();
@@ -876,6 +883,10 @@ namespace WebAPI.Models
             IsPPBond = wbsprg.IsPPBond;
             IsCostPartOfContract = wbsprg.IsCostPartOfContract;
             PPBondNotes = wbsprg.PPBondNotes;
+            //List<ProgramNotes> ProgramNotesList = new List<ProgramNotes>();
+            programnotesList = ProgramNotes.getProgramNotes(Convert.ToInt32(ProgramID));
+            ProgramNote = programnotesList.Max(m => m.notes_desc);
+            //ProgramNote = LatestNote.ToString(;
 
             originalEndDate = (wbsprg.originalEndDate != null ? wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd") : ""); // Aditya 21022022
             ProgramManagerID = wbsprg.ProgramManagerID; ProgramSponsorID = wbsprg.ProgramSponsorID; ProjectClassID = wbsprg.ProjectClassID;
@@ -897,7 +908,7 @@ namespace WebAPI.Models
             List<ProgramWBSTree> matchedWBSTree = new List<ProgramWBSTree>();
             List<ProjectWBSTree> ProjectList = new List<ProjectWBSTree>();
             List<ProgramElementWBSTree> ProgramElementList = new List<ProgramElementWBSTree>();
-
+            
             //Single Project
             if (ProjectID != "null")
             {
