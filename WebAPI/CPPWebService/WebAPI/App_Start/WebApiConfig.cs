@@ -1797,6 +1797,18 @@ namespace WebAPI
                  routeTemplate: "prelimnaryNotice/getPrelimnaryNotice/{programId}",
                  defaults: new { controller = "PrelimnaryNotice", action = "Get", programId = RouteParameter.Optional}
              );
+            //Narayan - 08/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "ContractInsurance",
+                 routeTemplate: "contractInsurance/saveContractInsurance",
+                 defaults: new { controller = "ContractInsurance", action = "Post" }
+             );
+            //Narayan - 08/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetContractInsurance",
+                 routeTemplate: "contractInsurance/getContractInsurance/{programId}",
+                 defaults: new { controller = "ContractInsurance", action = "Get", programId = RouteParameter.Optional }
+             );
             config.Routes.MapHttpRoute(
               name: "DataMigration",
               routeTemplate: "Request/Migration",

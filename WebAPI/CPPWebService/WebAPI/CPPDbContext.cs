@@ -278,6 +278,8 @@ namespace WebAPI
 
         public DbSet<PrelimnaryNotice> PrelimnaryNotices { get; set; }   // Narayan - 04-04-2022
 
+        public DbSet<ContractInsurance> ContractInsurances { get; set; }   // Narayan - 07-04-2022
+
 
     }
 
