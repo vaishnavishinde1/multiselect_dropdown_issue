@@ -10180,6 +10180,7 @@ WBSTree = (function ($) {
                     $("#program_current_end_date").datepicker();	//datepicker - program
                     $("#program_original_end_date").datepicker(); // Aditya ogDate
                     $("#modification_date").datepicker(); // Jignesh 28-10-2020
+                    $("#date_of_pre_notice").datepicker(); //Narayan
                     //=============== Jignesh-24-03-2021 Modification Changes ==========================
                     //$('#duration_date').datepicker("destroy");
                     /*$('#program_element_milestone_date_modal').datepicker({
@@ -10772,7 +10773,8 @@ WBSTree = (function ($) {
                     //luan Jquery - luan here
                     $("#program_current_start_date").datepicker();	//datepicker - program
                     $("#program_current_end_date").datepicker();	//datepicker - program
-                    $("#program_original_end_date").datepicker(); // Aditya ogDate
+                    $("#program_original_end_date").datepicker(); // Aditya 
+                    $("#date_of_pre_notice").datepicker(); //Narayan
                     $("#labor_start_date").datepicker();   //vaishnavi 12-4-2022
                     $("#labor_end_date").datepicker();
                     $("#materials_start_date").datepicker();
