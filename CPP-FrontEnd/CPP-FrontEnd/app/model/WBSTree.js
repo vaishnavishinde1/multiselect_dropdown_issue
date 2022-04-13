@@ -5010,8 +5010,8 @@ WBSTree = (function ($) {
                             "Description": newNode.OtherDescription,
                             "WarrantyType": "Other Warranty"
                         },
-                        "ReportingTo": newNode.ReportingTo           //vaishnavi 12-4-2022
-                       
+                        "ReportingTo": newNode.ReportingTo,          //vaishnavi 12-4-2022
+                        "programNote": newNode.ProgramNote
                        
                     }
 
@@ -10874,7 +10874,7 @@ WBSTree = (function ($) {
 
 
                     modal.find('.modal-body #reporting_to').val('');     //vaishnavi 12-4-2022
-
+                    modal.find('.modal-body #txtprogramNotes').val('');
 
                     // Check
                     document.getElementById("program_tm_billing").checked = false;

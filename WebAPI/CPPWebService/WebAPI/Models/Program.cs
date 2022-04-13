@@ -426,6 +426,15 @@ namespace WebAPI.Models
                             }
                         }
                         ProgramWarranty.registerProgramWarranty(pgm);
+
+                        if (pgm.programNote != "")
+                        {
+                            ProgramNotes pNotes = new ProgramNotes();
+                            pNotes.notes_desc = pgm.programNote;
+                            pNotes.programID = pgm.ProgramID;
+                            ctx.ProgramNotes.Add(pNotes);
+                            ctx.SaveChanges();
+                        }
                     }     //Vaishnavi 12-04-2022
                     else
                     {
@@ -563,11 +572,14 @@ namespace WebAPI.Models
                                 }
                                 if (program.isNotesModified == true)
                                 {
-                                    ProgramNotes pNotes = new ProgramNotes();
-                                    pNotes.notes_desc = program.programNote;
-                                    pNotes.programID = program.ProgramID;
-                                    ctx.ProgramNotes.Add(pNotes);
-                                    ctx.SaveChanges();
+                                    if (program.programNote != "")
+                                    {
+                                        ProgramNotes pNotes = new ProgramNotes();
+                                        pNotes.notes_desc = program.programNote;
+                                        pNotes.programID = program.ProgramID;
+                                        ctx.ProgramNotes.Add(pNotes);
+                                        ctx.SaveChanges();
+                                    }
                                 }
                                 result = "Success";
                             }
@@ -792,11 +804,14 @@ namespace WebAPI.Models
                             }
                             if (program.isNotesModified == true)
                             {
-                                ProgramNotes pNotes = new ProgramNotes();
-                                pNotes.notes_desc = program.programNote;
-                                pNotes.programID = program.ProgramID;
-                                ctx.ProgramNotes.Add(pNotes);
-                                ctx.SaveChanges();
+                                if (program.programNote != "")
+                                {
+                                    ProgramNotes pNotes = new ProgramNotes();
+                                    pNotes.notes_desc = program.programNote;
+                                    pNotes.programID = program.ProgramID;
+                                    ctx.ProgramNotes.Add(pNotes);
+                                    ctx.SaveChanges();
+                                }
                             }
 
                             result = "Success";
