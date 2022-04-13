@@ -10043,6 +10043,31 @@ WBSTree = (function ($) {
 
                     });
 
+                    $("#date_of_pre_notice").datepicker();
+                    // Narayan - get prelimnary notices list for notice history
+                    _Document.getNoticeByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                        _NoticeList = response.data;
+                        var gridNotice = $("#gridNoticeList tbody");
+                        gridNotice.empty();
+                        _NoticeList.reverse();
+                        var NoticeList = _NoticeList;
+                        //if (!_IsRootForModification) {
+                        for (var x = 0; x < NoticeList.length; x++) {
+                            var durationDate = "";
+                            if (_NoticeList[x].DurationDate != null) {
+                                durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
+                            }
+                            gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                '><a>' + (x + 1) + '</a></td> ' +
+                                '<td>' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                '>' + _NoticeList[x].Reason + '</td>' +
+                                //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                                '<tr > ');
+                        }
+                        //}
+                    });
 
                     $('#certified_payroll_select').multiselect({
                         // columns: 5,
@@ -10054,6 +10079,25 @@ WBSTree = (function ($) {
                         numberDisplayed: 1
 
                     });
+
+                    // Narayan - get insurnace list for insurance history
+                    _Document.getInsuranceByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                        _InsuranceList = response.data;
+                        var gridInsurance = $("#gridInsuranceList tbody");
+                        gridInsurance.empty();
+                        _InsuranceList.reverse();
+                        var InsuranceList = _InsuranceList;
+                        for (var x = 0; x < InsuranceList.length; x++) {
+                            gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                '><a>' + (x + 1) + '</a></td> ' +
+                                '<td>' + _InsuranceList[x].Type + '</td>' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                '>' + _InsuranceList[x].Limit + '</td>' +
+                                '<tr > ');
+                        }
+                    });
+
 
                     $('#wrap_select').multiselect({
                         // columns: 5,
