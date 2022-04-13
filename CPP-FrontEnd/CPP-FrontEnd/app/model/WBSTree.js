@@ -4018,6 +4018,15 @@ WBSTree = (function ($) {
                     selectedNode.Lumpsum = program_Lumpsum ? 1 : 0;
                     selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
 
+                    //Aditya Prime
+                    if ($('#ProgramModal').find('.modal-body #prime_subPrime_dd').val() == 'Sub-Prime') {
+                        if (!$('#ProgramModal').find('.modal-body #prime_dd').val()) {
+                            dhtmlx.alert('Select a Prime first');
+                            return;
+                        }
+                    }
+                    
+
                     //Nivedita 13-01-2022
                     if (!$('#ProgramModal').find('.modal-body #program_project_manager').val()) {
                         dhtmlx.alert('Contract Manager Name is a required field.'); // Jignesh-02-03-2021
