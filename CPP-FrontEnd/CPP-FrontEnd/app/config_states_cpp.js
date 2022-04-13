@@ -378,6 +378,16 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
             templateUrl: appHelper.templatePath('admin/service-class'),
             controller: 'ServiceClassCtrl'
         }).
+        state('app.admin-certified-payroll', {    //Vaishnavi 12-04-2022
+            url: '/admin-certified-payroll',
+            templateUrl: appHelper.templatePath('admin/certified-payroll'),
+            controller: 'CertifiedPayrollCtrl'
+        }).
+        state('app.admin-wrap', {
+            url: '/admin-wrap',
+            templateUrl: appHelper.templatePath('admin/wrap'),
+            controller: 'WrapCtrl'
+        }).       //Vaishnavi 12-04-2022
         state('app.admin-project-class-phase', {
             url: '/admin-project-class-phase',
             templateUrl: appHelper.templatePath('admin/project-class-phase'),

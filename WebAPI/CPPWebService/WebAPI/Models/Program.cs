@@ -70,6 +70,18 @@ namespace WebAPI.Models
         public String ContractValue { get; set; }   //Manasi 14-07-2020
         public String JobNumber { get; set; }    //Manasi 04-08-2020
 
+        public List<int> CertifiedPayrollIDS { get; set; }   //Vaishnavi 12-04-2022
+
+        public String IsCertifiedPayrollChecked { get; set; }
+
+        public List<String> ProgramPrevailingWagesList { get; set; }
+
+        public String IsPrevailingWageChecked { get; set; }
+
+        public List<int> WrapIDS { get; set; }
+
+        public String IsWrapChecked { get; set; }     //Vaishnavi 12-04-2022
+
         public DateTime? CurrentStartDate { get; set; }
         public DateTime? CurrentEndDate { get; set; }
         public DateTime? originalEndDate { get; set; } //Aditya 17-02-2021
@@ -97,6 +109,21 @@ namespace WebAPI.Models
 
         public string PPBondNotes { get; set; }
 
+        [NotMapped]
+        public DateTime? LaborStartDate { get; set; }    //Vaishnavi 12-04-2022
+        [NotMapped]
+        public DateTime? LaborEndDate { get; set; }
+        [NotMapped]
+        public DateTime? MaterialsStartDate { get; set; }
+        [NotMapped]
+        public DateTime? MaterialsEndDate { get; set; }
+        [NotMapped]
+        public DateTime? OtherStartDate { get; set; }
+        [NotMapped]
+        public DateTime? OtherEndDate { get; set; }
+
+        public string ReportingTo { get; set; }    //Vaishnavi 12-04-2022
+
         [ForeignKey("ProgramManagerID")]
         public virtual Employee ProgramManagerObj { get; set; }
 
@@ -105,6 +132,13 @@ namespace WebAPI.Models
 
         [ForeignKey("ProjectClassID")]
         public virtual ProjectClass ProjectClass { get; set; }
+
+        [NotMapped]
+        public ProgramWarranty LaborWarrantyList { get; set; }     //Vaishnavi 12-04-2022
+        [NotMapped]
+        public ProgramWarranty MaterialsWarrantyList { get; set; }
+        [NotMapped]
+        public ProgramWarranty OtherWarrantyList { get; set; }       //Vaishnavi 12-04-2022
 
         [NotMapped]
         public string programNote { get; set; }
@@ -274,6 +308,7 @@ namespace WebAPI.Models
             }
             catch (Exception ex)
             {
+               
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
                 Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
@@ -304,6 +339,10 @@ namespace WebAPI.Models
                         pgm.programCategories = null;
                         pgm.IsDeleted = false;
                         pgm.Status = "Active";   //----Vaishnavi 30-03-2022----//
+                        pgm.IsCertifiedPayrollChecked = pgm.IsCertifiedPayrollChecked;    //Vaishnavi 12-04-2022
+                        pgm.IsPrevailingWageChecked = pgm.IsPrevailingWageChecked;
+                        pgm.IsWrapChecked = pgm.IsWrapChecked;
+                        pgm.ReportingTo = pgm.ReportingTo;    //Vaishnavi 12-04-2022
                         ctx.Program.Add(pgm);
                         ctx.SaveChanges();
                         var prog = ctx.Program.OrderByDescending(p => p.ProgramID).FirstOrDefault();
@@ -344,13 +383,50 @@ namespace WebAPI.Models
                         }
                         ctx.ContractModification.Add(contractModificationsList);
                         ctx.SaveChanges();
-
-                        ProgramNotes pNotes = new ProgramNotes();
-                        pNotes.notes_desc = pgm.programNote;
-                        pNotes.program_id = pgm.ProgramID;
-                        ctx.ProgramNotes.Add(pNotes);
-                        ctx.SaveChanges();
-                    }
+                        if (pgm.IsCertifiedPayrollChecked == "Yes")     //Vaishnavi 12-04-2022
+                        {
+                            if (pgm.CertifiedPayrollIDS.Count != 0)
+                            {
+                                for (int i = 0; i < pgm.CertifiedPayrollIDS.Count; i++)
+                                {
+                                    ProgramCertifiedPayroll programCertifiedPayroll = new ProgramCertifiedPayroll();
+                                    programCertifiedPayroll.ProgramID = pgm.ProgramID;
+                                    programCertifiedPayroll.CertifiedPayrollID = pgm.CertifiedPayrollIDS[i];
+                                    ctx.ProgramCertifiedPayroll.Add(programCertifiedPayroll);
+                                    ctx.SaveChanges();
+                                }
+                            }
+                        }
+                        if (pgm.IsPrevailingWageChecked == "Yes")
+                        {
+                            if (pgm.ProgramPrevailingWagesList.Count != 0)
+                            {
+                                for (int i = 0; i < pgm.ProgramPrevailingWagesList.Count; i++)
+                                {
+                                    ProgramPrevailingWage programPrevailingWage = new ProgramPrevailingWage();
+                                    programPrevailingWage.ProgramID = pgm.ProgramID;
+                                    programPrevailingWage.Description = pgm.ProgramPrevailingWagesList[i];
+                                    ctx.ProgramPrevailingWage.Add(programPrevailingWage);
+                                    ctx.SaveChanges();
+                                }
+                            }
+                        }
+                        if (pgm.IsWrapChecked == "Yes")
+                        {
+                            if (pgm.WrapIDS.Count != 0)
+                            {
+                                for (int i = 0; i < pgm.WrapIDS.Count; i++)
+                                {
+                                    ProgramWrap programWrap = new ProgramWrap();
+                                    programWrap.ProgramID = pgm.ProgramID;
+                                    programWrap.WrapID = pgm.WrapIDS[i];
+                                    ctx.ProgramWrap.Add(programWrap);
+                                    ctx.SaveChanges();
+                                }
+                            }
+                        }
+                        ProgramWarranty.registerProgramWarranty(pgm);
+                    }     //Vaishnavi 12-04-2022
                     else
                     {
                         //result = "Failed to add new Program. Program " + pgm.ProgramName + " Already Exist in the system";
@@ -489,7 +565,7 @@ namespace WebAPI.Models
                                 {
                                     ProgramNotes pNotes = new ProgramNotes();
                                     pNotes.notes_desc = program.programNote;
-                                    pNotes.program_id = program.ProgramID;
+                                    pNotes.programID = program.ProgramID;
                                     ctx.ProgramNotes.Add(pNotes);
                                     ctx.SaveChanges();
                                 }
@@ -578,6 +654,106 @@ namespace WebAPI.Models
                             pgm.PrimeParent = program.PrimeParent;
 
                             ctx.SaveChanges();
+                            pgm.IsCertifiedPayrollChecked = program.IsCertifiedPayrollChecked;    //Vaishnavi 12-04-2022
+                            pgm.IsPrevailingWageChecked = program.IsPrevailingWageChecked;
+                            pgm.IsWrapChecked = program.IsWrapChecked;
+                            pgm.ReportingTo = program.ReportingTo;
+                            ctx.SaveChanges();
+                            if (program.IsCertifiedPayrollChecked == "Yes")
+                            {
+                                if (program.CertifiedPayrollIDS.Count != 0)
+                                {
+                                    List<ProgramCertifiedPayroll> programids = ctx.ProgramCertifiedPayroll.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                    foreach (var k in programids)
+                                    {
+                                        ctx.ProgramCertifiedPayroll.Remove(k);
+                                        ctx.SaveChanges();
+                                    }
+                                    for (int i = 0; i < program.CertifiedPayrollIDS.Count; i++)
+                                    {
+                                        ProgramCertifiedPayroll programCertifiedPayroll = new ProgramCertifiedPayroll();
+                                        programCertifiedPayroll.ProgramID = program.ProgramID;
+                                        programCertifiedPayroll.CertifiedPayrollID = program.CertifiedPayrollIDS[i];
+                                        ctx.ProgramCertifiedPayroll.Add(programCertifiedPayroll);
+                                        ctx.SaveChanges();
+                                    }
+                                }
+                            }
+                            if (program.IsCertifiedPayrollChecked == "No")
+                            {
+
+                                List<ProgramCertifiedPayroll> programids = ctx.ProgramCertifiedPayroll.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                foreach (var x in programids)
+                                {
+                                    ctx.ProgramCertifiedPayroll.Remove(x);
+                                    ctx.SaveChanges();
+                                }
+
+                            }
+                            if (program.IsPrevailingWageChecked == "Yes")
+                            {
+                                if (program.ProgramPrevailingWagesList.Count != 0)
+                                {
+                                    List<ProgramPrevailingWage> programids = ctx.ProgramPrevailingWage.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                    foreach (var k in programids)
+                                    {
+                                        ctx.ProgramPrevailingWage.Remove(k);
+                                        ctx.SaveChanges();
+                                    }
+                                    for (int i = 0; i < program.ProgramPrevailingWagesList.Count; i++)
+                                    {
+                                        ProgramPrevailingWage programPrevailingWage = new ProgramPrevailingWage();
+                                        programPrevailingWage.ProgramID = program.ProgramID;
+                                        programPrevailingWage.Description = program.ProgramPrevailingWagesList[i];
+                                        ctx.ProgramPrevailingWage.Add(programPrevailingWage);
+                                        ctx.SaveChanges();
+                                    }
+                                }
+                            }
+                            if (program.IsPrevailingWageChecked == "No")
+                            {
+
+                                List<ProgramPrevailingWage> programids = ctx.ProgramPrevailingWage.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                foreach (var x in programids)
+                                {
+                                    ctx.ProgramPrevailingWage.Remove(x);
+                                    ctx.SaveChanges();
+                                }
+
+                            }
+                            if (program.IsWrapChecked == "Yes")
+                            {
+                                if (program.WrapIDS.Count != 0)
+                                {
+                                    List<ProgramWrap> programids = ctx.ProgramWrap.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                    foreach (var k in programids)
+                                    {
+                                        ctx.ProgramWrap.Remove(k);
+                                        ctx.SaveChanges();
+                                    }
+                                    for (int i = 0; i < program.WrapIDS.Count; i++)
+                                    {
+                                        ProgramWrap programWrap = new ProgramWrap();
+                                        programWrap.ProgramID = program.ProgramID;
+                                        programWrap.WrapID = program.WrapIDS[i];
+                                        ctx.ProgramWrap.Add(programWrap);
+                                        ctx.SaveChanges();
+                                    }
+                                }
+                            }
+                            if (program.IsWrapChecked == "No")
+                            {
+
+                                List<ProgramWrap> programids = ctx.ProgramWrap.Where(p => p.ProgramID == program.ProgramID).ToList();
+                                foreach (var x in programids)
+                                {
+                                    ctx.ProgramWrap.Remove(x);
+                                    ctx.SaveChanges();
+                                }
+
+                            }
+
+                            ProgramWarranty.updateProgramWarranty(program);    //Vaishnavi 12-04-2022
 
                             for (var i = 0; i < fundToBeDeletedList.Count; i++)
                             {
@@ -618,7 +794,7 @@ namespace WebAPI.Models
                             {
                                 ProgramNotes pNotes = new ProgramNotes();
                                 pNotes.notes_desc = program.programNote;
-                                pNotes.program_id = program.ProgramID;
+                                pNotes.programID = program.ProgramID;
                                 ctx.ProgramNotes.Add(pNotes);
                                 ctx.SaveChanges();
                             }

@@ -610,6 +610,7 @@
     <Compile Include="Controllers\PrelimnaryNoticeController.cs" />
     <Compile Include="Controllers\RegisterApprovalResendLinkinMatrixController.cs" />
     <Compile Include="Controllers\RegisterBOMRequestController.cs" />
+    <Compile Include="Controllers\RegisterCertifiedPayrollController.cs" />
     <Compile Include="Controllers\RegisterChangeOrderController.cs" />
     <Compile Include="Controllers\RegisterClientPOCController.cs" />
     <Compile Include="Controllers\RegisterContractController.cs" />
@@ -623,11 +624,13 @@
     <Compile Include="Controllers\RegisterServiceToSubseviceController.cs" />
     <Compile Include="Controllers\RegisterSingleLookupActivityCategoryController.cs" />
     <Compile Include="Controllers\RegisterUserLicenseMappingController.cs" />
+    <Compile Include="Controllers\RegisterWrapController.cs" />
     <Compile Include="Controllers\RequestActivitiesForGanttAtContractLevelController.cs" />
     <Compile Include="Controllers\RequestActivitiesForGanttAtProjectLevelController.cs" />
     <Compile Include="Controllers\RequestApprovalTimerCountDownController.cs" />
     <Compile Include="Controllers\RequestApprovedCodeSubmitController.cs" />
     <Compile Include="Controllers\RequestBOMRequestController.cs" />
+    <Compile Include="Controllers\RequestCertifiedPayrollController.cs" />
     <Compile Include="Controllers\RequestChangeOrderController.cs" />
     <Compile Include="Controllers\RequestClientPOCController.cs" />
     <Compile Include="Controllers\RequestContractController.cs" />
@@ -645,6 +648,7 @@
     <Compile Include="Controllers\RequestPhaseForGanttAtProjectLevelController.cs" />
     <Compile Include="Controllers\RequestPOListController.cs" />
     <Compile Include="Controllers\RequestProgramContractController.cs" />
+    <Compile Include="Controllers\RequestProgramNotesController.cs" />
     <Compile Include="Controllers\RequestPurchaseOrderIDDetailController.cs" />
     <Compile Include="Controllers\RequestResendUniqueCodeController.cs" />
     <Compile Include="Controllers\RequestServiceClassController.cs" />
@@ -821,6 +825,7 @@
     <Compile Include="Controllers\RequestServiceController.cs" />
     <Compile Include="Controllers\RequestTestingSSRSController.cs" />
     <Compile Include="Controllers\RegisterCustomCostOverheadController.cs" />
+    <Compile Include="Controllers\RequestWrapController.cs" />
     <Compile Include="Controllers\TimesheetUploadController.cs" />
     <Compile Include="Controllers\TranslateQuickbooksBillController.cs" />
     <Compile Include="Controllers\UserReports\RequestContractReportController.cs" />
@@ -848,6 +853,7 @@
     <Compile Include="Models\Api\ApiLog.cs" />
     <Compile Include="Models\Audit.cs" />
     <Compile Include="Models\BOMRequest.cs" />
+    <Compile Include="Models\CertifiedPayroll.cs" />
     <Compile Include="Models\ChangeOrder.cs" />
     <Compile Include="Models\clientPOC.cs" />
     <Compile Include="Models\Contract.cs" />
@@ -875,7 +881,12 @@
     <Compile Include="Models\POList.cs" />
     <Compile Include="Models\POODCEmployeeDetails.cs" />
     <Compile Include="Models\PrelimnaryNotice.cs" />
+    <Compile Include="Models\ProgramCertifiedPayroll.cs" />
     <Compile Include="Models\ProgramContract.cs" />
+    <Compile Include="Models\ProgramNotes.cs" />
+    <Compile Include="Models\ProgramPrevailingWage.cs" />
+    <Compile Include="Models\ProgramWarranty.cs" />
+    <Compile Include="Models\ProgramWrap.cs" />
     <Compile Include="Models\ProjectAccessControl.cs" />
     <Compile Include="Models\ProjectApproversDetails.cs" />
     <Compile Include="Models\Quartz\InsperityExportJob.cs" />
@@ -984,6 +995,7 @@
     <Compile Include="Models\ViewPrgmElementGantt.cs" />
     <Compile Include="Models\WBS.cs" />
     <Compile Include="Models\WBSTree.cs" />
+    <Compile Include="Models\Wrap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

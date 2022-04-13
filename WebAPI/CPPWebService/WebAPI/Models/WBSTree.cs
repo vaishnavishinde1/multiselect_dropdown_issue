@@ -816,6 +816,23 @@ namespace WebAPI.Models
         [DataMember]
         public String JobNumber;  //Manasi  04-08-2020
 
+        [DataMember]       
+        public List<int> CertifiedPayrollIDS;     //Vaishnavi 12-04-2022
+
+        [DataMember]
+        public String IsCertifiedPayrollChecked;
+
+        [DataMember]
+        public List<String> ProgramPrevailingWagesList;
+
+        [DataMember]
+        public String IsPrevailingWageChecked;
+
+        [DataMember]
+        public List<int> WrapIDS;
+        [DataMember]
+        public String IsWrapChecked;    //Vaishnavi 12-04-2022
+
         [DataMember]
         public String IsPPBond;
         [DataMember]
@@ -833,12 +850,46 @@ namespace WebAPI.Models
         public  List<ProgramNotes> programnotesList;
 
         [DataMember]
+        public String LaborWarranty;     //Vaishnavi 12-04-2022
+        [DataMember]
+        public String MaterialsWarranty;
+        [DataMember]
+        public String OtherWarranty;
+        [DataMember]
+        public String LaborStartDate;
+        [DataMember]
+        public String LaborEndDate;
+        [DataMember]
+        public String MaterialsStartDate;
+        [DataMember]
+        public String MaterialsEndDate;
+        [DataMember]
+        public String OtherStartDate;
+        [DataMember]
+        public String OtherEndDate;
+        [DataMember]
+        public String LaborDescription;
+        [DataMember]
+        public String MaterialsDescription;
+        [DataMember]
+        public String OtherDescription;
+
+        [DataMember]
+        public ProgramWarranty LaborWarrantyList;
+        [DataMember]
+        public ProgramWarranty MaterialsWarrantyList;
+        [DataMember]
+        public ProgramWarranty OtherWarrantyList;    //Vaishnavi 12-04-2022
+
+        [DataMember]
         public List<ProgramElementWBSTree> children = new List<ProgramElementWBSTree>();
 
         [DataMember]
         public String Status;   //----Vaishnavi 30-03-2022----//
 
        
+        [DataMember]
+        public String ReportingTo;    //Vaishnavi 12-04-2022
         public ProgramWBSTree(Project proj, Program wbsprg, List<ProgramElementWBSTree> prge)
         {
             ProgramID = wbsprg.ProgramID.ToString();
@@ -883,7 +934,14 @@ namespace WebAPI.Models
             Lumpsum = wbsprg.Lumpsum;
             ContractValue = wbsprg.ContractValue;   //Manasi 14-07-2020
             JobNumber = wbsprg.JobNumber;   //Manasi  04-08-2020
-
+            CPPDbContext ctx = new CPPDbContext();      //Vaishnavi 12-04-2022
+            CertifiedPayrollIDS = ctx.ProgramCertifiedPayroll.Where(c => c.ProgramID == wbsprg.ProgramID).Select(x => x.CertifiedPayrollID).ToList();
+            IsCertifiedPayrollChecked = wbsprg.IsCertifiedPayrollChecked;
+            ProgramPrevailingWagesList = ctx.ProgramPrevailingWage.Where(c => c.ProgramID == wbsprg.ProgramID).Select(x => x.Description).ToList();
+            IsPrevailingWageChecked = wbsprg.IsPrevailingWageChecked;
+            WrapIDS = ctx.ProgramWrap.Where(c => c.ProgramID == wbsprg.ProgramID).Select(x => x.WrapID).ToList();
+            IsWrapChecked = wbsprg.IsWrapChecked;
+            ReportingTo = wbsprg.ReportingTo;      //Vaishnavi 12-04-2022
             IsPPBond = wbsprg.IsPPBond;
             IsCostPartOfContract = wbsprg.IsCostPartOfContract;
             PPBondNotes = wbsprg.PPBondNotes;
@@ -894,6 +952,29 @@ namespace WebAPI.Models
 
             PrimeSubPrime = wbsprg.PrimeSubPrime;
             PrimeParent = wbsprg.PrimeParent;
+            LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
+            MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+            OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+
+            wbsprg.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
+            wbsprg.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
+            wbsprg.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
+            wbsprg.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
+            wbsprg.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
+            wbsprg.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
+
+            LaborStartDate = (wbsprg.LaborStartDate != null ? wbsprg.LaborStartDate.Value.ToString("yyyy-MM-dd") : "");
+            MaterialsStartDate = (wbsprg.MaterialsStartDate != null ? wbsprg.MaterialsStartDate.Value.ToString("yyyy-MM-dd") : "");
+            OtherStartDate = (wbsprg.OtherStartDate != null ? wbsprg.OtherStartDate.Value.ToString("yyyy-MM-dd") : "");
+            LaborEndDate = (wbsprg.LaborEndDate != null ? wbsprg.LaborEndDate.Value.ToString("yyyy-MM-dd") : "");
+            MaterialsEndDate = (wbsprg.MaterialsEndDate != null ? wbsprg.MaterialsEndDate.Value.ToString("yyyy-MM-dd") : "");
+            OtherEndDate = (wbsprg.OtherEndDate != null ? wbsprg.OtherEndDate.Value.ToString("yyyy-MM-dd") : "");
+
+            LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
+            MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
+            OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
+
+
 
             originalEndDate = (wbsprg.originalEndDate != null ? wbsprg.originalEndDate.Value.ToString("yyyy-MM-dd") : ""); // Aditya 21022022
             ProgramManagerID = wbsprg.ProgramManagerID; ProgramSponsorID = wbsprg.ProgramSponsorID; ProjectClassID = wbsprg.ProjectClassID;
