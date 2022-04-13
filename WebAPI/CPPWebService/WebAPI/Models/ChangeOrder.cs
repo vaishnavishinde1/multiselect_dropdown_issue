@@ -87,6 +87,7 @@ namespace WebAPI.Models
                     //                    ToList();
 
                     var students = (from left in ctx.ChangeOrder
+                                    where left.IsDeleted == false
                                     join right in ctx.Document on left.ChangeOrderID equals right.ChangeOrderID into joinedList
                                     from sub in joinedList.DefaultIfEmpty()
                                     orderby left.ChangeOrderID descending
@@ -440,7 +441,9 @@ namespace WebAPI.Models
                         //ctx.ChangeOrder.Remove(retreivedChangeOrder);
                         ctx.SaveChanges();
 
-						result = ChangeOrder.ChangeOrderName + " has been deleted successfully.\n";
+                        WebAPI.Models.ProgramElement.updatePojectEndDateOnChangeOrder(ChangeOrder.ProgramElementID.GetValueOrDefault(), ChangeOrder.ProjectEndDateCO);
+
+                        result = ChangeOrder.ChangeOrderName + " has been deleted successfully.\n";
 					}
 					else
 					{

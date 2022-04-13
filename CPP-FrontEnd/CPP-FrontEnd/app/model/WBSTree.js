@@ -9294,19 +9294,33 @@ WBSTree = (function ($) {
                 dhtmlx.confirm("Are you sure you want to delete?", function (result) {
                     //console.log(result);
                     if (result) {
+                        //update- Added by Amruta to save end date on change order
+                        debugger;
+                        if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
+                            debugger;
+                            var curendt = new Date($('#program_element_PEnd_Date').val());
+                            curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                            // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
+                            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                        }
+                        debugger;
+                        var pendDate = $('#program_element_PEnd_Date').val();
+                        var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                         var obj = {
                             "Operation": 3,
                             "ChangeOrderID": g_selectedProgramElementChangeOrder.ChangeOrderID,
                             "ChangeOrderName": g_selectedProgramElementChangeOrder.ChangeOrderName,
                             "ChangeOrderNumber": g_selectedProgramElementChangeOrder.ChangeOrderNumber,
                             "ChangeOrderAmount": g_selectedProgramElementChangeOrder.ChangeOrderAmount,
+                            "ProjectEndDateCO": projectEndDate,
                             "ChangeOrderScheduleChange": g_selectedProgramElementChangeOrder.ChangeOrderScheduleChange,
                             "ProgramElementID": wbsTree.getSelectedProgramElementID(),
                         }
 
                         var listToSave = [];
                         listToSave.push(obj);
-                        var ProgramElementId = selectedNode.ProgramElementID;
+                       // var ProgramElementId = selectedNode.ProgramElementID;
+                        var ProgramElementId = _selectedNode.ProgramElementID;
                         wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
                             function (response) {
                                 if (response.result.split(',')[0].trim() === "Success") {
