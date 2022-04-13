@@ -4246,8 +4246,7 @@ WBSTree = (function ($) {
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         "PPBondNotes": selectedNode.PPBondNotes,
                         "programNote": selectedNode.ProgramNote,
-                        "isNotesModified": isNotesModified
-                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "isNotesModified": isNotesModified,
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime
 
@@ -4589,8 +4588,7 @@ WBSTree = (function ($) {
                         "IsPPBond": selectedNode.IsPPBond,
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         "PPBondNotes": selectedNode.PPBondNotes,
-                        "programNote": selectedNode.ProgramNote
-                        "PPBondNotes": selectedNode.PPBondNotes,
+                        "programNote": selectedNode.ProgramNote,
                         "PrimeParent": newNode.PrimeParent,
                         "PrimeSubPrime": newNode.PrimeSubPrime
                     }
@@ -13156,7 +13154,7 @@ WBSTree = (function ($) {
                 $('#txtUploadByViewModel').val(docData.CreatedBy);
                 $('#txtDocNoteViewModel').val(docData.DocumentDescription);
                 $("#ProgramModal").css({ "opacity": "0.4" });
-                $("#documentUploadProgramNewPopup").css({ "opacity": "0.4" });
+                //$("#documentUploadProgramNewPopup").css({ "opacity": "0.4" });
                 $('#DocViewModalPrg').modal({ show: true, backdrop: 'static' });
             });
 
