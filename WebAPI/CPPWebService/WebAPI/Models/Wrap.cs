@@ -98,7 +98,7 @@ namespace WebAPI.Models
                     }
                     else
                     {
-                        result += wrap.Description + "' failed to be created, duplicate Service is not allowed.\n";
+                        result += wrap.Description + "' failed to be created, duplicate wrap is not allowed.\n";
                     }
                 }
 
@@ -141,7 +141,7 @@ namespace WebAPI.Models
                     //}
                     if (duplicateWrap != null)
                     {
-                        result += wrap.Description + " failed to be updated, duplicate of certified Payroll is not allowed.\n";
+                        result += wrap.Description + " failed to be updated, duplicate of wrap is not allowed.\n";
                     }
                     else if (retreivedWrap != null)
                     {

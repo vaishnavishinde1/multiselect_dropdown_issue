@@ -559,7 +559,7 @@ namespace WebAPI.Models
                                 {
                                     ProgramNotes pNotes = new ProgramNotes();
                                     pNotes.notes_desc = program.programNote;
-                                    pNotes.program_id = program.ProgramID;
+                                    pNotes.programID = program.ProgramID;
                                     ctx.ProgramNotes.Add(pNotes);
                                     ctx.SaveChanges();
                                 }
@@ -785,7 +785,7 @@ namespace WebAPI.Models
                             {
                                 ProgramNotes pNotes = new ProgramNotes();
                                 pNotes.notes_desc = program.programNote;
-                                pNotes.program_id = program.ProgramID;
+                                pNotes.programID = program.ProgramID;
                                 ctx.ProgramNotes.Add(pNotes);
                                 ctx.SaveChanges();
                             }

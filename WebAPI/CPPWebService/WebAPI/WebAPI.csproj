@@ -648,6 +648,7 @@
     <Compile Include="Controllers\RequestPhaseForGanttAtProjectLevelController.cs" />
     <Compile Include="Controllers\RequestPOListController.cs" />
     <Compile Include="Controllers\RequestProgramContractController.cs" />
+    <Compile Include="Controllers\RequestProgramNotesController.cs" />
     <Compile Include="Controllers\RequestPurchaseOrderIDDetailController.cs" />
     <Compile Include="Controllers\RequestResendUniqueCodeController.cs" />
     <Compile Include="Controllers\RequestServiceClassController.cs" />
@@ -882,6 +883,7 @@
     <Compile Include="Models\PrelimnaryNotice.cs" />
     <Compile Include="Models\ProgramCertifiedPayroll.cs" />
     <Compile Include="Models\ProgramContract.cs" />
+    <Compile Include="Models\ProgramNotes.cs" />
     <Compile Include="Models\ProgramPrevailingWage.cs" />
     <Compile Include="Models\ProgramWarranty.cs" />
     <Compile Include="Models\ProgramWrap.cs" />

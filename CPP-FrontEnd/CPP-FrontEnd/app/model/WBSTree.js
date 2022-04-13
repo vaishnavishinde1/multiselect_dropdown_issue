@@ -3363,55 +3363,34 @@ WBSTree = (function ($) {
             }
 
             function populateNotesHistoryTable(programID) {
+                
+                //wbsTree.getContract().get({}, function (contractData) {           //vaishnavi 13-04-2022
 
-                wbsTree.getContract().get({}, function (contractData) {
+                //    wbsTree.getProgramContract().get({}, function (programContractData) {
+                        var angularHttp = wbsTree.getAngularHttp();
+                        angularHttp.get(serviceBasePath + 'Request/ProgramNotes/' + programID).then(function (response) {
+                           
+                            var gridNoticelist = $("#gridNoticehistoryList tbody");
 
-                    wbsTree.getProgramContract().get({}, function (programContractData) {
-                        var programContractList = programContractData.result;
-                        var contractList = contractData.result;
-                        wbsTree.setProgramContractList(programContractList);
-                        wbsTree.setContractList(contractList);
+                            var programNotesList = response.data.data;
 
-                        $('#program_element_notes_history_table_id').empty();
-
-                        for (var x = 0; x < programContractList.length; x++) {
-                            console.log(programContractList[x].ProgramID, programID);
-
-                            if (programContractList[x].ProgramID == programID) {
-                                var singleContract = {};
-
-                                for (var y = 0; y < contractList.length; y++) {
-                                    if (programContractList[x].ContractID == contractList[y].ContractID) {
-                                        singleContract = contractList[y];
-                                    }
-                                }
-
-
-                                //luan here - Find the program project class name
-                                var projectClassName = "";
-                                var projectClassList = wbsTree.getProjectClassList();
-                                for (var y = 0; y < projectClassList.length; y++) {
-                                    if (projectClassList[y].ProjectClassID == singleContract.ProjectClassID) {
-                                        projectClassName = projectClassList[y].ProjectClassName;
-                                    }
-                                }
-
-                                console.log(singleContract);
-
-                                $('#program_contract_table_body_id').append(
-                                    '<tr id="' + singleContract.ContractID + '" class="fade-selection-animation clickable-row">' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractNumber + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:30%;">' + singleContract.ContractName + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractStartDate + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractEndDate + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + projectClassName + '</td>' +
+                            programNotesList= programNotesList.reverse();
+                            gridNoticelist.empty();
+                            for (var x = 0; x < programNotesList.length; x++) {
+                                gridNoticelist.append(
+                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
+                                      '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                    '><a>' + (x + 1) + '</a></td> ' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:30%;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].CreatedBy + '</td>' +
                                     '</tr>'
                                 );
+
                             }
-                        }
                     });
 
-                });
+               /* });*/
             }
 
             function populateNotesHistoryTableNew() {
@@ -4410,9 +4389,9 @@ WBSTree = (function ($) {
                         "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         "PPBondNotes": selectedNode.PPBondNotes,
                         "programNote": selectedNode.ProgramNote,
-                        "isNotesModified": isNotesModified
+                        "isNotesModified": isNotesModified,
 
-                        "LaborWarrantyList": {             //vaishnavi 12-4-2022
+                        "LaborWarrantyList": {                                 //vaishnavi 12-4-2022
                             "WarrantyDescription": selectedNode.LaborWarranty,
                             "StartDate": selectedNode.LaborStartDate,
                             "EndDate": selectedNode.LaborEndDate,
@@ -9566,6 +9545,8 @@ WBSTree = (function ($) {
                 $('#prevailing_wages_select_div').hide();
                 $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
                 $('#message_div').hide();
+                $('#noteshistrorylabel').hide();
+                $('#noteshistorygrid').hide();
                 defaultModalPosition();
 
 
@@ -9808,6 +9789,8 @@ WBSTree = (function ($) {
 
                 if (selectedNode.level == "Program") {
                     modal_mode = 'Update';
+                    $('#noteshistrorylabel').show();
+                    $('#noteshistorygrid').show();
 
                     $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
                         this.checked = false;

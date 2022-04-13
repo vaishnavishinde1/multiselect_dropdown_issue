@@ -25,7 +25,7 @@ namespace WebAPI.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int notes_id { get; set; }
         public string notes_desc { get; set; }
-        public int program_id { get; set; }
+        public int programID { get; set; }
 
         public static List<ProgramNotes> getProgramNotes(int ProgramID)
         {
@@ -36,7 +36,7 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                     MatchedProgramNotesList = ctx.ProgramNotes.Where(a => a.program_id == ProgramID).ToList();
+                     MatchedProgramNotesList = ctx.ProgramNotes.Where(a => a.programID == ProgramID).ToList();
                     //MatchedProgramList = test.Select(a => new Program { ProgramID = a.ProgramID, ProgramName = a.ProgramName }).ToList();
                 }
 

@@ -1836,6 +1836,11 @@ namespace WebAPI
                  defaults: new { controller = "ContractInsurance", action = "Get", programId = RouteParameter.Optional }
              );
             config.Routes.MapHttpRoute(
+                 name: "RequestProgramNotes",
+                 routeTemplate: "Request/ProgramNotes/{programId}",
+                 defaults: new { controller = "RequestProgramNotes", action = "Get", programId = RouteParameter.Optional }
+             );
+            config.Routes.MapHttpRoute(
               name: "DataMigration",
               routeTemplate: "Request/Migration",
               defaults: new { controller = "DataMigration" }
