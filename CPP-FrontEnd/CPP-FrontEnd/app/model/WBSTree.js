@@ -9606,8 +9606,6 @@ WBSTree = (function ($) {
                 $('#prevailing_wages_select_div').hide();
                 $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
                 $('#message_div').hide();
-                $('#noteshistrorylabel').hide();
-                $('#noteshistorygrid').hide();
                 defaultModalPosition();
 
 
@@ -9849,9 +9847,8 @@ WBSTree = (function ($) {
                 //   getSubBudgetCategory();
 
                 if (selectedNode.level == "Program") {
+                    modal.find('.modal-body #txtprogramNotes').val('');
                     modal_mode = 'Update';
-                    $('#noteshistrorylabel').show();
-                    $('#noteshistorygrid').show();
 
                     $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
                         this.checked = false;
@@ -10356,7 +10353,7 @@ WBSTree = (function ($) {
                     
                     
                     modal.find('.modal-body #txtPPNotes').val(selectedNode.PPBondNotes);
-                    modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNote);
+                    //modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNote);
                     
                    // modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNotes);
                     
@@ -10650,7 +10647,8 @@ WBSTree = (function ($) {
                     programSponsorDropDown.val(programSponsorName);
                 }
                 else {
-                   
+                    modal.find('.modal-body #txtprogramNotes').val('');
+                    modal.find('.modal-body #gridNoticehistoryList tbody').empty();
                     $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
                         this.checked = false;
                     });
@@ -14195,7 +14193,7 @@ WBSTree = (function ($) {
                 '#program_client_email,#program_client_address_line1,#program_client_address_line2,#program_client_city,#program_client_state,' +
                 '#program_client_po_num,#program_project_manager,#program_billing_poc_city,#program_billing_poc_state,#program_billing_poc_po_num,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_po_num,#program_project_manager,#program_project_manager_phone,#program_project_manager_email,' +
-                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction,#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to' +
+                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction,#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,#txtprogramNotes,' +
                 '#labor_warranty,#materials_warranty,#other_warranty,#labor_start_date,#labor_end_date,#materials_start_date,#materials_end_date,#other_start_date,#other_end_date,#labordescription,#materialsdescription,#otherdescription';
 
             $(contPageFieldIDs).unbind().on('input change paste', function (e) {
