@@ -1388,6 +1388,7 @@
                                     </div>
                                     <div class="text-center col-xs-4" style="margin-top: 158px">
                                         <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
+                                        <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
                                     </div>
                                 </div>
 
@@ -1403,6 +1404,7 @@
                                                 <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
                                                 <td style="font-weight:900;" width="500">Reason</td>
                                                 <!--<td style="font-weight:900;">Date of Created</td>-->
+                                                <td style="font-weight:900;">Action</td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -1787,6 +1789,7 @@
                     <div id="divNotesHistory" style="padding:5px; height:270px;width:97.5%;border: #a9a9a9;border-style: solid; border-width: thin;margin-right:20px;">
                         <div class="_form-group" style="margin-top:10px;">
                             <label for="" class="_control-label _bold">Notes</label>
+                            <button type="button" id="btnClearNotesDesc" class="btn btn-primary pull-right" style="">Clear</button>
                             <textarea style="height:70px;" type="text" class="form-control" id="txtprogramNotes"></textarea>
                         </div>
                         <label for="program_element_milestone_name" id="noteshistrorylabel" class="control-label _bold" style="font-size: 14px;font-family:Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Notes History</label>
@@ -1800,6 +1803,8 @@
                                             <td style="font-weight:900;" width="500"> Created Date</td>
                                             <td style="font-weight:900;" width="500"> Created By</td>
                                             <!--<td style="font-weight:900;">Date of Created</td>-->
+                                            <td style="font-weight:900;">Action</td>
+
                                         </tr>
                                     </thead>
                                     <tbody></tbody>

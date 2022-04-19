@@ -3395,27 +3395,29 @@ WBSTree = (function ($) {
             }
 
             function populateNotesHistoryTable(programID) {
-                
+                $('#btnClearNotesDesc').hide(); // Narayan - 14-04-2022
+
                 //wbsTree.getContract().get({}, function (contractData) {           //vaishnavi 13-04-2022
 
                 //    wbsTree.getProgramContract().get({}, function (programContractData) {
                         var angularHttp = wbsTree.getAngularHttp();
                         angularHttp.get(serviceBasePath + 'Request/ProgramNotes/' + programID).then(function (response) {
                            
-                            var gridNoticelist = $("#gridNoticehistoryList tbody");
+                            var gridNoteslist = $("#gridNoticehistoryList tbody");
 
                             var programNotesList = response.data.data;
 
                             programNotesList= programNotesList.reverse();
-                            gridNoticelist.empty();
+                            gridNoteslist.empty();
                             for (var x = 0; x < programNotesList.length; x++) {
-                                gridNoticelist.append(
+                                gridNoteslist.append(
                                     '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td id="notes_desc" class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].notes_desc + '</td>' +
                                     '<td class="class-td-LiveView" style="width:30%;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].CreatedBy + '</td>' +
+                                    '<td> <button type="button" id="notes_view">view</button></td>' +
                                     '</tr>'
                                 );
 
@@ -9460,6 +9462,47 @@ WBSTree = (function ($) {
                 }
             });
 
+            // Narayan - on click view button in prelimnary notice - 14-04-2022
+            $("#gridNoticeList").on('click', '#view_notice', function () {
+                $('#btnSaveNotice').hide();
+                var row = $(this).closest("tr");
+                var date = row.find("#history_notice_date").text();
+                var reason = row.find("#history_notice_reason").text();
+                modal.find('.modal-body #date_of_pre_notice').val(date);
+                modal.find('.modal-body #notice_reason').val(reason);
+                $('#btnClearNotice').show();
+            });
+
+            // Narayan - on click clear button in prelimnary notice - 14-04-2022
+            $('#btnClearNotice').on('click', function () {
+                $('#btnSaveNotice').show();
+                ResetNoticeFields();
+                $('#btnClearNotice').hide();
+            });
+
+            //Narayan - for reset notice fields
+            function ResetNoticeFields() {
+                $('#date_of_pre_notice').val('');
+                $('#notice_reason').val('');
+                //$('input[name="rbModHistory"]').prop('checked', false);
+                //$('#btnDeleteConModification').attr('disabled', 'disabled');
+                //$('#btnEditConModification').attr('disabled', 'disabled');
+            }
+
+            // Narayan - on click view button in common notes - 14-04-2022
+            $("#gridNoticehistoryList").on('click', '#notes_view', function () {
+                var row = $(this).closest("tr");
+                var desc = row.find("#notes_desc").text();
+                modal.find('.modal-body #txtprogramNotes').val(desc);
+                $('#btnClearNotesDesc').show();
+            });
+
+            // Narayan - on click clear button in common notes - 14-04-2022
+            $('#btnClearNotesDesc').on('click', function () {
+                modal.find('.modal-body #txtprogramNotes').val('');
+                $('#btnClearNotesDesc').hide();
+            });
+
             $('#prevailing_wages_options input').on('change', function () {          //vaishnavi 12-4-2022
                 var selOption = $("input[type='radio'][name='prevailing_wages']:checked").val();
                 console.log(selOption);
@@ -9708,10 +9751,11 @@ WBSTree = (function ($) {
                                 gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
-                                    '<td>' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
+                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td> <button type="button" id="view_notice">view</button></td>' +
                                     '<tr > ');
                             }
 
@@ -9719,14 +9763,6 @@ WBSTree = (function ($) {
                     });
                 }
 
-                //Narayan - for reset notice fields
-                function ResetNoticeFields() {
-                    $('#date_of_pre_notice').val('');
-                    $('#notice_reason').val('');
-                    //$('input[name="rbModHistory"]').prop('checked', false);
-                    //$('#btnDeleteConModification').attr('disabled', 'disabled');
-                    //$('#btnEditConModification').attr('disabled', 'disabled');
-                }
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveInsurance').unbind().on('click', function (event) {
@@ -10060,10 +10096,11 @@ WBSTree = (function ($) {
                             gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '><a>' + (x + 1) + '</a></td> ' +
-                                '<td>' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
+                                '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
                                 '>' + _NoticeList[x].Reason + '</td>' +
                                 //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                                '<td> <button type="button" id="view_notice">view</button></td>' +
                                 '<tr > ');
                         }
                         //}
@@ -10356,7 +10393,7 @@ WBSTree = (function ($) {
                     
                     
                     modal.find('.modal-body #txtPPNotes').val(selectedNode.PPBondNotes);
-                    modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNote);
+                    modal.find('.modal-body #txtprogramNotes').val('');  // Narayan 14-04-2022
                     
                    // modal.find('.modal-body #txtprogramNotes').val(selectedNode.ProgramNotes);
                     
@@ -10434,6 +10471,7 @@ WBSTree = (function ($) {
 
                     modal.find('.modal-body #date_of_pre_notice').val(''); // Narayan - 06/04/2022
                     modal.find('.modal-body #notice_reason').val(''); // Narayan - 06/04/2022
+                    $('#btnClearNotice').hide(); // Narayan 14-04-2022
 
                     modal.find('.modal-body #insurance_type_select').val('');
                     modal.find('.modal-body #insurance_limit').val('');
@@ -10443,6 +10481,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #scope_quality_description').val(selectedNode.ScopeQualityDescription);
                     wbsTree.getProjectMap().setCoordinates(selectedNode.LatLong);
 
+                    $('#btnClearNotesDesc').hide(); // Narayan 14-04-2022
 
                     //Load Document Grid
                     var gridUploadedDocumentProgram = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocumentProgram tbody');
@@ -10944,10 +10983,13 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #date_of_pre_notice').val(''); // Narayan - 06/04/2022
                     modal.find('.modal-body #notice_reason').val(''); // Narayan - 06/04/2022
                     modal.find('.modal-body #gridNoticeList tbody').empty(); // Narayan - 06/04/2022
+                    $('#btnClearNotice').hide(); // Narayan 14-04-2022
                     
                     modal.find('.modal-body #insurance_type_select').val('');
                     modal.find('.modal-body #insurance_limit').val('');
                     modal.find('.modal-body #gridInsuranceList tbody').empty(); // Narayan - 08/04/2022
+
+                    $('#btnClearNotesDesc').hide(); // Narayan 14-04-2022
 
                     //Populate program project classes for dropdown
                     var projectClassDropDown = modal.find('.modal-body #program_project_class');
