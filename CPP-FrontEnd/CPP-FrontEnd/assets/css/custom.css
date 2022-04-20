@@ -1310,3 +1310,11 @@ option[value='-1'] {
 #tree-container .table-responsive > tbody > tr > td {
     white-space: normal !important;
 }
+/* Extra Space under last row of user management table */ 
+.usermanagementtbl .ui-grid-viewport
+{
+    padding-bottom:70px;
+}
+    .usermanagementtbl .ui-grid-viewport .ui-grid-canvas {
+        border-bottom: 1px solid #d4d4d4;
+    }

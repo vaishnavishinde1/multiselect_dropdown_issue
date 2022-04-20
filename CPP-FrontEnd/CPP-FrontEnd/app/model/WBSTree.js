@@ -9468,8 +9468,8 @@ WBSTree = (function ($) {
                 var row = $(this).closest("tr");
                 var date = row.find("#history_notice_date").text();
                 var reason = row.find("#history_notice_reason").text();
-                modal.find('.modal-body #date_of_pre_notice').val(date);
-                modal.find('.modal-body #notice_reason').val(reason);
+                $('#date_of_pre_notice').val(date); // Narayan - 20/04/2022
+                $('#notice_reason').val(reason); // Narayan - 20/04/2022
                 $('#btnClearNotice').show();
             });
 
@@ -9844,11 +9844,11 @@ WBSTree = (function ($) {
                     }
                     var additionalInfo = {
                         Operation: 6,
-                        Reason: reason,
-                        Date: date,
+                        //Reason: reason,
+                        //Date: date,
                         ProgramID: programId,
                         CreatedBy: createdBy,
-                        PrelimnaryNotice: prelimnaryNotice,
+                        //PrelimnaryNotice: prelimnaryNotice,
                         IsPPBond: IsPPBond,
                         IsCostPartOfContract: IsCostPartOfContract,
                         PPBondNotes: PPBondNotes,
@@ -10007,8 +10007,8 @@ WBSTree = (function ($) {
 
                 //Narayan - for reset insurance fields
                 function ResetInsuranceFields() {
-                    modal.find('.modal-body #insurance_type_select').val('');
-                    modal.find('.modal-body #insurance_limit').val('');
+                    $('#insurance_type_select').val(''); // Narayan - 20/04/2022
+                    $('#insurance_limit').val(''); // Narayan - 20/04/2022
                 }
 
                 //Enable upload button for edit Project
@@ -10634,12 +10634,12 @@ WBSTree = (function ($) {
                     document.getElementById("program_Lumpsum").checked = selectedNode.Lumpsum ? true : false;
                     document.getElementById("program_certified_payroll").checked = selectedNode.CertifiedPayroll ? true : false;
 
-                    modal.find('.modal-body #date_of_pre_notice').val(''); // Narayan - 06/04/2022
-                    modal.find('.modal-body #notice_reason').val(''); // Narayan - 06/04/2022
+                    $('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
+                    $('#notice_reason').val(''); // Narayan - 20/04/2022
                     $('#btnClearNotice').hide(); // Narayan 14-04-2022
 
-                    modal.find('.modal-body #insurance_type_select').val('');
-                    modal.find('.modal-body #insurance_limit').val('');
+                    $('#insurance_type_select').val(''); // Narayan - 20/04/2022
+                    $('#insurance_limit').val(''); // Narayan - 20/04/2022
 
                     modal.find('.modal-body #cost_description').val(selectedNode.CostDescription);
                     modal.find('.modal-body #schedule_description').val(selectedNode.ScheduleDescription);
@@ -11147,14 +11147,14 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #scope_quality_description').val('');
                     modal.find('.modal-body #gridDocument tbody').empty();
 
-                    modal.find('.modal-body #date_of_pre_notice').val(''); // Narayan - 06/04/2022
-                    modal.find('.modal-body #notice_reason').val(''); // Narayan - 06/04/2022
-                    modal.find('.modal-body #gridNoticeList tbody').empty(); // Narayan - 06/04/2022
+                    $('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
+                    $('#notice_reason').val(''); // Narayan - 20/04/2022
+                    $('#gridNoticeList tbody').empty(); // Narayan - 20/04/2022
                     $('#btnClearNotice').hide(); // Narayan 14-04-2022
                     
-                    modal.find('.modal-body #insurance_type_select').val('');
-                    modal.find('.modal-body #insurance_limit').val('');
-                    modal.find('.modal-body #gridInsuranceList tbody').empty(); // Narayan - 08/04/2022
+                    $('#insurance_type_select').val(''); // Narayan - 20/04/2022
+                    $('#insurance_limit').val(''); // Narayan - 20/04/2022
+                    $('#gridInsuranceList tbody').empty(); // Narayan - 20/04/2022
 
                     $('#btnClearNotesDesc').hide(); // Narayan 14-04-2022
 
