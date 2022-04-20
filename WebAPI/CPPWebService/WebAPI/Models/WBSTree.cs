@@ -847,7 +847,16 @@ namespace WebAPI.Models
         public String ProgramNote;
 
         [DataMember]
+        public String preliminaryNoticeDate;
+
+        [DataMember]
+        public String preliminaryNoticeReason;
+
+        [DataMember]
         public  List<ProgramNotes> programnotesList;
+
+        [DataMember]
+        public List<PrelimnaryNotice> prelimnaryNoticeList;
 
         [DataMember]
         public String LaborWarranty;     //Vaishnavi 12-04-2022
@@ -949,6 +958,21 @@ namespace WebAPI.Models
             programnotesList = ProgramNotes.getProgramNotes(Convert.ToInt32(ProgramID));
             ProgramNote = programnotesList.Max(m => m.notes_desc);
             //ProgramNote = LatestNote.ToString(;
+
+            prelimnaryNoticeList = PrelimnaryNotice.GetPrelimnaryNoticeList(Convert.ToInt32(ProgramID));
+            
+            if (prelimnaryNoticeList.Count > 0)
+            {
+                preliminaryNoticeDate = prelimnaryNoticeList.Max(m => m.Date).ToString("yyyy-MM-dd");
+                preliminaryNoticeReason = prelimnaryNoticeList.Max(m => m.Reason);
+            }
+            else
+            {
+                preliminaryNoticeDate = "";
+                preliminaryNoticeReason = "";
+            }
+             
+
 
             PrimeSubPrime = wbsprg.PrimeSubPrime;
             PrimeParent = wbsprg.PrimeParent;
