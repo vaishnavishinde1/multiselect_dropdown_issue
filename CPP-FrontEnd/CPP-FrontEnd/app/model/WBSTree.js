@@ -3024,7 +3024,7 @@ WBSTree = (function ($) {
         obj.prototype.dblclick = function (wbsTree, d) {
             console.log(d);
             wbsTree.setSelectedNode(d);
-            if (d.level == "Project") {
+            if (d.level == "Project" && d.TotalUnapprovedTrends == "0") {
                 window.location.href = "#/app/cost-gantt/" + d.ProjectID + "/1000/" + $("#selectOrg").val();
             }
         }
@@ -3413,7 +3413,7 @@ WBSTree = (function ($) {
                                     '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" style="width:45.5%;">' + programNotesList[x].notes_desc + '</td>' +
                                     '<td class="class-td-LiveView" style="width:30%;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" style="width:17.5%;">' + programNotesList[x].CreatedBy + '</td>' +
                                     '</tr>'
@@ -9820,6 +9820,8 @@ WBSTree = (function ($) {
                 $('#EditBtnProgram').attr('disabled', 'disabled');
                 $('#downloadBtnProgram').attr('disabled', 'disabled');   //Manasi
                 $('#updateBtnProgram').removeAttr('disabled');   //Manasi
+                $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
+                ViewAllUploadFileContracts
 
                 //Load Document Grid
                 var gridUploadedDocument = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocument tbody');
@@ -10853,7 +10855,7 @@ WBSTree = (function ($) {
 
                     $("#prelimnary_notice *").prop('disabled', true);// Narayan - 06/04/2022
                     $("#contract_insurance *").prop('disabled', true); // Narayan - 08/04/2022
-
+                    $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     $('#updateBtnProgram').attr('disabled', 'disabled');   //Manasi
                     //================ Jignesh-23-02-2021 =====================
                     $('#delete_program').attr('disabled', 'disabled');
@@ -11184,7 +11186,7 @@ WBSTree = (function ($) {
                     $("#update_program").attr('disabled', 'disabled');
                     $("#btnSaveModification").attr('disabled', 'disabled'); // Jignesh-04-03-2021
                     $('#updateDMBtnContModification').attr('disabled', 'disabled');
-
+                    $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     //  $('#ProgramModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgram').attr('disabled', 'disabled');
                     $('#cancel_program').removeAttr('disabled');
@@ -11198,8 +11200,10 @@ WBSTree = (function ($) {
 
                     if (selectedNode.level == "Program") {
                         $('#updateBtnProgram').removeAttr('disabled');
+                        $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
                     } else {
                         $('#updateBtnProgram').attr('disabled', 'disabled');
+                        $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     }
 
                 }
@@ -11392,6 +11396,7 @@ WBSTree = (function ($) {
 
             $('#downloadBtnProgram').unbind('click').on('click', function (event) {
 
+                $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                 $('#updateBtnProgram').attr('disabled', 'disabled');
                 $('#DeleteUploadProgram').attr('disabled', 'disabled');
                 $('#ViewUploadFileProgram').attr('disabled', 'disabled');
@@ -11415,6 +11420,7 @@ WBSTree = (function ($) {
                     //document.getElementById("loading").style.display = "none";
                     dhtmlx.alert("File downloaded successfully.");
 
+                    $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
                     $('#updateBtnProgram').removeAttr('disabled');
                     $('#DeleteUploadProgram').removeAttr('disabled');
                     $('#ViewUploadFileProgram').removeAttr('disabled');
