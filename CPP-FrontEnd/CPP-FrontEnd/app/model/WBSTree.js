@@ -3788,18 +3788,18 @@ WBSTree = (function ($) {
                     }
                     selectedNode.ProgramManager = $('#ProgramModal').find('.modal-body #program_manager').val();
                     selectedNode.ProgramSponsor = $('#ProgramModal').find('.modal-body #program_sponsor').val();
-                    selectedNode.IsPPBond = $('#ProgramModal').find('input[name=PPBond]:checked').val();
-                    selectedNode.IsCostPartOfContract = $('#ProgramModal').find('input[name=costPartQ]:checked').val();
-                    if (selectedNode.IsCostPartOfContract == 'No') {
-                        if (!$('#ProgramModal').find('.modal-body #txtPPNotes').val()) {
-                            dhtmlx.alert('P&P Notes is a required field.'); 
-                            return;
-                        }
-                        selectedNode.PPBondNotes = $('#ProgramModal').find('.modal-body #txtPPNotes').val();
-                    }
-                    else {
-                        selectedNode.PPBondNotes = '';
-                    }
+                    //selectedNode.IsPPBond = $('#ProgramModal').find('input[name=PPBond]:checked').val();
+                    //selectedNode.IsCostPartOfContract = $('#ProgramModal').find('input[name=costPartQ]:checked').val();
+                    //if (selectedNode.IsCostPartOfContract == 'No') {
+                    //    if (!$('#ProgramModal').find('.modal-body #txtPPNotes').val()) {
+                    //        dhtmlx.alert('P&P Notes is a required field.'); 
+                    //        return;
+                    //    }
+                    //    selectedNode.PPBondNotes = $('#ProgramModal').find('.modal-body #txtPPNotes').val();
+                    //}
+                    //else {
+                    //    selectedNode.PPBondNotes = '';
+                    //}
                     
                     selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
                     var modifiedNotes = selectedNode.ProgramNote;
@@ -3898,45 +3898,45 @@ WBSTree = (function ($) {
                         selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
                     }
 
-                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();  //vaishnavi 12-4-2022
-                    //if (!certified_payrollchecked) {
-                    //    dhtmlx.alert('Certified Payroll is a required field.'); // Jignesh-02-03-2021
-                    //    return;
+                    //var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();  //vaishnavi 12-4-2022
+                    ////if (!certified_payrollchecked) {
+                    ////    dhtmlx.alert('Certified Payroll is a required field.'); // Jignesh-02-03-2021
+                    ////    return;
+                    ////}
+                    //if (certified_payrollchecked == "Yes") {
+                    //    var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
+                    //    if (!SelectedCertifiedPayrollList) {
+                    //        dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
                     //}
-                    if (certified_payrollchecked == "Yes") {
-                        var SelectedCertifiedPayrollList = $('#ProgramModal').find('#certified_payroll_select').val();
-                        if (!SelectedCertifiedPayrollList) {
-                            dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
 
-                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
-                    //if (!preivingwagechecked) {
-                    //    dhtmlx.alert('Preiving Wage is a required field.'); // Jignesh-02-03-2021
-                    //    return;
+                    //var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    ////if (!preivingwagechecked) {
+                    ////    dhtmlx.alert('Preiving Wage is a required field.'); // Jignesh-02-03-2021
+                    ////    return;
+                    ////}
+                    //if (preivingwagechecked == "Yes") {
+                    //    var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
+                    //    if (!SelectedPreivingwageList) {
+                    //        dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
                     //}
-                    if (preivingwagechecked == "Yes") {
-                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
-                        if (!SelectedPreivingwageList) {
-                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
-                    if (wrapchecked == "Yes") {
-                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
-                        if (!SelectedwrapList) {
-                            dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                        selectedNode.ReportingTo = $('#ProgramModal').find('#reporting_to').val();
+                    //var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    //if (wrapchecked == "Yes") {
+                    //    var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
+                    //    if (!SelectedwrapList) {
+                    //        dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //    selectedNode.ReportingTo = $('#ProgramModal').find('#reporting_to').val();
                         
-                        if (!selectedNode.ReportingTo) {
-                            dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }   //vaishnavi 12-4-2022
+                    //    if (!selectedNode.ReportingTo) {
+                    //        dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
+                    //        return;
+                    //    }
+                    //}   //vaishnavi 12-4-2022
                     //Nivedita 13-01-2022
                     //selectedNode.BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
                     var BillingPOCPhone1 = $('#ProgramModal').find('.modal-body #program_billing_poc_phone_1').val();
@@ -3992,20 +3992,20 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
-                    selectedNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
-                    selectedNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
-                    selectedNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
+                    //selectedNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
+                    //selectedNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
+                    //selectedNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
 
-                    selectedNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
-                    selectedNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
-                    selectedNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
-                    selectedNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
-                    selectedNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
-                    selectedNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
+                    //selectedNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
+                    //selectedNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
+                    //selectedNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
+                    //selectedNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
+                    //selectedNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
+                    //selectedNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
 
-                    selectedNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
-                    selectedNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
-                    selectedNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
+                    //selectedNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
+                    //selectedNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
+                    //selectedNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
@@ -4432,35 +4432,35 @@ WBSTree = (function ($) {
                         "categoryToBedeleted": categoryToBeDeleted,
                         "fundToBeDeleted": fundToBeDeleted,
                         "isModified": isModified,
-                        "IsPPBond": selectedNode.IsPPBond,
-                        "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes,
+                        //"IsPPBond": selectedNode.IsPPBond,
+                        //"IsCostPartOfContract": selectedNode.IsCostPartOfContract,
+                        //"PPBondNotes": selectedNode.PPBondNotes,
                         "programNote": selectedNode.ProgramNote,
                         "isNotesModified": isNotesModified,
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
-                        "LaborWarrantyList": {                                 //vaishnavi 12-4-2022
-                            "WarrantyDescription": selectedNode.LaborWarranty,
-                            "StartDate": selectedNode.LaborStartDate,
-                            "EndDate": selectedNode.LaborEndDate,
-                            "Description": selectedNode.LaborDescription,
-                            "WarrantyType": "Labor Warranty"
-                        },
+                        //"LaborWarrantyList": {                                 //vaishnavi 12-4-2022
+                        //    "WarrantyDescription": selectedNode.LaborWarranty,
+                        //    "StartDate": selectedNode.LaborStartDate,
+                        //    "EndDate": selectedNode.LaborEndDate,
+                        //    "Description": selectedNode.LaborDescription,
+                        //    "WarrantyType": "Labor Warranty"
+                        //},
 
-                        "MaterialsWarrantyList": {
-                            "WarrantyDescription": selectedNode.MaterialsWarranty,
-                            "StartDate": selectedNode.MaterialsStartDate,
-                            "EndDate": selectedNode.MaterialsEndDate,
-                            "Description": selectedNode.MaterialsDescription,
-                            "WarrantyType": "Materials Warranty"
-                        },
-                        "OtherWarrantyList": {
-                            "WarrantyDescription": selectedNode.OtherWarranty,
-                            "StartDate": selectedNode.OtherStartDate,
-                            "EndDate": selectedNode.OtherEndDate,
-                            "Description": selectedNode.OtherDescription,
-                            "WarrantyType": "Other Warranty"
-                        },
+                        //"MaterialsWarrantyList": {
+                        //    "WarrantyDescription": selectedNode.MaterialsWarranty,
+                        //    "StartDate": selectedNode.MaterialsStartDate,
+                        //    "EndDate": selectedNode.MaterialsEndDate,
+                        //    "Description": selectedNode.MaterialsDescription,
+                        //    "WarrantyType": "Materials Warranty"
+                        //},
+                        //"OtherWarrantyList": {
+                        //    "WarrantyDescription": selectedNode.OtherWarranty,
+                        //    "StartDate": selectedNode.OtherStartDate,
+                        //    "EndDate": selectedNode.OtherEndDate,
+                        //    "Description": selectedNode.OtherDescription,
+                        //    "WarrantyType": "Other Warranty"
+                        //},
                         "ReportingTo": selectedNode.ReportingTo          //vaishnavi 12-4-2022
 
                     }, function (response) {
@@ -4996,9 +4996,9 @@ WBSTree = (function ($) {
 
                         "programFunds": fundToBeAdded,
                         "programCategories": categoryToBeAdded,
-                        "IsPPBond": selectedNode.IsPPBond,
-                        "IsCostPartOfContract": selectedNode.IsCostPartOfContract,
-                        "PPBondNotes": selectedNode.PPBondNotes,
+                        //"IsPPBond": selectedNode.IsPPBond,
+                        //"IsCostPartOfContract": selectedNode.IsCostPartOfContract,
+                        //"PPBondNotes": selectedNode.PPBondNotes,
                         "LaborWarrantyList": {                 //vaishnavi 12-4-2022
                             "WarrantyDescription": newNode.LaborWarranty,
                             "StartDate": newNode.LaborStartDate,
@@ -9679,6 +9679,8 @@ WBSTree = (function ($) {
                     var date = $('#date_of_pre_notice').val();
                     var reason = $('#notice_reason').val();
 
+                    
+
                     console.log(createdBy)
 
                     if (date == "" || date.length == 0) {
@@ -9711,6 +9713,171 @@ WBSTree = (function ($) {
                     PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
 
                     return;
+                });
+
+                $('#additionalInfoPopupSave').unbind().on('click', function (event) {
+
+                    //Narayan save notice
+                    var operation = wbsTree.getPrelimneryNoticeOperation();
+                    var programId = wbsTree.getSelectedNode().ProgramID;
+                    var createdBy = wbsTree.getLocalStorage().userName;
+                    var date = $('#date_of_pre_notice').val();
+                    var reason = $('#notice_reason').val();
+
+                    //var IsPPBond = $('#additionalInfoPopup').find('input[name=PPBond]:checked').val();
+                    
+                    var IsPPBond = $("input[type='radio'][name='PPBond']:checked").val();
+                    var IsCostPartOfContract = $("input[type='radio'][name=costPartQ]:checked").val();
+                    var PPBondNotes='';
+                    if (IsCostPartOfContract == 'No') {
+                        if (!$('#txtPPNotes').val()) {
+                            dhtmlx.alert('P&P Notes is a required field.');
+                            return;
+                        }
+                        PPBondNotes = $('#txtPPNotes').val();
+                    }
+                    else {
+                        PPBondNotes = '';
+                    }
+
+                    console.log(createdBy)
+
+                    //if (date == "" || date.length == 0) {
+                    //    dhtmlx.alert('Enter Date.');
+                    //    return;
+                    //}
+
+                    if (date) {
+
+                        var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+
+                        if (reason == "" || reason.length == 0) {
+                        dhtmlx.alert('Enter Reason.');
+                        return;
+                    }
+                    }
+                    
+
+                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();  //vaishnavi 12-4-2022
+                    var SelectedCertifiedPayrollList;
+                    if (certified_payrollchecked == "Yes") {
+                        //var SelectedCertifiedPayrollList = $('#certified_payroll_select_div').find('#certified_payroll_select').val();
+                        SelectedCertifiedPayrollList = $('#certified_payroll_select').val();
+                        SelectedCertifiedPayrollList = 'A';
+                        if (!SelectedCertifiedPayrollList) {
+                            dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+
+                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
+                    var SelectedPreivingwageList;
+                    if (preivingwagechecked == "Yes") {
+                         SelectedPreivingwageList = $('#additionalInfoPopup').find('#prevailing_wages_select').val();
+                        if (!SelectedPreivingwageList) {
+                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
+                    var ReportingTo = '';
+                    var SelectedwrapList;
+                    if (wrapchecked == "Yes") {
+                         SelectedwrapList = $('#additionalInfoPopup').find('#wrap_select').val();
+                        if (!SelectedwrapList) {
+                            dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                        ReportingTo = $('#additionalInfoPopup').find('#reporting_to').val();
+
+                        if (!selectedNode.ReportingTo) {
+                            dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
+                            return;
+                        }
+                    }
+
+                    LaborWarranty = $('#additionalInfoPopup').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
+                    MaterialsWarranty = $('#additionalInfoPopup').find('.modal-body #materials_warranty').val();
+                    OtherWarranty = $('#additionalInfoPopup').find('.modal-body #other_warranty').val();
+
+                    LaborStartDate = $('#additionalInfoPopup').find('.modal-body #labor_start_date').val();
+                    LaborEndDate = $('#additionalInfoPopup').find('.modal-body #labor_end_date').val();
+                    MaterialsStartDate = $('#additionalInfoPopup').find('.modal-body #materials_start_date').val();
+                    MaterialsEndDate = $('#additionalInfoPopup').find('.modal-body #materials_end_date').val();
+                    OtherStartDate = $('#additionalInfoPopup').find('.modal-body #other_start_date').val();
+                    OtherEndDate = $('#additionalInfoPopup').find('.modal-body #other_end_date').val();
+
+                    LaborDescription = $('#additionalInfoPopup').find('.modal-body #labordescription').val();
+                    MaterialsDescription = $('#additionalInfoPopup').find('.modal-body #materialsdescription').val();
+                    OtherDescription = $('#additionalInfoPopup').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
+
+                    var prelimnaryNotice = {
+                        Reason: reason,
+                        Date: date
+                    };
+
+                    var LaborWarrantyList =  {                                 //vaishnavi 12-4-2022
+                        WarrantyDescription: LaborWarranty,
+                        StartDate: LaborStartDate,
+                        EndDate: LaborEndDate,
+                        Description: LaborDescription,
+                        WarrantyType: "Labor Warranty"
+                    }
+                    var MaterialsWarrantyList = {
+                        WarrantyDescription: MaterialsWarranty,
+                        StartDate: MaterialsStartDate,
+                        EndDate: MaterialsEndDate,
+                        Description: MaterialsDescription,
+                        WarrantyType: "Materials Warranty"
+                    }
+
+                    var OtherWarrantyList= {
+                        WarrantyDescription: OtherWarranty,
+                        StartDate: OtherStartDate,
+                        EndDate: OtherEndDate,
+                        Description: OtherDescription,
+                        WarrantyType: "Other Warranty"
+                    }
+                    var additionalInfo = {
+                        Operation: 6,
+                        Reason: reason,
+                        Date: date,
+                        ProgramID: programId,
+                        CreatedBy: createdBy,
+                        PrelimnaryNotice: prelimnaryNotice,
+                        IsPPBond: IsPPBond,
+                        IsCostPartOfContract: IsCostPartOfContract,
+                        PPBondNotes: PPBondNotes,
+                        IsCertifiedPayrollChecked: certified_payrollchecked,
+                        IsPrevailingWageChecked: preivingwagechecked,
+                        IsWrapChecked: wrapchecked,
+                        ReportingTo: ReportingTo,
+                        CertifiedPayrollIDS: SelectedCertifiedPayrollList,
+                        ProgramPrevailingWagesList: SelectedPreivingwageList,
+                        WrapIDS: SelectedwrapList,
+                        LaborWarrantyList : LaborWarrantyList,
+                        MaterialsWarrantyList: MaterialsWarrantyList,
+                        OtherWarrantyList: OtherWarrantyList
+                        
+                    };
+
+
+                    var request = {
+                        method: 'POST',
+                        url: serviceBasePath + 'RegisterProgram/UpdateAdditionalProgramDetails',
+                        data: additionalInfo
+                    };
+                    var angularHttp = wbsTree.getAngularHttp();
+                    angularHttp(request).then(function success(d) {
+                        if (d.data.result == "success") { }
+                    });
+                    //PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
+
+
                 });
 
                 //Api call for add prelimnary notices
@@ -10363,6 +10530,7 @@ WBSTree = (function ($) {
                             $('#costPartQNo').attr("checked", "checked");
                             div = document.getElementById('PPNotes');
                             div.style.display = "block";
+                            $('#txtPPNotes').val(selectedNode.PPBondNotes);
                         }
                         else {
                             $('#costPartQYes').attr("checked", "checked");
@@ -10788,9 +10956,10 @@ WBSTree = (function ($) {
 
                     $('#btnModification').attr('disabled', 'disabled');   //Manasi 23-02-2021
                     $('#btnDocManagement').attr('disabled', 'disabled');
+                    $('#btnAdditionalInfo').attr('disabled', 'disabled');
                     $('#spnBtnModification').attr('title', "A contract needs to be saved before the modifications can be added");   //Manasi 23-02-2021
                     $('#documentUploadProgramNew').attr('title', "A contract needs to be saved before the document can be added");  //Manasi 23-02-2021
-
+                    $('#spnAdditionalInfo').attr('title', 'A contract needs to be saved before the additional information can be added');
                     $('#delete_program').attr('disabled', 'disabled');   //Manasi 24-02-2021
                     $('#spnBtndelete_program').attr('title', "A contract needs to be saved before it can be deleted");   //Manasi 24-02-2021
 
@@ -14532,6 +14701,43 @@ WBSTree = (function ($) {
 
                 //$("#emp_class").multiselect('refresh');
                 //$("#emp_class").multipleSelect('refresh');
+            });
+            //=============================================================================================================
+
+            //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
+            $('#btnAdditionalInfo').on('click', function () {
+                $("#ProgramModal").css({ "opacity": "0.4" });
+                $('#additionalInfoPopup').modal({ show: true, backdrop: 'static' });
+
+                //var certifiedpayrollDropDown = $('#ProgramModal').find('#certified_payroll_select');
+                var certifiedpayrollDropDown = $('#additionalInfoPopup').find('#certified_payroll_select');
+                certifiedpayrollDropDown.empty();
+                var certifiedPayrollList = wbsTree.getCertifiedPayrollList();
+                for (var x = 0; x < certifiedPayrollList.length; x++) {
+                    var Name = '';
+                    Name = certifiedPayrollList[x].Description;
+                    var certifiedId = parseInt(certifiedPayrollList[x].ID);
+
+                    certifiedpayrollDropDown.append('<option value=' + certifiedPayrollList[x].ID + '>' + Name + '</option>');
+
+                }
+                $('#wrap_select_div').show();
+                var datawrapArray = [];
+                var wrapDropDown = $('#additionalInfoPopup').find('#wrap_select');
+                wrapDropDown.empty();
+                var WrapList = wbsTree.getWrapList();
+                for (var x = 0; x < WrapList.length; x++) {
+                    var Name = '';
+                    Name = WrapList[x].Description;
+                    var certifiedId = parseInt(WrapList[x].ID);
+
+                    wrapDropDown.append('<option value=' + WrapList[x].ID + '>' + Name + '</option>');
+
+                }
+                wrapDropDown.val(datawrapArray);
+                //debugger;
+              
+                
             });
             //=============================================================================================================
             //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================

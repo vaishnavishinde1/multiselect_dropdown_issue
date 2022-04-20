@@ -1828,6 +1828,7 @@ namespace WebAPI
                  routeTemplate: "prelimnaryNotice/savePrelimnaryNotice",
                  defaults: new { controller = "PrelimnaryNotice", action = "Post" }
              );
+
             //Narayan - 04/04/2022
             config.Routes.MapHttpRoute(
                  name: "GetPrelimnaryNotice",
@@ -1982,6 +1983,12 @@ namespace WebAPI
                  name: "RegisterProgramElementOnChangeOrder",
                  routeTemplate: "Request/ProjectEndDateChangeOrder/{projectId}/{ProjectEndDate}",
                  defaults: new { controller = "RequestProgramElementOnChangeOrder", projectId = RouteParameter.Optional, ProjectEndDate = RouteParameter.Optional }
+             );
+
+            config.Routes.MapHttpRoute(
+                 name: "ProgramAdditionalInfo",
+                 routeTemplate: "RegisterProgram/UpdateAdditionalProgramDetails",
+                 defaults: new { controller = "RegisterProgram", action = "Post" }
              );
 
         }

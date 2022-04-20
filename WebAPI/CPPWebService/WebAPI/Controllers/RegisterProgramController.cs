@@ -57,6 +57,11 @@ namespace WebAPI.Controllers
             {
                 status = "Success";
             }
+            else if (program.Operation == 6) // Update Additional Program Details
+            {
+                status = WebAPI.Models.Program.UpdateAdditionalProgramDetails(program);
+
+            }
 
 
             var jsonNew = new
