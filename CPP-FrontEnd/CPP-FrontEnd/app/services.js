@@ -442,6 +442,12 @@ angular.module('xenon.services', []).
 
 		this.toStatePath = function(path)
 		{
+			if (path != 'app.wbs') {
+				$('#closed,#approved,#unapproved').hide();
+			}
+			else {
+				$('#closed,#approved,#unapproved').show();
+            }
 			return path.replace(/\//g, '.').replace(/^\./, '');
 		};
 

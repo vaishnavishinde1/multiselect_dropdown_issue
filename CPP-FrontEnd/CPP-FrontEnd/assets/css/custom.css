@@ -778,7 +778,7 @@ fieldset.scheduler-border {
 }
 
 body {
-    overflow-y: auto;
+    overflow-y: auto !important;
     height: 100%;
     padding-right: 0 !important;
 }

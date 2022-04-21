@@ -1283,17 +1283,17 @@
                             <!--Aditya primedd 01042022-->
                             <div class="_form-group" style="margin-top:5px;">
                                 <div class="col-xs-6" style="padding-left: 0">
-                                    <label for="program_element_project_number" class="control-label _bold required">Prime/ Sub-Prime</label>
+                                    <label for="program_element_project_number" class="control-label _bold required">Prime/ Sub</label>
                                     <!--<input type="text" class="form-control" id="program_client_poc">-->
                                     <!--Added by Amruta -->
-                                    <select class="form-control" id="prime_subPrime_dd">
+                                    <select type="text" class="form-control" id="prime_subPrime_dd">
                                         <option>Prime</option>
-                                        <option>Sub-Prime</option>
+                                        <option>Sub</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-6" style="padding-left: 0; padding-right:0;">
                                     <label for="program_name" class="_control-label _bold required">Primes</label>
-                                    <select type="select" class="form-control" id="prime_dd" disabled={true}></select>
+                                    <select type="text" class="form-control" id="prime_dd" disabled={true}></select>
                                 </div>
                             </div>
                         </div>
@@ -1792,12 +1792,12 @@
                         <!--Aditya primedd 01042022-->
                         <div class="_form-group" style="margin-top: 10px; margin-bottom: 80px;">
                             <div class="col-xs-6" style="padding-left: 0">
-                                <label for="program_element_project_number" class="control-label _bold required">Prime/ Sub-Prime</label>
+                                <label for="program_element_project_number" class="control-label _bold required">Prime/ Sub</label>
                                 <!--<input type="text" class="form-control" id="program_client_poc">-->
                                 <!--Added by Amruta -->
                                 <select class="form-control" id="prime_subPrime_dd">
                                     <option>Prime</option>
-                                    <option>Sub-Prime</option>
+                                    <option>Sub</option>
                                 </select>
                             </div>
                             <div class="col-xs-6" style="padding-left: 0; padding-right:0;">
@@ -4593,7 +4593,7 @@
     <div class="modal-dialog modal-lg" style="width:1499px !important;" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#5cb85c;">
-                <button id="cancel_additionalInfoPopup_x" type="button" class="exit-button" data-dismiss="modal" aria-label="Close">
+                <button id="cancel_additionalInfoPopup_x" type="button" class="exit-button"  aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title modal_heading" style="color:white;">Additional Info</h4>
@@ -6159,7 +6159,7 @@
             } else {
                 $("#addNewPrimeModal").modal('toggle');
                 $("#ProgramModal").css({ "opacity": "1" });
-                $("#prime_dd").val('');
+                $(".modal-body #prime_dd").val('');
             }
         });
 
@@ -6208,27 +6208,27 @@
         });
 
         //Nivedita - documentUploadProgramNewPopup - 06-04-2022
-        $('#cancel_additionalInfoPopup_x').unbind('click').on('click', function () {
-            if (false) {
-                $("#additionalInfoPopup").css({ "opacity": "0.4" });
-                $("#ExitConfirmModal").appendTo('body');
-                $("#ExitConfirmModal").modal('toggle');
-            } else {
-                $("#additionalInfoPopup").modal('toggle');
-                $("#ProgramModal").css({ "opacity": "1" });
-            }
-        });
+        //$('#cancel_additionalInfoPopup_x').unbind('click').on('click', function () {
+        //    if (false) {
+        //        //$("#additionalInfoPopup").css({ "opacity": "0.4" });
+        //        $("#ExitConfirmModal").appendTo('body');
+        //        $("#ExitConfirmModal").modal('toggle');
+        //    } else {
+        //        $("#additionalInfoPopup").modal('toggle');
+        //        $("#ProgramModal").css({ "opacity": "1" });
+        //    }
+        //});
 
-        $('#additionalInfoPopupCancel').unbind('click').on('click', function () {
-            if (false) {
-                $("#additionalInfoPopup").css({ "opacity": "0.4" });
-                $("#ExitConfirmModal").appendTo('body');
-                $("#ExitConfirmModal").modal('toggle');
-            } else {
-                $("#additionalInfoPopup").modal('toggle');
-                $("#ProgramModal").css({ "opacity": "1" });
-            }
-        });
+        //$('#additionalInfoPopupCancel').unbind('click').on('click', function () {
+        //    if (false) {
+        //        //$("#additionalInfoPopup").css({ "opacity": "0.4" });
+        //        $("#ExitConfirmModal").appendTo('body');
+        //        $("#ExitConfirmModal").modal('toggle');
+        //    } else {
+        //        $("#additionalInfoPopup").modal('toggle');
+        //        $("#ProgramModal").css({ "opacity": "1" });
+        //    }
+        //});
         //=============================================================================================================
 
 
@@ -6868,6 +6868,7 @@
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
+            $('#closed,#approved,#unapproved').show();
             localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
@@ -6875,6 +6876,7 @@
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
+            $('#closed,#approved,#unapproved').hide();
             localStorage.setItem('MODE', 'gridview');
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }

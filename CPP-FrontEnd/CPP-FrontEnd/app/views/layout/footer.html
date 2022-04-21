@@ -11,6 +11,12 @@
 
 			<div style="float: left">&copy; 2022<strong> Birdi Systems, Inc.</strong></div> <!--Birdi, Inc.--><!--Manasi 16-02-2021-->
 			<div style="float: right"><strong>Capital Project Planner V2.0</strong></div>  <!--Manasi 16-02-2021-->
+			<!--shweta -3-9-2021-->
+			<!-- Manasi 01-04-2021-->
+			<div id="closed" style="background-color: #2ca5c8; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 100px; display: inline-block"></div><span id="closed" style="font-weight:bold;"> : Closed</span>
+			<div id="approved" style="background-color: #d41600; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 30px; display: inline-block"></div><span id="approved" style="font-weight:bold;"> : Approved</span>
+			<div id="unapproved" style="background-color: #ffcc00; width: 25px; border: 1px solid #000000; height: 12px; margin-left: 30px; display: inline-block"></div><span id="unapproved" style="font-weight:bold;"> : Unapproved</span>
+				
 		</div>
 
 
@@ -26,3 +32,17 @@
 	</div>
 
 </footer>
+<script>
+
+	//$(document).ready(function () {
+	//	debugger;
+        var url = window.location.href;
+        var view_mode = localStorage.getItem('MODE');
+        if (view_mode == 'mindmap' || view_mode == '') {
+            $('#closed,#approved,#unapproved').show();
+        }
+        else {
+            $('#closed,#approved,#unapproved').hide();
+        }
+ //   });
+</script>

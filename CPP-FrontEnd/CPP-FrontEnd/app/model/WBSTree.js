@@ -52,6 +52,7 @@ WBSTree = (function ($) {
             $('#selectManagingDepartment').show();
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
+            $('#closed,#approved,#unapproved').hide();
             localStorage.setItem('MODE', 'gridview');
         }
         else {
@@ -61,6 +62,7 @@ WBSTree = (function ($) {
             $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('class', "fa fa-th-large");
             $('.toggle-btn i').attr('title', 'Go To GridView');
+            $('#closed,#approved,#unapproved').show();
             localStorage.setItem('MODE', 'mindmap');
         }
         //--------------------Aditya----------------------//
@@ -2830,29 +2832,28 @@ WBSTree = (function ($) {
                 console.log(wbstree);
 
                 //=====================Aditya 04042022 populate prime dd for new contract ==============//
-                console.log("Prime dd=====>");
-                modal = $(this);
-                var primeDropDown = modal.find('.modal-body #prime_dd');
-                var primeSubPrimeDD = modal.find('.modal-body #prime_subPrime_dd');
-                primeSubPrimeDD.val('Prime');
-                primeDropDown.attr('disabled', true);
-                var primeList = wbsTree.getPrimeList();
-                primeList.sort(function (a, b) {   //vaishnavi
-                    return a.Name.localeCompare(b.Name);  //vaishnavi
-                }); //vaishnavi
-                primeDropDown.empty();
-                //if (wbsTree.getLocalStorage().role === "Admin") {
-                if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                    primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
-                }
-                for (var x = 0; x < primeList.length; x++) {
-                    if (primeList[x].Name == null) {
-                        continue;
-                    }
-                    primeDropDown.append('<option selected="false"value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
-                    primeDropDown.val('');
-                    
-                }
+                //console.log("Prime dd=====>");
+                //modal = $(this);
+                //var primeDropDown = modal.find('.modal-body #prime_dd');
+                //var primeSubPrimeDD = modal.find('.modal-body #prime_subPrime_dd');
+                //primeSubPrimeDD.val('Prime');
+                //primeDropDown.attr('disabled', true);
+                //var primeList = wbsTree.getPrimeList();
+                //primeList.sort(function (a, b) {   //vaishnavi
+                //    return a.Name.localeCompare(b.Name);  //vaishnavi
+                //}); //vaishnavi
+                //primeDropDown.empty();
+                ////if (wbsTree.getLocalStorage().role === "Admin") {
+                //if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                //    primeDropDown.append('<option value="Add New"> ----------Add New---------- </option>');
+                //}
+                //for (var x = 0; x < primeList.length; x++) {
+                //    if (primeList[x].Name == null) {
+                //        continue;
+                //    }
+                //    primeDropDown.append('<option selected="false"value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                //    primeDropDown.val('');
+                //}
                 //===================================================//
                 //Amruta -- Populate client dropdown for new contract
                 console.log("Client dd=====>");
@@ -4007,7 +4008,7 @@ WBSTree = (function ($) {
                     selectedNode.CertifiedPayroll = program_certified_payroll_checked ? 1 : 0;
 
                     //Aditya Prime
-                    if ($('#ProgramModal').find('.modal-body #prime_subPrime_dd').val() == 'Sub-Prime') {
+                    if ($('.modal-body #prime_subPrime_dd').val() == 'Sub') {
                         if (!$('#ProgramModal').find('.modal-body #prime_dd').val()) {
                             dhtmlx.alert('Select a Prime first');
                             return;
@@ -4488,6 +4489,14 @@ WBSTree = (function ($) {
                     if (!newNode.name) {
                         dhtmlx.alert('Contract Name is a required field.'); // Jignesh-02-03-2021
                         return;
+                    }
+
+                    //Aditya Prime
+                    if ($('.modal-body #prime_subPrime_dd').val() == 'Sub') {
+                        if (!$('#ProgramModal').find('.modal-body #prime_dd').val()) {
+                            dhtmlx.alert('Select a Prime first');
+                            return;
+                        }
                     }
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
@@ -10140,13 +10149,13 @@ WBSTree = (function ($) {
 
                     //======================Aditya 04042022 prime=========================//
                     console.log("Prime ddupdate=====>");
-                    if (selectedNode.PrimeSubPrime != "Sub-Prime") {
-                        $('#prime_dd').attr('disabled', 'disabled');
-                        $('#prime_dd').val('');
+                    if (selectedNode.PrimeSubPrime != "Sub") {
+                        $('.modal-body #prime_dd').attr('disabled', 'disabled');
+                        $('.modal-body #prime_dd').val('');
                     }
                     else {
-                        $('#prime_dd').removeAttr('disabled');
-
+                        $('.modal-body #prime_dd').removeAttr('disabled');
+                        selectedNode.PrimeParent ? $('.modal-body #prime_dd').val(selectedNode.PrimeParent): $('.modal-body #prime_dd').val();
                     }
                     //modal = $(this);
                     var primeDropDown = modal.find('.modal-body #prime_dd');
@@ -14059,7 +14068,43 @@ WBSTree = (function ($) {
 
 
             //=============================================================================================================
-
+            //Nivedita Additional program
+            var additionalContPageFieldIDs = '#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,#txtprogramNotes,' + '#labor_warranty,#materials_warranty,#other_warranty,#labor_start_date,#labor_end_date,#materials_start_date,#materials_end_date,#other_start_date,#other_end_date,#labordescription,#materialsdescription,#otherdescription,#txtPPNotes' +
+                '#date_of_pre_notice, #notice_reason, #insurance_type_select, #insurance_limit';
+            // debugger;
+            $(additionalContPageFieldIDs).unbind().on('input change paste', function (e) {
+                isFieldValueChanged = true;
+            });
+            $('#additionalInfoPopupCancel,#cancel_additionalInfoPopup_x').unbind('click').on('click', function () {
+                if (isFieldValueChanged) {
+                    dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
+                        //$("#ProgramModal").css({ "opacity": "1" });
+                        if (result) {
+                            $('#notice_reason').val('');
+                            $('#insurance_limit').val('');
+                            $('#date_of_pre_notice').val('');
+                            $('#insurance_type_select').val('');
+                            $('#txtPPNotes').val('');
+                            $('#certified_payroll_select_div').hide();
+                            $('#prevailing_wages_select_div').hide();
+                            $('#wrap_select_div').hide();
+                            $("#additionalInfoPopup").modal('toggle');
+                            $("#ProgramModal").css({ "opacity": "1" });
+                            isFieldValueChanged = false;
+                        }
+                    });
+                }
+                else {
+                    if (wbsTree.unsavedChanges("Program Additional Info")) {
+                        //$("#additionalInfoPopup").css({ "opacity": "0.4" });
+                        $("#ExitConfirmModal").appendTo('body');
+                        $("#ExitConfirmModal").modal('toggle');
+                    } else {
+                        $("#additionalInfoPopup").modal('toggle');
+                        $("#ProgramModal").css({ "opacity": "1" });
+                    }
+                }
+            });
             //===================== Jignesh-31-03-2021 Setup Page Exit Pop Message ==============================================
 
             var contPageFieldIDs = '#program_name,#program_contract_number,#program_current_start_date,#program_current_end_date,#program_original_end_date,' +
@@ -14440,7 +14485,7 @@ WBSTree = (function ($) {
                     }
 
 
-
+                                       
                     modal.find('.modal-body #txtPPNotes').val(data.PPBondNotes);
 
                     $('#reporting_to').val(data.ReportingTo);
@@ -14459,7 +14504,7 @@ WBSTree = (function ($) {
                     $('#labordescription').val(data.LaborDescription);
                     $('#materialsdescription').val(data.MaterialsDescription);
                     $('#otherdescription').val(data.OtherDescription);
-
+                    
 
 
                 $("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
@@ -15025,38 +15070,40 @@ WBSTree = (function ($) {
             });
             //=======================================================================================================
             //================= Aditya prime dd disable on Prime ========================//
-            $('#prime_subPrime_dd').on('change', function () {
-                if ($(this).val() != "Sub-Prime") {
-                    $('#prime_dd').attr('disabled', 'disabled');
-                    $('#prime_dd').val('');
+            $('.modal-body #prime_subPrime_dd').on('change', function () {
+                if ($(this).val() != "Sub") {
+                    $('.modal-body #prime_dd').attr('disabled', 'disabled');
+                    $('.modal-body #prime_dd').val('');
+                    $('.modal-body #prime_subPrime_dd').val('Prime')
                 }
                 else {
-                    $('#prime_dd').removeAttr('disabled');
-                    
+                    $('.modal-body #prime_dd').removeAttr('disabled');
+                    $('.modal-body #prime_subPrime_dd').val('Sub');
                 }
             });
-            $('#prime_dd').on('change', function () {
+            $('.modal-body #prime_dd').on('change', function () {
                 if ($(this).val() == "Add New") {
-
-                    var thisData = $(this);
                     //wbsTree.setSelectedDocTypeDropDown(thisData.context.id);
                     $('#addNewPrimeModal').modal({ show: true, backdrop: 'static' });
                     $('#txtPrimeName').val('');
                     return;
                 }
                 var PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
-                var primeName = $('#prime_dd').val();
+                var primeName = $(this).val();
+                var name = $(this).val();
                 var primeList = wbsTree.getPrimeList();
                 for (var x = 0; x < primeList.length; x++) {
                     if (primeList[x].id == primeName) {
-                        PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
+                /*PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');*/
+                        $('.modal-body #prime_dd').val(primeName);
+                        break;
                     }
-                    else {
-                        PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
-                    }
+                    //else {
+                    //    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                    //}
                 }
             });
-            
+
             //=========================================================================//
 
             $('#program_client_poc').on('change', function () {                     //Tanmay - 15/12/2021
@@ -16806,7 +16853,7 @@ WBSTree = (function ($) {
                     //});
 
 
-                    //Populate project client for dropdown
+                    //Populate project prime for dropdown
                     var primeDropDown = modal.find('.modal-body #prime_dd');
                     var primeList = wbsTree.getPrimeList();
                     primeDropDown.empty();
