@@ -121,6 +121,18 @@ namespace WebAPI.Models
         public DateTime? OtherStartDate { get; set; }
         [NotMapped]
         public DateTime? OtherEndDate { get; set; }
+        [NotMapped]
+        public string LaborWarranty { get; set; }    //Vaishnavi 12-04-2022
+        [NotMapped]
+        public string MaterialsWarranty { get; set; }
+        [NotMapped]
+        public string OtherWarranty { get; set; }
+        [NotMapped]
+        public string LaborDescription { get; set; }
+        [NotMapped]
+        public string MaterialsDescription { get; set; }
+        [NotMapped]
+        public string OtherDescription { get; set; }
 
         public string ReportingTo { get; set; }    //Vaishnavi 12-04-2022
 
@@ -342,10 +354,10 @@ namespace WebAPI.Models
                         pgm.programCategories = null;
                         pgm.IsDeleted = false;
                         pgm.Status = "Active";   //----Vaishnavi 30-03-2022----//
-                        pgm.IsCertifiedPayrollChecked = pgm.IsCertifiedPayrollChecked;    //Vaishnavi 12-04-2022
-                        pgm.IsPrevailingWageChecked = pgm.IsPrevailingWageChecked;
-                        pgm.IsWrapChecked = pgm.IsWrapChecked;
-                        pgm.ReportingTo = pgm.ReportingTo;    //Vaishnavi 12-04-2022
+                        //pgm.IsCertifiedPayrollChecked = pgm.IsCertifiedPayrollChecked;    //Vaishnavi 12-04-2022
+                        //pgm.IsPrevailingWageChecked = pgm.IsPrevailingWageChecked;
+                        //pgm.IsWrapChecked = pgm.IsWrapChecked;
+                        //pgm.ReportingTo = pgm.ReportingTo;    //Vaishnavi 12-04-2022
                         ctx.Program.Add(pgm);
                         ctx.SaveChanges();
                         var prog = ctx.Program.OrderByDescending(p => p.ProgramID).FirstOrDefault();
@@ -386,49 +398,49 @@ namespace WebAPI.Models
                         }
                         ctx.ContractModification.Add(contractModificationsList);
                         ctx.SaveChanges();
-                        if (pgm.IsCertifiedPayrollChecked == "Yes")     //Vaishnavi 12-04-2022
-                        {
-                            if (pgm.CertifiedPayrollIDS.Count != 0)
-                            {
-                                for (int i = 0; i < pgm.CertifiedPayrollIDS.Count; i++)
-                                {
-                                    ProgramCertifiedPayroll programCertifiedPayroll = new ProgramCertifiedPayroll();
-                                    programCertifiedPayroll.ProgramID = pgm.ProgramID;
-                                    programCertifiedPayroll.CertifiedPayrollID = pgm.CertifiedPayrollIDS[i];
-                                    ctx.ProgramCertifiedPayroll.Add(programCertifiedPayroll);
-                                    ctx.SaveChanges();
-                                }
-                            }
-                        }
-                        if (pgm.IsPrevailingWageChecked == "Yes")
-                        {
-                            if (pgm.ProgramPrevailingWagesList.Count != 0)
-                            {
-                                for (int i = 0; i < pgm.ProgramPrevailingWagesList.Count; i++)
-                                {
-                                    ProgramPrevailingWage programPrevailingWage = new ProgramPrevailingWage();
-                                    programPrevailingWage.ProgramID = pgm.ProgramID;
-                                    programPrevailingWage.Description = pgm.ProgramPrevailingWagesList[i];
-                                    ctx.ProgramPrevailingWage.Add(programPrevailingWage);
-                                    ctx.SaveChanges();
-                                }
-                            }
-                        }
-                        if (pgm.IsWrapChecked == "Yes")
-                        {
-                            if (pgm.WrapIDS.Count != 0)
-                            {
-                                for (int i = 0; i < pgm.WrapIDS.Count; i++)
-                                {
-                                    ProgramWrap programWrap = new ProgramWrap();
-                                    programWrap.ProgramID = pgm.ProgramID;
-                                    programWrap.WrapID = pgm.WrapIDS[i];
-                                    ctx.ProgramWrap.Add(programWrap);
-                                    ctx.SaveChanges();
-                                }
-                            }
-                        }
-                        ProgramWarranty.registerProgramWarranty(pgm);
+                        //if (pgm.IsCertifiedPayrollChecked == "Yes")     //Vaishnavi 12-04-2022
+                        //{
+                        //    if (pgm.CertifiedPayrollIDS.Count != 0)
+                        //    {
+                        //        for (int i = 0; i < pgm.CertifiedPayrollIDS.Count; i++)
+                        //        {
+                        //            ProgramCertifiedPayroll programCertifiedPayroll = new ProgramCertifiedPayroll();
+                        //            programCertifiedPayroll.ProgramID = pgm.ProgramID;
+                        //            programCertifiedPayroll.CertifiedPayrollID = pgm.CertifiedPayrollIDS[i];
+                        //            ctx.ProgramCertifiedPayroll.Add(programCertifiedPayroll);
+                        //            ctx.SaveChanges();
+                        //        }
+                        //    }
+                        //}
+                        //if (pgm.IsPrevailingWageChecked == "Yes")
+                        //{
+                        //    if (pgm.ProgramPrevailingWagesList.Count != 0)
+                        //    {
+                        //        for (int i = 0; i < pgm.ProgramPrevailingWagesList.Count; i++)
+                        //        {
+                        //            ProgramPrevailingWage programPrevailingWage = new ProgramPrevailingWage();
+                        //            programPrevailingWage.ProgramID = pgm.ProgramID;
+                        //            programPrevailingWage.Description = pgm.ProgramPrevailingWagesList[i];
+                        //            ctx.ProgramPrevailingWage.Add(programPrevailingWage);
+                        //            ctx.SaveChanges();
+                        //        }
+                        //    }
+                        //}
+                        //if (pgm.IsWrapChecked == "Yes")
+                        //{
+                        //    if (pgm.WrapIDS.Count != 0)
+                        //    {
+                        //        for (int i = 0; i < pgm.WrapIDS.Count; i++)
+                        //        {
+                        //            ProgramWrap programWrap = new ProgramWrap();
+                        //            programWrap.ProgramID = pgm.ProgramID;
+                        //            programWrap.WrapID = pgm.WrapIDS[i];
+                        //            ctx.ProgramWrap.Add(programWrap);
+                        //            ctx.SaveChanges();
+                        //        }
+                        //    }
+                        //}
+                        //ProgramWarranty.registerProgramWarranty(pgm);
 
                         if (pgm.programNote != "")
                         {
@@ -1415,14 +1427,15 @@ namespace WebAPI.Models
                     ctx.SaveChanges();
 
                     ProgramWarranty.updateProgramWarranty(program);
-                    PrelimnaryNotice prelimnaryNotice = new PrelimnaryNotice();
-                    prelimnaryNotice.CreatedDate = DateTime.Now;
-                    prelimnaryNotice.ProgramID = program.ProgramID;
-                    prelimnaryNotice.CreatedBy = program.CreatedBy;
-                    prelimnaryNotice.Date = program.prelimnaryNotice.Date;
-                    prelimnaryNotice.Reason = program.prelimnaryNotice.Reason; 
-                    ctx.PrelimnaryNotices.Add(prelimnaryNotice);
-                    ctx.SaveChanges();
+                    //PrelimnaryNotice prelimnaryNotice = new PrelimnaryNotice();
+                    //prelimnaryNotice.CreatedDate = DateTime.Now;
+                    //prelimnaryNotice.ProgramID = program.ProgramID;
+                    //prelimnaryNotice.CreatedBy = program.CreatedBy;
+                    //prelimnaryNotice.Date = program.prelimnaryNotice.Date;
+                    //prelimnaryNotice.Reason = program.prelimnaryNotice.Reason; 
+                    //ctx.PrelimnaryNotices.Add(prelimnaryNotice);
+                    //ctx.SaveChanges();
+                    result = "Success";
                 }
             }
             catch (Exception ex)
@@ -1435,5 +1448,68 @@ namespace WebAPI.Models
             
             return result;
         }
+
+        public static Program GetProgramAdditionalInfo(int ProgramID)
+        {
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            List<Program> MatchedProgramList = new List<Program>();
+            Program additionalinfodata = new Program();
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+
+                    additionalinfodata.IsCertifiedPayrollChecked = ctx.Program.Where(x => x.ProgramID == ProgramID).Select(x => x.IsCertifiedPayrollChecked).FirstOrDefault();
+                    additionalinfodata.IsPrevailingWageChecked = ctx.Program.Where(x => x.ProgramID == ProgramID).Select(x => x.IsPrevailingWageChecked).FirstOrDefault();
+                    additionalinfodata.IsWrapChecked = ctx.Program.Where(x => x.ProgramID == ProgramID).Select(x => x.IsWrapChecked).FirstOrDefault();
+
+                    additionalinfodata.CertifiedPayrollIDS = ctx.ProgramCertifiedPayroll.Where(c => c.ProgramID == ProgramID).Select(x => x.CertifiedPayrollID).ToList();
+                    additionalinfodata.ProgramPrevailingWagesList = ctx.ProgramPrevailingWage.Where(c => c.ProgramID ==ProgramID).Select(x => x.Description).ToList();
+                    additionalinfodata.WrapIDS = ctx.ProgramWrap.Where(c => c.ProgramID == ProgramID).Select(x => x.WrapID).ToList();
+                    additionalinfodata.ReportingTo = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.ReportingTo).FirstOrDefault();
+
+                    additionalinfodata.LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
+                    additionalinfodata.MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+                    additionalinfodata.OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+
+                    additionalinfodata.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    additionalinfodata.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    additionalinfodata.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    additionalinfodata.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
+                    additionalinfodata.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
+                    additionalinfodata.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
+
+                    //additionalinfodata.LaborStartDate = (wbsprg.LaborStartDate != null ? wbsprg.LaborStartDate.Value.ToString("yyyy-MM-dd") : "");
+                    //additionalinfodata.MaterialsStartDate = (wbsprg.MaterialsStartDate != null ? wbsprg.MaterialsStartDate.Value.ToString("yyyy-MM-dd") : "");
+                    //additionalinfodata.OtherStartDate = (wbsprg.OtherStartDate != null ? wbsprg.OtherStartDate.Value.ToString("yyyy-MM-dd") : "");
+                    //additionalinfodata.LaborEndDate = (wbsprg.LaborEndDate != null ? wbsprg.LaborEndDate.Value.ToString("yyyy-MM-dd") : "");
+                    //additionalinfodata.MaterialsEndDate = (wbsprg.MaterialsEndDate != null ? wbsprg.MaterialsEndDate.Value.ToString("yyyy-MM-dd") : "");
+                    //additionalinfodata.OtherEndDate = (wbsprg.OtherEndDate != null ? wbsprg.OtherEndDate.Value.ToString("yyyy-MM-dd") : "");
+
+                    additionalinfodata.LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
+                    additionalinfodata.MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
+                    additionalinfodata.OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
+                    additionalinfodata.IsPPBond = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.IsPPBond).FirstOrDefault();
+                    additionalinfodata.IsCostPartOfContract = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.IsCostPartOfContract).FirstOrDefault();
+                    additionalinfodata.PPBondNotes = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.PPBondNotes).FirstOrDefault(); 
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                string a = ex.InnerException.ToString();
+            }
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Exit Point", Logger.logLevel.Debug);
+            return additionalinfodata;
+
+        }
+
+      
+       
     }
 }

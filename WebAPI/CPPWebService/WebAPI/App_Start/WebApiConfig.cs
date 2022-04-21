@@ -1990,6 +1990,12 @@ namespace WebAPI
                  routeTemplate: "RegisterProgram/UpdateAdditionalProgramDetails",
                  defaults: new { controller = "RegisterProgram", action = "Post" }
              );
+            config.Routes.MapHttpRoute(
+               name: "RequestAdditionalInfo",
+                    routeTemplate: "Request/AdditionalInfo/{ProgramID}",
+               //Returns: DT_RowId, ProgramID, ProgramName, ProgramManager, ProgramSponsor		                 //Returns: DT_RowId, ProgramID, ProgramName, ProgramManager, ProgramSponsor
+               defaults: new { controller = "RequestAdditionalInfo",ProgramID = RouteParameter.Optional}
+             );
 
         }
     }

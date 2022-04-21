@@ -959,18 +959,18 @@ namespace WebAPI.Models
             ProgramNote = programnotesList.Max(m => m.notes_desc);
             //ProgramNote = LatestNote.ToString(;
 
-            prelimnaryNoticeList = PrelimnaryNotice.GetPrelimnaryNoticeList(Convert.ToInt32(ProgramID));
+            //prelimnaryNoticeList = PrelimnaryNotice.GetPrelimnaryNoticeList(Convert.ToInt32(ProgramID));
             
-            if (prelimnaryNoticeList.Count > 0)
-            {
-                preliminaryNoticeDate = prelimnaryNoticeList.Max(m => m.Date).ToString("yyyy-MM-dd");
-                preliminaryNoticeReason = prelimnaryNoticeList.Max(m => m.Reason);
-            }
-            else
-            {
-                preliminaryNoticeDate = "";
-                preliminaryNoticeReason = "";
-            }
+            //if (prelimnaryNoticeList.Count > 0)
+            //{
+            //    preliminaryNoticeDate = prelimnaryNoticeList.Max(m => m.Date).ToString("yyyy-MM-dd");
+            //    preliminaryNoticeReason = prelimnaryNoticeList.Max(m => m.Reason);
+            //}
+            //else
+            //{
+            //    preliminaryNoticeDate = "";
+            //    preliminaryNoticeReason = "";
+            //}
              
 
 
