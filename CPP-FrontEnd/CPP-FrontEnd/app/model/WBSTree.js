@@ -9406,7 +9406,7 @@ WBSTree = (function ($) {
                     if (preivingwagechecked == "Yes") {
                          SelectedPreivingwageList = $('#additionalInfoPopup').find('#prevailing_wages_select').val();
                         if (!SelectedPreivingwageList) {
-                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
+                            dhtmlx.alert('Preivailing wagesList Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
                     }
