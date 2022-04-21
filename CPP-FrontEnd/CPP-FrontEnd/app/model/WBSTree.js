@@ -10174,6 +10174,8 @@ WBSTree = (function ($) {
                     $('#edit_program_contract').prop("disabled", false);
                     $('#btnDocManagement').removeAttr('disabled'); 
                     $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
+                    $('#btnAdditionalInfo').removeAttr('disabled');
+                    $('#spnAdditionalInfo').removeAttr('title');
                     $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
                     $('#documentUploadProgramNew').removeAttr('title');  //Manasi 23-02-2021
 
