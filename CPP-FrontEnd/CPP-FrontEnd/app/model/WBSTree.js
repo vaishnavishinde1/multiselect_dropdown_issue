@@ -3992,20 +3992,6 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
-                    //selectedNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
-                    //selectedNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
-                    //selectedNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
-
-                    //selectedNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
-                    //selectedNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
-                    //selectedNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
-                    //selectedNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
-                    //selectedNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
-                    //selectedNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
-
-                    //selectedNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
-                    //selectedNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
-                    //selectedNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
@@ -4310,28 +4296,7 @@ WBSTree = (function ($) {
                         "isNotesModified": isNotesModified,
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
-                        //"LaborWarrantyList": {                                 //vaishnavi 12-4-2022
-                        //    "WarrantyDescription": selectedNode.LaborWarranty,
-                        //    "StartDate": selectedNode.LaborStartDate,
-                        //    "EndDate": selectedNode.LaborEndDate,
-                        //    "Description": selectedNode.LaborDescription,
-                        //    "WarrantyType": "Labor Warranty"
-                        //},
-
-                        //"MaterialsWarrantyList": {
-                        //    "WarrantyDescription": selectedNode.MaterialsWarranty,
-                        //    "StartDate": selectedNode.MaterialsStartDate,
-                        //    "EndDate": selectedNode.MaterialsEndDate,
-                        //    "Description": selectedNode.MaterialsDescription,
-                        //    "WarrantyType": "Materials Warranty"
-                        //},
-                        //"OtherWarrantyList": {
-                        //    "WarrantyDescription": selectedNode.OtherWarranty,
-                        //    "StartDate": selectedNode.OtherStartDate,
-                        //    "EndDate": selectedNode.OtherEndDate,
-                        //    "Description": selectedNode.OtherDescription,
-                        //    "WarrantyType": "Other Warranty"
-                        //},
+                        
                         "ReportingTo": selectedNode.ReportingTo          //vaishnavi 12-4-2022
 
                     }, function (response) {
@@ -4455,20 +4420,6 @@ WBSTree = (function ($) {
                     newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
                     newNode.PrimeSubPrime = $('#ProgramModal').find('.modal-body #prime_subPrime_dd').val();
 
-                    newNode.LaborWarranty = $('#ProgramModal').find('.modal-body #labor_warranty').val();          //vaishnavi 12-4-2022
-                    newNode.MaterialsWarranty = $('#ProgramModal').find('.modal-body #materials_warranty').val();
-                    newNode.OtherWarranty = $('#ProgramModal').find('.modal-body #other_warranty').val();
-
-                    newNode.LaborStartDate = $('#ProgramModal').find('.modal-body #labor_start_date').val();
-                    newNode.LaborEndDate = $('#ProgramModal').find('.modal-body #labor_end_date').val();
-                    newNode.MaterialsStartDate = $('#ProgramModal').find('.modal-body #materials_start_date').val();
-                    newNode.MaterialsEndDate = $('#ProgramModal').find('.modal-body #materials_end_date').val();
-                    newNode.OtherStartDate = $('#ProgramModal').find('.modal-body #other_start_date').val();
-                    newNode.OtherEndDate = $('#ProgramModal').find('.modal-body #other_end_date').val();
-
-                    newNode.LaborDescription = $('#ProgramModal').find('.modal-body #labordescription').val();
-                    newNode.MaterialsDescription = $('#ProgramModal').find('.modal-body #materialsdescription').val();
-                    newNode.OtherDescription = $('#ProgramModal').find('.modal-body #otherdescription').val();        //vaishnavi 12-4-2022
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
                     var program_sov_billing_checked = document.getElementById("program_sov_billing").checked;
@@ -4560,83 +4511,7 @@ WBSTree = (function ($) {
                         return;
                     }
 
-                    if (newNode.LaborStartDate) {          //vaishnavi 12-4-2022
-                        var testDate = moment(newNode.LaborStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (newNode.LaborEndDate) {
-                        var testDate = moment(newNode.LaborEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (newNode.MaterialsStartDate) {
-                        var testDate = moment(newNode.MaterialsStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (newNode.MaterialsEndDate) {
-                        var testDate = moment(newNode.MaterialsEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (newNode.OtherStartDate) {
-                        var testDate = moment(newNode.OtherStartDate , 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (newNode.OtherEndDate) {
-                        var testDate = moment(newNode.OtherEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-
-                    var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();
-                    //if (!certified_payrollchecked) {
-                    //    dhtmlx.alert('Certified Payroll is a required field.'); // Jignesh-02-03-2021
-                    //    return;
-                    //}
                   
-
-                    var preivingwagechecked = $("input[type='radio'][name='prevailing_wages']:checked").val();
-                    //if (!preivingwagechecked) {
-                    //    dhtmlx.alert('Preiving Wage is a required field.'); // Jignesh-02-03-2021
-                    //    return;
-                    //}
-                    if (preivingwagechecked == "Yes") {
-                        var SelectedPreivingwageList = $('#ProgramModal').find('#prevailing_wages_select').val();
-                        if (!SelectedPreivingwageList) {
-                            dhtmlx.alert('Preiving wage List Cannot be Empty.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }
-
-                    var wrapchecked = $("input[type='radio'][name='wrap']:checked").val();
-                    if (wrapchecked == "Yes") {
-                        var SelectedwrapList = $('#ProgramModal').find('#wrap_select').val();
-                        if (!SelectedwrapList) {
-                            dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                        newNode.ReportingTo = $('#additionalInfoPopup').find('#reporting_to').val();
-                        if (!newNode.ReportingTo) {
-                            dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
-                            return;
-                        }
-                    }   //vaishnavi 12-4-2022
-
                     if (!newNode.ContractValue) {
                         dhtmlx.alert('Original Contract Value is a required field.'); // Jignesh-02-03-2021
                         return;
@@ -9563,6 +9438,51 @@ WBSTree = (function ($) {
                     OtherStartDate = $('#additionalInfoPopup').find('.modal-body #other_start_date').val();
                     OtherEndDate = $('#additionalInfoPopup').find('.modal-body #other_end_date').val();
 
+                    if (LaborStartDate) {          //vaishnavi 12-4-2022
+                        var testDate = moment(LaborStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (LaborEndDate) {
+                        var testDate = moment(LaborEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (MaterialsStartDate) {
+                        var testDate = moment(MaterialsStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (MaterialsEndDate) {
+                        var testDate = moment(MaterialsEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (OtherStartDate) {
+                        var testDate = moment(OtherStartDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (OtherEndDate) {
+                        var testDate = moment(OtherEndDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+
+
+
                     LaborDescription = $('#additionalInfoPopup').find('.modal-body #labordescription').val();
                     MaterialsDescription = $('#additionalInfoPopup').find('.modal-body #materialsdescription').val();
                     OtherDescription = $('#additionalInfoPopup').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
@@ -10364,22 +10284,6 @@ WBSTree = (function ($) {
                     //===========================================================================================
                     //modal.find('.modal-body #program_billing_poc_special_instruction').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
                     modal.find('.modal-body #program_billing_poc_special_instruction').val(selectedNode.BillingPOCSpecialInstruction ? selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n') : '');
-
-                  /*  modal.find('.modal-body #reporting_to').val(selectedNode.ReportingTo);    */       //vaishnavi 12-4-2022
-                    modal.find('.modal-body #labor_warranty').val(selectedNode.LaborWarranty);
-                    modal.find('.modal-body #materials_warranty').val(selectedNode.MaterialsWarranty);
-                    modal.find('.modal-body #other_warranty').val(selectedNode.OtherWarranty);
-                   
-                    modal.find('.modal-body #labor_start_date').val(selectedNode.LaborStartDate ? moment(selectedNode.LaborStartDate).format('MM/DD/YYYY') : "");
-                    modal.find('.modal-body #labor_end_date').val(selectedNode.LaborEndDate ? moment(selectedNode.LaborEndDate).format('MM/DD/YYYY') : "");
-                    modal.find('.modal-body #materials_start_date').val(selectedNode.MaterialsStartDate ? moment(selectedNode.MaterialsStartDate).format('MM/DD/YYYY') : "");
-                    modal.find('.modal-body #materials_end_date').val(selectedNode.MaterialsEndDate ? moment(selectedNode.MaterialsEndDate).format('MM/DD/YYYY') : "");
-                    modal.find('.modal-body #other_start_date').val(selectedNode.OtherStartDate ? moment(selectedNode.OtherStartDate).format('MM/DD/YYYY') : "");
-                    modal.find('.modal-body #other_end_date').val(selectedNode.OtherEndDate ? moment(selectedNode.OtherEndDate).format('MM/DD/YYYY') : "");
-
-                    modal.find('.modal-body #labordescription').val(selectedNode.LaborDescription);
-                    modal.find('.modal-body #materialsdescription').val(selectedNode.MaterialsDescription);
-                    modal.find('.modal-body #otherdescription').val(selectedNode.OtherDescription);        //vaishnavi 12-4-2022
 
                     // Check
                     document.getElementById("program_tm_billing").checked = selectedNode.TMBilling ? true : false;
