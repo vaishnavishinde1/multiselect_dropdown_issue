@@ -5678,9 +5678,11 @@
         debugger;
         var div;
         div = document.getElementById(divName);
+        radioNo = document.getElementById('costPartQNo');
         if (divName == 'ShowDivCost') {
             div1 = document.getElementById('PPNotes');
             div1.style.display = "none";
+            radioNo.checked = false;
         }
         div.style.display = "none";
 

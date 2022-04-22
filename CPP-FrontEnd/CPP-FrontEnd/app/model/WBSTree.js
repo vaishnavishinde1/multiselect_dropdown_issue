@@ -9341,26 +9341,26 @@ WBSTree = (function ($) {
                         PPBondNotes = '';
                     }
 
-                    console.log(createdBy)
+                    //console.log(createdBy)
 
                     //if (date == "" || date.length == 0) {
                     //    dhtmlx.alert('Enter Date.');
                     //    return;
                     //}
 
-                    if (date) {
+                    //if (date) {
 
-                        var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
+                    //    var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
 
-                        if (reason == "" || reason.length == 0) {
-                        dhtmlx.alert('Enter Reason.');
-                        return;
-                    }
-                    }
+                    //    if (reason == "" || reason.length == 0) {
+                    //    dhtmlx.alert('Enter Reason.');
+                    //    return;
+                    //}
+                    //}
                     
 
                     var certified_payrollchecked = $("input[type='radio'][name='certified_payroll']:checked").val();  //vaishnavi 12-4-2022
@@ -10092,26 +10092,26 @@ WBSTree = (function ($) {
                     ////    nonSelectedText: '-- Select --',
                     ////    numberDisplayed: 1
 
-                    // Narayan - get insurnace list for insurance history
-                    _Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
-                        _WarrantyList = response.data;
-                        var gridWarranty = $("#gridWarrantyList tbody");
-                        gridWarranty.empty();
-                        _WarrantyList.reverse();
-                        var WarrantyList = _WarrantyList;
-                        for (var x = 0; x < WarrantyList.length; x++) {
-                            gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                '><a>' + (x + 1) + '</a></td> ' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"'+
-                                '>' + _WarrantyList[x].WarrantyType + '</td > ' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
-                                '<tr > ');
-                        }
-                    });
+                    //// Narayan - get warranty list for warranty history
+                    //_Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    //    _WarrantyList = response.data;
+                    //    var gridWarranty = $("#gridWarrantyList tbody");
+                    //    gridWarranty.empty();
+                    //    _WarrantyList.reverse();
+                    //    var WarrantyList = _WarrantyList;
+                    //    for (var x = 0; x < WarrantyList.length; x++) {
+                    //        gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                    //            '><a>' + (x + 1) + '</a></td> ' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"'+
+                    //            '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                    //            '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                    //            '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                    //            '<tr > ');
+                    //    }
+                    //});
 
 
                     //$('#certified_payroll_select').multiselect({
@@ -14609,6 +14609,13 @@ WBSTree = (function ($) {
                 //wrapDropDown.val(datawrapArray);
                 //debugger;
                 $('#txtPPNotes').val('');
+                $('#warranty_start_date').val('');
+                $('#warranty_end_date').val('');
+                $('#warranty_description').val('');
+                $('#date_of_pre_notice').val('');
+                $('#notice_reason').val('');
+                $('#insurance_limit').val('');
+                $('#insurance_type_select').val('');
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
@@ -14951,6 +14958,28 @@ WBSTree = (function ($) {
                             '<tr > ');
                     }
                 });
+
+                // Narayan - get warranty list for warranty history
+                _Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    _WarrantyList = response.data;
+                    var gridWarranty = $("#gridWarrantyList tbody");
+                    gridWarranty.empty();
+                    _WarrantyList.reverse();
+                    var WarrantyList = _WarrantyList;
+                    for (var x = 0; x < WarrantyList.length; x++) {
+                        gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '><a>' + (x + 1) + '</a></td> ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<tr > ');
+                    }
+                });
+
 
 
                 
