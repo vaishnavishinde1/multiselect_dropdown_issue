@@ -965,6 +965,12 @@ namespace WebAPI
                routeTemplate: "Request/ProcurementReport",
                defaults: new { controller = "RequestProcurementReport" }
                );
+
+            config.Routes.MapHttpRoute( //luan here - Availability Report
+           name: "ResourceAvailabilityReport",
+           routeTemplate: "Request/ResourceAvailabilityReport",
+           defaults: new { controller = "RequestResourceAvailabilityReport" }
+           );
             #endregion
 
             config.Routes.MapHttpRoute( //luan here - Work Breakdown Structure Admin Report
