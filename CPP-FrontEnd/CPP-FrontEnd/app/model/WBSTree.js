@@ -10975,6 +10975,8 @@ WBSTree = (function ($) {
                     $('#insurance_limit').val(''); // Narayan - 20/04/2022
                     $('#gridInsuranceList tbody').empty(); // Narayan - 20/04/2022
 
+                    $('#gridWarrantyList tbody').empty(); // Narayan - 22/04/2022
+
                     $('#btnClearNotesDesc').hide(); // Narayan 14-04-2022
 
                     //Populate program project classes for dropdown

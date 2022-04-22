@@ -4598,10 +4598,10 @@
                 </button>
                 <h4 class="modal-title modal_heading" style="color:white;">Additional Info</h4>
             </div>
-            <div class="modal-body" style="height:840px;">
+            <div class="modal-body" style="height:auto;">
                 <div class="col-md-6" style="padding-left:0;">
-                    <form style="height: 170px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; margin-bottom: 8px; background-color: #fbfbfb;">
-                        <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
+                    <form style="height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; margin-bottom: 8px; background-color: #fbfbfb;">
+                        <div class="_form-group" style="margin-top: 5px; min-height: 20px;">
                             <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
 
                                 <label for="program_P&P" class="control-label _bold">P&P Bonds</label>
@@ -4638,34 +4638,38 @@
 
 
                     </form>
-                    <form id="certified_payroll_options" style="height: 112px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                        <div class="col-xs-4">
-                            <label for="program_element_project_number" class="control-label _bold">Certified Payroll </label>
-                            <input type="radio" class="control-group" name="certified_payroll" value="Yes">Yes
-                            <input type="radio" class="control-group" name="certified_payroll" value="No">No
-                        </div>
-                        <div class="col-xs-4" id="certified_payroll_select_div">
-                            <select type="text" class="form-control" style="width:50%;" id="certified_payroll_select" multiple>
-                                <!--<option value="state">A</option>
+                    <form id="certified_payroll_options" style="height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
+                        <div class="" style="margin-top: 5px; min-height: 20px; ">
+                            <div class="col-xs-4">
+                                <label for="program_element_project_number" class="control-label _bold">Certified Payroll </label>
+                                <input type="radio" class="control-group" name="certified_payroll" value="Yes">Yes
+                                <input type="radio" class="control-group" name="certified_payroll" value="No">No
+                            </div>
+                            <div class="col-xs-4" id="certified_payroll_select_div">
+                                <select type="text" class="form-control" style="width:50%;" id="certified_payroll_select" multiple>
+                                    <!--<option value="state">A</option>
                 <option value="federal">B </option>-->
-                            </select>
+                                </select>
+                            </div>
                         </div>
                     </form>
-                    <form id="prevailing_wages_options" style="height: 112px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                        <div class="col-xs-5">
-                            <label for="program_element_project_number" class="control-label _bold">Prevailing Wages </label>
-                            <input type="radio" class="control-group" name="prevailing_wages" value="Yes">Yes
-                            <input type="radio" class="control-group" name="prevailing_wages" value="No">No
-                        </div>
-                        <div class="col-xs-4" id="prevailing_wages_select_div">
-                            <select type="text" class="form-control" style="width:50%;" id="prevailing_wages_select" multiple>
-                                <!--<option value="state">State</option>
-                                <option value="federal">Federal </option>-->
-                            </select>
+                    <form id="prevailing_wages_options" style="height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
+                        <div class="" style="margin-top: 5px; min-height: 20px;">
+                            <div class="col-xs-5">
+                                <label for="program_element_project_number" class="control-label _bold">Prevailing Wages </label>
+                                <input type="radio" class="control-group" name="prevailing_wages" value="Yes">Yes
+                                <input type="radio" class="control-group" name="prevailing_wages" value="No">No
+                            </div>
+                            <div class="col-xs-4" id="prevailing_wages_select_div">
+                                <select type="text" class="form-control" style="width:50%;" id="prevailing_wages_select" multiple>
+                                    <!--<option value="state">State</option>
+                <option value="federal">Federal </option>-->
+                                </select>
+                            </div>
                         </div>
                     </form>
 
-                    <form id="contract_warranty" style="height: 417px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
+                    <form id="contract_warranty" style=" height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior: auto">
 
                         <!--<div class="row">-->
                         <!--<div class="_form-group" style="margin-top:3px;">-->
@@ -4757,46 +4761,46 @@
     </div>-->
                         <!--</div>-->
                         <!--</div>-->
+                        <div style="padding: 10px;">
+                            <div class="row">
+                                <!--<div class="_form-group" style="margin-top:3px;">-->
+                                <div class="col-xs-4" style="padding-left: 15px;">
+                                    <label for="program_element_project_number" class="control-label _bold ">Warranty Type </label>
+                                    <select type="text" class="form-control" id="warranty_select">
+                                        <option value="Labor">Labor</option>
+                                        <option value="Materials">Materials</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                <!--</div>-->
+                                <!--<div class="_form-group" style="margin-top:3px;">-->
+                                <div class="col-xs-4" style="padding-left:10px;">
+                                    <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                    <input type="text" class="form-control" id="warranty_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                </div>
+                                <!--</div>-->
+                                <!--<div class="_form-group" style="margin-top:3px;">-->
+                                <div class="col-xs-4" style="padding-left: 10px;">
+                                    <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                    <input type="text" class="form-control" id="warranty_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-                        <div class="row">
-                            <!--<div class="_form-group" style="margin-top:3px;">-->
-                            <div class="col-xs-4" style="padding-left: 15px;">
-                                <label for="program_element_project_number" class="control-label _bold ">Warranty Type </label>
-                                <select type="text" class="form-control" id="warranty_select">
-                                    <option value="Labor">Labor</option>
-                                    <option value="Materials">Materials</option>
-                                    <option value="Others">Others</option>
-                                </select>
+                                </div>
+                                <!--</div>-->
                             </div>
-                            <!--</div>-->
-                            <!--<div class="_form-group" style="margin-top:3px;">-->
-                            <div class="col-xs-4" style="padding-left:10px;">
-                                <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-                                <input type="text" class="form-control" id="warranty_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                            </div>
-                            <!--</div>-->
-                            <!--<div class="_form-group" style="margin-top:3px;">-->
-                            <div class="col-xs-4" style="padding-left: 10px;">
-                                <label for="program_element_project_number" class="control-label _bold">End Date</label>
-                                <input type="text" class="form-control" id="warranty_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                            <br />
+                            <div class="row">
 
+                                <!--<div class="_form-group" style="margin-top:10px;">-->
+                                <div class="col-xs-8" style="padding-left: 15px;">
+                                    <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                    <textarea type="text" cols="20" class="form-control" id="warranty_description" style="padding-left: 15px;"></textarea>
+                                </div>
+                                <!--</div>-->
+                                <div class="col-xs-4 text-center" style="margin-top: 30px;">
+                                    <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                </div>
                             </div>
-                            <!--</div>-->
                         </div>
-                        <br />
-                        <div class="row">
-
-                            <!--<div class="_form-group" style="margin-top:10px;">-->
-                            <div class="col-xs-8" style="padding-left: 15px;">
-                                <label for="program_element_project_number" class="control-label _bold">Description</label>
-                                <textarea type="text" cols="20" class="form-control" id="warranty_description" style="padding-left: 15px;"></textarea>
-                            </div>
-                            <!--</div>-->
-                            <div class="col-xs-4 text-center" style="margin-top: 30px;">
-                                <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                            </div>
-                        </div>
-
                         <!--<div class="row" style="">
         <div class="col-xs-4">
             <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
@@ -4850,108 +4854,114 @@
                 </div>
                 <div class="col-md-6" style="padding-left:0;">
 
-                    <form id="prelimnary_notice" style="height: 371px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                        <div class="row" style="">
-                            <h4 style="text-align:center;font-weight: 600;">Prelimnary Notice</h4>
-                            <div class="col-xs-9">
-                                <label for="program_element_project_number" class="control-label _bold ">Date of Notice </label>
-                                <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">
-                                <!--</div>
-        <div class="col-xs-8">-->
-                                <label for="program_element_project_number" class="control-label _bold ">Reason of Notice </label>
-                                <textarea class="form-control" id="notice_reason" rows="3" cols="40"></textarea>
-                            </div>
-                            <div class="text-center col-xs-3" style="margin-top: 120px">
-                                <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                                <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
-                            </div>
-                        </div>
-                        <hr />
-                        <div>
-                            <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>-->
-                            <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 149px !important;">
-                                <table id="gridNoticeList" class="table table-striped table-bordered">
-                                    <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                                        <tr>
-                                            <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                            <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
-                                            <td style="font-weight:900;" width="500">Reason</td>
-                                            <!--<td style="font-weight:900;">Date of Created</td>-->
-                                            <td style="font-weight:900;">Action</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </form>
-
-
-
-                    <form id="contract_insurance" style="height: 277px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                        <div class="row" style="">
-                            <div class="col-xs-4">
-                                <label for="program_element_project_number" class="control-label _bold ">Insurance Type </label>
-                                <select type="text" class="form-control" id="insurance_type_select">
-                                    <option value="GL Policy Limits">GL Policy Limits</option>
-                                    <option value="Auto Liability">Auto Liability</option>
-                                    <option value="WC Liability">WC Liability</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-4">
-                                <label for="program_element_project_number" class="control-label _bold ">Limit </label>
-                                <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
-                            </div>
-                            <div class="col-xs-4" style="margin-top: 23px;">
-                                <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                            </div>
-                        </div>
-
-                        <!--<div class="text-center" style="margin-top: 10px">
-            <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-        </div>-->
-                        <hr />
-                        <div>
-                            <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
-                            <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 149px !important;">
-                                <table id="gridInsuranceList" class="table table-striped table-bordered">
-                                    <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                                        <tr>
-                                            <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                            <td style="font-weight:900;min-width: 300px;">Type</td>
-                                            <td style="font-weight:900;">Limit</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form id="wrap_options" style="height: 170px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                        <div class="col-xs-4">
-                            <label for="additionalinfo_project_number" class="control-label _bold">Wrap </label>
-                            <input type="radio" class="control-group" name="wrap" value="Yes">Yes
-                            <input type="radio" class="control-group" name="wrap" value="No">No
-                        </div>
-                        <div id="wrap_select_div">
-                            <div class="col-xs-4">
-                                <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
-                                </select>
-                            </div>
+                    <form id="prelimnary_notice" style=" height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
+                        <div style="padding: 10px;">
                             <div class="row" style="">
-                                <div class="col-xs-12">
-                                    <label for="program_element_project_number" class="control-label _bold ">Reporting to</label>
-                                    <textarea style="height:60px" type="text" class="form-control" id="reporting_to"></textarea>
+                                <h4 style="text-align:center;font-weight: 600;">Prelimnary Notice</h4>
+                                <div class="col-xs-9">
+                                    <label for="program_element_project_number" class="control-label _bold ">Date of Notice </label>
+                                    <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">
+                                    <!--</div>
+                    <div class="col-xs-8">-->
+                                    <label for="program_element_project_number" class="control-label _bold ">Reason of Notice </label>
+                                    <textarea class="form-control" id="notice_reason" rows="3" cols="40"></textarea>
+                                </div>
+                                <div class="text-center col-xs-3" style="margin-top: 120px">
+                                    <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                    <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>-->
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 149px !important;">
+                                    <table id="gridNoticeList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
+                                                <td style="font-weight:900;" width="500">Reason</td>
+                                                <!--<td style="font-weight:900;">Date of Created</td>-->
+                                                <td style="font-weight:900;">Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                  
+
+
+                    <form id="contract_insurance" style=" height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
+                        <div style="padding: 10px;">
+                            <div class="row" style="">
+                                <div class="col-xs-4">
+                                    <label for="program_element_project_number" class="control-label _bold ">Insurance Type </label>
+                                    <select type="text" class="form-control" id="insurance_type_select">
+                                        <option value="GL Policy Limits">GL Policy Limits</option>
+                                        <option value="Auto Liability">Auto Liability</option>
+                                        <option value="WC Liability">WC Liability</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label for="program_element_project_number" class="control-label _bold ">Limit </label>
+                                    <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
+                                </div>
+                                <div class="col-xs-4" style="margin-top: 23px;">
+                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                </div>
+                            </div>
+
+                            <!--<div class="text-center" style="margin-top: 10px">
+                <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+            </div>-->
+                            <hr />
+                            <div>
+                                <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 149px !important;">
+                                    <table id="gridInsuranceList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 300px;">Type</td>
+                                                <td style="font-weight:900;">Limit</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="wrap_options" style=" height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
+                        <div class="" style="margin-top: 5px; min-height: 20px;">
+                            <div class="col-xs-4">
+                                <label for="additionalinfo_project_number" class="control-label _bold">Wrap </label>
+                                <input type="radio" class="control-group" name="wrap" value="Yes">Yes
+                                <input type="radio" class="control-group" name="wrap" value="No">No
+                            </div>
+                            <div id="wrap_select_div">
+                                <div class="col-xs-4">
+                                    <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
+                                    </select>
+                                </div>
+                                <div class="row" style="">
+                                    <div class="col-xs-12">
+                                        <label for="program_element_project_number" class="control-label _bold ">Reporting to</label>
+                                        <textarea style="height:60px" type="text" class="form-control" id="reporting_to"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
                 </div>
                     <!--<div class="_form-group">
             <div id="divadditionalInfo" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;">-->
