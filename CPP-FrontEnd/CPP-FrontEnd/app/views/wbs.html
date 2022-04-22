@@ -4600,26 +4600,26 @@
             </div>
             <div class="modal-body" style="height:auto;">
                 <div class="col-md-6" style="padding-left:0;">
-                    <form style="height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; margin-bottom: 8px; background-color: #fbfbfb;">
+                    <form id="pandpbondform" style="height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; margin-bottom: 8px; background-color: #fbfbfb;">
                         <div class="_form-group" style="margin-top: 5px; min-height: 20px;">
                             <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
 
                                 <label for="program_P&P" class="control-label _bold">P&P Bonds</label>
                                 <div class="radio-inline">
-                                    <input type="radio" value="Yes" name="PPBond" id="PPBondYes" onclick="ShowDiv('ShowDivCost')">
+                                    <input type="radio" value="Yes" name="PPBond" id="PPBondYes" >
                                     <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
                                 </div>
                                 <div class="radio-inline">
-                                    <input type="radio" value="No" name="PPBond" id="PPBondNo" onclick="HideDiv('ShowDivCost')">
+                                    <input type="radio" value="No" name="PPBond" id="PPBondNo" >
                                     <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
                                 </div>
 
                             </div>
-                            <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
+                            <div class="col-xs-12" style="padding-left: 0; padding-right:0;" id="ShowDivCost">
 
                                 <label for="program_P&P" class="control-label _bold ">Is the cost part of the contract?</label>
                                 <div class="radio-inline">
-                                    <input type="radio" value="Yes" name="costPartQ" id="costPartQYes" onclick="HideDiv('PPNotes')">
+                                    <input type="radio" value="Yes" name="costPartQ" id="costPartQYes" >
                                     <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
                                 </div>
                                 <div class="radio-inline">
@@ -4628,7 +4628,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-xs-12" style="margin-top:2px;padding-left: 0; padding-right:0;display:none;" id="PPNotes">
+                            <div class="col-xs-12" style="margin-top:2px;padding-left: 0; padding-right:0;" id="PPNotes">
                                 <label for="" class="_control-label _bold">Notes</label>
                                 <textarea style="height:70px;" type="text" class="form-control" id="txtPPNotes"></textarea>
                             </div>
@@ -5661,32 +5661,32 @@
         });
     }
     //var formdata = new FormData();
-    function ShowDiv(divName) {
+    //function ShowDiv(divName) {
 
-        var div;
-        div = document.getElementById(divName); 
-        divNote = document.getElementById('PPNotes');
-        radioNo = document.getElementById('costPartQNo');
+    //    var div;
+    //    div = document.getElementById(divName); 
+    //    divNote = document.getElementById('PPNotes');
+    //    radioNo = document.getElementById('costPartQNo');
        
-        if (radioNo.checked == true) {
-            divNote.style.display = "block";
-        }
+    //    if (radioNo.checked == true) {
+    //        divNote.style.display = "block";
+    //    }
 
-        div.style.display = "block";
-    }
-    function HideDiv(divName) {
-        debugger;
-        var div;
-        div = document.getElementById(divName);
-        radioNo = document.getElementById('costPartQNo');
-        if (divName == 'ShowDivCost') {
-            div1 = document.getElementById('PPNotes');
-            div1.style.display = "none";
-            radioNo.checked = false;
-        }
-        div.style.display = "none";
+    //    div.style.display = "block";
+    //}
+    //function HideDiv(divName) {
+    //    debugger;
+    //    var div;
+    //    div = document.getElementById(divName);
+    //    radioNo = document.getElementById('costPartQNo');
+    //    if (divName == 'ShowDivCost') {
+    //        div1 = document.getElementById('PPNotes');
+    //        div1.style.display = "none";
+    //        radioNo.checked = false;
+    //    }
+    //    div.style.display = "none";
 
-    }
+    //}
     //function openTab(evt, cityName) {
 
     //    var i, tabcontent, tablinks;

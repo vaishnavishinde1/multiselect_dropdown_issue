@@ -9147,6 +9147,42 @@ WBSTree = (function ($) {
                 $('#btnClearNotesDesc').hide();
             });
 
+            $('#pandpbondform input').on('change', function () {          //vaishnavi 12-4-2022
+                var selOption = $("input[type='radio'][name='PPBond']:checked").val();
+                var selOptionCPQ = $("input[type='radio'][name='costPartQ']:checked").val();
+                console.log(selOptionCPQ);
+                //if (selOptionCPQ == 'Yes') {
+                //    $("#PPNotes *").prop('disabled', true);
+                //} else {
+                //    $("#PPNotes *").prop('disabled', false);
+                //}
+                console.log(selOption);
+                if (selOption == 'Yes') {
+                    $("#ShowDivCost *").prop('disabled', false);
+                    if (selOptionCPQ == 'No') {
+                       
+                        $("#PPNotes *").prop('disabled', false);
+                    }
+                    else {
+                        $("#PPNotes *").prop('disabled', true);
+                        $("#txtPPNotes").val('');
+                }
+                   
+                } else {
+                  
+                    $("input:radio[name='costPartQ']").each(function (i) {
+                        this.checked = false;
+                    });
+                    $("#txtPPNotes").val('');
+                    $("#ShowDivCost *").prop('disabled', true);
+                    $("#PPNotes *").prop('disabled', true);
+                }
+            })
+
+            $('#pandpbondform input').on('change', function () {          //vaishnavi 12-4-2022
+               
+            })
+
             $('#prevailing_wages_options input').on('change', function () {          //vaishnavi 12-4-2022
                 var selOption = $("input[type='radio'][name='prevailing_wages']:checked").val();
                 console.log(selOption);
@@ -14633,37 +14669,42 @@ WBSTree = (function ($) {
                             $('input[name=costPartQ][value="' + data.IsCostPartOfContract + '"]')
                                 .prop('checked', true)
                                 .trigger('change');
-                            //$('#costPartQNo').attr("checked", "checked");
+                            $('#costPartQNo').attr("checked", "checked");
                             div = document.getElementById('PPNotes');
                             div.style.display = "block";
+                            //$("#PPNotes *").prop('disabled', false);
                             $('#txtPPNotes').val(data.PPBondNotes);
                         }
                         else {
                             $('input[name=costPartQ][value="' + data.IsCostPartOfContract + '"]')
                                 .prop('checked', true)
                                 .trigger('change');
-                            div = document.getElementById('PPNotes');
-                            div.style.display = "none";
+                            //div = document.getElementById('PPNotes');
+                            //div.style.display = "none";
+                            $("#PPNotes *").prop('disabled', true);
                             
                            // $('#costPartQYes').attr("checked", "checked");
                         }
                     }
                     else if (data.IsPPBond == 'No') {
                         $('#PPBondNo').attr("checked", "checked");
-                        div = document.getElementById('ShowDivCost');
-                        div.style.display = "none";
-                        div = document.getElementById('PPNotes');
-                        div.style.display = "none";
+                        //div = document.getElementById('ShowDivCost');
+                        //div.style.display = "none";
+                        //div = document.getElementById('PPNotes');
+                        //div.style.display = "none";
+                        //$("#ShowDivCost *").prop('disabled', true);
+                        //$("#PPNotes *").prop('disabled', true);
                     }
                     else {
                         $('#PPBondYes').prop("checked", false);
                         $('#PPBondNo').prop("checked", false);
                         $('#costPartQYes').prop("checked", false);
                         $('#costPartQNo').prop("checked", false);
-                        div = document.getElementById('ShowDivCost');
-                        div.style.display = "none";
-                        div = document.getElementById('PPNotes');
-                        div.style.display = "none";
+                        //div = document.getElementById('ShowDivCost');
+                        //div.style.display = "none";
+                        //div = document.getElementById('PPNotes');
+                        //div.style.display = "none";
+
                         modal.find('.modal-body #txtPPNotes').val('');
                     }
 
