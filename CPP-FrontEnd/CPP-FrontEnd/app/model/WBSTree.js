@@ -87,6 +87,7 @@ WBSTree = (function ($) {
         var lineWidth = 0;
         var modificationTypeData = null; // jignesh-m
         _ContractModificationOperation = 1;
+        _ContractWarrantyOperation = 1;
         _PrelimneryNoticeOperation = 1;
         _ContractInsuranceOperation = 1;
         _duration = 750;
@@ -149,6 +150,7 @@ WBSTree = (function ($) {
         _documentList = null;
         _ProjectWhiteList = null;
         _ProjectWhiteListService = null;
+        _WarrantyList = null; // Narayan 22-04-2022
         _NoticeList = null; // Narayan 05-04-2022
         _InsuranceList = null; // Narayan 05-04-2022
         _ModificationList = null; // Jignesh 29-10-2020
@@ -1009,6 +1011,12 @@ WBSTree = (function ($) {
             return _ContractModificationOperation;
         }
         //Narayan - prelimnary opration
+        obj.prototype.getContractWarrantyOperation = function () {
+            return _ContractWarrantyOperation;
+        }
+        obj.prototype.setContractWarrantyOperation = function (ope) {
+            _ContractWarrantyOperation = ope;
+        }//Narayan - prelimnary opration
         obj.prototype.getPrelimneryNoticeOperation = function () {
             return _PrelimneryNoticeOperation;
         }
@@ -9307,50 +9315,7 @@ WBSTree = (function ($) {
                 modal.find('.modal-body #program_name').focus();
                 $('#fundSelect').append($('<option></option>').val('').html("Select a Fund"));
 
-                // Narayan - Save Notice from contract
-                $('#btnSaveNotice').unbind().on('click', function (event) {
-                    var operation = wbsTree.getPrelimneryNoticeOperation();
-                    var programId = wbsTree.getSelectedNode().ProgramID;
-                    var createdBy = wbsTree.getLocalStorage().userName;
-                    var date = $('#date_of_pre_notice').val();
-                    var reason = $('#notice_reason').val();
-
-                    
-
-                    console.log(createdBy)
-
-                    if (date == "" || date.length == 0) {
-                        dhtmlx.alert('Enter Date.');
-                        return;
-                    }
-
-                    if (date) {
-
-                        var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (reason == "" || reason.length == 0) {
-                        dhtmlx.alert('Enter Reason.');
-                        return;
-                    }
-
-                    var prelimnaryNotice = {
-                        Operation: operation,
-                        Reason: reason,
-                        Date: date,
-                        ProgramID: programId,
-                        CreatedBy: createdBy,
-                    };
-
-                    
-                    PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
-
-                    return;
-                });
-
+                
                 $('#additionalInfoPopupSave').unbind().on('click', function (event) {
 
                     //Narayan save notice
@@ -9563,6 +9528,167 @@ WBSTree = (function ($) {
                     //PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
 
 
+                });
+
+                // Narayan - Save Insurance from contract
+                $('#btnSaveWarranty').unbind().on('click', function (event) {
+                    var operation = wbsTree.getContractWarrantyOperation();
+                    var programId = wbsTree.getSelectedNode().ProgramID;
+                    var createdBy = wbsTree.getLocalStorage().userName;
+                    var type = $('#warranty_select').val();
+                    var startDate = $('#warranty_start_date').val();
+                    var endDate = $('#warranty_end_date').val();
+                    var desc = $('#warranty_description').val();
+
+                    console.log(createdBy)
+
+                    if (type == null || type == "" || type.length == 0) {
+                        dhtmlx.alert('Select Type First.');
+                        return;
+                    }
+
+                    if (startDate == "" || startDate.length == 0) {
+                        dhtmlx.alert('Enter Start Date.');
+                        return;
+                    }
+                    if (startDate) {
+
+                        var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+
+                    if (endDate == "" || endDate.length == 0) {
+                        dhtmlx.alert('Enter End Date.');
+                        return;
+                    }
+                    if (endDate) {
+
+                        var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+
+                    if (desc == "" || desc.length == 0) {
+                        dhtmlx.alert('Enter Description.');
+                        return;
+                    }
+
+                    var contractWarranty = {
+                        Operation: operation,
+                        WarrantyType: type,
+                        StartDate: startDate,
+                        EndDate: endDate,
+                        Description: desc,
+                        ProgramID: programId,
+                        CreatedBy: createdBy,
+                    };
+
+                    PerformOperationOnContractWarranty(contractWarranty);
+
+                    return;
+                });
+
+                //Api call for add contract warrenty 
+                function PerformOperationOnContractWarranty(contractWarranty) {
+                    var request = {
+                        method: 'POST',
+                        url: serviceBasePath + 'contractWarranty/saveContractWarranty',
+                        data: contractWarranty
+                    };
+                    var angularHttp = wbsTree.getAngularHttp();
+                    angularHttp(request).then(function success(d) {
+                        if (d.data.result == "success") {
+                            wbsTree.getContractWarrantyOperation();
+                            if (wbsTree.getContractWarrantyOperation() == 1) {
+                                dhtmlx.alert("Warranty Added Successfully!!!.");
+                            }
+                            else if (wbsTree.getContractWarrantyOperation() == 2) {
+                                dhtmlx.alert("Warranty Updated Successfully!!!.");
+                            }
+                            else if (wbsTree.getContractWarrantyOperation() == 3) {
+                                dhtmlx.alert("Warranty Deleted Successfully!!!.");
+                            }
+                            wbsTree.setContractWarrantyOperation(1);
+                            ResetWarrantyFields();
+
+                            _WarrantyList = d.data.data;
+                            var gridWarranty = $("#gridWarrantyList tbody");
+                            gridWarranty.empty();
+                            _WarrantyList.reverse();
+                            var WarrantyList = _WarrantyList;
+                            for (var x = 0; x < WarrantyList.length; x++) {
+                                gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '><a>' + (x + 1) + '</a></td> ' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<tr > ');
+                            }
+
+                        }
+                    });
+                }
+
+                //Narayan - 22/04/2022 - for reset insurance fields
+                function ResetWarrantyFields() {
+                    //$('#warranty_select').val('');  
+                    $('#warranty_start_date').val('');
+                    $('#warranty_end_date').val('');
+                    $('#warranty_description').val('');
+                }
+
+
+                // Narayan - Save Notice from contract
+                $('#btnSaveNotice').unbind().on('click', function (event) {
+                    var operation = wbsTree.getPrelimneryNoticeOperation();
+                    var programId = wbsTree.getSelectedNode().ProgramID;
+                    var createdBy = wbsTree.getLocalStorage().userName;
+                    var date = $('#date_of_pre_notice').val();
+                    var reason = $('#notice_reason').val();
+
+
+
+                    console.log(createdBy)
+
+                    if (date == "" || date.length == 0) {
+                        dhtmlx.alert('Enter Date.');
+                        return;
+                    }
+
+                    if (date) {
+
+                        var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                    }
+                    if (reason == "" || reason.length == 0) {
+                        dhtmlx.alert('Enter Reason.');
+                        return;
+                    }
+
+                    var prelimnaryNotice = {
+                        Operation: operation,
+                        Reason: reason,
+                        Date: date,
+                        ProgramID: programId,
+                        CreatedBy: createdBy,
+                    };
+
+
+                    PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
+
+                    return;
                 });
 
                 //Api call for add prelimnary notices
@@ -9966,7 +10092,36 @@ WBSTree = (function ($) {
                     ////    nonSelectedText: '-- Select --',
                     ////    numberDisplayed: 1
 
-                    ////});
+                    // Narayan - get insurnace list for insurance history
+                    _Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                        _WarrantyList = response.data;
+                        var gridWarranty = $("#gridWarrantyList tbody");
+                        gridWarranty.empty();
+                        _WarrantyList.reverse();
+                        var WarrantyList = _WarrantyList;
+                        for (var x = 0; x < WarrantyList.length; x++) {
+                            gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '><a>' + (x + 1) + '</a></td> ' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"'+
+                                '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
+                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                                '<tr > ');
+                        }
+                    });
+
+
+                    //$('#certified_payroll_select').multiselect({
+                    //    // columns: 5,
+                    //    clearButton: true,
+                    //    search: false,
+                    //    selectAll: false,
+                    //    // rebuild : true,
+                    //    nonSelectedText: '-- Select --',
+                    //    numberDisplayed: 1
 
                     //// Narayan - get insurnace list for insurance history
                     //_Document.getInsuranceByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
@@ -10138,6 +10293,8 @@ WBSTree = (function ($) {
                     $("#program_original_end_date").datepicker(); // Aditya ogDate
                     $("#modification_date").datepicker(); // Jignesh 28-10-2020
                     $("#date_of_pre_notice").datepicker(); //Narayan
+                    $("#warranty_start_date").datepicker(); //Narayan
+                    $("#warranty_end_date").datepicker(); //Narayan
                     //=============== Jignesh-24-03-2021 Modification Changes ==========================
                     //$('#duration_date').datepicker("destroy");
                     /*$('#program_element_milestone_date_modal').datepicker({

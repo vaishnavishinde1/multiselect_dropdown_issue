@@ -1822,6 +1822,19 @@ namespace WebAPI
                 routeTemplate: "Request/ImportCoAdFile",
                 defaults: new { controller = "CoAdImport", action = "Post" }
             );
+            //Narayan - 22/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "ContractWarranty",
+                 routeTemplate: "contractWarranty/saveContractWarranty",
+                 defaults: new { controller = "ContractWarranty", action = "Post" }
+             );
+
+            //Narayan - 22/04/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetContractWarranty",
+                 routeTemplate: "contractWarranty/getContractWarranty/{programId}",
+                 defaults: new { controller = "ContractWarranty", action = "Get", programId = RouteParameter.Optional }
+             );
             //Narayan - 04/04/2022
             config.Routes.MapHttpRoute(
                  name: "PrelimnaryNotice",
