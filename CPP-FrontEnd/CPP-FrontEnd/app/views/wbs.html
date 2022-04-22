@@ -5664,7 +5664,14 @@
     function ShowDiv(divName) {
 
         var div;
-        div = document.getElementById(divName);
+        div = document.getElementById(divName); 
+        divNote = document.getElementById('PPNotes');
+        radioNo = document.getElementById('costPartQNo');
+       
+        if (radioNo.checked == true) {
+            divNote.style.display = "block";
+        }
+
         div.style.display = "block";
     }
     function HideDiv(divName) {

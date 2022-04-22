@@ -1426,7 +1426,7 @@ namespace WebAPI.Models
                     }
                     ctx.SaveChanges();
 
-                    ProgramWarranty.updateProgramWarranty(program);
+                    //ProgramWarranty.updateProgramWarranty(program);
                     //PrelimnaryNotice prelimnaryNotice = new PrelimnaryNotice();
                     //prelimnaryNotice.CreatedDate = DateTime.Now;
                     //prelimnaryNotice.ProgramID = program.ProgramID;
@@ -1469,16 +1469,16 @@ namespace WebAPI.Models
                     additionalinfodata.WrapIDS = ctx.ProgramWrap.Where(c => c.ProgramID == ProgramID).Select(x => x.WrapID).ToList();
                     additionalinfodata.ReportingTo = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.ReportingTo).FirstOrDefault();
 
-                    additionalinfodata.LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
-                    additionalinfodata.MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
-                    additionalinfodata.OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+                    //additionalinfodata.LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
+                    //additionalinfodata.MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+                    //additionalinfodata.OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
 
-                    additionalinfodata.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
-                    additionalinfodata.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
-                    additionalinfodata.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
-                    additionalinfodata.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
-                    additionalinfodata.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
-                    additionalinfodata.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
+                    //additionalinfodata.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    //additionalinfodata.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    //additionalinfodata.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
+                    //additionalinfodata.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
+                    //additionalinfodata.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
+                    //additionalinfodata.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
 
                     //additionalinfodata.LaborStartDate = (wbsprg.LaborStartDate != null ? wbsprg.LaborStartDate.Value.ToString("yyyy-MM-dd") : "");
                     //additionalinfodata.MaterialsStartDate = (wbsprg.MaterialsStartDate != null ? wbsprg.MaterialsStartDate.Value.ToString("yyyy-MM-dd") : "");
@@ -1487,9 +1487,9 @@ namespace WebAPI.Models
                     //additionalinfodata.MaterialsEndDate = (wbsprg.MaterialsEndDate != null ? wbsprg.MaterialsEndDate.Value.ToString("yyyy-MM-dd") : "");
                     //additionalinfodata.OtherEndDate = (wbsprg.OtherEndDate != null ? wbsprg.OtherEndDate.Value.ToString("yyyy-MM-dd") : "");
 
-                    additionalinfodata.LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
-                    additionalinfodata.MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
-                    additionalinfodata.OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
+                    //additionalinfodata.LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
+                    //additionalinfodata.MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
+                    //additionalinfodata.OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID ==ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
                     additionalinfodata.IsPPBond = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.IsPPBond).FirstOrDefault();
                     additionalinfodata.IsCostPartOfContract = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.IsCostPartOfContract).FirstOrDefault();
                     additionalinfodata.PPBondNotes = ctx.Program.Where(w => w.ProgramID == ProgramID).Select(p => p.PPBondNotes).FirstOrDefault(); 

@@ -9401,93 +9401,93 @@ WBSTree = (function ($) {
                         }
                     }
 
-                    LaborWarranty = $('#additionalInfoPopup').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
-                    MaterialsWarranty = $('#additionalInfoPopup').find('.modal-body #materials_warranty').val();
-                    OtherWarranty = $('#additionalInfoPopup').find('.modal-body #other_warranty').val();
+                    //LaborWarranty = $('#additionalInfoPopup').find('.modal-body #labor_warranty').val();  //vaishnavi 12-4-2022
+                    //MaterialsWarranty = $('#additionalInfoPopup').find('.modal-body #materials_warranty').val();
+                    //OtherWarranty = $('#additionalInfoPopup').find('.modal-body #other_warranty').val();
 
-                    LaborStartDate = $('#additionalInfoPopup').find('.modal-body #labor_start_date').val();
-                    LaborEndDate = $('#additionalInfoPopup').find('.modal-body #labor_end_date').val();
-                    MaterialsStartDate = $('#additionalInfoPopup').find('.modal-body #materials_start_date').val();
-                    MaterialsEndDate = $('#additionalInfoPopup').find('.modal-body #materials_end_date').val();
-                    OtherStartDate = $('#additionalInfoPopup').find('.modal-body #other_start_date').val();
-                    OtherEndDate = $('#additionalInfoPopup').find('.modal-body #other_end_date').val();
+                    //LaborStartDate = $('#additionalInfoPopup').find('.modal-body #labor_start_date').val();
+                    //LaborEndDate = $('#additionalInfoPopup').find('.modal-body #labor_end_date').val();
+                    //MaterialsStartDate = $('#additionalInfoPopup').find('.modal-body #materials_start_date').val();
+                    //MaterialsEndDate = $('#additionalInfoPopup').find('.modal-body #materials_end_date').val();
+                    //OtherStartDate = $('#additionalInfoPopup').find('.modal-body #other_start_date').val();
+                    //OtherEndDate = $('#additionalInfoPopup').find('.modal-body #other_end_date').val();
 
-                    if (LaborStartDate) {          //vaishnavi 12-4-2022
-                        var testDate = moment(LaborStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (LaborEndDate) {
-                        var testDate = moment(LaborEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (MaterialsStartDate) {
-                        var testDate = moment(MaterialsStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (MaterialsEndDate) {
-                        var testDate = moment(MaterialsEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (OtherStartDate) {
-                        var testDate = moment(OtherStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
-                    if (OtherEndDate) {
-                        var testDate = moment(OtherEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
-                            return;
-                        }
-                    }
+                    //if (LaborStartDate) {          //vaishnavi 12-4-2022
+                    //    var testDate = moment(LaborStartDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Labor Start Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
+                    //if (LaborEndDate) {
+                    //    var testDate = moment(LaborEndDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Labor End Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
+                    //if (MaterialsStartDate) {
+                    //    var testDate = moment(MaterialsStartDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Materials Start Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
+                    //if (MaterialsEndDate) {
+                    //    var testDate = moment(MaterialsEndDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Materials End Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
+                    //if (OtherStartDate) {
+                    //    var testDate = moment(OtherStartDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Other Start Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
+                    //if (OtherEndDate) {
+                    //    var testDate = moment(OtherEndDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Other End Date Should be in MM/DD/YYYY Format.');
+                    //        return;
+                    //    }
+                    //}
 
 
 
-                    LaborDescription = $('#additionalInfoPopup').find('.modal-body #labordescription').val();
-                    MaterialsDescription = $('#additionalInfoPopup').find('.modal-body #materialsdescription').val();
-                    OtherDescription = $('#additionalInfoPopup').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
+                    //LaborDescription = $('#additionalInfoPopup').find('.modal-body #labordescription').val();
+                    //MaterialsDescription = $('#additionalInfoPopup').find('.modal-body #materialsdescription').val();
+                    //OtherDescription = $('#additionalInfoPopup').find('.modal-body #otherdescription').val();   //vaishnavi 12-4-2022
 
-                    var prelimnaryNotice = {
-                        Reason: reason,
-                        Date: date
-                    };
+                    //var prelimnaryNotice = {
+                    //    Reason: reason,
+                    //    Date: date
+                    //};
 
-                    var LaborWarrantyList =  {                                 //vaishnavi 12-4-2022
-                        WarrantyDescription: LaborWarranty,
-                        StartDate: LaborStartDate,
-                        EndDate: LaborEndDate,
-                        Description: LaborDescription,
-                        WarrantyType: "Labor Warranty"
-                    }
-                    var MaterialsWarrantyList = {
-                        WarrantyDescription: MaterialsWarranty,
-                        StartDate: MaterialsStartDate,
-                        EndDate: MaterialsEndDate,
-                        Description: MaterialsDescription,
-                        WarrantyType: "Materials Warranty"
-                    }
+                    //var LaborWarrantyList =  {                                 //vaishnavi 12-4-2022
+                    //    WarrantyDescription: LaborWarranty,
+                    //    StartDate: LaborStartDate,
+                    //    EndDate: LaborEndDate,
+                    //    Description: LaborDescription,
+                    //    WarrantyType: "Labor Warranty"
+                    //}
+                    //var MaterialsWarrantyList = {
+                    //    WarrantyDescription: MaterialsWarranty,
+                    //    StartDate: MaterialsStartDate,
+                    //    EndDate: MaterialsEndDate,
+                    //    Description: MaterialsDescription,
+                    //    WarrantyType: "Materials Warranty"
+                    //}
 
-                    var OtherWarrantyList= {
-                        WarrantyDescription: OtherWarranty,
-                        StartDate: OtherStartDate,
-                        EndDate: OtherEndDate,
-                        Description: OtherDescription,
-                        WarrantyType: "Other Warranty"
-                    }
+                    //var OtherWarrantyList= {
+                    //    WarrantyDescription: OtherWarranty,
+                    //    StartDate: OtherStartDate,
+                    //    EndDate: OtherEndDate,
+                    //    Description: OtherDescription,
+                    //    WarrantyType: "Other Warranty"
+                    //}
                     var additionalInfo = {
                         Operation: 6,
                         //Reason: reason,
@@ -9504,10 +9504,10 @@ WBSTree = (function ($) {
                         ReportingTo: ReportingTo,
                         CertifiedPayrollIDS: SelectedCertifiedPayrollList,
                         ProgramPrevailingWagesList: SelectedPreivingwageList,
-                        WrapIDS: SelectedwrapList,
-                        LaborWarrantyList : LaborWarrantyList,
-                        MaterialsWarrantyList: MaterialsWarrantyList,
-                        OtherWarrantyList: OtherWarrantyList
+                        WrapIDS: SelectedwrapList
+                       // LaborWarrantyList : LaborWarrantyList,
+                       // MaterialsWarrantyList: MaterialsWarrantyList,
+                       // OtherWarrantyList: OtherWarrantyList
                         
                     };
 
@@ -9519,7 +9519,11 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
-                        if (d.data.result == "success") { }
+                        if (d.data.result == "Success") {
+                            isFieldValueChanged = false;
+                            $("#additionalInfoPopup").modal('toggle');
+                            $("#ProgramModal").css({ "opacity": "1" });
+                        }
                     });
                     //PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
 
@@ -10054,30 +10058,39 @@ WBSTree = (function ($) {
 
                     $("#date_of_pre_notice").datepicker();
                     // Narayan - get prelimnary notices list for notice history
-                    _Document.getNoticeByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
-                        _NoticeList = response.data;
-                        var gridNotice = $("#gridNoticeList tbody");
-                        gridNotice.empty();
-                        _NoticeList.reverse();
-                        var NoticeList = _NoticeList;
-                        //if (!_IsRootForModification) {
-                        for (var x = 0; x < NoticeList.length; x++) {
-                            var durationDate = "";
-                            if (_NoticeList[x].DurationDate != null) {
-                                durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
-                            }
-                            gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + (x + 1) + '</a></td> ' +
-                                '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
-                                '>' + _NoticeList[x].Reason + '</td>' +
-                                //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
-                                '<td> <button type="button" id="view_notice">view</button></td>' +
-                                '<tr > ');
-                        }
-                        //}
-                    });
+                    //_Document.getNoticeByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    //    _NoticeList = response.data;
+                    //    var gridNotice = $("#gridNoticeList tbody");
+                    //    gridNotice.empty();
+                    //    _NoticeList.reverse();
+                    //    var NoticeList = _NoticeList;
+                    //    //if (!_IsRootForModification) {
+                    //    for (var x = 0; x < NoticeList.length; x++) {
+                    //        var durationDate = "";
+                    //        if (_NoticeList[x].DurationDate != null) {
+                    //            durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
+                    //        }
+                    //        gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                    //            '><a>' + (x + 1) + '</a></td> ' +
+                    //            '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
+                    //            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                    //            '>' + _NoticeList[x].Reason + '</td>' +
+                    //            //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                    //            '<td> <button type="button" id="view_notice">view</button></td>' +
+                    //            '<tr > ');
+                    //    }
+                    //    //}
+                    //});
+
+                    ////$('#certified_payroll_select').multiselect({
+                    ////    // columns: 5,
+                    ////    clearButton: true,
+                    ////    search: false,
+                    ////    selectAll: false,
+                    ////    // rebuild : true,
+                    ////    nonSelectedText: '-- Select --',
+                    ////    numberDisplayed: 1
 
                     // Narayan - get insurnace list for insurance history
                     _Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
@@ -10110,25 +10123,23 @@ WBSTree = (function ($) {
                     //    nonSelectedText: '-- Select --',
                     //    numberDisplayed: 1
 
+                    //// Narayan - get insurnace list for insurance history
+                    //_Document.getInsuranceByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    //    _InsuranceList = response.data;
+                    //    var gridInsurance = $("#gridInsuranceList tbody");
+                    //    gridInsurance.empty();
+                    //    _InsuranceList.reverse();
+                    //    var InsuranceList = _InsuranceList;
+                    //    for (var x = 0; x < InsuranceList.length; x++) {
+                    //        gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                    //            '><a>' + (x + 1) + '</a></td> ' +
+                    //            '<td>' + _InsuranceList[x].Type + '</td>' +
+                    //            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                    //            '>' + _InsuranceList[x].Limit + '</td>' +
+                    //            '<tr > ');
+                    //    }
                     //});
-
-                    // Narayan - get insurnace list for insurance history
-                    _Document.getInsuranceByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
-                        _InsuranceList = response.data;
-                        var gridInsurance = $("#gridInsuranceList tbody");
-                        gridInsurance.empty();
-                        _InsuranceList.reverse();
-                        var InsuranceList = _InsuranceList;
-                        for (var x = 0; x < InsuranceList.length; x++) {
-                            gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + (x + 1) + '</a></td> ' +
-                                '<td>' + _InsuranceList[x].Type + '</td>' +
-                                '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
-                                '>' + _InsuranceList[x].Limit + '</td>' +
-                                '<tr > ');
-                        }
-                    });
 
 
                     //$('#wrap_select').multiselect({
@@ -14221,8 +14232,8 @@ WBSTree = (function ($) {
 
             //=============================================================================================================
             //Nivedita Additional program
-            var additionalContPageFieldIDs = '#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,#txtprogramNotes,' + '#labor_warranty,#materials_warranty,#other_warranty,#labor_start_date,#labor_end_date,#materials_start_date,#materials_end_date,#other_start_date,#other_end_date,#labordescription,#materialsdescription,#otherdescription,#txtPPNotes' +
-                '#date_of_pre_notice, #notice_reason, #insurance_type_select, #insurance_limit';
+            var additionalContPageFieldIDs = '#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,' +
+                '#date_of_pre_notice, #notice_reason, #insurance_type_select, #insurance_limit,#txtPPNotes';
             // debugger;
             $(additionalContPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
@@ -14254,6 +14265,7 @@ WBSTree = (function ($) {
                     } else {
                         $("#additionalInfoPopup").modal('toggle');
                         $("#ProgramModal").css({ "opacity": "1" });
+                        isFieldValueChanged = false;
                     }
                 }
             });
@@ -14265,7 +14277,7 @@ WBSTree = (function ($) {
                 '#program_client_email,#program_client_address_line1,#program_client_address_line2,#program_client_city,#program_client_state,' +
                 '#program_client_po_num,#program_project_manager,#program_billing_poc_city,#program_billing_poc_state,#program_billing_poc_po_num,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_po_num,#program_project_manager,#program_project_manager_phone,#program_project_manager_email,' +
-                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction';
+                '#program_tm_billing,#program_sov_billing,#program_monthly_billing,#program_Lumpsum,#program_billing_poc_special_instruction,#txtprogramNotes';
 
             $(contPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
@@ -14596,25 +14608,37 @@ WBSTree = (function ($) {
                 //}
                 //wrapDropDown.val(datawrapArray);
                 //debugger;
-
+                $('#txtPPNotes').val('');
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
-
+                  
 
                     if (data.IsPPBond == 'Yes') {
-                        $('#PPBondYes').attr("checked", "checked");
+                        $('input[name=PPBond][value="' + data.IsPPBond + '"]')
+                            .prop('checked', true)
+                            .trigger('change');
+                        //$('#PPBondYes').attr("checked", "checked");
                         div = document.getElementById('ShowDivCost');
                         div.style.display = "block";
                         if (data.IsCostPartOfContract == 'No') {
-                            $('#costPartQNo').attr("checked", "checked");
+                            $('input[name=costPartQ][value="' + data.IsCostPartOfContract + '"]')
+                                .prop('checked', true)
+                                .trigger('change');
+                            //$('#costPartQNo').attr("checked", "checked");
                             div = document.getElementById('PPNotes');
                             div.style.display = "block";
                             $('#txtPPNotes').val(data.PPBondNotes);
                         }
                         else {
-                            $('#costPartQYes').attr("checked", "checked");
+                            $('input[name=costPartQ][value="' + data.IsCostPartOfContract + '"]')
+                                .prop('checked', true)
+                                .trigger('change');
+                            div = document.getElementById('PPNotes');
+                            div.style.display = "none";
+                            
+                           // $('#costPartQYes').attr("checked", "checked");
                         }
                     }
                     else if (data.IsPPBond == 'No') {
@@ -14638,24 +14662,24 @@ WBSTree = (function ($) {
 
 
                                        
-                    modal.find('.modal-body #txtPPNotes').val(data.PPBondNotes);
+                    modal.find('#txtPPNotes').val(data.PPBondNotes);
 
                     $('#reporting_to').val(data.ReportingTo);
                     
-                    $('#labor_warranty').val(data.LaborWarranty);
-                    $('#materials_warranty').val(data.MaterialsWarranty);
-                    $('#other_warranty').val(data.OtherWarranty);
+                    //$('#labor_warranty').val(data.LaborWarranty);
+                    //$('#materials_warranty').val(data.MaterialsWarranty);
+                    //$('#other_warranty').val(data.OtherWarranty);
 
-                    $('#labor_start_date').val(data.LaborStartDate ? moment(data.LaborStartDate).format('MM/DD/YYYY') : "");
-                    $('#labor_end_date').val(data.LaborEndDate ? moment(data.LaborEndDate).format('MM/DD/YYYY') : "");
-                    $('#materials_start_date').val(data.MaterialsStartDate ? moment(data.MaterialsStartDate).format('MM/DD/YYYY') : "");
-                    $('#materials_end_date').val(data.MaterialsEndDate ? moment(data.MaterialsEndDate).format('MM/DD/YYYY') : "");
-                    $('#other_start_date').val(data.OtherStartDate ? moment(data.OtherStartDate).format('MM/DD/YYYY') : "");
-                    $('#other_end_date').val(data.OtherEndDate ? moment(data.OtherEndDate).format('MM/DD/YYYY') : "");
+                    //$('#labor_start_date').val(data.LaborStartDate ? moment(data.LaborStartDate).format('MM/DD/YYYY') : "");
+                    //$('#labor_end_date').val(data.LaborEndDate ? moment(data.LaborEndDate).format('MM/DD/YYYY') : "");
+                    //$('#materials_start_date').val(data.MaterialsStartDate ? moment(data.MaterialsStartDate).format('MM/DD/YYYY') : "");
+                    //$('#materials_end_date').val(data.MaterialsEndDate ? moment(data.MaterialsEndDate).format('MM/DD/YYYY') : "");
+                    //$('#other_start_date').val(data.OtherStartDate ? moment(data.OtherStartDate).format('MM/DD/YYYY') : "");
+                    //$('#other_end_date').val(data.OtherEndDate ? moment(data.OtherEndDate).format('MM/DD/YYYY') : "");
 
-                    $('#labordescription').val(data.LaborDescription);
-                    $('#materialsdescription').val(data.MaterialsDescription);
-                    $('#otherdescription').val(data.OtherDescription);
+                    //$('#labordescription').val(data.LaborDescription);
+                    //$('#materialsdescription').val(data.MaterialsDescription);
+                    //$('#otherdescription').val(data.OtherDescription);
                     
 
 
@@ -14882,6 +14906,52 @@ WBSTree = (function ($) {
                 wrapDropDown.multiselect('refresh');       //vaishnavi 12-4-2022
 
                 });
+
+                _Document.getNoticeByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    _NoticeList = response.data;
+                    var gridNotice = $("#gridNoticeList tbody");
+                    gridNotice.empty();
+                    _NoticeList.reverse();
+                    var NoticeList = _NoticeList;
+                    //if (!_IsRootForModification) {
+                    for (var x = 0; x < NoticeList.length; x++) {
+                        var durationDate = "";
+                        if (_NoticeList[x].DurationDate != null) {
+                            durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
+                        }
+                        gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                            '><a>' + (x + 1) + '</a></td> ' +
+                            '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
+                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '>' + _NoticeList[x].Reason + '</td>' +
+                            //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td> <button type="button" id="view_notice">view</button></td>' +
+                            '<tr > ');
+                    }
+                    //}
+                });
+
+              
+
+                // Narayan - get insurnace list for insurance history
+                _Document.getInsuranceByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
+                    _InsuranceList = response.data;
+                    var gridInsurance = $("#gridInsuranceList tbody");
+                    gridInsurance.empty();
+                    _InsuranceList.reverse();
+                    var InsuranceList = _InsuranceList;
+                    for (var x = 0; x < InsuranceList.length; x++) {
+                        gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                            '><a>' + (x + 1) + '</a></td> ' +
+                            '<td>' + _InsuranceList[x].Type + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '>' + _InsuranceList[x].Limit + '</td>' +
+                            '<tr > ');
+                    }
+                });
+
 
                 
             });
