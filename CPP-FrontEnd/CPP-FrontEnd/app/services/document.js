@@ -15,6 +15,10 @@ angular.module('cpp.services').
                 return $resource(serviceBasePath + "Register/Document/:docIDs");
             },
 
+            getWarrantyByProgramId: function (programId) {
+                return $resource(serviceBasePath + "contractWarranty/getContractWarranty/:programId");
+            },
+
             getNoticeByProgramId: function (programId) {
                 return $resource(serviceBasePath + "prelimnaryNotice/getPrelimnaryNotice/:programId");
             },

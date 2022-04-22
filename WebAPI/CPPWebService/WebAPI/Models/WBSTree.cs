@@ -976,27 +976,27 @@ namespace WebAPI.Models
 
             PrimeSubPrime = wbsprg.PrimeSubPrime;
             PrimeParent = wbsprg.PrimeParent;
-            LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
-            MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
-            OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+            //LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
+            //MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
+            //OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
 
-            wbsprg.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
-            wbsprg.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
-            wbsprg.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
-            wbsprg.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
-            wbsprg.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
-            wbsprg.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
+            //wbsprg.LaborStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.StartDate).FirstOrDefault();
+            //wbsprg.MaterialsStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.StartDate).FirstOrDefault();
+            //wbsprg.OtherStartDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.StartDate).FirstOrDefault();
+            //wbsprg.LaborEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.EndDate).FirstOrDefault();
+            //wbsprg.MaterialsEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.EndDate).FirstOrDefault();
+            //wbsprg.OtherEndDate = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.EndDate).FirstOrDefault();
 
-            LaborStartDate = (wbsprg.LaborStartDate != null ? wbsprg.LaborStartDate.Value.ToString("yyyy-MM-dd") : "");
-            MaterialsStartDate = (wbsprg.MaterialsStartDate != null ? wbsprg.MaterialsStartDate.Value.ToString("yyyy-MM-dd") : "");
-            OtherStartDate = (wbsprg.OtherStartDate != null ? wbsprg.OtherStartDate.Value.ToString("yyyy-MM-dd") : "");
-            LaborEndDate = (wbsprg.LaborEndDate != null ? wbsprg.LaborEndDate.Value.ToString("yyyy-MM-dd") : "");
-            MaterialsEndDate = (wbsprg.MaterialsEndDate != null ? wbsprg.MaterialsEndDate.Value.ToString("yyyy-MM-dd") : "");
-            OtherEndDate = (wbsprg.OtherEndDate != null ? wbsprg.OtherEndDate.Value.ToString("yyyy-MM-dd") : "");
+            //LaborStartDate = (wbsprg.LaborStartDate != null ? wbsprg.LaborStartDate.Value.ToString("yyyy-MM-dd") : "");
+            //MaterialsStartDate = (wbsprg.MaterialsStartDate != null ? wbsprg.MaterialsStartDate.Value.ToString("yyyy-MM-dd") : "");
+            //OtherStartDate = (wbsprg.OtherStartDate != null ? wbsprg.OtherStartDate.Value.ToString("yyyy-MM-dd") : "");
+            //LaborEndDate = (wbsprg.LaborEndDate != null ? wbsprg.LaborEndDate.Value.ToString("yyyy-MM-dd") : "");
+            //MaterialsEndDate = (wbsprg.MaterialsEndDate != null ? wbsprg.MaterialsEndDate.Value.ToString("yyyy-MM-dd") : "");
+            //OtherEndDate = (wbsprg.OtherEndDate != null ? wbsprg.OtherEndDate.Value.ToString("yyyy-MM-dd") : "");
 
-            LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
-            MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
-            OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
+            //LaborDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.Description).FirstOrDefault();
+            //MaterialsDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.Description).FirstOrDefault();
+            //OtherDescription = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.Description).FirstOrDefault();     //Vaishnavi 12-04-2022
 
 
 
