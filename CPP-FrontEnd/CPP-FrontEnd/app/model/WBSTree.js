@@ -9106,6 +9106,41 @@ WBSTree = (function ($) {
                 }
             });
 
+            // Narayan - on click view button in warranty grid - 25-04-2022
+            $("#gridWarrantyList").on('click', '#view_warranty', function () {
+                $('#btnSaveWarranty').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var AllWarranties = _WarrantyList;
+                if (id != undefined) {
+                    for (var i = 0; i < AllWarranties.length; i++){
+                        if (AllWarranties[i].Id == id) {
+                            $('#warranty_select').val(AllWarranties[i].WarrantyType);
+                            $('#warranty_start_date').val(moment(AllWarranties[i].StartDate).format('MM/DD/YYYY'));
+                            $('#warranty_end_date').val(moment(AllWarranties[i].EndDate).format('MM/DD/YYYY'));
+                            $('#warranty_description').val(AllWarranties[i].Description);
+                            break;
+                        }
+                    }
+                }
+                $('#btnClearWarranty').show();
+            });
+
+            // Narayan - on click clear button in warranty - 25-04-2022
+            $('#btnClearWarranty').on('click', function () {
+                $('#btnSaveWarranty').show();
+                ResetWarrantyFields();
+                $('#btnClearWarranty').hide();
+            });
+
+            //Narayan - 22/04/2022 - for reset insurance fields
+            function ResetWarrantyFields() {
+                $('#warranty_select').val("Labor");
+                $('#warranty_start_date').val('');
+                $('#warranty_end_date').val('');
+                $('#warranty_description').val('');
+            }
+
             // Narayan - on click view button in prelimnary notice - 14-04-2022
             $("#gridNoticeList").on('click', '#view_notice', function () {
                 $('#btnSaveNotice').hide();
@@ -9673,15 +9708,6 @@ WBSTree = (function ($) {
                         }
                     });
                 }
-
-                //Narayan - 22/04/2022 - for reset insurance fields
-                function ResetWarrantyFields() {
-                    //$('#warranty_select').val('');  
-                    $('#warranty_start_date').val('');
-                    $('#warranty_end_date').val('');
-                    $('#warranty_description').val('');
-                }
-
 
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice').unbind().on('click', function (event) {
@@ -14652,6 +14678,8 @@ WBSTree = (function ($) {
                 $('#notice_reason').val('');
                 $('#insurance_limit').val('');
                 $('#insurance_type_select').val('');
+
+                $('#btnClearWarranty').hide();
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
@@ -15017,6 +15045,7 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td> <button type="button" id="view_warranty">view</button></td>' +
                             '<tr > ');
                     }
                 });
