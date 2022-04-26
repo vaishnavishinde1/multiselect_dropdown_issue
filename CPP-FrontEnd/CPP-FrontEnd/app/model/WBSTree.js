@@ -4666,8 +4666,9 @@ WBSTree = (function ($) {
                         //"IsPPBond": selectedNode.IsPPBond,
                         //"IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         //"PPBondNotes": selectedNode.PPBondNotes,
-                        "programNote": newNode.ProgramNote
-                       
+                        "programNote": newNode.ProgramNote,
+                        "PrimeSubPrime": newNode.PrimeSubPrime,
+                        "PrimeParent": newNode.PrimeParent,
                     }
 
 
