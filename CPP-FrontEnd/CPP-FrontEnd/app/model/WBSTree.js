@@ -9204,16 +9204,19 @@ WBSTree = (function ($) {
                 }
             })
 
-            $('#wrap_options input').on('change', function () {
-                var selOption = $("input[type='radio'][name='wrap']:checked").val();
-                console.log(selOption);
-                if (selOption == 'Yes') {
+            //$('#wrap_options input').on('change', function () {
+            //    var selOption = $("input[type='radio'][name='wrap']:checked").val();
+            //    console.log(selOption);
+            //    if (selOption == 'Yes') {
 
-                    $('#wrap_select_div').show();
-                } else {
-                    $('#wrap_select_div').hide();
-                }
-            })   //vaishnavi 12-4-2022
+            //        $('#wrap_select_div').show();
+            //        $("#reporting_to*").prop('disabled', false);
+            //    } else {
+            //        $('#wrap_select_div').hide();
+            //        $("#reporting_to").prop('disabled', true);
+            //        $("#reporting_to").val('');
+            //    }
+            //})   //vaishnavi 12-4-2022
             //============================= Jignesh-ChangeOrderPopUpChanges ============================================
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
@@ -9327,7 +9330,7 @@ WBSTree = (function ($) {
             $('#ProgramModal').unbind().on('show.bs.modal', function (event) {
                 $('#certified_payroll_select_div').hide();  //vaishnavi 12-4-2022
                 $('#prevailing_wages_select_div').hide();
-                $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
+                $('#wrap_select_div').css("visibility", "hidden");    //vaishnavi 12-4-2022
                 $('#message_div').hide();
                 defaultModalPosition();
 
@@ -14286,7 +14289,7 @@ WBSTree = (function ($) {
                             $('#txtPPNotes').val('');
                             $('#certified_payroll_select_div').hide();
                             $('#prevailing_wages_select_div').hide();
-                            $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
                             $("#additionalInfoPopup").modal('toggle');
                             $("#ProgramModal").css({ "opacity": "1" });
                             isFieldValueChanged = false;
@@ -14652,11 +14655,29 @@ WBSTree = (function ($) {
                 $('#notice_reason').val('');
                 $('#insurance_limit').val('');
                 $('#insurance_type_select').val('');
+                $("#reporting_to").prop('disabled', true);
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
-                  
+                    
+                    $('input:radio[name=wrap]').change(function () {
+                        var selOption = $("input[type='radio'][name='wrap']:checked").val();
+                        console.log(selOption);
+                        if (selOption == 'Yes') {
+
+                           // $('#wrap_select_div').show();
+                            $('#wrap_select_div').css("visibility", "visible");
+                            $("#reporting_to*").prop('disabled', false);
+                            $('#reporting_to').val(data.ReportingTo);
+                        } else {
+                           // $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
+                            $("#reporting_to").prop('disabled', true);
+                            $("#reporting_to").val('');
+                        }
+                    })   //vaishnavi 12-4-2022
+
 
                     if (data.IsPPBond == 'Yes') {
                         $('input[name=PPBond][value="' + data.IsPPBond + '"]')
@@ -14687,13 +14708,16 @@ WBSTree = (function ($) {
                         }
                     }
                     else if (data.IsPPBond == 'No') {
-                        $('#PPBondNo').attr("checked", "checked");
+                      //  $('#PPBondNo').attr("checked", "checked");
+                        $('input[name=PPBond][value="' + data.IsPPBond + '"]')
+                            .prop('checked', true)
+                            .trigger('change');
                         //div = document.getElementById('ShowDivCost');
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-                        //$("#ShowDivCost *").prop('disabled', true);
-                        //$("#PPNotes *").prop('disabled', true);
+                        $("#ShowDivCost *").prop('disabled', true);
+                        $("#PPNotes *").prop('disabled', true);
                     }
                     else {
                         $('#PPBondYes').prop("checked", false);
@@ -14704,7 +14728,8 @@ WBSTree = (function ($) {
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-
+                        $("#ShowDivCost *").prop('disabled', false);
+                        $("#PPNotes *").prop('disabled', true);
                         modal.find('.modal-body #txtPPNotes').val('');
                     }
 
@@ -14874,13 +14899,15 @@ WBSTree = (function ($) {
 
                 }
                     if (data.IsWrapChecked == "No") {
-
-                    $('#wrap_select_div').hide();
+                        
+                        $('#wrap_select_div').css("visibility", "hidden");
+                        $("#reporting_to").prop('disabled', true);
                 }
 
                     if (data.IsWrapChecked == "Yes") {
 
-                    $('#wrap_select_div').show();
+                        $('#wrap_select_div').css("visibility", "visible");
+                        $("#reporting_to").prop('disabled', false);
 
                     var wraplist = [];
 
@@ -15184,6 +15211,9 @@ WBSTree = (function ($) {
                                     '>' + _ModificationList[x].ScheduleImpact + '</td>' +
                                     '<td>' + moment(_ModificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                     '<tr > ');
+                                if (_ModificationList[x].ModificationNo == 0) {
+                                    $('#rb' +_ModificationList[x].Id).hide();
+                                }
                             }
 
                             $('#documentUploadContModification').removeAttr('title');    //Manasi 01-03-2021
