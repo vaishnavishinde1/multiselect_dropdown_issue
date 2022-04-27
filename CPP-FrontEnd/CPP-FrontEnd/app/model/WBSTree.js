@@ -46,23 +46,25 @@ WBSTree = (function ($) {
 
         var view_mode = localStorage.getItem('MODE');
         if (view_mode == 'gridview') {
+            debugger;
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
-            $('#closed,#approved,#unapproved').hide();
+            //$('#closed,#approved,#unapproved,#contract,#project').hide();
             localStorage.setItem('MODE', 'gridview');
         }
         else {
+            debugger;
             $('#mindmap').show();
+            $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('class', "fa fa-th-large");
             $('.toggle-btn i').attr('title', 'Go To GridView');
-            $('#closed,#approved,#unapproved').show();
             localStorage.setItem('MODE', 'mindmap');
         }
         //--------------------Aditya----------------------//

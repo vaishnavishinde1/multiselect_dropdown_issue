@@ -6961,7 +6961,7 @@
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
-            $('#closed,#approved,#unapproved').show();
+            $('#closed,#approved,#unapproved,#contract,#project').show();
             localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
@@ -6969,7 +6969,7 @@
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
-            $('#closed,#approved,#unapproved').hide();
+            $('#closed,#approved,#unapproved,#contract,#project').hide();
             localStorage.setItem('MODE', 'gridview');
             $('.toggle-btn i').attr('title', 'Go To TreeView');
         }

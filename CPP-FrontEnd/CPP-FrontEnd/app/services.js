@@ -443,10 +443,10 @@ angular.module('xenon.services', []).
 		this.toStatePath = function(path)
 		{
 			if (path != 'app.wbs') {
-				$('#closed,#approved,#unapproved').hide();
+				$('#closed,#approved,#unapproved,#contract,#project').hide();
 			}
 			else {
-				$('#closed,#approved,#unapproved').show();
+				$('#closed,#approved,#unapproved,#contract,#project').show();
             }
 			return path.replace(/\//g, '.').replace(/^\./, '');
 		};
