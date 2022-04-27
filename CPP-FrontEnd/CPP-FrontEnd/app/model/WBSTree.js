@@ -3420,11 +3420,11 @@ WBSTree = (function ($) {
                             gridNoteslist.empty();
                             for (var x = 0; x < programNotesList.length; x++) {
                                 gridNoteslist.append(
-                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row" style="width:50px;">' +
+                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td id="notes_desc" class="class-td-LiveView" style="width:250px;">' + programNotesList[x].notes_desc + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:130px;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                                    '<td id="notes_desc" class="class-td-LiveView" >' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="notes_view">view</button></td>' +
                                     '</tr>'
@@ -9794,7 +9794,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td> <button type="button" id="view_notice">view</button></td>' +
@@ -15117,7 +15117,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             '<td> <button type="button" id="view_notice">view</button></td>' +
