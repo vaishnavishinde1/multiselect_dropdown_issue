@@ -10237,16 +10237,16 @@ WBSTree = (function ($) {
                             }
 
                             //06042022 issue with change current date
-                            if (modType == true) {
+                            if (modType == true && selectedNode.CurrentEndDate!='') {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true); //Aditya 06042022 if schedule impact modification disable current end date
-                                $('#program_original_end_date').attr('disabled', true);
+                                $('#program_current_end_date').attr('disabled', 'disabled'); //Aditya 06042022 if schedule impact modification disable current end date
+                                $('#program_original_end_date').attr('disabled', 'disabled');
                             }
                             else {
-                                $('#program_original_end_date').val(selectedNode.CurrentEndDate);
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
+                                $('#program_original_end_date').val((selectedNode.CurrentEndDate).format('MM/DD/YYYY'));                         
                             }
 
                         }
@@ -10255,15 +10255,15 @@ WBSTree = (function ($) {
                                 $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
                             }
                             else if (selectedNode.originalEndDate != '') {
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
                                 $('#program_current_end_date').val(moment(selectedNode.originalEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
                             }
                             else {
                                 $('#program_original_end_date').val('');
                             }
-                            $('#program_current_end_date').attr('disabled', true);
-                            $('#program_original_end_date').attr('disabled', false);
+                            $('#program_current_end_date').attr('disabled', 'disabled');
+                            $('#program_original_end_date').removeAttr('disabled');
                         }
                     });
                         //}
@@ -10839,8 +10839,8 @@ WBSTree = (function ($) {
                         $('#program_current_end_date').focus();
                         $('#program_current_end_date').blur();
                     });
-                    $('#program_current_end_date').attr('disabled', true);
-                    $('#program_original_end_date').attr('disabled', false);
+                    $('#program_current_end_date').attr('disabled', 'disabled');
+                    $('#program_original_end_date').removeAttr('disabled');
                     //-----------------------------------------------------------------------------
                     wbsTree.setIsProgramNew(true);
                     _Is_Program_New = true;
