@@ -9706,6 +9706,7 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td> <button type="button" id="view_warranty">view</button></td>' +
                                     '<tr > ');
                             }
 
