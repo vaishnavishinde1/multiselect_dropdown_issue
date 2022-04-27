@@ -912,12 +912,12 @@
                             <!--Aditya ogDate--->
                             <div class="col-md-4" style="padding-left: 0;">
                                 <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
-                                <input type="text" class="form-control" id="program_original_end_date" autocomplete="off" placeholder="MM/DD/YYYY"><!--Aditya: This is original End Date-->
+                                <input type="text" class="form-control" id="program_original_end_date" disabled="disabled" autocomplete="off" placeholder="MM/DD/YYYY"><!--Aditya: This is original End Date-->
                             </div>
 
                             <div class="col-md-4" style="padding-left: 0; padding-right: 0;">
                                 <label for="program_element_contract_number" class="control-label _bold">Current Contract End Date</label>
-                                <input type="text" class="form-control" id="program_current_end_date" autocomplete="off"> <!--This Current End Date which is modified by Schedule impact-->
+                                <input type="text" class="form-control" id="program_current_end_date" autocomplete="off" disabled="disabled"> <!--This Current End Date which is modified by Schedule impact-->
                             </div>
                             <!--<div class="col-md-4" style="padding-left: 0;">
                             <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
@@ -1820,10 +1820,10 @@
                                 <table id="gridNoticehistoryList" class="table table-striped table-bordered">
                                     <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                         <tr>
-                                            <td style="font-weight:900;width: 50px !important;">ID</td>
-                                            <td style="font-weight: 900; width: 250px !important;"> Description</td>
-                                            <td style="font-weight: 900; width: 130px !important; "> Created Date</td>
-                                            <td style="font-weight: 900; width: 130px !important; "> Created By</td>
+                                            <td style="font-weight: 900; width: 12%; ">ID</td>
+                                            <td style="font-weight: 900; width: 42%; "> Description</td>
+                                            <td style="font-weight: 900; width: 16%; "> Created Date</td>
+                                            <td style="font-weight: 900; width: 16%; "> Created By</td>
                                             <!--<td style="font-weight:900;">Date of Created</td>-->
                                             <td style="font-weight: 900;">Action</td>
 
@@ -4798,7 +4798,7 @@
                                 <!--</div>-->
                                 <div class="col-xs-4 text-center" style="margin-top: 30px;">
                                     <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                                    <!--<button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>-->
+                                    <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -4825,11 +4825,11 @@
                                 <table id="gridWarrantyList" class="table table-striped table-bordered">
                                     <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                         <tr>
-                                            <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                            <td style="font-weight:900;">Warranty</td>
-                                            <td style="font-weight:900;">Start Date</td>
-                                            <td style="font-weight:900;">End Date</td>
-                                            <!--<td style="font-weight:900;">Action</td>-->
+                                            <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                            <td style="font-weight: 900; width: 400px;">Warranty</td>
+                                            <td style="font-weight: 900; width: 200px;">Start Date</td>
+                                            <td style="font-weight: 900; width: 200px;">End Date</td>
+                                            <td style="font-weight:900;">Action</td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -4880,9 +4880,9 @@
                                     <table id="gridNoticeList" class="table table-striped table-bordered">
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
-                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
-                                                <td style="font-weight:900;" width="500">Reason</td>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 25%; ">Date of Notice	</td>
+                                                <td style="font-weight: 900; width: 45%; " >Reason</td>
                                                 <!--<td style="font-weight:900;">Date of Created</td>-->
                                                 <td style="font-weight:900;">Action</td>
                                             </tr>
@@ -4928,9 +4928,9 @@
                                     <table id="gridInsuranceList" class="table table-striped table-bordered">
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
-                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                                <td style="font-weight:900;min-width: 300px;">Type</td>
-                                                <td style="font-weight:900;">Limit</td>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 43%;">Type</td>
+                                                <td style="font-weight: 900; width: 43%;">Limit</td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>

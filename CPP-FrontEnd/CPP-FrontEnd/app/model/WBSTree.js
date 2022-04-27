@@ -3422,11 +3422,11 @@ WBSTree = (function ($) {
                             gridNoteslist.empty();
                             for (var x = 0; x < programNotesList.length; x++) {
                                 gridNoteslist.append(
-                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row" style="width:50px;">' +
+                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td id="notes_desc" class="class-td-LiveView" style="width:250px;">' + programNotesList[x].notes_desc + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:130px;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                                    '<td id="notes_desc" class="class-td-LiveView" >' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="notes_view">view</button></td>' +
                                     '</tr>'
@@ -9109,6 +9109,41 @@ WBSTree = (function ($) {
                 }
             });
 
+            // Narayan - on click view button in warranty grid - 25-04-2022
+            $("#gridWarrantyList").on('click', '#view_warranty', function () {
+                $('#btnSaveWarranty').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var AllWarranties = _WarrantyList;
+                if (id != undefined) {
+                    for (var i = 0; i < AllWarranties.length; i++){
+                        if (AllWarranties[i].Id == id) {
+                            $('#warranty_select').val(AllWarranties[i].WarrantyType);
+                            $('#warranty_start_date').val(moment(AllWarranties[i].StartDate).format('MM/DD/YYYY'));
+                            $('#warranty_end_date').val(moment(AllWarranties[i].EndDate).format('MM/DD/YYYY'));
+                            $('#warranty_description').val(AllWarranties[i].Description);
+                            break;
+                        }
+                    }
+                }
+                $('#btnClearWarranty').show();
+            });
+
+            // Narayan - on click clear button in warranty - 25-04-2022
+            $('#btnClearWarranty').on('click', function () {
+                $('#btnSaveWarranty').show();
+                ResetWarrantyFields();
+                $('#btnClearWarranty').hide();
+            });
+
+            //Narayan - 22/04/2022 - for reset insurance fields
+            function ResetWarrantyFields() {
+                $('#warranty_select').val("Labor");
+                $('#warranty_start_date').val('');
+                $('#warranty_end_date').val('');
+                $('#warranty_description').val('');
+            }
+
             // Narayan - on click view button in prelimnary notice - 14-04-2022
             $("#gridNoticeList").on('click', '#view_notice', function () {
                 $('#btnSaveNotice').hide();
@@ -9680,15 +9715,6 @@ WBSTree = (function ($) {
                     });
                 }
 
-                //Narayan - 22/04/2022 - for reset insurance fields
-                function ResetWarrantyFields() {
-                    //$('#warranty_select').val('');  
-                    $('#warranty_start_date').val('');
-                    $('#warranty_end_date').val('');
-                    $('#warranty_description').val('');
-                }
-
-
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice').unbind().on('click', function (event) {
                     var operation = wbsTree.getPrelimneryNoticeOperation();
@@ -9770,7 +9796,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td> <button type="button" id="view_notice">view</button></td>' +
@@ -10242,16 +10268,16 @@ WBSTree = (function ($) {
                             }
 
                             //06042022 issue with change current date
-                            if (modType == true) {
+                            if (modType == true && selectedNode.CurrentEndDate!='') {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true); //Aditya 06042022 if schedule impact modification disable current end date
-                                $('#program_original_end_date').attr('disabled', true);
+                                $('#program_current_end_date').attr('disabled', 'disabled'); //Aditya 06042022 if schedule impact modification disable current end date
+                                $('#program_original_end_date').attr('disabled', 'disabled');
                             }
                             else {
-                                $('#program_original_end_date').val(selectedNode.CurrentEndDate);
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
+                                $('#program_original_end_date').val((selectedNode.CurrentEndDate).format('MM/DD/YYYY'));                         
                             }
 
                         }
@@ -10260,15 +10286,15 @@ WBSTree = (function ($) {
                                 $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
                             }
                             else if (selectedNode.originalEndDate != '') {
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
                                 $('#program_current_end_date').val(moment(selectedNode.originalEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
                             }
                             else {
                                 $('#program_original_end_date').val('');
                             }
-                            $('#program_current_end_date').attr('disabled', true);
-                            $('#program_original_end_date').attr('disabled', false);
+                            $('#program_current_end_date').attr('disabled', 'disabled');
+                            $('#program_original_end_date').removeAttr('disabled');
                         }
                     });
                         //}
@@ -10881,8 +10907,8 @@ WBSTree = (function ($) {
                         $('#program_current_end_date').focus();
                         $('#program_current_end_date').blur();
                     });
-                    $('#program_current_end_date').attr('disabled', true);
-                    $('#program_original_end_date').attr('disabled', false);
+                    $('#program_current_end_date').attr('disabled', 'disabled');
+                    $('#program_original_end_date').removeAttr('disabled');
                     //-----------------------------------------------------------------------------
                     wbsTree.setIsProgramNew(true);
                     _Is_Program_New = true;
@@ -14749,6 +14775,9 @@ WBSTree = (function ($) {
                 $('#insurance_type_select').val('');
                 $("#reporting_to").prop('disabled', true);
               
+
+                $('#btnClearWarranty').hide();
+              
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
@@ -15090,7 +15119,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             '<td> <button type="button" id="view_notice">view</button></td>' +
@@ -15136,6 +15165,7 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td> <button type="button" id="view_warranty">view</button></td>' +
                             '<tr > ');
                     }
                 });
