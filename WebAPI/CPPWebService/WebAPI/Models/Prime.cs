@@ -107,7 +107,7 @@ namespace WebAPI.Models
                     }
                     else
                     {
-                        result += Prime.Name + "' failed to be created, duplicate Service is not allowed.\n";
+                        result += Prime.Name + "' failed to be created, duplicate Prime is not allowed.\n";
                     }
                 }
 
@@ -150,11 +150,11 @@ namespace WebAPI.Models
 
                     if (retreivedPrime != null && retreivedPrime.id != Prime.id)
                     {
-                        return "Updating the project division Type is unavailable at this moment (" + Prime.Name + "). \n";
+                        return "Updating the prime is unavailable at this moment (" + Prime.Name + "). \n";
                     }
                     else if (duplicatePrime != null)
                     {
-                        result += Prime.Name + " failed to be updated, duplicate of services is not allowed.\n";
+                        result += Prime.Name + " failed to be updated, duplicate of Prime is not allowed.\n";
                     }
                     else if (retreivedPrime != null)
                     {

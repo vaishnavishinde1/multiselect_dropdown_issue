@@ -3420,11 +3420,11 @@ WBSTree = (function ($) {
                             gridNoteslist.empty();
                             for (var x = 0; x < programNotesList.length; x++) {
                                 gridNoteslist.append(
-                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row" style="width:50px;">' +
+                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td id="notes_desc" class="class-td-LiveView" style="width:250px;">' + programNotesList[x].notes_desc + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:130px;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                                    '<td id="notes_desc" class="class-td-LiveView" >' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="notes_view">view</button></td>' +
                                     '</tr>'
@@ -9107,6 +9107,41 @@ WBSTree = (function ($) {
                 }
             });
 
+            // Narayan - on click view button in warranty grid - 25-04-2022
+            $("#gridWarrantyList").on('click', '#view_warranty', function () {
+                $('#btnSaveWarranty').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var AllWarranties = _WarrantyList;
+                if (id != undefined) {
+                    for (var i = 0; i < AllWarranties.length; i++){
+                        if (AllWarranties[i].Id == id) {
+                            $('#warranty_select').val(AllWarranties[i].WarrantyType);
+                            $('#warranty_start_date').val(moment(AllWarranties[i].StartDate).format('MM/DD/YYYY'));
+                            $('#warranty_end_date').val(moment(AllWarranties[i].EndDate).format('MM/DD/YYYY'));
+                            $('#warranty_description').val(AllWarranties[i].Description);
+                            break;
+                        }
+                    }
+                }
+                $('#btnClearWarranty').show();
+            });
+
+            // Narayan - on click clear button in warranty - 25-04-2022
+            $('#btnClearWarranty').on('click', function () {
+                $('#btnSaveWarranty').show();
+                ResetWarrantyFields();
+                $('#btnClearWarranty').hide();
+            });
+
+            //Narayan - 22/04/2022 - for reset insurance fields
+            function ResetWarrantyFields() {
+                $('#warranty_select').val("Labor");
+                $('#warranty_start_date').val('');
+                $('#warranty_end_date').val('');
+                $('#warranty_description').val('');
+            }
+
             // Narayan - on click view button in prelimnary notice - 14-04-2022
             $("#gridNoticeList").on('click', '#view_notice', function () {
                 $('#btnSaveNotice').hide();
@@ -9205,16 +9240,19 @@ WBSTree = (function ($) {
                 }
             })
 
-            $('#wrap_options input').on('change', function () {
-                var selOption = $("input[type='radio'][name='wrap']:checked").val();
-                console.log(selOption);
-                if (selOption == 'Yes') {
+            //$('#wrap_options input').on('change', function () {
+            //    var selOption = $("input[type='radio'][name='wrap']:checked").val();
+            //    console.log(selOption);
+            //    if (selOption == 'Yes') {
 
-                    $('#wrap_select_div').show();
-                } else {
-                    $('#wrap_select_div').hide();
-                }
-            })   //vaishnavi 12-4-2022
+            //        $('#wrap_select_div').show();
+            //        $("#reporting_to*").prop('disabled', false);
+            //    } else {
+            //        $('#wrap_select_div').hide();
+            //        $("#reporting_to").prop('disabled', true);
+            //        $("#reporting_to").val('');
+            //    }
+            //})   //vaishnavi 12-4-2022
             //============================= Jignesh-ChangeOrderPopUpChanges ============================================
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
@@ -9328,7 +9366,7 @@ WBSTree = (function ($) {
             $('#ProgramModal').unbind().on('show.bs.modal', function (event) {
                 $('#certified_payroll_select_div').hide();  //vaishnavi 12-4-2022
                 $('#prevailing_wages_select_div').hide();
-                $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
+                $('#wrap_select_div').css("visibility", "hidden");    //vaishnavi 12-4-2022
                 $('#message_div').hide();
                 defaultModalPosition();
 
@@ -9675,15 +9713,6 @@ WBSTree = (function ($) {
                     });
                 }
 
-                //Narayan - 22/04/2022 - for reset insurance fields
-                function ResetWarrantyFields() {
-                    //$('#warranty_select').val('');  
-                    $('#warranty_start_date').val('');
-                    $('#warranty_end_date').val('');
-                    $('#warranty_description').val('');
-                }
-
-
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice').unbind().on('click', function (event) {
                     var operation = wbsTree.getPrelimneryNoticeOperation();
@@ -9765,7 +9794,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td> <button type="button" id="view_notice">view</button></td>' +
@@ -10296,24 +10325,43 @@ WBSTree = (function ($) {
                    
                     
                     
-                    
+                    //Nivedita - Button changes to color on Add New  25-04-2022
+
+                    $('#delete_program').removeClass('btn btn-black');
+                    $('#delete_program').addClass('btn btn-primary c-btn-delete');
+                    $('#delete_program').attr('style', 'width:150px;margin-left:15px;');
+                    $('#delete_program').removeAttr('disabled');  //Manasi 24-02-2021
+                    $('#spnBtndelete_program').removeAttr('title');  //Manasi 24-02-2021
+
+                    $('#btnModification').removeClass('btn btn-black');
+                    $('#btnModification').addClass('btn btn-primary c-btn-save');
+                    $('#btnModification').attr('style', 'width:150px;background-color:#FF9407 !important;color:white;');
+                    $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
+                    $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
+
+                    $('#btnAdditionalInfo').removeClass('btn btn-black');
+                    $('#btnAdditionalInfo').addClass('btn btn-primary c-btn-save');
+                    $('#btnAdditionalInfo').attr('style', 'width:150px;background-color: #4f07ff !important;color:white;');
+                    $('#btnAdditionalInfo').removeAttr('disabled');
+                    $('#spnAdditionalInfo').removeAttr('title');
+
+
                     $('#new_program_contract').prop("disabled", false);
                     $('#edit_program_contract').prop("disabled", false);
                     $('#btnDocManagement').removeAttr('disabled'); 
-                    $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
-                    $('#btnAdditionalInfo').removeAttr('disabled');
-                    $('#spnAdditionalInfo').removeAttr('title');
-                    $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
+                    
+                    
+                    
                     $('#documentUploadProgramNew').removeAttr('title');  //Manasi 23-02-2021
 
-                    $('#delete_program').removeAttr('disabled');  //Manasi 24-02-2021
-                    $('#spnBtndelete_program').removeAttr('title');  //Manasi 24-02-2021
+                    
+                    
 
                     $("#prelimnary_notice *").prop('disabled', false); // Narayan - 06/04/2022
                     $("#contract_insurance *").prop('disabled', false); // Narayan - 08/04/2022
 
                     //================ Jignesh-23-02-2021 =====================
-                    $('#delete_program').removeAttr('disabled');
+                    //$('#delete_program').removeAttr('disabled');
                     $('#btnModification').removeAttr('disabled');
                     //=========================================================
 
@@ -10821,13 +10869,31 @@ WBSTree = (function ($) {
                     //wrapDropDown.val(datawrapArray);
                     //wrapDropDown.multiselect('refresh');  //vaishnavi 12-4-2022
 
-                    $('#btnModification').attr('disabled', 'disabled');   //Manasi 23-02-2021
+                    
                     $('#btnDocManagement').attr('disabled', 'disabled');
+
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+
+                    $('#delete_program').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_program').addClass('btn btn-black');
+                    $('#delete_program').attr('style', 'width:150px;');
+                    $('#delete_program').attr('disabled', 'disabled');   //Manasi 24-02-2021
+
+                    $('#btnModification').removeClass('btn btn-primary c-btn-save');
+                    $('#btnModification').addClass('btn btn-black');
+                    $('#btnModification').attr('style', 'width:150px;');
+                    $('#btnModification').attr('disabled', 'disabled');   //Manasi 23-02-2021
+
+                    $('#btnAdditionalInfo').removeClass('btn-primary c-btn-save');
+                    $('#btnAdditionalInfo').addClass('btn btn-black');
+                    $('#btnAdditionalInfo').attr('style', 'width:150px;');
                     $('#btnAdditionalInfo').attr('disabled', 'disabled');
+
+
                     $('#spnBtnModification').attr('title', "A contract needs to be saved before the modifications can be added");   //Manasi 23-02-2021
                     $('#documentUploadProgramNew').attr('title', "A contract needs to be saved before the document can be added");  //Manasi 23-02-2021
                     $('#spnAdditionalInfo').attr('title', 'A contract needs to be saved before the additional information can be added');
-                    $('#delete_program').attr('disabled', 'disabled');   //Manasi 24-02-2021
+                    
                     $('#spnBtndelete_program').attr('title', "A contract needs to be saved before it can be deleted");   //Manasi 24-02-2021
 
                     modal_mode = 'Create';
@@ -10929,7 +10995,7 @@ WBSTree = (function ($) {
                     $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     $('#updateBtnProgram').attr('disabled', 'disabled');   //Manasi
                     //================ Jignesh-23-02-2021 =====================
-                    $('#delete_program').attr('disabled', 'disabled');
+                    //$('#delete_program').attr('disabled', 'disabled');
                     $('#btnModification').attr('disabled', 'disabled');
                     //=========================================================
                     modal.find('.modal-title').text('New Contract');
@@ -11258,9 +11324,22 @@ WBSTree = (function ($) {
 
                 // Pritesh for Authorization added on 5th Aug 2020
                 if ((wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) || localStorage.Status == "Closed") {  //----Vaishnavi 30-03-2022----//
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022	
+                    $('#delete_program').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_program').addClass('btn btn-black');
+                    $('#delete_program').attr('style', 'width:150px;');
                     $("#delete_program").attr('disabled', 'disabled');
+
+                    $('#update_program').removeClass('btn btn-primary c-btn-save');
+                    $('#update_program').addClass('btn btn-black');
+                    $('#update_program').attr('style', 'width:150px;');
                     $("#update_program").attr('disabled', 'disabled');
+
+                    $('#btnSaveModification').removeClass('btn btn-primary c-btn-save');
+                    $('#btnSaveModification').addClass('btn btn-black');
+                    $('#btnSaveModification').attr('style', 'width:100px;');
                     $("#btnSaveModification").attr('disabled', 'disabled'); // Jignesh-04-03-2021
+
                     $('#updateDMBtnContModification').attr('disabled', 'disabled');
                     $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     //  $('#ProgramModal :input').attr('disabled', 'disabled');
@@ -11270,6 +11349,9 @@ WBSTree = (function ($) {
                     localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
                 } else {
                     //$("#delete_program").removeAttr('disabled'); // Jignesh-23-02-2021
+                    $('#update_program').removeClass('btn btn-black');
+                    $('#update_program').addClass('btn btn-primary c-btn-save');
+                    $('#update_program').attr('style', 'width:150px;');
                     $("#update_program").removeAttr('disabled');
                     //  $('#ProgramModal :input').removeAttr('disabled');
 
@@ -12703,12 +12785,18 @@ WBSTree = (function ($) {
                     $("#new_program_element_change_order").removeAttr('disabled');
                     // $("#edit_program_element_change_order").removeAttr('disabled');
                     $('#divChangeOrder').removeAttr('title');   //Manasi 23-02-2021
+                    //Nivedita - Button changes to color on Add New  25-04-2022
                     $("#delete_program_element").removeAttr('disabled');  //Manasi 24-02-2021
-                    $('#documentUploadProgramNewPrg').removeAttr('title')  //Manasi 23-02-2021
+                    $('#delete_program_element').removeClass('btn btn-black');
+                    $('#delete_program_element').addClass('btn btn-primary c-btn-delete');
                     $('#spnBtndelete_program_element').removeAttr('title'); //Manasi 24-02-2021
+
+                    $('#documentUploadProgramNewPrg').removeAttr('title')  //Manasi 23-02-2021
+                    
                     //Nivedita 14-01-2022
                     $('#new_program_element_milestone').removeAttr('disabled');
                     $('#edit_program_element_milestone').removeAttr('disabled');
+                    $('#ViewAllUploadFileProjects').removeAttr('disabled');
                     g_newProgramElement = false;
                     wbsTree.setIsProgramElementNew(false);
                     _Is_Program_Element_New = false;
@@ -13341,11 +13429,18 @@ WBSTree = (function ($) {
                     //---------------------------------------------------------------------------------------------------------------------------
                     $("#new_program_element_change_order").attr('disabled', 'disabled');
                     $("#edit_program_element_change_order").attr('disabled', 'disabled');
+
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022				
+                    $('#delete_program_element').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_program_element').addClass('btn btn-black');
+                    $('#delete_program_element').attr('style', 'width:150px;');
                     $("#delete_program_element").attr('disabled', 'disabled');  //Manasi 24-02-2021
+
+                    $('#spnBtndelete_program_element').attr('title', "A project needs to be saved before it can be deleted"); //Manasi 24-02-2021
                     //Nivedita 14-01-2022
                     $("#new_program_element_milestone").attr('disabled', 'disabled');
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
-                    $('#spnBtndelete_program_element').attr('title', "A project needs to be saved before it can be deleted"); //Manasi 24-02-2021
+                    
 
                     g_newProgramElement = true;
                     wbsTree.setProgramElementFileDraft([]);
@@ -13359,6 +13454,7 @@ WBSTree = (function ($) {
                     g_program_element_change_order_draft_list = [];
 
                     $('#updateBtnProgramPrg').attr('disabled', 'disabled');  //Manasi
+                    $('#ViewAllUploadFileProjects').attr('disabled', 'disabled');  //Nivedita 25-04-2022
                     modal.find('.modal-body #program_element_Start_Date').removeAttr('disabled');  //Manasi 23-10-2020
 
                     $('#divmilestone').attr('title', "A project needs to be saved before key project milestones can be added");    //Manasi 23-02-2021
@@ -13706,10 +13802,20 @@ WBSTree = (function ($) {
 
                 // Pritesh for Authorization added on 5th Aug 2020
                 if ((wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) || localStorage.Status == "Closed") {   //----Vaishnavi 30-03-2022----//
+                    //Nivedita - Button changes to Grey on disabled 25-04-2022				
+                    $('#delete_program_element').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_program_element').addClass('btn btn-black');
+                    $('#delete_program_element').attr('style', 'width:150px;');
                     $("#delete_program_element").attr('disabled', 'disabled');
+
+                    $('#update_program_element').removeClass('btn btn-primary c-btn-save');
+                    $('#update_program_element').addClass('btn btn-black');
+                    $('#update_program_element').attr('style', 'width:150px;');
                     $("#update_program_element").attr('disabled', 'disabled');
+                    
                     // $('#ProgramElementModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrg').attr('disabled', 'disabled');
+                    
                     $('#new_program_element_change_order').attr('disabled', 'disabled');
                     $('#edit_program_element_change_order').attr('disabled', 'disabled');
                     $('#new_program_element_milestone').attr('disabled', 'disabled');
@@ -13719,8 +13825,17 @@ WBSTree = (function ($) {
                     localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
                 }
                 else if (localStorage.dept == 1) {  //vaishnavi 10-03-2022
+                    //Nivedita - Button changes to Grey on disabled  25-04-2022
+                    $('#delete_program_element').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_program_element').addClass('btn btn-black');
+                    $('#delete_program_element').attr('style', 'width:150px;');
                     $("#delete_program_element").attr('disabled', 'disabled');
+
+                    $('#update_program_element').removeClass('btn btn-primary c-btn-save');
+                    $('#update_program_element').addClass('btn btn-black');
+                    $('#update_program_element').attr('style', 'width:150px;');
                     $("#update_program_element").attr('disabled', 'disabled');
+
                     $("#new_program_element_milestone").attr('disabled', 'disabled');
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
                     $("#new_program_element_change_order").attr('disabled', 'disabled');
@@ -13729,6 +13844,9 @@ WBSTree = (function ($) {
                 } //vaishnavi 10-03-2022
                 else {
                     //$("#delete_program_element").removeAttr('disabled'); //Manasi 24-02-2021
+                    $('#update_program_element').removeClass('btn btn-black');
+                    $('#update_program_element').addClass('btn btn-primary c-btn-save');
+                    $('#update_program_element').attr('style', 'width:150px;');
                     $("#update_program_element").removeAttr('disabled');
                     //Nivedita 14-01-2022
                     // $('#new_program_element_milestone').removeAttr('disabled');
@@ -14287,7 +14405,7 @@ WBSTree = (function ($) {
                             $('#txtPPNotes').val('');
                             $('#certified_payroll_select_div').hide();
                             $('#prevailing_wages_select_div').hide();
-                            $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
                             $("#additionalInfoPopup").modal('toggle');
                             $("#ProgramModal").css({ "opacity": "1" });
                             isFieldValueChanged = false;
@@ -14653,11 +14771,32 @@ WBSTree = (function ($) {
                 $('#notice_reason').val('');
                 $('#insurance_limit').val('');
                 $('#insurance_type_select').val('');
+                $("#reporting_to").prop('disabled', true);
+              
+
+                $('#btnClearWarranty').hide();
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
-                  
+                    
+                    $('input:radio[name=wrap]').change(function () {
+                        var selOption = $("input[type='radio'][name='wrap']:checked").val();
+                        console.log(selOption);
+                        if (selOption == 'Yes') {
+
+                           // $('#wrap_select_div').show();
+                            $('#wrap_select_div').css("visibility", "visible");
+                            $("#reporting_to*").prop('disabled', false);
+                            $('#reporting_to').val(data.ReportingTo);
+                        } else {
+                           // $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
+                            $("#reporting_to").prop('disabled', true);
+                            $("#reporting_to").val('');
+                        }
+                    })   //vaishnavi 12-4-2022
+
 
                     if (data.IsPPBond == 'Yes') {
                         $('input[name=PPBond][value="' + data.IsPPBond + '"]')
@@ -14688,13 +14827,16 @@ WBSTree = (function ($) {
                         }
                     }
                     else if (data.IsPPBond == 'No') {
-                        $('#PPBondNo').attr("checked", "checked");
+                      //  $('#PPBondNo').attr("checked", "checked");
+                        $('input[name=PPBond][value="' + data.IsPPBond + '"]')
+                            .prop('checked', true)
+                            .trigger('change');
                         //div = document.getElementById('ShowDivCost');
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-                        //$("#ShowDivCost *").prop('disabled', true);
-                        //$("#PPNotes *").prop('disabled', true);
+                        $("#ShowDivCost *").prop('disabled', true);
+                        $("#PPNotes *").prop('disabled', true);
                     }
                     else {
                         $('#PPBondYes').prop("checked", false);
@@ -14705,7 +14847,8 @@ WBSTree = (function ($) {
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-
+                        $("#ShowDivCost *").prop('disabled', false);
+                        $("#PPNotes *").prop('disabled', true);
                         modal.find('.modal-body #txtPPNotes').val('');
                     }
 
@@ -14875,13 +15018,15 @@ WBSTree = (function ($) {
 
                 }
                     if (data.IsWrapChecked == "No") {
-
-                    $('#wrap_select_div').hide();
+                        
+                        $('#wrap_select_div').css("visibility", "hidden");
+                        $("#reporting_to").prop('disabled', true);
                 }
 
                     if (data.IsWrapChecked == "Yes") {
 
-                    $('#wrap_select_div').show();
+                        $('#wrap_select_div').css("visibility", "visible");
+                        $("#reporting_to").prop('disabled', false);
 
                     var wraplist = [];
 
@@ -14972,7 +15117,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             '<td> <button type="button" id="view_notice">view</button></td>' +
@@ -15018,6 +15163,7 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td> <button type="button" id="view_warranty">view</button></td>' +
                             '<tr > ');
                     }
                 });
@@ -15185,6 +15331,9 @@ WBSTree = (function ($) {
                                     '>' + _ModificationList[x].ScheduleImpact + '</td>' +
                                     '<td>' + moment(_ModificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                     '<tr > ');
+                                if (_ModificationList[x].ModificationNo == 0) {
+                                    $('#rb' +_ModificationList[x].Id).hide();
+                                }
                             }
 
                             $('#documentUploadContModification').removeAttr('title');    //Manasi 01-03-2021
@@ -16391,6 +16540,12 @@ WBSTree = (function ($) {
                     $('#emp_classDiv').show();
 
                     $('#documentUploadProgramNewPrgElm').removeAttr('title');   //Manasi 23-02-2021
+
+                    //Nivedita - Button changes to color on Add New  25-04-2022
+
+                    $('#delete_project').removeClass('btn btn-black');
+                    $('#delete_project').addClass('btn btn-primary c-btn-delete');
+                    $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
                     $('#delete_project').removeAttr('disabled');  //Manasi 24-02-2021
                     $('#spnBtndelete_project').removeAttr('title');  //Manasi 24-02-2021
 
@@ -16429,6 +16584,16 @@ WBSTree = (function ($) {
                     });
 
                     $('#updateBtnProgramPrgElm').removeAttr('disabled');
+
+                    //Nivedita - Button changes to color on Add New  25-04-2022
+
+                    $('#ViewAllUploadFileProgramPrgElm').removeAttr('disabled');
+
+                    $('#delete_project').removeClass('btn btn-black');
+                    $('#delete_project').addClass('btn btn-primary c-btn-delete');
+                    $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
+                    $('#delete_project').removeAttr('disabled');
+                    
 
                     var path = serviceBasePath + 'Request/VersionDetails/1/' + selectedNode.ProjectID + '/0';
 
@@ -16971,8 +17136,17 @@ WBSTree = (function ($) {
                     //$("#datepicker").val('2/2/2012');
                     console.log('applied jquery');
 
-                    $('#documentUploadProgramNewPrgElm').attr('title', "A project element needs to be saved before the documents can be uploaded");  //Manasi 23-02-2021
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+
+                    $('#ViewAllUploadFileProgramPrgElm').attr('disabled', 'disabled');  
+
+                    $('#delete_project').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_project').addClass('btn btn-black');
+                    $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
                     $('#delete_project').attr('disabled', 'disabled');  //Manasi 24-02-2021
+
+                    $('#documentUploadProgramNewPrgElm').attr('title', "A project element needs to be saved before the documents can be uploaded");  //Manasi 23-02-2021
+                    
                     $('#spnBtndelete_project').attr('title', "A project element needs to be saved before it can be deleted");  //Manasi 24-02-2021
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');   //Manasi
                     // updateBtnProgramPrgElm
@@ -17287,7 +17461,14 @@ WBSTree = (function ($) {
 
                 // Pritesh for Authorization added on 5th Aug 2020
                 if ((wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) || localStorage.Status == "Closed") {  //----Vaishnavi 30-03-2022----//
+                    $('#delete_project').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_project').addClass('btn btn-black');
+                    $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
                     $("#delete_project").attr('disabled', 'disabled');
+
+                    $('#update_project').removeClass('btn btn-primary c-btn-save');
+                    $('#update_project').addClass('btn btn-black');
+                    $('#update_project').attr('style', 'width:150px;margin-left:15px;');
                     $("#update_project").attr('disabled', 'disabled');
                     // $('#ProjectModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
@@ -17300,7 +17481,11 @@ WBSTree = (function ($) {
                     localStorage.Status = "";  //----Vaishnavi 30-03-2022----//
                 } else {
                     //$("#delete_project").removeAttr('disabled'); //Manasi 24-02-2021
+                    $('#update_project').removeClass('btn btn-black');
+                    $('#update_project').addClass('btn btn-primary c-btn-save');
+                    $('#update_project').attr('style', 'width:150px;margin-left:15px;');
                     $("#update_project").removeAttr('disabled');
+
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
                     $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022

@@ -2173,6 +2173,10 @@ angular.module('cpp.controllers').
                                 //'>' + durationDate + '</td>' +
                                 '<td>' + moment(_modificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                 '<tr > ');
+
+                            if (_modificationList[x].ModificationNo == 0) {
+                                $('#rb' + _modificationList[x].Id).hide();
+                            }
                         }
 
                         $('input[name=rbModHistory]').on('click', function (event) {

@@ -1315,6 +1315,17 @@ option[value='-1'] {
 {
     padding-bottom:70px;
 }
-    .usermanagementtbl .ui-grid-viewport .ui-grid-canvas {
-        border-bottom: 1px solid #d4d4d4;
-    }
+.usermanagementtbl .ui-grid-viewport .ui-grid-canvas {
+    border-bottom: 1px solid #d4d4d4;
+}
+input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
+
+.open>.multiselect-container {
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 90px;
+    overflow: auto;
+    overflow-y: auto;
+}

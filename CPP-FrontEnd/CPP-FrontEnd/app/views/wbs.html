@@ -1820,10 +1820,10 @@
                                 <table id="gridNoticehistoryList" class="table table-striped table-bordered">
                                     <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                         <tr>
-                                            <td style="font-weight:900;width: 50px !important;">ID</td>
-                                            <td style="font-weight: 900; width: 250px !important;"> Description</td>
-                                            <td style="font-weight: 900; width: 130px !important; "> Created Date</td>
-                                            <td style="font-weight: 900; width: 130px !important; "> Created By</td>
+                                            <td style="font-weight: 900; width: 12%; ">ID</td>
+                                            <td style="font-weight: 900; width: 42%; "> Description</td>
+                                            <td style="font-weight: 900; width: 16%; "> Created Date</td>
+                                            <td style="font-weight: 900; width: 16%; "> Created By</td>
                                             <!--<td style="font-weight:900;">Date of Created</td>-->
                                             <td style="font-weight: 900;">Action</td>
 
@@ -1953,7 +1953,7 @@
 
                     <!--<div class="col-sm-3 text-center" style="padding-right:130px;">-->
                     <span id="spnAdditionalInfo" title="" class="col-sm-2 text-center">
-                        <button type="button" id="btnAdditionalInfo" class="btn btn-blue w-auto m-t-8">Additional Info</button>
+                        <button type="button" id="btnAdditionalInfo" class="btn btn-primary c-btn-save" style="background-color: #4f07ff !important;color:white;">Additional Info</button>
                     </span>
                     <!--</div>-->
                     <!--</div>-->
@@ -4798,7 +4798,7 @@
                                 <!--</div>-->
                                 <div class="col-xs-4 text-center" style="margin-top: 30px;">
                                     <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                                    <!--<button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>-->
+                                    <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -4825,11 +4825,11 @@
                                 <table id="gridWarrantyList" class="table table-striped table-bordered">
                                     <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                         <tr>
-                                            <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                            <td style="font-weight:900;">Warranty</td>
-                                            <td style="font-weight:900;">Start Date</td>
-                                            <td style="font-weight:900;">End Date</td>
-                                            <!--<td style="font-weight:900;">Action</td>-->
+                                            <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                            <td style="font-weight: 900; width: 400px;">Warranty</td>
+                                            <td style="font-weight: 900; width: 200px;">Start Date</td>
+                                            <td style="font-weight: 900; width: 200px;">End Date</td>
+                                            <td style="font-weight:900;">Action</td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -4880,9 +4880,9 @@
                                     <table id="gridNoticeList" class="table table-striped table-bordered">
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
-                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
-                                                <td style="font-weight:900;" width="500">Reason</td>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 25%; ">Date of Notice	</td>
+                                                <td style="font-weight: 900; width: 45%; " >Reason</td>
                                                 <!--<td style="font-weight:900;">Date of Created</td>-->
                                                 <td style="font-weight:900;">Action</td>
                                             </tr>
@@ -4928,9 +4928,9 @@
                                     <table id="gridInsuranceList" class="table table-striped table-bordered">
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
-                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                                <td style="font-weight:900;min-width: 300px;">Type</td>
-                                                <td style="font-weight:900;">Limit</td>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 43%;">Type</td>
+                                                <td style="font-weight: 900; width: 43%;">Limit</td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -4953,13 +4953,15 @@
                                     <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
                                     </select>
                                 </div>
+                            </div>
+                          
                                 <div class="col-xs-12 form-inline">
                                     <div class="form-group" style="width: 100%; margin: 0; margin-bottom: 4px; ">
                                         <label for="program_element_project_number" class="control-label _bold ">Reporting to</label>&nbsp;
-                                        <textarea style="height: 35px; width: 50%;" type="text" class="form-control" id="reporting_to"></textarea>
+                                        <textarea style="height: 35px; width: 80%;" type="text" class="form-control" id="reporting_to"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                           
                         </div>
                     </form>
 
@@ -5491,7 +5493,7 @@
                     </div>
                     <div class="row" id="buttonRow">
                         <div class="col-sm-12 text-center">
-                            <button id="downloadBtnInViewAllProgramElement" class="btn btn-black" style="margin-top:8px;">Download</button>
+                            <button id="downloadBtnInViewAllProgramElement" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
                             <button id="ViewUploadFileInViewAllProgramElement" class="btn btn-black" style="margin-top:8px;width:145px;">View Documents</button>
                         </div>
                     </div>
@@ -5544,7 +5546,7 @@
                     </div>
                     <div class="row" id="buttonRow">
                         <div class="col-sm-12 text-center">
-                            <button id="downloadBtnInViewAllProject" class="btn btn-black" style="margin-top:8px;">Download</button>
+                            <button id="downloadBtnInViewAllProject" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
                             <button id="ViewUploadFileInViewAllProject" class="btn btn-black" style="margin-top:8px;width:145px;">View Documents</button>
                         </div>
                     </div>
@@ -5597,7 +5599,7 @@
                     </div>
                     <div class="row" id="buttonRow">
                         <div class="col-sm-12 text-center">
-                            <button id="downloadBtnInViewAllContracts" class="btn btn-black" style="margin-top:8px;">Download</button>
+                            <button id="downloadBtnInViewAllContracts" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
                             <button id="ViewUploadFileInViewAllContracts" class="btn btn-black" style="margin-top:8px;width:145px;">View Documents</button>
                         </div>
                     </div>
