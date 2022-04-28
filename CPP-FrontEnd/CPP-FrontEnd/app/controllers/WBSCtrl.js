@@ -2173,6 +2173,10 @@ angular.module('cpp.controllers').
                                 //'>' + durationDate + '</td>' +
                                 '<td>' + moment(_modificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                 '<tr > ');
+
+                            if (_modificationList[x].ModificationNo == 0) {
+                                $('#rb' + _modificationList[x].Id).hide();
+                            }
                         }
 
                         $('input[name=rbModHistory]').on('click', function (event) {
@@ -4197,6 +4201,7 @@ angular.module('cpp.controllers').
                         myLocalStorage.set('userSelectedOrgId', orgId);
                         $scope.filterOrgId = myLocalStorage.get('userSelectedOrgId');
                     } else {
+                        $('#closed,#approved,#unapproved,#contract,#project').show();
                         var checkIfExisted = isOrgExisted(orgId, $scope.organizationList);
                         if (checkIfExisted == false)
                             orgId = $scope.organizationList[0].OrganizationID;

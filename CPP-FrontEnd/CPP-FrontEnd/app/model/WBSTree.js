@@ -46,23 +46,25 @@ WBSTree = (function ($) {
 
         var view_mode = localStorage.getItem('MODE');
         if (view_mode == 'gridview') {
+            debugger;
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
-            $('#closed,#approved,#unapproved').hide();
+            //$('#closed,#approved,#unapproved,#contract,#project').hide();
             localStorage.setItem('MODE', 'gridview');
         }
         else {
+            debugger;
             $('#mindmap').show();
+            $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
             $('.toggle-btn i').attr('class', "fa fa-th-large");
             $('.toggle-btn i').attr('title', 'Go To GridView');
-            $('#closed,#approved,#unapproved').show();
             localStorage.setItem('MODE', 'mindmap');
         }
         //--------------------Aditya----------------------//
@@ -3420,11 +3422,11 @@ WBSTree = (function ($) {
                             gridNoteslist.empty();
                             for (var x = 0; x < programNotesList.length; x++) {
                                 gridNoteslist.append(
-                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row" style="width:50px;">' +
+                                    '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td id="notes_desc" class="class-td-LiveView" style="width:250px;">' + programNotesList[x].notes_desc + '</td>' +
-                                    '<td class="class-td-LiveView" style="width:130px;">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                                    '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="notes_view">view</button></td>' +
                                     '</tr>'
@@ -9107,6 +9109,49 @@ WBSTree = (function ($) {
                 }
             });
 
+            // Narayan - on click view button in warranty grid - 25-04-2022
+            $("#gridWarrantyList").on('click', '#view_warranty', function () {
+                $('#btnSaveWarranty').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var AllWarranties = _WarrantyList;
+                if (id != undefined) {
+                    for (var i = 0; i < AllWarranties.length; i++){
+                        if (AllWarranties[i].Id == id) {
+                            $('#warranty_select').val(AllWarranties[i].WarrantyType);
+                            $('#warranty_start_date').val(moment(AllWarranties[i].StartDate).format('MM/DD/YYYY'));
+                            $('#warranty_end_date').val(moment(AllWarranties[i].EndDate).format('MM/DD/YYYY'));
+                            $('#warranty_description').val(AllWarranties[i].Description);
+                            break;
+                        }
+                    }
+                }
+                $('#warranty_select').prop('disabled', true);
+                $('#warranty_start_date').prop('disabled', true);
+                $('#warranty_end_date').prop('disabled', true);
+                $('#warranty_description').prop('disabled', true);
+                $('#btnClearWarranty').show();
+            });
+
+            // Narayan - on click clear button in warranty - 25-04-2022
+            $('#btnClearWarranty').on('click', function () {
+                $('#btnSaveWarranty').show();
+                ResetWarrantyFields();
+                $('#warranty_select').prop('disabled', false);
+                $('#warranty_start_date').prop('disabled', false);
+                $('#warranty_end_date').prop('disabled', false);
+                $('#warranty_description').prop('disabled', false);
+                $('#btnClearWarranty').hide();
+            });
+
+            //Narayan - 22/04/2022 - for reset insurance fields
+            function ResetWarrantyFields() {
+                $('#warranty_select').val("Labor");
+                $('#warranty_start_date').val('');
+                $('#warranty_end_date').val('');
+                $('#warranty_description').val('');
+            }
+
             // Narayan - on click view button in prelimnary notice - 14-04-2022
             $("#gridNoticeList").on('click', '#view_notice', function () {
                 $('#btnSaveNotice').hide();
@@ -9115,6 +9160,8 @@ WBSTree = (function ($) {
                 var reason = row.find("#history_notice_reason").text();
                 $('#date_of_pre_notice').val(date); // Narayan - 20/04/2022
                 $('#notice_reason').val(reason); // Narayan - 20/04/2022
+                $('#date_of_pre_notice').prop('disabled', true);
+                $('#notice_reason').prop('disabled', true);
                 $('#btnClearNotice').show();
             });
 
@@ -9122,6 +9169,8 @@ WBSTree = (function ($) {
             $('#btnClearNotice').on('click', function () {
                 $('#btnSaveNotice').show();
                 ResetNoticeFields();
+                $('#date_of_pre_notice').prop('disabled', false);
+                $('#notice_reason').prop('disabled', false);
                 $('#btnClearNotice').hide();
             });
 
@@ -9139,12 +9188,14 @@ WBSTree = (function ($) {
                 var row = $(this).closest("tr");
                 var desc = row.find("#notes_desc").text();
                 modal.find('.modal-body #txtprogramNotes').val(desc);
+                $('#txtprogramNotes').prop("disabled", "disabled");
                 $('#btnClearNotesDesc').show();
             });
 
             // Narayan - on click clear button in common notes - 14-04-2022
             $('#btnClearNotesDesc').on('click', function () {
                 modal.find('.modal-body #txtprogramNotes').val('');
+                $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });
 
@@ -9205,16 +9256,19 @@ WBSTree = (function ($) {
                 }
             })
 
-            $('#wrap_options input').on('change', function () {
-                var selOption = $("input[type='radio'][name='wrap']:checked").val();
-                console.log(selOption);
-                if (selOption == 'Yes') {
+            //$('#wrap_options input').on('change', function () {
+            //    var selOption = $("input[type='radio'][name='wrap']:checked").val();
+            //    console.log(selOption);
+            //    if (selOption == 'Yes') {
 
-                    $('#wrap_select_div').show();
-                } else {
-                    $('#wrap_select_div').hide();
-                }
-            })   //vaishnavi 12-4-2022
+            //        $('#wrap_select_div').show();
+            //        $("#reporting_to*").prop('disabled', false);
+            //    } else {
+            //        $('#wrap_select_div').hide();
+            //        $("#reporting_to").prop('disabled', true);
+            //        $("#reporting_to").val('');
+            //    }
+            //})   //vaishnavi 12-4-2022
             //============================= Jignesh-ChangeOrderPopUpChanges ============================================
             $('#program_element_change_order_ddModificationType').on('change', function () {
                 var ddValue = $('#program_element_change_order_ddModificationType').val();
@@ -9328,7 +9382,7 @@ WBSTree = (function ($) {
             $('#ProgramModal').unbind().on('show.bs.modal', function (event) {
                 $('#certified_payroll_select_div').hide();  //vaishnavi 12-4-2022
                 $('#prevailing_wages_select_div').hide();
-                $('#wrap_select_div').hide();      //vaishnavi 12-4-2022
+                $('#wrap_select_div').css("visibility", "hidden");    //vaishnavi 12-4-2022
                 $('#message_div').hide();
                 defaultModalPosition();
 
@@ -9668,21 +9722,15 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _WarrantyList[x].CreatedBy + '</td>' +
+                                    '<td> <button type="button" id="view_warranty">view</button></td>' +
                                     '<tr > ');
                             }
 
                         }
                     });
                 }
-
-                //Narayan - 22/04/2022 - for reset insurance fields
-                function ResetWarrantyFields() {
-                    //$('#warranty_select').val('');  
-                    $('#warranty_start_date').val('');
-                    $('#warranty_end_date').val('');
-                    $('#warranty_description').val('');
-                }
-
 
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice').unbind().on('click', function (event) {
@@ -9765,9 +9813,9 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
-                                    //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td>' + _NoticeList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="view_notice">view</button></td>' +
                                     '<tr > ');
                             }
@@ -9843,9 +9891,12 @@ WBSTree = (function ($) {
                                 gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td>' + _InsuranceList[x].Type + '</td>' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _InsuranceList[x].Type + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].Limit + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _InsuranceList[x].CreatedBy + '</td>' +
                                     '<tr > ');
                             }
 
@@ -10237,16 +10288,16 @@ WBSTree = (function ($) {
                             }
 
                             //06042022 issue with change current date
-                            if (modType == true) {
+                            if (modType == true && selectedNode.CurrentEndDate!='') {
                                 ogEndDate = moment(selectedNode.CurrentEndDate).subtract(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY');
                                 ogEndDate ? $('#program_original_end_date').val(ogEndDate) : $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true); //Aditya 06042022 if schedule impact modification disable current end date
-                                $('#program_original_end_date').attr('disabled', true);
+                                $('#program_current_end_date').attr('disabled', 'disabled'); //Aditya 06042022 if schedule impact modification disable current end date
+                                $('#program_original_end_date').attr('disabled', 'disabled');
                             }
                             else {
-                                $('#program_original_end_date').val(selectedNode.CurrentEndDate);
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
+                                $('#program_original_end_date').val((selectedNode.CurrentEndDate).format('MM/DD/YYYY'));                         
                             }
 
                         }
@@ -10255,15 +10306,15 @@ WBSTree = (function ($) {
                                 $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
                             }
                             else if (selectedNode.originalEndDate != '') {
+                                $('#program_current_end_date').attr('disabled', 'disabled');
+                                $('#program_original_end_date').removeAttr('disabled');
                                 $('#program_current_end_date').val(moment(selectedNode.originalEndDate).format('MM/DD/YYYY'));
-                                $('#program_current_end_date').attr('disabled', true);
-                                $('#program_original_end_date').attr('disabled', false);
                             }
                             else {
                                 $('#program_original_end_date').val('');
                             }
-                            $('#program_current_end_date').attr('disabled', true);
-                            $('#program_original_end_date').attr('disabled', false);
+                            $('#program_current_end_date').attr('disabled', 'disabled');
+                            $('#program_original_end_date').removeAttr('disabled');
                         }
                     });
                         //}
@@ -10333,7 +10384,21 @@ WBSTree = (function ($) {
 
                     //================ Jignesh-23-02-2021 =====================
                     //$('#delete_program').removeAttr('disabled');
-                    $('#btnModification').removeAttr('disabled');
+                    if (selectedNode.Status == "Closed") {
+                        $('#btnModification').removeClass('btn btn-primary c-btn-save');
+                        $('#btnModification').addClass('btn btn-black');
+                        $('#btnModification').attr('style', 'width:150px;');
+                        $('#btnModification').attr('disabled', 'disabled');
+
+                        $('#btnAdditionalInfo').removeClass('btn btn-primary c-btn-save');
+                        $('#btnAdditionalInfo').addClass('btn btn-black');
+                        $('#btnAdditionalInfo').attr('style', 'width:150px;');
+                        $('#btnAdditionalInfo').attr('disabled', 'disabled');
+
+                    }
+                    else {
+                        $('#btnModification').removeAttr('disabled');
+                    }
                     //=========================================================
 
                     //luan Jquery - luan here
@@ -10876,8 +10941,8 @@ WBSTree = (function ($) {
                         $('#program_current_end_date').focus();
                         $('#program_current_end_date').blur();
                     });
-                    $('#program_current_end_date').attr('disabled', true);
-                    $('#program_original_end_date').attr('disabled', false);
+                    $('#program_current_end_date').attr('disabled', 'disabled');
+                    $('#program_original_end_date').removeAttr('disabled');
                     //-----------------------------------------------------------------------------
                     wbsTree.setIsProgramNew(true);
                     _Is_Program_New = true;
@@ -14376,7 +14441,7 @@ WBSTree = (function ($) {
                             $('#txtPPNotes').val('');
                             $('#certified_payroll_select_div').hide();
                             $('#prevailing_wages_select_div').hide();
-                            $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
                             $("#additionalInfoPopup").modal('toggle');
                             $("#ProgramModal").css({ "opacity": "1" });
                             isFieldValueChanged = false;
@@ -14742,11 +14807,32 @@ WBSTree = (function ($) {
                 $('#notice_reason').val('');
                 $('#insurance_limit').val('');
                 $('#insurance_type_select').val('');
+                $("#reporting_to").prop('disabled', true);
+              
+
+                $('#btnClearWarranty').hide();
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
-                  
+                    
+                    $('input:radio[name=wrap]').change(function () {
+                        var selOption = $("input[type='radio'][name='wrap']:checked").val();
+                        console.log(selOption);
+                        if (selOption == 'Yes') {
+
+                           // $('#wrap_select_div').show();
+                            $('#wrap_select_div').css("visibility", "visible");
+                            $("#reporting_to*").prop('disabled', false);
+                            $('#reporting_to').val(data.ReportingTo);
+                        } else {
+                           // $('#wrap_select_div').hide();
+                            $('#wrap_select_div').css("visibility", "hidden");
+                            $("#reporting_to").prop('disabled', true);
+                            $("#reporting_to").val('');
+                        }
+                    })   //vaishnavi 12-4-2022
+
 
                     if (data.IsPPBond == 'Yes') {
                         $('input[name=PPBond][value="' + data.IsPPBond + '"]')
@@ -14777,13 +14863,16 @@ WBSTree = (function ($) {
                         }
                     }
                     else if (data.IsPPBond == 'No') {
-                        $('#PPBondNo').attr("checked", "checked");
+                      //  $('#PPBondNo').attr("checked", "checked");
+                        $('input[name=PPBond][value="' + data.IsPPBond + '"]')
+                            .prop('checked', true)
+                            .trigger('change');
                         //div = document.getElementById('ShowDivCost');
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-                        //$("#ShowDivCost *").prop('disabled', true);
-                        //$("#PPNotes *").prop('disabled', true);
+                        $("#ShowDivCost *").prop('disabled', true);
+                        $("#PPNotes *").prop('disabled', true);
                     }
                     else {
                         $('#PPBondYes').prop("checked", false);
@@ -14794,7 +14883,8 @@ WBSTree = (function ($) {
                         //div.style.display = "none";
                         //div = document.getElementById('PPNotes');
                         //div.style.display = "none";
-
+                        $("#ShowDivCost *").prop('disabled', false);
+                        $("#PPNotes *").prop('disabled', true);
                         modal.find('.modal-body #txtPPNotes').val('');
                     }
 
@@ -14964,13 +15054,15 @@ WBSTree = (function ($) {
 
                 }
                     if (data.IsWrapChecked == "No") {
-
-                    $('#wrap_select_div').hide();
+                        
+                        $('#wrap_select_div').css("visibility", "hidden");
+                        $("#reporting_to").prop('disabled', true);
                 }
 
                     if (data.IsWrapChecked == "Yes") {
 
-                    $('#wrap_select_div').show();
+                        $('#wrap_select_div').css("visibility", "visible");
+                        $("#reporting_to").prop('disabled', false);
 
                     var wraplist = [];
 
@@ -15061,9 +15153,9 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
-                            //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td>' + _NoticeList[x].CreatedBy + '</td>' +
                             '<td> <button type="button" id="view_notice">view</button></td>' +
                             '<tr > ');
                     }
@@ -15083,9 +15175,12 @@ WBSTree = (function ($) {
                         gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
-                            '<td>' + _InsuranceList[x].Type + '</td>' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '> ' + _InsuranceList[x].Type + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].Limit + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _InsuranceList[x].CreatedBy + '</td>' +
                             '<tr > ');
                     }
                 });
@@ -15107,6 +15202,9 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _WarrantyList[x].CreatedBy + '</td>' +
+                            '<td> <button type="button" id="view_warranty">view</button></td>' +
                             '<tr > ');
                     }
                 });
@@ -15274,6 +15372,9 @@ WBSTree = (function ($) {
                                     '>' + _ModificationList[x].ScheduleImpact + '</td>' +
                                     '<td>' + moment(_ModificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                     '<tr > ');
+                                if (_ModificationList[x].ModificationNo == 0) {
+                                    $('#rb' +_ModificationList[x].Id).hide();
+                                }
                             }
 
                             $('#documentUploadContModification').removeAttr('title');    //Manasi 01-03-2021
