@@ -9176,12 +9176,14 @@ WBSTree = (function ($) {
                 var row = $(this).closest("tr");
                 var desc = row.find("#notes_desc").text();
                 modal.find('.modal-body #txtprogramNotes').val(desc);
+                $('#txtprogramNotes').prop("disabled", "disabled");
                 $('#btnClearNotesDesc').show();
             });
 
             // Narayan - on click clear button in common notes - 14-04-2022
             $('#btnClearNotesDesc').on('click', function () {
                 modal.find('.modal-body #txtprogramNotes').val('');
+                $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });
 
@@ -10364,7 +10366,21 @@ WBSTree = (function ($) {
 
                     //================ Jignesh-23-02-2021 =====================
                     //$('#delete_program').removeAttr('disabled');
-                    $('#btnModification').removeAttr('disabled');
+                    if (selectedNode.Status == "Closed") {
+                        $('#btnModification').removeClass('btn btn-primary c-btn-save');
+                        $('#btnModification').addClass('btn btn-black');
+                        $('#btnModification').attr('style', 'width:150px;');
+                        $('#btnModification').attr('disabled', 'disabled');
+
+                        $('#btnAdditionalInfo').removeClass('btn btn-primary c-btn-save');
+                        $('#btnAdditionalInfo').addClass('btn btn-black');
+                        $('#btnAdditionalInfo').attr('style', 'width:150px;');
+                        $('#btnAdditionalInfo').attr('disabled', 'disabled');
+
+                    }
+                    else {
+                        $('#btnModification').removeAttr('disabled');
+                    }
                     //=========================================================
 
                     //luan Jquery - luan here

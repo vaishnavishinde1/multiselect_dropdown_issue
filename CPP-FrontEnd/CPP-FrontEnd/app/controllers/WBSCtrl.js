@@ -4201,6 +4201,7 @@ angular.module('cpp.controllers').
                         myLocalStorage.set('userSelectedOrgId', orgId);
                         $scope.filterOrgId = myLocalStorage.get('userSelectedOrgId');
                     } else {
+                        $('#closed,#approved,#unapproved,#contract,#project').show();
                         var checkIfExisted = isOrgExisted(orgId, $scope.organizationList);
                         if (checkIfExisted == false)
                             orgId = $scope.organizationList[0].OrganizationID;
