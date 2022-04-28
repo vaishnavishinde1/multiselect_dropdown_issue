@@ -1195,6 +1195,11 @@ WBSTrendTree = (function ($) {
                     $('#EditBtnTrend').attr('disabled', 'disabled');
                     $('#downloadBtnTrend').attr('disabled', 'disabled');
                     $('#documentUploadTrend').attr('title', "A trend needs to be saved before the documents can be uploaded"); //Manasi 23-02-2021
+
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+                    $('#delete_future_trend').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_future_trend').addClass('btn btn-black');
+                    $('#delete_future_trend').attr('style', 'width:150px;');
                     $('#delete_future_trend').attr('disabled', 'disabled');   //Manasi 24-02-2021
                     $('#spnBtndelete_future_trend').attr('title', "A trend needs to be saved before it can be deleted"); //Manasi 24-02-2021
                     //============================================================================================================
@@ -1249,6 +1254,11 @@ WBSTrendTree = (function ($) {
                 $('#EditBtnTrend').attr('disabled', 'disabled');
                 $('#downloadBtnTrend').attr('disabled', 'disabled');
                 $('#documentUploadTrend').removeAttr('title');   //Manasi 23-02-2021
+
+                //Nivedita - Button changes to Grey on Add New  25-04-2022
+                $('#delete_future_trend').removeClass('btn btn-black');
+                $('#delete_future_trend').addClass('btn btn-primary c-btn-delete');
+                $('#delete_future_trend').attr('style', 'width:150px;');
                 $('#delete_future_trend').removeAttr('disabled');   //Manasi 24-02-2021
                 $('#spnBtndelete_future_trend').removeAttr('title');   //Manasi 24-02-2021
                 //============================================================================================================
@@ -1344,10 +1354,18 @@ WBSTrendTree = (function ($) {
                 });
                 //============================================================================================================
                 if (wbsTree.getLocalStorage().acl[6] == 1 && wbsTree.getLocalStorage().acl[7] == 0) {
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+                    $('#delete_future_trend').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_future_trend').addClass('btn btn-black');
+                    $('#delete_future_trend').attr('style', 'width:150px;');
                     $('#delete_future_trend').attr('disabled', 'disabled');
                     $('#update_trend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled'); // Jignesh-05-03-2021
                 } else {
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+                    $('#delete_future_trend').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_future_trend').addClass('btn btn-black');
+                    $('#delete_future_trend').attr('style', 'width:150px;');
                     $('#delete_future_trend').attr('disabled', 'disabled');  //----Vaishnavi 30-03-2022----//
                     $('#update_trend').removeAttr('disabled');
                     $('#updateDMBtnTrend').removeAttr('disabled'); // Jignesh-05-03-2021
@@ -1355,6 +1373,10 @@ WBSTrendTree = (function ($) {
                 }
                  //----Vaishnavi 30-03-2022----//
                 if (metadata.Status == "Closed") {
+                    //Nivedita - Button changes to Grey on Add New  25-04-2022
+                    $('#delete_future_trend').removeClass('btn btn-primary c-btn-delete');
+                    $('#delete_future_trend').addClass('btn btn-black');
+                    $('#delete_future_trend').attr('style', 'width:150px;');
                     $('#delete_future_trend').attr('disabled', 'disabled');
                     $('#update_trend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled');
