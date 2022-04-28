@@ -3423,7 +3423,7 @@ WBSTree = (function ($) {
                                     '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
                                       '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td id="notes_desc" class="class-td-LiveView" >' + programNotesList[x].notes_desc + '</td>' +
+                                    '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
                                     '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="notes_view">view</button></td>' +
@@ -9124,6 +9124,10 @@ WBSTree = (function ($) {
                         }
                     }
                 }
+                $('#warranty_select').prop('disabled', true);
+                $('#warranty_start_date').prop('disabled', true);
+                $('#warranty_end_date').prop('disabled', true);
+                $('#warranty_description').prop('disabled', true);
                 $('#btnClearWarranty').show();
             });
 
@@ -9131,6 +9135,10 @@ WBSTree = (function ($) {
             $('#btnClearWarranty').on('click', function () {
                 $('#btnSaveWarranty').show();
                 ResetWarrantyFields();
+                $('#warranty_select').prop('disabled', false);
+                $('#warranty_start_date').prop('disabled', false);
+                $('#warranty_end_date').prop('disabled', false);
+                $('#warranty_description').prop('disabled', false);
                 $('#btnClearWarranty').hide();
             });
 
@@ -9150,6 +9158,8 @@ WBSTree = (function ($) {
                 var reason = row.find("#history_notice_reason").text();
                 $('#date_of_pre_notice').val(date); // Narayan - 20/04/2022
                 $('#notice_reason').val(reason); // Narayan - 20/04/2022
+                $('#date_of_pre_notice').prop('disabled', true);
+                $('#notice_reason').prop('disabled', true);
                 $('#btnClearNotice').show();
             });
 
@@ -9157,6 +9167,8 @@ WBSTree = (function ($) {
             $('#btnClearNotice').on('click', function () {
                 $('#btnSaveNotice').show();
                 ResetNoticeFields();
+                $('#date_of_pre_notice').prop('disabled', false);
+                $('#notice_reason').prop('disabled', false);
                 $('#btnClearNotice').hide();
             });
 
@@ -9706,6 +9718,8 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _WarrantyList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="view_warranty">view</button></td>' +
                                     '<tr > ');
                             }
@@ -9795,9 +9809,9 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x+1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
-                                    //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                                    '<td>' + _NoticeList[x].CreatedBy + '</td>' +
                                     '<td> <button type="button" id="view_notice">view</button></td>' +
                                     '<tr > ');
                             }
@@ -9873,9 +9887,12 @@ WBSTree = (function ($) {
                                 gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td>' + _InsuranceList[x].Type + '</td>' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _InsuranceList[x].Type + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].Limit + '</td>' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '>' + _InsuranceList[x].CreatedBy + '</td>' +
                                     '<tr > ');
                             }
 
@@ -15118,9 +15135,9 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                            '<td id="history_notice_reason" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
-                            //'<td>' + moment(_NoticeList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td>' + _NoticeList[x].CreatedBy + '</td>' +
                             '<td> <button type="button" id="view_notice">view</button></td>' +
                             '<tr > ');
                     }
@@ -15140,9 +15157,12 @@ WBSTree = (function ($) {
                         gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
-                            '<td>' + _InsuranceList[x].Type + '</td>' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width:200px;width:100%;"' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '> ' + _InsuranceList[x].Type + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].Limit + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _InsuranceList[x].CreatedBy + '</td>' +
                             '<tr > ');
                     }
                 });
@@ -15164,6 +15184,8 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _WarrantyList[x].CreatedBy + '</td>' +
                             '<td> <button type="button" id="view_warranty">view</button></td>' +
                             '<tr > ');
                     }
