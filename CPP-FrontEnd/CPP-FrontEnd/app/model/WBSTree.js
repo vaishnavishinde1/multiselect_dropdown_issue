@@ -1899,7 +1899,7 @@ WBSTree = (function ($) {
                 .attr("stroke", "grey");
 
             var line3 = svgGroup.append("line")
-                .attr("x1", -100)
+                .attr("x1", svgWidthUnit * 3.5)
                 .attr("y1", 10)
                 .attr("x2", svgWidthUnit * 3.5)
                 .attr("y2", 10)
