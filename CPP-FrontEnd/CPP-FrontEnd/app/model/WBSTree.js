@@ -10376,6 +10376,7 @@ WBSTree = (function ($) {
                     
                     $('#documentUploadProgramNew').removeAttr('title');  //Manasi 23-02-2021
 
+                    $("#txtprogramNotes").removeAttr('disabled');
                     
                     
 
@@ -14810,7 +14811,17 @@ WBSTree = (function ($) {
                 $("#reporting_to").prop('disabled', true);
               
 
+                $('#btnSaveWarranty').show();
+                $('#warranty_select').prop('disabled', false);
+                $('#warranty_start_date').prop('disabled', false);
+                $('#warranty_end_date').prop('disabled', false);
+                $('#warranty_description').prop('disabled', false);
                 $('#btnClearWarranty').hide();
+
+                $('#btnSaveNotice').show();
+                $('#date_of_pre_notice').prop('disabled', false);
+                $('#notice_reason').prop('disabled', false);
+                $('#btnClearNotice').hide();
               
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
