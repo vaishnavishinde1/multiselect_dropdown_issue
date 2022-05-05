@@ -59,6 +59,7 @@ namespace WebAPI.Models
                             ctx.ContractProjectManagers.Add(contractProjectManager);
                             ctx.SaveChanges();
                         }
+                        SendSetUpMail(program.ProgramID);
                     }
                 }
             }
