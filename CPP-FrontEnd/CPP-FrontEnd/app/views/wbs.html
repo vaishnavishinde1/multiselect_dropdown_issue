@@ -219,7 +219,36 @@
         background-color: white;
         outline: 0;
     }
+    /*Aditya PMDD CSS 05052022*/
+    #program_project_manager_multiselect + .btn-group {
+        display: inline-block;
+        width: 100%;
+    }
 
+        #program_project_manager_multiselect + .btn-group .btn.btn-default {
+            width: 100%;
+            text-align: left;
+            border: 1px solid #ccc;
+            height: 34px;
+            border-radius: 4px;
+        }
+
+            #program_project_manager_multiselect + .btn-group .btn.btn-default .caret {
+                margin-top: 8px;
+                float: right;
+                border-top: 5px dashed;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+            }
+
+        #program_project_manager_multiselect + .btn-group label {
+            padding: 7px 20px 7px 40px
+        }
+
+        #program_project_manager_multiselect + .btn-group .checkbox input[type=checkbox] {
+            margin-left: -25px;
+        }
+        <!--->
     #emp_class + .btn-group {
         display: inline-block;
         width: 100%;
@@ -1144,9 +1173,14 @@
                     </form>
                     <form style="height: 250px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
                         <div class="_form-group" style="margin-top:5px; margin-bottom:75px;">
-                            <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
+                            <!--Aditya PMDD 05052022-->
+                            <div class="col-xs-6" style="padding-left: 0">
                                 <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
                                 <input type="text" class="form-control" id="program_project_manager">
+                            </div>
+                            <div class="col-xs-6" style="padding-left: 0; padding-right:0;">
+                                <label for="program_element_project_number" class="control-label _bold required">Project Manager</label>
+                                <select type="text" class="form-control" id="program_project_manager_multiselect" multiple={true}></select>
                             </div>
                         </div>
                         <!--Changed by Jignesh From Project to Contract 27-10-2020 -->
