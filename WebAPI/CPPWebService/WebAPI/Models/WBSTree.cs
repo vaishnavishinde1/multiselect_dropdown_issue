@@ -896,7 +896,14 @@ namespace WebAPI.Models
         [DataMember]
         public String Status;   //----Vaishnavi 30-03-2022----//
 
-       
+        //Aditya PMDD 05052022
+        //[DataMember]
+        //public List<ContractProjectManager> ContractProjectManager;
+        //Aditya PMDD 05052022
+        [DataMember]
+        public List<ContractProjectManager> PManagerIDS;
+
+
         [DataMember]
         public String ReportingTo;    //Vaishnavi 12-04-2022
         public ProgramWBSTree(Project proj, Program wbsprg, List<ProgramElementWBSTree> prge)
@@ -976,6 +983,9 @@ namespace WebAPI.Models
 
             PrimeSubPrime = wbsprg.PrimeSubPrime;
             PrimeParent = wbsprg.PrimeParent;
+            PManagerIDS = ctx.ContractProjectManagers.Where(w => w.ProgramId == wbsprg.ProgramID).ToList();  //Aditya PMDD 05052022
+            //ContractProjectManager = ctx.ContractProjectManagers.Where(w => w.ProgramId == wbsprg.ProgramID).ToList();
+
             //LaborWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Labor Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();    //Vaishnavi 12-04-2022
             //MaterialsWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Materials Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();
             //OtherWarranty = ctx.ProgramWarranty.Where(w => w.ProgramID == wbsprg.ProgramID && w.WarrantyType == "Other Warranty").Select(p => p.WarrantyDescription).FirstOrDefault();

@@ -105,6 +105,8 @@ namespace WebAPI.Models
 
         public string PrimeParent { get; set; }
 
+        public List<int> PManagerIDS { get; set; } //Aditya PMDD 05052022
+
         public string IsCostPartOfContract { get; set; }
 
         public string PPBondNotes { get; set; }
@@ -398,6 +400,9 @@ namespace WebAPI.Models
                         }
                         ctx.ContractModification.Add(contractModificationsList);
                         ctx.SaveChanges();
+
+                        ContractProjectManager.SavePMList(pgm); //Aditya PMDD 05052022
+
                         //if (pgm.IsCertifiedPayrollChecked == "Yes")     //Vaishnavi 12-04-2022
                         //{
                         //    if (pgm.CertifiedPayrollIDS.Count != 0)
@@ -550,6 +555,7 @@ namespace WebAPI.Models
                                 pgm.PrimeSubPrime = program.PrimeSubPrime;
                                 pgm.PrimeParent = program.PrimeParent;
                                 ctx.SaveChanges();
+                                ContractProjectManager.SavePMList(program); //Aditya PMDD 05052022
 
                                 for (var i = 0; i < fundToBeDeletedList.Count; i++)
                                 {
@@ -682,6 +688,7 @@ namespace WebAPI.Models
                             pgm.PrimeParent = program.PrimeParent;
 
                             ctx.SaveChanges();
+                            ContractProjectManager.SavePMList(program); //Aditya PMDD 05052022
                             //pgm.IsCertifiedPayrollChecked = program.IsCertifiedPayrollChecked;    //Vaishnavi 12-04-2022
                             //pgm.IsPrevailingWageChecked = program.IsPrevailingWageChecked;
                             //pgm.IsWrapChecked = program.IsWrapChecked;

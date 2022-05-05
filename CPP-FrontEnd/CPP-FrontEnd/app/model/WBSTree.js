@@ -3873,6 +3873,8 @@ WBSTree = (function ($) {
                     //Aditya Prime 07042022
                     selectedNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
                     selectedNode.PrimeSubPrime = $('#ProgramModal').find('.modal-body #prime_subPrime_dd').val();
+                    //Aditya PMDD 05052022
+                    selectedNode.PManagerIDS = $('#ProgramModal').find('.modal-body #program_project_manager_multiselect').val();
 
                     //Nivedita 13-01-2022
                     selectedNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate 18-02-2022
@@ -4024,8 +4026,14 @@ WBSTree = (function ($) {
                             return;
                         }
                     }
-                    
 
+                    //Aditya PMDD validation
+                    var program_project_manager_multiselect = $('#program_project_manager_multiselect').val();
+                    if (!program_project_manager_multiselect) {
+                        dhtmlx.alert('Select Project Managers');
+                        return;
+                    }
+                    
                     //Nivedita 13-01-2022
                     if (!$('#ProgramModal').find('.modal-body #program_project_manager').val()) {
                         dhtmlx.alert('Contract Manager Name is a required field.'); // Jignesh-02-03-2021
@@ -4309,7 +4317,7 @@ WBSTree = (function ($) {
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
                         
                         "ReportingTo": selectedNode.ReportingTo          //vaishnavi 12-4-2022
-
+                        "PManagerIDS": selectedNode.PManagerIDS //Aditya PMDD 05052022
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
                         if (response.result.split(',')[0].trim() === "Success") {
@@ -4430,7 +4438,8 @@ WBSTree = (function ($) {
                     // Aditya prime
                     newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
                     newNode.PrimeSubPrime = $('#ProgramModal').find('.modal-body #prime_subPrime_dd').val();
-
+                    //Aditya PMDD 05052022
+                    newNode.PManagerIDS = $('#ProgramModal').find('.modal-body #program_project_manager_multiselect').val();
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing").checked;
                     var program_sov_billing_checked = document.getElementById("program_sov_billing").checked;
@@ -4508,6 +4517,13 @@ WBSTree = (function ($) {
                             return;
                         }
                     }
+                    //Aditya PMDD validation
+                    var program_project_manager_multiselect = $('#program_project_manager_multiselect').val();
+                    if (!program_project_manager_multiselect) {
+                        dhtmlx.alert('Select Project Managers');
+                        return;
+                    }
+
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
                        var testDate = moment(newNode.CurrentStartDate,'M/D/YYYY',true).isValid();
@@ -4671,6 +4687,7 @@ WBSTree = (function ($) {
                         "programNote": newNode.ProgramNote,
                         "PrimeSubPrime": newNode.PrimeSubPrime,
                         "PrimeParent": newNode.PrimeParent,
+                        "PManagerIDS": newNode.PManagerIDS, //Aditya PMDD 05052022
                     }
 
 
@@ -10430,6 +10447,55 @@ WBSTree = (function ($) {
                     console.log('applied jquery');
                     console.log(selectedNode);
 
+                    //======================Aditya Project Manager DD=========================//
+                    var program_project_manager_multiselect = modal.find('.modal-body #program_project_manager_multiselect');
+                    console.log("Populate Project Manager DD: Update");
+                    var userList = wbsTree.getUserList();
+                    var ManagerID = selectedNode.PManagerIDS;
+                    var projectManagerList = [];
+                    var DDUser = [];
+                    angular.forEach(ManagerID, function (item) {
+                        item.UserId
+                            ? projectManagerList.push(parseInt(item.UserId))
+                            : projectManagerList.push(parseInt(item));
+
+                        //total += parseFloat(item.CurrentCost);
+                    });
+                    angular.forEach(userList, function (item) {
+                        if (item.Role == 'Project Manager') {
+                            DDUser.push(item);
+                        }
+                    });
+                    DDUser.sort(function (a, b) {
+                        return a.FirstName.localeCompare(b.FirstName);
+                    });
+                    //$('#program_project_manager_multiselect').val('');
+                    program_project_manager_multiselect.empty();
+
+                    for (var x = 0; x < DDUser.length; x++) {
+                        var Name = '';
+                        Name = DDUser[x].FirstName +''+DDUser[x].LastName;
+                        var pmUserId = DDUser[x].Id;
+                            if (projectManagerList.includes(pmUserId)) {
+                                    program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + ' selected>' + Name + '</option>');
+                                }
+                                else {
+                                    program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + '>' + Name + '</option>');
+                                }
+                    }
+
+                    $('#program_project_manager_multiselect').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+                    });
+                    program_project_manager_multiselect.multiselect('refresh');
+                    //===============================================================================//
+
                     //======================Aditya 04042022 prime=========================//
                     console.log("Prime ddupdate=====>");
                     if (selectedNode.PrimeSubPrime != "Sub") {
@@ -10954,7 +11020,33 @@ WBSTree = (function ($) {
 
                     $('#gridUploadedDocumentProgramNew tbody').empty();
                     $('#gridUploadedDocumentProgramNew > tbody').html("");
-
+                    //======================Aditya Project Manager DD=========================//
+                    var program_project_manager_multiselect = modal.find('.modal-body #program_project_manager_multiselect');
+                    console.log("Populate Project Manager DD :Create");
+                    modal = $(this);
+                    var userList = wbsTree.getUserList();
+                    projectManagerList
+                    userList.sort(function (a, b) {
+                        return a.FirstName.localeCompare(b.FirstName);
+                    });
+                    program_project_manager_multiselect.empty();
+                    for (var x = 0; x < userList.length; x++) {
+                        if (userList[x].Role == "Project Manager") {
+                            program_project_manager_multiselect.append('<option value=' + userList[x].Id + '>' + userList[x].FirstName + " " + userList[x].LastName + '</option>');
+                        }
+                    }
+                    //program_project_manager_multiselect.val(ManagerID);
+                    $('#program_project_manager_multiselect').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: false,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1 
+                    });
+                    program_project_manager_multiselect.multiselect('refresh');
+                    //===============================================================================//
                     //Aditya 04042022 prime=================================//
                     console.log("Prime dd=====>");
                     modal = $(this);
@@ -14463,7 +14555,7 @@ WBSTree = (function ($) {
             });
             //===================== Jignesh-31-03-2021 Setup Page Exit Pop Message ==============================================
 
-            var contPageFieldIDs = '#program_name,#program_contract_number,#program_current_start_date,#program_current_end_date,#program_original_end_date,' +
+            var contPageFieldIDs = '#program_name,#program_contract_number,#program_current_start_date,#program_current_end_date,#program_original_end_date,#program_project_manager_multiselect' +
                 '#program_client_poc,#program_billing_poc,#program_billing_poc_phone_1,#program_billing_poc_phone_2,' +
                 '#program_billing_poc_email,#program_billing_poc_address_line1,#program_billing_poc_address_line2,#program_client_phone,' +
                 '#program_client_email,#program_client_address_line1,#program_client_address_line2,#program_client_city,#program_client_state,' +
