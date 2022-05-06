@@ -4316,7 +4316,7 @@ WBSTree = (function ($) {
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
                         
-                        "ReportingTo": selectedNode.ReportingTo          //vaishnavi 12-4-2022
+                        "ReportingTo": selectedNode.ReportingTo,      //vaishnavi 12-4-2022
                         "PManagerIDS": selectedNode.PManagerIDS //Aditya PMDD 05052022
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
