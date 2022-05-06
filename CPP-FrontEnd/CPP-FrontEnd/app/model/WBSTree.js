@@ -10461,11 +10461,17 @@ WBSTree = (function ($) {
 
                         //total += parseFloat(item.CurrentCost);
                     });
-                    angular.forEach(userList, function (item) {
-                        if (item.Role == 'Project Manager') {
-                            DDUser.push(item);
-                        }
-                    });
+                    var filters = [{ RoleList: 'Project Manager' }]
+                    var DDUser = userList.filter(s => filters.every(t => {
+                        var key = Object.keys(t)[0];
+                        var res = s.RoleList.indexOf(t[key]);
+                        return res >= 0
+                    }));
+                    //angular.forEach(userList, function (item) {
+                    //    if (item.Role == 'Project Manager') {
+                    //        DDUser.push(item);
+                    //    }
+                    //});
                     DDUser.sort(function (a, b) {
                         return a.FirstName.localeCompare(b.FirstName);
                     });
@@ -11026,14 +11032,19 @@ WBSTree = (function ($) {
                     modal = $(this);
                     var userList = wbsTree.getUserList();
                     projectManagerList
-                    userList.sort(function (a, b) {
+                    
+                    var filters = [{ RoleList: 'Project Manager' }]
+                    var DDUser = userList.filter(s => filters.every(t => {
+                        var key = Object.keys(t)[0];
+                        var res = s.RoleList.indexOf(t[key]);
+                        return res >= 0
+                    }));
+                    DDUser.sort(function (a, b) {
                         return a.FirstName.localeCompare(b.FirstName);
                     });
                     program_project_manager_multiselect.empty();
-                    for (var x = 0; x < userList.length; x++) {
-                        if (userList[x].Role == "Project Manager") {
-                            program_project_manager_multiselect.append('<option value=' + userList[x].Id + '>' + userList[x].FirstName + " " + userList[x].LastName + '</option>');
-                        }
+                    for (var x = 0; x < DDUser.length; x++) {
+                        program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + '>' + DDUser[x].FirstName + " " + DDUser[x].LastName + '</option>');
                     }
                     //program_project_manager_multiselect.val(ManagerID);
                     $('#program_project_manager_multiselect').multiselect({
