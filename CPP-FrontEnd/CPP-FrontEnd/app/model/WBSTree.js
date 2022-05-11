@@ -3593,6 +3593,8 @@ WBSTree = (function ($) {
                 $('#downloadBtnChangeOrder').attr('disabled', 'disabled');
                 $('#ViewUploadFileChangeOrder').attr('disabled', 'disabled');
                 $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                //Added by Amruta for Project end date locking
+                $('#program_element_PEnd_Date').removeAttr('disabled');
                 wbsTree.getChangeOrder().get({}, function (changeOrderData) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
@@ -3604,8 +3606,14 @@ WBSTree = (function ($) {
                     var schImp = 0;
                     for (var x = 0; x < changeOrderList.length; x++) {
                         console.log(changeOrderList[x].ProgramElementID, programElementID);
+                        
 
                         if (changeOrderList[x].ProgramElementID == programElementID) {
+
+                            //Added By Amruta for locking the project end date
+                            $('#program_element_PEnd_Date').attr('disabled', 'disabled'); 
+
+                            
 
 
                             var singeChangeOrder = {};
@@ -3700,9 +3708,12 @@ WBSTree = (function ($) {
             //03-05-2022
             function populateProgramElementChangeOrderTableNew() {
                 $('#program_element_change_order_table_id').empty();
+                modal.find('.modal-body #program_element_PEnd_Date').removeAttr('disabled'); 
                 //  alert(FileName);
                 for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
                     var singeChangeOrder = {};
+
+                    modal.find('.modal-body #program_element_PEnd_Date').attr('disabled', 'disabled'); 
 
                     singeChangeOrder = g_program_element_change_order_draft_list[x];
 
