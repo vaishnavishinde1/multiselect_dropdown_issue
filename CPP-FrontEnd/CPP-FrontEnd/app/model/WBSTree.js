@@ -57,7 +57,7 @@ WBSTree = (function ($) {
             localStorage.setItem('MODE', 'gridview');
         }
         else {
-            debugger;
+            //debugger;
             $('#mindmap').show();
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
@@ -9430,8 +9430,8 @@ WBSTree = (function ($) {
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
-                    var date = $('#date_of_pre_notice').val();
-                    var reason = $('#notice_reason').val();
+                    //var date = $('#date_of_pre_notice').val();
+                    //var reason = $('#notice_reason').val();
 
                     //var IsPPBond = $('#additionalInfoPopup').find('input[name=PPBond]:checked').val();
                     
@@ -9970,6 +9970,7 @@ WBSTree = (function ($) {
                 if (selectedNode.level == "Program") {
                     modal.find('.modal-body #txtprogramNotes').val('');
                     modal_mode = 'Update';
+                    $(".hasDatepicker").datepicker("destroy"); // Narayan - distroy all datepicker for reinitialize - 09/05/2022
 
                     //$("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
                     //    this.checked = false;
@@ -10161,7 +10162,7 @@ WBSTree = (function ($) {
 
                     //});
 
-                    $("#date_of_pre_notice").datepicker();
+                    //$("#date_of_pre_notice").datepicker();
                     // Narayan - get prelimnary notices list for notice history
                     //_Document.getNoticeByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
                     //    _NoticeList = response.data;
@@ -10658,7 +10659,7 @@ WBSTree = (function ($) {
                     document.getElementById("program_Lumpsum").checked = selectedNode.Lumpsum ? true : false;
                     document.getElementById("program_certified_payroll").checked = selectedNode.CertifiedPayroll ? true : false;
 
-                    $('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
+                    //$('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
                     $('#notice_reason').val(''); // Narayan - 20/04/2022
                     $('#btnClearNotice').hide(); // Narayan 14-04-2022
 
@@ -10880,6 +10881,7 @@ WBSTree = (function ($) {
                 else {
                     modal.find('.modal-body #txtprogramNotes').val('');
                     modal.find('.modal-body #gridNoticehistoryList tbody').empty();
+                    $(".hasDatepicker").datepicker("destroy"); // Narayan - distroy all datepicker for reinitialize - 09/05/2022
                     //$("input:radio[name='certified_payroll']").each(function (i) {     //vaishnavi 12-4-2022
                     //    this.checked = false;
                     //});
@@ -11120,7 +11122,7 @@ WBSTree = (function ($) {
                     $("#program_current_start_date").datepicker();	//datepicker - program
                     $("#program_current_end_date").datepicker();	//datepicker - program
                     $("#program_original_end_date").datepicker(); // Aditya 
-                    $("#date_of_pre_notice").datepicker(); //Narayan
+                    //$("#date_of_pre_notice").datepicker(); //Narayan
                     $("#labor_start_date").datepicker();   //vaishnavi 12-4-2022
                     $("#labor_end_date").datepicker();
                     $("#materials_start_date").datepicker();
@@ -11220,7 +11222,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #scope_quality_description').val('');
                     modal.find('.modal-body #gridDocument tbody').empty();
 
-                    $('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
+                    //$('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
                     $('#notice_reason').val(''); // Narayan - 20/04/2022
                     $('#gridNoticeList tbody').empty(); // Narayan - 20/04/2022
                     $('#btnClearNotice').hide(); // Narayan 14-04-2022
@@ -14540,7 +14542,7 @@ WBSTree = (function ($) {
                         if (result) {
                             $('#notice_reason').val('');
                             $('#insurance_limit').val('');
-                            $('#date_of_pre_notice').val('');
+                            //$('#date_of_pre_notice').val('');
                             $('#insurance_type_select').val('');
                             $('#txtPPNotes').val('');
                             $('#certified_payroll_select_div').hide();
