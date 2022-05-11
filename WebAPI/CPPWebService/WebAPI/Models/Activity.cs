@@ -3243,8 +3243,9 @@ namespace WebAPI.Models
                 //costList = ctx.CostUnit.Where(l => l.ActivityID == aId && l.Granularity == "week").ToList();
                 costList = getCost.getODCCostByCostID(Convert.ToInt16(lineId), "week", aId);
                 totalQuantity = costList.Sum(a => Convert.ToDouble(a.ODCCost));
-                if (costList.Count != 0)
-                    adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
+                //Nivedita 03-05-2022
+               // if (costList.Count != 0)
+                    //adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
             }
 
             update_result += "";
@@ -3263,7 +3264,9 @@ namespace WebAPI.Models
                         //adjust last value
                         var adjustedValue = totalQuantity - totalToAdjust;
                         adjustedValue = Convert.ToDouble(adjustedValue.ToString("F8"));
+                        
                         cost.ODCCost = adjustedValue.ToString("F8");
+                        
                         cost.ODCQuantity = adjustedValue.ToString("F8");
                         var newCtx = new CPPDbContext();
                         var currentCost = newCtx.CostODC.Where(a => a.ODCCostID == cost.ODCCostID && a.Granularity == scale && a.IsDeleted==false).FirstOrDefault();
@@ -3576,8 +3579,9 @@ namespace WebAPI.Models
                 //costList = ctx.CostODC.Where(l => l.ActivityID == aId && l.Granularity == "week").ToList();
                 costList = getCost.getODCCostByCostID(Convert.ToInt16(lineId), "week", aId);
                 totalQuantity = costList.Sum(a => Convert.ToDouble(a.ODCCost));
-                if (costList.Count != 0)
-                    adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
+                //Nivedita 03-05-2022
+                //if (costList.Count != 0)
+                //    adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
             }
 
 
@@ -3686,8 +3690,9 @@ namespace WebAPI.Models
                 //costList = ctx.CostODC.Where(l => l.ActivityID == aId && l.Granularity == "week").ToList();
                 costList = getCost.getODCCostByCostID(Convert.ToInt16(lineId), "week", aId);
                 totalQuantity = costList.Sum(a => Convert.ToDouble(a.ODCCost));
-                if (costList.Count != 0)
-                    adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
+                //Nivedita 03-05-2022
+                //if (costList.Count != 0)
+                //    adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
             }
 
 

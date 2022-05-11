@@ -289,6 +289,8 @@ namespace WebAPI.Models
                                 }
 
 
+                                //var FileUploadCtrl =new WebAPI.Controllers.FilesUploadController();
+                                //_ = FileUploadCtrl.Post("", 0, 0, 0, 0, ChangeOrder.ChangeOrderID, 0);
                                 result = "Success," + ChangeOrder.ChangeOrderID;
                             }
                             else if(retreivedChangeOrder != null)

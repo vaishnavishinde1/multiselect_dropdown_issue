@@ -31,6 +31,7 @@ angular.module('cpp.controllers').
             $scope.deleteDoc = [];
             var _modificationList = null;
             var _wbsTreeData = null; 
+            var g_program_element_change_order_draft_list = [];
             $('#fileUploadProject').change(function (ev) {
                 console.log(fileUploadProject.files);
                 $("#document_name_project").val(fileUploadProject.files[0].name);
@@ -3019,8 +3020,474 @@ angular.module('cpp.controllers').
 
             });
 
+            //03-05-2022
+            ////Program element change order
+            //function populateProgramElementChangeOrderTableNew() {
+            //    $('#program_element_change_order_table_id').empty();
+            //    //  alert(FileName);
+            //    for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
+            //        var singeChangeOrder = {};
+
+            //        singeChangeOrder = g_program_element_change_order_draft_list[x];
+
+            //        console.log(singeChangeOrder);
+            //        //  alert(singeChangeOrder.DocumentName);
+
+            //        $('#program_element_change_order_table_id').append(
+            //            '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderAmount + '</td>' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderDate + '</td>' +
+            //            '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderScheduleChange + '</td>' +
+            //            '</tr>'
+            //        );
 
 
+
+            //        //$('#program_element_change_order_table_id').append(
+            //        //    '<tr id="' + singeChangeOrder.ChangeOrderName + '" class="fade-selection-animation clickable-row">' +
+            //        //   // '<td class="class-td-LiveView" style="width:20%;">' + singeChangeOrder.DocumentName + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:20%;">' + singeChangeOrder.ChangeOrderName + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:20%;">' + singeChangeOrder.OrderType + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:15%;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:15%;">' + singeChangeOrder.ChangeOrderAmount + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:20%;">' + singeChangeOrder.OrderDate + '</td>' +
+            //        //    '<td class="class-td-LiveView" style="width:50%;">' + singeChangeOrder.ChangeOrderScheduleChange + '</td>' +
+            //        //    '</tr>'
+            //        //);
+            //    }
+            //}
+
+            //03-05-2022
+            //$('#update_program_element_change_order_modal').unbind('click').on('click', function ($files) {
+            //    //03-05-2022
+            //    // $('#fileUploadProgramElementChangeOrderModal').prop('disabled', false);  //Manasi 20-08-2020
+            //    //$('#uploadBtnProgramelmtCOspinRow').show();   //Manasi 20-08-2020
+            //    debugger;
+            //    var selectedNode = wbsTree.getSelectedNode();
+            //    if (selectedNode.level == "Program") {
+            //        dhtmlx.alert('Change Order only work in edit mode.');
+            //        return;
+            //    }
+            //    console.log('get files', $files);
+            //    console.log(g_newProgramElementChangeOrder);
+            //    // var files = fileUploadProgramElementChangeOrderModal.files;
+            //    // var fileName = "";
+            //    //if (files.length != 0 || files.length) {
+            //    //    angular.forEach(fileUploadProgramElementChangeOrderModal.files, function (value, key) {
+            //    //        fileName = value.name;
+            //    //    });
+            //    //}
+            //    var g_newProgramElement = $("#g_newProgramElement").val();
+            //    var CoTitle = $("#program_element_change_order_name_modal").val();
+            //    var ChangeOrderTypedd = $("#program_element_change_order_ddModificationType").val();;
+            //    var OrderNo = $("#program_element_change_order_number_modal").val();
+            //    var OrderDte = $("#ChangeOrderDate").val();
+            //    var AmtOrder = $("#program_element_change_order_amount_modal").val();
+            //    var SpNote = $("#program_element_change_order_schedule_change_modal").val();
+            //    var Reason = $("#program_element_change_order_Reason_modal").val();
+            //    var modType = $('#program_element_change_order_ddModificationType').val();
+            //    //var durationDate = $('#program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
+            //    var scheduleImpact = $('#program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
+
+            //    if (CoTitle == "" || CoTitle.length == 0) {
+            //        dhtmlx.alert('Enter Title.');
+            //        return;
+            //    }
+            //    if (OrderDte == "" || OrderDte.length == 0) {
+            //        dhtmlx.alert('Enter Date.');
+            //        return;
+            //    }
+            //    //Vaishnavi 08-02-2022
+            //    if (OrderDte) {
+
+            //        var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
+            //        if (!testDate) {
+            //            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+            //            return;
+            //        }
+            //    }
+
+            //    if (Reason == "" || Reason.length == 0) {
+            //        dhtmlx.alert('Enter Reason.');
+            //        return;
+            //    }
+            //    if (SpNote == "" || SpNote.length == 0) {
+            //        dhtmlx.alert('Enter Description.'); // Jignesh-18-02-2021
+            //        return;
+            //    }
+            //    if (OrderNo == "" || OrderNo.length == 0) {
+            //        dhtmlx.alert('Enter Client Change Order No.'); // Jignesh-08-02-2021
+            //        return;
+            //    }
+            //    if (ChangeOrderTypedd == null || ChangeOrderTypedd == 0) {
+            //        dhtmlx.alert('Select Order Type.');
+            //        return;
+            //    }
+            //    //if (AmtOrder == "" || AmtOrder.length == 0) {
+            //    //    dhtmlx.alert('Enter Amount.');
+            //    //    return;
+            //    //}
+
+            //    if (modType != "" || modType.length != 0) {
+            //        if (modType == 1) {
+            //            if (AmtOrder == "" || AmtOrder.length == 0) {
+            //                dhtmlx.alert('Enter Value.');
+            //                return;
+            //            }
+            //        }
+            //        else if (modType == 2) {//changeOrderScheduleImpact
+            //            // Jignesh-24-03-2021
+            //            //if (durationDate == "" || durationDate.length == 0) {
+            //            //    dhtmlx.alert('Enter Duration Date.');
+            //            //    return;
+            //            //}
+            //            if (scheduleImpact == "" || scheduleImpact.length == 0) {
+            //                dhtmlx.alert('Enter Schedule Impact.');
+            //                return;
+            //            }
+            //        }
+            //        else if (modType == 3) {
+            //            if (AmtOrder == "" || AmtOrder.length == 0) {
+            //                dhtmlx.alert('Enter Value.'); // Jignesh-18-02-2021
+            //                return;
+            //            }
+            //            // Jignesh-24-03-2021
+            //            if (scheduleImpact == "" || scheduleImpact.length == 0) {
+            //                dhtmlx.alert('Enter Schedule Impact.');
+            //                return;
+            //            }
+            //            //if (durationDate == "" || durationDate.length == 0) {
+            //            //    dhtmlx.alert('Enter Duration Date.');
+            //            //    return;
+            //            //}
+            //        }
+            //    }
+            //    //  alert(fileName);
+            //    // alert(g_newProgramElementChangeOrder);
+            //    if (!g_newProgramElementChangeOrder) {   //Update  ppuu
+            //        var updatedChangeOrder = g_selectedProgramElementChangeOrder;
+            //        var isModified = true;
+
+            //        updatedChangeOrder.ChangeOrderName = modal.find('.modal-body #program_element_change_order_name_modal').val();
+            //        updatedChangeOrder.ChangeOrderNumber = modal.find('.modal-body #program_element_change_order_number_modal').val();
+            //        updatedChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+            //        updatedChangeOrder.ChangeOrderScheduleChange = modal.find('.modal-body #program_element_change_order_schedule_change_modal').val();
+            //        updatedChangeOrder.OrderType = modal.find('.modal-body #ChangeOrderType').val();
+            //        updatedChangeOrder.OrderDate = modal.find('.modal-body #ChangeOrderDate').val();
+
+            //        //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //        updatedChangeOrder.Reason = modal.find('.modal-body #program_element_change_order_Reason_modal').val();
+            //        updatedChangeOrder.ModificationTypeId = modal.find('.modal-body #program_element_change_order_ddModificationType').val();
+            //        //updatedChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
+            //        updatedChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
+            //        //=======================================================================================
+
+            //        if (g_newProgramElement) {
+            //            //Find the one in the draft list
+            //            for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
+            //                if (g_program_element_change_order_draft_list[x].ChangeOrderName == g_selectedProgramElementChangeOrder.ChangeOrderName
+            //                    && g_program_element_change_order_draft_list[x].ChangeOrderNumber == g_selectedProgramElementChangeOrder.ChangeOrderNumber
+            //                    && g_program_element_change_order_draft_list[x].ChangeOrderAmount == g_selectedProgramElementChangeOrder.ChangeOrderAmount
+            //                    && g_program_element_change_order_draft_list[x].ChangeOrderScheduleChange == g_selectedProgramElementChangeOrder.ChangeOrderScheduleChange) {
+            //                    //  g_program_element_change_order_draft_list[x].DocumentName = fileName;
+            //                    g_program_element_change_order_draft_list[x].ChangeOrderName = updatedChangeOrder.ChangeOrderName;
+            //                    g_program_element_change_order_draft_list[x].ChangeOrderNumber = updatedChangeOrder.ChangeOrderNumber;
+            //                    g_program_element_change_order_draft_list[x].ChangeOrderAmount = updatedChangeOrder.ChangeOrderAmount;
+            //                    g_program_element_change_order_draft_list[x].ChangeOrderScheduleChange = updatedChangeOrder.ChangeOrderScheduleChange;
+            //                    g_program_element_change_order_draft_list[x].OrderType = updatedChangeOrder.OrderType;
+            //                    g_program_element_change_order_draft_list[x].OrderDate = updatedChangeOrder.OrderDate;
+            //                    //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //                    g_program_element_change_order_draft_list[x].Reason = updatedChangeOrder.Reason;
+            //                    g_program_element_change_order_draft_list[x].ModificationTypeId = updatedChangeOrder.ModificationTypeId;
+            //                    //g_program_element_change_order_draft_list[x].DurationDate = updatedChangeOrder.DurationDate; // Jignesh-24-03-2021
+            //                    g_program_element_change_order_draft_list[x].ScheduleImpact = updatedChangeOrder.ScheduleImpact; // Jignesh-24-03-2021
+            //                    //=======================================================================================
+
+            //                    if (wbsTree.getProgramElementChangeOrderFileDraft().length > 0) {
+            //                        g_program_element_change_order_draft_list[x].DocumentDraft = wbsTree.getProgramElementChangeOrderFileDraft();
+            //                    }
+            //                }
+            //            }
+            //            populateProgramElementChangeOrderTableNew();
+            //            $('#ProgramElementChangeOrderModal').modal('hide');
+            //            $("#ProgramElementModal").css({ "opacity": "1" });
+            //            return;
+            //        }
+
+            //        debugger;
+            //        //update- Added by Amruta to save end date on change order
+
+            //        if (updatedChangeOrder.ScheduleImpact != "") {
+            //            var curendt = new Date($('#program_element_PEnd_Date').val());
+            //            curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+            //            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+            //            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+            //        }
+            //        debugger;
+            //        var pendDate = $('#program_element_PEnd_Date').val();
+            //        var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+
+            //        var obj = {
+            //            "Operation": 2,
+            //            "ChangeOrderID": updatedChangeOrder.ChangeOrderID,
+            //            "ChangeOrderName": updatedChangeOrder.ChangeOrderName,
+            //            "ChangeOrderNumber": updatedChangeOrder.ChangeOrderNumber,
+            //            "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
+            //            "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
+            //            "ProgramElementID": selectedNode.ProgramElementID,
+            //            "ProjectEndDateCO": projectEndDate,
+            //            "OrderType": updatedChangeOrder.OrderType,
+            //            "OrderDate": updatedChangeOrder.OrderDate,
+            //            //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //            "Reason": updatedChangeOrder.Reason,
+            //            "ModificationTypeId": updatedChangeOrder.ModificationTypeId,
+            //            //"DurationDate": updatedChangeOrder.DurationDate // Jignesh-24-03-2021
+            //            "ScheduleImpact": updatedChangeOrder.ScheduleImpact // Jignesh-24-03-2021
+            //            //=======================================================================================
+            //        }
+
+            //        var listToSave = [];
+            //        listToSave.push(obj);
+
+            //        //API to Insert/Update ppbb
+            //        wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave, function (response) {
+            //            //alert(response.result.split(',')[0]); //Manasi
+            //            //if (response.result.split(',')[0].trim() === "Success") {successfully
+            //            if (response.result.indexOf('successfully') >= 0) {  //Manasi
+            //                //Added by Amruta for populating the end date post exit modal -1
+            //                selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+            //                wbsTree.updateTreeNodes(selectedNode);
+            //                dhtmlx.alert({
+            //                    text: response.result,
+            //                    width: '500px'
+            //                });
+            //                //-------Manasi
+            //                $('#ProgramElementChangeOrderModal').modal('hide');
+            //                $("#ProgramElementModal").css({ "opacity": "1" });
+
+            //                //Manu: 11/01/2022 
+            //                /*  var curendt = new Date($('#program_element_PEnd_Date').val());
+            //                  curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+            //                  curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+            //                  $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change();*/ //Added by Amruta for confirmation popup
+
+
+            //                //$('#ProgramModal').modal('hide');
+            //            } else {
+            //                if (response.result == '' || response.result == null || response.result == undefined)
+            //                    dhtmlx.alert('Something went wrong. Please try again..');
+            //                else {
+            //                    dhtmlx.alert({
+            //                        text: response.result,
+            //                        width: '500px'
+            //                    });
+            //                }
+
+            //                return;  //Manasi
+            //            }
+
+            //            $('#ProgramElementChangeOrderModal').modal('hide');
+            //            $("#ProgramElementModal").css({ "opacity": "1" });
+            //            debugger;
+            //            populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
+
+            //            g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //            //$('#uploadBtnProgramelmtCOspinRow').hide()     //Manasi 20-08-2020
+            //            document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
+            //        });
+
+            //    }
+
+            //    if (g_newProgramElementChangeOrder) {
+            //        var newNode = { name: "New Program Element Change Order" };
+            //        var newChangeOrder = {};
+
+            //        newChangeOrder.ChangeOrderName = modal.find('.modal-body #program_element_change_order_name_modal').val();
+            //        newChangeOrder.ChangeOrderNumber = modal.find('.modal-body #program_element_change_order_number_modal').val();
+            //        newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+            //        newChangeOrder.ChangeOrderScheduleChange = modal.find('.modal-body #program_element_change_order_schedule_change_modal').val();
+            //        newChangeOrder.OrderType = modal.find('.modal-body #ChangeOrderType').val();
+            //        newChangeOrder.OrderDate = modal.find('.modal-body #ChangeOrderDate').val();
+            //        //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //        newChangeOrder.Reason = modal.find('.modal-body #program_element_change_order_Reason_modal').val();
+            //        newChangeOrder.ModificationTypeId = modal.find('.modal-body #program_element_change_order_ddModificationType').val();
+            //        //newChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
+            //        newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
+            //        //=======================================================================================
+            //        var orgendt = new Date($('#program_element_PEnd_Date').val());
+
+            //        if (newChangeOrder.ScheduleImpact != "") {
+            //            var curendt = new Date($('#program_element_PEnd_Date').val());
+            //            curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+            //            curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+            //            $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
+            //            debugger;
+            //        }
+
+            //        var pendDate = $('#program_element_PEnd_Date').val();
+            //        var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+
+            //        var obj = {
+            //            "Operation": 1,
+            //            "ChangeOrderID": 0,
+            //            "ChangeOrderName": newChangeOrder.ChangeOrderName,
+            //            "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
+            //            "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
+            //            "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
+            //            "ProgramElementID": selectedNode.ProgramElementID,
+            //            "ProjectEndDateCO": projectEndDate,
+            //            "OrderType": newChangeOrder.OrderType,
+            //            "OrderDate": newChangeOrder.OrderDate, //.replace(/\//g, ""),
+            //            //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //            "Reason": newChangeOrder.Reason,
+            //            "ModificationTypeId": newChangeOrder.ModificationTypeId,
+            //            //"DurationDate": newChangeOrder.DurationDate // Jignesh-24-03-2021
+            //            "ScheduleImpact": newChangeOrder.ScheduleImpact // Jignesh-24-03-2021
+            //            //=======================================================================================
+            //        }
+
+            //        var listToSave = [];
+            //        listToSave.push(obj);
+
+            //        //   alert(g_newProgramElement);
+            //        if (g_newProgramElement) {
+            //            g_program_element_change_order_draft_list.push({
+            //                "Operation": 1,
+            //                "ChangeOrderID": 0,
+            //                //"DocumentName": fileName,
+            //                "ChangeOrderName": newChangeOrder.ChangeOrderName,
+            //                "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
+            //                "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
+            //                "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
+            //                "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+            //                "ProjectEndDateCO": projectEndDate,
+            //                "OrderType": newChangeOrder.OrderType,
+            //                "OrderDate": newChangeOrder.OrderDate,
+            //                //================== Jignesh-ChangeOrderPopUpChanges ====================================
+            //                "Reason": newChangeOrder.Reason,
+            //                "ModificationTypeId": newChangeOrder.ModificationTypeId,
+            //                //"DurationDate": newChangeOrder.DurationDate // Jignesh-24-03-2021
+            //                "ScheduleImpact": newChangeOrder.ScheduleImpact // Jignesh-24-03-2021
+            //                //=======================================================================================
+            //            });
+
+            //            // alert(fileName);
+            //            //ppaaa
+            //            populateProgramElementChangeOrderTableNew();
+            //            $('#ProgramElementChangeOrderModal').modal('hide');
+            //            $("#ProgramElementModal").css({ "opacity": "1" });
+            //            return;
+            //        }
+
+            //        console.log(listToSave);
+
+            //        //API to Insert Program Element CHANGE ORDER
+            //        wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
+            //            function (response) {
+            //                console.log(response);
+            //                //var newChangeOrderID = response.result.split(',')[1].trim();
+            //                if (response.result.split(',')[0].trim() === "Success") {
+            //                    //Added by Amruta for populating the end date post exit modal -2
+            //                    selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+            //                    wbsTree.updateTreeNodes(selectedNode);
+            //                    var newChangeOrderID = response.result.split(',')[1].trim();
+
+            //                    //Upload draft documents
+            //                    var index = 0;
+
+            //                    var apiUpload = function () {
+            //                        //03-05-2022
+            //                        //if ($('#program_element_change_order_file_name').html().length == 0) {
+            //                        //    return;
+            //                        //}
+            //                        ////if (index >= wbsTree.getProgramElementChangeOrderFileDraft().length) {
+            //                        ////    return;
+            //                        ////}
+            //                        //docTypeID = 1;
+            //                        //// docTypeID = wbsTree.getProgramElementChangeOrderFileDraft()[index].docTypeID;
+            //                        ////  formdata = wbsTree.getProgramElementChangeOrderFileDraft()[index].formdata;
+
+            //                        //formdata = new FormData();
+            //                        //var fileName = "";
+
+            //                        //angular.forEach(fileUploadProgramElementChangeOrderModal.files, function (value, key) {
+            //                        //    fileName = value.name;
+            //                        //    formdata.append(key, value);
+            //                        //});
+            //                        //var request = {
+            //                        //    method: 'POST',
+            //                        //    url: serviceBasePath + '/uploadFiles/Post/ProgramElementChangeOrder/0/0/0/0/' + newChangeOrderID + '/' + docTypeID,
+            //                        //    data: formdata, //fileUploadProject.files, //$scope.
+            //                        //    ignore: true,
+            //                        //    headers: {
+            //                        //        'Content-Type': undefined
+            //                        //    }
+            //                        //};
+
+            //                        //var angularHttp = wbsTree.getAngularHttp();
+            //                        //angularHttp(request).then(function success(d) {
+            //                        //    console.log(d);
+            //                        //    debugger;
+            //                        //    populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);  //Manasi
+            //                        //    $('#program_element_change_order_file_name').empty();
+
+            //                        //    document.getElementById("fileUploadProgramElementChangeOrderModal").value = "";
+
+            //                        //    //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
+            //                        //    document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
+            //                        //});
+            //                    }
+
+            //                    apiUpload();// Paa
+
+            //                    populateProgramElementChangeOrderTableNew(); //Manasi
+            //                    $('#ProgramElementChangeOrderModal').modal('hide');
+            //                    $("#ProgramElementModal").css({ "opacity": "1" });
+
+            //                    //Manu: 11/01/2022
+            //                   /* var curendt = new Date($('#program_element_PEnd_Date').val());
+            //                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+            //                    curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+            //                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')).change()*/;//Added by Amruta for confirmation popup-1
+            //                    //
+
+            //                } else {
+            //                    //$('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 20-08-2020
+            //                    document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
+            //                    debugger;
+            //                    if (response.result == '' || response.result == null || response.result == undefined) {
+            //                        $('#program_element_PEnd_Date').val(moment(orgendt).format('MM/DD/YYYY'));
+            //                        dhtmlx.alert('Something went wrong. Please try again..');
+            //                    }
+
+            //                    else {
+            //                        dhtmlx.alert({ text: response.result, width: '500px' });
+            //                    }
+            //                    //$('#ProgramElementChangeOrderModal').modal('hide');  Manasi
+            //                    //$("#ProgramElementModal").css({ "opacity": "1" });
+            //                    return; //Manasi
+            //                }
+            //                $('#ProgramElementChangeOrderModal').modal('hide');
+            //                $("#ProgramElementModal").css({ "opacity": "1" });
+            //                debugger;
+            //                populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
+
+            //                g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //                //  $('#program_element_change_order_file_name').empty(); // manasi 7 jul 2020
+            //            });
+
+            //        //$('#program_element_change_order_file_name').empty();
+
+            //        //document.getElementById("fileUploadProgramElementChangeOrderModal").value = ""; prith commented on 24jul2020 as was not abe to save
+            //    }
+
+
+
+            //});
 
             $scope.getTheFiles = function ($files) {
                 console.log('get files', $files);
