@@ -14567,19 +14567,23 @@ WBSTree = (function ($) {
                 var organizationId = $("#selectOrg").val();
                 var thisData = $(this);
                 var docId = $(this).closest("tr").find(".docId").text();
-                
+                var ChangeOrderID = $(this).closest('tr').attr('id'); 
                 var docData = {};
                 var changeOrderData = {};
                 console.log(docId);
 
-                $.each(_documentList,
-                    function (i, el) {
-                        if (this.DocumentID == docId) {
-                            docData = _documentList[i];
-                            console.log(_documentList[i]);
-                        }
-                    });
-                var changeOrderId = docData.ChangeOrderID;
+                if (docId != 0)
+                {
+                    $.each(_documentList,
+                        function (i, el) {
+                            if (this.DocumentID == docId) {
+                                docData = _documentList[i];
+                                console.log(_documentList[i]);
+                            }
+                        });
+                }
+                
+                
                 if (thisData[0].id == "viewOrderDetail") {
                     $.each(_changeOrderList,
                         function (i, el) {
