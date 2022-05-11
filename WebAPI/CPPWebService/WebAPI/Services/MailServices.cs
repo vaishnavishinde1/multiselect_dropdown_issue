@@ -484,9 +484,24 @@ namespace WebAPI.Services
             List<string> to = new List<string>();
             to.Add(toEmail);
             String subject = sub;
-            string message = "<html>Hello " + TargetedUser + " , <br><br> Contract Ammount for Contrat - <strong>" + ContractName + "</strong>, with contract no <strong>" + ContractNumber + "</strong> has been modified by <strong>$" + ModifiedValue + "</strong> ."
+            string message = "<html>Hello " + TargetedUser + " , <br><br> Contract Ammount for Contract - <strong>" + ContractName + "</strong>, with contract no <strong>" + ContractNumber + "</strong> has been modified by <strong>$" + ModifiedValue + "</strong> ."
                 + "<br> Current Contract Value : <strong>$" + CurruntValue + "</strong>"
                 + "<br><br>Please log in CPP and respond accordingly.<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            var sendMailThread = new Task(() =>
+            {
+                SendMail(to, "", "", subject, message);
+            });
+            sendMailThread.Start();
+        }
+
+        // Narayan - Contract Project Manager for Contract Created Mail 
+        public static void ContractProjectManagerMail(string toEmail, string ContractNumber, string ContractName)
+        {
+            List<string> to = new List<string>();
+            to.Add(toEmail);
+            String subject = "Contract Setup Notification - " + ContractName + " & " + ContractNumber + "";
+            string message = "<html>Hello, <br><br>Contract - <strong>" + ContractName + "</strong>, with contract no <strong>" + ContractNumber + "</strong> has been created."
+                + "<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
             var sendMailThread = new Task(() =>
             {
                 SendMail(to, "", "", subject, message);
