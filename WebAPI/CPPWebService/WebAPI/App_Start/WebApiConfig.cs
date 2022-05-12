@@ -971,6 +971,12 @@ namespace WebAPI
            routeTemplate: "Request/ResourceAvailabilityReport",
            defaults: new { controller = "RequestResourceAvailabilityReport" }
            );
+
+            config.Routes.MapHttpRoute( //luan here - Billing Exception Report
+              name: "BillingExceptionReport",
+              routeTemplate: "Request/BillingExceptionReport",
+              defaults: new { controller = "RequestBillingExceptionReport" }
+              );
             #endregion
 
             config.Routes.MapHttpRoute( //luan here - Work Breakdown Structure Admin Report

@@ -102,7 +102,7 @@
 
                 //Added by Amruta 15-03-2022
                 { filterName: 'Procurement Report', reportPathName: 'ProcurementReport', fileName: 'Procurement Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
-
+                { filterName: 'Billing Exception Report', reportPathName: 'BillingExceptionReport', fileName: 'Billing Exception Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
             ]
 
             // Jignesh 21-12-2020
@@ -414,6 +414,25 @@
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
+
+                else if ($scope.reportTypeFilter.filterName == 'Billing Exception Report') {            //Procurement Report - MySQL
+                    baseUrl = serviceBasePath + 'Request/BillingExceptionReport';
+
+                    var pdfUrl = baseUrl
+                        + '?ProgramID=' + allFilters.programID
+                        + '&ProgramElementID=' + allFilters.programElementID
+                        + '&ProjectID=' + allFilters.projectID
+                        + '&FileType=' + 'PDF';
+
+                    var excelUrl = baseUrl
+                        + '?ProgramID=' + allFilters.programID
+                        + '&ProgramElementID=' + allFilters.programElementID
+                        + '&ProjectID=' + allFilters.projectID
+                        + '&FileType=' + 'excel';
+
+                    openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
+                }
+
             }
 
             //Select cost type
