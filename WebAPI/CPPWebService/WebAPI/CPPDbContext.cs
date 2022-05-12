@@ -297,6 +297,7 @@ namespace WebAPI
 
         public DbSet<ContractInsurance> ContractInsurances { get; set; }   // Narayan - 07-04-2022
 
+        public DbSet<ContractProjectManager> ContractProjectManagers { get; set; } // Narayan - 03-05-2022
 
     }
 
