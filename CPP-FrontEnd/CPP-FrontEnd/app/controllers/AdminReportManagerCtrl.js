@@ -102,6 +102,11 @@
 
                 //Added by Amruta 15-03-2022
                 { filterName: 'Procurement Report', reportPathName: 'ProcurementReport', fileName: 'Procurement Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
+		
+		//Added by Amruta 
+                { filterName: 'Resource Availability Report', reportPathName: 'ResourceReport', fileName: 'Resource Availability Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
+
+            
                 { filterName: 'Billing Exception Report', reportPathName: 'BillingExceptionReport', fileName: 'Billing Exception Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
             ]
 
@@ -415,6 +420,31 @@
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
 
+//Added by Amruta 
+                else if ($scope.reportTypeFilter.filterName == 'Resource Availability Report') {            //Resource Availability Report - MySQL
+                    baseUrl = serviceBasePath + 'Request/ResourceAvailabilityReport';
+					if (!allFilters.FromDate) {
+                        dhtmlx.alert('Must select from date');
+                        return;
+                    }
+                    if (!allFilters.ToDate) {
+                        dhtmlx.alert('Must select to date');
+                        return;
+                    }
+                    var pdfUrl = baseUrl
+                        + '?PositionID=' + allFilters.positionID
+                        + '&FromDate=' + allFilters.FromDate
+                        + '&ToDate=' + allFilters.ToDate
+                        + '&FileType=' + 'PDF';
+
+                    var excelUrl = baseUrl
+                        + '?PositionID=' + allFilters.positionID
+                        + '&FromDate=' + allFilters.FromDate
+                        + '&ToDate=' + allFilters.ToDate
+                        + '&FileType=' + 'excel';
+
+                    openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
+                }
                 else if ($scope.reportTypeFilter.filterName == 'Billing Exception Report') {            //Procurement Report - MySQL
                     baseUrl = serviceBasePath + 'Request/BillingExceptionReport';
 
@@ -607,7 +637,9 @@
                     CostTypeID: 'A',
                     projectClassID: 0,
                     phaseCode: 'All',
-                    version: 0
+                    version: 0,
+                    fromDate: '',
+                    ToDate: ''
                 }
 
                 //Process cost type
@@ -698,6 +730,23 @@
                     allFilters.phaseCode = $scope.selectedPhase.Code;
                 } else {
                     allFilters.phaseCode = 'All';
+                }
+
+                //Process Start Date
+                $scope.selectedFromDate = $("#fromDate").val();
+                $scope.selectedToDate = $("#toDate").val();
+                if ($scope.selectedFromDate != undefined && $scope.selectedFromDate != null && $scope.selectedFromDate) {
+                    console.log(" $scope.selectedFromDate ::");
+                    console.log($scope.selectedFromDate);
+                    allFilters.FromDate = $scope.selectedFromDate
+                } else {
+                    allFilters.FromDate = 0;
+                }
+                //Process End Date
+                if ($scope.selectedToDate != undefined && $scope.selectedToDate != null && $scope.selectedToDate) {
+                    allFilters.ToDate = $("#toDate").val();
+                } else {
+                    allFilters.ToDate = 0;
                 }
 
                 return allFilters

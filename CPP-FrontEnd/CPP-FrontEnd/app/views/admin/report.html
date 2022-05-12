@@ -293,7 +293,7 @@
         </div>
 
         <!--Positions-->
-        <div ng-show="reportTypeFilter.filterName=='Employee Admin Report'"
+        <div ng-show="reportTypeFilter.filterName=='Employee Admin Report'|| reportTypeFilter.filterName=='Resource Availability Report'"
              class="form-group required" style="padding-left:0;padding-right:0;"
              ng-class="{ 'has-error' : reportManagerForm.positionFilter.$error.required}">
 
@@ -306,6 +306,17 @@
                     <span ng-bind="item.PositionDescription"></span>
                 </ui-select-choices>
             </ui-select>
+        </div>
+
+        <div ng-show="reportTypeFilter.filterName=='Resource Availability Report'"
+             class="form-group required" style="padding-left:0;padding-right:0;"
+             ng-class="{ 'has-error' : reportManagerForm.positionFilter.$error.required}">
+
+            <label for="pasttrend_approval_date" class="control-label">From Date</label>
+            <input type="text" class="form-control" id="fromDate" placeholder="MM/DD/YYYY" />
+
+            <label for="pasttrend_approval_date" class="control-label">To Date</label>
+            <input type="text" class="form-control" id="toDate" placeholder="MM/DD/YYYY" />
         </div>
 
         <!--Project Class-->
@@ -342,7 +353,7 @@
     </div>
 
     <div class="c-modal-footer">
-        <button type="button" class="btn btn-info w100" data-dismiss="modal" ng-click="goBack('close')">Close</button><!--changes done by shweta 16-7-2020-->
+        <!--<button type="button" class="btn btn-info w100" data-dismiss="modal" ng-click="goBack('close')">Close</button>-->  <!--changes done by shweta 16-7-2020-->
         <button type="button" class="btn btn-info w100" ng-click="generateReport()">Run</button><!--changes done by shweta 16-7-2020-->
     </div>
 </div>
@@ -355,6 +366,19 @@
           handle: ".modal-header"
       });
   });
+
+    $("#fromDate").datepicker();
+    $("#toDate").datepicker();
+	
+	    $("#fromDate").datepicker().
+        on('change', function () {
+            var date = $("#fromDate").datepicker('getDate');
+            var endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + 365);
+            $("#toDate").datepicker('option', { minDate: date, maxDate: endDate });
+        });;
+  
+	
 </script><!DOCTYPE html>
 
 <html>
