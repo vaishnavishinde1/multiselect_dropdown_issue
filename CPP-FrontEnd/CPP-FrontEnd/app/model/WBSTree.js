@@ -57,7 +57,7 @@ WBSTree = (function ($) {
             localStorage.setItem('MODE', 'gridview');
         }
         else {
-            debugger;
+            //debugger;
             $('#mindmap').show();
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
@@ -10599,7 +10599,7 @@ WBSTree = (function ($) {
 
                     for (var x = 0; x < DDUser.length; x++) {
                         var Name = '';
-                        Name = DDUser[x].FirstName +''+DDUser[x].LastName;
+                        Name = DDUser[x].FirstName  + ' ' + DDUser[x].LastName;
                         var pmUserId = DDUser[x].Id;
                             if (projectManagerList.includes(pmUserId)) {
                                     program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + ' selected>' + Name + '</option>');
