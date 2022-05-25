@@ -9328,6 +9328,7 @@ WBSTree = (function ($) {
             // Narayan - on click view button in warranty grid - 25-04-2022
             $("#gridWarrantyList").on('click', '#view_warranty', function () {
                 $('#btnSaveWarranty').hide();
+                $('#btnUpdateWarranty').hide();
                 var row = $(this).closest("tr");
                 var id = row[0].id;
                 var AllWarranties = _WarrantyList;
@@ -9346,54 +9347,115 @@ WBSTree = (function ($) {
                 $('#warranty_start_date').prop('disabled', true);
                 $('#warranty_end_date').prop('disabled', true);
                 $('#warranty_description').prop('disabled', true);
-                $('#btnClearWarranty').show();
+                //$('#btnClearWarranty').show();
             });
 
-            // Narayan - on click clear button in warranty - 25-04-2022
-            $('#btnClearWarranty').on('click', function () {
-                $('#btnSaveWarranty').show();
-                ResetWarrantyFields();
+            // Narayan - on click edit button in warranty grid - 23-05-2022
+            $("#gridWarrantyList").on('click', '#update_warranty', function () {
+                $('#btnSaveWarranty').hide();
+                //$('#btnClearWarranty').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var AllWarranties = _WarrantyList;
+                if (id != undefined) {
+                    for (var i = 0; i < AllWarranties.length; i++) {
+                        if (AllWarranties[i].Id == id) {
+                            $('#warranty_id').val(AllWarranties[i].Id);
+                            $('#warranty_select').val(AllWarranties[i].WarrantyType);
+                            $('#warranty_start_date').val(moment(AllWarranties[i].StartDate).format('MM/DD/YYYY'));
+                            $('#warranty_end_date').val(moment(AllWarranties[i].EndDate).format('MM/DD/YYYY'));
+                            $('#warranty_description').val(AllWarranties[i].Description);
+                            break;
+                        }
+                    }
+                }
+                wbsTree.setContractWarrantyOperation(2);
                 $('#warranty_select').prop('disabled', false);
                 $('#warranty_start_date').prop('disabled', false);
                 $('#warranty_end_date').prop('disabled', false);
                 $('#warranty_description').prop('disabled', false);
-                $('#btnClearWarranty').hide();
+                //$('#btnClearWarranty').show();
+                $('#btnUpdateWarranty').show();
+            });
+
+            // Narayan - on click clear button in warranty - 25-04-2022
+            $('#btnClearWarranty').on('click', function () {
+                ResetWarrantyFields();
             });
 
             //Narayan - 22/04/2022 - for reset insurance fields
             function ResetWarrantyFields() {
+                $('#btnSaveWarranty').show();
+
+                wbsTree.setContractWarrantyOperation(1);
+
+                $('#warranty_id').val('');
                 $('#warranty_select').val("Labor");
                 $('#warranty_start_date').val('');
                 $('#warranty_end_date').val('');
                 $('#warranty_description').val('');
+
+                $('#warranty_select').prop('disabled', false);
+                $('#warranty_start_date').prop('disabled', false);
+                $('#warranty_end_date').prop('disabled', false);
+                $('#warranty_description').prop('disabled', false);
+
+                $('#btnUpdateWarranty').hide();
+                //$('#btnClearWarranty').hide();
             }
 
             // Narayan - on click view button in prelimnary notice - 14-04-2022
             $("#gridNoticeList").on('click', '#view_notice', function () {
                 $('#btnSaveNotice').hide();
+                $('#btnUpdateNotice').hide();
                 var row = $(this).closest("tr");
                 var date = row.find("#history_notice_date").text();
                 var reason = row.find("#history_notice_reason").text();
-                $('#date_of_pre_notice').val(date); // Narayan - 20/04/2022
-                $('#notice_reason').val(reason); // Narayan - 20/04/2022
+                $('#date_of_pre_notice').val(date); // Narayan - 23/05/2022
+                $('#notice_reason').val(reason); // Narayan - 23/05/2022
                 $('#date_of_pre_notice').prop('disabled', true);
                 $('#notice_reason').prop('disabled', true);
-                $('#btnClearNotice').show();
+                //$('#btnClearNotice').show();
+            });
+
+            // Narayan - on click edit button in prelimnary notice - 23-05-2022
+            $("#gridNoticeList").on('click', '#update_notice', function () {
+                $('#btnSaveNotice').hide();
+                //$('#btnClearNotice').hide();
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var date = row.find("#history_notice_date").text();
+                var reason = row.find("#history_notice_reason").text();
+                $('#pre_notice_id').val(id); // Narayan - 23/05/2022
+                $('#date_of_pre_notice').val(date); // Narayan - 23/05/2022
+                $('#notice_reason').val(reason); // Narayan - 23/05/2022
+                wbsTree.setPrelimneryNoticeOperation(2);
+                $('#date_of_pre_notice').prop('disabled', false);
+                $('#notice_reason').prop('disabled', false);
+                $('#btnUpdateNotice').show();
             });
 
             // Narayan - on click clear button in prelimnary notice - 14-04-2022
             $('#btnClearNotice').on('click', function () {
-                $('#btnSaveNotice').show();
                 ResetNoticeFields();
-                $('#date_of_pre_notice').prop('disabled', false);
-                $('#notice_reason').prop('disabled', false);
-                $('#btnClearNotice').hide();
             });
 
             //Narayan - for reset notice fields
             function ResetNoticeFields() {
+                $('#btnSaveNotice').show();
+
+                wbsTree.setPrelimneryNoticeOperation(1);
+
+                $('#pre_notice_id').val('');
                 $('#date_of_pre_notice').val('');
                 $('#notice_reason').val('');
+
+                $('#date_of_pre_notice').prop('disabled', false);
+                $('#notice_reason').prop('disabled', false);
+
+                $('#btnUpdateNotice').hide();
+                //$('#btnClearNotice').hide();
+
                 //$('input[name="rbModHistory"]').prop('checked', false);
                 //$('#btnDeleteConModification').attr('disabled', 'disabled');
                 //$('#btnEditConModification').attr('disabled', 'disabled');
@@ -9414,6 +9476,39 @@ WBSTree = (function ($) {
                 $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });
+
+            // Narayan - on click edit button in insurance - 24-05-2022
+            $("#gridInsuranceList").on('click', '#update_insurance', function () {
+                $('#btnSaveInsurance').hide();
+
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                var type = row.find("#history_type").text();
+                var limit = row.find("#history_limit").text();
+                $('#insurance_id').val(id); 
+                $('#insurance_type_select').val(type);
+                $('#insurance_limit').val(limit);
+                wbsTree.setContractInsuranceOperation(2);
+                $('#btnUpdateInsurance').show();
+            });
+
+            // Narayan - on click clear button in insurance - 25-05-2022
+            $('#btnClearInsurance').on('click', function () {
+                ResetInsuranceFields();
+            });
+
+            //Narayan - for reset insurance fields - 24-05-2022
+            function ResetInsuranceFields() {
+                $('#btnSaveInsurance').show();
+
+                wbsTree.setContractInsuranceOperation(1);
+
+                $('#insurance_id').val('');
+                $('#insurance_type_select').val('');
+                $('#insurance_limit').val('');
+
+                $('#btnUpdateInsurance').hide();
+            }
 
             $('#pandpbondform input').on('change', function () {          //vaishnavi 12-4-2022
                 var selOption = $("input[type='radio'][name='PPBond']:checked").val();
@@ -9841,7 +9936,7 @@ WBSTree = (function ($) {
                 });
 
                 // Narayan - Save Insurance from contract
-                $('#btnSaveWarranty').unbind().on('click', function (event) {
+                $('#btnSaveWarranty, #btnUpdateWarranty').unbind().on('click', function (event) {
                     var operation = wbsTree.getContractWarrantyOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -9908,6 +10003,11 @@ WBSTree = (function ($) {
                         CreatedBy: createdBy,
                     };
 
+                    // Narayan - set id for updation - 23/05/2022
+                    if (operation == 2) {
+                        contractWarranty.Id = $('#warranty_id').val();
+                    }
+
                     PerformOperationOnContractWarranty(contractWarranty);
 
                     return;
@@ -9953,7 +10053,8 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td> <button type="button" id="view_warranty">view</button></td>' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-search" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -9962,7 +10063,7 @@ WBSTree = (function ($) {
                 }
 
                 // Narayan - Save Notice from contract
-                $('#btnSaveNotice').unbind().on('click', function (event) {
+                $('#btnSaveNotice, #btnUpdateNotice').unbind().on('click', function (event) {
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10001,9 +10102,12 @@ WBSTree = (function ($) {
                         Reason: reason,
                         Date: date,
                         ProgramID: programId,
-                        CreatedBy: createdBy,
                     };
 
+                    // Narayan - set id for updation - 23/05/2022
+                    if (operation == 2) {
+                        prelimnaryNotice.Id = $('#pre_notice_id').val();
+                    }
 
                     PerformOperationOnPrelimnaryNotice(prelimnaryNotice);
 
@@ -10050,7 +10154,8 @@ WBSTree = (function ($) {
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td> <button type="button" id="view_notice">view</button></td>' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-search" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -10058,9 +10163,13 @@ WBSTree = (function ($) {
                     });
                 }
 
+                //// Narayan
+                //$('#insurance_limit').on('change', function () {
+                //    $('#insurance_limit').val().replace("$", "").replaceAll(",", "");
+                //});
 
                 // Narayan - Save Insurance from contract
-                $('#btnSaveInsurance').unbind().on('click', function (event) {
+                $('#btnSaveInsurance, #btnUpdateInsurance').unbind().on('click', function (event) {
                     var operation = wbsTree.getContractInsuranceOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10086,6 +10195,11 @@ WBSTree = (function ($) {
                         ProgramID: programId,
                         CreatedBy: createdBy,
                     };
+
+                    // Narayan - set id for updation - 24/05/2022
+                    if (operation == 2) {
+                        contractInsurance.Id = $('#insurance_id').val();
+                    }
 
 
                     PerformOperationOnContractInsurance(contractInsurance);
@@ -10125,23 +10239,18 @@ WBSTree = (function ($) {
                                 gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '<td id="history_type" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].Type + '</td>' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '<td id="history_limit" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].Limit + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].CreatedBy + '</td>' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
                                     '<tr > ');
                             }
 
                         }
                     });
-                }
-
-                //Narayan - for reset insurance fields
-                function ResetInsuranceFields() {
-                    $('#insurance_type_select').val(''); // Narayan - 20/04/2022
-                    $('#insurance_limit').val(''); // Narayan - 20/04/2022
                 }
 
                 //Enable upload button for edit Project
@@ -10878,7 +10987,7 @@ WBSTree = (function ($) {
 
                     //$('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
                     $('#notice_reason').val(''); // Narayan - 20/04/2022
-                    $('#btnClearNotice').hide(); // Narayan 14-04-2022
+                    //$('#btnClearNotice').hide(); // Narayan 14-04-2022
 
                     $('#insurance_type_select').val(''); // Narayan - 20/04/2022
                     $('#insurance_limit').val(''); // Narayan - 20/04/2022
@@ -11442,7 +11551,7 @@ WBSTree = (function ($) {
                     //$('#date_of_pre_notice').val(''); // Narayan - 20/04/2022
                     $('#notice_reason').val(''); // Narayan - 20/04/2022
                     $('#gridNoticeList tbody').empty(); // Narayan - 20/04/2022
-                    $('#btnClearNotice').hide(); // Narayan 14-04-2022
+                    //$('#btnClearNotice').hide(); // Narayan 14-04-2022
                     
                     $('#insurance_type_select').val(''); // Narayan - 20/04/2022
                     $('#insurance_limit').val(''); // Narayan - 20/04/2022
@@ -15140,28 +15249,35 @@ WBSTree = (function ($) {
                 //wrapDropDown.val(datawrapArray);
                 //debugger;
                 $('#txtPPNotes').val('');
-                $('#warranty_start_date').val('');
-                $('#warranty_end_date').val('');
-                $('#warranty_description').val('');
-                $('#date_of_pre_notice').val('');
-                $('#notice_reason').val('');
-                $('#insurance_limit').val('');
-                $('#insurance_type_select').val('');
+                //$('#warranty_start_date').val('');
+                //$('#warranty_end_date').val('');
+                //$('#warranty_description').val('');
+                //$('#date_of_pre_notice').val('');
+                //$('#notice_reason').val('');
+                //$('#insurance_limit').val('');
+                //$('#insurance_type_select').val('');
                 $("#reporting_to").prop('disabled', true);
-              
 
-                $('#btnSaveWarranty').show();
-                $('#warranty_select').prop('disabled', false);
-                $('#warranty_start_date').prop('disabled', false);
-                $('#warranty_end_date').prop('disabled', false);
-                $('#warranty_description').prop('disabled', false);
-                $('#btnClearWarranty').hide();
+                ResetWarrantyFields();
 
-                $('#btnSaveNotice').show();
-                $('#date_of_pre_notice').prop('disabled', false);
-                $('#notice_reason').prop('disabled', false);
-                $('#btnClearNotice').hide();
-              
+                //$('#btnSaveWarranty').show();
+                //$('#warranty_select').prop('disabled', false);
+                //$('#warranty_start_date').prop('disabled', false);
+                //$('#warranty_end_date').prop('disabled', false);
+                //$('#warranty_description').prop('disabled', false);
+                //$('#btnClearWarranty').hide();
+                //$('#btnUpdateWarranty').hide();
+
+                ResetNoticeFields();
+
+                //$('#btnSaveNotice').show();
+                //$('#date_of_pre_notice').prop('disabled', false);
+                //$('#notice_reason').prop('disabled', false);
+                //$('#btnUpdateNotice').hide();
+                //$('#btnClearNotice').hide();
+
+                ResetInsuranceFields();
+
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp.get(serviceBasePath + 'Request/AdditionalInfo/' + _selectedProgramID).then(function (response) {
                     var data = response.data.result;
@@ -15506,7 +15622,8 @@ WBSTree = (function ($) {
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td> <button type="button" id="view_notice">view</button></td>' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-search" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
                             '<tr > ');
                     }
                     //}
@@ -15525,12 +15642,13 @@ WBSTree = (function ($) {
                         gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '> ' + _InsuranceList[x].Type + '</td > ' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '<td id="history_type" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _InsuranceList[x].Type + '</td>' +
+                            '<td id="history_limit" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].Limit + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].CreatedBy + '</td>' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -15554,7 +15672,8 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td> <button type="button" id="view_warranty">view</button></td>' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-search" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -16020,13 +16139,13 @@ WBSTree = (function ($) {
                 }
             });
             $("#insurance_limit").keypress(function (e) {
-                if (e.which != 46 && e.which != 45 && e.which != 46 &&
+                if (e.which != 46 && e.which != 46 &&
                     !(e.which >= 48 && e.which <= 57)) {
                     return false;
                 }
-                //else {
-                //    $(this).val('$' + $(this).val().replace('$', ''));
-                //}
+                else {
+                    $(this).val('$' + $(this).val().replace('$', ''));
+                }
             });
             //====================== Jignesh-25-03-2021 =================================
             $("#modification_value,#program_element_change_order_amount_modal").keypress(function (e) {

@@ -33,6 +33,10 @@ namespace WebAPI.Controllers
             {
                 ProgramWarranty.registerProgramWarranty(programWarranty);
             }
+            else if(programWarranty.Operation == 2)
+            {
+                ProgramWarranty.updateProgramWarranty(programWarranty);
+            }
             List<ProgramWarranty> programWarrantiesList = ProgramWarranty.GetProgramWarrantyList(programWarranty.ProgramID);
             var jsonNew = new
             {
