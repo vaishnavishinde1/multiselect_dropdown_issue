@@ -4817,6 +4817,7 @@
                         <div style="padding: 10px;">
                             <div class="row">
                                 <!--<div class="_form-group" style="margin-top:3px;">-->
+                                <input type="text" style="display:none;" class="form-control" id="warranty_id" hidden disabled >
                                 <div class="col-xs-4" style="padding-left: 15px;">
                                     <label for="program_element_project_number" class="control-label _bold ">Warranty Type </label>
                                     <select type="text" class="form-control" id="warranty_select">
@@ -4849,9 +4850,13 @@
                                     <textarea type="text" cols="20" class="form-control" id="warranty_description" style="padding-left: 15px;"></textarea>
                                 </div>
                                 <!--</div>-->
-                                <div class="col-xs-4 text-center" style="margin-top: 30px;">
-                                    <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                                    <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
+                                <div class="col-xs-2" style="margin-top: 30px;">
+                                    <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100%;">Add</button>
+                                    <button type="button" id="btnUpdateWarranty" class="btn btn-primary" style="width: 100%; margin-left: 0;">Update</button>
+                                    <!--<button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>-->
+                                </div>
+                                <div class="col-xs-2" style="margin-top: 30px;">
+                                    <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100%;">Clear</button>
                                 </div>
                             </div>
                         </div>
@@ -4883,7 +4888,7 @@
                                             <td style="font-weight: 900; width: 220px;">Start Date</td>
                                             <td style="font-weight: 900; width: 220px;">End Date</td>
                                             <td style="font-weight: 900; width: 18%;">Created By</td>
-                                            <td style="font-weight:900;">Action</td>
+                                            <td style="font-weight: 900; width: 15%; ">Action</td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -4914,17 +4919,21 @@
                         <div style="padding: 10px;">
                             <div class="row" style="">
                                 <h4 style="text-align:center;font-weight: 600;">Prelimnary Notice</h4>
+                                <input type="text" style="display:none;" class="form-control" id="pre_notice_id" hidden disabled>
                                 <div class="col-xs-9">
                                     <label for="program_element_project_number" class="control-label _bold ">Date of Notice </label>
                                     <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">
                                     <!--</div>
-                    <div class="col-xs-8">-->
+        <div class="col-xs-8">-->
                                     <label for="program_element_project_number" class="control-label _bold m-t-10">Reason of Notice </label>
                                     <textarea class="form-control" id="notice_reason" rows="3" cols="40"></textarea>
                                 </div>
-                                <div class="text-center col-xs-3" style="margin-top: 120px">
-                                    <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                                    <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
+                                <div class="text-center col-xs-3" style="margin-top: 96px">
+                                    <button type="button" id="btnSaveNotice" class="btn-primary c-btn-save" style="width: 60%; height: 30px;">Add</button>
+                                    <button type="button" id="btnUpdateNotice" class="btn-primary" style="width: 60%; height: 30px; margin-left: 0;">Update</button>
+                                    <div style="margin-top: 10px;">
+                                        <button type="button" id="btnClearNotice" class="btn-primary c-btn-back" style="width: 60%; height: 30px; ">Clear</button>
+                                    </div>
                                 </div>
                             </div>
                             <hr />
@@ -4935,8 +4944,8 @@
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
                                                 <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
-                                                <td style="font-weight: 900; width: 23%; ">Date of Notice	</td>
-                                                <td style="font-weight: 900; width: 43%; " >Reason</td>
+                                                <td style="font-weight: 900; width: 22%; ">Date of Notice	</td>
+                                                <td style="font-weight: 900; width: 41%; " >Reason</td>
                                                 <td style="font-weight: 900; width: 18%;">Created By</td>
                                                 <td style="font-weight:900;">Action</td>
                                             </tr>
@@ -4954,6 +4963,7 @@
                     <form id="contract_insurance" style=" height: auto; display: inline-block; width: -webkit-fill-available; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 0">
                         <div style="padding: 10px;">
                             <div class="row" style="">
+                                <input type="text" style="display:none;" class="form-control" id="insurance_id" hidden disabled>
                                 <div class="col-xs-4">
                                     <label for="program_element_project_number" class="control-label _bold ">Insurance Type </label>
                                     <select type="text" class="form-control" id="insurance_type_select">
@@ -4967,14 +4977,18 @@
                                     <label for="program_element_project_number" class="control-label _bold ">Limit </label>
                                     <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
                                 </div>
-                                <div class="col-xs-4" style="margin-top: 23px;">
-                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                <div class="col-xs-2" style="margin-top: 24px;">
+                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width: 100%; margin: 0;">Add</button>
+                                    <button type="button" id="btnUpdateInsurance" class="btn btn-primary" style="width: 100%; margin: 0;">Update</button>
+                                </div>
+                                <div class="col-xs-2" style="margin-top: 24px;">
+                                    <button type="button" id="btnClearInsurance" class="btn btn-primary c-btn-back" style="width: 100%; margin: 0;">Clear</button>
                                 </div>
                             </div>
 
                             <!--<div class="text-center" style="margin-top: 10px">
-                <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-            </div>-->
+        <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+    </div>-->
                             <hr />
                             <div>
                                 <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
@@ -4986,6 +5000,7 @@
                                                 <td style="font-weight: 900; width: 33%;">Type</td>
                                                 <td style="font-weight: 900; width: 33%;">Limit</td>
                                                 <td style="font-weight: 900; width: 18%;">Created By</td>
+                                                <td style="font-weight:900;">Action</td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
