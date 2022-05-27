@@ -3593,6 +3593,7 @@ WBSTree = (function ($) {
                 $('#downloadBtnChangeOrder').attr('disabled', 'disabled');
                 $('#ViewUploadFileChangeOrder').attr('disabled', 'disabled');
                 $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
                 //Added by Amruta for Project end date locking
                 $('#program_element_PEnd_Date').removeAttr('disabled');
                 wbsTree.getChangeOrder().get({}, function (changeOrderData) {
@@ -3687,10 +3688,12 @@ WBSTree = (function ($) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                             $('#ViewUploadFileChangeOrder').removeAttr('disabled');
                             $('#edit_program_element_change_order').removeAttr('disabled');
+                            $('#delete_program_element_change_order').removeAttr('disabled');
                         } else {
                             $('#downloadBtnChangeOrder').removeAttr('disabled');
                             $('#ViewUploadFileChangeOrder').removeAttr('disabled');
                             $('#edit_program_element_change_order').removeAttr('disabled');
+                            $('#delete_program_element_change_order').removeAttr('disabled');
                         }
 
                     });
