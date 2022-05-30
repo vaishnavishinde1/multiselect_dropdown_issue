@@ -248,7 +248,7 @@
         #program_project_manager_multiselect + .btn-group .checkbox input[type=checkbox] {
             margin-left: -25px;
         }
-        <!--->
+    
     #emp_class + .btn-group {
         display: inline-block;
         width: 100%;
@@ -458,7 +458,7 @@
             <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
-                <svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree">
+                <svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:20px;" id="wbs-tree">
 
                 </svg>
             </div>
@@ -2676,6 +2676,7 @@
                                 <div style="text-align: center;">
                                     <button id="new_program_element_milestone" class="btn btn-black">Add</button>
                                     <button id="edit_program_element_milestone" class="btn btn-black">Edit</button>
+                                    <button id="delete_program_element_milestone" class="btn btn-black">Delete</button>
                                 </div>
 
                             </div>
@@ -2948,6 +2949,7 @@
                                 <div style="text-align: center;">
                                     <button id="new_program_element_change_order" class="btn btn-black">Add</button>
                                     <button id="edit_program_element_change_order" class="btn btn-black">Edit</button>
+                                    <button id="delete_program_element_change_order" class="btn btn-black">Delete</button>
                                     <button id="downloadBtnChangeOrder" class="btn btn-black">Download</button>
                                     <button id="ViewUploadFileChangeOrder" class="btn btn-black" style="width: 145px;">View Documents</button>
                                 </div>
@@ -3247,6 +3249,7 @@
             <div class="c-modal-footer">
                 <!--<button type="button" class="btn btn-default" id = "close_modal" data-dismiss="modal">Close</button>-->
                 <div class="row">
+
                     <div class="col-sm-4 text-left">
                         <button id="delete_project_element_milestone_modal" type="button"
                                 class="btn btn-primary c-btn-delete" data-toggle="modal" style="margin-left:15px;" href="">
@@ -3549,6 +3552,7 @@
                                 <div style="text-align: center;">
                                     <button id="new_project_element_milestone" class="btn btn-black">Add</button>
                                     <button id="edit_project_element_milestone" class="btn btn-black">Edit</button>
+                                    <button id="delete_project_element_milestone" class="btn btn-black">Delete</button>
                                 </div>
                             </div>
                         </form>
@@ -4817,7 +4821,6 @@
                         <div style="padding: 10px;">
                             <div class="row">
                                 <!--<div class="_form-group" style="margin-top:3px;">-->
-                                <input type="text" style="display:none;" class="form-control" id="warranty_id" hidden disabled>
                                 <div class="col-xs-4" style="padding-left: 15px;">
                                     <label for="program_element_project_number" class="control-label _bold ">Warranty Type </label>
                                     <select type="text" class="form-control" id="warranty_select">
@@ -4850,9 +4853,9 @@
                                     <textarea type="text" cols="20" class="form-control" id="warranty_description" style="padding-left: 15px;"></textarea>
                                 </div>
                                 <!--</div>-->
-                                <div class="col-xs-2" style="margin-top: 30px;">
-                                    <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100%;">Add</button>
-                                    <button type="button" id="btnUpdateWarranty" class="btn btn-primary" style="width: 100%; margin-left: 0;">Update</button>
+                                <div class="col-xs-4 text-center" style="margin-top: 30px;">
+                                    <button type="button" id="btnSaveWarranty" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                    <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
                                 </div>
                                 <div class="col-xs-2" style="margin-top: 30px;">
                                     <button type="button" id="btnClearWarranty" class="btn btn-primary c-btn-back" style="width:100%;">Clear</button>
@@ -4882,12 +4885,12 @@
                                 <table id="gridWarrantyList" class="table table-striped table-bordered">
                                     <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                         <tr>
-                                            <th style="font-weight: 900; width: 13%; ">Sr. No.</th>
-                                            <th style="font-weight: 900; width: 300px;">Warranty</th>
-                                            <th style="font-weight: 900; width: 220px;">Start Date</th>
-                                            <th style="font-weight: 900; width: 220px;">End Date</th>
-                                            <th style="font-weight: 900; width: 18%;">Created By</th>
-                                            <th style="font-weight:900;">Action</th>
+                                            <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                            <td style="font-weight: 900; width: 300px;">Warranty</td>
+                                            <td style="font-weight: 900; width: 220px;">Start Date</td>
+                                            <td style="font-weight: 900; width: 220px;">End Date</td>
+                                            <td style="font-weight: 900; width: 18%;">Created By</td>
+                                            <td style="font-weight:900;">Action</td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -4927,14 +4930,11 @@
                                     <label for="program_element_project_number" class="control-label _bold m-t-10">Reason of Notice </label>
                                     <textarea class="form-control" id="notice_reason" rows="3" cols="40"></textarea>
                                 </div>
-                                <div class="text-center col-xs-3" style="margin-top: 96px">
-                                    <button type="button" id="btnSaveNotice" class="btn-primary c-btn-save" style="width: 60%; height: 30px;">Add</button>
-                                    <button type="button" id="btnUpdateNotice" class="btn-primary" style="width: 60%; height: 30px; margin-left: 0;">Update</button>
-                                    <div style="margin-top: 10px;">
-                                        <button type="button" id="btnClearNotice" class="btn-primary c-btn-back" style="width: 60%; height: 30px; ">Clear</button>
-                                    </div>
+                                <div class="text-center col-xs-3" style="margin-top: 120px">
+                                    <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                    <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
                                 </div>
-                                </div>
+                            </div>
                             <hr />
                             <div>
                                 <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>-->
@@ -4942,11 +4942,11 @@
                                     <table id="gridNoticeList" class="table table-striped table-bordered">
                                         <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
                                             <tr>
-                                                <th style="font-weight: 900; width: 13%; ">Sr. No.</th>
-                                                <th style="font-weight: 900; width: 23%; ">Date of Notice	</th>
-                                                <th style="font-weight: 900; width: 43%; " >Reason</th>
-                                                <th style="font-weight: 900; width: 18%;">Created By</th>
-                                                <th style="font-weight:900;">Action</th>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 23%; ">Date of Notice	</td>
+                                                <td style="font-weight: 900; width: 43%; " >Reason</td>
+                                                <td style="font-weight: 900; width: 18%;">Created By</td>
+                                                <td style="font-weight:900;">Action</td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -4976,32 +4976,28 @@
                                     <label for="program_element_project_number" class="control-label _bold ">Limit </label>
                                     <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
                                 </div>
-                                <div class="col-xs-4" style="margin-top: 24px;">
-                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width: 100%; margin: 0;">Add</button>
-                                    <button type="button" id="btnUpdateInsurance" class="btn btn-primary" style="width: 100%; margin: 0;">Update</button>
-                                </div>
-                                <div class="col-xs-2" style="margin-top: 24px;">
-                                    <button type="button" id="btnClearInsurance" class="btn btn-primary c-btn-back" style="width: 100%; margin: 0;">Clear</button>
+                                <div class="col-xs-4" style="margin-top: 23px;">
+                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
                                 </div>
                             </div>
 
-                                <!--<div class="text-center" style="margin-top: 10px">
-        <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-    </div>-->
-                                <hr />
-                                <div>
-                                    <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
-                                    <div class="panel-body" style="overflow-x: hidden; padding-top: 0;margin-top:10px; height: 149px !important;">
-                                        <table id="gridInsuranceList" class="table table-striped table-bordered">
-                                            <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                                                <tr>
-                                                    <th style="font-weight: 900; width: 13%; ">Sr. No.</th>
-                                                    <th style="font-weight: 900; width: 33%;">Type</th>
-                                                    <th style="font-weight: 900; width: 33%;">Limit</th>
-                                                    <th style="font-weight: 900; width: 18%;">Created By</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
+                            <!--<div class="text-center" style="margin-top: 10px">
+                <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+            </div>-->
+                            <hr />
+                            <div>
+                                <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
+                                <div class="panel-body" style="overflow-x: hidden; padding-top: 0;margin-top:10px; height: 149px !important;">
+                                    <table id="gridInsuranceList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight: 900; width: 13%; ">Sr. No.</td>
+                                                <td style="font-weight: 900; width: 33%;">Type</td>
+                                                <td style="font-weight: 900; width: 33%;">Limit</td>
+                                                <td style="font-weight: 900; width: 18%;">Created By</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
 
                                         </table>
                                     </div>

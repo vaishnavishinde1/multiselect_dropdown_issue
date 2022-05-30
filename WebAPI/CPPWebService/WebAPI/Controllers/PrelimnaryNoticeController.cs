@@ -33,6 +33,10 @@ namespace WebAPI.Controllers
             {
                 PrelimnaryNotice.SaveNotice(prelimnaryNotice);
             }
+            else if (prelimnaryNotice.Operation == 2)
+            {
+                PrelimnaryNotice.UpdateNotice(prelimnaryNotice);
+            }
             List<PrelimnaryNotice> prelimnaryNoticesList = PrelimnaryNotice.GetPrelimnaryNoticeList(prelimnaryNotice.ProgramID);
             var jsonNew = new
             {

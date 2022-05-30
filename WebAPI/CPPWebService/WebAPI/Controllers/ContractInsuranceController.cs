@@ -34,6 +34,10 @@ namespace WebAPI.Controllers
             {
                 ContractInsurance.SaveInsurance(contractInsurance);
             }
+            else if (contractInsurance.Operation == 2)
+            {
+                ContractInsurance.UpdateInsurance(contractInsurance);
+            }
             List<ContractInsurance> contractInsurances = ContractInsurance.GetContractInsurances(contractInsurance.ProgramID);
             var jsonNew = new
             {
