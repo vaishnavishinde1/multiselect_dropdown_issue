@@ -189,7 +189,8 @@
                     type: 'date',
                         //cellFilter: 'date:"yyyy-MM-dd"',
                         cellFilter: 'date:"MM/dd/yyyy"',   //Jignesh 23-09-2020
-                        cellClass: 'c-col-Date' //Manasi
+                        cellClass: 'c-col-Date',//Manasi
+                        aggregation: { MIN: '05-12-2022' }
                 }, {
                     name: 'EndDate',
                     displayName: 'End Date*',
