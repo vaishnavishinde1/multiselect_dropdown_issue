@@ -1483,6 +1483,27 @@ namespace WebAPI
                 defaults: new { controller = "RegisterWrap" }
             );    //Vaishnavi 12-04-2022
 
+        //    config.Routes.MapHttpRoute(
+        //     name: "RequestHoliday",
+        //     routeTemplate: "Request/Holiday",
+        //    defaults: new { controller = "RequestHoliday" }
+        //);
+            config.Routes.MapHttpRoute(
+               name: "RequestHoliday",
+               routeTemplate: "Request/Holiday/{year}/",
+               defaults: new
+               {
+                   controller = "RequestHoliday",
+                   year = RouteParameter.Optional
+                  
+               }
+           );
+            config.Routes.MapHttpRoute(
+                name: "RegisterHoliday",
+                routeTemplate: "Response/Holiday",
+                defaults: new { controller = "RegisterHoliday" }
+            );    //Vaishnavi 12-04-2022
+
             //Project Class Phase
             config.Routes.MapHttpRoute(
                   name: "RequestProjectClassPhase",
