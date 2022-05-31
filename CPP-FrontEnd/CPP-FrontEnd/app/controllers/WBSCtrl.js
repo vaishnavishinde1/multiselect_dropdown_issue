@@ -3982,7 +3982,15 @@ angular.module('cpp.controllers').
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
                     .$promise.then(function (response) {
                         $("#FilterTrend").removeAttr('disabled');   //vaishnavi 02-03-2022
+                        usSpinnerService.spin('spinner-1');
                         $("#btnQuickSearch").removeAttr('disabled');   //vaishnavi 02-03-2022
+
+                        //Add loader stop code here
+                        usSpinnerService.stop('spinner-1');
+                        $scope.showSpinner = false;
+                        $('#spin').removeClass('fademe');
+
+
                         $("#btnQuickSearch").css('background-color', 'black');   //vaishnavi 02-03-2022
                         $('#wbs-tree').html('');    //vaishnavi 02-03-2022
                         $('#wbsGridView').html('');   //vaishnavi 02-03-2022
@@ -4491,9 +4499,9 @@ angular.module('cpp.controllers').
                     finally(function () {
                         console.log($rootScope);
                         // $rootScope.buttonDisabled =false;
-                        usSpinnerService.stop('spinner-1');
-                        $scope.showSpinner = false;
-                        $('#spin').removeClass('fademe');
+                        //usSpinnerService.stop('spinner-1');
+                        //$scope.showSpinner = false;
+                        //$('#spin').removeClass('fademe');
                     })
             }
 
