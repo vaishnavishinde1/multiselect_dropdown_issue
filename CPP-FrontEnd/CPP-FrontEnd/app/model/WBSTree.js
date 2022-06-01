@@ -46,7 +46,7 @@ WBSTree = (function ($) {
 
         var view_mode = localStorage.getItem('MODE');
         if (view_mode == 'gridview') {
-            debugger;
+            //debugger;
             $('#mindmap').hide();
             $('#selectProject').hide();
             $('#wbsGridView').show();
@@ -80,7 +80,8 @@ WBSTree = (function ($) {
         //used to indicate the id of the node added
         var nodeIdCounter = 0;
 
-
+        //Date validator
+        var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; //Aditya 20052022
 
         //used for exit modal
         var originalInfo = null;
@@ -4232,21 +4233,35 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (selectedNode.CurrentStartDate) {
-                        var testDate= moment(selectedNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(selectedNode.CurrentStartDate))) {
                             dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
                             return;
                         }
+                        else {
+                            var testDate = moment(selectedNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invlaid Contract Start Date.');
+                                return;
+                            }
+                        }
+                        
                     }
                     //Vaishnavi 08-02-2022
                     selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     if (selectedNode.CurrentEndDate1) {
-
-                        var testDate = moment(selectedNode.CurrentEndDate1, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        
+                        if (!(date_regex.test(selectedNode.CurrentEndDate1))) {
                             dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
                             return;
                         }
+                        else {
+                            var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Contract End Date');
+                                return;
+                            }
+                        }
+                        
                     }
 
                     if (selectedNode.BillingPOCPhone1.length > 0) {
@@ -4554,19 +4569,31 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
-                       var testDate = moment(newNode.CurrentStartDate,'M/D/YYYY',true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.CurrentStartDate))) {
                             dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Contract Start Date.');
+                                return;
+                            }
                         }
                     }
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentEndDate) {
-                        var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.CurrentEndDate))) {
                             dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Contract End Date.');
+                                return;
+                            }
                         }
                     }
                     if (!newNode.ContractNumber) {
@@ -5235,41 +5262,62 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectNTPDate) {
-
-                        var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(selectedNode.ProjectNTPDate))) {
                             dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
                             return;
                         }
+                        else {
+                            var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project NTP Date.');
+                                return;
+                            }
+                        }
+                        
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPODate) {
-
-                        var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(selectedNode.ProjectPODate))) {
                             dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project PO Date.');
+                                return;
+                            }
                         }
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPStartDate) {
-
-                        var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(selectedNode.ProjectPStartDate))) {
                             dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project Start Date.');
+                                return;
+                            }
                         }
                     }
                    
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPEndDate) {
-
-                        var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(selectedNode.ProjectPEndDate))) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project End Date.');
+                                return;
+                            }
                         }
                         // Aditya 14-02-2022-----------------//
                         if (moment(selectedNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(selectedNode.ProjectPStartDate, 'MM/DD/YYYY')) {
@@ -5788,43 +5836,63 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectStartDate) {
-
-                        var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.ProjectStartDate))) {
                             dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalida Date.');
+                                return;
+                            }
                         }
                     }
 
                    
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPODate) {
-
-                        var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.ProjectPODate))) {
                             dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project PO Date.');
+                                return;
+                            }
                         }
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPStartDate) {
-
-                        var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.ProjectPStartDate))) {
                             dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project Start Date.');
+                                return;
+                            }
                         }
                     }
 
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPEndDate) {
-
-                        var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(newNode.ProjectPEndDate))) {
                             dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Project End Date.');
+                                return;
+                            }
                         }
                         // Aditya 14-02-2022-----------------//
                         if (moment(newNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(newNode.ProjectPStartDate, 'MM/DD/YYYY')) {
@@ -7701,12 +7769,18 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-
-                    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                    if (!testDate) {
+                    if (!(date_regex.test(MilestoneDate))) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
                     }
+                    else {
+                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Invalid Date.');
+                            return;
+                        }
+                    }
+                    
                 }
 
                 console.log(g_newProjectElementMilestone);
@@ -8142,11 +8216,16 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-
-                    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                    if (!testDate) {
+                    if (!(date_regex.test(MilestoneDate))) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
+                    }
+                    else {
+                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Invalid Date.');
+                            return;
+                        }
                     }
                 }
 
@@ -8667,11 +8746,16 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (OrderDte) {
-
-                    var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
-                    if (!testDate) {
+                    if (!(date_regex.test(OrderDte))) {
                         dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                         return;
+                    }
+                    else {
+                        var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
+                        if (!testDate) {
+                            dhtmlx.alert('Invalid Date.');
+                            return;
+                        }
                     }
                 }
 
@@ -10188,11 +10272,16 @@ WBSTree = (function ($) {
                         return;
                     }
                     if (startDate) {
-
-                        var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(startDate))) {
                             dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Start Date.');
+                                return;
+                            }
                         }
                     }
 
@@ -10201,11 +10290,16 @@ WBSTree = (function ($) {
                         return;
                     }
                     if (endDate) {
-
-                        var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(endDate))) {
                             dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid End Date.');
+                                return;
+                            }
                         }
                     }
 
@@ -10301,11 +10395,16 @@ WBSTree = (function ($) {
                     }
 
                     if (date) {
-
-                        var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
+                        if (!(date_regex.test(date))) {
                             dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
                             return;
+                        }
+                        else {
+                            var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Date.');
+                                return;
+                            }
                         }
                     }
                     if (reason == "" || reason.length == 0) {
@@ -11023,7 +11122,7 @@ WBSTree = (function ($) {
 
                     for (var x = 0; x < DDUser.length; x++) {
                         var Name = '';
-                        Name = DDUser[x].FirstName  + ' ' + DDUser[x].LastName;
+                        Name = DDUser[x].FirstName +''+DDUser[x].LastName;
                         var pmUserId = DDUser[x].Id;
                             if (projectManagerList.includes(pmUserId)) {
                                     program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + ' selected>' + Name + '</option>');
