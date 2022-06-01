@@ -3594,6 +3594,7 @@ WBSTree = (function ($) {
                 $('#downloadBtnChangeOrder').attr('disabled', 'disabled');
                 $('#ViewUploadFileChangeOrder').attr('disabled', 'disabled');
                 $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
                 //Added by Amruta for Project end date locking
                 $('#program_element_PEnd_Date').removeAttr('disabled');
                 wbsTree.getChangeOrder().get({}, function (changeOrderData) {
@@ -3688,10 +3689,12 @@ WBSTree = (function ($) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                             $('#ViewUploadFileChangeOrder').removeAttr('disabled');
                             $('#edit_program_element_change_order').removeAttr('disabled');
+                            $('#delete_program_element_change_order').removeAttr('disabled');
                         } else {
                             $('#downloadBtnChangeOrder').removeAttr('disabled');
                             $('#ViewUploadFileChangeOrder').removeAttr('disabled');
                             $('#edit_program_element_change_order').removeAttr('disabled');
+                            $('#delete_program_element_change_order').removeAttr('disabled');
                         }
 
                     });
@@ -3834,9 +3837,14 @@ WBSTree = (function ($) {
                     //}
                     
                     selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                    var isViewModeOn = true;
+                    isViewModeOn = $('#txtprogramNotes').is(':disabled');
                     var modifiedNotes = selectedNode.ProgramNote;
                     var isNotesModified = false;
-                    if (orgNotes != modifiedNotes) {
+                    //if (orgNotes != modifiedNotes) {
+                    //    isNotesModified = true;
+                    //}
+                    if (!isViewModeOn) {
                         isNotesModified = true;
                     }
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
@@ -8077,6 +8085,90 @@ WBSTree = (function ($) {
                 $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
             });
 
+            $('#delete_project_element_milestone').unbind().on('click', function (event) {  //Manasi
+                event.preventDefault();    //Manasi 09-03-2021
+                g_newProjectElementMilestone = false;
+               // $('#delete_project_element_milestone_modal').show();
+                if ((g_selectedProjectElementMilestone == undefined || g_selectedProjectElementMilestone == null)) {
+                    g_selectedProjectElementMilestone = { MilestoneID: 0 };
+                }
+
+                if (g_selectedProjectElementMilestone.MilestoneID <= 0) {
+                    dhtmlx.alert('Must select a milestone first');
+                    return;
+                } else {
+                    dhtmlx.confirm({
+                        type: "confirm-warning",
+                        text: "Are you sure you want to delete?",
+                        callback: function (accept) {
+                            if (accept) {
+                                var obj = {
+                                    "Operation": 3,
+                                    "MilestoneID": g_selectedProjectElementMilestone.MilestoneID,
+                                    "MilestoneName": g_selectedProjectElementMilestone.MilestoneName,
+                                    "MilestoneDescription": g_selectedProjectElementMilestone.MilestoneDescription,
+                                    "MilestoneDate": g_selectedProjectElementMilestone.MilestoneDate,
+                                    "ProgramElementID": 0,
+                                    "ProjectID": wbsTree.getSelectedProjectID()
+                                }
+                                //alert(obj.MilestoneID);
+                                //if (obj.MilestoneID === undefined || obj.MilestoneID === null) {
+                                //    alert(obj.MilestoneID);
+                                //    $('#ProjectElementMilestoneModal').modal('hide');
+                                //    $("#ProjectModal").css({ "opacity": "1" });
+                                //}
+                                var listToSave = [];
+                                listToSave.push(obj);
+
+                                wbsTree.getUpdateMilestone({ ProjectID: 1 }).save(listToSave,
+                                    function (response) {
+                                        var r = response.result.split(',')[0].trim();
+                                        var r1 = r.split(' ')[1].trim();
+                                        //alert(r1);
+                                        if (response.result.split(',')[0].trim() === "Success") {
+                                            //$('#ProgramModal').modal('hide');
+
+                                        }
+                                        //Manasi
+                                        else if (r1 === "failed") {
+                                            var rowId = obj.MilestoneName;
+                                            document.getElementById(rowId).remove();
+                                            //obj = null;
+                                            dhtmlx.alert(rowId + ' has been deleted successfully.');
+                                            var index;
+                                            for (var x = 0; x < g_project_element_milestone_draft_list.length; x++) {
+                                                if (g_project_element_milestone_draft_list[x].MilestoneName === rowId) {
+                                                    g_project_element_milestone_draft_list.splice(x, 1);
+                                                }
+
+                                            }
+                                            populateProjectElementMilestoneTableNew();
+                                            $('#ProjectElementMilestoneModal').modal('hide');
+                                            $("#ProjectModal").css({ "opacity": "1" });
+                                        }
+                                        else {
+                                            if (response.result == '' || response.result == null || response.result == undefined)
+                                                dhtmlx.alert('Something went wrong. Please try again..');
+                                            else
+                                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                            $('#ProjectElementMilestoneModal').modal('hide');
+                                            $("#ProjectModal").css({ "opacity": "1" });
+                                            populateProjectElementMilestoneTable(wbsTree.getSelectedProjectID()); //Manasi
+                                        }
+                                        //populateProjectElementMilestoneTable(wbsTree.getSelectedProjectID());  --Manasi
+
+                                    });
+                                g_selectedProjectElementMilestone = null; //Manasi
+                            }
+                            //g_selectedProjectElementMilestone = null;
+                        }
+                    });
+
+                }
+                console.log(g_selectedProjectElementMilestone);
+               // $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
+            });
+            
             //Manasi
             $('#cancel_project_element_milestone_modal').click(function () {
                 var rowId = g_selectedProjectElementMilestone.MilestoneID;
@@ -8471,6 +8563,104 @@ WBSTree = (function ($) {
             });
 
 
+            //Added by Amruta for delete
+            $('#delete_program_element_milestone').unbind().on('click', function (event) { //Manasi
+                event.preventDefault();    //Manasi 09-03-2021
+               
+               // g_newProgramElementMilestone = false;
+
+                debugger;
+                if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
+                    g_selectedProgramElementMilestone = { MilestoneID: 0 };
+
+                    
+                }
+
+                if (g_selectedProgramElementMilestone.MilestoneID <= 0) {
+                    dhtmlx.alert('Must select a milestone first');
+                    return;
+                } else {
+                    confirmPopupMilestone(g_selectedProgramElementMilestone);
+
+                }
+                console.log(g_selectedProgramElementMilestone);
+
+
+               
+
+
+                //$('#delete_program_contract_modal').show();
+               // $('#delete_program_element_milestone_modal').show();
+                
+                //$('#ProgramElementMilestoneModal').modal({ show: true, backdrop: 'static' });
+            });
+
+            function confirmPopupMilestone(g_selectedProgramElementMilestone) {
+
+                 dhtmlx.confirm({
+                        type: "confirm-warning",
+                        text: "Are you sure you want to delete?",
+                        callback: function (accept) {
+                            if (accept) {
+                                var obj = {
+                                    "Operation": 3,
+                                    "MilestoneID": g_selectedProgramElementMilestone.MilestoneID,
+                                    "MilestoneName": g_selectedProgramElementMilestone.MilestoneName,
+                                    "MilestoneDescription": g_selectedProgramElementMilestone.MilestoneDescription,
+                                    "MilestoneDate": g_selectedProgramElementMilestone.MilestoneDate,
+                                    "ProgramElementID": _selectedNode.ProgramElementID, // wbsTree.getSelectedProgramElementID(),
+                                    "ProjectID": 0
+                                }
+
+                                var listToSave = [];
+                                listToSave.push(obj);
+
+                                wbsTree.getUpdateMilestone({ ProjectID: 1 }).save(listToSave,
+                                    function (response) {
+                                        var r = response.result.split(',')[0].trim();
+                                        var r1 = r.split(' ')[1].trim();
+                                        if (response.result.split(',')[0].trim() === "Success") {
+                                            //$('#ProgramModal').modal('hide');
+
+                                        }
+                                        //Manasi
+                                        else if (r1 === "failed") {
+                                            var rowId = obj.MilestoneName;
+                                            document.getElementById(rowId).remove();
+                                            //obj = null;
+                                            dhtmlx.alert(rowId + ' has been deleted successfully.');
+                                            var index;
+                                            for (var x = 0; x < g_program_element_milestone_draft_list.length; x++) {
+                                                if (g_program_element_milestone_draft_list[x].MilestoneName === rowId) {
+                                                    g_program_element_milestone_draft_list.splice(x, 1);
+                                                }
+
+                                            }
+                                            populateProgramElementMilestoneTableNew();
+                                            $('#ProgramElementMilestoneModal').modal('hide');
+                                            $("#ProgramElementModal").css({ "opacity": "1" });
+                                        }
+                                        else {
+                                            if (response.result == '' || response.result == null || response.result == undefined)
+                                                dhtmlx.alert('Something went wrong. Please try again..');
+                                            else
+                                                dhtmlx.alert({ text: response.result, width: '500px' });
+                                            $('#ProgramElementMilestoneModal').modal('hide');
+                                            $("#ProgramElementModal").css({ "opacity": "1" });
+
+                                            populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //Manasi wbsTree.getSelectedProgramElementID()
+                                        }
+                                        //populateProgramElementMilestoneTable(wbsTree.getSelectedProgramElementID());  --Manasi
+
+                                    });
+                                g_selectedProjectElementMilestone = null; //Manasi
+                            }
+                            //g_selectedProgramElementMilestone = null; 	//Manasi
+                        }
+                    });
+
+            }
+
             //Manasi
             $('#cancel_program_element_milestone_modal').click(function () {
                 var rowId = g_selectedProgramElementMilestone.MilestoneID;
@@ -8543,6 +8733,8 @@ WBSTree = (function ($) {
                 //var durationDate = $('#program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
                 var scheduleImpact = $('#program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                 var DocID = $("#DocChangeOrderID").val();
+
+                var currendDtBkp = new Date($('#program_element_PEnd_Date').val());
 
                 if (CoTitle == "" || CoTitle.length == 0) {
                     dhtmlx.alert('Enter Title.');
@@ -8800,6 +8992,9 @@ WBSTree = (function ($) {
                                     text: response.result,
                                     width: '500px'
                                 });
+                                //update- Added by Amruta to save end date on change order
+
+                                $('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
                             }
 
                             return;  //Manasi
@@ -8985,6 +9180,10 @@ WBSTree = (function ($) {
                                 else {
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 }
+
+                                //update- Added by Amruta to save end date on change order
+
+                                $('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
                                 //$('#ProgramElementChangeOrderModal').modal('hide');  Manasi
                                 //$("#ProgramElementModal").css({ "opacity": "1" });
                                 return; //Manasi
@@ -9648,6 +9847,116 @@ WBSTree = (function ($) {
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
             });
+
+            $('#delete_program_element_change_order').unbind().on('click', function (event) {
+                debugger;   
+                $('#uploadBtnProgramelmtCOspinRow').hide();     //Manasi 
+                g_newProgramElementChangeOrder = false;
+               // $('#delete_program_contract_modal').show();
+                //03-05-2022
+                //$('#uploadBtnProgramElementChangeOrderModal').prop("disabled", false);
+                if ((g_selectedProgramElementChangeOrder == undefined || g_selectedProgramElementChangeOrder == null)) {
+                    g_selectedProgramElementChangeOrder = { ChangeOrderID: 0 };
+                }
+
+                if (g_selectedProgramElementChangeOrder.ChangeOrderID <= 0) {
+                    dhtmlx.alert('Must select a change order first');
+                    return;
+                }
+                else {
+                    var trends = [];
+                    _Trend.getAllTrendsForChangeOrderList().get({
+                        ProjectID: wbsTree.getSelectedProgramElementID()
+                    }, function (response) {
+                        var projectAlltrend = response.result;
+                        for (let i = 0; i < projectAlltrend.length; i++) {
+                            if (projectAlltrend[i].ChangeOrderID == g_selectedProgramElementChangeOrder.ChangeOrderID)
+                                trends.push(projectAlltrend[i]);
+                        }
+                    if (trends.length > 0) {
+                        dhtmlx.alert('Can not delete.<br/>Trends are linked with this order');
+                        return;
+                    } else {
+                        dhtmlx.confirm("Are you sure you want to delete?", function (result) {
+                            //console.log(result);
+                            if (result) {
+                                //update- Added by Amruta to save end date on change order
+                                debugger;
+                                if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
+                                    debugger;
+                                    progelem_scheduleImp = parseInt(g_selectedProgramElementChangeOrder.ScheduleImpact);
+                                    var curendt = new Date($('#program_element_PEnd_Date').val());
+                                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                                    // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
+                                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                                }
+                                debugger;
+                                var pendDate = $('#program_element_PEnd_Date').val();
+                                var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+                                var obj = {
+                                    "Operation": 3,
+                                    "ChangeOrderID": g_selectedProgramElementChangeOrder.ChangeOrderID,
+                                    "ChangeOrderName": g_selectedProgramElementChangeOrder.ChangeOrderName,
+                                    "ChangeOrderNumber": g_selectedProgramElementChangeOrder.ChangeOrderNumber,
+                                    "ChangeOrderAmount": g_selectedProgramElementChangeOrder.ChangeOrderAmount,
+                                    "ProjectEndDateCO": projectEndDate,
+                                    "ChangeOrderScheduleChange": g_selectedProgramElementChangeOrder.ChangeOrderScheduleChange,
+                                    "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                                }
+
+                                var listToSave = [];
+                                listToSave.push(obj);
+                                // var ProgramElementId = selectedNode.ProgramElementID;
+                                var ProgramElementId = _selectedNode.ProgramElementID;
+                                wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
+                                    function (response) {
+                                        if (response.result.split(',')[0].trim() === "Success") {
+                                            //$('#ProgramModal').modal('hide');
+
+                                        } else {
+                                            if (response.result == '' || response.result == null || response.result == undefined)
+                                                dhtmlx.alert('Something went wrong. Please try again..');
+                                            else
+                                                dhtmlx.alert({ text: response.result, width: '500px' });
+
+                                            $('#ProgramElementChangeOrderModal').modal('hide');
+                                            $("#ProgramElementModal").css({ "opacity": "1" });
+
+                                        }
+                                        debugger;
+                                        //Nivedita 14-01-2022
+                                        populateProgramElementChangeOrderTable(ProgramElementId);
+                                        //populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
+
+                                    });
+                                g_selectedProgramElementChangeOrder = null; 	//Manasi
+                            }
+                        });
+                    }
+
+                    });
+
+                }
+                console.log(g_selectedProgramElementChangeOrder);
+                //03-05-2022
+                //$('#fileUploadProgramElementChangeOrderModal').val(''); // Jignesh-01-03-2021
+               // $('#ProgramElementChangeOrderModal').modal({ show: true, backdrop: 'static' });
+
+               // progelem_scheduleImp = parseInt($('#program_element_change_order_schedule_impact').val());
+
+                $('#DocChangeOrderID').val(g_selectedProgramElementChangeOrder.DocumentID);
+               // $('#delete_program_element_change_order_modal').show();
+                $("#ChangeOrderDate").datepicker();
+                $("#program_element_change_order_duration_date").datepicker(); //  Jignesh-ChangeOrderPopUpChanges
+                $("input:radio[name='rbChangeOrder']").each(function (i) {
+                    this.checked = false;
+                });
+
+                $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
+                $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
+                // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+            });
+            
 
             //Manasi
             $('#cancel_program_element_change_order_modal').click(function () {
@@ -13188,6 +13497,7 @@ WBSTree = (function ($) {
                 $('#downloadBtnChangeOrder').attr('disabled', 'disabled');
                 $('#ViewUploadFileChangeOrder').attr('disabled', 'disabled');
                 $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
                 //console.log(modal);
 
                 ////load docTypeList
@@ -13264,6 +13574,7 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     $('#new_program_element_milestone').removeAttr('disabled');
                     $('#edit_program_element_milestone').removeAttr('disabled');
+                    $('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
@@ -13898,6 +14209,7 @@ WBSTree = (function ($) {
                     //---------------------------------------------------------------------------------------------------------------------------
                     $("#new_program_element_change_order").attr('disabled', 'disabled');
                     $("#edit_program_element_change_order").attr('disabled', 'disabled');
+                    $("#delete_program_element_change_order").attr('disabled', 'disabled');
 
                     //Nivedita - Button changes to Grey on Add New  25-04-2022				
                     $('#delete_program_element').removeClass('btn btn-primary c-btn-delete');
@@ -13909,6 +14221,7 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     $("#new_program_element_milestone").attr('disabled', 'disabled');
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
+                    $("#delete_program_element_milestone").attr('disabled', 'disabled');
                     
 
                     g_newProgramElement = true;
@@ -14288,8 +14601,10 @@ WBSTree = (function ($) {
                     
                     $('#new_program_element_change_order').attr('disabled', 'disabled');
                     $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                    $('#delete_program_element_change_order').attr('disabled', 'disabled');
                     $('#new_program_element_milestone').attr('disabled', 'disabled');
                     $('#edit_program_element_milestone').attr('disabled', 'disabled');
+                    $('#delete_program_element_milestone').attr('disabled', 'disabled');
                     $('#cancel_program_element').removeAttr('disabled');
                     $('#cancel_program_element_x').removeAttr('disabled');
                     localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
@@ -14308,6 +14623,7 @@ WBSTree = (function ($) {
 
                     $("#new_program_element_milestone").attr('disabled', 'disabled');
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
+                    $("#delete_program_element_milestone").attr('disabled', 'disabled');
                     $("#new_program_element_change_order").attr('disabled', 'disabled');
                     $("#updateBtnProgramPrg").attr('disabled', 'disabled');
                     localStorage.dept = "";
@@ -14331,6 +14647,7 @@ WBSTree = (function ($) {
                         // Add
                         $("#new_program_element_change_order").attr('disabled', 'disabled');
                         $("#edit_program_element_change_order").attr('disabled', 'disabled');
+                        $("#delete_program_element_change_order").attr('disabled', 'disabled');
                         $('#updateBtnProgramPrg').attr('disabled', 'disabled');
                     }
 
@@ -14768,7 +15085,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
 
             //========================= Updated by Jignesh-01-03-2021 =====================================================
-            $('#program_element_change_order_table_id,#gridViewAllDocumentInContract,#gridViewAllDocumentInProject').on('click', '#viewOrderDetail,#viewAllOrderDetail', function (m) {
+            /*$('#program_element_change_order_table_id,#gridViewAllDocumentInContract,#gridViewAllDocumentInProject').on('click', '#viewOrderDetail,#viewAllOrderDetail', function (m) {
                 event.preventDefault();
                 var _ChangeOrderTrendList = [];
                 var self = wbsTree.getSelectedNode();
@@ -14866,8 +15183,123 @@ WBSTree = (function ($) {
                     });
                 }
                 $('#ProgramElementChangeOrderViewModal').modal({ show: true, backdrop: 'static' });
+            });*/
+
+            //========================= Updated by Nivedita-25-05-2022 =====================================================
+            $('#program_element_change_order_table_id,#gridViewAllDocumentInContract,#gridViewAllDocumentInProject').on('click', '#viewOrderDetail,#viewAllOrderDetail', function (m) {
+                event.preventDefault();
+                var _ChangeOrderTrendList = [];
+                var self = wbsTree.getSelectedNode();
+                var organizationId = $("#selectOrg").val();
+                var thisData = $(this);
+                var docId = $(this).closest("tr").find(".docId").text();
+                var ChangeOrderID = $(this).closest('tr').attr('id');
+                var docData = {};
+                var changeOrderData = {};
+                console.log(docId);
+
+
+
+                //if (docId != 0)
+                //{
+                // $.each(_documentList,
+                // function (i, el) {
+                // if (this.DocumentID == docId) {
+                // docData = _documentList[i];
+                // console.log(_documentList[i]);
+                // }
+                // });
+                //}
+
+
+                if (thisData[0].id == "viewOrderDetail") {
+                    $.each(_changeOrderList,
+                        function (i, el) {
+                            if (this.ChangeOrderID == ChangeOrderID) {
+                                changeOrderData = _changeOrderList[i];
+                            }
+                        });
+                }
+                else {
+                    $.each(_changeOrderList,
+                        function (i, el) {
+                            if (this.DocumentID == docId) {
+                                changeOrderData = _changeOrderList[i];
+                                //changeOrderData = _changeOrderList[i].ChangeOrderID;
+                            }
+                        });
+                }
+
+
+
+                //==================== Jignesh-ChangeOrderPopUpChanges ==================
+                var changeOrderType = changeOrderData.ModificationTypeId == 1 ? 'Value' :
+                    changeOrderData.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
+
+
+
+                $('#change_order_view_doc_name_modal').val(changeOrderData.DocumentName);
+                $('#change_order_view_title_modal').val(changeOrderData.ChangeOrderName);
+                //$('#change_order_view_order_type_modal').val(moment(docData.CreatedDate).format('MM/DD/YYYY'));
+                $('#change_order_view_order_type_modal').val(changeOrderType);
+                $('#change_order_view_clientorder_num_modal').val(changeOrderData.ChangeOrderNumber);
+                $('#change_order_view_date_modal').val(moment(changeOrderData.OrderDate).format('MM/DD/YYYY'));
+
+
+
+                $('#change_order_view_note_modal').val(changeOrderData.ChangeOrderScheduleChange);
+                $('#program_element_change_order_Reason_modal_E').val(changeOrderData.Reason);
+                $('#change_order_view_Amount_modal').val('$' + changeOrderData.ChangeOrderAmount.replace('$', ''));
+                $('#program_element_change_order_schedule_impact_E').val(changeOrderData.ScheduleImpact); // Jignesh-24-03-2021
+                //$('#program_element_change_order_duration_date_E').val(moment(docData.DurationDate).format('MM/DD/YYYY')); // Jignesh-24-03-2021
+
+
+
+                if (changeOrderData.ModificationTypeId == 1) {
+                    $('#divValueE').show();
+                    $('#divDurationDateE').hide();
+                }
+                else if (changeOrderData.ModificationTypeId == 2) {
+                    $('#divValueE').hide();
+                    $('#divDurationDateE').show();
+                }
+                else if (changeOrderData.ModificationTypeId == 3) {
+                    $('#divValueE').show();
+                    $('#divDurationDateE').show();
+                }
+
+
+
+                //==========================================================================================================
+                var gridChangeOrderTrendList = $("#gridChangeOrderList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
+                gridChangeOrderTrendList.empty();
+                if (self.children) {
+                    _Trend.getAllTrendsForChangeOrderList().get({
+                        ProjectID: self.children[0].ProjectID
+                    }, function (response) {
+                        gridChangeOrderTrendList.empty();
+                        // Jignesh-TDM-06-01-2020
+                        _ChangeOrderTrendList = response.result;
+                        if (_ChangeOrderTrendList.length > 0) {
+                            for (var x = 0; x < _ChangeOrderTrendList.length; x++) {
+                                if (_ChangeOrderTrendList[x].ChangeOrderID == ChangeOrderID) {
+                                    gridChangeOrderTrendList.append('<tr>' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '><a>' + _ChangeOrderTrendList[x].TrendDescription + '</a></td> ' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '><a href="' + window.location.href.replace("wbs", "") + 'cost-gantt/' + _ChangeOrderTrendList[x].ProjectID + '/' + _ChangeOrderTrendList[x].TrendNumber + '/' + organizationId + '" target="_blank">Open Trend</a></td>' + // Jignesh-10-06-2021
+                                        '<tr > ');
+                                }
+                            }
+                        }
+                        _ChangeOrderTrendList = [];
+                    });
+                }
+                $('#ProgramElementChangeOrderViewModal').modal({ show: true, backdrop: 'static' });
+
             });
 
+//=============================================================================================================
 
 
             //=============================================================================================================
@@ -17984,6 +18416,7 @@ WBSTree = (function ($) {
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
                     $('#edit_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
+                    $('#delete_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
 
 
                     $('#cancel_project').removeAttr('disabled');
@@ -17999,12 +18432,14 @@ WBSTree = (function ($) {
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
                     $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                    $('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
                    
                     if (selectedNode.level == "Project") {
                         // Edit
                         $('#updateBtnProgramPrgElm').removeAttr('disabled');
                         $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
                         $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                        $('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
 
                     } else {
                         $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');

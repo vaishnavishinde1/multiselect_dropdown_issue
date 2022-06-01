@@ -449,7 +449,12 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
             url: '/admin-prime',
             templateUrl: appHelper.templatePath('admin/prime'),
             controller: 'PrimeCtrl'
-         }).
+        }).
+        state('app.admin-holiday', {
+            url: '/admin-holiday',
+            templateUrl: appHelper.templatePath('admin/holiday'),
+            controller: 'holidayCtrl'
+        }).
          state('app.admin-agilegrid', {
              url: '/admin-agilegrid',
              templateUrl: appHelper.templatePath('admin/agilegrid'),

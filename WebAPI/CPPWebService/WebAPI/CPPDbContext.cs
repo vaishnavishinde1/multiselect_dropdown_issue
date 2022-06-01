@@ -121,6 +121,7 @@ namespace WebAPI
             modelBuilder.Entity<ProgramCertifiedPayroll>().ToTable("program_certifiedroll");
             modelBuilder.Entity<ProgramPrevailingWage>().ToTable("program_prevailing_wage");
             modelBuilder.Entity<Wrap>().ToTable("wrap");
+            modelBuilder.Entity<Holidays>().ToTable("holidays");
             modelBuilder.Entity<ProgramWrap>().ToTable("program_wrap");
             modelBuilder.Entity<ProgramWarranty>().ToTable("program_warranty");    //Vaishnavi 12-04-2022
             //modelBuilder.Entity<ProjectClassPhase>().ToTable("project_class_phase");
@@ -232,6 +233,7 @@ namespace WebAPI
         public DbSet<ProgramCertifiedPayroll> ProgramCertifiedPayroll { get; set; }
         public DbSet<ProgramPrevailingWage> ProgramPrevailingWage { get; set; }
         public DbSet<Wrap> Wrap { get; set; }
+        public DbSet<Holidays> Holidays { get; set; }
         public DbSet<ProgramWrap> ProgramWrap { get; set; }
         public DbSet<ProgramWarranty> ProgramWarranty { get; set; }     //Vaishnavi 12-04-2022
         public DbSet<Contract> Contract { get; set; }
