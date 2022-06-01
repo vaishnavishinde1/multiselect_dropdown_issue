@@ -205,10 +205,10 @@ namespace WebAPI.Models
                             //retreivedChangeOrder = ctx.ChangeOrder.Where(u => u.ChangeOrderName == ChangeOrder.ChangeOrderName).FirstOrDefault();
 
                             retreivedChangeOrder = ctx.ChangeOrder.Where(u => u.ChangeOrderName == ChangeOrder.ChangeOrderName
-                                                                                && u.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();   //Manasi
+                                                                                && u.ProgramElementID == ChangeOrder.ProgramElementID && u.IsDeleted == false).FirstOrDefault();   //Manasi
 
                             retreivedChangeOrderNo = ctx.ChangeOrder.Where(u => u.ChangeOrderNumber == ChangeOrder.ChangeOrderNumber
-                                                                                && u.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
+                                                                                && u.ProgramElementID == ChangeOrder.ProgramElementID && u.IsDeleted == false).FirstOrDefault();
 
                             #region old logic
                             //if (true) //retreivedChangeOrder == null

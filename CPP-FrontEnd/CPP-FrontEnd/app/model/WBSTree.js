@@ -3836,9 +3836,14 @@ WBSTree = (function ($) {
                     //}
                     
                     selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                    var isViewModeOn = true;
+                    isViewModeOn = $('#txtprogramNotes').is(':disabled');
                     var modifiedNotes = selectedNode.ProgramNote;
                     var isNotesModified = false;
-                    if (orgNotes != modifiedNotes) {
+                    //if (orgNotes != modifiedNotes) {
+                    //    isNotesModified = true;
+                    //}
+                    if (!isViewModeOn) {
                         isNotesModified = true;
                     }
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
@@ -9757,6 +9762,9 @@ WBSTree = (function ($) {
                 $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+
+                $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
 
             $('#delete_program_element_change_order').unbind().on('click', function (event) {
@@ -9775,60 +9783,76 @@ WBSTree = (function ($) {
                     return;
                 }
                 else {
-                    dhtmlx.confirm("Are you sure you want to delete?", function (result) {
-                        //console.log(result);
-                        if (result) {
-                            //update- Added by Amruta to save end date on change order
-                            debugger;
-                            if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
-                                debugger;
-                                progelem_scheduleImp = parseInt(g_selectedProgramElementChangeOrder.ScheduleImpact);
-                                var curendt = new Date($('#program_element_PEnd_Date').val());
-                                curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                                // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
-                                $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
-                            }
-                            debugger;
-                            var pendDate = $('#program_element_PEnd_Date').val();
-                            var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
-                            var obj = {
-                                "Operation": 3,
-                                "ChangeOrderID": g_selectedProgramElementChangeOrder.ChangeOrderID,
-                                "ChangeOrderName": g_selectedProgramElementChangeOrder.ChangeOrderName,
-                                "ChangeOrderNumber": g_selectedProgramElementChangeOrder.ChangeOrderNumber,
-                                "ChangeOrderAmount": g_selectedProgramElementChangeOrder.ChangeOrderAmount,
-                                "ProjectEndDateCO": projectEndDate,
-                                "ChangeOrderScheduleChange": g_selectedProgramElementChangeOrder.ChangeOrderScheduleChange,
-                                "ProgramElementID": wbsTree.getSelectedProgramElementID(),
-                            }
-
-                            var listToSave = [];
-                            listToSave.push(obj);
-                            // var ProgramElementId = selectedNode.ProgramElementID;
-                            var ProgramElementId = _selectedNode.ProgramElementID;
-                            wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
-                                function (response) {
-                                    if (response.result.split(',')[0].trim() === "Success") {
-                                        //$('#ProgramModal').modal('hide');
-
-                                    } else {
-                                        if (response.result == '' || response.result == null || response.result == undefined)
-                                            dhtmlx.alert('Something went wrong. Please try again..');
-                                        else
-                                            dhtmlx.alert({ text: response.result, width: '500px' });
-
-                                        $('#ProgramElementChangeOrderModal').modal('hide');
-                                        $("#ProgramElementModal").css({ "opacity": "1" });
-
-                                    }
-                                    debugger;
-                                    //Nivedita 14-01-2022
-                                    populateProgramElementChangeOrderTable(ProgramElementId);
-                                    //populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
-
-                                });
-                            g_selectedProgramElementChangeOrder = null; 	//Manasi
+                    var trends = [];
+                    _Trend.getAllTrendsForChangeOrderList().get({
+                        ProjectID: wbsTree.getSelectedProgramElementID()
+                    }, function (response) {
+                        var projectAlltrend = response.result;
+                        for (let i = 0; i < projectAlltrend.length; i++) {
+                            if (projectAlltrend[i].ChangeOrderID == g_selectedProgramElementChangeOrder.ChangeOrderID)
+                                trends.push(projectAlltrend[i]);
                         }
+                    if (trends.length > 0) {
+                        dhtmlx.alert('Can not delete.<br/>Trends are linked with this order');
+                        return;
+                    } else {
+                        dhtmlx.confirm("Are you sure you want to delete?", function (result) {
+                            //console.log(result);
+                            if (result) {
+                                //update- Added by Amruta to save end date on change order
+                                debugger;
+                                if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
+                                    debugger;
+                                    progelem_scheduleImp = parseInt(g_selectedProgramElementChangeOrder.ScheduleImpact);
+                                    var curendt = new Date($('#program_element_PEnd_Date').val());
+                                    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                                    // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
+                                    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                                }
+                                debugger;
+                                var pendDate = $('#program_element_PEnd_Date').val();
+                                var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+                                var obj = {
+                                    "Operation": 3,
+                                    "ChangeOrderID": g_selectedProgramElementChangeOrder.ChangeOrderID,
+                                    "ChangeOrderName": g_selectedProgramElementChangeOrder.ChangeOrderName,
+                                    "ChangeOrderNumber": g_selectedProgramElementChangeOrder.ChangeOrderNumber,
+                                    "ChangeOrderAmount": g_selectedProgramElementChangeOrder.ChangeOrderAmount,
+                                    "ProjectEndDateCO": projectEndDate,
+                                    "ChangeOrderScheduleChange": g_selectedProgramElementChangeOrder.ChangeOrderScheduleChange,
+                                    "ProgramElementID": wbsTree.getSelectedProgramElementID(),
+                                }
+
+                                var listToSave = [];
+                                listToSave.push(obj);
+                                // var ProgramElementId = selectedNode.ProgramElementID;
+                                var ProgramElementId = _selectedNode.ProgramElementID;
+                                wbsTree.getUpdateChangeOrder({ ProjectID: 1 }).save(listToSave,
+                                    function (response) {
+                                        if (response.result.split(',')[0].trim() === "Success") {
+                                            //$('#ProgramModal').modal('hide');
+
+                                        } else {
+                                            if (response.result == '' || response.result == null || response.result == undefined)
+                                                dhtmlx.alert('Something went wrong. Please try again..');
+                                            else
+                                                dhtmlx.alert({ text: response.result, width: '500px' });
+
+                                            $('#ProgramElementChangeOrderModal').modal('hide');
+                                            $("#ProgramElementModal").css({ "opacity": "1" });
+
+                                        }
+                                        debugger;
+                                        //Nivedita 14-01-2022
+                                        populateProgramElementChangeOrderTable(ProgramElementId);
+                                        //populateProgramElementChangeOrderTable(selectedNode.ProgramElementID);
+
+                                    });
+                                g_selectedProgramElementChangeOrder = null; 	//Manasi
+                            }
+                        });
+                    }
+
                     });
 
                 }
@@ -9850,6 +9874,9 @@ WBSTree = (function ($) {
                 $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+
+                $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
             
 
