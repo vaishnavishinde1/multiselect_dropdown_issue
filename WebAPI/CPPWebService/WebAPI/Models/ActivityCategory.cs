@@ -29,6 +29,7 @@ namespace WebAPI.Models
         [StringLength(60)]
         public String SubCategoryDescription { get; set; }
         public String Phase { get; set; }        //Should be foreign key
+        public String Services { get; set; }        //Aditya: Add Services column 04062022
         public int? OrganizationID { get; set; }
         //ON DELETE RESTRICT
         //Nullable foreign key
@@ -207,6 +208,7 @@ namespace WebAPI.Models
                                                                                 || s.SubCategoryDescription == activity.SubCategoryDescription)
                                                                                 && s.OrganizationID == activity.OrganizationID
                                                                                 //&& s.Phase == activity.Phase Subtask
+                                                                                && s.Services == activity.Services //Aditya 04062022
                                                                                 && s.VersionId == activity.VersionId).FirstOrDefault();
 
                     if (retrievedActivityCategory == null)
@@ -415,6 +417,7 @@ namespace WebAPI.Models
                                                                                 //&& s.ID != activity.ID
                                                                                 && s.OrganizationID == activity.OrganizationID
                                                                                 //&& s.Phase == activity.Phase 
+                                                                                && s.Services == activity.Services //Aditya 04062022
                                                                                 && s.VersionId == activity.VersionId).FirstOrDefault();
 
                     if (retrievedActivityCategory != null && (retrievedActivityCategory.CategoryID != activity.CategoryID || retrievedActivityCategory.SubCategoryID != activity.SubCategoryID))

@@ -1,7 +1,7 @@
 angular.module('cpp.controllers').
     //budget Category Controller
-    controller('BudgetCategoryCtrl', ['PhaseCode', '$state', '$scope', '$rootScope', 'Category', 'Organization', 'VersionDetails', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout',
-        function (PhaseCode, $state, $scope, $rootScope, Category, Organization, VersionDetails, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout)
+    controller('BudgetCategoryCtrl', ['PhaseCode', 'ServiceClass', '$state', '$scope', '$rootScope', 'Category', 'Organization', 'VersionDetails', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout',
+        function (PhaseCode, ServiceClass, $state, $scope, $rootScope, Category, Organization, VersionDetails, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout)
         {
             //Work Breakdown Structure
             Page.setTitle('Work Breakdown Structure');
@@ -47,6 +47,19 @@ angular.module('cpp.controllers').
                 console.log("End here");
             };
 
+            // Aditya: Populate Service Dropdown //06062022
+            ServiceClass.get({}, function (projectClasses) {
+                $scope.projectClassCollection = projectClasses.result;
+                console.log(projectClasses.result);
+                $scope.ServiceList = [];
+                angular.forEach($scope.projectClassCollection, function (projectClass) {
+                    $scope.ServiceList.push({ Id: projectClass.ID, Value: projectClass.Description });
+                    //projectClass.Services = projectClass.Description; //here
+                });
+                //$scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.projectClassCollection;
+                $scope.gridOptions.columnDefs[5].editDropdownOptionsArray = $scope.ServiceList;
+            });
+
             $scope.filterChangeOrg = function (filterOrgID) {
                 var orgId = null;
                 if (filterOrgID) {
@@ -86,6 +99,12 @@ angular.module('cpp.controllers').
                             angular.forEach($scope.budgetCollection, function (item, index) {
                                 item.checkbox = false;
                                 $scope.checkList[index + 1] = false;
+                                //Aditya: get Service name //04062022
+                                angular.forEach($scope.ServiceList, function (service, index) {
+                                    if (service.Id == item.Services) {
+                                        item.Services = service.Value;
+                                    }
+                                });
                             });
                             $scope.gridOptions.data = $scope.budgetCollection;
 
@@ -127,6 +146,12 @@ angular.module('cpp.controllers').
                         angular.forEach($scope.budgetCollection, function (item, index) {
                             item.checkbox = false;
                             $scope.checkList[index + 1] = false;
+                            //Aditya: get Service name //04062022
+                            angular.forEach($scope.ServiceList, function (service, index) {
+                                if (service.Id == item.Services) {
+                                    item.Services = service.Value;
+                                }
+                            });
                         });
                         $scope.gridOptions.data = $scope.budgetCollection;
 
@@ -145,7 +170,7 @@ angular.module('cpp.controllers').
                 console.log($scope.userCollection);
             });
             $scope.budgetCategoryItem ;
-            $scope.applicableList = [];
+            $scope.applicableList = [];            
             //PhaseCode.get({},function(PhaseCodeData){
             //    $scope.phaseCodeCollection = PhaseCodeData.result;
             //    console.log('PhaseCodeData.result');
@@ -184,6 +209,12 @@ angular.module('cpp.controllers').
                     angular.forEach($scope.budgetCollection, function (item, index) {
                         item.checkbox = false;
                         $scope.checkList[index + 1] = false;
+                        //Aditya: get Service name //04062022
+                        angular.forEach($scope.ServiceList, function (service, index) {
+                            if (service.Id == item.Services) {
+                                item.Services = service.Value;
+                            }
+                        });
                     });
                     $scope.gridOptions.data = $scope.budgetCollection;
 
@@ -332,7 +363,8 @@ angular.module('cpp.controllers').
                     CategoryID:'',
                     CategoryDescription : '',
                     SubCategoryID: '',
-                    SubCategoryDescription : '',
+                    SubCategoryDescription: '',
+                    Services: '', //Aditya 04062022
                     //Phase: '',
                     OrganizationID: '',
                     checkbox: false,
@@ -417,9 +449,19 @@ angular.module('cpp.controllers').
                     /*editableCellTemplate:$scope.cellInputEditableTemplate,
                     cellFilter: 'mapStatus',
                     enableCellEditOnFocus: true,*/
-                    width:300
-                },
-
+                        width: 300
+                    },
+                    //Aditya: Add Service Column // 04062022
+                    {
+                        field: 'Services',
+                        name: 'Service',
+                        editableCellTemplate: 'ui-grid/dropdownEditor',
+                        editDropdownValueLabel: 'Value', //code
+                        editDropdownIdLabel: 'Id',    //phase
+                        editDropDownChange: 'test',
+                        cellFilter: 'mapPhase',
+                        width: 300
+                    },
                     //{
                     //    field: 'Phase',
                     //    name: 'Phase',
@@ -599,6 +641,7 @@ angular.module('cpp.controllers').
                                 CategoryDescription: value.CategoryDescription,
                                 SubCategoryID: value.SubCategoryID,
                                 SubCategoryDescription: value.SubCategoryDescription,
+                                Services: value.Services, //Aditya 04062022
                                 //Phase: value.Phase,
                                 OrganizationID: ($("#selectOrg").val() === "0" ? null : $("#selectOrg").val())
                             }
@@ -609,7 +652,7 @@ angular.module('cpp.controllers').
                             isChanged = true;
                             angular.forEach($scope.orgBudgetCollection, function (orgItem) {
                                 if (value.ID === orgItem.ID && value.CategoryID === orgItem.CategoryID && value.CategoryDescription === orgItem.CategoryDescription
-                                    && value.SubCategoryID === orgItem.SubCategoryID && value.SubCategoryDescription === orgItem.SubCategoryDescription
+                                    && value.SubCategoryID === orgItem.SubCategoryID && value.SubCategoryDescription === orgItem.SubCategoryDescription && value.Services === orgItem.Services
                                     /*&& value.Phase === orgItem.Phase*/) {
                                     //Do nothing on unchanged Item
                                     isChanged = false;
@@ -630,6 +673,7 @@ angular.module('cpp.controllers').
                                     CategoryDescription: value.CategoryDescription,
                                     SubCategoryID: value.SubCategoryID,
                                     SubCategoryDescription: value.SubCategoryDescription,
+                                    Services: value.Services, //Aditya 04062022
                                     //Phase: temp,
                                     OrganizationID: value.OrganizationID,
                                     ID: value.ID
@@ -650,6 +694,7 @@ angular.module('cpp.controllers').
                                     CategoryDescription: value.CategoryDescription,
                                     SubCategoryID: value.SubCategoryID,
                                     SubCategoryDescription: value.SubCategoryDescription,
+                                    Services: value.Services, //Aditay 04062022
                                     //Phase: temp,
                                     OrganizationID: value.OrganizationID,
                                 }
@@ -681,6 +726,14 @@ angular.module('cpp.controllers').
 
                         if (response.data.result) {
                             dhtmlx.alert(response.data.result);
+                            //Aditya: get Service name //04062022
+                            angular.forEach($scope.budgetCollection, function (item, index) {
+                                angular.forEach($scope.ServiceList, function (service, index) {
+                                    if (service.Id == item.Services) {
+                                        item.Services = service.Value;
+                                    }
+                                });
+                            });
                         } else {
                             dhtmlx.alert('No changes to be saved.');
                         }
@@ -696,6 +749,12 @@ angular.module('cpp.controllers').
                                 angular.forEach($scope.budgetCollection, function (item, index) {
                                     item.checkbox = false;
                                     $scope.checkList[index + 1] = false;
+                                    //Aditya: get Service name //04062022
+                                    angular.forEach($scope.ServiceList, function (service, index) {
+                                        if (service.Id == item.Services) {
+                                            item.Services = service.Value;
+                                        }
+                                    });
                                 });
                                 $scope.gridOptions.data = $scope.budgetCollection;
 
@@ -737,6 +796,7 @@ angular.module('cpp.controllers').
                                 CategoryDescription: item.CategoryDescription,
                                 SubCategoryID: item.SubCategoryID,
                                 SubCategoryDescription: item.SubCategoryDescription,
+                                Services: item.Services, //Aditya 04062022
                                 //Phase: item.Phase,
                                 displayId : item.displayId,
                                 ID : item.ID
