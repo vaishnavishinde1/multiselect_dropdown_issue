@@ -9846,6 +9846,9 @@ WBSTree = (function ($) {
                 $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+
+                $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
 
             $('#delete_program_element_change_order').unbind().on('click', function (event) {
@@ -9955,6 +9958,9 @@ WBSTree = (function ($) {
                 $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
                 $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
+
+                $('#edit_program_element_change_order').attr('disabled', 'disabled');
+                $('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
             
 
