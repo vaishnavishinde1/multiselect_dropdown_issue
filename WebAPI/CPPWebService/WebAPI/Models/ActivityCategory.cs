@@ -131,7 +131,7 @@ namespace WebAPI.Models
                 {
                     Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
                     int? versionId = Convert.ToInt32(ProjectDetails.VersionId);
-                    MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId)
+                    MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId && p.Services == ProjectDetails.ProjectClassID.ToString())
                                                         .OrderBy(a => a.CategoryDescription).Distinct().ToList();
                         MatchedActivityCategoryList = MatchedActivityCategoryList.GroupBy(a => a.CategoryID).Select(a => a.First()).OrderBy(a=>a.CategoryID).ToList();
                     
@@ -151,7 +151,7 @@ namespace WebAPI.Models
         }
 
 
-        public static List<ActivityCategory> getSubCategory(int OrganizationID, String CategoryID, String phase, String VersionId)
+        public static List<ActivityCategory> getSubCategory(int OrganizationID, String CategoryID, String phase, String VersionId, String ProjectId)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
@@ -160,13 +160,16 @@ namespace WebAPI.Models
             //string activityPhase = "";
             //activityPhase = getPhaseNameByCode(phase);
             int? verId = Convert.ToInt32(VersionId);
+            int? prjId = Convert.ToInt32(ProjectId);
             try
             {
 
                 using (var ctx = new CPPDbContext())
                 {
+                    Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
+
                     MatchedActivityCategoryList = ctx.ActivityCategory.
-                            Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId)
+                            Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId && a.Services == ProjectDetails.ProjectClassID.ToString())
                             .OrderBy(a => a.SubCategoryID)
                             .ToList();
                 }

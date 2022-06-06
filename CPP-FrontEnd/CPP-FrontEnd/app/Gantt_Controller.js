@@ -3826,7 +3826,7 @@ angular.module('xenon.Gantt_Controller', []).
                         //console.log('calling SubActivityCategory Gantt_ctrl 1');
                         //console.log(task.parent);
                         var phaseid = $scope.scheduleGanttInstance.getTask(task.parent).PhaseID;
-                        $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + CategoryID + "/" + VersionId).then(function (response) {
+                        $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + CategoryID + "/" + VersionId + "/" + $scope.selectedProject).then(function (response) {
                             //  GanttCategory.getSubCategory().get({ProgramID:delayedData[2].result[0].ProgramID, Phase:task.parent , CategoryID: CategoryID },function(response){
                             // ProgramCategory.getSubActivityCategoryProgram().get({Phase: task.parent, CateogryID : CategoryID},function(response){
                             var subCategory = response.data.result;
@@ -4623,6 +4623,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         //cost["delete"] = "<span class='notClickableFont'><i class='fa fa-trash'></i></span>";
                                         //cost["costLineItemIdNew"] = costs[i].CostLineItemID; // Pritesh
                                         cost["costLineItemIdNew"] = costs[i].CostLineItemID;  //Manasi 02-12-2020
+                                        
                                         cost["newCostLineItemId"] = costs[i].CostLineItemID.substring(18) == 'undefined' ? '' : costs[i].CostLineItemID.substring(18);    //Manasi 06-11-2020
                                         //cost["newCostLineItemId"] = costs[i].CostLineItemID == 'undefined' ? '' : costs[i].CostLineItemID;    //Manasi 06-11-2020
                                         cost["delete"] = htmlDelete;
@@ -12797,7 +12798,7 @@ angular.module('xenon.Gantt_Controller', []).
                                 //  ProgramCategory.getSubActivityCategoryProgram().get({Phase:$scope.lightBoxTask.parent, CateogryID: index},function(response){
 
                                 var phaseid = $scope.scheduleGanttInstance.getTask($scope.lightBoxTask.parent).PhaseID;
-                                $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + index + "/" + vId).then(function (response) {
+                                $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + index + "/" + vId + "/" + "/" + $scope.selectedProject).then(function (response) {
                                     var subCategory = response.data.result;
                                     for (var i = 0; i < subCategory.length; i++) {
                                         var obj = {};
@@ -13020,7 +13021,9 @@ angular.module('xenon.Gantt_Controller', []).
 
                                 //console.log($scope.OrganizationID);
                                 var phaseid = $scope.scheduleGanttInstance.getTask($scope.lightBoxTask.parent).PhaseID;
-                                $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + index + "/" + vId).then(function (response) {
+                                
+                                $scope.selectedProject = delayedData[2].result[0].ProjectID
+                                $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + phaseid + "/" + index + "/" + vId + "/" + $scope.selectedProject).then(function (response) {
                                     var subCategory = response.data.result;
                                     var defaultOne = {};
 
@@ -13146,7 +13149,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         }
 
                                         if (response.status == 'Success') {
-                                            $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + $scope.selectedPhase.PhaseID + "/" + CategoryID + "/" + VersionId).then(function (SubCategoryData) {
+                                            $http.get(serviceBasePath + "Request/SubActivityCategory/" + $scope.OrganizationID + "/" + $scope.selectedPhase.PhaseID + "/" + CategoryID + "/" + VersionId + "/" + $scope.selectedProject).then(function (SubCategoryData) {
                                                 var subCategory = SubCategoryData.data.result;
                                                 //console.log(subCategory);
                                                 var selectedSubcategory = {};

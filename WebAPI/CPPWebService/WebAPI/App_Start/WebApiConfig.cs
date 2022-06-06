@@ -717,7 +717,7 @@ namespace WebAPI
                 );
             config.Routes.MapHttpRoute(
                 name: "SubCategory",
-                routeTemplate: "Request/SubActivityCategory/{OrganizationID}/{Phase}/{CategoryID}/{VersionId}",
+                routeTemplate: "Request/SubActivityCategory/{OrganizationID}/{Phase}/{CategoryID}/{VersionId}/{ProjectId}",
                 defaults: new { controller = "RequestSubAC", OrganizationID = RouteParameter.Optional, Phase = RouteParameter.Optional, CategoryID = RouteParameter.Optional, VersionId = RouteParameter.Optional }
 
                 );
