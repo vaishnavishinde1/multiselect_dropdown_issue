@@ -4246,6 +4246,25 @@ WBSTree = (function ($) {
                         }
                         
                     }
+                    // Narayan - validation for orignal contract end date - 08/06/2022
+                    if (selectedNode.originalEndDate) {
+                        if (!(date_regex.test(selectedNode.originalEndDate))) {
+                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                        else if (selectedNode.originalEndDate < selectedNode.CurrentStartDate) {
+                            dhtmlx.alert('End Date can not set before Start Date');
+                            return;
+                        }
+                        else {
+                            var testDate = moment(selectedNode.originalEndDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Contract End Date');
+                                return;
+                            }
+                        }
+                        
+                    }
                     //Vaishnavi 08-02-2022
                     selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     if (selectedNode.CurrentEndDate1) {
@@ -4577,6 +4596,24 @@ WBSTree = (function ($) {
                             var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
                             if (!testDate) {
                                 dhtmlx.alert('Invalid Contract Start Date.');
+                                return;
+                            }
+                        }
+                    }
+                    // Narayan - validation for orignal contract end date - 08/06/2022
+                    if (newNode.originalEndDate) {
+                        if (!(date_regex.test(newNode.originalEndDate))) {
+                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                        else if (newNode.originalEndDate < newNode.CurrentStartDate) {
+                            dhtmlx.alert('End Date can not set before Start Date');
+                            return;
+                        }
+                        else {
+                            var testDate = moment(newNode.originalEndDate, 'M/D/YYYY', true).isValid();
+                            if (!testDate) {
+                                dhtmlx.alert('Invalid Contract End Date.');
                                 return;
                             }
                         }
@@ -8662,25 +8699,27 @@ WBSTree = (function ($) {
             }
 
             //Manasi
-            $('#cancel_program_element_milestone_modal').click(function () {
-                var rowId = g_selectedProgramElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementMilestone = null; 	//Manasi
-            });
+            // Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 08/06/2022
+            //$('#cancel_program_element_milestone_modal').click(function () {
+            //    var rowId = g_selectedProgramElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementMilestone = null; 	//Manasi
+            //});
 
-            $('#cancel_program_element_milestone_modal_x').click(function () {
-                var rowId = g_selectedProgramElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementMilestone = null; 	//Manasi
-            });
+            //$('#cancel_program_element_milestone_modal_x').click(function () {
+            //    var rowId = g_selectedProgramElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementMilestone = null; 	//Manasi
+            //});
+
             //===================================================================================== PROGRAM ELEMENT MILESTONE END ===================================================================
 
 
@@ -9839,16 +9878,16 @@ WBSTree = (function ($) {
                 $('#delete_program_element_change_order_modal').show();
                 $("#ChangeOrderDate").datepicker();
                 $("#program_element_change_order_duration_date").datepicker(); //  Jignesh-ChangeOrderPopUpChanges
-                $("input:radio[name='rbChangeOrder']").each(function (i) {
-                    this.checked = false;
-                });
+                //$("input:radio[name='rbChangeOrder']").each(function (i) {
+                //    this.checked = false;
+                //});
 
-                $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
-                $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
+                //$("#downloadBtnChangeOrder").attr('disabled', 'disabled');
+                //$("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
 
-                $('#edit_program_element_change_order').attr('disabled', 'disabled');
-                $('#delete_program_element_change_order').attr('disabled', 'disabled');
+                //$('#edit_program_element_change_order').attr('disabled', 'disabled');
+                //$('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
 
             $('#delete_program_element_change_order').unbind().on('click', function (event) {
@@ -9955,35 +9994,36 @@ WBSTree = (function ($) {
                     this.checked = false;
                 });
 
-                $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
-                $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
+                //$("#downloadBtnChangeOrder").attr('disabled', 'disabled');
+                //$("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
 
-                $('#edit_program_element_change_order').attr('disabled', 'disabled');
-                $('#delete_program_element_change_order').attr('disabled', 'disabled');
+                //$('#edit_program_element_change_order').attr('disabled', 'disabled');
+                //$('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
             
 
             //Manasi
-            $('#cancel_program_element_change_order_modal').click(function () {
-                var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementChangeOrder = null; 	//Manasi
-            });
+            // Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 08/06/2022
+            //$('#cancel_program_element_change_order_modal').click(function () {
+            //    var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //});
 
-            $('#cancel_program_element_change_order_modal_x').click(function () {
-                var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementChangeOrder = null; 	//Manasi
-            });
+            //$('#cancel_program_element_change_order_modal_x').click(function () {
+            //    var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //});
             //Added by Aditya ogDate-------------------------//
             //$('#program_original_end_date').on('change', function () {
             //    isFieldValueChanged = true;
@@ -10292,6 +10332,10 @@ WBSTree = (function ($) {
                     if (endDate) {
                         if (!(date_regex.test(endDate))) {
                             dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                            return;
+                        }
+                        else if (endDate < startDate) {
+                            dhtmlx.alert('End Date can not set before Start Date'); // Narayan - End date validation - 08/06/2022
                             return;
                         }
                         else {
