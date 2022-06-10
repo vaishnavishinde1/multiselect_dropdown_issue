@@ -220,7 +220,8 @@ angular.module('cpp.controllers').
                     DepartmentID: '',
                     DepartmentName: '',
                     EmployeeName: '',
-                    Password: '',
+                   // Password: '',
+                    LoginPassword:'',
                     checkbox: false,
                     new: true
                 });
@@ -521,8 +522,10 @@ angular.module('cpp.controllers').
                         angular.forEach($scope.lstRole, function (item) {
                             
                             item.isSelected = false;
-                            if (user.RoleList.includes(item.Role)) {
-                                item.isSelected = true;
+                            if (user.RoleList != undefined) {    //vaishnavi 10-06-2022
+                                if (user.RoleList.includes(item.Role)) {
+                                    item.isSelected = true;
+                                }
                             }
                             
                         });
@@ -589,6 +592,8 @@ angular.module('cpp.controllers').
                             user.PasswordChangeRequired === orgUser.PasswordChangeRequired) {
                             isChanged = false;
 
+
+                            
                             angular.forEach(orgUser.RoleList, function (item) {
 
                                 if (user.RoleList.includes(item)) {
@@ -609,12 +614,12 @@ angular.module('cpp.controllers').
                         //});
                     });
 
-                    if (isChanged && user.Id == undefined && (user.UserID == "" || user.UserID == null
-                        || user.LoginPassword == "" || user.LoginPassword == null
+                    if (isChanged && (user.UserID == "" || user.UserID == null
+                       // || user.LoginPassword == "" || user.LoginPassword == null
                         || user.FirstName == "" || user.FirstName == null
                         || user.LastName == "" || user.LastName == null
                         || user.Email == "" || user.Email == null
-                        || user.RoleList.length == 0 || user.RoleList.length == null 
+                        || user.RoleList == undefined || user.RoleList.length == 0 || user.RoleList.length == null       //vaishnavi 10-06-2022
                         || user.DepartmentID == "" || user.DepartmentID == null
                         || user.EmployeeID == "" || user.EmployeeID == null
                         || user.PasswordChangeRequired == undefined || user.PasswordChangeRequired == null)) {
@@ -643,7 +648,16 @@ angular.module('cpp.controllers').
                     //------------------------------------------------------------------------------------------------------
                     //-----------------------------Nivedita 09-11-2021 password validation-------------------------------------------------------------------------
 
+                    //vaishnavi 10-06-2022
 
+                    if (user.new === true && user.LoginPassword == "") {
+                        dhtmlx.alert({
+                            text: "Password Cannot be Empty. (Row " + user.displayId + ")",
+                            width: "300px"
+                        });
+                        isFilled = false;
+                        return;
+                    }
 
                     const regexPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
                     if (isChanged && !regexPassword.test(user.LoginPassword) && user.LoginPassword != "") {
