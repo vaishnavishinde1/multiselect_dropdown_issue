@@ -8207,25 +8207,27 @@ WBSTree = (function ($) {
             });
             
             //Manasi
-            $('#cancel_project_element_milestone_modal').click(function () {
-                var rowId = g_selectedProjectElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProjectElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProjectElementMilestone = null; 	//Manasi
-            });
+            //Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 10/06/2022
+            //$('#cancel_project_element_milestone_modal').click(function () {
+            //    var rowId = g_selectedProjectElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProjectElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProjectElementMilestone = null; 	//Manasi
+            //});
 
-            $('#cancel_project_element_milestone_modal_x').click(function () {
-                var rowId = g_selectedProjectElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProjectElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProjectElementMilestone = null; 	//Manasi
-            });
+            //$('#cancel_project_element_milestone_modal_x').click(function () {
+            //    var rowId = g_selectedProjectElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProjectElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProjectElementMilestone = null; 	//Manasi
+            //});
+
             //===================================================================================== PROJECT ELEMENT MILESTONE END ===================================================================
 
 
