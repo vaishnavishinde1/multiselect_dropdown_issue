@@ -2047,7 +2047,7 @@ angular.module('cpp.controllers').
                 }
                 
                 //Vaishnavi 08-02-2022
-                if (date)
+                if (date) {
                     //Aditya 10062022
                     var validation = validateDate(date, 'Date');
                     if (validation == false) {

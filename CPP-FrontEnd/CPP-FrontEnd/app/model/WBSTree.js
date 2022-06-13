@@ -4319,7 +4319,7 @@ WBSTree = (function ($) {
                         //     return;
                         // }
                         var label='Original End Date';
-                        var validation=validateDate.apply(selectedNode.originalEndDate,label);
+                        var validation=validateDate(selectedNode.originalEndDate,label);
                         if(validation==false){
                             return false;
                         }
@@ -4692,7 +4692,7 @@ WBSTree = (function ($) {
                         //     return;
                         // }
                         var label='Original End Date';
-                        var validation=validateDate.apply(selectedNode.originalEndDate,label);
+                        var validation=validateDate(newNode.originalEndDate,label);
                         if(validation==false){
                             return false;
                         }
