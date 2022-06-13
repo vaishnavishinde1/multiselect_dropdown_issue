@@ -1949,7 +1949,67 @@ angular.module('cpp.controllers').
             //=======================================================================================================
 
             //====================================== Jignesh-24-03-2021 Modification Changes =======================================
+            //Aditya chek date 10062022
+            function validateDate(dateString, title) {
+                let dateformat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+                // Match the date format through regular expression      
+                if (dateString.match(dateformat)) {
 
+                    let operator = dateString.split('/');
+
+                    // Extract the string into month, date and year      
+                    let datepart = [];
+                    if (operator.length > 1) {
+                        datepart = dateString.split('/');
+                    }
+                    let month = parseInt(datepart[0]);
+                    let day = parseInt(datepart[1]);
+                    let year = parseInt(datepart[2]);
+
+                    // Create list of days of a month      
+                    let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                    if (month == 1 || month > 2) {
+                        if (day > ListofDays[month - 1]) {
+                            ///This check is for Confirming that the date is not out of its range   
+                            dhtmlx.alert('Invalid ' + title + ' ');
+                            return false;
+                        }
+                    } else if (month == 2) {
+                        let leapYear = false;
+                        if ((!(year % 4) && year % 100) || !(year % 400)) {
+                            leapYear = true;
+                        }
+                        if ((leapYear == false) && (day >= 29)) {
+                            dhtmlx.alert('Invalid ' + title + ' ');
+                            return false;
+                        } else
+                            if ((leapYear == true) && (day > 29)) {
+                                dhtmlx.alert('Invalid ' + title + ' ');
+                                return false;
+                            }
+                    }
+                } else {
+                    let operator = dateString.split('/');
+
+                    // Extract the string into month, date and year      
+                    let datepart = [];
+                    if (operator.length > 1) {
+                        datepart = dateString.split('/');
+                    }
+                    let month = parseInt(datepart[0]);
+                    let day = parseInt(datepart[1]);
+
+                    if (day > 31) {
+                        dhtmlx.alert('Invalid ' + title + ' ');
+                        return false;
+                    }
+                    else {
+                        dhtmlx.alert(title + ' Should be in MM/DD/YYYY Format');
+                        return false;
+                    }
+                }
+                return true;
+            }
             $('#btnSaveModification').unbind().on('click', function (event) {
                 var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedNode().ProgramID;
@@ -1985,15 +2045,19 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Date.');
                     return;
                 }
-
+                
                 //Vaishnavi 08-02-2022
-                if (date) {
-
-                    var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                    if (!testDate){
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+                if (date)
+                    //Aditya 10062022
+                    var validation = validateDate(date, 'Date');
+                    if (validation == false) {
+                        return false;
                     }
+                    //var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                    //if (!testDate){
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
                 }
                 //Nivedita 03-02-2022
                 if (modType != 1)

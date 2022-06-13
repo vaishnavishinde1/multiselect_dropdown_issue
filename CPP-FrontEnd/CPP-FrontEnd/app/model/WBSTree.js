@@ -28,6 +28,70 @@ WBSTree = (function ($) {
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
         });
+
+        //Aditya chek date 10062022
+        function validateDate(dateString, title) {
+            let dateformat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+            // Match the date format through regular expression      
+            if (dateString.match(dateformat)) {
+
+                let operator = dateString.split('/');
+
+                // Extract the string into month, date and year      
+                let datepart = [];
+                if (operator.length > 1) {
+                    datepart = dateString.split('/');
+                }
+                let month = parseInt(datepart[0]);
+                let day = parseInt(datepart[1]);
+                let year = parseInt(datepart[2]);
+
+                // Create list of days of a month      
+                let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                if (month == 1 || month > 2) {
+                    if (day > ListofDays[month - 1]) {
+                        ///This check is for Confirming that the date is not out of its range   
+                        dhtmlx.alert('Invalid ' + title + ' ');
+                        return false;
+                    }
+                } else if (month == 2) {
+                    let leapYear = false;
+                    if ((!(year % 4) && year % 100) || !(year % 400)) {
+                        leapYear = true;
+                    }
+                    if ((leapYear == false) && (day >= 29)) {
+                        dhtmlx.alert('Invalid ' + title + ' ');
+                        return false;
+                    } else
+                        if ((leapYear == true) && (day > 29)) {
+                            dhtmlx.alert('Invalid ' + title + ' ');
+                            return false;
+                        }
+                }
+            } else {
+                let operator = dateString.split('/');
+
+                // Extract the string into month, date and year      
+                let datepart = [];
+                if (operator.length > 1) {
+                    datepart = dateString.split('/');
+                }
+                let month = parseInt(datepart[0]);
+                let day = parseInt(datepart[1]);
+
+                if (day > 31) {
+                    dhtmlx.alert('Invalid ' + title + ' ');
+                    return false;
+                }
+                else {
+                    dhtmlx.alert(title + ' Should be in MM/DD/YYYY Format');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         function myFunc(div) {
             var scroll = document.body.scrollTop;
             div.style.top = (scroll / 10) + "px";
@@ -80,8 +144,9 @@ WBSTree = (function ($) {
         //used to indicate the id of the node added
         var nodeIdCounter = 0;
 
-        //Date validator
-        var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; //Aditya 20052022
+        //Date validator :Aditya  
+        //var date_regex = /^(?:(?:(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec))(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:(?:0?2|(?:Feb))(\/|-|\.)(?:29)\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+        //var date_regex = /^(0[1 - 9]|1[0 - 2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; //Aditya 20052022
 
         //used for exit modal
         var originalInfo = null;
@@ -287,7 +352,13 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[1] == 1) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuViewGantt").parent().show(); // Aditya view Gantt in Grid view
+                    //Aditya 
+                    if (d.children != undefined) {
+                        $("#contextMenuViewGantt").parent().show();
+                    }
+                    else {
+                        $("#contextMenuViewGantt").parent().hide();
+                    }
                      //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
 
@@ -3491,7 +3562,7 @@ WBSTree = (function ($) {
 
                             $('#project_element_milestone_table_id').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
-                                '<td style="width: 28px">' +
+                                '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -3517,7 +3588,7 @@ WBSTree = (function ($) {
 
                     $('#project_element_milestone_table_id').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
-                        '<td style="width: 28px">' +
+                        '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -3548,7 +3619,7 @@ WBSTree = (function ($) {
 
                             $('#program_element_milestone_table_id').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
-                                '<td style="width: 28px">' +
+                                '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 /*'<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +*/
@@ -3577,7 +3648,7 @@ WBSTree = (function ($) {
 
                     $('#program_element_milestone_table_id').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
-                        '<td style="width: 28px">' +
+                        '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -4232,35 +4303,37 @@ WBSTree = (function ($) {
                     }
 
                     //Vaishnavi 08-02-2022
+                    
+                    //Aditya Invalid date check 10062022
                     if (selectedNode.CurrentStartDate) {
-                        if (!(date_regex.test(selectedNode.CurrentStartDate))) {
-                            dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        var label = 'Contract Start Date';
+                        var validation = validateDate(selectedNode.CurrentStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invlaid Contract Start Date.');
-                                return;
-                            }
-                        }
-                        
                     }
                     //Vaishnavi 08-02-2022
                     selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     if (selectedNode.CurrentEndDate1) {
-                        
-                        if (!(date_regex.test(selectedNode.CurrentEndDate1))) {
-                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        //Aditya 10062022
+                        var label = 'Contract End Date';
+                        var validation = validateDate(selectedNode.CurrentEndDate1, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract End Date');
-                                return;
-                            }
-                        }
+
+
+                        //if (!(date_regex.test(selectedNode.CurrentEndDate1))) {
+                        //    dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract End Date');
+                        //        return;
+                        //    }
+                        //}
                         
                     }
 
@@ -4569,32 +4642,48 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
-                        if (!(date_regex.test(newNode.CurrentStartDate))) {
-                            dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Contract Start Date';
+                        var validation = validateDate(newNode.CurrentStartDate, label)
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract Start Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.CurrentStartDate))) {
+                        //    dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentEndDate) {
-                        if (!(date_regex.test(newNode.CurrentEndDate))) {
-                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Contract End Date';
+                        var validation = validateDate(newNode.CurrentEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract End Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.CurrentEndDate))) {
+                        //    dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract End Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     if (!newNode.ContractNumber) {
                         dhtmlx.alert('Contract # is a required field.'); // Jignesh-02-03-2021
@@ -5262,63 +5351,92 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectNTPDate) {
-                        if (!(date_regex.test(selectedNode.ProjectNTPDate))) {
-                            dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project NTP Date';
+                        var validation = validateDate(selectedNode.ProjectNTPDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project NTP Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(selectedNode.ProjectNTPDate))) {
+                        //    dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project NTP Date.');
+                        //        return;
+                        //    }
+                        //}
                         
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPODate) {
-                        if (!(date_regex.test(selectedNode.ProjectPODate))) {
-                            dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project PO Date';
+                        var validation = validateDate(selectedNode.ProjectPODate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project PO Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPODate))) {
+                        //    dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project PO Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPStartDate) {
-                        if (!(date_regex.test(selectedNode.ProjectPStartDate))) {
-                            dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project Start Date';
+                        var validation = validateDate(selectedNode.ProjectPStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project Start Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPStartDate))) {
+                        //    dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                    
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPEndDate) {
-                        if (!(date_regex.test(selectedNode.ProjectPEndDate))) {
-                            dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project End Date';
+                        var validation = validateDate(selectedNode.ProjectPEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project End Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPEndDate))) {
+                        //    dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project End Date.');
+                        //        return;
+                        //    }
+                        //}
                         // Aditya 14-02-2022-----------------//
                         if (moment(selectedNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(selectedNode.ProjectPStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
@@ -5836,64 +5954,95 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectStartDate) {
-                        if (!(date_regex.test(newNode.ProjectStartDate))) {
-                            dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project NTP Date';
+                        var validation = validateDate(newNode.ProjectStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalida Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectStartDate))) {
+                        //    dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalida Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                    
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPODate) {
-                        if (!(date_regex.test(newNode.ProjectPODate))) {
-                            dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project PO Date';
+                        var validation = validateDate(newNode.ProjectPODate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project PO Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPODate))) {
+                        //    dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project PO Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPStartDate) {
-                        if (!(date_regex.test(newNode.ProjectPStartDate))) {
-                            dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project Start Date';
+                        var validation = validateDate(newNode.ProjectPStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project Start Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPStartDate))) {
+                        //    dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPEndDate) {
-                        if (!(date_regex.test(newNode.ProjectPEndDate))) {
-                            dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        //Aditya 10062022
+                        var label = 'Project End Date';
+                        var validation = validateDate(newNode.ProjectPEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project End Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPEndDate))) {
+                        //    dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project End Date.');
+                        //        return;
+                        //    }
+                        //}
                         // Aditya 14-02-2022-----------------//
                         if (moment(newNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(newNode.ProjectPStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
@@ -6189,7 +6338,7 @@ WBSTree = (function ($) {
 
 
                             }
-                            debugger;
+                            //debugger;
                             //if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
@@ -7769,17 +7918,24 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-                    if (!(date_regex.test(MilestoneDate))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    var label = 'Date';
+                    var validation = validateDate(MilestoneDate, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(MilestoneDate))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                     
                 }
 
@@ -8216,17 +8372,25 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-                    if (!(date_regex.test(MilestoneDate))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    //Aditya 10062022
+                    var label = 'Date';
+                    var validation = validateDate(MilestoneDate, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(MilestoneDate))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                 }
 
                 console.log(g_newProgramElementMilestone);
@@ -8351,7 +8515,7 @@ WBSTree = (function ($) {
                             $('#ProgramElementMilestoneModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
 
-                            debugger;
+                            //debugger;
                             console.log(_selectedNode);
                             populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //wbsTree.getSelectedProgramElementID()
 
@@ -8746,17 +8910,25 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (OrderDte) {
-                    if (!(date_regex.test(OrderDte))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    //Aditya 10062022
+                    var label = 'Date';
+                    var validation = validateDate(OrderDte, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(OrderDte))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                 }
 
                 if (Reason == "" || Reason.length == 0) {
@@ -10272,17 +10444,25 @@ WBSTree = (function ($) {
                         return;
                     }
                     if (startDate) {
-                        if (!(date_regex.test(startDate))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Start Date';
+                        var validation = validateDate(startDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Start Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(startDate))) {
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     if (endDate == "" || endDate.length == 0) {
@@ -10290,17 +10470,25 @@ WBSTree = (function ($) {
                         return;
                     }
                     if (endDate) {
-                        if (!(date_regex.test(endDate))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'End Date';
+                        var validation = validateDate(endDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid End Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(endDate))) {
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid End Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     if (desc == "" || desc.length == 0) {
@@ -10395,17 +10583,25 @@ WBSTree = (function ($) {
                     }
 
                     if (date) {
-                        if (!(date_regex.test(date))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Date';
+                        var validation = validateDate(date, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(date))) {
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     if (reason == "" || reason.length == 0) {
                         dhtmlx.alert('Enter Reason.');
@@ -18810,7 +19006,12 @@ WBSTree = (function ($) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
-                    $("#contextMenuViewGantt").parent().show();
+                    if (node.children != undefined) {
+                        $("#contextMenuViewGantt").parent().show();
+                    }
+                    else {
+                        $("#contextMenuViewGantt").parent().hide();
+                    }
                      //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
