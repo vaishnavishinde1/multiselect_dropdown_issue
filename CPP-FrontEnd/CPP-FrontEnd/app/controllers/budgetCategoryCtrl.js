@@ -1,8 +1,7 @@
 angular.module('cpp.controllers').
     //budget Category Controller
     controller('BudgetCategoryCtrl', ['PhaseCode', 'ServiceClass', '$state', '$scope', '$rootScope', 'Category', 'Organization', 'VersionDetails', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout',
-        function (PhaseCode, ServiceClass, $state, $scope, $rootScope, Category, Organization, VersionDetails, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout)
-        {
+        function (PhaseCode, ServiceClass, $state, $scope, $rootScope, Category, Organization, VersionDetails, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout) {
             //Work Breakdown Structure
             Page.setTitle('Work Breakdown Structure');
             ProjectTitle.setTitle('');
@@ -28,7 +27,7 @@ angular.module('cpp.controllers').
                 $scope.filterChangeOrg($scope.filterOrg.OrganizationID);
             });
 
-            
+
 
             $scope.setOrganization = function (org) {
 
@@ -36,7 +35,7 @@ angular.module('cpp.controllers').
                 console.log("Here");
                 console.log(org);
                 console.log("End here");
-               
+
             };
 
             $scope.setVersion = function (version) {
@@ -79,45 +78,45 @@ angular.module('cpp.controllers').
                 VersionDetails.lookup().get({ operation: '0', programElementID: '0', organizationID: orgId }, function (versionData) {
                     if (versionData.result.length > 0) {
 
-                    
-                    $scope.versionList = versionData.result;
-                    $scope.setVersion(($scope.versionList[0]));
-                    //console.log("Get Org List");
-                    //console.log($scope.organizationList);
-                    $scope.filterVersion = $scope.versionList[0];
-                    $("#selectVersion").val($scope.filterVersion.Id);
-                    $scope.filterChangeVersion($scope.filterVersion.Id);
+
+                        $scope.versionList = versionData.result;
+                        $scope.setVersion(($scope.versionList[0]));
+                        //console.log("Get Org List");
+                        //console.log($scope.organizationList);
+                        $scope.filterVersion = $scope.versionList[0];
+                        $("#selectVersion").val($scope.filterVersion.Id);
+                        $scope.filterChangeVersion($scope.filterVersion.Id);
 
 
-                    if (orgId && $scope.filterVersion.Id) {
+                        if (orgId && $scope.filterVersion.Id) {
 
-                        Category.get({ OrganizationID: orgId, VersionID: $scope.filterVersion.Id }, function (categoryData) {
-                            $scope.checkList = [];
-                            $scope.budgetCollection = categoryData.result;
-                            $scope.orgBudgetCollection = angular.copy(categoryData.result);
-                            addIndex($scope.budgetCollection);
-                            angular.forEach($scope.budgetCollection, function (item, index) {
-                                item.checkbox = false;
-                                $scope.checkList[index + 1] = false;
-                                //Aditya: get Service name //04062022
-                                angular.forEach($scope.ServiceList, function (service, index) {
-                                    if (service.Id == item.Services) {
-                                        item.Services = service.Value;
-                                    }
+                            Category.get({ OrganizationID: orgId, VersionID: $scope.filterVersion.Id }, function (categoryData) {
+                                $scope.checkList = [];
+                                $scope.budgetCollection = categoryData.result;
+                                $scope.orgBudgetCollection = angular.copy(categoryData.result);
+                                addIndex($scope.budgetCollection);
+                                angular.forEach($scope.budgetCollection, function (item, index) {
+                                    item.checkbox = false;
+                                    $scope.checkList[index + 1] = false;
+                                    //Aditya: get Service name //04062022
+                                    angular.forEach($scope.ServiceList, function (service, index) {
+                                        if (service.Id == item.Services) {
+                                            item.Services = service.Value;
+                                        }
+                                    });
                                 });
-                            });
-                            $scope.gridOptions.data = $scope.budgetCollection;
+                                $scope.gridOptions.data = $scope.budgetCollection;
 
-                            console.log('budgetCollection');
-                            console.log($scope.budgetCollection);
-                        });
+                                console.log('budgetCollection');
+                                console.log($scope.budgetCollection);
+                            });
 
                         }
                     }
-                    
+
                 });
 
-                
+
             }
 
             $scope.filterChangeVersion = function (filterVersionID) {
@@ -160,17 +159,17 @@ angular.module('cpp.controllers').
                     });
 
                 }
-                
+
             }
 
-            var url = serviceBasePath+'response/activityCategory/';
+            var url = serviceBasePath + 'response/activityCategory/';
             $scope.$on('ngGridEventEndCellEdit', function (data) {
                 console.log(data.targetScope.row.entity.status);
                 data.targetScope.row.entity.status = 'Modified';
                 console.log($scope.userCollection);
             });
-            $scope.budgetCategoryItem ;
-            $scope.applicableList = [];            
+            $scope.budgetCategoryItem;
+            $scope.applicableList = [];
             //PhaseCode.get({},function(PhaseCodeData){
             //    $scope.phaseCodeCollection = PhaseCodeData.result;
             //    console.log('PhaseCodeData.result');
@@ -187,11 +186,11 @@ angular.module('cpp.controllers').
             //});
 
             $scope.projectTypeCollection = [{
-                Type : "Runway",
-                ProjectTypeDescription : "Runway"
-            },{
-                Type : "TEST",
-                ProjectTypeDescription : "TEST"
+                Type: "Runway",
+                ProjectTypeDescription: "Runway"
+            }, {
+                Type: "TEST",
+                ProjectTypeDescription: "TEST"
             }
             ]
 
@@ -223,14 +222,14 @@ angular.module('cpp.controllers').
                 });
 
             }
-            
 
-            var addIndex = function(data){
+
+            var addIndex = function (data) {
                 var i = 1;
-                angular.forEach(data, function(value, key, obj){
-                    value.displayId =  i;
+                angular.forEach(data, function (value, key, obj) {
+                    value.displayId = i;
                     i = i + 1;
-                    if(value.Schedule === "0001-01-01T00:00:00"){
+                    if (value.Schedule === "0001-01-01T00:00:00") {
                         value.Schedule = "";
                     }
                 });
@@ -338,16 +337,16 @@ angular.module('cpp.controllers').
 
             $scope.cellInputEditableTemplate = '<input ng-class="\'colt\' + col.index" ng-input="COL_FIELD" ng-model="COL_FIELD" ng-blur="updateEntity(row)" />';
             //$scope.cellSelectEditableTemplate = '<select ng-class="\'colt\' + col.index" ng-input="COL_FIELD" ng-model="COL_FIELD" ng-click = "test(COL_FIELD)" ng-options="phase.Code for phase in phaseCodeCollection" />';
-            $scope.cellCheckEditTableTemplate =  '<input class="c-approval-matrix-check"  type="checkbox" ng-input="COL-FIELD" ng-model="COL_FIELD"/>';
-            $scope.cellCheckEditTableTemplateApplicable =  '<input class="c-approval-matrix-check"  type="checkbox" ng-input="COL-FIELD" ng-model="COL_FIELD"/>';
+            $scope.cellCheckEditTableTemplate = '<input class="c-approval-matrix-check"  type="checkbox" ng-input="COL-FIELD" ng-model="COL_FIELD"/>';
+            $scope.cellCheckEditTableTemplateApplicable = '<input class="c-approval-matrix-check"  type="checkbox" ng-input="COL-FIELD" ng-model="COL_FIELD"/>';
             //$scope.cellSelectEditableTemplateProjectType = '<select ng-class="\'colt\' + col.index" ng-input="COL_FIELD" ng-model="COL_FIELD" style="width:120px;" ng-options="id.Type for id in phaseCodeCollection" ng-blur="updateEntity(row)" />';
-            $scope.addRow = function(){
+            $scope.addRow = function () {
                 //var table = document.getElementById('wbsTable');
                 //table.scrollTop = table.scrollHeight;
-              //  $scope.gridOptions.selectItem(rowToSelect, true);
-              //  var grid = $scope.gridOptions.ngGrid;
-              //  grid.$viewport.scrollTop(grid.rowMap[rowToSelect] * grid.config.rowHeight);
-                var x =  Math.max.apply(Math,$scope.budgetCollection.map(function(o){
+                //  $scope.gridOptions.selectItem(rowToSelect, true);
+                //  var grid = $scope.gridOptions.ngGrid;
+                //  grid.$viewport.scrollTop(grid.rowMap[rowToSelect] * grid.config.rowHeight);
+                var x = Math.max.apply(Math, $scope.budgetCollection.map(function (o) {
 
                     return o.displayId;
                 }))
@@ -358,31 +357,31 @@ angular.module('cpp.controllers').
                 }
 
                 $scope.checkList[++x] = false;
-                $scope.budgetCollection .splice(x,0,{
+                $scope.budgetCollection.splice(x, 0, {
                     displayId: x,
-                    CategoryID:'',
-                    CategoryDescription : '',
+                    CategoryID: '',
+                    CategoryDescription: '',
                     SubCategoryID: '',
                     SubCategoryDescription: '',
                     Services: '', //Aditya 04062022
                     //Phase: '',
                     OrganizationID: '',
                     checkbox: false,
-                    new : true
+                    new: true
                 });
                 console.log('$scope.budgetCollection');
                 console.log($scope.budgetCollection);
                 $scope.gridApi.core.clearAllFilters();//Nivedita-T on 17/11/2021
                 $timeout(function () {
                     console.log($scope.gridOptions.data[$scope.gridOptions.data.length - 1], $scope.gridOptions.columnDefs[0]);
-                    
+
                     $scope.gridApi.core.scrollTo($scope.gridOptions.data[$scope.gridOptions.data.length - 1], $scope.gridOptions.columnDefs[0]);
                 }, 1);
 
             }
 
             $scope.gridOptions = {
-                enableColumnMenus :false,
+                enableColumnMenus: false,
                 enableCellEditOnFocus: true,
                 enableFiltering: true,
                 /*data: 'budgetCollection',
@@ -391,8 +390,8 @@ angular.module('cpp.controllers').
                 selectedItems: $scope.mySelections,
                 enableCellEditOnFocus: true,
                 multiSelect: false,*/
-                rowHeight:40,
-                width:700,
+                rowHeight: 40,
+                width: 700,
                 /*afterSelectionChange: function (rowItem, event) {
                     console.log($scope.mySelections);
                     $scope.selectedIDs = [];
@@ -403,77 +402,77 @@ angular.module('cpp.controllers').
 
                 },*/
                 columnDefs: [{
-                    field:'displayId',
-                    name:'ID',
-                    enableCellEdit:false,
+                    field: 'displayId',
+                    name: 'ID',
+                    enableCellEdit: false,
                     /*cellClass:'c-col-id',*/
                     width: 50,
                     cellClass: 'c-col-Num' //Manasi
 
                     /*cellTemplate:'<div ng-class="c-col-id" style="margin-top:15%;" ng-click="clicked(row,col)">{{row.getProperty(col.field)}}</div>'*/
 
-                },{
+                }, {
                     field: 'CategoryID',
                     //name: 'Category Id',
-                        name: 'Category Id',  //Manasi
-                        width: 120,
-                        cellClass: 'c-col-Num' //Manasi
+                    name: 'Category Id',  //Manasi
+                    width: 120,
+                    cellClass: 'c-col-Num' //Manasi
 
-                   /* editableCellTemplate: $scope.cellInputEditableTemplate,
-                    cellFilter : 'mapStatus'*/
+                    /* editableCellTemplate: $scope.cellInputEditableTemplate,
+                     cellFilter : 'mapStatus'*/
 
-                },{
+                }, {
                     field: 'CategoryDescription',
                     //name: 'Category Title',
-                        name: 'Category Title',
-                   /* enableCellEditOnFocus: true,
-                    editableCellTemplate: $scope.cellInputEditableTemplate,
-                    cellFilter :'mapStatus',*/
-                    width:300
+                    name: 'Category Title',
+                    /* enableCellEditOnFocus: true,
+                     editableCellTemplate: $scope.cellInputEditableTemplate,
+                     cellFilter :'mapStatus',*/
+                    width: 300
 
 
-                },{
-                    field:'SubCategoryID',
+                }, {
+                    field: 'SubCategoryID',
                     //name:'SubCategory Id',
-                        name:'SubCategory Id',
-                        width: 150,
-                        cellClass: 'c-col-Num' //Manasi
+                    name: 'SubCategory Id',
+                    width: 150,
+                    cellClass: 'c-col-Num' //Manasi
 
                     /*editableCellTemplate:$scope.cellInputEditableTemplate,
                     cellFilter: 'mapStatus',
                     enableCellEditOnFocus: true*/
-                },{
-                    field:'SubCategoryDescription',
-                        //name: 'SubCategory Title',
-                        name: 'SubCategory Title',
+                }, {
+                    field: 'SubCategoryDescription',
+                    //name: 'SubCategory Title',
+                    name: 'SubCategory Title',
                     /*editableCellTemplate:$scope.cellInputEditableTemplate,
                     cellFilter: 'mapStatus',
                     enableCellEditOnFocus: true,*/
-                        width: 300
-                    },
-                    //Aditya: Add Service Column // 04062022
-                    {
-                        field: 'Services',
-                        name: 'Service',
-                        editableCellTemplate: 'ui-grid/dropdownEditor',
-                        editDropdownValueLabel: 'Value', //code
-                        editDropdownIdLabel: 'Id',    //phase
-                        editDropDownChange: 'test',
-                        cellFilter: 'mapPhase',
-                        width: 300
-                    },
-                    //{
-                    //    field: 'Phase',
-                    //    name: 'Phase',
-                    //    editableCellTemplate: 'ui-grid/dropdownEditor',
-                    //    editDropdownValueLabel: 'Code',
-                    //    editDropdownIdLabel: 'Phase',
-                    //    editDropDownChange: 'test',
-                    //    /* enableCellEditOnFocus: true,
-                    //     editableCellTemplate: $scope.cellSelectEditableTemplate,*/
-                    //    cellFilter: 'mapPhase',
-                    //    width: 200
-                    //},
+                    width: 300
+                },
+                //Aditya: Add Service Column // 04062022
+                {
+                    field: 'Services',
+                    name: 'Service',
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownIdLabel: 'Id', 
+                    editDropdownValueLabel: 'Value',
+                    editDropDownChange: 'test',
+                    cellFilter: 'customFilter:this',
+                    width: 300
+                },
+                //{
+                //    field: 'Phase',
+                //    name: 'Phase',
+                //    editableCellTemplate: 'ui-grid/dropdownEditor',
+                //    editDropdownValueLabel: 'Code',
+                //    editDropdownIdLabel: 'Phase',
+                //    editDropDownChange: 'test',
+                //    /* enableCellEditOnFocus: true,
+                //     editableCellTemplate: $scope.cellSelectEditableTemplate,*/
+                //    cellFilter: 'mapPhase',
+                //    width: 200
+                //},
                 //{
                 //    field:'IsApplicable',
                 //    displayName: 'Applicable',
@@ -491,12 +490,12 @@ angular.module('cpp.controllers').
                 //    enableCellEditOnFocus: true
                 //},
                 {
-                    field:'checkBox',
+                    field: 'checkBox',
                     name: '',
                     enableCellEdit: false,
                     enableFiltering: false,
-                    width:35,
-                    cellTemplate:'<input type="checkbox" ng-model="checkList[row.entity.displayId]" class = "c-col-check" ng-click="grid.appScope.check(row,col)" style="text-align: center;vertical-align: middle;">'
+                    width: 35,
+                    cellTemplate: '<input type="checkbox" ng-model="checkList[row.entity.displayId]" class = "c-col-check" ng-click="grid.appScope.check(row,col)" style="text-align: center;vertical-align: middle;">'
 
                 }
                 ]
@@ -566,36 +565,36 @@ angular.module('cpp.controllers').
 
             };
 
-            $scope.check = function(row,col){
-            if(row.entity.checkbox==false){
-                row.entity.checkbox = true;
-                $scope.checkList[row.entity.displayId] = true;
-                row.config.enableRowSelection = true;
-            }else{
-                $scope.checkList[row.entity.displayId] = false;
-                row.entity.checkbox = false;
+            $scope.check = function (row, col) {
+                if (row.entity.checkbox == false) {
+                    row.entity.checkbox = true;
+                    $scope.checkList[row.entity.displayId] = true;
+                    row.config.enableRowSelection = true;
+                } else {
+                    $scope.checkList[row.entity.displayId] = false;
+                    row.entity.checkbox = false;
+                }
             }
-        }
 
-            $scope.applicableCheck = function(row,col){
-                if(row.entity.IsApplicable==false){
+            $scope.applicableCheck = function (row, col) {
+                if (row.entity.IsApplicable == false) {
                     row.entity.IsApplicable = true;
                     $scope.applicableList[row.entity.displayId] = true;
                     row.config.enableRowSelection = true;
-                }else{
+                } else {
                     $scope.applicableList[row.entity.displayId] = false;
                     row.entity.IsApplicable = false;
                 }
             }
-            $scope.clicked = function(row,col){
+            $scope.clicked = function (row, col) {
                 $scope.orgRow = row;
                 $scope.col = col;
                 $scope.row = row.entity;
             }
-            $scope.save = function(){
+            $scope.save = function () {
                 var isReload = false;
                 var isChanged = true;
-                var isFilled  = true;
+                var isFilled = true;
                 var listToSave = [];
                 var isInvalidList = false;
                 angular.forEach($scope.budgetCollection, function (value, key, obj) {
@@ -628,13 +627,21 @@ angular.module('cpp.controllers').
                         if (isFilled == false) {
                             return;
                         }
-
+                        //Aditya: get service id 06062022
+                        angular.forEach($scope.ServiceList, function (orgItem) {
+                            if (value.Services == orgItem.Value) {
+                                value.Services = orgItem.Id;
+                                return false;
+                            }
+                        });
                         //New Item
                         if (value.new === true) {
                             console.log(value);
                             isReload = true;
                             console.log("#selectOrg");
                             console.log($("#selectOrg").val() === "0");
+                            //var ServiceId;
+
                             var dataObj = {
                                 Operation: '1',
                                 CategoryID: value.CategoryID,
@@ -650,16 +657,23 @@ angular.module('cpp.controllers').
                         }
                         else {
                             isChanged = true;
-                            angular.forEach($scope.orgBudgetCollection, function (orgItem) {
-                                if (value.ID === orgItem.ID && value.CategoryID === orgItem.CategoryID && value.CategoryDescription === orgItem.CategoryDescription
-                                    && value.SubCategoryID === orgItem.SubCategoryID && value.SubCategoryDescription === orgItem.SubCategoryDescription && value.Services === orgItem.Services
-                                    /*&& value.Phase === orgItem.Phase*/) {
-                                    //Do nothing on unchanged Item
-                                    isChanged = false;
-                                    //isChanged = true;
-                                }
-                            });
-                            if (isChanged == true) {
+                            //angular.forEach($scope.orgBudgetCollection, function (orgItem) {
+                            //    if (value.ID === orgItem.ID && value.CategoryID === orgItem.CategoryID && value.CategoryDescription === orgItem.CategoryDescription
+                            //        && value.SubCategoryID === orgItem.SubCategoryID && value.SubCategoryDescription === orgItem.SubCategoryDescription && value.Services === orgItem.Services
+                            //        /*&& value.Phase === orgItem.Phase*/) {
+                            //        //Do nothing on unchanged Item
+                            //        isChanged = false;
+                            //        //isChanged = true;
+                            //    }
+                            //});
+                            //Aditya: 06062022
+                            var changeBudget = [];
+                            changeBudget = $scope.orgBudgetCollection.filter(orgItem => value.ID === orgItem.ID && value.CategoryID === orgItem.CategoryID && value.CategoryDescription === orgItem.CategoryDescription && value.SubCategoryID === orgItem.SubCategoryID && value.SubCategoryDescription === orgItem.SubCategoryDescription && value.Services == orgItem.Services);
+                            if (changeBudget.length > 0) {
+                                isChanged = false;
+                            }
+                            console.log(changeBudget);
+                            if (isChanged === true) {
                                 var temp = '';
                                 isReload = true;
                                 /*if (typeof value.Phase == 'string') {
@@ -667,6 +681,7 @@ angular.module('cpp.controllers').
                                 } else {
                                     temp = value.Phase.Code;
                                 }*/
+
                                 var dataObj = {
                                     Operation: '2',
                                     CategoryID: value.CategoryID,
@@ -709,18 +724,18 @@ angular.module('cpp.controllers').
                     return;
                 }
 
-                angular.forEach($scope.listToDelete,function(item){
-                   listToSave.push(item);
+                angular.forEach($scope.listToDelete, function (item) {
+                    listToSave.push(item);
                 });
                 console.log(listToSave);
-                if(isFilled == false){
+                if (isFilled == false) {
                     return;
-                }else {
+                } else {
                     $http({
                         url: url,
                         method: "POST",
                         data: JSON.stringify(listToSave),
-                        headers: {'Content-Type': 'application/json'}
+                        headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
                         response.data.result.replace(/[\r]/g, '\n');
 
@@ -763,10 +778,10 @@ angular.module('cpp.controllers').
                             });
 
                         }
-                        
+
                         //$scope.selectOrg.selected = $("#selectOrg").val();
 
-                    },function error(response){
+                    }, function error(response) {
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                     //if (isReload == true)
@@ -775,14 +790,14 @@ angular.module('cpp.controllers').
                     //    alert("No changes to save");
                 }
             }
-            $scope.delete = function(){
+            $scope.delete = function () {
                 var isChecked = false;
                 var unSavedChanges = false;
                 var listToSave = [];
                 var selectedRow = false;
                 $scope.listToDelete = [];
                 var newList = [];
-                angular.forEach($scope.budgetCollection,function(item){
+                angular.forEach($scope.budgetCollection, function (item) {
                     if (item.checkbox == true) {
                         selectedRow = true;
                         if (item.new === true) {
@@ -798,8 +813,8 @@ angular.module('cpp.controllers').
                                 SubCategoryDescription: item.SubCategoryDescription,
                                 Services: item.Services, //Aditya 04062022
                                 //Phase: item.Phase,
-                                displayId : item.displayId,
-                                ID : item.ID
+                                displayId: item.displayId,
+                                ID: item.ID
                             }
                             listToSave.push(dataObj);
                             $scope.listToDelete.push(dataObj);
@@ -810,8 +825,8 @@ angular.module('cpp.controllers').
                 if (!selectedRow) {
                     dhtmlx.alert("Please select a record to delete.");
                 }
-                if(newList.length != 0){
-                    for(var i = 0; i < newList.length; i++) {
+                if (newList.length != 0) {
+                    for (var i = 0; i < newList.length; i++) {
                         var ind = -1;
                         angular.forEach($scope.budgetCollection, function (item, index) {
                             if (item.displayId == newList[i].displayId) {
@@ -819,113 +834,112 @@ angular.module('cpp.controllers').
                                 ind = index;
                             }
                         });
-                        if(ind != -1){
-                            $scope.checkList.splice(newList[i].displayId,1);
-                            $scope.budgetCollection.splice(ind,1);
+                        if (ind != -1) {
+                            $scope.checkList.splice(newList[i].displayId, 1);
+                            $scope.budgetCollection.splice(ind, 1);
                         }
                     }
 
                 }
-                if(listToSave.length != 0){}
-                    for(var i = 0; i < listToSave.length; i++) {
-                        var ind = -1;
-                        angular.forEach($scope.budgetCollection, function (item, index) {
-                            if (item.displayId == listToSave[i].displayId) {
-                                item.checkbox = false;
-                                ind = index;
-                            }
-                        });
-                        if(ind != -1){
-                            $scope.checkList.splice(listToSave[i].displayId,1);
-                            $scope.budgetCollection.splice(ind,1);
-                        }
-                    }
-                }
-                $scope.checkForChanges = function(){
-                    var unSavedChanges = false;
-                    var originalCollection = $scope.orgBudgetCollection;
-                    var currentCollection = $scope.budgetCollection;
-                    if (currentCollection.length !== originalCollection.length){
-                        unSavedChanges = true;
-                        return unSavedChanges;
-                    } else {
-                        angular.forEach(currentCollection, function (currentObject){
-                            for(var i = 0, len = originalCollection.length; i < len; i++) {
-                                if(unSavedChanges){
-                                    return unSavedChanges; // no need to look through the rest of the original array
-                                }
-                                console.log(originalCollection[i].ID === currentObject.ID);
-                                if(originalCollection[i].ID === currentObject.ID) {
-                                    var originalObject = originalCollection[i];
-                                    console.log(originalObject, currentObject);
-                                    // compare relevant data
-                                    if(/*originalObject.Phase !== currentObject.Phase ||*/
-                                        originalObject.CategoryID !== currentObject.CategoryID ||
-                                        originalObject.CategoryDescription !== currentObject.CategoryDescription ||
-                                        originalObject.SubCategoryID !== currentObject.SubCategoryID ||
-                                        originalObject.SubCategoryDescription !== currentObject.SubCategoryDescription)
-                                    {
-                                        console.log(originalObject, currentObject);
-                                        // alert if a change has not been save
-                                        //alert("unsaved change on " + originalObject.CategoryDescription + " - " + originalObject.SubCategoryDescription);
-                                        unSavedChanges = true;
-                                        return unSavedChanges;
-                                    }
-                                    break; //no need to check any further, go to next object in new collection
-                                }
-                            }
-                        });
-                    }
-                    return unSavedChanges;
-                };
-                onRouteChangeOff = $scope.$on('$locationChangeStart', function(event){
-                    var newUrl = $location.path();
-                    if(true) return;
-                    $scope.confirm = "";
-                    var scope = $rootScope.$new();
-                    scope.params = {confirm:$scope.confirm};
-                    $rootScope.modalInstance = $uibModal.open({
-                        scope: scope,
-                        templateUrl: 'app/views/Modal/exit_confirmation_modal.html',
-                        controller: 'exitConfirmation',
-                        size: 'md',
-                        backdrop: true
-                    });
-                    $rootScope.modalInstance.result.then(function(data){
-                        console.log(scope.params.confirm);
-                        if(scope.params.confirm === "exit"){
-                            onRouteChangeOff();
-                            $location.path(newUrl);
-                        }
-                        else if(scope.params.confirm === "save"){
-                            $scope.save();
-                            onRouteChangeOff();
-                            $location.path(newUrl);
-                        }
-                        else if(scope.params.confirm === "back"){
-                            //do nothing
+                if (listToSave.length != 0) { }
+                for (var i = 0; i < listToSave.length; i++) {
+                    var ind = -1;
+                    angular.forEach($scope.budgetCollection, function (item, index) {
+                        if (item.displayId == listToSave[i].displayId) {
+                            item.checkbox = false;
+                            ind = index;
                         }
                     });
-                    event.preventDefault();
-                });
-
-            }])
-
-    .  filter('mapProjectType',function(){
-            return function(input) {
-                if(!input)
-                    return ""
-                if (!input.Type) {
-
-                    return input;
-                } else if (input.Type) {
-                    return input.Type;
-                } else {
-                    return 'unknown';
+                    if (ind != -1) {
+                        $scope.checkList.splice(listToSave[i].displayId, 1);
+                        $scope.budgetCollection.splice(ind, 1);
+                    }
                 }
-                return input.Type;
             }
-        });
+            $scope.checkForChanges = function () {
+                var unSavedChanges = false;
+                var originalCollection = $scope.orgBudgetCollection;
+                var currentCollection = $scope.budgetCollection;
+                if (currentCollection.length !== originalCollection.length) {
+                    unSavedChanges = true;
+                    return unSavedChanges;
+                } else {
+                    angular.forEach(currentCollection, function (currentObject) {
+                        for (var i = 0, len = originalCollection.length; i < len; i++) {
+                            if (unSavedChanges) {
+                                return unSavedChanges; // no need to look through the rest of the original array
+                            }
+                            console.log(originalCollection[i].ID === currentObject.ID);
+                            if (originalCollection[i].ID === currentObject.ID) {
+                                var originalObject = originalCollection[i];
+                                console.log(originalObject, currentObject);
+                                // compare relevant data
+                                if (/*originalObject.Phase !== currentObject.Phase ||*/
+                                    originalObject.CategoryID !== currentObject.CategoryID ||
+                                    originalObject.CategoryDescription !== currentObject.CategoryDescription ||
+                                    originalObject.SubCategoryID !== currentObject.SubCategoryID ||
+                                    originalObject.SubCategoryDescription !== currentObject.SubCategoryDescription) {
+                                    console.log(originalObject, currentObject);
+                                    // alert if a change has not been save
+                                    //alert("unsaved change on " + originalObject.CategoryDescription + " - " + originalObject.SubCategoryDescription);
+                                    unSavedChanges = true;
+                                    return unSavedChanges;
+                                }
+                                break; //no need to check any further, go to next object in new collection
+                            }
+                        }
+                    });
+                }
+                return unSavedChanges;
+            };
+            onRouteChangeOff = $scope.$on('$locationChangeStart', function (event) {
+                var newUrl = $location.path();
+                if (true) return;
+                $scope.confirm = "";
+                var scope = $rootScope.$new();
+                scope.params = { confirm: $scope.confirm };
+                $rootScope.modalInstance = $uibModal.open({
+                    scope: scope,
+                    templateUrl: 'app/views/Modal/exit_confirmation_modal.html',
+                    controller: 'exitConfirmation',
+                    size: 'md',
+                    backdrop: true
+                });
+                $rootScope.modalInstance.result.then(function (data) {
+                    console.log(scope.params.confirm);
+                    if (scope.params.confirm === "exit") {
+                        onRouteChangeOff();
+                        $location.path(newUrl);
+                    }
+                    else if (scope.params.confirm === "save") {
+                        $scope.save();
+                        onRouteChangeOff();
+                        $location.path(newUrl);
+                    }
+                    else if (scope.params.confirm === "back") {
+                        //do nothing
+                    }
+                });
+                event.preventDefault();
+            });
 
-    function gridLoad() {
-    }
+        }])
+
+    .filter('mapProjectType', function () {
+        return function (input) {
+            if (!input)
+                return ""
+            if (!input.Type) {
+
+                return input;
+            } else if (input.Type) {
+                return input.Type;
+            } else {
+                return 'unknown';
+            }
+            return input.Type;
+        }
+    });
+
+function gridLoad() {
+}
