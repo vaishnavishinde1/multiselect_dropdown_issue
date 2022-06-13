@@ -4323,7 +4323,7 @@ WBSTree = (function ($) {
                         if(validation==false){
                             return false;
                         }
-                        else if (selectedNode.originalEndDate < selectedNode.CurrentStartDate) {
+                        else if (moment(selectedNode.originalEndDate, 'MM/DD/YYYY') < moment(selectedNode.CurrentStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('End Date can not set before Start Date');
                             return;
                         }
@@ -4696,7 +4696,7 @@ WBSTree = (function ($) {
                         if(validation==false){
                             return false;
                         }
-                        else if (newNode.originalEndDate < newNode.CurrentStartDate) {
+                        else if (moment(newNode.originalEndDate, 'MM/DD/YYYY') < moment(newNode.CurrentStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('End Date can not set before Start Date');
                             return;
                         }
@@ -10527,7 +10527,7 @@ WBSTree = (function ($) {
                         if (validation == false) {
                             return false;
                         }
-                        else if (endDate < startDate) {
+                        else if (moment(endDate, 'MM/DD/YYYY') < moment(startDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('End Date can not set before Start Date'); // Narayan - End date validation - 08/06/2022
                             return;
                         }
