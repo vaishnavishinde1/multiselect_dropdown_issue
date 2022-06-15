@@ -3577,6 +3577,7 @@ WBSTree = (function ($) {
 
             //Project element milestone
             function populateProjectElementMilestoneTableNew() {
+                $("#update_project_element_milestone_modal").attr("disabled", false);
                 $('#project_element_milestone_table_id').empty();
 
                 for (var x = 0; x < g_project_element_milestone_draft_list.length; x++) {
@@ -8139,6 +8140,7 @@ WBSTree = (function ($) {
 
             // SHOW PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#ProjectElementMilestoneModal').unbind().on('show.bs.modal', function (event) {
+              
                 $('#message_div').hide();
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
@@ -8279,6 +8281,7 @@ WBSTree = (function ($) {
 
             // CLICK ADD PROJECT ELEMENT MILESTONE LEGACY
             $('#new_project_element_milestone').unbind().on('click', function (event) {
+                
                 event.preventDefault();    //Manasi 09-03-2021
                 g_newProjectElementMilestone = true;
                 $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
