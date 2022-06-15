@@ -101,6 +101,7 @@ angular.module('cpp.controllers').
 
 
             $scope.saveChanges = function () {
+                $('#btnSaveCostOverhead').prop('disabled', true); //Aditya
                 //alert($scope.rowCollection[0].CurrentMarkup);
                 var cnt = 0;
                 angular.forEach($scope.rowCollection, function (item) {
@@ -110,10 +111,12 @@ angular.module('cpp.controllers').
                     }
                 });
                 if (cnt > 0) {
+                    $('#btnSaveCostOverhead').prop('disabled', false); //Aditya
                     dhtmlx.alert("Markup must be a valid number greater than or equal 1");  //Manasi 22-07-2020
                     return;
                 }
                 if (!$scope.Justification) {
+                    $('#btnSaveCostOverhead').prop('disabled', false); //Aditya
                     dhtmlx.alert("Enter Justification.");
                     return;
                 }
@@ -132,10 +135,11 @@ angular.module('cpp.controllers').
                             text: response.data.result,
                             width: "20%"
                         }
+                        $('#btnSaveCostOverhead').prop('disabled', false); //Aditya
                         dhtmlx.alert(message);
                         $rootScope.modalInstance.close("reload");
                     }, function error() {
-
+                        $('#btnSaveCostOverhead').prop('disabled', false); //Aditya
                     });
              }   
             

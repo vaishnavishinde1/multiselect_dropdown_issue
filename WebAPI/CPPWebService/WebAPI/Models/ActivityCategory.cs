@@ -432,13 +432,17 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     activity.VersionId = latestVersion.Id;
+                    ActivityCategory oldVersionActivityCategory = ctx.ActivityCategory.Where(s => s.ID == activity.ID).FirstOrDefault(); // Narayan - getting old version data before modification - 10/06/2022
                     ActivityCategory retrievedActivityCategory = new ActivityCategory();
-                    retrievedActivityCategory = ctx.ActivityCategory.Where(s => s.SubCategoryID == activity.SubCategoryID
-                                                                            && s.CategoryID == activity.CategoryID
-                                                                            //&& s.Phase == activity.Phase
-                                                                            && s.VersionId == latestVersion.Id).FirstOrDefault();
+                    retrievedActivityCategory = ctx.ActivityCategory.Where(s =>
+                                                                            //s.ID == activity.ID
+                                                                            s.SubCategoryID == oldVersionActivityCategory.SubCategoryID
+                                                                            && s.CategoryID == oldVersionActivityCategory.CategoryID
+                                                                            && s.Services == oldVersionActivityCategory.Services
+                                                                            && s.VersionId == latestVersion.Id
+                                                                            ).FirstOrDefault(); // Narayan - old version data compare with same new version data - 10/06/2022
 
-                    
+
 
                     ActivityCategory duplicateActivityCategory = new ActivityCategory();
                     duplicateActivityCategory = ctx.ActivityCategory.Where(s => s.SubCategoryID == activity.SubCategoryID
@@ -510,7 +514,9 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     ActivityCategory retrievedActivity = new ActivityCategory();
-                    retrievedActivity = ctx.ActivityCategory.Where(s => s.SubCategoryID == activity.SubCategoryID
+                    retrievedActivity = ctx.ActivityCategory.Where(s =>
+                                                                            s.ID == activity.ID
+                                                                            && s.SubCategoryID == activity.SubCategoryID
                                                                             && s.CategoryID == activity.CategoryID
                                                                            // && s.Phase == activity.Phase
                                                                             && s.VersionId == latestVersion.Id).FirstOrDefault();

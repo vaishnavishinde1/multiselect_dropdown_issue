@@ -28,6 +28,70 @@ WBSTree = (function ($) {
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
         });
+
+        //Aditya chek date 10062022
+        function validateDate(dateString, title) {
+            let dateformat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+            // Match the date format through regular expression      
+            if (dateString.match(dateformat)) {
+
+                let operator = dateString.split('/');
+
+                // Extract the string into month, date and year      
+                let datepart = [];
+                if (operator.length > 1) {
+                    datepart = dateString.split('/');
+                }
+                let month = parseInt(datepart[0]);
+                let day = parseInt(datepart[1]);
+                let year = parseInt(datepart[2]);
+
+                // Create list of days of a month      
+                let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                if (month == 1 || month > 2) {
+                    if (day > ListofDays[month - 1]) {
+                        ///This check is for Confirming that the date is not out of its range   
+                        dhtmlx.alert('Invalid ' + title + ' ');
+                        return false;
+                    }
+                } else if (month == 2) {
+                    let leapYear = false;
+                    if ((!(year % 4) && year % 100) || !(year % 400)) {
+                        leapYear = true;
+                    }
+                    if ((leapYear == false) && (day >= 29)) {
+                        dhtmlx.alert('Invalid ' + title + ' ');
+                        return false;
+                    } else
+                        if ((leapYear == true) && (day > 29)) {
+                            dhtmlx.alert('Invalid ' + title + ' ');
+                            return false;
+                        }
+                }
+            } else {
+                let operator = dateString.split('/');
+
+                // Extract the string into month, date and year      
+                let datepart = [];
+                if (operator.length > 1) {
+                    datepart = dateString.split('/');
+                }
+                let month = parseInt(datepart[0]);
+                let day = parseInt(datepart[1]);
+
+                if (day > 31) {
+                    dhtmlx.alert('Invalid ' + title + ' ');
+                    return false;
+                }
+                else {
+                    dhtmlx.alert(title + ' Should be in MM/DD/YYYY Format');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         function myFunc(div) {
             var scroll = document.body.scrollTop;
             div.style.top = (scroll / 10) + "px";
@@ -80,8 +144,9 @@ WBSTree = (function ($) {
         //used to indicate the id of the node added
         var nodeIdCounter = 0;
 
-        //Date validator
-        var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; //Aditya 20052022
+        //Date validator :Aditya  
+        //var date_regex = /^(?:(?:(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec))(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:(?:0?2|(?:Feb))(\/|-|\.)(?:29)\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+        //var date_regex = /^(0[1 - 9]|1[0 - 2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; //Aditya 20052022
 
         //used for exit modal
         var originalInfo = null;
@@ -287,7 +352,13 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[1] == 1) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuViewGantt").parent().show(); // Aditya view Gantt in Grid view
+                    //Aditya 
+                    if (d.children != undefined) {
+                        $("#contextMenuViewGantt").parent().show();
+                    }
+                    else {
+                        $("#contextMenuViewGantt").parent().hide();
+                    }
                      //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
 
@@ -3491,7 +3562,7 @@ WBSTree = (function ($) {
 
                             $('#project_element_milestone_table_id').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
-                                '<td style="width: 28px">' +
+                                '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -3517,7 +3588,7 @@ WBSTree = (function ($) {
 
                     $('#project_element_milestone_table_id').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
-                        '<td style="width: 28px">' +
+                        '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -3548,7 +3619,7 @@ WBSTree = (function ($) {
 
                             $('#program_element_milestone_table_id').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
-                                '<td style="width: 28px">' +
+                                '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 /*'<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +*/
@@ -3577,7 +3648,7 @@ WBSTree = (function ($) {
 
                     $('#program_element_milestone_table_id').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
-                        '<td style="width: 28px">' +
+                        '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
@@ -4232,35 +4303,60 @@ WBSTree = (function ($) {
                     }
 
                     //Vaishnavi 08-02-2022
+                    
+                    //Aditya Invalid date check 10062022
                     if (selectedNode.CurrentStartDate) {
-                        if (!(date_regex.test(selectedNode.CurrentStartDate))) {
-                            dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
+                        var label = 'Contract Start Date';
+                        var validation = validateDate(selectedNode.CurrentStartDate, label);
+                        if (validation == false) {
+                            return false;
+                        }
+                    }
+                    // Narayan - validation for orignal contract end date - 08/06/2022
+                    if (selectedNode.originalEndDate) {
+                        // if (!(date_regex.test(selectedNode.originalEndDate))) {
+                        //     dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //     return;
+                        // }
+                        var label='Original End Date';
+                        var validation=validateDate(selectedNode.originalEndDate,label);
+                        if(validation==false){
+                            return false;
+                        }
+                        else if (moment(selectedNode.originalEndDate, 'MM/DD/YYYY') < moment(selectedNode.CurrentStartDate, 'MM/DD/YYYY')) {
+                            dhtmlx.alert('End Date can not set before Start Date');
                             return;
                         }
-                        else {
-                            var testDate = moment(selectedNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invlaid Contract Start Date.');
-                                return;
-                            }
-                        }
-                        
+                        // else {
+                        //     var testDate = moment(selectedNode.originalEndDate, 'M/D/YYYY', true).isValid();
+                        //     if (!testDate) {
+                        //         dhtmlx.alert('Invalid Contract End Date');
+                        //         return;
+                        //     }
+                        // }
                     }
                     //Vaishnavi 08-02-2022
                     selectedNode.CurrentEndDate1 = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     if (selectedNode.CurrentEndDate1) {
-                        
-                        if (!(date_regex.test(selectedNode.CurrentEndDate1))) {
-                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        //Aditya 10062022
+                        var label = 'Contract End Date';
+                        var validation = validateDate(selectedNode.CurrentEndDate1, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract End Date');
-                                return;
-                            }
-                        }
+
+
+                        //if (!(date_regex.test(selectedNode.CurrentEndDate1))) {
+                        //    dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.CurrentEndDate1, 'MM/DD/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract End Date');
+                        //        return;
+                        //    }
+                        //}
                         
                     }
 
@@ -4287,6 +4383,7 @@ WBSTree = (function ($) {
                     //}
 
                     //API to Insert/Update
+                    $("#update_program").attr("disabled", true); //Aditya
                     wbsTree.getProgram().persist().save({
                         "Operation": 2,
                         "ProgramID": selectedNode.ProgramID,
@@ -4364,6 +4461,7 @@ WBSTree = (function ($) {
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_program").attr("disabled", false); //Aditya
                             g_contract_draft_list = [];
                             angular.forEach(fundToBeAdded, function (item) {
                                 console.log(item);
@@ -4400,11 +4498,25 @@ WBSTree = (function ($) {
                             selectedNode.ProgramManager = temp_node.ProgramManager;
                             selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
                             if (response.result == '' || response.result == null || response.result == undefined)
-                                dhtmlx.alert('Something went wrong. Please try again..');
+                                //dhtmlx.alert('Something went wrong. Please try again..');
+                                 //Aditya
+                            dhtmlx.alert({
+                                text: 'Something went wrong. Please try again..',
+                                width: '500px',
+                                callback: function (result) {
+                                    if (result) $("#update_program").attr("disabled", false);
+                                    else $("#update_program").attr("disabled", false);
+                                }
+                            });
                             else {
+                                 //Aditya
                                 dhtmlx.alert({
                                     text: response.result,
-                                    width: '500px'
+                                    width: '500px',
+                                    callback: function (result) {
+                                        if (result) $("#update_program").attr("disabled", false);
+                                        else $("#update_program").attr("disabled", false);
+                                    }
                                 });
                             }
                         }
@@ -4569,32 +4681,71 @@ WBSTree = (function ($) {
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentStartDate) {
-                        if (!(date_regex.test(newNode.CurrentStartDate))) {
-                            dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
+
+                        //Aditya 10062022
+                        var label = 'Contract Start Date';
+                        var validation = validateDate(newNode.CurrentStartDate, label)
+                        if (validation == false) {
+                            return false;
+                        }
+
+                        //if (!(date_regex.test(newNode.CurrentStartDate))) {
+                        //    dhtmlx.alert('Contract Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract Start Date.');
+                        //        return;
+                        //    }
+                        //}
+                    }
+                    // Narayan - validation for orignal contract end date - 08/06/2022
+                    if (newNode.originalEndDate) {
+                        // if (!(date_regex.test(newNode.originalEndDate))) {
+                        //     dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //     return;
+                        // }
+                        var label='Original End Date';
+                        var validation=validateDate(newNode.originalEndDate,label);
+                        if(validation==false){
+                            return false;
+                        }
+                        else if (moment(newNode.originalEndDate, 'MM/DD/YYYY') < moment(newNode.CurrentStartDate, 'MM/DD/YYYY')) {
+                            dhtmlx.alert('End Date can not set before Start Date');
                             return;
                         }
-                        else {
-                            var testDate = moment(newNode.CurrentStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract Start Date.');
-                                return;
-                            }
-                        }
+                        // else {
+                        //     var testDate = moment(newNode.originalEndDate, 'M/D/YYYY', true).isValid();
+                        //     if (!testDate) {
+                        //         dhtmlx.alert('Invalid Contract End Date.');
+                        //         return;
+                        //     }
+                        // }
                     }
 
                     //Vaishnavi 08-02-2022
                     if (newNode.CurrentEndDate) {
-                        if (!(date_regex.test(newNode.CurrentEndDate))) {
-                            dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Contract End Date';
+                        var validation = validateDate(newNode.CurrentEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Contract End Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.CurrentEndDate))) {
+                        //    dhtmlx.alert('Contract End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.CurrentEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Contract End Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     if (!newNode.ContractNumber) {
                         dhtmlx.alert('Contract # is a required field.'); // Jignesh-02-03-2021
@@ -4674,7 +4825,7 @@ WBSTree = (function ($) {
                     //    return;
                     //}
 
-                     
+                    $("#update_program").attr("disabled", true); //Aditya
                     selectedNode = newNode;
                     var obj = {
                         "Operation": 1,
@@ -4751,7 +4902,7 @@ WBSTree = (function ($) {
                         function (response) {
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             if (response.result.split(',')[0].trim() === "Success") {
-
+                                $("#update_program").attr("disabled", false); //Aditya
                                 console.log("-------ADDING A PROGRAM-------");
                                 resultArray = response.result.split(',');
                                 //console.log("ADDED");
@@ -4850,6 +5001,7 @@ WBSTree = (function ($) {
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                             } else {
+                                $("#update_program").attr("disabled", false); //Aditya
                                 selectedNode.name = temp_node.name;
                                 selectedNode.ProgramNote = temp_node.ProgramNote;
                                 selectedNode.ProgramManager = temp_node.ProgramManager;
@@ -5262,63 +5414,92 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectNTPDate) {
-                        if (!(date_regex.test(selectedNode.ProjectNTPDate))) {
-                            dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project NTP Date';
+                        var validation = validateDate(selectedNode.ProjectNTPDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project NTP Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(selectedNode.ProjectNTPDate))) {
+                        //    dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectNTPDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project NTP Date.');
+                        //        return;
+                        //    }
+                        //}
                         
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPODate) {
-                        if (!(date_regex.test(selectedNode.ProjectPODate))) {
-                            dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project PO Date';
+                        var validation = validateDate(selectedNode.ProjectPODate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project PO Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPODate))) {
+                        //    dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project PO Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPStartDate) {
-                        if (!(date_regex.test(selectedNode.ProjectPStartDate))) {
-                            dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project Start Date';
+                        var validation = validateDate(selectedNode.ProjectPStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project Start Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPStartDate))) {
+                        //    dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                    
                     //Vaishnavi 08-02-2022
                     if (selectedNode.ProjectPEndDate) {
-                        if (!(date_regex.test(selectedNode.ProjectPEndDate))) {
-                            dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project End Date';
+                        var validation = validateDate(selectedNode.ProjectPEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project End Date.');
-                                return;
-                            }
-                        }
+                        //if (!(date_regex.test(selectedNode.ProjectPEndDate))) {
+                        //    dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(selectedNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project End Date.');
+                        //        return;
+                        //    }
+                        //}
                         // Aditya 14-02-2022-----------------//
                         if (moment(selectedNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(selectedNode.ProjectPStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
@@ -5398,7 +5579,7 @@ WBSTree = (function ($) {
                     }
                     console.log("Program element update");
                     console.log(selectedNode);
-
+                    $("#update_program_element").attr("disabled", true);
                     var objToSave = {
                         "Operation": 2,
                         "ProjectID": selectedNode.ProjectID,
@@ -5492,9 +5673,11 @@ WBSTree = (function ($) {
                     console.log(objToSave);
                     wbsTree.getProgramElement().persist().save(objToSave, function (response) {
                         if (response.result == "Duplicate") {
+                            $("#update_program_element").attr("disabled", false);
                             dhtmlx.alert('Failed to update. Project # already exist');
                             return;
                         } else if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_program_element").attr("disabled", false);
                             var result = response.result.split(',')[1].trim()
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             originalInfo = objToSave;
@@ -5517,6 +5700,7 @@ WBSTree = (function ($) {
                             $('#ProgramElementModal').modal('hide');
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
+                            $("#update_program_element").attr("disabled", false);
 
                             dhtmlx.alert({
                                 text: 'Failed to save',
@@ -5836,64 +6020,95 @@ WBSTree = (function ($) {
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectStartDate) {
-                        if (!(date_regex.test(newNode.ProjectStartDate))) {
-                            dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project NTP Date';
+                        var validation = validateDate(newNode.ProjectStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalida Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectStartDate))) {
+                        //    dhtmlx.alert('Project NTP Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalida Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                    
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPODate) {
-                        if (!(date_regex.test(newNode.ProjectPODate))) {
-                            dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project PO Date';
+                        var validation = validateDate(newNode.ProjectPODate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project PO Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPODate))) {
+                        //    dhtmlx.alert('Project PO Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPODate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project PO Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPStartDate) {
-                        if (!(date_regex.test(newNode.ProjectPStartDate))) {
-                            dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
-                            return;
+
+                        //Aditya 10062022
+                        var label = 'Project Start Date';
+                        var validation = validateDate(newNode.ProjectPStartDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project Start Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPStartDate))) {
+                        //    dhtmlx.alert('Project Start Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPStartDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     
                     //Vaishnavi 08-02-2022
                     if (newNode.ProjectPEndDate) {
-                        if (!(date_regex.test(newNode.ProjectPEndDate))) {
-                            dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        //Aditya 10062022
+                        var label = 'Project End Date';
+                        var validation = validateDate(newNode.ProjectPEndDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Project End Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(newNode.ProjectPEndDate))) {
+                        //    dhtmlx.alert('Project End Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(newNode.ProjectPEndDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Project End Date.');
+                        //        return;
+                        //    }
+                        //}
                         // Aditya 14-02-2022-----------------//
                         if (moment(newNode.ProjectPEndDate, 'MM/DD/YYYY') < moment(newNode.ProjectPStartDate, 'MM/DD/YYYY')) {
                             dhtmlx.alert('Project End Date cannot be Smaller than Project Start Date.');
@@ -5951,6 +6166,7 @@ WBSTree = (function ($) {
                     if (selectedNode.CapitalProjectAssistantID <= 0) selectedNode.CapitalProjectAssistantID = 10000;
                     if (selectedNode.ProjectManagerID <= 0) selectedNode.ProjectManagerID = 10000;
 
+                    $("#update_program_element").attr("disabled", true);
                     //API to Insert Project
                     var objToSave = {
 
@@ -6045,12 +6261,14 @@ WBSTree = (function ($) {
                     wbsTree.getProgramElement().persist().save(objToSave, function (response) {
                         console.log(response);
                         if (response.result == "Duplicate") {
+                            $("#update_program_element").attr("disabled", false);
                             dhtmlx.alert('Failed to update. Project # already exist');
                             return;
                         }
                         console.log("-------ADDING A SUPER PROJECT-------");
 
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_program_element").attr("disabled", false);
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             resultArray = response.result.split(',');
                             newNode.ProgramElementID = resultArray[1];
@@ -6067,7 +6285,7 @@ WBSTree = (function ($) {
 
                                 docTypeID = wbsTree.getProgramElementFileDraft()[index].docTypeID;
                                 formdata = wbsTree.getProgramElementFileDraft()[index].formdata;
-
+                               
                                 var request = {
                                     method: 'POST',
                                     url: serviceBasePath + '/uploadFiles/Post/ProgramElement/0/' + newNode.ProgramElementID + '/0/0/0/' + docTypeID,
@@ -6104,9 +6322,11 @@ WBSTree = (function ($) {
                                     function (response) {
                                         if (response.result) {
                                             if (response.result.split(',')[0].trim() === "Success") {
+                                               
                                                 g_program_element_milestone_draft_list = [];
                                                 console.log('program element milestone saved successfully');
                                             } else {
+                                               
                                                 //dhtmlx.alert({ text: response.result, width: '500px' });
                                                 $('#ProgramElementMilestoneModal').modal('hide');
                                                 $("#ProgramElementModal").css({ "opacity": "1" });
@@ -6189,7 +6409,7 @@ WBSTree = (function ($) {
 
 
                             }
-                            debugger;
+                            //debugger;
                             //if (!displayMap)
                             wbsTree.loadFullGridView();
                             wbsTree.setSelectedNode(selectedNode);
@@ -6698,7 +6918,7 @@ WBSTree = (function ($) {
                     }
 
                     //--------------------------------------------------------------------------------------
-
+                    $("#update_project").attr("disabled", true);
                     var objToSave = {
                         "Operation": 2,
                         "ProjectID": selectedNode.ProjectID,
@@ -6793,9 +7013,11 @@ WBSTree = (function ($) {
 
                     wbsTree.getProject().persist().save(objToSave, function (response) {
                         if (response.result == "Duplicate") {
+                            $("#update_project").attr("disabled", false);
                             dhtmlx.alert('Failed to update. Project element # already exist');
                             return;
                         } else if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_project").attr("disabled", false);
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             originalInfo = objToSave;
                             var docIDs = wbsTree.getDeleteDocIDs();
@@ -6828,7 +7050,7 @@ WBSTree = (function ($) {
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
                         } else {
-
+                            $("#update_project").attr("disabled", false);
                             dhtmlx.alert({
                                 text: 'Failed to save',
                                 width: '500px'
@@ -7174,9 +7396,9 @@ WBSTree = (function ($) {
                         approversDetails.push(approver);
                         console.log(approversDetails);
                     }
-
+                    
                     //--------------------------------------------------------------------------------------
-
+                    $("#update_project").attr("disabled", true);
                     //API to Insert Project
                     var objToSave = {
 
@@ -7271,11 +7493,13 @@ WBSTree = (function ($) {
 
                     wbsTree.getProject().persist().save(objToSave, function (response) {
                         if (response.result == "Duplicate") {
+                            $("#update_project").attr("disabled", false);
                             dhtmlx.alert('Failed to update. Project element # already exist');
                             return;
                         }
                         console.log("-------ADDING A PROJECT-------");
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_project").attr("disabled", false);
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             console.log(response.result.split(','));
 
@@ -7412,6 +7636,8 @@ WBSTree = (function ($) {
                             });
 
                         } else {
+                            $("#update_project").attr("disabled", false);
+                          
 
                             //dhtmlx.alert({
                             //    text: 'Failed to save',
@@ -7420,6 +7646,7 @@ WBSTree = (function ($) {
                             if (response.result == '' || response.result == null || response.result == undefined)
                                 dhtmlx.alert('Something went wrong. Please try again..');
                             else {
+                                $("#update_project").attr("disabled", false);
                                 dhtmlx.alert({
                                     text: response.result,
                                     width: '500px'
@@ -7769,17 +7996,24 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-                    if (!(date_regex.test(MilestoneDate))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    var label = 'Date';
+                    var validation = validateDate(MilestoneDate, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(MilestoneDate))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                     
                 }
 
@@ -7809,7 +8043,7 @@ WBSTree = (function ($) {
                         $("#ProjectModal").css({ "opacity": "1" });
                         return;
                     }
-
+                    $("#update_project_element_milestone_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 2,
                         "MilestoneID": updatedMilestone.MilestoneID,
@@ -7826,11 +8060,15 @@ WBSTree = (function ($) {
                     //API to Insert/Update
                     wbsTree.getUpdateMilestone({ ProjectID: 1 }).save(listToSave, function (response) {
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_project_element_milestone_modal").attr("disabled", false);
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            if (response.result == '' || response.result == null || response.result == undefined)
+                            if (response.result == '' || response.result == null || response.result == undefined) {
+                                $("#update_project_element_milestone_modal").attr("disabled", false);
                                 dhtmlx.alert('Something went wrong. Please try again..');
+                            }
                             else {
+                                $("#update_project_element_milestone_modal").attr("disabled", false);
                                 dhtmlx.alert({
                                     text: response.result,
                                     width: '500px'
@@ -7853,7 +8091,7 @@ WBSTree = (function ($) {
                     newMilestone.MilestoneName = modal.find('.modal-body #project_element_milestone_name_modal').val();
                     newMilestone.MilestoneDescription = modal.find('.modal-body #project_element_milestone_description_modal').val();
                     newMilestone.MilestoneDate = modal.find('.modal-body #project_element_milestone_date_modal').val();
-
+                    $("#update_project_element_milestone_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 1,
                         "MilestoneName": newMilestone.MilestoneName,
@@ -7891,13 +8129,17 @@ WBSTree = (function ($) {
                             console.log(response);
                             var newMilestoneID = response.result.split(',')[1].trim();
                             if (response.result.split(',')[0].trim() === "Success") {
+                                $("#update_project_element_milestone_modal").attr("disabled", false);
                                 $('#ProjectElementMilestoneModal').modal('hide');
                                 $("#ProjectModal").css({ "opacity": "1" });
 
                             } else {
-                                if (response.result == '' || response.result == null || response.result == undefined)
+                                if (response.result == '' || response.result == null || response.result == undefined) {
+                                    $("#update_project_element_milestone_modal").attr("disabled", false);
                                     dhtmlx.alert('Something went wrong. Please try again..');
+                                }
                                 else
+                                    $("#update_project_element_milestone_modal").attr("disabled", false);
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 $('#ProjectElementMilestoneModal').modal('hide');
                                 $("#ProjectModal").css({ "opacity": "1" });
@@ -8170,25 +8412,27 @@ WBSTree = (function ($) {
             });
             
             //Manasi
-            $('#cancel_project_element_milestone_modal').click(function () {
-                var rowId = g_selectedProjectElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProjectElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProjectElementMilestone = null; 	//Manasi
-            });
+            //Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 10/06/2022
+            //$('#cancel_project_element_milestone_modal').click(function () {
+            //    var rowId = g_selectedProjectElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProjectElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProjectElementMilestone = null; 	//Manasi
+            //});
 
-            $('#cancel_project_element_milestone_modal_x').click(function () {
-                var rowId = g_selectedProjectElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProjectElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProjectElementMilestone = null; 	//Manasi
-            });
+            //$('#cancel_project_element_milestone_modal_x').click(function () {
+            //    var rowId = g_selectedProjectElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProjectElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProjectElementMilestone = null; 	//Manasi
+            //});
+
             //===================================================================================== PROJECT ELEMENT MILESTONE END ===================================================================
 
 
@@ -8216,17 +8460,25 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (MilestoneDate) {
-                    if (!(date_regex.test(MilestoneDate))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    //Aditya 10062022
+                    var label = 'Date';
+                    var validation = validateDate(MilestoneDate, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(MilestoneDate))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(MilestoneDate, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                 }
 
                 console.log(g_newProgramElementMilestone);
@@ -8255,7 +8507,7 @@ WBSTree = (function ($) {
                         $("#ProgramElementModal").css({ "opacity": "1" });
                         return;
                     }
-
+                    $("#update_program_element_milestone_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 2,
                         "MilestoneID": updatedMilestone.MilestoneID,
@@ -8272,11 +8524,15 @@ WBSTree = (function ($) {
                     //API to Insert/Update
                     wbsTree.getUpdateMilestone({ ProjectID: 1 }).save(listToSave, function (response) {
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_program_element_milestone_modal").attr("disabled", false);
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            if (response.result == '' || response.result == null || response.result == undefined)
+                            if (response.result == '' || response.result == null || response.result == undefined) {
+                                $("#update_program_element_milestone_modal").attr("disabled", false);
                                 dhtmlx.alert('Something went wrong. Please try again..');
+                            }
                             else {
+                                $("#update_program_element_milestone_modal").attr("disabled", false);
                                 dhtmlx.alert({
                                     text: response.result,
                                     width: '500px'
@@ -8300,7 +8556,7 @@ WBSTree = (function ($) {
                     newMilestone.MilestoneName = modal.find('.modal-body #program_element_milestone_name_modal').val();
                     newMilestone.MilestoneDescription = modal.find('.modal-body #program_element_milestone_description_modal').val();
                     newMilestone.MilestoneDate = modal.find('.modal-body #program_element_milestone_date_modal').val();
-
+                    $("#update_program_element_milestone_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 1,
                         "MilestoneName": newMilestone.MilestoneName,
@@ -8337,13 +8593,17 @@ WBSTree = (function ($) {
                             console.log(response);
                             var newMilestoneID = response.result.split(',')[1].trim();
                             if (response.result.split(',')[0].trim() === "Success") {
+                                $("#update_program_element_milestone_modal").attr("disabled", false);
                                 $('#ProgramElementMilestoneModal').modal('hide');
                                 $("#ProgramElementModal").css({ "opacity": "1" });
 
                             } else {
-                                if (response.result == '' || response.result == null || response.result == undefined)
+                                if (response.result == '' || response.result == null || response.result == undefined) {
+                                    $("#update_program_element_milestone_modal").attr("disabled", false);
                                     dhtmlx.alert('Something went wrong. Please try again..');
+                                }
                                 else
+                                    $("#update_program_element_milestone_modal").attr("disabled", false);
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 $('#ProgramElementMilestoneModal').modal('hide');
                                 $("#ProgramElementModal").css({ "opacity": "1" });
@@ -8351,7 +8611,7 @@ WBSTree = (function ($) {
                             $('#ProgramElementMilestoneModal').modal('hide');
                             $("#ProgramElementModal").css({ "opacity": "1" });
 
-                            debugger;
+                            //debugger;
                             console.log(_selectedNode);
                             populateProgramElementMilestoneTable(_selectedNode.ProgramElementID); //wbsTree.getSelectedProgramElementID()
 
@@ -8662,25 +8922,27 @@ WBSTree = (function ($) {
             }
 
             //Manasi
-            $('#cancel_program_element_milestone_modal').click(function () {
-                var rowId = g_selectedProgramElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementMilestone = null; 	//Manasi
-            });
+            // Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 08/06/2022
+            //$('#cancel_program_element_milestone_modal').click(function () {
+            //    var rowId = g_selectedProgramElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementMilestone = null; 	//Manasi
+            //});
 
-            $('#cancel_program_element_milestone_modal_x').click(function () {
-                var rowId = g_selectedProgramElementMilestone.MilestoneID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementMilestone.MilestoneName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementMilestone = null; 	//Manasi
-            });
+            //$('#cancel_program_element_milestone_modal_x').click(function () {
+            //    var rowId = g_selectedProgramElementMilestone.MilestoneID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementMilestone.MilestoneName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementMilestone = null; 	//Manasi
+            //});
+
             //===================================================================================== PROGRAM ELEMENT MILESTONE END ===================================================================
 
 
@@ -8746,17 +9008,25 @@ WBSTree = (function ($) {
                 }
                 //Vaishnavi 08-02-2022
                 if (OrderDte) {
-                    if (!(date_regex.test(OrderDte))) {
-                        dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                        return;
+
+                    //Aditya 10062022
+                    var label = 'Date';
+                    var validation = validateDate(OrderDte, label);
+                    if (validation == false) {
+                        return false;
                     }
-                    else {
-                        var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
-                        if (!testDate) {
-                            dhtmlx.alert('Invalid Date.');
-                            return;
-                        }
-                    }
+
+                    //if (!(date_regex.test(OrderDte))) {
+                    //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                    //    return;
+                    //}
+                    //else {
+                    //    var testDate = moment(OrderDte, 'M/D/YYYY', true).isValid();
+                    //    if (!testDate) {
+                    //        dhtmlx.alert('Invalid Date.');
+                    //        return;
+                    //    }
+                    //}
                 }
 
                 if (Reason == "" || Reason.length == 0) {
@@ -8903,7 +9173,7 @@ WBSTree = (function ($) {
                     debugger;
                     var pendDate = $('#program_element_PEnd_Date').val();
                     var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
-
+                    $("#update_program_element_change_order_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 2,
                         "ChangeOrderID": updatedChangeOrder.ChangeOrderID,
@@ -8933,6 +9203,7 @@ WBSTree = (function ($) {
                         //alert(response.result.split(',')[0]); //Manasi
                         //if (response.result.split(',')[0].trim() === "Success") {successfully
                         if (response.result.indexOf('successfully') >= 0) {  //Manasi
+                            $("#update_program_element_change_order_modal").attr("disabled", false);
                             //Added by Amruta for populating the end date post exit modal -1
                             selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
                             wbsTree.updateTreeNodes(selectedNode);
@@ -8985,9 +9256,12 @@ WBSTree = (function ($) {
 
                             //$('#ProgramModal').modal('hide');
                         } else {
-                            if (response.result == '' || response.result == null || response.result == undefined)
+                            if (response.result == '' || response.result == null || response.result == undefined) {
+                                $("#update_program_element_change_order_modal").attr("disabled", false);
                                 dhtmlx.alert('Something went wrong. Please try again..');
+                            }
                             else {
+                                $("#update_program_element_change_order_modal").attr("disabled", false);
                                 dhtmlx.alert({
                                     text: response.result,
                                     width: '500px'
@@ -9040,7 +9314,7 @@ WBSTree = (function ($) {
 
                     var pendDate = $('#program_element_PEnd_Date').val();
                     var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
-
+                    $("#update_program_element_change_order_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 1,
                         "ChangeOrderID": 0,
@@ -9103,6 +9377,7 @@ WBSTree = (function ($) {
                             console.log(response);
                             //var newChangeOrderID = response.result.split(',')[1].trim();
                             if (response.result.split(',')[0].trim() === "Success") {
+                                $("#update_program_element_change_order_modal").attr("disabled", false);
                                 //Added by Amruta for populating the end date post exit modal -2
                                 selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
                                 wbsTree.updateTreeNodes(selectedNode);
@@ -9173,11 +9448,13 @@ WBSTree = (function ($) {
                                 document.getElementById("uploadBtnProgramelmtCOspinRow").style.display = "none";   //Manasi 20-08-2020
                                 debugger;
                                 if (response.result == '' || response.result == null || response.result == undefined) {
+                                    $("#update_program_element_change_order_modal").attr("disabled", false);
                                     $('#program_element_PEnd_Date').val(moment(orgendt).format('MM/DD/YYYY'));
                                     dhtmlx.alert('Something went wrong. Please try again..');
                                 }
                                     
                                 else {
+                                    $("#update_program_element_change_order_modal").attr("disabled", false);
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 }
 
@@ -9839,16 +10116,16 @@ WBSTree = (function ($) {
                 $('#delete_program_element_change_order_modal').show();
                 $("#ChangeOrderDate").datepicker();
                 $("#program_element_change_order_duration_date").datepicker(); //  Jignesh-ChangeOrderPopUpChanges
-                $("input:radio[name='rbChangeOrder']").each(function (i) {
-                    this.checked = false;
-                });
+                //$("input:radio[name='rbChangeOrder']").each(function (i) {
+                //    this.checked = false;
+                //});
 
-                $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
-                $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
+                //$("#downloadBtnChangeOrder").attr('disabled', 'disabled');
+                //$("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
 
-                $('#edit_program_element_change_order').attr('disabled', 'disabled');
-                $('#delete_program_element_change_order').attr('disabled', 'disabled');
+                //$('#edit_program_element_change_order').attr('disabled', 'disabled');
+                //$('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
 
             $('#delete_program_element_change_order').unbind().on('click', function (event) {
@@ -9955,35 +10232,36 @@ WBSTree = (function ($) {
                     this.checked = false;
                 });
 
-                $("#downloadBtnChangeOrder").attr('disabled', 'disabled');
-                $("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
+                //$("#downloadBtnChangeOrder").attr('disabled', 'disabled');
+                //$("#ViewUploadFileChangeOrder").attr('disabled', 'disabled');
                 // $("#edit_program_element_change_order").attr('disabled', 'disabled');
 
-                $('#edit_program_element_change_order').attr('disabled', 'disabled');
-                $('#delete_program_element_change_order').attr('disabled', 'disabled');
+                //$('#edit_program_element_change_order').attr('disabled', 'disabled');
+                //$('#delete_program_element_change_order').attr('disabled', 'disabled');
             });
             
 
             //Manasi
-            $('#cancel_program_element_change_order_modal').click(function () {
-                var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementChangeOrder = null; 	//Manasi
-            });
+            // Narayan - Commenting Cancel functionality for record should be selected when exiting the popup - 08/06/2022
+            //$('#cancel_program_element_change_order_modal').click(function () {
+            //    var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //});
 
-            $('#cancel_program_element_change_order_modal_x').click(function () {
-                var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
-                if (rowId === undefined || rowId === null) {
-                    rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
-                }
-                var tr = document.getElementById(rowId)
-                $(tr).removeClass('active');
-                g_selectedProgramElementChangeOrder = null; 	//Manasi
-            });
+            //$('#cancel_program_element_change_order_modal_x').click(function () {
+            //    var rowId = g_selectedProgramElementChangeOrder.ChangeOrderID;
+            //    if (rowId === undefined || rowId === null) {
+            //        rowId = g_selectedProgramElementChangeOrder.ChangeOrderName;
+            //    }
+            //    var tr = document.getElementById(rowId)
+            //    $(tr).removeClass('active');
+            //    g_selectedProgramElementChangeOrder = null; 	//Manasi
+            //});
             //Added by Aditya ogDate-------------------------//
             //$('#program_original_end_date').on('change', function () {
             //    isFieldValueChanged = true;
@@ -10037,7 +10315,7 @@ WBSTree = (function ($) {
 
                 
                 $('#additionalInfoPopupSave').unbind().on('click', function (event) {
-
+                    $('#additionalInfoPopupSave').prop('disabled', true); //Aditya
                     //Narayan save notice
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
@@ -10052,6 +10330,7 @@ WBSTree = (function ($) {
                     var PPBondNotes='';
                     if (IsCostPartOfContract == 'No') {
                         if (!$('#txtPPNotes').val()) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('P&P Notes is a required field.');
                             return;
                         }
@@ -10090,6 +10369,7 @@ WBSTree = (function ($) {
                         SelectedCertifiedPayrollList = $('#certified_payroll_select').val();
                    
                         if (!SelectedCertifiedPayrollList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10100,6 +10380,7 @@ WBSTree = (function ($) {
                     if (preivingwagechecked == "Yes") {
                          SelectedPreivingwageList = $('#additionalInfoPopup').find('#prevailing_wages_select').val();
                         if (!SelectedPreivingwageList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Preivailing wagesList Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10110,12 +10391,14 @@ WBSTree = (function ($) {
                     if (wrapchecked == "Yes") {
                          SelectedwrapList = $('#additionalInfoPopup').find('#wrap_select').val();
                         if (!SelectedwrapList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
                         ReportingTo = $('#additionalInfoPopup').find('#reporting_to').val();
 
                         if (!ReportingTo) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10240,6 +10523,7 @@ WBSTree = (function ($) {
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
                         if (d.data.result == "Success") {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             isFieldValueChanged = false;
                             $("#additionalInfoPopup").modal('toggle');
                             $("#ProgramModal").css({ "opacity": "1" });
@@ -10252,6 +10536,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveWarranty, #btnUpdateWarranty').unbind().on('click', function (event) {
+                    $('#btnSaveWarranty').prop('disabled', true); //Aditya
+                    $('#btnUpdateWarranty').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractWarrantyOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10263,47 +10549,79 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (startDate == "" || startDate.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Start Date.');
                         return;
                     }
                     if (startDate) {
-                        if (!(date_regex.test(startDate))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //Aditya 10062022
+                        var label = 'Start Date';
+                        var validation = validateDate(startDate, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Start Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(startDate))) {
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(startDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Start Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     if (endDate == "" || endDate.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter End Date.');
                         return;
                     }
                     if (endDate) {
-                        if (!(date_regex.test(endDate))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //Aditya 10062022
+                        var label = 'End Date';
+                        var validation = validateDate(endDate, label);
+                        if (validation == false) {
+                            return false;
+                        }
+                        else if (moment(endDate, 'MM/DD/YYYY') < moment(startDate, 'MM/DD/YYYY')) {
+                            $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                            $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                            dhtmlx.alert('End Date can not set before Start Date'); // Narayan - End date validation - 08/06/2022
                             return;
                         }
-                        else {
-                            var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid End Date.');
-                                return;
-                            }
-                        }
+                        
+
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(endDate, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid End Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
 
                     if (desc == "" || desc.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Description.');
                         return;
                     }
@@ -10337,6 +10655,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractWarrantyOperation();
                             if (wbsTree.getContractWarrantyOperation() == 1) {
@@ -10379,6 +10699,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice, #btnUpdateNotice').unbind().on('click', function (event) {
+                    $('#btnSaveNotice').prop('disabled', true); //Aditya
+                    $('#btnUpdateNotice').prop('disabled', true); //Aditya
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10390,24 +10712,37 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (date == "" || date.length == 0) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Date.');
                         return;
                     }
 
                     if (date) {
-                        if (!(date_regex.test(date))) {
-                            dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
-                            return;
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
+                        //Aditya 10062022
+                        var label = 'Date';
+                        var validation = validateDate(date, label);
+                        if (validation == false) {
+                            return false;
                         }
-                        else {
-                            var testDate = moment(date, 'M/D/YYYY', true).isValid();
-                            if (!testDate) {
-                                dhtmlx.alert('Invalid Date.');
-                                return;
-                            }
-                        }
+
+                        //if (!(date_regex.test(date))) {
+                        //    dhtmlx.alert('Date Should be in MM/DD/YYYY Format.');
+                        //    return;
+                        //}
+                        //else {
+                        //    var testDate = moment(date, 'M/D/YYYY', true).isValid();
+                        //    if (!testDate) {
+                        //        dhtmlx.alert('Invalid Date.');
+                        //        return;
+                        //    }
+                        //}
                     }
                     if (reason == "" || reason.length == 0) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Reason.');
                         return;
                     }
@@ -10438,6 +10773,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getPrelimneryNoticeOperation();
                             if (wbsTree.getPrelimneryNoticeOperation() == 1) {
@@ -10485,6 +10822,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveInsurance, #btnUpdateInsurance').unbind().on('click', function (event) {
+                    $('#btnSaveInsurance').prop('disabled', true); //Aditya
+                    $('#btnUpdateInsurance').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractInsuranceOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10494,11 +10833,15 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (limit == "" || limit.length == 0) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Limit.');
                         return;
                     }
@@ -10531,6 +10874,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractInsuranceOperation();
                             if (wbsTree.getContractInsuranceOperation() == 1) {
@@ -12255,6 +12600,7 @@ WBSTree = (function ($) {
             //--------------------------------Manasi------------------------------------------------
             $('#ViewUploadFileProgram').unbind().on('click', function (event) {  //Manasi
                 // $('#PdfViewer').modal({ show: true, backdrop: 'static' });
+                $('#ViewUploadFileProgram').attr('disabled', 'disabled'); //Aditya
                 $("#Aadhariframe").attr('src', '');
                 var RbUpload = document.querySelector('input[name = "rbCategories"]:checked').value;
 
@@ -12297,8 +12643,10 @@ WBSTree = (function ($) {
                             const url = URL.createObjectURL(blob);
                             $('#Aadhariframe').attr('src', url);
                             $('#PdfViewer').modal({ show: true, backdrop: 'static' });
+                            $('#ViewUploadFileProgram').attr('disabled', false); //Aditya
                         }
                         else {
+                            $('#ViewUploadFileProgram').attr('disabled', false); //Aditya
                             // It's wrong, show something else!
                             dhtmlx.alert("File type does not support the view. To view this file type, please download the file first.");
                         }
@@ -12797,6 +13145,7 @@ WBSTree = (function ($) {
 
             //-----------------------Manasi-------------------------------------------------------
             $('#ViewUploadFileProgramPrg').unbind().on('click', function (event) {   //Manasi
+                $("#ViewUploadFileProgramPrg").attr("disabled", true);
                 //  $('#PdfViewerPrg').modal({ show: true, backdrop: 'static' });
                 $("#AadhariframePrg").attr('src', '');
                 var RbUpload = document.querySelector('input[name = "rbCategoriesPrg"]:checked').value;
@@ -12840,8 +13189,10 @@ WBSTree = (function ($) {
                             const url = URL.createObjectURL(blob);
                             $('#AadhariframePrg').attr('src', url);
                             $('#PdfViewerPrg').modal({ show: true, backdrop: 'static' });
+                            $("#ViewUploadFileProgramPrg").attr("disabled", false);
                         }
                         else {
+                            $("#ViewUploadFileProgramPrg").attr("disabled", false);
                             // It's wrong, show something else!
                             dhtmlx.alert("File type does not support the view. To view this file type, please download the file first.");
                         }
@@ -12854,6 +13205,7 @@ WBSTree = (function ($) {
             });
             //====================================== Jignesh-TDM-06-01-2020 =======================================
             $('#ViewUploadFileTrend').unbind().on('click', function (event) {   //Manasi
+                $("#ViewUploadFileTrend").attr("disabled", true);
                 //  $('#PdfViewerPrg').modal({ show: true, backdrop: 'static' });
                 $("#AadhariframePrg").attr('src', '');
                 var RbUpload = document.querySelector('input[name = "rbCategoriesTrend"]:checked').value;
@@ -12885,8 +13237,10 @@ WBSTree = (function ($) {
                             const url = URL.createObjectURL(blob);
                             $('#AadhariframeTrend').attr('src', url);
                             $('#PdfViewerTrend').modal({ show: true, backdrop: 'static' });
+                            $("#ViewUploadFileTrend").attr("disabled", false);
                         }
                         else {
+                            $("#ViewUploadFileTrend").attr("disabled", false);
                             // It's wrong, show something else!
                             dhtmlx.alert("File type does not support the view. To view this file type, please download the file first.");
                         }
@@ -13011,6 +13365,7 @@ WBSTree = (function ($) {
             });
 
             $('#ViewUploadFileChangeOrder').unbind().on('click', function (event) {
+                $("#ViewUploadFileChangeOrder").attr("disabled", true);
                 // $('#PdfViewerChangeorder').modal({ show: true, backdrop: 'static' });
                 // $("#iFrameChangeorder").attr('src', '');
                 //// var RbUpload = document.querySelector('input[name ="rbChangeOrder"]:checked').value;
@@ -13080,8 +13435,10 @@ WBSTree = (function ($) {
                                 const url = URL.createObjectURL(blob);
                                 $('#AadhariframePrg').attr('src', url);
                                 $('#PdfViewerPrg').modal({ show: true, backdrop: 'static' });
+                                $("#ViewUploadFileChangeOrder").attr("disabled", false);
                             }
                             else {
+                                $("#ViewUploadFileChangeOrder").attr("disabled", false);
                                 // It's wrong, show something else!
                                 dhtmlx.alert("File type does not support the view. To view this file type, please download the file first.");
                             }
@@ -14889,6 +15246,7 @@ WBSTree = (function ($) {
                 $('#ViewUploadFileInViewAllContracts').attr('disabled', 'disabled');
                 $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                 //===============================================================================
+                $('#ViewAllUploadFileContracts').attr('disabled', true); //Aditya
                 $('#searchCont').val(''); // Jignesh-24-02-2021
                 if (modal_mode == 'Create') {
                     _selectedProgramID = 0;
@@ -14933,6 +15291,7 @@ WBSTree = (function ($) {
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
                         }
+                        $('#ViewAllUploadFileContracts').attr('disabled', false); //Aditya
                         $('input[name=rbCategories]').on('click', function (event) {
                             if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
                                 $('#ViewUploadFileInViewAllContracts').removeAttr('disabled');
@@ -16433,7 +16792,7 @@ WBSTree = (function ($) {
                     var thisData = $(this);
                     wbsTree.setSelectedDocTypeDropDown(thisData.context.id);
                     //selectedDocTypeDropDown = thisData.context.id;
-                    $('#addNewDocumentTypeModal').modal({ show: true, backdrop: 'static' });
+                    $('#addNewDocumentTypeModal').modal({ show: true, backdrop: 'static' }).css({'z-index': '9999'});
                     $('#txtDocType').val('');
                     $('#txtDocDescription').val('');
                 }
@@ -18818,7 +19177,12 @@ WBSTree = (function ($) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
-                    $("#contextMenuViewGantt").parent().show();
+                    if (node.children != undefined) {
+                        $("#contextMenuViewGantt").parent().show();
+                    }
+                    else {
+                        $("#contextMenuViewGantt").parent().hide();
+                    }
                      //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
