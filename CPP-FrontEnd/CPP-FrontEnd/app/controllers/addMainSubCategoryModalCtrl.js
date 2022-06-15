@@ -77,10 +77,16 @@
 
             //When clicked on save button
             $scope.save = function () {
+                //Aditya
+                $('#saveMainSubCategory').prop('disabled', true);
+                $('#closeMainSubCategory').prop('disabled', true);
                 console.log($scope.category);
 
                 if ($scope.category.CategoryDescription == undefined || $scope.category.CategoryDescription == null || $scope.category.CategoryDescription == '') {
                     //dhtmlx.alert('Please enter main category');
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     dhtmlx.alert('Please enter main category'); /*Tanmay - 01/12/2021*/
                     return;
                 }
@@ -88,12 +94,18 @@
                 if (!Number.isInteger(parseFloat($scope.category.CategoryID)) || parseFloat($scope.category.CategoryID) < 0
                     || $scope.category.CategoryID.length < 4 || $scope.category.CategoryID.indexOf('.') >= 0) {
                     //dhtmlx.alert('Category ID must be integer values greater than or equal to 0. Length greater than or equal to 4.');
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     dhtmlx.alert('Category ID must be integer values greater than or equal to 0. Length greater than or equal to 4.'); /*Tanmay - 01/12/2021*/
                     return;
                 }
 
                 if ($scope.category.SubCategoryDescription == undefined || $scope.category.SubCategoryDescription == null || $scope.category.SubCategoryDescription == '') {
                     //dhtmlx.alert('Please enter a sub category');
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     dhtmlx.alert('Please enter a sub category'); /*Tanmay - 01/12/2021*/
                     return;
                 }
@@ -101,12 +113,18 @@
                 if (!Number.isInteger(parseFloat($scope.category.SubCategoryID)) || parseFloat($scope.category.SubCategoryID) < 0
                     || $scope.category.SubCategoryID.length < 4 || $scope.category.SubCategoryID.indexOf('.') >= 0) {
                     //dhtmlx.alert('SubCategory ID must be integer values greater than or equal to 0. Length greater than or equal to 4.');
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     dhtmlx.alert('SubCategory ID must be integer values greater than or equal to 0. Length greater than or equal to 4.'); /*Tanmay - 01/12/2021*/
                     return;
                 }
 
                 if ($scope.category.CategoryDescription.includes('\'') || $scope.category.CategoryDescription.includes('\"') || $scope.category.CategoryDescription.includes('\\')
                     || $scope.category.SubCategoryDescription.includes('\'') || $scope.category.SubCategoryDescription.includes('\"') || $scope.category.SubCategoryDescription.includes('\\')) {
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     dhtmlx.alert('Special characters of single quote, double quote, and backslash are not allowed');
                     return;
                 }
@@ -138,16 +156,25 @@
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result.indexOf('successfully') >= 0) {
+                        //Aditya
+                        $('#saveMainSubCategory').prop('disabled', false);
+                        $('#closeMainSubCategory').prop('disabled', false);
                         param.status = 'Success';
                         param.message = response.data.result;
                         param.subCategoryData = subCategory; // Jignesh 06-10-2020
                         $scope.goBack(param);
                     } else {
+                        //Aditya
+                        $('#saveMainSubCategory').prop('disabled', false);
+                        $('#closeMainSubCategory').prop('disabled', false);
                         param.status = 'Failed';
                         dhtmlx.alert(response.data.result);
                         $('div.gantt_modal_box.dhtmlx_modal_box.gantt-confirm.dhtmlx-confirm').css('z-index', '100000001');
                     }
                 }, function error(response) {
+                    //Aditya
+                    $('#saveMainSubCategory').prop('disabled', false);
+                    $('#closeMainSubCategory').prop('disabled', false);
                     param.status = 'Failed';
                     dhtmlx.alert('Failed to save. Please contact your Administrator.');
                     $('div.gantt_modal_box.dhtmlx_modal_box.gantt-confirm.dhtmlx-confirm').css('z-index', '100000001');

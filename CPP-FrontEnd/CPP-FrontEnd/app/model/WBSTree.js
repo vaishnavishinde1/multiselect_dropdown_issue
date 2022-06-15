@@ -4383,6 +4383,7 @@ WBSTree = (function ($) {
                     //}
 
                     //API to Insert/Update
+                    $("#update_program").attr("disabled", true); //Aditya
                     wbsTree.getProgram().persist().save({
                         "Operation": 2,
                         "ProgramID": selectedNode.ProgramID,
@@ -4460,6 +4461,7 @@ WBSTree = (function ($) {
                     }, function (response) {
                         isFieldValueChanged = false; // Jignesh-31-03-2021
                         if (response.result.split(',')[0].trim() === "Success") {
+                            $("#update_program").attr("disabled", false); //Aditya
                             g_contract_draft_list = [];
                             angular.forEach(fundToBeAdded, function (item) {
                                 console.log(item);
@@ -4496,11 +4498,25 @@ WBSTree = (function ($) {
                             selectedNode.ProgramManager = temp_node.ProgramManager;
                             selectedNode.ProgramSponsor = temp_node.ProgramSponsor;
                             if (response.result == '' || response.result == null || response.result == undefined)
-                                dhtmlx.alert('Something went wrong. Please try again..');
+                                //dhtmlx.alert('Something went wrong. Please try again..');
+                                 //Aditya
+                            dhtmlx.alert({
+                                text: 'Something went wrong. Please try again..',
+                                width: '500px',
+                                callback: function (result) {
+                                    if (result) $("#update_program").attr("disabled", false);
+                                    else $("#update_program").attr("disabled", false);
+                                }
+                            });
                             else {
+                                 //Aditya
                                 dhtmlx.alert({
                                     text: response.result,
-                                    width: '500px'
+                                    width: '500px',
+                                    callback: function (result) {
+                                        if (result) $("#update_program").attr("disabled", false);
+                                        else $("#update_program").attr("disabled", false);
+                                    }
                                 });
                             }
                         }
@@ -4809,7 +4825,7 @@ WBSTree = (function ($) {
                     //    return;
                     //}
 
-                     
+                    $("#update_program").attr("disabled", true); //Aditya
                     selectedNode = newNode;
                     var obj = {
                         "Operation": 1,
@@ -4886,7 +4902,7 @@ WBSTree = (function ($) {
                         function (response) {
                             isFieldValueChanged = false; // Jignesh-31-03-2021
                             if (response.result.split(',')[0].trim() === "Success") {
-
+                                $("#update_program").attr("disabled", false); //Aditya
                                 console.log("-------ADDING A PROGRAM-------");
                                 resultArray = response.result.split(',');
                                 //console.log("ADDED");
@@ -4985,6 +5001,7 @@ WBSTree = (function ($) {
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                             } else {
+                                $("#update_program").attr("disabled", false); //Aditya
                                 selectedNode.name = temp_node.name;
                                 selectedNode.ProgramNote = temp_node.ProgramNote;
                                 selectedNode.ProgramManager = temp_node.ProgramManager;
@@ -10260,7 +10277,7 @@ WBSTree = (function ($) {
 
                 
                 $('#additionalInfoPopupSave').unbind().on('click', function (event) {
-
+                    $('#additionalInfoPopupSave').prop('disabled', true); //Aditya
                     //Narayan save notice
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
@@ -10275,6 +10292,7 @@ WBSTree = (function ($) {
                     var PPBondNotes='';
                     if (IsCostPartOfContract == 'No') {
                         if (!$('#txtPPNotes').val()) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('P&P Notes is a required field.');
                             return;
                         }
@@ -10313,6 +10331,7 @@ WBSTree = (function ($) {
                         SelectedCertifiedPayrollList = $('#certified_payroll_select').val();
                    
                         if (!SelectedCertifiedPayrollList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Certified PayrollList Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10323,6 +10342,7 @@ WBSTree = (function ($) {
                     if (preivingwagechecked == "Yes") {
                          SelectedPreivingwageList = $('#additionalInfoPopup').find('#prevailing_wages_select').val();
                         if (!SelectedPreivingwageList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Preivailing wagesList Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10333,12 +10353,14 @@ WBSTree = (function ($) {
                     if (wrapchecked == "Yes") {
                          SelectedwrapList = $('#additionalInfoPopup').find('#wrap_select').val();
                         if (!SelectedwrapList) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Wrap List Cannot be Empty.'); // Jignesh-02-03-2021
                             return;
                         }
                         ReportingTo = $('#additionalInfoPopup').find('#reporting_to').val();
 
                         if (!ReportingTo) {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             dhtmlx.alert('Reporting to is a required field.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -10463,6 +10485,7 @@ WBSTree = (function ($) {
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
                         if (d.data.result == "Success") {
+                            $('#additionalInfoPopupSave').prop('disabled', false); //Aditya
                             isFieldValueChanged = false;
                             $("#additionalInfoPopup").modal('toggle');
                             $("#ProgramModal").css({ "opacity": "1" });
@@ -10475,6 +10498,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveWarranty, #btnUpdateWarranty').unbind().on('click', function (event) {
+                    $('#btnSaveWarranty').prop('disabled', true); //Aditya
+                    $('#btnUpdateWarranty').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractWarrantyOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10486,16 +10511,21 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (startDate == "" || startDate.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Start Date.');
                         return;
                     }
                     if (startDate) {
-
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'Start Date';
                         var validation = validateDate(startDate, label);
@@ -10517,10 +10547,14 @@ WBSTree = (function ($) {
                     }
 
                     if (endDate == "" || endDate.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter End Date.');
                         return;
                     }
                     if (endDate) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'End Date';
                         var validation = validateDate(endDate, label);
@@ -10528,6 +10562,8 @@ WBSTree = (function ($) {
                             return false;
                         }
                         else if (endDate < startDate) {
+                            $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                            $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                             dhtmlx.alert('End Date can not set before Start Date'); // Narayan - End date validation - 08/06/2022
                             return;
                         }
@@ -10546,6 +10582,8 @@ WBSTree = (function ($) {
                     }
 
                     if (desc == "" || desc.length == 0) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Description.');
                         return;
                     }
@@ -10579,6 +10617,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
+                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractWarrantyOperation();
                             if (wbsTree.getContractWarrantyOperation() == 1) {
@@ -10621,6 +10661,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice, #btnUpdateNotice').unbind().on('click', function (event) {
+                    $('#btnSaveNotice').prop('disabled', true); //Aditya
+                    $('#btnUpdateNotice').prop('disabled', true); //Aditya
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10632,12 +10674,15 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (date == "" || date.length == 0) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Date.');
                         return;
                     }
 
                     if (date) {
-
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'Date';
                         var validation = validateDate(date, label);
@@ -10658,6 +10703,8 @@ WBSTree = (function ($) {
                         //}
                     }
                     if (reason == "" || reason.length == 0) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Reason.');
                         return;
                     }
@@ -10688,6 +10735,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveNotice').prop('disabled', false); //Aditya
+                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getPrelimneryNoticeOperation();
                             if (wbsTree.getPrelimneryNoticeOperation() == 1) {
@@ -10735,6 +10784,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveInsurance, #btnUpdateInsurance').unbind().on('click', function (event) {
+                    $('#btnSaveInsurance').prop('disabled', true); //Aditya
+                    $('#btnUpdateInsurance').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractInsuranceOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10744,11 +10795,15 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (limit == "" || limit.length == 0) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Limit.');
                         return;
                     }
@@ -10781,6 +10836,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
+                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
+                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractInsuranceOperation();
                             if (wbsTree.getContractInsuranceOperation() == 1) {
@@ -12505,6 +12562,7 @@ WBSTree = (function ($) {
             //--------------------------------Manasi------------------------------------------------
             $('#ViewUploadFileProgram').unbind().on('click', function (event) {  //Manasi
                 // $('#PdfViewer').modal({ show: true, backdrop: 'static' });
+                $('#ViewUploadFileProgram').attr('disabled', 'disabled'); //Aditya
                 $("#Aadhariframe").attr('src', '');
                 var RbUpload = document.querySelector('input[name = "rbCategories"]:checked').value;
 
@@ -12547,8 +12605,10 @@ WBSTree = (function ($) {
                             const url = URL.createObjectURL(blob);
                             $('#Aadhariframe').attr('src', url);
                             $('#PdfViewer').modal({ show: true, backdrop: 'static' });
+                            $('#ViewUploadFileProgram').attr('disabled', false); //Aditya
                         }
                         else {
+                            $('#ViewUploadFileProgram').attr('disabled', false); //Aditya
                             // It's wrong, show something else!
                             dhtmlx.alert("File type does not support the view. To view this file type, please download the file first.");
                         }
@@ -15139,6 +15199,7 @@ WBSTree = (function ($) {
                 $('#ViewUploadFileInViewAllContracts').attr('disabled', 'disabled');
                 $('#downloadBtnInViewAllContracts').attr('disabled', 'disabled');
                 //===============================================================================
+                $('#ViewAllUploadFileContracts').attr('disabled', true); //Aditya
                 $('#searchCont').val(''); // Jignesh-24-02-2021
                 if (modal_mode == 'Create') {
                     _selectedProgramID = 0;
@@ -15183,6 +15244,7 @@ WBSTree = (function ($) {
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
                         }
+                        $('#ViewAllUploadFileContracts').attr('disabled', false); //Aditya
                         $('input[name=rbCategories]').on('click', function (event) {
                             if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
                                 $('#ViewUploadFileInViewAllContracts').removeAttr('disabled');

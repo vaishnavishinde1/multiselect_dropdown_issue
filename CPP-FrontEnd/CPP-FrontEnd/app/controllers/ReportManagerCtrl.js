@@ -102,7 +102,8 @@
                 //    return;
                 //}
                 // Var TrendNumber = $scope.params.TrendNumber;
-
+                $('#ganttReportRun').prop('disabled', true); //Aditya
+                $('#ganttReportClose').prop('disabled', true); //Aditya
                 var reportType = $scope.reportTypeFilter;
                 if ((reportType == 'Budget vs. Actual Summary Report' || reportType == 'Labor Management Report' || reportType == 'Material Report'
                     || reportType == 'ODC Report' || reportType == 'Subcontractor Report') && $scope.params.TrendNumber != 1000) {
@@ -157,9 +158,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Budget Summary Report') {            //Budget Summary Report - MySQL
@@ -206,9 +210,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Labor Management Report') {            //FTE Report - MySQL
@@ -249,9 +256,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'ODC Report') {            //ODC Report - MySQL
@@ -292,9 +302,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Subcontractor Report') {            //Subcontractor Report - MySQL
@@ -342,9 +355,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Budget vs. Actual Summary Report') {            //Summary Report - MySQL
@@ -387,9 +403,12 @@
 
                         //Open pdf viewer modal
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Budget Planning Report') {            //Budget Planning Report - MySQL
@@ -432,9 +451,12 @@
 
                 		//Open pdf viewer modal
                 		openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                 	}, function error(response) {
-                		console.log(response);
+                        console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                 	});
                 }
                 else if ($scope.reportTypeFilter == 'Budget Summary Report SDA') {            //Budget Summary Report SDA - MySQL
@@ -475,9 +497,12 @@
 
                 		//Open pdf viewer modal
                 		openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                 	}, function error(response) {
-                		console.log(response);
+                        console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                 	});
                 }
                 else if ($scope.reportTypeFilter == 'Budget' ||           //Budget - Tableau
@@ -525,9 +550,12 @@
                         };
 
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
                 else if ($scope.reportTypeFilter == 'Budgeted vs Actual vs ETC Chart') {     //Budgeted vs Actual vs ETC Chart - Tableau
@@ -555,9 +583,12 @@
                         };
 
                         openPDFViewerModal(scope);
-
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     }, function error(response) {
                         console.log(response);
+                        $('#ganttReportRun').prop('disabled', false); //Aditya
+                        $('#ganttReportClose').prop('disabled', false); //Aditya
                     });
                 }
             }
@@ -565,7 +596,8 @@
             //Generate file name for download based on the report type
             function generateFileName(reportType) {
                 var fileName = reportType;
-
+                $('#ganttReportRun').prop('disabled', true); //Aditya
+                $('#ganttReportClose').prop('disabled', true); //Aditya
                 $scope.filedateformat = "DDMMYY_hhmm";  //Manasi 28-07-2020
                 $scope.filedateformat = moment().format($scope.filedateformat);   //Manasi 28-07-2020
                 fileName = fileName + '_' + $scope.filedateformat;  //Manasi 28-07-2020

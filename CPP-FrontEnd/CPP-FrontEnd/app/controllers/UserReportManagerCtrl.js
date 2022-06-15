@@ -97,7 +97,7 @@
 
             //When clicked on run button
             $scope.generateReport = function () {
-
+                $('#runUserReport').prop('disabled', true); //Aditya
                 console.log($scope.selectedOrganization, $scope.selectedClient);
 
                 var baseUrl = '';
@@ -113,6 +113,7 @@
                 else if ($scope.reportTypeFilter.filterName == 'Contract Report') {            //Contract Report From CPP Into Jonas - MySQL
 
                     if (!allFilters.organizationID) {
+                        $('#runUserReport').prop('disabled', false); //Aditya
                         dhtmlx.alert('Must select an organization for Contract Report');
                         return;
                     }
@@ -187,12 +188,14 @@
                         openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                     }
                     else {
+                        $('#runUserReport').prop('disabled', false); //Aditya
                         dhtmlx.alert('This report requires a project to be selected');
                         return;
                     }
                 }
                 else if ($scope.reportTypeFilter.filterName == 'Customer Report') {            //Customer Report - MySQL
                     if (!allFilters.organizationID) {
+                        $('#runUserReport').prop('disabled', false); //Aditya
                         dhtmlx.alert('Must select an organization for Customer Report');
                         return;
                     }
@@ -762,8 +765,9 @@
 
                     //Open pdf viewer modal
                     openPDFViewerModal(scope);
-
+                    $('#runUserReport').prop('disabled', false); //Aditya
                 }, function error(response) {
+                    $('#runUserReport').prop('disabled', false); //Aditya
                     console.log(response);
                 });
             }
@@ -788,6 +792,7 @@
 
             //Open the pdf viewer modal to view the content
             function openPDFViewerModal(scope) {
+                $('#runUserReport').prop('disabled', false); //Aditya
                 $rootScope.modalInstance = $uibModal.open({
                     backdrop: 'static',
                     keyboard: false,
