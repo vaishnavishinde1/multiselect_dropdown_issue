@@ -135,7 +135,7 @@
 
             //When clicked on run button
             $scope.generateReport = function () {
-
+                $('#adminRepRunBtn').attr('disabled', true);
                 console.log($scope.selectedOrganization, $scope.selectedProgramElement, $scope.selectedProject, $scope.selectedTrend);
 
                 var baseUrl = '';
@@ -202,12 +202,14 @@
                         openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                     }
                     else {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('This report requires a project to be selected');
                         return;
                     }
                 }
                 else if ($scope.reportTypeFilter.filterName == 'Customer Report') {            //Customer Report - MySQL
                     if (!allFilters.organizationID) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select an organization for Customer Report');
                         return;
                     }
@@ -307,11 +309,13 @@
                     baseUrl = serviceBasePath + 'Request/WorkBreakdownStructureAdminReport';
 
                     if (!allFilters.organizationID) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select an organization for Work Breakdown Structure Admin Report');
                         return;
                     }
 
                     if (!allFilters.version) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select a Version for Work Breakdown Structure Admin Report');
                         return;
                     }
@@ -353,14 +357,17 @@
                 else if ($scope.reportTypeFilter.filterName == 'Cost Type Report') {
                     var startDate = $('#_start_date').val();
                     if (!allFilters.organizationID) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select an organization for Cost Type Report');
                         return;
                     }
                     if (!allFilters.programElementID) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select project for Cost Type Report');
                         return;
                     }
                     if (!allFilters.projectID) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select project element for Cost Type Report');
                         return;
                     }
@@ -380,6 +387,7 @@
                 //Jignesh 31-12-2020
                 else if ($scope.reportTypeFilter.filterName == 'Trend Status Report') {
                     if (!$scope.selectedTrendStatus) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select trend status for Trend Status Report');
                         return;
                     }
@@ -423,11 +431,13 @@
 //Added by Amruta 
                 else if ($scope.reportTypeFilter.filterName == 'Resource Availability Report') {            //Resource Availability Report - MySQL
                     baseUrl = serviceBasePath + 'Request/ResourceAvailabilityReport';
-					if (!allFilters.FromDate) {
+                    if (!allFilters.FromDate) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select from date');
                         return;
                     }
                     if (!allFilters.ToDate) {
+                        $('#adminRepRunBtn').attr('disabled', false);
                         dhtmlx.alert('Must select to date');
                         return;
                     }
@@ -834,7 +844,7 @@
             function openReportViewer(baseUrl, pdfUrl, excelUrl, fileName) {
                 $http.get(pdfUrl).then(function success(response) {
                     console.log(response);
-
+                    $('#adminRepRunBtn').attr('disabled', false);
                     var scope = $rootScope.$new();
 
                     //Declare parameters for pdf viewer modal
@@ -853,6 +863,7 @@
 
                 }, function error(response) {
                     console.log(response);
+                    $('#adminRepRunBtn').attr('disabled', false);
                 });
             }
 
