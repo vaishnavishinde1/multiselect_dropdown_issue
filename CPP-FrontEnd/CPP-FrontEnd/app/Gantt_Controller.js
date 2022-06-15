@@ -2206,6 +2206,7 @@ angular.module('xenon.Gantt_Controller', []).
             }
 
             $scope.submitForApproval = function () {
+                $('#submitForApproval').prop('disabled', true); //Aditya
                 //luan here - approval process pritesh2
                 var isApprovalFailed = false;
                 $scope.scheduleGanttInstance.eachTask(function (task) {
@@ -3480,7 +3481,6 @@ angular.module('xenon.Gantt_Controller', []).
 
             //OnlightboxSave - Add new activity when the user click on the save button in lightbox
             $scope.scheduleGanttInstance.attachEvent("onLightboxSave", function (id, task, is_new) {
-
                 //console.log(id, task, is_new);
 
                 if (task.mainCategory.includes('\'') || task.mainCategory.includes('\"') || task.mainCategory.includes('\\')

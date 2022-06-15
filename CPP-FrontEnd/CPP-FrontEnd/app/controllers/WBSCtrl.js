@@ -1367,6 +1367,7 @@ angular.module('cpp.controllers').
                 document.getElementById("uploadBtnContModspinRow").style.display = "block";
                 formdata = new FormData();
                 var fileName = "";
+                $('#uploadBtnProgram').attr('disabled', true); //Aditya
                 angular.forEach(fileUploadProgram.files, function (value, key) {
                     //$scope.selectedFileName = $files[0].name;
                     fileName = value.name;
@@ -1506,6 +1507,7 @@ angular.module('cpp.controllers').
                                     $("#cancel_doc_update_modal_x").trigger('click');
                                 }
                                 else {
+                                    $('#uploadBtnProgram').attr('disabled', false); //Aditya
                                     dhtmlx.alert(d.data);
                                 }
                                 $('#uploadBtnProgramspinRow').hide();
@@ -2142,7 +2144,7 @@ angular.module('cpp.controllers').
                         //}
                     }
                 }
-
+                $("#btnSaveModification").attr('disabled', true); //Aditya
                 var contractModification = {
                     //ModificationNo: modNumber,
                     Operation: operation,
@@ -2219,12 +2221,15 @@ angular.module('cpp.controllers').
                     if (d.data.result == "success") {
                         wbsTree.getContractModificationOperation();
                         if (wbsTree.getContractModificationOperation() == 1) {
+                            $("#btnSaveModification").attr('disabled', false); //Aditya
                             dhtmlx.alert("Modification Added Successfully!!!.");
                         }
                         else if (wbsTree.getContractModificationOperation() == 2) {
+                            $("#btnSaveModification").attr('disabled', false); //Aditya
                             dhtmlx.alert("Modification Updated Successfully!!!.");
                         }
                         else if (wbsTree.getContractModificationOperation() == 3) {
+                            $("#btnSaveModification").attr('disabled', false); //Aditya
                             dhtmlx.alert("Modification Deleted Successfully!!!.");
                         }
                         wbsTree.setContractModificationOperation(1);
