@@ -160,6 +160,7 @@ angular.module('cpp.controllers').
 
                     return;
                 }
+                $("#uploadBtnProject").attr("disabled", true);
                 if (!g_editelementdocument) {
                     // Jignesh-24-02-2021 Remove ''&ExecutionDate=' + ExecutionDate.replace(/\//g, "") +' from url from below request.
                     var request = {
@@ -237,6 +238,7 @@ angular.module('cpp.controllers').
                             })
 
                         if (d.data == "File uploaded successfully") {
+                            $("#uploadBtnProject").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             fileUploadProject.value = "";
                             $("#PrgSpecialNotePrgElm").val("");
@@ -248,6 +250,7 @@ angular.module('cpp.controllers').
                             $('#cancel_doc_update_modal_xPrgElm').trigger('click');
                         }
                         else {
+                            $("#uploadBtnProject").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         // dhtmlx.alert(d.data);
@@ -277,6 +280,7 @@ angular.module('cpp.controllers').
                 else {
                     var editOperation = "1";
                     var noFile = false;
+                    $("#uploadBtnProject").attr("disabled", true);
 
                     if (fileUploadProject.files.length == 0)
                         noFile = true;
@@ -355,6 +359,7 @@ angular.module('cpp.controllers').
                             })
 
                         if (d.data == DocumentName + " has been updated successfully.\n") {
+                            $("#uploadBtnProject").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             fileUploadProject.value = "";
                             $("#PrgSpecialNotePrgElm").val("");
@@ -366,6 +371,7 @@ angular.module('cpp.controllers').
                             $('#cancel_doc_update_modal_xPrgElm').trigger('click');
                         }
                         else {
+                            $("#uploadBtnProject").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         // dhtmlx.alert(d.data);
@@ -472,7 +478,7 @@ angular.module('cpp.controllers').
                 var selectedNodeTrend = wbsTrendTree.getSelectedTreeNode().metadata;
                 var trendNumber = selectedNodeTrend.TrendNumber;
                 var TrendNumber = trendNumber;
-
+                $("#uploadDocBtnTrend").attr("disabled", true);
                 if (!g_edittrenddocument) {
 
                     // Jignesh-24-02-2021 Remove ''&ExecutionDate=' + ExecutionDate.replace(/\//g, "") +' from url from below request.
@@ -546,6 +552,7 @@ angular.module('cpp.controllers').
                                 document.getElementById("uploadBtnTrendspinRow").style.display = "none";
                             })
                         if (d.data == "File uploaded successfully") {
+                            $("#uploadDocBtnTrend").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             formdata = new FormData();
                             fileUploadTrend.value = "";
@@ -557,6 +564,7 @@ angular.module('cpp.controllers').
                             $('#cancel_doc_update_modal_xTrend').trigger('click');
                         }
                         else {
+                            $("#uploadDocBtnTrend").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         document.getElementById("uploadBtnTrendspinRow").style.display = "none";
@@ -569,6 +577,7 @@ angular.module('cpp.controllers').
                         //    $('#cancel_doc_update_modal_xTrend').trigger('click');  //Manasi 20-08-2020
                         //}
                     }, function error(d) {
+                        $("#uploadDocBtnTrend").attr("disabled", false);
                         dhtmlx.alert(d.ExceptionMessage);
                     }).finally(function () {
                         //Clear selected files
@@ -587,7 +596,7 @@ angular.module('cpp.controllers').
 
                     if (fileUploadProgramElement.files.length == 0)
                         noFile = true;
-
+                    $("#uploadDocBtnTrend").attr("disabled", true);
                     var request = {
                         method: 'POST',
                         url: serviceBasePath + '/uploadTrendFile/Post/' + wbsTree.getSelectedProjectID() + '/' + TrendNumber + '/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + noFile,
@@ -658,6 +667,7 @@ angular.module('cpp.controllers').
                                 document.getElementById("uploadBtnTrendspinRow").style.display = "none";
                             })
                         if (d.data == DocumentName + " has been updated successfully.\n") {
+                            $("#uploadDocBtnTrend").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             formdata = new FormData();
                             fileUploadTrend.value = "";
@@ -669,6 +679,7 @@ angular.module('cpp.controllers').
                             $('#cancel_doc_update_modal_xTrend').trigger('click');
                         }
                         else {
+                            $("#uploadDocBtnTrend").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         document.getElementById("uploadBtnTrendspinRow").style.display = "none";
@@ -681,6 +692,7 @@ angular.module('cpp.controllers').
                         //    $('#cancel_doc_update_modal_xTrend').trigger('click');  //Manasi 20-08-2020
                         //}
                     }, function error(d) {
+                        $("#uploadDocBtnTrend").attr("disabled", false);
                         dhtmlx.alert(d.ExceptionMessage);
                     }).finally(function () {
                         //Clear selected files
@@ -1003,6 +1015,7 @@ angular.module('cpp.controllers').
 
                     return;
                 }
+                $("#uploadBtnProgramElement").attr("disabled", true);
                 if (!g_editprojectdocument) {
                     // Jignesh-24-02-2021 Remove ''&ExecutionDate=' + ExecutionDate.replace(/\//g, "") +' from url from below request.
                     var request = {
@@ -1025,6 +1038,7 @@ angular.module('cpp.controllers').
                     /* Needs $http */
                     // SEND THE FILES.
                     $http(request).then(function success(d) {
+                        $("#uploadBtnProgramElement").attr("disabled", false);
                         console.log(d);
                         var gridUploadedDocument = $('#gridUploadedDocumentProgramNewPrg tbody');
                         gridUploadedDocument.empty();
@@ -1086,6 +1100,7 @@ angular.module('cpp.controllers').
                                 // $rootScope.buttonDisabled =false;
                             })
                         if (d.data == "File uploaded successfully") {
+                            $("#uploadBtnProgramElement").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             fileUploadProgramElement.value = "";
                             formdata = new FormData();
@@ -1099,6 +1114,7 @@ angular.module('cpp.controllers').
                             $("#cancel_doc_update_modal_xPrg").trigger('click');
                         }
                         else {
+                            $("#uploadBtnProgramElement").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         //if (d.data == "0") {
@@ -1124,6 +1140,7 @@ angular.module('cpp.controllers').
                     if (fileUploadProgramElement.files.length == 0)
                         noFile = true;
 
+                    $("#uploadBtnProgramElement").attr("disabled", true);
                     var request = {
                         method: 'POST',
                         url: serviceBasePath + '/uploadFilesnew/Postnew/ProgramElement/0/' + _selectedNode.ProgramElementID + '/0/0/0/' + docTypeID + '?SpecialNote=' + encodeURIComponent(SpecialNote) + '&DocumentName=' + encodeURIComponent(DocumentName) + '&DocID=' + encodeURIComponent(DocID) + '&editOperation=' + encodeURIComponent(editOperation) + '&noFile=' + encodeURIComponent(noFile),
@@ -1202,6 +1219,7 @@ angular.module('cpp.controllers').
                                 // $rootScope.buttonDisabled =false;
                             })
                         if (d.data == DocumentName + " has been updated successfully.\n") {
+                            $("#uploadBtnProgramElement").attr("disabled", false);
                             dhtmlx.alert(d.data);
                             fileUploadProgramElement.value = "";
                             formdata = new FormData();
@@ -1215,6 +1233,7 @@ angular.module('cpp.controllers').
                             $("#cancel_doc_update_modal_xPrg").trigger('click');
                         }
                         else {
+                            $("#uploadBtnProgramElement").attr("disabled", false);
                             dhtmlx.alert(d.data);
                         }
                         //if (d.data == "0") {
@@ -1657,6 +1676,7 @@ angular.module('cpp.controllers').
                     DocumentTypeDescription: description
                 }
                 listToSave.push(dataObj);
+                $("#btnSaveDocType").attr("disabled", true);
                 var url = serviceBasePath + 'response/DocumentType/';
                 $http({
                     url: url,
@@ -1671,6 +1691,7 @@ angular.module('cpp.controllers').
                             url: serviceBasePath + "Request/DocumentType",
                             method: "GET"
                         }).then(function success(response) {
+                            $("#btnSaveDocType").attr("disabled", false);
                             wbsTree.setDocTypeList(response.data.result);
                             var selectedDocTypeDropDown = wbsTree.getSelectedDocTypeDropDown();
                             var docTypeDropDownProgram;
@@ -1715,10 +1736,12 @@ angular.module('cpp.controllers').
                         $('#cancel_addNewDocumentTypeModal_x').trigger('click');
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#btnSaveDocType").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
                     //$state.reload();
                 }, function error(response) {
+                    $("#btnSaveDocType").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             });
