@@ -184,7 +184,15 @@ namespace WebAPI.Models
 								ctx.SaveChanges();
 							}
 						}
-						ctx.ContractModification.Remove(retreivedConMod);
+						
+                        ctx.ContractModification.Remove(retreivedConMod);
+						//Narayan - Delete All related Documents after deleting contract modification - 16/06/2022
+						List<Document> deleteRelDocList = new List<Document>();
+						int modNo = Int32.Parse(retreivedConMod.ModificationNo);
+						deleteRelDocList = ctx.Document.Where(d => d.ProgramID == contractModification.ProgramID && d.ModificationNumber == modNo).ToList();
+						foreach (var deleteRelDoc in deleteRelDocList)
+							ctx.Document.Remove(deleteRelDoc);
+
 						ctx.SaveChanges();
 
 						// Narayan - modification mail 

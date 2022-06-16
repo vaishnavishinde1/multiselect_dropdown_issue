@@ -2200,8 +2200,13 @@ angular.module('cpp.controllers').
                             ProgramID: wbsTree.getSelectedNode().ProgramID,
                             originalEndDate: pgmogenddate // Aditya ogDate
                         };
-                        PerformOperationOnContractModification(contractModification);
-
+                        // Narayan - show confirmation message before delete - 16/06/2022
+                        dhtmlx.confirm("Are you sure you want to delete ?<br/> It will also delete linked documents", function (result) {
+                            //console.log(result);
+                            if (result) {
+                                PerformOperationOnContractModification(contractModification);
+                            }
+                        });
                         $('input[name="rbModHistory"]').prop('checked', false);
                         $('#btnDeleteConModification').attr('disabled', 'disabled');
                         $('#btnEditConModification').attr('disabled', 'disabled');
@@ -2321,6 +2326,54 @@ angular.module('cpp.controllers').
                         //else {
                         //    modal.find('.modal-body #program_current_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));  // Jignesh-26-02-2021
                         //}
+
+                        // Narayan - Update Modification Document Grid for document changes - 16/06/2022
+                        _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
+                            wbsTree.setDocumentList(response.result);
+                            var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
+                            var modId = null;
+                            var modTitle = null;
+                            gridUploadedModDocument.empty();
+                            for (var x = 0; x < _documentList.length; x++) {
+                                if (_documentList[x].ModificationNumber >= 0 && _documentList[x].ModificationNumber != null) {
+                                    for (var i = 0; i < _ModificationList.length; i++) {
+                                        if (_documentList[x].ModificationNumber == _ModificationList[i].ModificationNo) {
+                                            modId = _ModificationList[i].ModificationNo;
+                                            modTitle = _ModificationList[i].Title;
+                                        }
+                                    }
+                                    gridUploadedModDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
+                                        '</td > <td ' +
+                                        'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '>' + _documentList[x].DocumentTypeName + '</td>' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '>' + modId + ' - ' + modTitle + '</td>' +
+                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                                        '<tr > ');   //MM/DD/YYYY h:mm a'
+                                }
+
+                            }
+
+                            var deleteDocBtn = modal.find('.modal-body #delete-doc');
+                            deleteDocBtn.attr('disabled', _documentList.length > 0 ? false : true);
+
+                            $('input[name=rbCategoriesMod]').on('click', function (event) {
+                                if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
+                                    $('#ViewUploadFileContModification').removeAttr('disabled');
+                                }
+                                else {
+                                    $('#DeleteUploadContModification').removeAttr('disabled');
+                                    $('#ViewUploadFileContModification').removeAttr('disabled');
+                                    $('#downloadBtnContModification').removeAttr('disabled');
+                                }
+
+                            });
+
+                        });
                     }
                 });
             }
