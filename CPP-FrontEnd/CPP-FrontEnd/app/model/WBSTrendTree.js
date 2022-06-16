@@ -1481,6 +1481,7 @@ WBSTrendTree = (function ($) {
                     //API to Insert/Update
                     //Parameterize JSON
                     console.log(metadata);
+                    $("#update_trend").attr("disabled", true);
                     var toUpdateTrend = {
                         "Operation": "5",   //update trend setup
                         "ProjectID": metadata.ProjectID,
@@ -1507,6 +1508,7 @@ WBSTrendTree = (function ($) {
 
                     console.log(toUpdateTrend);
                     _Trend.persist().save(toUpdateTrend, function (response) {
+                        $("#update_trend").attr("disabled", false);
                         isFieldValueChanged = false; // Jignesh-31-03-2021
                         metadata.TrendJustification = modal.find('.modal-body #trend_justification').val();
                         metadata.TrendImpact = modal.find('.modal-body input[name="trend_impact"]:checked').val();
@@ -1581,7 +1583,7 @@ WBSTrendTree = (function ($) {
                     //        CostOverheadTypeID = costOverheadTypes[x].ID;
                     //    }
                     //}
-
+                    $("#update_trend").attr("disabled", true);
                     var toUpdateTrend = {
                         "Operation": "1",
                         "ProjectID": _selectedProjectID,
@@ -1614,6 +1616,7 @@ WBSTrendTree = (function ($) {
                     };
                     console.log(toUpdateTrend);
                     _Trend.persist().save(toUpdateTrend, function (response) {
+                        $("#update_trend").attr("disabled", false);
                         isFieldValueChanged = false; // Jignesh-31-03-2021
                         $('#FutureTrendModal').modal('hide');
                         //wbsTrendTree.trendGraph();
@@ -1671,7 +1674,7 @@ WBSTrendTree = (function ($) {
                         isChangeRequest = 0;
                         isApprovedByClient = 0;
                     }
-
+                    $("#update_pasttrend").attr("disabled", true);
                     console.log(metadata);
                     var toUpdateTrend = {
                         "Operation": "5",   //update trend setup
@@ -1699,6 +1702,7 @@ WBSTrendTree = (function ($) {
 
                     console.log(toUpdateTrend);
                     _Trend.persist().save(toUpdateTrend, function (response) {
+                        $("#update_pasttrend").attr("disabled", false);
                         isFieldValueChanged = false; 
                         metadata.TrendNumber = pastTrendNumber;
                         metadata.TrendJustification = modal.find('.modal-body #pasttrend_justification').val();

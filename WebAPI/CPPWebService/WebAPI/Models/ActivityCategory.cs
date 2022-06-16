@@ -133,9 +133,23 @@ namespace WebAPI.Models
                 {
                     Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
                     int? versionId = Convert.ToInt32(ProjectDetails.VersionId);
-                    MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId && p.Services == ProjectDetails.ProjectClassID.ToString())
+                    int TotalActivityCount = ctx.ActivityCategory.Where(p => p.VersionId == versionId).Count();
+                    int TotalServiceCount = ctx.ActivityCategory.Where(p => p.VersionId == versionId && p.Services == null).Count();
+
+                    if (TotalActivityCount== TotalServiceCount)
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => p.OrganizationID == orgID && p.VersionId == versionId)
+                                                            .OrderBy(a => a.CategoryDescription).Distinct().ToList();
+                    }
+                    else
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => p.OrganizationID == orgID && p.VersionId == versionId && p.Services == ProjectDetails.ProjectClassID.ToString())
                                                         .OrderBy(a => a.CategoryDescription).Distinct().ToList();
-                        MatchedActivityCategoryList = MatchedActivityCategoryList.GroupBy(a => a.CategoryID).Select(a => a.First()).OrderBy(a=>a.CategoryID).ToList();
+                    }
+                    //MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId)
+                    //                                    .OrderBy(a => a.CategoryDescription).Distinct().ToList();
+                    
+                    MatchedActivityCategoryList = MatchedActivityCategoryList.GroupBy(a => a.CategoryID).Select(a => a.First()).OrderBy(a=>a.CategoryID).ToList();
                     
                 }
             }
@@ -168,12 +182,26 @@ namespace WebAPI.Models
 
                 using (var ctx = new CPPDbContext())
                 {
+                    int TotalActivityCount = ctx.ActivityCategory.Where(p => p.VersionId == verId).Count();
+                    int TotalServiceCount = ctx.ActivityCategory.Where(p => p.VersionId == verId && p.Services == null).Count();
+
                     Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
 
-                    MatchedActivityCategoryList = ctx.ActivityCategory.
+                    if (TotalActivityCount == TotalServiceCount)
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.
+                            Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId )
+                            .OrderBy(a => a.SubCategoryID)
+                            .ToList();
+                    }
+                    else
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.
                             Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId && a.Services == ProjectDetails.ProjectClassID.ToString())
                             .OrderBy(a => a.SubCategoryID)
                             .ToList();
+                    }
+                    
                 }
             
 
