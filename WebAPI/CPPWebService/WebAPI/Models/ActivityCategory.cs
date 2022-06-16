@@ -21,6 +21,8 @@ namespace WebAPI.Models
     {
         [NotMapped]
         public int Operation { get; set; }
+        [NotMapped]
+        public int SuccessTask { get; set; }
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public String CategoryID { get; set; }
@@ -223,6 +225,7 @@ namespace WebAPI.Models
                         ctx.SaveChanges();
                         //register_result += "Subcategory ID " + activity.SubCategoryID + " has been created successfully.\n";    //front end relying the word "successfully"
                         register_result += "SubCategory ID " + activity.SubCategoryID + " has been created successfully.\n";    /*Tanmay - 01/12/2021*/
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else
                     {
@@ -447,6 +450,7 @@ namespace WebAPI.Models
                         ctx.Entry(retrievedActivityCategory).State = System.Data.Entity.EntityState.Modified;
                         ctx.SaveChanges();
                         update_result += "Subcategory ID " + activity.SubCategoryID + " has been updated successfully.\n";
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else    //Entry not found
                     {
@@ -485,19 +489,22 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
+                    ActivityCategory oldVersionActivityCategory = ctx.ActivityCategory.Where(s => s.ID == activity.ID).FirstOrDefault(); // Narayan - getting old version data before deletion - 14/06/2022
                     ActivityCategory retrievedActivity = new ActivityCategory();
                     retrievedActivity = ctx.ActivityCategory.Where(s =>
-                                                                            s.ID == activity.ID
-                                                                            && s.SubCategoryID == activity.SubCategoryID
-                                                                            && s.CategoryID == activity.CategoryID
-                                                                           // && s.Phase == activity.Phase
-                                                                            && s.VersionId == latestVersion.Id).FirstOrDefault();
+                                                                            //s.ID == activity.ID
+                                                                            s.SubCategoryID == oldVersionActivityCategory.SubCategoryID
+                                                                            && s.CategoryID == oldVersionActivityCategory.CategoryID
+                                                                            && s.Services == oldVersionActivityCategory.Services
+                                                                            // && s.Phase == activity.Phase
+                                                                            && s.VersionId == latestVersion.Id).FirstOrDefault(); // Narayan - old version data compare with same new version data - 14/06/2022
                     if (retrievedActivity != null)
                     {
                         //Delete
                         ctx.ActivityCategory.Remove(retrievedActivity);
                         ctx.SaveChanges();
                         result += "Subcategory ID " + activity.SubCategoryID + " has been deleted successfully.\n";
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else
                     {
