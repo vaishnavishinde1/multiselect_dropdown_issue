@@ -25,7 +25,6 @@ namespace WebAPI.Models
         public String PreTrendPhaseEndDate;
         public int PreTrendPhaseCost;
         public int PostTrendPhaseCost;
-        public int VersionId;
         Phase() { }
 
         //From RequestPhaseController

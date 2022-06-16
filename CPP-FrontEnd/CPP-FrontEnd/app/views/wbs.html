@@ -458,7 +458,7 @@
             <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
-                <svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
+                <svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:20px;" id="wbs-tree">
 
                 </svg>
             </div>
@@ -780,7 +780,7 @@
                             <div class="col-md-3" style="padding-left:0;margin-top:5px;" id="divModificationValue">
                                 <label for="" class="control-label _bold required">Value</label>
                                 <!--<input type="number" class="form-control" id="modification_value" autocomplete="off">--> <!--Jignesh-17-02-2021-->
-                                <input type="text" class="form-control" id="modification_value" autocomplete="off"> <!--Jignesh-25-03-2021-->
+                                <input type="text" class="form-control" id="modification_value" autocomplete="off" data-type="currency"> <!--Jignesh-25-03-2021-->
                             </div>
                             <!--================ Jignesh-24-03-2021 Modification Changes ========================================-->
                             <!--<div class="col-md-4" style="padding-left: 0;margin-top:5px;" id="divModDurationDate">
@@ -3340,9 +3340,9 @@
                                     <label for="program_element_type" class="control-label _bold">Client PO#</label>
                                     <input type="text" class="form-control" id="project_element_po_number">
                                 </div>-->
-                                <div class="col-xs-6" style="padding-left: 0; padding-right: 0;">
+                                <div class="col-xs-6" style="padding-left: 0;">
                                     <label for="program_element_class" class="control-label _bold">Amount</label>
-                                    <input type="text" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="project_element_amount" data-type="currency">
+                                    <input type="text"  style="width: 98%;" onkeypress="return event.charCode >= 48" min="1" class="form-control" id="project_element_amount" data-type="currency">
                                 </div>
                             </div>
                             <!--===============================================================================================-->

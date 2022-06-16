@@ -1448,12 +1448,9 @@ namespace WebAPI
             //Services Class
             config.Routes.MapHttpRoute(
                   name: "RequestServiceClass",
-                  routeTemplate: "Request/ServiceClass/{ProjectID}/",
-                  defaults: new { controller = "RequestServiceClass", ProjectID = RouteParameter.Optional }
+                  routeTemplate: "Request/ServiceClass",
+                  defaults: new { controller = "RequestServiceClass" }
              );
-
-            
-
             config.Routes.MapHttpRoute(
                 name: "RegisterServiceClass",
                 routeTemplate: "Response/ServiceClass",

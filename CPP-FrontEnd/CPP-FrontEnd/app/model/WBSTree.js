@@ -10539,8 +10539,8 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveWarranty, #btnUpdateWarranty').unbind().on('click', function (event) {
-                    $('#btnSaveWarranty').prop('disabled', true); //Aditya
-                    $('#btnUpdateWarranty').prop('disabled', true); //Aditya
+                    $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', true); //Aditya
+                    //$('#btnUpdateWarranty').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractWarrantyOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10552,21 +10552,21 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (startDate == "" || startDate.length == 0) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Start Date.');
                         return;
                     }
                     if (startDate) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'Start Date';
                         var validation = validateDate(startDate, label);
@@ -10588,14 +10588,14 @@ WBSTree = (function ($) {
                     }
 
                     if (endDate == "" || endDate.length == 0) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter End Date.');
                         return;
                     }
                     if (endDate) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'End Date';
                         var validation = validateDate(endDate, label);
@@ -10603,8 +10603,8 @@ WBSTree = (function ($) {
                             return false;
                         }
                         else if (moment(endDate, 'MM/DD/YYYY') < moment(startDate, 'MM/DD/YYYY')) {
-                            $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                            $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                            $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                            //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                             dhtmlx.alert('End Date can not set before Start Date'); // Narayan - End date validation - 08/06/2022
                             return;
                         }
@@ -10623,8 +10623,8 @@ WBSTree = (function ($) {
                     }
 
                     if (desc == "" || desc.length == 0) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Description.');
                         return;
                     }
@@ -10651,6 +10651,7 @@ WBSTree = (function ($) {
 
                 //Api call for add contract warrenty 
                 function PerformOperationOnContractWarranty(contractWarranty) {
+                    $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', true); //Aditya
                     var request = {
                         method: 'POST',
                         url: serviceBasePath + 'contractWarranty/saveContractWarranty',
@@ -10658,8 +10659,8 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
-                        $('#btnSaveWarranty').prop('disabled', false); //Aditya
-                        $('#btnUpdateWarranty').prop('disabled', false); //Aditya
+                        $('#btnSaveWarranty, #btnUpdateWarranty').prop('disabled', false); //Aditya
+                        //$('#btnUpdateWarranty').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractWarrantyOperation();
                             if (wbsTree.getContractWarrantyOperation() == 1) {
@@ -10702,8 +10703,7 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Notice from contract
                 $('#btnSaveNotice, #btnUpdateNotice').unbind().on('click', function (event) {
-                    $('#btnSaveNotice').prop('disabled', true); //Aditya
-                    $('#btnUpdateNotice').prop('disabled', true); //Aditya
+                    $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', true); //Aditya
                     var operation = wbsTree.getPrelimneryNoticeOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10715,15 +10715,13 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (date == "" || date.length == 0) {
-                        $('#btnSaveNotice').prop('disabled', false); //Aditya
-                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
+                        $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Date.');
                         return;
                     }
 
                     if (date) {
-                        $('#btnSaveNotice').prop('disabled', false); //Aditya
-                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
+                        $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', false); //Aditya
                         //Aditya 10062022
                         var label = 'Date';
                         var validation = validateDate(date, label);
@@ -10744,8 +10742,7 @@ WBSTree = (function ($) {
                         //}
                     }
                     if (reason == "" || reason.length == 0) {
-                        $('#btnSaveNotice').prop('disabled', false); //Aditya
-                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
+                        $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Reason.');
                         return;
                     }
@@ -10769,6 +10766,7 @@ WBSTree = (function ($) {
 
                 //Api call for add prelimnary notices
                 function PerformOperationOnPrelimnaryNotice(prelimnaryNotice) {
+                    $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', true); //Aditya
                     var request = {
                         method: 'POST',
                         url: serviceBasePath + 'prelimnaryNotice/savePrelimnaryNotice',
@@ -10776,8 +10774,7 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
-                        $('#btnSaveNotice').prop('disabled', false); //Aditya
-                        $('#btnUpdateNotice').prop('disabled', false); //Aditya
+                        $('#btnSaveNotice, #btnUpdateNotice').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getPrelimneryNoticeOperation();
                             if (wbsTree.getPrelimneryNoticeOperation() == 1) {
@@ -10825,8 +10822,7 @@ WBSTree = (function ($) {
 
                 // Narayan - Save Insurance from contract
                 $('#btnSaveInsurance, #btnUpdateInsurance').unbind().on('click', function (event) {
-                    $('#btnSaveInsurance').prop('disabled', true); //Aditya
-                    $('#btnUpdateInsurance').prop('disabled', true); //Aditya
+                    $('#btnSaveInsurance, #btnUpdateInsurance').prop('disabled', true); //Aditya
                     var operation = wbsTree.getContractInsuranceOperation();
                     var programId = wbsTree.getSelectedNode().ProgramID;
                     var createdBy = wbsTree.getLocalStorage().userName;
@@ -10836,15 +10832,13 @@ WBSTree = (function ($) {
                     console.log(createdBy)
 
                     if (type == null || type == "" || type.length == 0) {
-                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
-                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
+                        $('#btnSaveInsurance, #btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Select Type First.');
                         return;
                     }
 
                     if (limit == "" || limit.length == 0) {
-                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
-                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
+                        $('#btnSaveInsurance, #btnUpdateInsurance').prop('disabled', false); //Aditya
                         dhtmlx.alert('Enter Limit.');
                         return;
                     }
@@ -10870,6 +10864,7 @@ WBSTree = (function ($) {
 
                 //Api call for add contract insurance
                 function PerformOperationOnContractInsurance(contractInsurance) {
+                    $('#btnSaveInsurance, #btnUpdateInsurance').prop('disabled', true); //Aditya
                     var request = {
                         method: 'POST',
                         url: serviceBasePath + 'contractInsurance/saveContractInsurance',
@@ -10877,8 +10872,7 @@ WBSTree = (function ($) {
                     };
                     var angularHttp = wbsTree.getAngularHttp();
                     angularHttp(request).then(function success(d) {
-                        $('#btnSaveInsurance').prop('disabled', false); //Aditya
-                        $('#btnUpdateInsurance').prop('disabled', false); //Aditya
+                        $('#btnSaveInsurance, #btnUpdateInsurance').prop('disabled', false); //Aditya
                         if (d.data.result == "success") {
                             wbsTree.getContractInsuranceOperation();
                             if (wbsTree.getContractInsuranceOperation() == 1) {
@@ -11470,7 +11464,7 @@ WBSTree = (function ($) {
 
                     for (var x = 0; x < DDUser.length; x++) {
                         var Name = '';
-                        Name = DDUser[x].FirstName +''+DDUser[x].LastName;
+                        Name = DDUser[x].FirstName +' '+DDUser[x].LastName;
                         var pmUserId = DDUser[x].Id;
                             if (projectManagerList.includes(pmUserId)) {
                                     program_project_manager_multiselect.append('<option value=' + DDUser[x].Id + ' selected>' + Name + '</option>');
@@ -11796,6 +11790,7 @@ WBSTree = (function ($) {
                             }
                         }
                         $('#total_modification').val('$' + totalValue);
+                        //$('#total_modification').val().replace("$", "").replaceAll(",", "");
                         //$('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
                         //$('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
                         var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
@@ -18035,29 +18030,21 @@ WBSTree = (function ($) {
                     //Populate project classes for dropdown
                     //Find the project class name given the id
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
-                    var serviceClassList; //= wbsTree.getServiceClassList();
-                    var angularHttp = wbsTree.getAngularHttp();
-                    angularHttp.get(serviceBasePath + 'Request/ServiceClass/' + selectedNode.ProjectID).then(function (response) {
+                    var serviceClassList = wbsTree.getServiceClassList();
+                    var projectClassName = '';
+                    serviceClassDropDown.empty();
 
-                        serviceClassList = response.data.result;
-                        var projectClassName = '';
-                        serviceClassDropDown.empty();
-
-                        for (var x = 0; x < serviceClassList.length; x++) {
-                            if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
-                                projectClassName = serviceClassList[x].Description
-                            }
-
-                            if (serviceClassList[x].Description == null) {
-                                continue;
-                            }
-                            serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    for (var x = 0; x < serviceClassList.length; x++) {
+                        if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                            projectClassName = serviceClassList[x].Description
                         }
-                        serviceClassDropDown.val(projectClassName.trim());
-                    });
-                    
 
-                    
+                        if (serviceClassList[x].Description == null) {
+                            continue;
+                        }
+                        serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    }
+                    serviceClassDropDown.val(projectClassName.trim());
 
                     //Populate employee classes for dropdown 
                     //Find the employee selected names given the id
