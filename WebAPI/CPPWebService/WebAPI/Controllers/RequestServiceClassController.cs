@@ -10,11 +10,11 @@ namespace WebAPI.Controllers
 {
     public class RequestServiceClassController : ApiController
     {
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(String ProjectID = "null")
         {
 
             List<ServiceClass> ServiceClassList = new List<ServiceClass>();
-            ServiceClassList = WebAPI.Models.ServiceClass.getServices();
+            ServiceClassList = WebAPI.Models.ServiceClass.getServices(ProjectID);
 
 
             var jsonNew = new
