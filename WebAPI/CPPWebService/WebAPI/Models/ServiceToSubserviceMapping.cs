@@ -21,7 +21,6 @@ namespace WebAPI.Models
         public int ProjectClassID { get; set; }
         public int PhaseID { get; set; }
         public int Order { get; set; }
-        public int VersionId { get; set; }
         //public DateTime CreatedDate { get; set; }
         //public DateTime UpdatedDate { get; set; }
         //public String CreatedBy { get; set; }
@@ -47,8 +46,7 @@ namespace WebAPI.Models
 
                 using (var ctx = new CPPDbContext())
                 {
-                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
-                    serviceToSubserviceMapping = ctx.ServiceToSubserviceMapping.Where(v=>v.VersionId == latestVersion.Id).OrderBy(a => a.ProjectClassID).ThenBy(b => b.Order).ToList();
+                    serviceToSubserviceMapping = ctx.ServiceToSubserviceMapping.OrderBy(a => a.ProjectClassID).ThenBy(b => b.Order).ToList();
                 }
 
             }

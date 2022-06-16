@@ -33,9 +33,6 @@ namespace WebAPI.Models
         public String ActivityPhaseCode { get; set; }
 
         public String PhaseNote { get; set; }
-
-        public int VersionId { get; set; }
-
         //PhaseCode(int phaseId, String desc, String code)
         //{ PhaseID = phaseId; PhaseDescription = desc; Code = code; }
         //PhaseCode() { }
@@ -85,8 +82,7 @@ namespace WebAPI.Models
                 {
                     using (var ctx = new CPPDbContext())
                     {
-                        Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
-                        MatchedPhaseCodeList = ctx.PhaseCode.Where(a => a.VersionId == latestVersion.Id).ToList();
+                        MatchedPhaseCodeList = ctx.PhaseCode.ToList();
                     }
                 }
             }

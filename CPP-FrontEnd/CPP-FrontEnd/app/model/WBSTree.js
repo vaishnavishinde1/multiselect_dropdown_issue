@@ -18030,29 +18030,21 @@ WBSTree = (function ($) {
                     //Populate project classes for dropdown
                     //Find the project class name given the id
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
-                    var serviceClassList; //= wbsTree.getServiceClassList();
-                    var angularHttp = wbsTree.getAngularHttp();
-                    angularHttp.get(serviceBasePath + 'Request/ServiceClass/' + selectedNode.ProjectID).then(function (response) {
+                    var serviceClassList = wbsTree.getServiceClassList();
+                    var projectClassName = '';
+                    serviceClassDropDown.empty();
 
-                        serviceClassList = response.data.result;
-                        var projectClassName = '';
-                        serviceClassDropDown.empty();
-
-                        for (var x = 0; x < serviceClassList.length; x++) {
-                            if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
-                                projectClassName = serviceClassList[x].Description
-                            }
-
-                            if (serviceClassList[x].Description == null) {
-                                continue;
-                            }
-                            serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    for (var x = 0; x < serviceClassList.length; x++) {
+                        if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                            projectClassName = serviceClassList[x].Description
                         }
-                        serviceClassDropDown.val(projectClassName.trim());
-                    });
-                    
 
-                    
+                        if (serviceClassList[x].Description == null) {
+                            continue;
+                        }
+                        serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    }
+                    serviceClassDropDown.val(projectClassName.trim());
 
                     //Populate employee classes for dropdown 
                     //Find the employee selected names given the id

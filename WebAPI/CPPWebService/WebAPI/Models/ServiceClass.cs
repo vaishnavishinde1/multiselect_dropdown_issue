@@ -20,14 +20,13 @@ namespace WebAPI.Models
         public int ID { get; set; }
         public String Code { get; set; }
         public String Description { get; set; }
-        public int VersionId { get; set; }
 
         //public DateTime CreatedDate { get; set; }
         //public DateTime UpdatedDate { get; set; }
         //public String CreatedBy { get; set; }
         //public String UpdatedBy { get; set; }
 
-        public static List<ServiceClass> getServices(string ProjectID)
+        public static List<ServiceClass> getServices()
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
@@ -38,25 +37,7 @@ namespace WebAPI.Models
 
                 using (var ctx = new CPPDbContext())
                 {
-                   
-                    Versionmaster latestVersion;
-                    
-                    string versionId;
-                    if (ProjectID != "null")
-                    {
-                        int projectid = Int32.Parse(ProjectID);
-                        versionId = ctx.Project.Where(a => a.ProjectID == projectid).Select(a => a.VersionId).FirstOrDefault();
-                        int version = Int32.Parse(versionId);
-                        serviceClassList = ctx.ServiceClass.Where(a => a.VersionId == version).OrderBy(a => a.ID).ToList();
-                    }
-                    else
-                    {
-                        latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
-                        serviceClassList = ctx.ServiceClass.Where(a => a.VersionId == latestVersion.Id).OrderBy(a => a.ID).ToList();
-                    }
-                    
-                    
-                    
+                    serviceClassList = ctx.ServiceClass.OrderBy(a => a.ID).ToList();
                 }
 
             }
