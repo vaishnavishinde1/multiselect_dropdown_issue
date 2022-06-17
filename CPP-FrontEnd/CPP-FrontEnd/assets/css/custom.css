@@ -26,7 +26,10 @@
 #green-square {
     background: green;
 }
-
+.btn-black { /*css added by sarab*/
+    background-color: #747474;
+    border-radius: 50px !important;
+}
 .btn.btn-black.active {
     background-color: #747474;
 }
@@ -367,23 +370,24 @@ label input[type="checkbox"] {
 }
 
 .c-btn-save {
-    /*border-radius:50px !important;*/
-    border-radius: 0px !important;
-    background-color: green !important;
+    /*   border-radius:50px !important;*/
+    border-radius: 50px !important;
+    background-color: #28a745 !important; /*changes by sarab*/
     width: 150px;
+    padding: 15px;
 }
 
 .c-btn-delete {
-    /*border-radius:50px !important;*/
-    border-radius: 0px !important;
-    background-color: red !important;
+    border-radius: 50px !important;
+    /* border-radius: 0px !important;*/
+    background-color: #dc3545 !important; /*changes by sarab*/
     width: 150px;
 }
 
 .c-btn-back {
-    /*border-radius:50px !important;*/
-    border-radius: 0px !important;
-    background-color: #41AAD3 !important;
+    border-radius: 50px !important;
+    /* border-radius: 0px !important;*/
+    background-color: #41AAD3 !important; /*changes by sarab*/
     width: 150px;
 }
 
@@ -455,7 +459,6 @@ label input[type="checkbox"] {
 
 .deleteRow {
     cursor: pointer;
-    cursor: hand;
 }
 
 .responsive-icon:hover {
@@ -981,7 +984,7 @@ body {
 @media only screen and (max-width: 800px) and (min-width: 701px) {
     html {
         /*/zoom: 90% !important;*/
-        zoom: 0.30;
+        zoom: 0.60;
         -moz-transform: scale(1);
         -moz-transform-origin: 0 0;
         -o-transform: scale(1);
@@ -1027,7 +1030,7 @@ body {
 @media only screen and (max-width: 1100px) and (min-width: 1001px) {
     html {
         /*/zoom: 90% !important;*/
-        zoom: 0.55;
+        zoom: 0.60;
         /*width: 140%;*/
         -moz-transform: scaleY(1);
         -moz-transform-origin: 0 0;
@@ -1043,7 +1046,7 @@ body {
 @media only screen and (max-width: 1200px) and (min-width: 1101px) {
     html {
         /*/zoom: 90% !important;*/
-        zoom: 0.60;
+        zoom: 0.80;
         width: 140%;
         height: 140% !important;
         -moz-transform: scale(0.71);
@@ -1060,16 +1063,21 @@ body {
 @media only screen and (max-width: 1400px) and (min-width: 1201px) {
     html {
         /*/zoom: 90% !important;*/
+        font-family: Poppins;
         zoom: 0.60;
         height: 105% !important;
-        -moz-transform: scale(1.1);
+        -moz-transform: scale(1);
         -moz-transform-origin: 0 0;
-        -o-transform: scale(1.1);
+        -o-transform: scale(1);
         -o-transform-origin: 0 0;
-        -webkit-transform: scale(1.1);
+        -webkit-transform: scale(1);
         -webkit-transform-origin: 0 0;
-        transform: scaleY(1.1); /* Standard Property */
+        transform: scaleY(1); /* Standard Property */
         transform-origin: 0 0; /* Standard Property */
+    }
+
+    body {
+        font-family: Poppins;
     }
 }
 
@@ -1094,8 +1102,8 @@ body {
     html {
         /*/zoom: 90% !important;*/
         zoom: 0.90;
-        width: 105%;
-        height: 105% !important;
+        width: 100%;
+        height: 100% !important;
         -moz-transform: scale(0.95);
         -moz-transform-origin: 0 0;
         -o-transform: scale(0.95);
@@ -1110,9 +1118,9 @@ body {
 @media only screen and (max-width: 1800px) and (min-width: 1701px) {
     html {
         /*/zoom: 90% !important;*/
-        zoom: 0.90;
+        zoom: 0.70;
         width: 100%;
-        height: 105% !important;
+        height: 100% !important;
         -moz-transform: scale(0.95);
         -moz-transform-origin: 0 0;
         -o-transform: scale(0.95);
@@ -1127,7 +1135,7 @@ body {
 @media only screen and (max-width: 1920px) and (min-width: 1801px) {
     html {
         /*/zoom: 90% !important;*/
-        zoom: 1;
+        zoom:0.85;
         width: 100%;
         height: 100% !important;
         -moz-transform: scale(1);
@@ -1140,7 +1148,22 @@ body {
         transform-origin: 0 0; /* Standard Property */
     }
 }
-
+@media only screen and (max-width: 2566px) and (min-width: 1921px) {
+    html {
+        /*/zoom: 90% !important;*/
+        zoom: 0.9;
+        width: 100%;
+        height: 100% !important;
+        -moz-transform: scale(1);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(1);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(1);
+        -webkit-transform-origin: 0 0;
+        transform: scaleY(1); /* Standard Property */
+        transform-origin: 0 0; /* Standard Property */
+    }
+}
 .green {
     background-color: lightgray;
     font-weight: 700;
@@ -1331,4 +1354,306 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
     max-height: 150px;
     width: inherit;
     background: #fff;
+}
+/*sarab*/
+.box-content {
+    /*  border: .5px solid #a9a9a9;*/
+    font-size: 12px;
+    /* background-color: #fbfbfb;*/
+    /*  margin-top: 15px;
+    margin: 0 -15px 10px -15px*/
+    margin-bottom: 8px;
+    font-family:Poppins !important;
+    margin-top: 5px;
+    padding: 5px;
+  
+}
+
+.label-heading {
+    font-family: Verdana, Arial, sans-serif !important;
+    display: block;
+    text-align: left;
+    padding: 8px 11px 8px;
+    /*  border-bottom: 1px solid #ccc;*/
+    border-left: 5px solid #0077bc;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+    line-height: 1.1;
+}
+
+.wbs-menu-heading {
+    margin-left: -10px;
+    padding: 0;
+    margin-top: -20px;
+    margin-bottom: 0;
+}
+
+.modal-md-modi {
+    padding-right: 300px;
+    width: 50% !important;
+}
+
+.modal-lg {
+    width: 80% !important;
+}
+
+.modal-sm {
+    width: 40% !important;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-b-7 {
+    margin-bottom: 7px;
+}
+.m-t-0{
+    margin-top:0px;
+}
+.m-t-120 {
+    margin-top: 120px;
+}
+.m-t-90 {
+    margin-top: 90px;
+}
+.m-t-25 {
+    margin-top: 25px;
+}
+
+.m-t-30 {
+    margin-top: 30px;
+}
+
+.p-b-30 {
+    padding-bottom: 30px;
+}
+
+.modal-height {
+    height: 865px !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1201px) {
+   /* .modal-height {
+        height: 133vh !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }*/
+    .input-icons i {
+        /* margin-left: -270px !important;*/
+    }
+    .btn-icon {
+        border: 1px solid #ccc;
+        padding: 4px 8px;
+        font-size: 24px;
+        border-radius: 5px;
+        margin: 10px 8px 2px;
+    }
+}
+/*
+@media only screen and (max-width: 1200px) and (min-width: 901px) {
+    .modal-height {
+        height: 150vh !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 1401px) {
+    .modal-height {
+        height: 110vh !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+@media only screen and (max-width: 1800px) and (min-width: 1701px) {
+    .modal-height {
+        height: 100vh !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+*/
+.panel-height {
+    height: 550px;
+    overflow: auto;
+}
+
+.panel-title {
+    font-size: 30px !important;
+}
+
+.login-bg {
+   /*background: linear-gradient(135deg,#222b45,#000);*/
+      background-image: url("../images/bsi-bg.png");
+   background-size:cover;
+   background-repeat:no-repeat;
+    height: 100%;
+    width: 100%;    
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background:rgba(25,25,25,0.8);
+    border-radius: 10px;
+    color: #fff;
+    width: 30%;
+    margin-top:-100px;
+    align-self: center;
+}
+
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
+        border-radius: 0px;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid #444;
+        padding: 20px 40px;
+        height: 52px;
+        width: 80%;
+        color: #fff !important;
+        font-weight: bold !important;
+        font-size: 14px;
+        -webkit-text-fill-color: white !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+        .login-box input[type="text"]:focus,
+        .login-box input[type="password"]:focus,
+        .login-box input[type="text"]:active,
+        .login-box input[type="password"]:active,
+        .login-box input[type="text"]:hover,
+        .login-box input[type="password"]:hover {
+            border-bottom: 1px solid #fff;
+            background-color: transparent;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }      
+
+.btn-login {
+    background: linear-gradient(180deg,#2889bc,#258fcd);
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 0px solid #57b846;
+    padding: 14px 100px;
+    outline: none;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: 0.25s;
+    cursor: pointer;
+    transition: background ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.input-icons i {
+    position: absolute;
+    /* margin-left: -220px;*/
+    margin-top: 8px;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}     
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+}
+
+    .btn-login:hover {
+        background: #333;
+        border: 0px solid #333;
+    }
+.col-left {
+    border-right: 1px solid #e3e3e3;
+}
+.btn-blk {
+    border: 0;
+    background: #343a40;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #343a40;
+    padding: 14px 60px;
+    outline: none;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.btn-blk:hover {
+    background: #666;
+    border: 2px solid #666;
+}
+.form-control {
+    color: #000 !important;
+    border: 1px solid #e2e2e2 !important;
+}
+.t-head {
+    background-color: #f2f2f2;
+    position: sticky !important;
+    border-top: 1px solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    position: relative;
+    text-align: left !important;
+    padding: 10px 8px;
+   
+    color: #000 !important;
+}
+.t-head-dark {
+    background-color: #153065;
+    position: sticky !important;
+    color: #fff !important;
+}
+.btn-icon {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin: 10px 5px 2px;
+}
+button[disabled=disabled], button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.whitetext {
+    color: #fff !important;
+}
+.whitetext a:link, .whitetext a:visited {
+   color: #fff !important;
+}
+.table-outline {
+    border: 1px solid #eee !important;
+    border-top: 0;
+    margin: 5px 15px;
+    overflow: auto;
+}
+.table-outline-wo-p {
+    border: 1px solid #eee !important;
+    border-top: 0;
+    overflow: auto;
+}
+m-l-5 {
+    margin-left:10px;
 }
