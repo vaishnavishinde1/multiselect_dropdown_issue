@@ -453,25 +453,22 @@
                 </div>
 
             </div>
-<<<<<<< HEAD
-=======
-            <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
+            <!--<div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">-->
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
-                <svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
+                <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
 
                 </svg>
             </div>
-            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">
+            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">-->
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
 
                 </svg>-->
-            </div>
+            <!--</div>-->
             <!--<div class="row grid" style="background-color: #ffffff; overflow-y: scroll; width: 100%; height: 96%;overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" id="wbsGridView">
 
             </div>-->
->>>>>>> 060a91511828a6d2ee4db7535014e1d045d66f1a
         </div>
     </div>
     <div class="col-md-4 col-sm-4">
@@ -1227,9 +1224,18 @@
                             <div class="col-md-12 box-content">
                                 <form>
                                     <div class="row m-b-10 ">
-                                        <div class="col-sm-12 col-md-12 ">
+                                        <!--<div class="col-sm-12 col-md-12 ">
+        <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
+        <input type="text" class="form-control" id="program_project_manager">
+    </div>-->
+                                        <!--Aditya PMDD 05052022-->
+                                        <div class="col-sm-6 col-md-6  p-r-0 ">
                                             <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
                                             <input type="text" class="form-control" id="program_project_manager">
+                                        </div>
+                                        <div class="col-sm-6 col-md-6">
+                                            <label for="program_element_project_number" class="control-label _bold required">Project Manager</label>
+                                            <select type="text" class="form-control" id="program_project_manager_multiselect" multiple={true}></select>
                                         </div>
                                     </div>
                                     <!--Changed by Jignesh From Project to Contract 27-10-2020 -->
@@ -2023,7 +2029,7 @@
                                             <button id="ViewUploadFileProgram" class="btn-icon" title="View"><i class="fa-file-o"></i></button>
 
 
-                                            <button id="ViewAllUploadFileContracts" class="btn-icon"><i class="fa-search"></i></button>
+                                            <button id="ViewAllUploadFileContracts" class="btn-icon"><i class="fa-list"></i></button>
 
 
                                             <button id="EditBtnProgram" class="btn-icon"><i class="fa-edit"></i></button>
@@ -2873,7 +2879,7 @@
                                                         <textarea rows="3" type="text" class="form-control" id="program_billing_poc_special_instruction1"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="row  m-b-15">
+                                                <div class="row">
                                                     <div class="col-sm-12 col-md-12">
                                                         <div class="radio-inline custom-control custom-checkbox">
                                                             <label class="switch">
@@ -2918,7 +2924,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 box-content">
+                                    <div class="col-md-12 box-content m-t-0">
 
                                         <!--=====================================================================================================-->
                                         <!--The three textboxes-->
@@ -2987,10 +2993,10 @@
                                         <!------------------------------------------------------------------------------------------------->
                                         <!--PROGRAM ELEMENT CHANGE ORDERS Priteshco Grid-->
                                         <!--<form style="border: .5px solid #a9a9a9; background-color: #fbfbfb; padding: 10px; margin-right: 20px;margin-left:0;margin-top:25px">-->
-                                        <div id="divChangeOrder" style=" height:325px;">
+                                        <div id="divChangeOrder" style=" height:280px;">
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Change Orders</label>
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;">
-                                                <div class="panel-body  table-outline p-0 " style=" height: 235px !important; overflow:auto">
+                                                <div class="panel-body  table-outline p-0 " style=" height: 200px !important; overflow:auto">
                                                     <table class="table table-striped">
                                                         <thead  class="t-head">
                                                             <tr class="table-background">
@@ -3124,7 +3130,7 @@
                                                     <button id="updateBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                                     <button id="downloadBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
                                                     <button id="ViewUploadFileProgramPrg" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="fa-file"></i></button>   <!--Shweta 16-07-2020-->
-                                                    <button id="ViewAllUploadFileProjects" class="btn-icon" data-toggle="tooltip" title="View All"><i class="fa-search"></i></button>   <!--Jignesh-03-03-2021-->
+                                                    <button id="ViewAllUploadFileProjects" class="btn-icon" data-toggle="tooltip" title="View All"><i class="fa-list"></i></button>   <!--Jignesh-03-03-2021-->
                                                     <button id="EditBtnProgramPrg" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i> </button>
                                                 </div>
                                                 <!--<div class="col-sm-6" id="bfc-container" style="text-align:right;">
@@ -3875,7 +3881,7 @@
                                                         <button id="updateBtnProgramPrgElm" class="btn-icon" title="Upload" data-toggle="tooltip"  ><i class="fa-upload"></i></button>     <!-- Shweta 16-07-2020 -->
                                                         <button id="downloadBtnProgramPrgElm" class="btn-icon" title="Download" data-toggle="tooltip"  ><i class="fa-download"></i></button>  <!-- Shweta 16-07-2020 -->
                                                         <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Documents" data-toggle="tooltip"  ><i class="fa-file-o"></i></button>   <!-- Shweta 16-07-2020 -->
-                                                        <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All" data-toggle="tooltip"  ><i class="fa-search"></i></button>   <!-- Swapnil 22-01-2021 -->
+                                                        <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All" data-toggle="tooltip"  ><i class="fa-list"></i></button>   <!-- Swapnil 22-01-2021 -->
                                                         <button id="EditBtnProgramPrgElm" class="btn-icon" title="Edit" data-toggle="tooltip"  ><i class="fa-edit"></i></button>
 
                                                     </div>
