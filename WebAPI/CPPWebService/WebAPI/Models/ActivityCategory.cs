@@ -21,6 +21,8 @@ namespace WebAPI.Models
     {
         [NotMapped]
         public int Operation { get; set; }
+        [NotMapped]
+        public int SuccessTask { get; set; }
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public String CategoryID { get; set; }
@@ -131,9 +133,23 @@ namespace WebAPI.Models
                 {
                     Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
                     int? versionId = Convert.ToInt32(ProjectDetails.VersionId);
-                    MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId && p.Services == ProjectDetails.ProjectClassID.ToString())
+                    int TotalActivityCount = ctx.ActivityCategory.Where(p => p.VersionId == versionId).Count();
+                    int TotalServiceCount = ctx.ActivityCategory.Where(p => p.VersionId == versionId && p.Services == null).Count();
+
+                    if (TotalActivityCount== TotalServiceCount)
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => p.OrganizationID == orgID && p.VersionId == versionId)
+                                                            .OrderBy(a => a.CategoryDescription).Distinct().ToList();
+                    }
+                    else
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => p.OrganizationID == orgID && p.VersionId == versionId && p.Services == ProjectDetails.ProjectClassID.ToString())
                                                         .OrderBy(a => a.CategoryDescription).Distinct().ToList();
-                        MatchedActivityCategoryList = MatchedActivityCategoryList.GroupBy(a => a.CategoryID).Select(a => a.First()).OrderBy(a=>a.CategoryID).ToList();
+                    }
+                    //MatchedActivityCategoryList = ctx.ActivityCategory.Where(p => /*(p.Phase == activityPhase || p.Phase == "All") &&*/ p.OrganizationID == orgID && p.VersionId == versionId)
+                    //                                    .OrderBy(a => a.CategoryDescription).Distinct().ToList();
+                    
+                    MatchedActivityCategoryList = MatchedActivityCategoryList.GroupBy(a => a.CategoryID).Select(a => a.First()).OrderBy(a=>a.CategoryID).ToList();
                     
                 }
             }
@@ -166,12 +182,26 @@ namespace WebAPI.Models
 
                 using (var ctx = new CPPDbContext())
                 {
+                    int TotalActivityCount = ctx.ActivityCategory.Where(p => p.VersionId == verId).Count();
+                    int TotalServiceCount = ctx.ActivityCategory.Where(p => p.VersionId == verId && p.Services == null).Count();
+
                     Project ProjectDetails = ctx.Project.Where(p => p.ProjectID == prjId).FirstOrDefault();
 
-                    MatchedActivityCategoryList = ctx.ActivityCategory.
+                    if (TotalActivityCount == TotalServiceCount)
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.
+                            Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId )
+                            .OrderBy(a => a.SubCategoryID)
+                            .ToList();
+                    }
+                    else
+                    {
+                        MatchedActivityCategoryList = ctx.ActivityCategory.
                             Where(a => a.CategoryID == CategoryID && /*(a.Phase == activityPhase || a.Phase == "All") &&*/ (a.OrganizationID == null || a.OrganizationID == OrganizationID) && a.VersionId == verId && a.Services == ProjectDetails.ProjectClassID.ToString())
                             .OrderBy(a => a.SubCategoryID)
                             .ToList();
+                    }
+                    
                 }
             
 
@@ -223,6 +253,7 @@ namespace WebAPI.Models
                         ctx.SaveChanges();
                         //register_result += "Subcategory ID " + activity.SubCategoryID + " has been created successfully.\n";    //front end relying the word "successfully"
                         register_result += "SubCategory ID " + activity.SubCategoryID + " has been created successfully.\n";    /*Tanmay - 01/12/2021*/
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else
                     {
@@ -447,6 +478,7 @@ namespace WebAPI.Models
                         ctx.Entry(retrievedActivityCategory).State = System.Data.Entity.EntityState.Modified;
                         ctx.SaveChanges();
                         update_result += "Subcategory ID " + activity.SubCategoryID + " has been updated successfully.\n";
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else    //Entry not found
                     {
@@ -485,19 +517,22 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
+                    ActivityCategory oldVersionActivityCategory = ctx.ActivityCategory.Where(s => s.ID == activity.ID).FirstOrDefault(); // Narayan - getting old version data before deletion - 14/06/2022
                     ActivityCategory retrievedActivity = new ActivityCategory();
                     retrievedActivity = ctx.ActivityCategory.Where(s =>
-                                                                            s.ID == activity.ID
-                                                                            && s.SubCategoryID == activity.SubCategoryID
-                                                                            && s.CategoryID == activity.CategoryID
-                                                                           // && s.Phase == activity.Phase
-                                                                            && s.VersionId == latestVersion.Id).FirstOrDefault();
+                                                                            //s.ID == activity.ID
+                                                                            s.SubCategoryID == oldVersionActivityCategory.SubCategoryID
+                                                                            && s.CategoryID == oldVersionActivityCategory.CategoryID
+                                                                            && s.Services == oldVersionActivityCategory.Services
+                                                                            // && s.Phase == activity.Phase
+                                                                            && s.VersionId == latestVersion.Id).FirstOrDefault(); // Narayan - old version data compare with same new version data - 14/06/2022
                     if (retrievedActivity != null)
                     {
                         //Delete
                         ctx.ActivityCategory.Remove(retrievedActivity);
                         ctx.SaveChanges();
                         result += "Subcategory ID " + activity.SubCategoryID + " has been deleted successfully.\n";
+                        activity.SuccessTask++; // Narayan - incriment success task - 14/06/2022
                     }
                     else
                     {

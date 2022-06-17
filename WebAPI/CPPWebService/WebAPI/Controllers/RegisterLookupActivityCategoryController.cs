@@ -46,53 +46,77 @@ namespace WebAPI.Controllers
                                                     new MySql.Data.MySqlClient.MySqlParameter("@OldVesrionID", oldVersion.Id),
                                                     new MySql.Data.MySqlClient.MySqlParameter("@NewVersionID", latestVersion.Id));
 
-                
+                    //Versionmaster latestVersion = ctx.VersionMaster.Where(s => s.Id == 76).FirstOrDefault();
 
-                String status = "";
+
+                    String status = "";
 
                     act_category_list = act_category_list.Where(s => s.Operation != 4).ToList();
 
-                foreach (var act_category in act_category_list)
-                {
-                    if (act_category.Operation == 1)
-                        status += WebAPI.Models.ActivityCategory.registerActivityCategory(act_category, latestVersion);
+                    int Success = 0;
 
-                    if (act_category.Operation == 2)
+                    foreach (var act_category in act_category_list)
                     {
-                        if (act_category.CategoryID == "null" && act_category.SubCategoryID == "null")  //CategoryID and SubcategoryID cannot be null
-                            status += "Must pass CategoryID and SubcategoryID";
-                        else //Update both category and subcategory
-                             status += WebAPI.Models.ActivityCategory.updateActivityCategorySubCategory(act_category, latestVersion);
+                        if (act_category.Operation == 1)
+                        {
+                            status += WebAPI.Models.ActivityCategory.registerActivityCategory(act_category, latestVersion);
+                            Success += act_category.SuccessTask; ; // Narayan - incriment success task - 14/06/2022
+                        }
+                        if (act_category.Operation == 2)
+                        {
+                            if (act_category.CategoryID == "null" && act_category.SubCategoryID == "null")  //CategoryID and SubcategoryID cannot be null
+                                status += "Must pass CategoryID and SubcategoryID";
+                            else //Update both category and subcategory
+                                status += WebAPI.Models.ActivityCategory.updateActivityCategorySubCategory(act_category, latestVersion);
+                            Success += act_category.SuccessTask; ; // Narayan - incriment success task - 14/06/2022
                             //status += WebAPI.Models.ActivityCategory.registerActivityCategory(act_category);
 
+                        }
+
+                        if (act_category.Operation == 3)
+                        {
+                            status += WebAPI.Models.ActivityCategory.deleteActivityCategory(act_category, latestVersion);
+                            Success += act_category.SuccessTask; ; // Narayan - incriment success task - 14/06/2022
+                        }
+                        if (act_category.Operation == 4)
+                            status += "";
                     }
 
-                    if (act_category.Operation == 3)
-                        status += WebAPI.Models.ActivityCategory.deleteActivityCategory(act_category, latestVersion);
+                    Console.WriteLine(Success);
 
-                    if (act_category.Operation == 4)
-                        status += "";
-                }
-               
-                var jsonNew = new
-                {
-                    result = status
-                    //result = "New WBS has been saved successfully."
-                };
+                    // Narayan - if none of multiple or single task Succeed then delete new version - 15/06/2022
+                    if(Success == 0)
+                    {
+                        ctx.VersionMaster.Remove(latestVersion);
+                        //List<ActivityCategory> deleteActivities = new List<ActivityCategory>();
+                        //deleteActivities = ctx.ActivityCategory.Where(a => a.VersionId == latestVersion.Id).ToList();
+                        //foreach (var activity in deleteActivities)
+                        //    ctx.ActivityCategory.Remove(activity);
+                        ctx.SaveChanges();
+                        ctx.Database.ExecuteSqlCommand("call SpRemoveWBSByVersionId(@VersionID)",
+                                                    new MySql.Data.MySqlClient.MySqlParameter("@VersionID", latestVersion.Id));
+                        status += "Unable to create new version due to fail task.";
+                    }
 
-                return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
+                    var jsonNew = new
+                    {
+                        result = status
+                        //result = "New WBS has been saved successfully."
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
                 }
             }
             catch (Exception ex)
             {
 
                 throw ex;
-                
-            }
-            
-            
 
-        
+            }
+
+
+
+
         }
-	}
+    }
 }
