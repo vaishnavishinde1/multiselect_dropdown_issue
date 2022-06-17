@@ -11298,7 +11298,14 @@ WBSTree = (function ($) {
                             else {
                                 $('#program_current_end_date').attr('disabled', 'disabled');
                                 $('#program_original_end_date').removeAttr('disabled');
-                                $('#program_original_end_date').val((selectedNode.CurrentEndDate).format('MM/DD/YYYY'));                         
+                                //Aditya: current end date issue fixed 17062022
+                                if (selectedNode.CurrentEndDate != "" ) {
+                                    $('#program_original_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));
+                                }
+                                else {
+                                    $('#program_original_end_date').val("");
+                                }
+                                                    
                             }
 
                         }
@@ -11790,9 +11797,9 @@ WBSTree = (function ($) {
                             }
                         }
                         $('#total_modification').val('$' + totalValue);
-                        //$('#total_modification').val().replace("$", "").replaceAll(",", "");
-                        //$('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
-                        //$('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
+                        //$('#total_modification').val().replace("$", "");
+                        $('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
+                        $('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
                         var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
                         var totalContractValue = parseFloat(ogContractValue) + totalValue;
                         $('#current_contract_value').val("$" + totalContractValue);
@@ -18030,29 +18037,21 @@ WBSTree = (function ($) {
                     //Populate project classes for dropdown
                     //Find the project class name given the id
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
-                    var serviceClassList; //= wbsTree.getServiceClassList();
-                    var angularHttp = wbsTree.getAngularHttp();
-                    angularHttp.get(serviceBasePath + 'Request/ServiceClass/' + selectedNode.ProjectID).then(function (response) {
+                    var serviceClassList = wbsTree.getServiceClassList();
+                    var projectClassName = '';
+                    serviceClassDropDown.empty();
 
-                        serviceClassList = response.data.result;
-                        var projectClassName = '';
-                        serviceClassDropDown.empty();
-
-                        for (var x = 0; x < serviceClassList.length; x++) {
-                            if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
-                                projectClassName = serviceClassList[x].Description
-                            }
-
-                            if (serviceClassList[x].Description == null) {
-                                continue;
-                            }
-                            serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    for (var x = 0; x < serviceClassList.length; x++) {
+                        if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                            projectClassName = serviceClassList[x].Description
                         }
-                        serviceClassDropDown.val(projectClassName.trim());
-                    });
-                    
 
-                    
+                        if (serviceClassList[x].Description == null) {
+                            continue;
+                        }
+                        serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    }
+                    serviceClassDropDown.val(projectClassName.trim());
 
                     //Populate employee classes for dropdown 
                     //Find the employee selected names given the id
