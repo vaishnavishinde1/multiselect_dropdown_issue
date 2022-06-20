@@ -481,6 +481,7 @@ angular.module('cpp.controllers').
                 // $scope.row = row.entity;
             }
             $scope.save = function () {
+                $("#save_User_Management").attr("disabled", true);
                 var isReload = false;
                 //
                 var isReload = false;
@@ -623,6 +624,7 @@ angular.module('cpp.controllers').
                         || user.DepartmentID == "" || user.DepartmentID == null
                         || user.EmployeeID == "" || user.EmployeeID == null
                         || user.PasswordChangeRequired == undefined || user.PasswordChangeRequired == null)) {
+                        $("#save_User_Management").attr("disabled", false);
                         dhtmlx.alert({
                             text: "UserID, First Name, Last Name, Email, Role, Employee, Department and Password cannot be empty (Row " + user.displayId + ")",
                             width: "300px"
@@ -638,6 +640,7 @@ angular.module('cpp.controllers').
                     const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
                     if (isChanged && !regex.test(user.Email)) {
+                        $("#save_User_Management").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Enter valid email address (Row " + user.displayId + ")",
                             width: "300px"
@@ -651,6 +654,7 @@ angular.module('cpp.controllers').
                     //vaishnavi 10-06-2022
 
                     if (user.new === true && user.LoginPassword == "") {
+                        $("#save_User_Management").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Password Cannot be Empty. (Row " + user.displayId + ")",
                             width: "300px"
@@ -661,6 +665,7 @@ angular.module('cpp.controllers').
 
                     const regexPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
                     if (isChanged && !regexPassword.test(user.LoginPassword) && user.LoginPassword != "") {
+                        $("#save_User_Management").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Enter valid password.<br/> Password should be at least 8 characters long, should contain atleast one number,one capital character and one special character. (Row " + user.displayId + ")",
                             width: "300px"
@@ -745,11 +750,14 @@ angular.module('cpp.controllers').
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_User_Management").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_User_Management").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_User_Management").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -807,6 +815,7 @@ angular.module('cpp.controllers').
                         });
 
                     }, function error(response) {
+                        $("#save_User_Management").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Information missing!");
                         console.log("Failed to save");
                     });
