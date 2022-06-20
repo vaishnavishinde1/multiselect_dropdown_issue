@@ -216,6 +216,7 @@
                 console.log(col);
             }
             $scope.save = function () {
+                $("#save_Service_Class").attr("disabled", true);
                 okToExit = false;
                 var isReload = false;
                 var isChanged = true;
@@ -234,6 +235,7 @@
 
 
                         if (value.Code == "" || value.Description == "") {
+                            $("#save_Service_Class").attr("disabled", false);
                             dhtmlx.alert({
                                 text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                                 width: "400px"
@@ -313,15 +315,19 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Service_Class").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Service_Class").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Service_Class").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
                         if (isTest == true) {
+                            $("#save_Service_Class").attr("disabled", false);
                             //   var newUrl = $location.path();
                             console.log(newUrl);
                             // onRouteChangeOff();
@@ -333,6 +339,7 @@
                         $state.reload();
 
                     }, function error(response) {
+                        $("#save_Service_Class").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }

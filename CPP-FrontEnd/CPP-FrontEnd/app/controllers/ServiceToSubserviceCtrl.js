@@ -279,6 +279,7 @@
 
 
             $scope.save = function () {
+                $("#save_Service_to_subService").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled = true;
@@ -306,6 +307,7 @@
                     if (!Number.isInteger(parseFloat($scope.projectClassPhaseCollection[i].Order))
                         || Number.parseFloat($scope.projectClassPhaseCollection[i].Order) < 1
                         || $scope.projectClassPhaseCollection[i].Order.length < 1) {
+                        $("#save_Service_to_subService").attr("disabled", false);
                         dhtmlx.alert('Order must be a valid integer greater than 0. (Row ' + $scope.projectClassPhaseCollection[i].displayId + ')');
                         isFilled = false;
                         return;
@@ -316,6 +318,7 @@
                         $scope.projectClassPhaseCollection[i].PhaseCodeName == "" ||
                         $scope.projectClassPhaseCollection[i].PhaseID == "" ||
                         $scope.projectClassPhaseCollection[i].Order == "") {
+                        $("#save_Service_to_subService").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + $scope.projectClassPhaseCollection[i].displayId + ")",
                             width: "300px"
@@ -424,14 +427,17 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Service_to_subService").attr("disabled", false);
                         console.log(response);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Service_to_subService").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                             listToSave = [];
                             $scope.listToDelete = [];
                         } else {
+                            $("#save_Service_to_subService").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -464,6 +470,7 @@
                             $scope.orgProjectClassPhaseCollection = angular.copy($scope.projectClassPhaseCollection);   //Manasi 15-07-2020
                         });
                     }, function error(response) {
+                        $("#save_Service_to_subService").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                     //if (isReload == true)

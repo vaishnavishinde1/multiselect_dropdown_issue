@@ -217,6 +217,7 @@
                 console.log(col);
             }
             $scope.save = function () {
+                $("#save_Prime").attr("disabled", true);
                 okToExit = false;
                 var isReload = false;
                 var isChanged = true;
@@ -237,6 +238,7 @@
                         if (
                             //value.Type == "" ||
                             value.Name == "") {
+                            $("#save_Prime").attr("disabled", false);
                             dhtmlx.alert({
                                 text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                                 width: "400px"
@@ -316,11 +318,14 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Prime").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Prime").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Prime").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -336,6 +341,7 @@
                         $state.reload();
 
                     }, function error(response) {
+                        $("#save_Prime").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }
