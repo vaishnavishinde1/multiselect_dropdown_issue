@@ -2,15 +2,15 @@ angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
-        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId','ProjectClassByProgramElementId', 'Client', 'Prime', 'Location', 'ProjectNumber',
+        'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId', 'ProjectClassByProgramElementId', 'Client', 'Prime', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
-        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber', 'CertifiedPayroll','Wrap',  
+        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber', 'CertifiedPayroll', 'Wrap',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap) {      
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -30,7 +30,7 @@ angular.module('cpp.controllers').
             var formdata = new FormData();
             $scope.deleteDoc = [];
             var _modificationList = null;
-            var _wbsTreeData = null; 
+            var _wbsTreeData = null;
             var g_program_element_change_order_draft_list = [];
             $('#fileUploadProject').change(function (ev) {
                 console.log(fileUploadProject.files);
@@ -108,7 +108,7 @@ angular.module('cpp.controllers').
                 //}
                 //------------------------Manasi----------------------------------
 
-               
+
                 //$('#spinRow').show();
                 //document.getElementById("loading1").style.display = "block"; // Manasi 25-08-2020
                 document.getElementById("uploadBtnProjectspinRow").style.display = "block"; //Manasi 25-08-2020
@@ -206,7 +206,8 @@ angular.module('cpp.controllers').
                                             '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -327,7 +328,8 @@ angular.module('cpp.controllers').
                                             '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -461,7 +463,7 @@ angular.module('cpp.controllers').
                 //    return;
                 //}
 
-               
+
 
                 document.getElementById("uploadBtnTrendspinRow").style.display = "block"; //Manasi 25-08-2020
 
@@ -523,7 +525,8 @@ angular.module('cpp.controllers').
                                             '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -638,7 +641,8 @@ angular.module('cpp.controllers').
                                             '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -905,7 +909,7 @@ angular.module('cpp.controllers').
                 }
 
                 console.log('get files', $files);
-               // var x = wbsTree.getSelectedProgramElementID();
+                // var x = wbsTree.getSelectedProgramElementID();
                 var x = _selectedNode.ProgramElementID;
                 console.log(x)
                 var docTypeID = $("#document_type_programPrg  option").filter(":selected").val();
@@ -934,8 +938,8 @@ angular.module('cpp.controllers').
                         return;
                     }
                 }
-                
-               // $('#fileUploadProgramElement').prop('disabled', false);
+
+                // $('#fileUploadProgramElement').prop('disabled', false);
                 if (DocumentName == "" || DocumentName.length == 0) {
                     dhtmlx.alert('Enter Document Name.');
                     return;
@@ -969,7 +973,7 @@ angular.module('cpp.controllers').
 
                 //-----------------------------------------------------------------
 
-               
+
                 //$('#spinRow').show();
                 //$('#uploadBtnProgramelmtDMspinRow').show();
                 document.getElementById("uploadBtnProgramElementspinRow").style.display = "block"; //Manasi 20-08-2020
@@ -1069,7 +1073,8 @@ angular.module('cpp.controllers').
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
-                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1189,7 +1194,8 @@ angular.module('cpp.controllers').
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
-                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1322,11 +1328,11 @@ angular.module('cpp.controllers').
                         dhtmlx.alert('Please select a file.');
                         return;
                     }
-                if (files[0].size / 1024 / 1024 > 128) {
-                    dhtmlx.alert('File size exceed 128MB. Please select a smaller size file.');
-                    return;
-                }
-                $('#fileUploadProgram').prop('disabled', false);
+                    if (files[0].size / 1024 / 1024 > 128) {
+                        dhtmlx.alert('File size exceed 128MB. Please select a smaller size file.');
+                        return;
+                    }
+                    $('#fileUploadProgram').prop('disabled', false);
                 }
                 if (DocumentName == "" || DocumentName.length == 0) {
                     dhtmlx.alert('Enter Document Name.');
@@ -1362,7 +1368,7 @@ angular.module('cpp.controllers').
 
                 //-----------------------------------------------------------------
 
-             
+
                 $('#uploadBtnProgramspinRow').show();
                 document.getElementById("uploadBtnContModspinRow").style.display = "block";
                 formdata = new FormData();
@@ -1470,7 +1476,8 @@ angular.module('cpp.controllers').
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1533,7 +1540,7 @@ angular.module('cpp.controllers').
                     });
                 }
                 else {
-                    
+
                     var editOperation = "1";
                     var noFile = false;
                     if (fileUploadProgram.files.length == 0)
@@ -1593,7 +1600,8 @@ angular.module('cpp.controllers').
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1756,7 +1764,7 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Prime Name');
                     return;
                 }
-                
+
 
 
 
@@ -1886,7 +1894,7 @@ angular.module('cpp.controllers').
                     return;
                 }
 
-                
+
 
                 var listToSave = [];
                 var dataObj = {
@@ -1902,7 +1910,7 @@ angular.module('cpp.controllers').
                     UniqueIdentityNumber: uniqueIdentityNumber
                 }
                 listToSave.push(dataObj);
-                
+
                 var url = serviceBasePath + 'response/Client/';
                 $http({
                     url: url,
@@ -1917,8 +1925,8 @@ angular.module('cpp.controllers').
                             debugger;
                             wbsTree.setClientList(response.result);
                             var clientDropDownProgram;
-                           
-                            var clientList = wbsTree.getClientList();   
+
+                            var clientList = wbsTree.getClientList();
                             clientList.sort(function (a, b) {                 //vaishnavi
                                 return a.ClientName.localeCompare(b.ClientName); //vaishnavi
                             });   //vaishnavi
@@ -1944,7 +1952,7 @@ angular.module('cpp.controllers').
                         //}).then(function success(response) {
                         //    wbsTree.setClientList(response.data.result);
                         //    var clientDropDownProgram;
-                            
+
                         //    var clientList = wbsTree.getClientList();
                         //    clientDropDownProgram = modal.find('.modal-body #program_client_poc');
                         //    clientDropDownProgram.empty();
@@ -2050,7 +2058,7 @@ angular.module('cpp.controllers').
 
 
                 var pgmogenddate = $('#program_original_end_date').val(); // Aditya ogDate
-                
+
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
                 var scheduleImpact = $('#schedule_impact').val();
@@ -2070,7 +2078,7 @@ angular.module('cpp.controllers').
                     dhtmlx.alert('Enter Date.');
                     return;
                 }
-                
+
                 //Vaishnavi 08-02-2022
                 if (date) {
                     //Aditya 10062022
@@ -2085,8 +2093,7 @@ angular.module('cpp.controllers').
                     //}
                 }
                 //Nivedita 03-02-2022
-                if (modType != 1)
-                {
+                if (modType != 1) {
                     //if (pgmcurrentstartdate == "" || pgmcurrentstartdate.length == 0) {
                     //    dhtmlx.alert('Enter Contract Start Date.');
                     //    return;
@@ -2098,7 +2105,7 @@ angular.module('cpp.controllers').
 
                     }
                 }
-                
+
                 //if (_selectedNode.CurrentEndDate == "") {
                 //    _selectedNode.CurrentEndDate = pgmcurrentenddate;
                 //}
@@ -2153,17 +2160,16 @@ angular.module('cpp.controllers').
                     Description: description,
                     Date: date,
                     ModificationType: modType,
-                    Value: value.replace("$", ""),
+                    Value: value.replace("$", "").replaceAll(",", ""),
                     //DurationDate: durationDate,
                     ProgramID: programId,
                     CreatedBy: createdBy,
                     ScheduleImpact: scheduleImpact,
                     originalEndDate: pgmogenddate // Aditya ogDate
-                    
+
                 };
-                
-                if (modType != 1)
-                {
+
+                if (modType != 1) {
                     contractModification.ProgramStartDt = pgmcurrentstartdate;
                     contractModification.ProgramEndDt = pgmcurrentenddate;
                     $('#program_current_end_date').attr('disabled', true); // Aditya ogDate
@@ -2201,7 +2207,7 @@ angular.module('cpp.controllers').
                             originalEndDate: pgmogenddate // Aditya ogDate
                         };
                         // Narayan - show confirmation message before delete - 16/06/2022
-                        dhtmlx.confirm("Are you sure you want to delete ?<br/> It will also delete linked documents", function (result) {
+                        dhtmlx.confirm("Are you sure you want to delete ?<br/> All linked documents will also get deleted", function (result) {
                             //console.log(result);
                             if (result) {
                                 PerformOperationOnContractModification(contractModification);
@@ -2292,15 +2298,15 @@ angular.module('cpp.controllers').
                         var totalValue = 0;
                         var totalDaysOfScheduleImpact = 0;
                         for (var x = 1; x < _modificationList.length; x++) {
-                            totalValue = totalValue + parseFloat((_modificationList[x].ModificationNo != "0" ? (_modificationList[x].Value != "" ? _modificationList[x].Value : 0 ) : 0 ));
+                            totalValue = totalValue + parseFloat((_modificationList[x].ModificationNo != "0" ? (_modificationList[x].Value != "" ? _modificationList[x].Value : 0) : 0));
                             totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_modificationList[x].ScheduleImpact);
                             //if (_modificationList[x].DurationDate != "" && _modificationList[x].DurationDate != null) {
                             //    updatedContractEndDate = _modificationList[x].DurationDate;
                             //}
                         }
                         $('#total_modification').val('$' + totalValue);
-                        //$('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
-                        //$('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
+                        $('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
+                        $('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
                         var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
                         var totalContractValue = parseFloat(ogContractValue) + totalValue;
                         $('#current_contract_value').val("$" + totalContractValue);
@@ -2308,8 +2314,7 @@ angular.module('cpp.controllers').
                         $('#current_contract_value').blur();  // Jignesh 01-12-2020
                         var modal = $('#ProgramModal'); //.format(sqlDateFormat);
                         //Nivedita 03-02-2022
-                        if (contractModification.ModificationType != 1)
-                        {
+                        if (contractModification.ModificationType != 1) {
                             var temp = wbsTree.getSelectedNode();
                             temp.CurrentEndDate = moment(d.data.CurrentEndDate).format('MM/DD/YYYY');
                             wbsTree.updateTreeNodes(temp);
@@ -2318,7 +2323,7 @@ angular.module('cpp.controllers').
                             modal.find('.modal-body #program_original_end_date').val(moment(contractModification.originalEndDate).format('MM/DD/YYYY')); // Aditya ogDate
                             modal.find('.modal-body #program_current_end_date').val(moment(d.data.CurrentEndDate).format('MM/DD/YYYY'));
                         }
-                        
+
                         //modal.find('.modal-body #program_current_end_date').val(_selectedNode.CurrentEndDate ? moment(_selectedNode.CurrentEndDate).add(totalDaysOfScheduleImpact, 'days').format('MM/DD/YYYY') : "");
                         //if (updatedContractEndDate != "" && updatedContractEndDate != null && updatedContractEndDate != undefined) {
                         //    modal.find('.modal-body #program_current_end_date').val(moment(updatedContractEndDate).format('MM/DD/YYYY'));  // Jignesh-26-02-2021
@@ -2327,7 +2332,7 @@ angular.module('cpp.controllers').
                         //    modal.find('.modal-body #program_current_end_date').val(moment(selectedNode.CurrentEndDate).format('MM/DD/YYYY'));  // Jignesh-26-02-2021
                         //}
 
-                        // Narayan - Update Modification Document Grid for document changes - 16/06/2022
+                        // Narayan - Update Modification & Contract Document Grid for document changes - 16/06/2022
                         _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
                             wbsTree.setDocumentList(response.result);
                             var gridUploadedModDocument = $('#gridUploadedDocumentContModification tbody');
@@ -2351,7 +2356,8 @@ angular.module('cpp.controllers').
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modId + ' - ' + modTitle + '</td>' +
-                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
                                 }
@@ -2371,6 +2377,52 @@ angular.module('cpp.controllers').
                                     $('#downloadBtnContModification').removeAttr('disabled');
                                 }
 
+                            });
+
+                            _Document.getModificationByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) { //Amruta 15022022
+                                var _modificationList = response.data;
+                                var moda2 = $('#ProgramModal');
+                                var gridUploadedContDocument = moda2.find("#gridUploadedDocumentProgramNew tbody");
+                                gridUploadedContDocument.empty();
+                                for (var x = 0; x < _documentList.length; x++) {
+                                    var modificatioTitle = "";
+                                    if (_modificationList != undefined) {
+                                        for (var i = 0; i < _modificationList.length; i++) {
+                                            if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
+                                                modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
+                                            }
+                                        }
+                                    }
+                                    gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        // '<input type="radio" group="prgrb" name="record">' +
+                                        '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
+                                        '</td > <td ' +
+                                        'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '>' + _documentList[x].DocumentTypeName + '</td>' +
+                                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
+                                        '>' + modificatioTitle + '</td>' +
+                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                                        '<tr > ');   //MM/DD/YYYY h:mm a'
+
+                                }
+                                $('input[name=rbCategories]').on('click', function (event) {
+                                    if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
+                                        $('#ViewUploadFileProgram').removeAttr('disabled');
+                                        $('#EditBtnProgram').removeAttr('disabled');
+                                    }
+                                    else {
+                                        $('#DeleteUploadProgram').removeAttr('disabled');
+                                        $('#ViewUploadFileProgram').removeAttr('disabled');
+                                        $('#EditBtnProgram').removeAttr('disabled');
+                                        $('#downloadBtnProgram').removeAttr('disabled');
+                                    }
+                                    localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
+                                    //g_selectedProjectDocument = null;
+                                    //g_selectedProjectDocument = $(this).closest("tr").find(".docId").text();
+                                });
                             });
 
                         });
@@ -2531,7 +2583,8 @@ angular.module('cpp.controllers').
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modId + ' - ' + modTitle + '</td>' +
-                                            '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2552,7 +2605,8 @@ angular.module('cpp.controllers').
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
-                                        '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                        '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2819,7 +2873,7 @@ angular.module('cpp.controllers').
                 $('#ClosedModal').modal('hide');
                 if (typeof modal_mode == 'undefined') {
                 }
-               
+
                 if (modal_mode == 'Create') {
 
                 }
@@ -2855,7 +2909,7 @@ angular.module('cpp.controllers').
                                     wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
                                     wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
                                     wbsTree.getScope().trend = null;
-                                   // window.location.reload();
+                                    // window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
@@ -2979,13 +3033,13 @@ angular.module('cpp.controllers').
                                 }, function (response) {
                                     console.log("-------DELETED PROJECT--------");
                                     console.log(selectedNode);
-                                   
+
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
                                     var firstGNode = $('#trendSvg').children()[0];
                                     //$(firstGNode).children().remove();
-                                   // window.location.reload();
+                                    // window.location.reload();
                                 });
                             }
                         //Find  index of selected node
@@ -2999,10 +3053,10 @@ angular.module('cpp.controllers').
                 }
                 _selectedProjectID = null;
                 //$('#project_name').hide();
-               // $('svg.trendTree g').hide();
+                // $('svg.trendTree g').hide();
 
             });
-           //----------------------------Vaishnavi 30-03-2022 Ends Here-------------------------------------------------//
+            //----------------------------Vaishnavi 30-03-2022 Ends Here-------------------------------------------------//
 
 
 
@@ -3794,7 +3848,7 @@ angular.module('cpp.controllers').
                 console.log(response);
                 wbsTree.setProjectWhiteList(response.result);
             });
-           //vaishnavi 12-04-2022
+            //vaishnavi 12-04-2022
             CertifiedPayroll.get({}, function (response) {
                 console.log(response);
                 wbsTree.setCertifiedPayrollList(response.result);
@@ -4060,7 +4114,7 @@ angular.module('cpp.controllers').
                 var sreachTxt = $('#txtQuickSearch').val();
                 $scope.SearchText = sreachTxt;
                 localStorage.setItem('SearchText', sreachTxt);
-                
+
                 var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1', null);
             });
             $scope.FilterTrend = function (e) {
@@ -4076,19 +4130,19 @@ angular.module('cpp.controllers').
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
                     $scope.loadWBSData(orgId, null, null, null, null, '0', null);
-                  
-                  
+
+
                 } else {
                     $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey'); //vaishnavi 02-03-2022
                     $scope.loadWBSData(orgId, null, null, null, null, '1', null);
-                    
-                   
+
+
                 }
 
             }
-       
+
             $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID) {
                 $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
                 $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
@@ -4150,22 +4204,22 @@ angular.module('cpp.controllers').
                         //$rootScope.fromWBS = true;
                         // Rename the project and project element nodes to include project number and project element number.
                         var organization = response;
-                        var str = "<div class='row row-padding'>"+
-                            "<div class='gadget color-my' style = 'height: 733px;' >"+
-                              //  "<div class='gadget-head' style='display: block'>"+
-                                   // "<h3 style='margin-top:1px;'>"+
-                                  //   "   Interface Definition"+
-                                    //"<small style='color:white;' ng-show='data.length' class='page-title-subtle-white'>[ {{ data.length }}  Records(s) ]</small>"+
-                                 //   "</h3>"+
+                        var str = "<div class='row row-padding'>" +
+                            "<div class='gadget color-my' style = 'height: 733px;' >" +
+                            //  "<div class='gadget-head' style='display: block'>"+
+                            // "<h3 style='margin-top:1px;'>"+
+                            //   "   Interface Definition"+
+                            //"<small style='color:white;' ng-show='data.length' class='page-title-subtle-white'>[ {{ data.length }}  Records(s) ]</small>"+
+                            //   "</h3>"+
 
-                                    
-                             //   "<input class='wild-card-search pull-right' ng-model='SearchValue'>"+
-                             //    "           <span class='pull-right' style='margin-right:5px;font-weight:bold;'>Search:</span>"+
-                                  
-                           // "</div>"+
-                                   " <div class='gadget-content' style='height: 91%;'>"+
-                                    "    <table class='table  table-condensed'>  <thead style='position: -webkit-sticky;position: sticky;top:0; '>" +
-                            "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>"+
+
+                            //   "<input class='wild-card-search pull-right' ng-model='SearchValue'>"+
+                            //    "           <span class='pull-right' style='margin-right:5px;font-weight:bold;'>Search:</span>"+
+
+                            // "</div>"+
+                            " <div class='gadget-content' style='height: 91%;'>" +
+                            "    <table class='table  table-condensed'>  <thead style='position: -webkit-sticky;position: sticky;top:0; '>" +
+                            "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Department</th>" +
@@ -4178,11 +4232,10 @@ angular.module('cpp.controllers').
                             "    <td colspan='7'>" +
                             "       <div class='scrolable-table' style='overflow:auto;overflow-x:hidden;height: 100% !important;'>" +
                             "          <table id='gridTable'; class='table striped table-condensed table-responsive table-bordered'>" +
-                            "             <tbody>" ;
+                            "             <tbody>";
                         var currentProgramCost, currentProjectCost, currentProjectElementCost;
-                       
-                        for (programI = 0; programI < organization.children.length; programI++)
-                        {
+
+                        for (programI = 0; programI < organization.children.length; programI++) {
                             var CalCulateProgramCost = 0;
                             //Nivedita
                             var program = organization.children[programI];
@@ -4195,7 +4248,7 @@ angular.module('cpp.controllers').
                                     for (var j = 0; j < project.children.length; j++) {
                                         var projectElement = project.children[j];
                                         CalCulateProjectCost += Number(projectElement.CurrentCost);
-                                       // CalCulateProgramCost += Number(projectElement.CurrentCost);
+                                        // CalCulateProgramCost += Number(projectElement.CurrentCost);
                                         //alert(program.ProgramID + 'Cost=' + CalCulateProgramCost);
                                         //CalCulateProjectCost += CalCulateProgramCost;
                                         //alert(CalCulateProjectCost);
@@ -4208,7 +4261,7 @@ angular.module('cpp.controllers').
                                     else {
                                         project.CurrentCost = CalCulateProjectCost;
                                     }
-                                    
+
                                 }
                                 if (CalCulateProgramCost == 0) {
                                     currentProgramCost = "";
@@ -4217,16 +4270,16 @@ angular.module('cpp.controllers').
                                 else {
                                     currentProgramCost = CalCulateProgramCost;
                                     program.CurrentCost = CalCulateProgramCost;
-                                   currentProgramCost = "$" + addCommas(currentProgramCost);
+                                    currentProgramCost = "$" + addCommas(currentProgramCost);
                                 }
-                                
+
                             }
-                            
+
                             console.log("Check program details===>");
                             console.log(program);
 
                             if (program.children.length == 0) {
-                                str += 
+                                str +=
                                     "<tr class='fade-selection-animation'> " +
                                     "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
@@ -4244,29 +4297,29 @@ angular.module('cpp.controllers').
                                     currentProjectCost = "$" + addCommas(project.CurrentCost);
                                 }
 
-                              
-                               
+
+
 
                                 //organization --- contract -- project
-                                
+
                                 console.log("Project Details====>");
                                 console.log(project);
                                 if (project.children.length == 0) {
                                     var projectClassName = '';
-                                   // ProjectClass.get({}, function (Projectresponse) {
-                                      //  console.log(Projectresponse);
-                                        var projectClassList = wbsTree.getProjectClassList();
-                                        for (var x = 0; x < projectClassList.length; x++) {
-                                            if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
-                                                projectClassName = projectClassList[x].ProjectClassName
-                                            }
+                                    // ProjectClass.get({}, function (Projectresponse) {
+                                    //  console.log(Projectresponse);
+                                    var projectClassList = wbsTree.getProjectClassList();
+                                    for (var x = 0; x < projectClassList.length; x++) {
+                                        if (projectClassList[x].ProjectClassID == project.ProjectClassID) {
+                                            projectClassName = projectClassList[x].ProjectClassName
                                         }
+                                    }
                                     //});
                                     str += "<tr class='fade-selection-animation'>" +
                                         "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
-                                        "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID+">" + project.ProjectClassName + "</td>" +
+                                        "<td class='my-word-wrap' style='width: 14.28%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;' ></td>" +
                                         "<td class='my-word-wrap' style='width: 14.28%;'></td></tr>";
@@ -4280,32 +4333,32 @@ angular.module('cpp.controllers').
                                         currentProjectElementCost = "$" + addCommas(projectElement.CurrentCost);
                                     }
 
-                                    
+
                                     console.log("Project Element Details====>");
                                     console.log(projectElement);
                                     var projectServiceName = '';
-                                   // ServiceClass.get({}, function (response) {
-                                      //  console.log(response);
-                                        
-                                       // var serviceClassList = response.result;
+                                    // ServiceClass.get({}, function (response) {
+                                    //  console.log(response);
+
+                                    // var serviceClassList = response.result;
                                     var serviceClassList = wbsTree.getServiceClassList();
 
-                                        for (var x = 0; x < serviceClassList.length; x++) {
-                                            if (serviceClassList[x].ID == projectElement.ProjectClassID) {
-                                                projectServiceName = serviceClassList[x].Description
-                                            }
+                                    for (var x = 0; x < serviceClassList.length; x++) {
+                                        if (serviceClassList[x].ID == projectElement.ProjectClassID) {
+                                            projectServiceName = serviceClassList[x].Description
                                         }
-                                       
-                                       
-                                   // });
+                                    }
+
+
+                                    // });
                                     str += "<tr class='fade-selection-animation'>" +
                                         "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + "  OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.50%;'><a level=" + project.level + " ProgramelementId=" + project.ProgramElementID + " title=" + currentProjectCost + ">" + project.name + "</a></td>" +
                                         "<td class='my-word-wrap' style='width: 14.50%;' ProjectClassId=" + project.ProgramElementID + ">" + project.ProjectClassName + "</td>" +
                                         "<td class='my-word-wrap' style='width: 14.60%;'><a level=" + projectElement.level + " ProjectId=" + projectElement.ProjectID + " title=" + currentProjectElementCost + ">" + projectElement.name + "</a></td>" +
-                                        "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName+"</td>" +
-                                        "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost +"</td></tr>";
+                                        "<td class='my-word-wrap' style='width: 14.40%;'>" + projectElement.ServiceName + "</td>" +
+                                        "<td class='my-word-wrap' style='width: 13.94%;'>" + currentProjectElementCost + "</td></tr>";
 
 
                                     projectElement.name = projectElement.ProjectElementNumber + ". " + projectElement.name;
@@ -4387,14 +4440,14 @@ angular.module('cpp.controllers').
 
                         modifyTableRowspan(column1);
                         //modifyTableRowspan(column2);
-                      //  modifyTableRowspan(column3);
-                       // modifyTableRowspan(column4);
+                        //  modifyTableRowspan(column3);
+                        // modifyTableRowspan(column4);
 
                         function modifyTableRowspan(column) {
 
-                        var topMatchTd;
-                        var previousValue = "";
-                        var rowSpan = 1;
+                            var topMatchTd;
+                            var previousValue = "";
+                            var rowSpan = 1;
                             column.each(function () {
                                 if ($(this).text() != "") {
 
@@ -4409,10 +4462,10 @@ angular.module('cpp.controllers').
                                     }
 
                                 }
-                            
 
-                            previousValue = $(this).text();
-                        });
+
+                                previousValue = $(this).text();
+                            });
 
                         }
 
@@ -4832,7 +4885,7 @@ angular.module('cpp.controllers').
                             $("#selectOrg option[value='" + orgId + "']").attr('selected', true);
                             wbsTree.getProjectMap().initProjectMap(wbsTree.getSelectedNode(), wbsTree.getOrganizationList());
                         }, 500);
-                    } 
+                    }
 
                     Program.lookup().get({ OrganizationID: orgId }, function (programData) {
                         $scope.programList = programData.result;
@@ -4885,7 +4938,7 @@ angular.module('cpp.controllers').
                                     console.log(testobj);
                                     $scope.filterProject = (testobj.ProjectID).toString();
                                     console.log('ProjectId--' + $scope.filterProject);
-                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null,'1',null);
+                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null, '1', null);
                                 });
                             });
                         });
@@ -4904,7 +4957,7 @@ angular.module('cpp.controllers').
                                 console.log(testobj);
                                 $scope.filterProgramElement = (testobj.ProgramElementID).toString();
                                 console.log('PrgmElmnt:' + $scope.filterProgramElement);
-                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null,'1',null);
+                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null, '1', null);
                                 Project.lookup().get({ ProgramID: $scope.filterProgramId, ProgramElementID: $scope.filterProgramElement }, function (projectData) {
                                     $scope.projectList = projectData.result;
                                 });
@@ -4918,7 +4971,7 @@ angular.module('cpp.controllers').
                             $scope.programList = programData.result;
                             var testobj = ($scope.programList.find(elem => elem.ProgramID == parseInt(localStorage.getItem('pgmId'))));
                             $scope.filterProgramId = (testobj.ProgramID).toString();
-                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null,'1',null);
+                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null);
                             ProgramElement.lookup().get({ ProgramID: $scope.filterProgramId }, function (programElementData) {
                                 $scope.programElementList = programElementData.result;
                                 $("#selectProgramElement").val("");
@@ -4928,7 +4981,7 @@ angular.module('cpp.controllers').
                     }
 
                     else
-                        $scope.loadWBSData(orgId, null, null, null, null,'1',null);
+                        $scope.loadWBSData(orgId, null, null, null, null, '1', null);
 
                 });
 
@@ -5089,7 +5142,7 @@ angular.module('cpp.controllers').
                         }
 
                     });
-                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null,'1',null);
+                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null, '1', null);
 
             }
 
@@ -5168,7 +5221,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgram $http.get pgmId:' + pgmId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, null, null, null,null,null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
 
                         });
                 }
@@ -5191,7 +5244,7 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                            $scope.loadWBSData(orgId, pgmId, null, null, null,'1',null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null, '1', null);
 
                         });
                 }
@@ -5270,7 +5323,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId + ' pgmEltId:' + pgmEltId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1',null);
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null);
                         });
                 } else {
                     $http.get(serviceBasePath + "Request/Project/" + pgmEltId)
@@ -5291,7 +5344,7 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId);
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null,'1',null);
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null);
                         });
                 }
                 //filterChangeProject();
@@ -5299,7 +5352,7 @@ angular.module('cpp.controllers').
             }
 
             $scope.filterChangeDepartment = function () {
-                
+
                 var orgId = $("#selectOrg").val();
                 var pgmId = $("#selectProgram").val();
                 var pgmEltId = $("#selectProgramElement").val();
@@ -5376,7 +5429,7 @@ angular.module('cpp.controllers').
                         });
                 }
 
-                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null,'1',null);
+                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null, '1', null);
 
             }
 

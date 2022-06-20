@@ -275,7 +275,8 @@ angular.module('cpp.controllers').
                 $scope.row = row.entity;
                 console.log(col);
             }
-            $scope.save = function(){
+            $scope.save = function () {
+                $("#save_Positions").attr("disabled", true);
                 var isChanged = true;
                 var isFilled = true;
                 var isReload = false;
@@ -290,7 +291,8 @@ angular.module('cpp.controllers').
                         //    value.MaxHourlyRate == "" ||
                         value.CurrentHourlyRate == ""
                         //|| value.UniqueIdentityNumber == ""
-                        ) {
+                    ) {
+                        $("#save_Positions").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "300px"
@@ -300,6 +302,7 @@ angular.module('cpp.controllers').
                     }
 
                     if (!(/(BEP[0-9]{5})/.test(value.UniqueIdentityNumber) && value.UniqueIdentityNumber.length == 8)) {
+                        $("#save_Positions").attr("disabled", false);
                     	dhtmlx.alert({
                     		text: "Unique identifier must be in the format of BEPxxxxx (Row " + value.displayId + ")",
                     		width: "400px"
@@ -390,21 +393,25 @@ angular.module('cpp.controllers').
                         data: JSON.stringify(listToSave),
                         headers: {'Content-Type': 'application/json'}
                     }).then(function success(response) {
+                        $("#save_Positions").attr("disabled", false);
 
                     	isFresh = true;
 
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Positions").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Positions").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
                         $scope.orgPositionCollection = angular.copy($scope.positionCollection);
                         $state.reload();
 
-                    },function error(response){
+                    }, function error(response) {
+                        $("#save_Positions").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }

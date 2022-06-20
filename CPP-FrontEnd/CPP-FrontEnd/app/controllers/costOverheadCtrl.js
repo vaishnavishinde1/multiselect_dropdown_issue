@@ -316,6 +316,7 @@
                 $scope.row = row.entity;
             }
             $scope.save = function () {
+                $("#save_Cost_Overhead").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled = true;
@@ -326,15 +327,18 @@
                         console.log(isNaN(value.Markup), Number.parseFloat(value.Markup) <= 0);
                         //if (isNaN(value.Markup) || Number.parseFloat(value.Markup) <= 0) {
                         if (isNaN(value.Markup) || Number.parseFloat(value.Markup) < 1) {      //Manasi 23-07-2020
+                            $("#save_Cost_Overhead").attr("disabled", false);
                             dhtmlx.alert('Markup must be a valid number greater than or equal 1 (Row ' + value.displayId + ')');
                             isInvalidList = true;
                             return;
                         } else if (value.StartDate > value.EndDate) {
+                            $("#save_Cost_Overhead").attr("disabled", false);
                             dhtmlx.alert('Start date must come before end date (Row ' + value.displayId +')');
                             isInvalidList = true;
                             return;
                         }
                         if (value.CostTypeName == "" || value.CostRateTypeName == "" || value.Markup == "" || value.StartDate == "" || value.EndDate == "") {
+                            $("#save_Cost_Overhead").attr("disabled", false);
                             dhtmlx.alert({
                                 text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                                 width: "300px"
@@ -455,11 +459,14 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Cost_Overhead").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Cost_Overhead").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Cost_Overhead").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -494,6 +501,7 @@
                         });
 
                     }, function error(response) {
+                        $("#save_Cost_Overhead").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                     //if (isReload == true)

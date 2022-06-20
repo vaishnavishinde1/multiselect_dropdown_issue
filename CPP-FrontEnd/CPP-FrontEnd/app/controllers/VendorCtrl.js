@@ -217,6 +217,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Vendor").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -227,7 +228,8 @@
                 if (value.VendorName == ""
                     //|| value.VendorDescription == "" // Aditya 3-2-2022
                     || value.UniqueIdentityNumber == ""
-                    ) {
+                ) {
+                    $("#save_Vendor").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -238,6 +240,7 @@
                 }
 
                 if (!(/(BV[0-9]{5})/.test(value.UniqueIdentityNumber) && value.UniqueIdentityNumber.length == 7)) {
+                    $("#save_Vendor").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Unique identifier must be in the format of BVxxxxx (Row " + value.displayId + ")",
                         width: "400px"
@@ -312,18 +315,21 @@
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $("#save_Vendor").attr("disabled", false);
                     var isFresh = true;
                     console.log(response);
 
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Vendor").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_Vendor").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -336,6 +342,7 @@
                     $state.reload();
 
                 }, function error(response) {
+                    $("#save_Vendor").attr("disabled", false);
                     console.log(response);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });

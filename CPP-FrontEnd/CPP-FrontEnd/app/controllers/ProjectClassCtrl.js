@@ -228,6 +228,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Project_Class").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -239,6 +240,7 @@
                     if (!Number.isInteger(parseFloat(value.ProjectClassLineItemID)) 
                         || Number.parseFloat(value.ProjectClassLineItemID) < 0
                         || value.ProjectClassLineItemID.length != 2) {
+                        $("#save_Project_Class").attr("disabled", false);
                         dhtmlx.alert('Department code must be a valid two digit number from 00-99. (Row ' + value.displayId + ')');
                         isInvalidList = true;
                         return;
@@ -247,6 +249,7 @@
 
 
                     if (value.ProjectClassName == "" || value.ProjectClassDescription == "" || value.ProjectClassLineItemID == "") {
+                        $("#save_Project_Class").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "400px"
@@ -328,15 +331,19 @@
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $("#save_Project_Class").attr("disabled", false);
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Project_Class").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Project_Class").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_Project_Class").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -348,6 +355,7 @@
                     $state.reload();
 
                 }, function error(response) {
+                    $("#save_Project_Class").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             }

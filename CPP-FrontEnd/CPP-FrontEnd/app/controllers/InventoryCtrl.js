@@ -192,6 +192,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Inventory").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -201,7 +202,8 @@
 
                 if (value.InventoryName == ""
                     || value.InventoryDescription == ""
-                    ) {
+                ) {
+                    $("#save_Inventory").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -273,17 +275,21 @@
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $("#save_Inventory").attr("disabled", false);
                     console.log(response);
 
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Inventory").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Inventory").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_Inventory").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -296,6 +302,7 @@
                     $state.reload();
 
                 }, function error(response) {
+                    $("#save_Inventory").attr("disabled", false);
                     console.log(response);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });

@@ -142,10 +142,11 @@ namespace WebAPI.Models
 
                     Prime duplicatePrime = ctx.Prime.Where(a => (a.id != Prime.id
                                                                                   && (a.Name == Prime.Name))
-                                                                                  || (a.id != Prime.id
+                                                                                  //|| (a.id != Prime.id
                                                                                   
                           //                                                        && (a.Type == Prime.Type)
-                                                                                  )).FirstOrDefault();
+                                                                                  //)
+                                                                                  ).FirstOrDefault();
                                                                                   
 
                     if (retreivedPrime != null && retreivedPrime.id != Prime.id)
