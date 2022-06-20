@@ -426,13 +426,13 @@ WBSTrendTree = (function ($) {
                     ];
                 var shapeSvg = parent.append("image")
                     .attr("xlink:href", function (d) {
-                         //----Vaishnavi 30-03-2022----//
-                        if (node.metadata.Status == "Closed") 
+                        //----Vaishnavi 30-03-2022----//
+                        if (node.metadata.Status == "Closed")
                             return "assets/js/wbs-tree/images/node.png";
                         else
                             return "assets/js/wbs-tree/images/nodeB.png";
-                         //----Vaishnavi 30-03-2022----//
-                       
+                        //----Vaishnavi 30-03-2022----//
+
                     })
                     .attr("x", "-7px")
                     .attr("y", "7px")
@@ -456,12 +456,12 @@ WBSTrendTree = (function ($) {
                     ];
                 var shapeSvg = parent.append("image")
                     .attr("xlink:href", function (d) {
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                         if (node.metadata.Status == "Closed")
                             return "assets/js/wbs-tree/images/node.png";
                         else
                             return "assets/js/wbs-tree/images/nodeC.png";
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                     })
                     .attr("x", "-7px")
                     .attr("y", "7px")
@@ -620,7 +620,7 @@ WBSTrendTree = (function ($) {
                         //window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/1000/" + node.metadata.OrganizationID;
                         //Nivedita22-12-2021
                         window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/3000/" + node.metadata.OrganizationID;
-                    }  else if (node.metadata.level == "ForecastProject") {
+                    } else if (node.metadata.level == "ForecastProject") {
                         // window.location.href = "#/app/future-project/" + node.metadata.ProjectID + "/" + node.metadata.OrganizationID + "/" + "week";
                         window.location.href = "#/app/cost-gantt/" + node.metadata.ProjectID + "/2000/" + node.metadata.OrganizationID;
                     }
@@ -652,38 +652,36 @@ WBSTrendTree = (function ($) {
                         $("#contextMenuMap").parent().hide();
                         $("#contextMenuViewGantt").parent().hide();
 
-                    } else if (node.metadata.level == "FutureTrend") { 
+                    } else if (node.metadata.level == "FutureTrend") {
                         $("#contextMenuAdd").parent().hide();
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                         $("#contextMenuClosed").parent().hide();
                         if (wbsTree.getLocalStorage().acl[6] == 1 && wbsTree.getLocalStorage().acl[7] != 0) {
                             $("#contextMenuClosed").parent().show();
                         }
-                        if (node.metadata.Status == "Closed")
-                        {
+                        if (node.metadata.Status == "Closed") {
                             $("#contextMenuDelete").parent().hide();
                             $("#contextMenuClosed").parent().hide();
                         }
                         $("#contextMenuViewGantt").parent().hide();
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                         modal_mode = "Update";
                     }
                     //========================= Jignesh-01-04-2021 =====================
                     else if (node.metadata.level == "PastTrend") {
                         $("#contextMenuDelete").parent().hide();
                         $("#contextMenuAdd").parent().hide();
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                         if (wbsTree.getLocalStorage().acl[6] == 1 && wbsTree.getLocalStorage().acl[7] != 0) {
                             $("#contextMenuClosed").parent().show();
                         }
-                        if (node.metadata.Status == "Closed")
-                        {
+                        if (node.metadata.Status == "Closed") {
                             $("#contextMenuEdit").html("Open Trend");
                             $("#contextMenuDelete").parent().hide();
                             $("#contextMenuClosed").parent().hide();
                         }
                         $("#contextMenuViewGantt").parent().hide();
-                         //----Vaishnavi 30-03-2022----//
+                        //----Vaishnavi 30-03-2022----//
                         modal_mode = "Update";
                     }
                     //==================================================================
@@ -733,12 +731,12 @@ WBSTrendTree = (function ($) {
                 } else {
                     $("#contextMenuEdit").html("Edit/Open Trend");
                 }
-                 //----Vaishnavi 30-03-2022----//
+                //----Vaishnavi 30-03-2022----//
                 if (node.metadata.Status == "Closed") {
                     $("#contextMenuEdit").html("Open Trend");
-                    
+
                 }
-                 //----Vaishnavi 30-03-2022----//
+                //----Vaishnavi 30-03-2022----//
 
             }
             // alert("2");
@@ -749,9 +747,9 @@ WBSTrendTree = (function ($) {
                 $("#contextMenuDelete").parent().show();
             } else {
                 $("#contextMenuDelete").parent().hide();
-                
+
             }
-           
+
             $("#contextMenuMap").parent().hide();
             //var currentZoom = ((window.outerWidth - 10) / window.innerWidth);
             //currentZoom = (currentZoom > 1) ? currentZoom : 1;
@@ -918,7 +916,7 @@ WBSTrendTree = (function ($) {
                 //modal_mode = 'Update';
                 modal.find('.modal-title').text("Trend");
                 var trendNumber = wbsTrendTree.getTrendNumber();
-                
+
 
                 modal_mode = 'Update';
                 modal.find('.c-modal-footer #approve_trend').show();
@@ -1023,7 +1021,8 @@ WBSTrendTree = (function ($) {
                                 '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -1048,7 +1047,7 @@ WBSTrendTree = (function ($) {
                     //=====================================================================================
                 });
                 //============================================================================================================
-                
+
 
             });
 
@@ -1076,7 +1075,7 @@ WBSTrendTree = (function ($) {
                 var s = wbsTrendTree.getWBSTree().getNewTrend();
                 var selectedNodeTrend = wbsTrendTree.getSelectedTreeNode();
                 console.log(selectedNodeTrend);
-                
+
                 modal.find('.modal-body #approval_date').datepicker("destroy"); // Jignesh-15-04-2021
                 modal.find('.modal-body #approval_date').datepicker(); // Jignesh-26-02-2021
 
@@ -1186,7 +1185,7 @@ WBSTrendTree = (function ($) {
                     modal.find('.modal-body #approval_date').val("");
                     modal.find('.modal-body #client_approved_date').val(""); // Jignesh-26-02-2021
                     //====================================== Jignesh-TDM-06-01-2020 =======================================
-					var gridUploadedDocument = $('#gridUploadedDocumentTrend tbody'); // 15-01-2021
+                    var gridUploadedDocument = $('#gridUploadedDocumentTrend tbody'); // 15-01-2021
                     gridUploadedDocument.empty(); // 15-01-2021
                     $('#DeleteUploadTrend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled');
@@ -1325,7 +1324,8 @@ WBSTrendTree = (function ($) {
                                 '><a>' + _documentList[x].DocumentName + '</a></td> ' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -1369,9 +1369,9 @@ WBSTrendTree = (function ($) {
                     $('#delete_future_trend').attr('disabled', 'disabled');  //----Vaishnavi 30-03-2022----//
                     $('#update_trend').removeAttr('disabled');
                     $('#updateDMBtnTrend').removeAttr('disabled'); // Jignesh-05-03-2021
-                   
+
                 }
-                 //----Vaishnavi 30-03-2022----//
+                //----Vaishnavi 30-03-2022----//
                 if (metadata.Status == "Closed") {
                     //Nivedita - Button changes to Grey on Add New  25-04-2022
                     $('#delete_future_trend').removeClass('btn btn-primary c-btn-delete');
@@ -1381,7 +1381,7 @@ WBSTrendTree = (function ($) {
                     $('#update_trend').attr('disabled', 'disabled');
                     $('#updateDMBtnTrend').attr('disabled', 'disabled');
                 }
-                 //----Vaishnavi 30-03-2022----//
+                //----Vaishnavi 30-03-2022----//
 
             });
 
@@ -1686,24 +1686,24 @@ WBSTrendTree = (function ($) {
                         "IsChangeRequest": isChangeRequest,
                         "ChangeOrderID": changeOrderId,
                         //"IsInternal": isInternal,
-                        "IsApprovedByClient": isApprovedByClient,  
+                        "IsApprovedByClient": isApprovedByClient,
                         "ClientApprovedDate": modal.find('.modal-body #pasttrend_client_approved_date').val(),
                         "TrendJustification": modal.find('.modal-body #pasttrend_justification').val(),
                         "TrendImpact": modal.find('.modal-body input[name="pasttrend_impact"]:checked').val(),
-                        "TrendImpactSchedule": modal.find('.modal-body input[name="pasttrend_impact_schedule"]:checked').val(),  
-                        "TrendImpactCostSchedule": modal.find('.modal-body input[name="pasttrend_impact_cost_schedule"]:checked').val(), 
+                        "TrendImpactSchedule": modal.find('.modal-body input[name="pasttrend_impact_schedule"]:checked').val(),
+                        "TrendImpactCostSchedule": modal.find('.modal-body input[name="pasttrend_impact_cost_schedule"]:checked').val(),
                         "ApprovalFrom": modal.find('.modal-body #approval_from').val(),
                         "ApprovalDate": modal.find('.modal-body #pasttrend_approval_date').val(),
                         "CreatedOn": metadata.CreatedOn,
                         //"costOverheadTypeID" : costOverheadTypeID
 
-                        "costOverheadTypeID": 1 
+                        "costOverheadTypeID": 1
                     };
 
                     console.log(toUpdateTrend);
                     _Trend.persist().save(toUpdateTrend, function (response) {
                         $("#update_pasttrend").attr("disabled", false);
-                        isFieldValueChanged = false; 
+                        isFieldValueChanged = false;
                         metadata.TrendNumber = pastTrendNumber;
                         metadata.TrendJustification = modal.find('.modal-body #pasttrend_justification').val();
                         metadata.TrendImpact = modal.find('.modal-body input[name="pasttrend_impact"]:checked').val();
@@ -1719,7 +1719,7 @@ WBSTrendTree = (function ($) {
                         wbsTrendTree.trendGraph();
                     });
                 }
-                
+
             });
             //===================================================================================================
             //============== Jignesh-31-03-2021 =================================================================
@@ -1930,11 +1930,11 @@ WBSTrendTree = (function ($) {
                 else {
 
                     $('#fileUploadTrend').val('');
-                    $('#DocSpecialNoteTrend').val(''); 
+                    $('#DocSpecialNoteTrend').val('');
                     $('#document_name_trend').val('');
                     $('#document_type_trend').val('');
                     $('#DocUpdateModalTrend').modal({ show: true, backdrop: 'static' });
-                    
+
                 }
             });
             $('#fileUploadTrend').change(function (ev) {
