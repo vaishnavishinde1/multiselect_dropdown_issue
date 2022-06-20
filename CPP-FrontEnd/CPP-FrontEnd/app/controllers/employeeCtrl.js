@@ -445,6 +445,7 @@ angular.module('cpp.controllers').
             var saved = false; //if table has been saved, then true
 
             $scope.save = function () {
+                $("#save_Employee").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled = true;
@@ -456,6 +457,7 @@ angular.module('cpp.controllers').
                         return;
                     }
                     if (employee.FirstName === "" || employee.LastName === "") {
+                        $("#save_Employee").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Employee first and last name cannot be empty! (Row " + employee.displayId + ")",
                             width: "300px"
@@ -465,6 +467,7 @@ angular.module('cpp.controllers').
                     }
 
                     if (employee.FTEPositionID === 'Click to Select') {
+                        $("#save_Employee").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please select FTE Position from the drop down list! (Row " + employee.displayId + ")",
                             width: "300px"
@@ -475,6 +478,7 @@ angular.module('cpp.controllers').
 
                     console.log(Math.sign(employee.HourlyRate), isNaN(employee.HourlyRate));
                     if (isNaN(employee.HourlyRate) || Math.sign(employee.HourlyRate) < 0) {
+                        $("#save_Employee").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Hourly Rate needs to be a valid number! (Row " + employee.displayId + ")",
                             width: "300px"
@@ -483,6 +487,7 @@ angular.module('cpp.controllers').
                         return;
                     }
                     if (employee.UniqueIdentityNumber === "" || employee.UniqueIdentityNumber == null) {
+                        $("#save_Employee").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Unique Identifier cannot be empty! (Row " + employee.displayId + ")",
                             width: "300px"
@@ -493,6 +498,7 @@ angular.module('cpp.controllers').
 
 
                     if (!(/(BE[0-9]{5})/.test(employee.UniqueIdentityNumber) && employee.UniqueIdentityNumber.length == 7)) {
+                        $("#save_Employee").attr("disabled", false);
                     	dhtmlx.alert({
                     		text: "Unique identifier must be in the format of BExxxxx (Row " + employee.displayId + ")",
                     		width: "400px"
@@ -601,11 +607,14 @@ angular.module('cpp.controllers').
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Employee").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Employee").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Employee").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -631,6 +640,7 @@ angular.module('cpp.controllers').
                             console.log($scope.employeeCollection);
                         });
                     }, function error(response) {
+                        $("#save_Employee").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Information missing!");
                         console.log("Failed to save");
                     });

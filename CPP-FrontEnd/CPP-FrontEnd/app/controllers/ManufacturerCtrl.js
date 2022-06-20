@@ -192,6 +192,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Manufacturer").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -201,7 +202,8 @@
 
                 if (value.ManufacturerName == ""
                     || value.ManufacturerDescription == ""
-                    ) {
+                ) {
+                    $("#save_Manufacturer").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -273,13 +275,16 @@
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $("#save_Manufacturer").attr("disabled", false);
                     console.log(response);
 
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Manufacturer").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Manufacturer").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
@@ -296,6 +301,7 @@
                     $state.reload();
 
                 }, function error(response) {
+                    $("#save_Manufacturer").attr("disabled", false);
                     console.log(response);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });

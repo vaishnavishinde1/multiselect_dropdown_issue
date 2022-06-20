@@ -219,7 +219,8 @@ angular.module('cpp.controllers').
             $scope.row = row.entity;
             console.log(col);
         }
-        $scope.save = function(){
+        $scope.save = function () {
+            $("#save_Unit_Type").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -228,6 +229,7 @@ angular.module('cpp.controllers').
             angular.forEach($scope.unitTypeCollection, function (value, key, obj) {
 
                 if (value.UnitName == "" || value.UnitAbbr == "") {
+                    $("#save_Unit_Type").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -303,15 +305,19 @@ angular.module('cpp.controllers').
                     data: JSON.stringify(listToSave),
                     headers: {'Content-Type': 'application/json'}
                 }).then(function success(response) {
+                    $("#save_Unit_Type").attr("disabled", false);
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Unit_Type").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Unit_Type").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
-                    if(isTest==true){
+                    if (isTest == true) {
+                        $("#save_Unit_Type").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -321,7 +327,8 @@ angular.module('cpp.controllers').
                     $scope.orgUnitTypeCollection = angular.copy($scope.unitTypeCollection);
                     okToExit = true;
                     $state.reload();
-                },function error(response){
+                }, function error(response) {
+                    $("#save_Unit_Type").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             }
