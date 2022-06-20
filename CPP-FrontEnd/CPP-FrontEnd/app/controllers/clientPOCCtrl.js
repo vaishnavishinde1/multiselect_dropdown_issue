@@ -361,6 +361,7 @@
             }
 
             $scope.save = function () {
+                $("#save_ClientPOC").attr("disabled", true);
                 okToExit = false;
                 var isReload = false;
                 var isChanged = true;
@@ -370,6 +371,7 @@
                   
                     if (value.BillingPOCPhone1.length > 0) {
                         if (value.BillingPOCPhone1.length != 10) {
+                            $("#save_ClientPOC").attr("disabled", false);
                             dhtmlx.alert('Enter valid 10 digit Client Phone 1.'); // Jignesh-02-03-2021
                             return true;
                         }
@@ -377,6 +379,7 @@
 
                     if (value.BillingPOCPhone2.length > 0) {
                         if (value.BillingPOCPhone2.length != 10) {
+                            $("#save_ClientPOC").attr("disabled", false);
                             dhtmlx.alert('Enter valid 10 digit Client Phone 2.'); // Jignesh-02-03-2021
                             return true;
                         }
@@ -385,6 +388,7 @@
                     if (value.BillingPOCEmail.length > 0) {
                         var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
                         if (!testEmail.test(value.BillingPOCEmail)) {
+                            $("#save_ClientPOC").attr("disabled", false);
                             dhtmlx.alert('Please enter valid Email Address for Billing POC.'); // Jignesh-02-03-2021
                             return;
                         }
@@ -399,6 +403,7 @@
                     }
 
                     if (value.BillingPOC == "" || value.UniqueIdentityNumber == "") {
+                        $("#save_ClientPOC").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "400px"
@@ -509,17 +514,21 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_ClientPOC").attr("disabled", false);
                         isFresh = true;
 
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_ClientPOC").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_ClientPOC").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
                         if (isTest == true) {
+                            $("#save_ClientPOC").attr("disabled", false);
                             //   var newUrl = $location.path();
                             console.log(newUrl);
                             // onRouteChangeOff();
@@ -531,6 +540,7 @@
                         okToExit = true;
                         $state.reload();
                     }, function error(response) {
+                        $("#save_ClientPOC").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }
