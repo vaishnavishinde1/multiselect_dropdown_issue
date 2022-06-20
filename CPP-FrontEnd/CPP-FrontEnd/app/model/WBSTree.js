@@ -15023,7 +15023,7 @@ WBSTree = (function ($) {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
                     document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
-                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 70;
+                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
                     document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
