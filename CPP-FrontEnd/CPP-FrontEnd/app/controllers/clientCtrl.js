@@ -397,6 +397,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Client").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -416,6 +417,7 @@
                 if (value.ClientPhone != null) {
                     if (value.ClientPhone.length > 0) {
                         if (value.ClientPhone.length != 10) {
+                            $("#save_Client").attr("disabled", false);
                             dhtmlx.alert('Enter valid 10 digit Client Phone.');
                             isFilled = false;
                             return true;
@@ -426,6 +428,7 @@
                     if (value.ClientEmail.length > 0) {
                         var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
                         if (!testEmail.test(value.ClientEmail)) {
+                            $("#save_Client").attr("disabled", false);
                             dhtmlx.alert('Please enter valid Email Address.');
                             isFilled = false;
                             return;
@@ -434,6 +437,7 @@
                 }
 
                 if (value.ClientName == "" || value.UniqueIdentityNumber == "") {
+                    $("#save_Client").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -539,16 +543,19 @@
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
                     isFresh = true;
-
+                    $("#save_Client").attr("disabled", false);
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Client").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Client").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_Client").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -560,6 +567,7 @@
                     okToExit = true;
                     $state.reload();
                 }, function error(response) {
+                    $("#save_Client").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             }

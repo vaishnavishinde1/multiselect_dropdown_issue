@@ -216,6 +216,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_document_type").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -224,6 +225,7 @@
             angular.forEach($scope.DocumentTypeCollection, function (value, key, obj) {
 
                 if (value.DocumentTypeName == "" || value.DocumentTypeDescription == "") {
+                    $("#save_document_type").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -299,14 +301,17 @@
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
                     response.data.result.replace(/[\r]/g, '\n');
-
+                    $("#save_document_type").attr("disabled", false);
                     if (response.data.result) {
+                        $("#save_document_type").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_document_type").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_document_type").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -318,6 +323,7 @@
                     okToExit = true;
                     $state.reload();
                 }, function error(response) {
+                    $("#save_document_type").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             }

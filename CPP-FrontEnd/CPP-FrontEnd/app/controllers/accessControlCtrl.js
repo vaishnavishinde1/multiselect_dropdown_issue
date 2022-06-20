@@ -116,7 +116,8 @@ angular.module('cpp.controllers').
             };
 
             //open a modal to edit data
-            $scope.saveAccessControl = function(){
+            $scope.saveAccessControl = function () {
+                $("#save_Access_Control").attr("disabled", true);
                 var dummyData ="";
                 var objArray = [];
                     var baseUrl = serviceBasePath + 'response/role/';
@@ -151,18 +152,22 @@ angular.module('cpp.controllers').
                         objArray.push(dataObj);
                 });
                 console.log(objArray);
-                $http.post(baseUrl, objArray).then(function success(response){
+                $http.post(baseUrl, objArray).then(function success(response) {
+                    $("#save_Access_Control").attr("disabled", false);
                     console.log(response);
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Access_Control").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Access_Control").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     $scope.orgRowCollection = angular.copy($scope.rowCollection);
                 }, function error(response) {
+                    $("#save_Access_Control").attr("disabled", false);
                     console.log(response);
                     dhtmlx.alert("Failed to save. Please contact your administrator!");
                 });

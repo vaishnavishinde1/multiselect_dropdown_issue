@@ -299,9 +299,11 @@ angular.module('cpp.controllers').
                 console.log(s);
 
             }
-            $scope.save = function(){
+            $scope.save = function () {
+                $("#save_Approval_Matrix").attr("disabled", true);
                 var isExist = checkForDuplicateRole();
-                if(isExist == true){
+                if (isExist == true) {
+                    $("#save_Approval_Matrix").attr("disabled", false);
                     dhtmlx.alert({text:"Roles are duplicated. Please check that all roles are unique!",
                                     width:'400px'})
                     return;
@@ -314,6 +316,7 @@ angular.module('cpp.controllers').
                     //debugger;
                     //if (value.Role == "" || value.Schedule == "") {
                     if (value.Role == "" || value.Cost == "") {
+                        $("#save_Approval_Matrix").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "400px"
@@ -398,12 +401,14 @@ angular.module('cpp.controllers').
                     //------------------------------ Swapnil 30/11/2020 --------------------------------------------------
                     $http.post(url, listToSave)
                         .then(function success(response) {
+                            $("#save_Approval_Matrix").attr("disabled", false);
                             console.log(response);
                             // console.log("Add new Succesfully");
                             $state.reload();
                             response.data.result.replace(/[\r]/g, '\n');
 
                             if (response.data.result == "") {
+                                $("#save_Approval_Matrix").attr("disabled", false);
                                 response.data.result = "No changes to be saved.";
                             }
 
@@ -415,7 +420,7 @@ angular.module('cpp.controllers').
                             var ApprovalCodeValidity = $("#txtNoOfMinForValidityCode").val();
 
                             if (ReminderMailDays == "" || ReminderMailDays == "0") {
-
+                                $("#save_Approval_Matrix").attr("disabled", false);
                                 ReminderMailDays = 0;
                                 dhtmlx.alert("Please enter valid value");
                                 return;
@@ -423,7 +428,7 @@ angular.module('cpp.controllers').
                             }
 
                             if (ApprovalCodeValidity == "" || ApprovalCodeValidity == "0") {
-
+                                $("#save_Approval_Matrix").attr("disabled", false);
                                 ReminderMailDays = 0;
                                 dhtmlx.alert("Please enter valid code validity time");
                                 return;
@@ -442,6 +447,7 @@ angular.module('cpp.controllers').
                                 mfaDetails.ReminderMailDays != mfaDetailsObj.ReminderMailDays ||
                                 mfaDetails.ApprovalCodeValidity != mfaDetailsObj.ApprovalCodeValidity) {
                                 MFAConfiguration.persist().save(mfaDetailsObj, function (res) {
+                                    $("#save_Approval_Matrix").attr("disabled", false);
                                     if (res.result.trim() == 'MFA details has been updated successfully.') {
                                         dhtmlx.alert("Changes saved successfully.");
                                         return;
@@ -449,13 +455,16 @@ angular.module('cpp.controllers').
                                 });
                             } else {
                                 if (response.data.result == "No changes to be saved.") {
+                                    $("#save_Approval_Matrix").attr("disabled", false);
                                     dhtmlx.alert("No changes to be saved.");
                                 } else {
+                                    $("#save_Approval_Matrix").attr("disabled", false);
                                     dhtmlx.alert("Changes saved successfully.");
                                 }
                             }
 
                         }, function error(response) {
+                            $("#save_Approval_Matrix").attr("disabled", false);
                             dhtmlx.alert("Failed to save. Please contact your Administrator.");
                         });
                     //----------------------------------------------------------------------------------------------------------------------------
