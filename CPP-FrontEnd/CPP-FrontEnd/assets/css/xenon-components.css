@@ -3415,9 +3415,9 @@ button.toast-close-button {
 }
 
 .login-page {
-    background: #2c2e2f;
+    /*  background: #2c2e2f;
     color: #fff;
-    padding-top: 150px
+    padding-top: 150px*/
 }
 
 .login-page .errors-container {

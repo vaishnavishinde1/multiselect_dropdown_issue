@@ -609,7 +609,7 @@ html, body {
 }
 
 .boxed-container {
-    background: #ccc
+    background: #000
 }
 
     .boxed-container #chat .chat-inner {
@@ -766,7 +766,7 @@ html, body {
     display: table-cell;
     position: relative;
     width: 340px;
-    background: #2c2e2f;
+    /*  background: #2c2e2f;*/ background: linear-gradient(135deg,#222b45,#000);
     z-index: 1
 }
 
@@ -1133,7 +1133,8 @@ html, body {
 
                 .sidebar-menu.collapsed .main-menu > li > ul {
                     position: absolute;
-                    background: #2c2e2f;
+                    /*background: #2c2e2f;  changed by sarab  */ 
+                    background: linear-gradient(135deg,#222b45,#000);
                     width: 250px;
                     top: -10px;
                     left: 100%;
@@ -4018,7 +4019,8 @@ body.chat-open #chat {
     .panel .panel-body {
         padding: 0;
         padding-top: 20px;
-        color: #979898
+        /*  color: #979898 */
+        color: #3a3a3a;
     }
 
         .panel .panel-body.no-padding {
@@ -5323,7 +5325,8 @@ label.cbr-inline {
 
     .btn.btn-red {
         background-color: #d5080f;
-        color: #fff
+        color: #fff;
+        border-radius:25px;
     }
 
         .btn.btn-red:hover {
