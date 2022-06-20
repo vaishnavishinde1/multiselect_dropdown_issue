@@ -228,6 +228,7 @@
             console.log(col);
         }
         $scope.save = function () {
+            $("#save_Trend_Status_Code").attr("disabled", true);
             okToExit = false;
             var isReload = false;
             var isChanged = true;
@@ -238,6 +239,7 @@
                 if (value.TrendStatusCodeNumber == "" || value.TrendStatusCodeName == ""
                     //|| value.TrendStatusCodeDescription == "" //Aditya 3-2-2022
                 ) {
+                    $("#save_Trend_Status_Code").attr("disabled", false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -316,15 +318,19 @@
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $("#save_Trend_Status_Code").attr("disabled", false);
                     response.data.result.replace(/[\r]/g, '\n');
 
                     if (response.data.result) {
+                        $("#save_Trend_Status_Code").attr("disabled", false);
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $("#save_Trend_Status_Code").attr("disabled", false);
                         dhtmlx.alert('No changes to be saved.');
                     }
 
                     if (isTest == true) {
+                        $("#save_Trend_Status_Code").attr("disabled", false);
                         //   var newUrl = $location.path();
                         console.log(newUrl);
                         // onRouteChangeOff();
@@ -336,6 +342,7 @@
                     okToExit = true;
                     $state.reload();
                 }, function error(response) {
+                    $("#save_Trend_Status_Code").attr("disabled", false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             }

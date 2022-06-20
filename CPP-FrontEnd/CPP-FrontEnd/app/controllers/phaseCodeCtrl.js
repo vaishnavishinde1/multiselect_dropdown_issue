@@ -59,7 +59,8 @@ angular.module('cpp.controllers').
                 }, 1);
             }
 
-            $scope.save = function(){
+            $scope.save = function () {
+                $("#save_Phase_Code").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled  = true;
@@ -68,6 +69,7 @@ angular.module('cpp.controllers').
 
                     console.log(value);
                     if (value.PhaseDescription == "" || value.ActivityPhaseCode == "") {
+                        $("#save_Phase_Code").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "300px"
@@ -140,18 +142,22 @@ angular.module('cpp.controllers').
                         data: JSON.stringify(listToSave),
                         headers: {'Content-Type': 'application/json'}
                     }).then(function success(response) {
+                        $("#save_Phase_Code").attr("disabled", false);
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Phase_Code").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Phase_Code").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
                         $scope.orgPhaseCodeCollection = angular.copy($scope.phaseCodeCollection);
                         $state.reload();
 
-                    },function error(response){
+                    }, function error(response) {
+                        $("#save_Phase_Code").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }

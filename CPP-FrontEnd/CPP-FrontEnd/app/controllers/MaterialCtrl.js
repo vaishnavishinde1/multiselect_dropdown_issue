@@ -335,6 +335,7 @@
                 $scope.row = row.entity;
             }
             $scope.save = function () {
+                $("#save_Material").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled = true;
@@ -376,6 +377,7 @@
 //                    }
 
                     if (isNaN(value.Cost) || Number.parseFloat(value.Cost) <= 0) {
+                        $("#save_Material").attr("disabled", false);
                         dhtmlx.alert('Cost must be a valid number greater than 0 (Row ' + value.displayId + ')');
                         isFilled = false;
                         return;
@@ -383,7 +385,8 @@
                         //value.Description == "" ||  // Aditya 3-2-2022 
                         value.MaterialCategoryName == "" ||
                         value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
-                        ) {
+                    ) {
+                        $("#save_Material").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                             width: "300px"
@@ -393,6 +396,7 @@
                     }
 
                     if (!(/(BM[0-9]{5})/.test(value.UniqueIdentityNumber) && value.UniqueIdentityNumber.length == 7)) {
+                        $("#save_Material").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Unique identifier must be in the format of BMxxxxx (Row " + value.displayId + ")",
                             width: "400px"
@@ -498,6 +502,7 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Material").attr("disabled", false);
                         isFresh = true;
 
                         console.log(response);
@@ -505,8 +510,10 @@
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Material").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Material").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -546,6 +553,7 @@
                             console.log($scope.materialCollection);
                         });
                     }, function error(response) {
+                        $("#save_Material").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }

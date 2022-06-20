@@ -263,6 +263,7 @@
                 $scope.row = row.entity;
             }
             $scope.save = function () {
+                $("#save_Subcontractor").attr("disabled", true);
                 var isReload = false;
                 var isChanged = true;
                 var isFilled = true;
@@ -392,13 +393,16 @@
                         data: JSON.stringify(listToSave),
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function success(response) {
+                        $("#save_Subcontractor").attr("disabled", false);
                         isFresh = true;
 
                         response.data.result.replace(/[\r]/g, '\n');
 
                         if (response.data.result) {
+                            $("#save_Subcontractor").attr("disabled", false);
                             dhtmlx.alert(response.data.result);
                         } else {
+                            $("#save_Subcontractor").attr("disabled", false);
                             dhtmlx.alert('No changes to be saved.');
                         }
 
@@ -423,6 +427,7 @@
                             console.log($scope.subcontractorCollection);
                         });
                     }, function error(response) {
+                        $("#save_Subcontractor").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                     //if (isReload == true)
