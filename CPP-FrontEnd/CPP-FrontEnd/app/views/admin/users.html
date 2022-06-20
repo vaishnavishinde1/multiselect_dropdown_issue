@@ -97,7 +97,7 @@
     <div class="col-centered" style="width: 1620px">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title" style="font-size:30px;">
+                <h3 class="panel-title">
                     User Management
                     <!--<span>-->
                     <!--<button type="button" class="btn btn-info btn-sm" ng-click="addRow()">-->
@@ -106,7 +106,7 @@
                 </h3>
                 <a href="#/app/wbs" class="exit-button">X</a>
             </div>
-            <div class="panel-body" style="height: 550px; overflow: auto">
+            <div class="panel-body panel-height">
                 <!-- <div class="gridStyle" ng-grid="gridOptions" style="height:500px;">
         </div>-->
                 <div class="gridStyle usermanagementtbl" ui-grid="gridOptions"  ui-grid-edit ui-grid-cellnav ui-grid-auto-resize style="height:500px;">
@@ -134,7 +134,7 @@
                     {{ COL_FIELD.join(', ') }}
                 </div>
             </script>
-            <div class="panel-footer" id="right_panel-footer" style="text-align:center">
+            <div class="panel-footer text-center" id="right_panel-footer">
                 <div class="row">
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-primary c-btn-delete" ng-click="delete()">Delete</button>
