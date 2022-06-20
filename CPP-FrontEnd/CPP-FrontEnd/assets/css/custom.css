@@ -1618,13 +1618,16 @@ input:-webkit-autofill:active {
     position: relative;
     text-align: left !important;
     padding: 10px 8px;
-   
+    top: 0;
+    height: 5%;
     color: #000 !important;
 }
 .t-head-dark {
     background-color: #153065;
     position: sticky !important;
     color: #fff !important;
+    top: 0;
+    height: 5%;
 }
 .btn-icon {
     border: 1px solid #ccc;

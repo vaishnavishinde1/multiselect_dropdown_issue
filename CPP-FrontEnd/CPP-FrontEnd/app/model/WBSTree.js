@@ -3501,7 +3501,8 @@ WBSTree = (function ($) {
                                     '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
                                     '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                                     '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
-                                    '<td> <button type="button" id="notes_view">view</button></td>' +
+                                    //'<td> <button type="button" id="notes_view">view</button></td>' +
+                                    '<td> <i class="fa fa-eye" style="font-size:20px"  title="view"  id="notes_view"></i></td>' +
                                     '</tr>'
                                 );
 
@@ -11695,7 +11696,8 @@ WBSTree = (function ($) {
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
-                                    '<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                    //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
+                                    '<td><i class="fa fa-eye" style="font-size:20px"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 

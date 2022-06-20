@@ -2153,7 +2153,7 @@ angular.module('cpp.controllers').
                     Description: description,
                     Date: date,
                     ModificationType: modType,
-                    Value: value.replace("$", ""),
+                    Value: value.replace("$", "").replaceAll(",",""),
                     //DurationDate: durationDate,
                     ProgramID: programId,
                     CreatedBy: createdBy,
@@ -2299,8 +2299,8 @@ angular.module('cpp.controllers').
                             //}
                         }
                         $('#total_modification').val('$' + totalValue);
-                        //$('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
-                        //$('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
+                        $('#total_modification').focus(); // Jignesh-ModificationPopUpChanges
+                        $('#total_modification').blur(); // Jignesh-ModificationPopUpChanges
                         var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
                         var totalContractValue = parseFloat(ogContractValue) + totalValue;
                         $('#current_contract_value').val("$" + totalContractValue);
