@@ -3502,7 +3502,7 @@ WBSTree = (function ($) {
                             '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                             '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                             //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            '<td> <i class="fa fa-eye" style="font-size:20px"  title="view"  id="notes_view"></i></td>' +
+                            '<td> <i class="fa fa-eye icon-btn"  title="View"  id="notes_view"></i></td>' +
                             '</tr>'
                         );
 
@@ -3723,7 +3723,7 @@ WBSTree = (function ($) {
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" style="font-size:20px;" name="btnviewOrderDetail"  id="viewOrderDetail"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
                                 '</tr>'
                             );
@@ -3750,6 +3750,10 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     console.log('TotalMod == ' + totalmod + ';' + 'SchImpact ==' + schImp);
                     $('#program_element_total_modifications').val('$' + totalmod);
+                    $('#program_element_total_modifications').focus();
+                    $('#program_element_total_modifications').blur();
+                    $('#program_element_total_value').focus();
+                    $('#program_element_total_value').blur();
                     var projvalue = 0;
                     if ($('#program_element_total_value').val()) {
                         //dhtmlx.alert($('#program_element_total_value').val());.replace('$', '')
@@ -3758,6 +3762,8 @@ WBSTree = (function ($) {
                     }
                     //var projvalue = parseFloat($('#program_element_total_value').val());
                     $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
+                    $('#program_element_total_current_value').focus();
+                    $('#program_element_total_current_value').blur();
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -8993,7 +8999,7 @@ WBSTree = (function ($) {
                 var ChangeOrderTypedd = $("#program_element_change_order_ddModificationType").val();;
                 var OrderNo = $("#program_element_change_order_number_modal").val();
                 var OrderDte = $("#ChangeOrderDate").val();
-                var AmtOrder = $("#program_element_change_order_amount_modal").val();
+                var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
                 var SpNote = $("#program_element_change_order_schedule_change_modal").val();
                 var Reason = $("#program_element_change_order_Reason_modal").val();
                 var modType = $('#program_element_change_order_ddModificationType').val();
@@ -9186,7 +9192,7 @@ WBSTree = (function ($) {
                         "Formdata": formdata,
                         "ChangeOrderName": updatedChangeOrder.ChangeOrderName,
                         "ChangeOrderNumber": updatedChangeOrder.ChangeOrderNumber,
-                        "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
+                        "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',',''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
                         "ProjectEndDateCO": projectEndDate,
@@ -9327,7 +9333,7 @@ WBSTree = (function ($) {
                         "Formdata": formdata,
                         "ChangeOrderName": newChangeOrder.ChangeOrderName,
                         "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
-                        "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
+                        "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',', ''),
                         "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
                         "ProjectEndDateCO": projectEndDate,
@@ -9352,7 +9358,7 @@ WBSTree = (function ($) {
                             "DocumentName": fileName,
                             "ChangeOrderName": newChangeOrder.ChangeOrderName,
                             "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
-                            "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
+                            "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',',''),
                             "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                             "ProgramElementID": wbsTree.getSelectedProgramElementID(),
                             "ProjectEndDateCO": projectEndDate,
@@ -9957,6 +9963,7 @@ WBSTree = (function ($) {
                 $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });
+            
 
             // Narayan - on click edit button in insurance - 24-05-2022
             $("#gridInsuranceList").on('click', '#update_insurance', function () {
@@ -9968,7 +9975,7 @@ WBSTree = (function ($) {
                 var limit = row.find("#history_limit").text();
                 $('#insurance_id').val(id);
                 $('#insurance_type_select').val(type);
-                $('#insurance_limit').val(limit);
+                $('#insurance_limit').val(limit.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
                 wbsTree.setContractInsuranceOperation(2);
                 $('#btnUpdateInsurance').show();
             });
@@ -10279,7 +10286,7 @@ WBSTree = (function ($) {
             //====================================== Created By Jignesh 28-10-2020 =======================================
             $('#program_contract_value').on('change', function () {
                 isFieldValueChanged = true;
-                var totalModification = $('#total_modification').val().replace("$", "");
+                var totalModification = $('#total_modification').val().replace("$", "").replaceAll(",", "");
                 var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
                 var totalContractValue = parseFloat(ogContractValue) + parseFloat(totalModification);
                 $('#current_contract_value').val(totalContractValue);
@@ -10694,8 +10701,8 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-eye icon-btn" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit icon-btn" id="update_warranty" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -10808,8 +10815,8 @@ WBSTree = (function ($) {
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-eye icon-btn" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit icon-btn" id="update_notice" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -10904,7 +10911,7 @@ WBSTree = (function ($) {
                                     '>' + _InsuranceList[x].Limit + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td style="white-space: nowrap"> <i class="fa fa-edit icon-btn" id="update_insurance"  title="edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -11698,7 +11705,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td><i class="fa fa-eye" style="font-size:20px"  title="View Details"  id="viewDocumentDetail"></i></td>' +
+                                    '<td><i class="fa fa-eye icon-btn"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -11751,7 +11758,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -13629,7 +13636,7 @@ WBSTree = (function ($) {
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + modificatioTitle + '</td>' +
                                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -13979,6 +13986,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_element_client_phone').val(selectedNode.ClientPhoneNumber);
                     //modal.find('.modal-body #program_element_total_current_value').val('$0');
                     $('#program_element_total_current_value').val('$0');
+                    $('#program_element_total_current_value').focus();
+                    $('#program_element_total_current_value').blur();
                     console.log(selectedNode);
                     modal.find('.modal-body #program_element_contract_number').val(selectedNode.parent.ContractNumber);
                     modal.find('.modal-body #program_element_contract_name').val(selectedNode.parent.name);
@@ -14091,7 +14100,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -14141,7 +14150,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -15146,7 +15155,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
 
@@ -15219,7 +15228,8 @@ WBSTree = (function ($) {
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             //'<td>' + _documentList[x].CreatedBy + '</td>' +
-                            '<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                            //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
@@ -15299,7 +15309,8 @@ WBSTree = (function ($) {
                                 '>' + _documentList[x].TrendName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                '<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                                //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -16432,8 +16443,8 @@ WBSTree = (function ($) {
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-eye icon-btn" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit icon-btn" id="update_notice" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
                     //}
@@ -16458,7 +16469,7 @@ WBSTree = (function ($) {
                             '>' + _InsuranceList[x].Limit + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-edit icon-btn" id="update_insurance"  title="edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -16482,8 +16493,8 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td style="white-space: nowrap"> <i class="fa fa-eye icon-btn" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit icon-btn" id="update_warranty" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -16530,7 +16541,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -16704,7 +16715,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modId + ' - ' + modTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
                         }
@@ -18250,7 +18261,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                    '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');
                             }
@@ -18305,7 +18316,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
