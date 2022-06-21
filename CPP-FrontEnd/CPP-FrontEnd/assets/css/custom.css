@@ -1676,3 +1676,11 @@ button[disabled=disabled], button:disabled {
 .bot-border {
     border-bottom: 1px solid #e3e3e3;
 }
+.icon-btn {
+    font-size:20px;
+    color:#000;
+    cursor:pointer;
+}
+.icon-btn:hover {
+    color:#000;
+}

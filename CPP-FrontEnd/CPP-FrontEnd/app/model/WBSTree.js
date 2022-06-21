@@ -9952,14 +9952,14 @@ WBSTree = (function ($) {
             $("#gridNoticehistoryList").on('click', '#notes_view', function () {
                 var row = $(this).closest("tr");
                 var desc = row.find("#notes_desc").text();
-                modal.find('.modal-body #txtprogramNotes').val(desc);
+                $('#txtprogramNotes').val(desc);
                 $('#txtprogramNotes').prop("disabled", "disabled");
                 $('#btnClearNotesDesc').show();
             });
 
             // Narayan - on click clear button in common notes - 14-04-2022
             $('#btnClearNotesDesc').on('click', function () {
-                modal.find('.modal-body #txtprogramNotes').val('');
+                $('#txtprogramNotes').val('');
                 $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });

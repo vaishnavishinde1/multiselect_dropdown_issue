@@ -2747,7 +2747,7 @@
                                             <!--Nivedita 14-01-2022 -->
                                             <div id="divmilestone" class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
                                                 <div class="panel-body  table-outline p-0 " style="height : 180px !important;">
-                                                    <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
+                                                    <table class="table table-striped " style="height: 99%; width: 100%; border: none;">
                                                         <thead class="t-head" style="height:5%; position: sticky; top: 0;">
                                                             <tr class="table-background">
                                                                 <td class="t-head" style="width: 30px; padding-left:5px;"></td>
@@ -2777,7 +2777,14 @@
                                                             <tr class="table-background">
                                                                 <td colspan="9" style="border-bottom: none;">
                                                                     <div class="scrolable-table" style="height:100px;">
-                                                                        <table id="program_element_milestone_table_id" class="table table-condensed table-responsive" style="border:none;"><tbody><tr id="241" class="fade-selection-animation clickable-row"><td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td><td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td><td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td><td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">11/23/2021</td></tr></tbody></table>
+                                                                        <table id="program_element_milestone_table_id" class="table table-striped" style="border:none;">
+                                                                        <tbody>
+                                                                            <tr id="241" class="fade-selection-animation clickable-row">
+                                                                                <td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td>
+                                                                                <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                                                                <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                                                                <td class="class-td-LiveView" style="font-family: Verdana, Arial, sans-serif !important; color: #333 !important; text-overflow: ellipsis; white-space: nowrap; width: 30%; text-align: right !important;">11/23/2021</td>
+                                                                            </tr></tbody></table>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -2993,7 +3000,7 @@
                                         <!------------------------------------------------------------------------------------------------->
                                         <!--PROGRAM ELEMENT CHANGE ORDERS Priteshco Grid-->
                                         <!--<form style="border: .5px solid #a9a9a9; background-color: #fbfbfb; padding: 10px; margin-right: 20px;margin-left:0;margin-top:25px">-->
-                                        <div id="divChangeOrder" style=" height:280px;">
+                                        <div id="divChangeOrder" style=" height:290px;">
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Change Orders</label>
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;">
                                                 <div class="panel-body  table-outline p-0 " style=" height: 200px !important; overflow:auto">
@@ -3683,7 +3690,7 @@
                                         <form>
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Key Project Element Milestones</label>
                                             <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                                <div class="panel-body table-outline p-0"  style="height : 230px !important;">
+                                                <div class="panel-body table-outline p-0"  style="height : 275px !important;">
                                                     <table class="table table-condensed table-responsive " style="border: none;">
                                                         <thead class="t-head" style="height: 5%; position:sticky;">
                                                             <tr class="table-background">
@@ -4300,7 +4307,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <!--===============================================================================-->
-                                        <div class="_form-group">
+                                        <div class="_form-group p-l-15">
                                             <!--======================== Edited by Jignesh 30-10-2020 ============================================
                                                                      Comment br tag & trend_internal, add margin-bottom:20px,-->
 
@@ -4310,9 +4317,9 @@
                                             <label class="radio-inline"> <input type="radio" name="trend_impact" value="Schedule"> Schedule </label>
                                             <label class="radio-inline"> <input type="radio" name="trend_impact" value="Cost & Schedule"> Cost & Schedule </label>-->
                                             <!-- ---------------------------Manasi--------------------------------------  -->
-                                            <label class="ps-5"><input type="checkbox" name="pasttrend_impact" value="Cost" class="ps-5" checked disabled> Cost</label>
-                                            <label> <input type="checkbox" name="pasttrend_impact_schedule" value="Schedule" class="ps-5" disabled> Schedule </label>
-                                            <label> <input type="checkbox" name="pasttrend_impact_cost_schedule" value="Cost & Schedule" class="ps-5" disabled> Cost & Schedule </label>
+                                            <label class="ps-5"><input type="checkbox" name="pasttrend_impact" value="Cost" class="p-l-15" checked disabled> Cost</label>
+                                            <label> <input type="checkbox" name="pasttrend_impact_schedule" value="Schedule" class="p-l-15" disabled> Schedule </label>
+                                            <label> <input type="checkbox" name="pasttrend_impact_cost_schedule" value="Cost & Schedule" class="p-l-15" disabled> Cost & Schedule </label>
                                             <!-- ---------------------------------------------------------------------------- -->
                                             <!--<div class="col-sm-4">
                                                 <label for="trend_impact" class="control-label _bold">Internal</label><br />
@@ -4328,22 +4335,23 @@
                                     </div>
                                     <div class="col-md-12">
                                         <!--=================================== Added by Jignesh 30-10-2020 ============================================-->
-                                        <div class="_form-group">
+                                        <div class="_form-group  p-l-15 p-r-15">
                                             <input type="radio" id="pastchngreq" name="pastchngreq" value="Change_Request">
                                             <label for="chng_req" class="control-label _bold">Change Request</label>
                                             <input type="radio" id="pastnochngreq" name="pastchngreq" value="No_Change_Request">
                                             <label for="no_chng_req" class="control-label _bold">No Change Request</label>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                   
                                         <!--============================ Jignesh-09-02-2021 ============================================-->
-                                        <div class="_form-group" id="divPastTrendChangeOrderDD">
-                                            <div class="col-md-12 m-b-15">
+                                    <div class="_form-group p-l-15 p-r-15" id="divPastTrendChangeOrderDD">
+                                        <div class="row">
+                                            <div class="col-md-12 m-b-15  ">
                                                 <label class="control-label _bold">Change Order: </label>
                                                 <select id="pasttrend_change_order" type="text" class="form-control"></select>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 m-b-15">
-                                                <label style="font-size: medium;">
+                                            <div class="col-sm-6 col-md-6 m-t-25 m-b-20">
+                                                <label style="font-size: medium; margin-left:15px">
                                                     <input type="checkbox" name="trend_approval_by_client" id="chkPastTrendApprovalByClient" value="approval by client">
                                                     <b>Approved By Client</b>
                                                 </label>
@@ -4360,7 +4368,7 @@
                                         <div class="col-md-12">
 
                                             <!--============================================================================================================-->
-                                            <div class="_form-group ">
+                                            <div class="_form-group  p-l-15 p-r-15">
                                                 <!--shweta-22-03-2021-->
                                                 <div class="row">
                                                     <div class="col-sm-6 col-md-6">
@@ -4537,25 +4545,31 @@
         <input type="text" class="form-control" id="approval_from">
     </div>-->
                         <!--=================================== Added by Jignesh 30-10-2020 ============================================-->
-                        <div class="_form-group">
-                            <input type="radio" id="chngreq" name="chngreq" value="Change_Request">
-                            <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
-                            <input type="radio" id="nochngreq" name="chngreq" value="No_Change_Request">
-                            <label for="no_chng_req" class="control-label _bold">No Change Request</label>
-                        </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                               <div class="_form-group">
+                                   <input type="radio" id="chngreq" name="chngreq" value="Change_Request">
+                                   <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
+                                   <input type="radio" id="nochngreq" name="chngreq" value="No_Change_Request">
+                                   <label for="no_chng_req" class="control-label _bold">No Change Request</label>
+                               </div>
+                           </div>
+                       </div>
+                       
                         <!--============================ Jignesh-09-02-2021 ============================================-->
+               
                         <div class="_form-group" id="divChangeOrderDD">
                             <label class="control-label _bold">Change Order: </label>
                             <select id="trend_change_order" type="text" class="form-control"></select>
                             <div class="row">
-                                <div class="col-sm-6" class="_form-group" style="margin-top:12px;">
-                                    <label style="padding-left: 7px; padding-top: 5px; font-size: medium;">
+                                <div class="col-sm-6 col-md-6 m-t-25 m-b-20">
+                                    <label style="font-size: medium;">
                                         <input type="checkbox" name="trend_approval_by_client" id="chkTrendApprovalByClient" value="approval by client">
                                         <b>Approved By Client</b>
                                     </label>
                                 </div>
 
-                                <div class="col-sm-6" class="_form-group" style="margin-top:12px; display:none;" id="secApprovedDate">
+                                <div class="col-sm-6 col-md-6" style="margin-top:12px; display:none;" id="secApprovedDate">
                                     <!--Jignesh-19-02-2021-->
                                     <label for="client_approved_date" class="control-label _bold">Approved Date</label>
                                     <input type="text" class="form-control" id="client_approved_date" autocomplete="off" placeholder="MM/DD/YYYY" /> <!--Jignesh-26-02-2021-->
@@ -4589,28 +4603,30 @@
                 </form>
             </div>
             <div class="c-modal-footer">
-                <!--<button type="button" class="btn btn-default" id = "close_modal" data-dismiss="modal">Close</button>-->
-                <div class="row">
-                    <!--<div class="col-sm-4" style="margin-left:-5px;">-->
-                    <div id="spnBtndelete_future_trend" class="col-md-4 col-sm-4 text-left ">
-                        <!--Manasi 24-02-2021-->
-                        <button id="delete_future_trend" type="button" class="btn btn-primary c-btn-delete" style="margin-left:10px;"
-                                data-toggle="modal" href="#DeleteModal">
-                            Delete
-                        </button>
-                    </div>
-                    <!--</div>-->
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <button type="button" data-dismiss="modal" class="btn btn-primary c-btn-save" id="update_trend">Save</button>
-                    </div>
+                <div class="container-fluid">
+                    <!--<button type="button" class="btn btn-default" id = "close_modal" data-dismiss="modal">Close</button>-->
+                    <div class="row">
+                        <!--<div class="col-sm-4" style="margin-left:-5px;">-->
+                        <div id="spnBtndelete_future_trend" class="col-md-4 col-sm-4 text-left">
+                            <!--Manasi 24-02-2021-->
+                            <button id="delete_future_trend" type="button" class="btn btn-primary c-btn-delete"
+                                    data-toggle="modal" href="#DeleteModal">
+                                Delete
+                            </button>
+                        </div>
+                        <!--</div>-->
+                        <div class="col-md-4 col-sm-4 text-center">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary c-btn-save" id="update_trend">Save</button>
+                        </div>
 
-                    <div class="col-md-4 col-sm-4 text-right">
-                        <!--Jignesh-31-03-2021-->
-                        <button type="button" class="btn btn-primary c-btn-back" style="margin-right:10px;" id="cancel_futuretrend">Exit</button> <!--Jignesh-22-03-2021-->
+                        <div class="col-md-4 col-sm-4 text-right">
+                            <!--Jignesh-31-03-2021-->
+                            <button type="button" class="btn btn-primary c-btn-back"  id="cancel_futuretrend">Exit</button> <!--Jignesh-22-03-2021-->
 
+                        </div>
                     </div>
+                    <!--<button type="button" class="btn btn-primary" id = "new_project">Create Project</button>-->
                 </div>
-                <!--<button type="button" class="btn btn-primary" id = "new_project">Create Project</button>-->
             </div>
         </div>
     </div>
@@ -5407,7 +5423,7 @@
 <!--============================================================================================================================-->
 <!--=========================================== Jignesh-AddNewDocModal-18-02-2021 ======================================================================-->
 <div class="modal fade" id="addNewDocumentTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width:675px !important;" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#FF9407;">
                 <button id="cancel_addNewDocumentTypeModal_x" type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -5492,7 +5508,7 @@
 <!------=================================================================================================------>
 <!--=========================================== Tanmay-AddNewDocModal-29/12/2021 ======================================================================-->
 <div class="modal fade" id="addNewClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width:675px !important;" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#FF9407;">
                 <button id="cancel_addNewClientModal_x" type="button" class="close" data-dismiss="modal" aria-label="Close">
