@@ -1435,6 +1435,7 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1201px) {
+    
    /* .modal-height {
         height: 133vh !important;
         overflow-x: hidden;
@@ -1443,13 +1444,7 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
     .input-icons i {
         /* margin-left: -270px !important;*/
     }
-    .btn-icon {
-        border: 1px solid #ccc;
-        padding: 4px 8px;
-        font-size: 24px;
-        border-radius: 5px;
-        margin: 10px 8px 2px;
-    }
+    
 }
 /*
 @media only screen and (max-width: 1200px) and (min-width: 901px) {
@@ -1633,7 +1628,7 @@ input:-webkit-autofill:active {
 .btn-icon {
     border: 1px solid #ccc;
     padding: 4px 8px;
-    font-size: 18px;
+    font-size: 20px;
     border-radius: 5px;
     margin: 10px 5px 2px;
 }
