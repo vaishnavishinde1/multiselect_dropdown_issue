@@ -1677,9 +1677,9 @@ button[disabled=disabled], button:disabled {
     border-bottom: 1px solid #e3e3e3;
 }
 .icon-btn {
-    font-size:20px;
-    color:#000;
-    cursor:pointer;
+    font-size: 20px !important;
+    color: #000;
+    cursor: pointer !important;
 }
 .icon-btn:hover {
     color:#000;
