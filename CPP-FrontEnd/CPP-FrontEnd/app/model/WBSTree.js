@@ -27,6 +27,7 @@ WBSTree = (function ($) {
 
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
+
         });
 
         //Aditya chek date 10062022
