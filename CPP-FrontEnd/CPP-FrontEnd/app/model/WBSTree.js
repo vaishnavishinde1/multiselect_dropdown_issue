@@ -3550,7 +3550,7 @@ WBSTree = (function ($) {
                     var milestoneList = milestoneData.result;
                     wbsTree.setMilestoneList(milestoneList);
 
-                    $('#project_element_milestone_table_id').empty();
+                    $('#project_element_milestone_table_id tbody').empty();
 
                     for (var x = 0; x < milestoneList.length; x++) {
                         console.log(milestoneList[x].ProjectID, projectID);
@@ -3561,13 +3561,13 @@ WBSTree = (function ($) {
 
                             console.log(singeMilestone);
 
-                            $('#project_element_milestone_table_id').append(
+                            $('#project_element_milestone_table_id tbody').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;;">' + singeMilestone.MilestoneDescription + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                                 '</tr>'
                             );
@@ -3579,7 +3579,7 @@ WBSTree = (function ($) {
             //Project element milestone
             function populateProjectElementMilestoneTableNew() {
                 $("#update_project_element_milestone_modal").attr("disabled", false);
-                $('#project_element_milestone_table_id').empty();
+                $('#project_element_milestone_table_id tbody').empty();
 
                 for (var x = 0; x < g_project_element_milestone_draft_list.length; x++) {
                     var singeMilestone = {};
@@ -3588,13 +3588,13 @@ WBSTree = (function ($) {
 
                     console.log(singeMilestone);
 
-                    $('#project_element_milestone_table_id').append(
+                    $('#project_element_milestone_table_id tbody').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                         '</tr>'
                     );
@@ -3608,7 +3608,7 @@ WBSTree = (function ($) {
                     var milestoneList = milestoneData.result;
                     wbsTree.setMilestoneList(milestoneList);
 
-                    $('#program_element_milestone_table_id').empty();
+                    $('#program_element_milestone_table_id tbody').empty();
 
                     for (var x = 0; x < milestoneList.length; x++) {
                         console.log(milestoneList[x].ProgramElementID, programElementID);
@@ -3619,14 +3619,14 @@ WBSTree = (function ($) {
 
                             console.log(singeMilestone);
 
-                            $('#program_element_milestone_table_id').append(
+                            $('#program_element_milestone_table_id tbody').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 /*'<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +*/
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                                 '</tr>'
                             );
@@ -3639,7 +3639,7 @@ WBSTree = (function ($) {
 
             //Program element milestone
             function populateProgramElementMilestoneTableNew() {
-                $('#program_element_milestone_table_id').empty();
+                $('#program_element_milestone_table_id tbody').empty();
 
                 for (var x = 0; x < g_program_element_milestone_draft_list.length; x++) {
                     var singeMilestone = {};
@@ -3648,13 +3648,13 @@ WBSTree = (function ($) {
 
                     console.log(singeMilestone);
 
-                    $('#program_element_milestone_table_id').append(
+                    $('#program_element_milestone_table_id tbody').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                         '<td class="class-td-LiveView" style=font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                         '</tr>'
                     );
@@ -8273,7 +8273,7 @@ WBSTree = (function ($) {
             });
 
             // CLICK PROJECT ELEMENT MILESTONE TABLE ROW LEGACY
-            $('#project_element_milestone_table_id').on('click', '.clickable-row', function (event) {
+            $('#project_element_milestone_table_id tbody').on('click', '.clickable-row', function (event) {
                 var foundProjectElementMilestone = {};
 
                 if (g_newProject) {
@@ -8752,7 +8752,7 @@ WBSTree = (function ($) {
             });
 
             // CLICK PROGRAM ELEMENT MILESTONE TABLE ROW LEGACY
-            $('#program_element_milestone_table_id').on('click', '.clickable-row', function (event) {
+            $('#program_element_milestone_table_id  tbody').on('click', '.clickable-row', function (event) {
                 var foundProgramElementMilestone = {};
 
                 if (g_newProgramElement) {
@@ -14615,7 +14615,7 @@ WBSTree = (function ($) {
                     _Is_Program_Element_New = true;
                     console.log(selectedNode);
 
-                    $('#program_element_milestone_table_id').empty();
+                    $('#program_element_milestone_table_id  tbody').empty();
                     $('#program_element_change_order_table_id').empty();
                     g_program_element_milestone_draft_list = [];
                     g_program_element_change_order_draft_list = [];
@@ -18459,7 +18459,7 @@ WBSTree = (function ($) {
                     wbsTree.setIsProjectNew(true);
                     _Is_Project_New = true;
                     wbsTree.setProjectFileDraft([]);
-                    $('#project_element_milestone_table_id').empty();
+                    $('#project_element_milestone_table_id tbody').empty();
                     g_project_element_milestone_draft_list = [];
 
 

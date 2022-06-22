@@ -2745,50 +2745,75 @@
                                             <!--css changes by shweta-->
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Key Project Milestones</label> <!--Key Program Element Milestones--> <!--css changes by shweta-->
                                             <!--Nivedita 14-01-2022 -->
-                                            <div id="divmilestone" class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                                <div class="panel-body  table-outline p-0 " style="height : 180px !important;">
-                                                    <table class="table table-striped " style="height: 99%; width: 100%; border: none;">
-                                                        <thead class="t-head" style="height:5%; position: sticky; top: 0;">
-                                                            <tr class="table-background">
-                                                                <td class="t-head" style="width: 30px; padding-left:5px;"></td>
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align: left !important; text-overflow: ellipsis; white-space: nowrap;">
-                                                                    <!--css changes by shweta-->
-                                                                    Title
-                                                                </td>
+                                            <!--<div id="divmilestone" class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
+    <div class="panel-body  table-outline p-0 " style="height : 180px !important;">
+        <table class="table table-striped " style="height: 99%; width: 100%; border: none;">
+            <thead class="t-head" style="height:5%; position: sticky; top: 0;">
+                <tr class="table-background">
+                    <td class="t-head" style="width: 30px; padding-left:5px;"></td>
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align: left !important; text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <!--css changes by shweta-->
+                                            <!--Title
+    </td>
 
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align: right !important;  text-overflow: ellipsis; white-space: nowrap;">
-                                                                    <!--css changes by shweta-->
-                                                                    Description
-                                                                </td>
+    <td class="t-head sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align: right !important;  text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <!--css changes by shweta-->
+                                            <!--Description
+    </td>
 
-                                                                <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 31%; text-align: right !important;text-overflow: ellipsis; white-space: nowrap;">
-                                                                    <!--css changes by shweta-->
-                                                                    Date
-                                                                </td>
-                                                                <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 30%; text-align: right !important; text-overflow: ellipsis; white-space: nowrap;">
-                                                                    <!--css changes by shweta-->
+    <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 31%; text-align: right !important;text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <!--css changes by shweta-->
+                                            <!--Date
+    </td>
+    <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 30%; text-align: right !important; text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <!--css changes by shweta-->
+                                            <!--</td>
 
-                                                                </td>
+        </tr>
+    </thead>-->
+                                            <!--<tfoot></tfoot>-->
+                                            <!--<tbody>
+                    <tr class="table-background">
+                        <td colspan="9" style="border-bottom: none;">
+                            <div class="scrolable-table" style="height:100px;">
+                                <table id="program_element_milestone_table_id" class="table table-striped" style="border:none;">
+                                    <tbody>
+                                        <tr id="241" class="fade-selection-animation clickable-row">
+                                            <td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td>
+                                            <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                            <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                            <td class="class-td-LiveView" style="font-family: Verdana, Arial, sans-serif !important; color: #333 !important; text-overflow: ellipsis; white-space: nowrap; width: 30%; text-align: right !important;">11/23/2021</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
+        <div class="text-center">
+            <button id="new_program_element_milestone" class="btn-icon" title="Add" data-toggle="tooltip"><i class="fa-plus"></i></button>
+            <button id="edit_program_element_milestone" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
+            <button id="delete_program_element_milestone" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>
+        </div>
+
+    </div>-->
+                                            <!--Narayan - Restructure table for key milestone in project - 22/06/2022-->
+                                            <div id="divmilestone" class="gadget-content " style="height: 50%;">
+                                                <div class="table-outline-wo-p" style="height: 180px !important;">
+                                                    <table id="program_element_milestone_table_id" class="table table-striped " style="height: 99%; width: 100%; border: none;">
+                                                        <thead class="t-head" style="height: 5%; position: sticky; top: 0;">
+                                                            <tr>
+                                                                <td style="font-weight: 900; width: 30px;"></td>
+                                                                <td style="font-weight: 900; width: 30%;">Title</td>
+                                                                <td style="font-weight: 900; width: 45%;">Description</td>
+                                                                <td style="font-weight: 900; width: 18%;">Date</td>
                                                             </tr>
                                                         </thead>
                                                         <!--<tfoot></tfoot>-->
-                                                        <tbody>
-                                                            <tr class="table-background">
-                                                                <td colspan="9" style="border-bottom: none;">
-                                                                    <div class="scrolable-table" style="height:100px;">
-                                                                        <table id="program_element_milestone_table_id" class="table table-striped" style="border:none;">
-                                                                        <tbody>
-                                                                            <tr id="241" class="fade-selection-animation clickable-row">
-                                                                                <td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td>
-                                                                                <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
-                                                                                <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
-                                                                                <td class="class-td-LiveView" style="font-family: Verdana, Arial, sans-serif !important; color: #333 !important; text-overflow: ellipsis; white-space: nowrap; width: 30%; text-align: right !important;">11/23/2021</td>
-                                                                            </tr></tbody></table>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                        <tbody></tbody>
                                                     </table>
                                                 </div>
 
@@ -2799,7 +2824,6 @@
                                                 </div>
 
                                             </div>
-
                                         </form>
                                     </div>
                                 </div>
@@ -3690,7 +3714,7 @@
                                         <form>
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Key Project Element Milestones</label>
                                             <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-                                                <div class="panel-body table-outline p-0"  style="height : 275px !important;">
+                                                <!--<div class="panel-body table-outline p-0" style="height : 275px !important;">
                                                     <table class="table table-condensed table-responsive " style="border: none;">
                                                         <thead class="t-head" style="height: 5%; position:sticky;">
                                                             <tr class="table-background">
@@ -3723,13 +3747,30 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                </div>-->
+                                                
+                                                <!--Narayan - Restructure table for key milestone in element - 22/06/2022-->
+                                                <div class="panel-body table-outline p-0" style="height : 275px !important;">
+                                                    <table id="project_element_milestone_table_id" class="table table-striped" style="height: 100%; width: 100%; border: none;">
+                                                        <thead class="t-head" style="height: 5%; position:sticky;">
+                                                            <tr>
+                                                                <td style="font-weight: 900; width: 30px;"></td>
+                                                                <td style="font-weight: 900; width: 30%;">Title</td>
+                                                                <td style="font-weight: 900; width: 45%;">Description</td>
+                                                                <td style="font-weight: 900; width: 18%;">Date</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot></tfoot>
+                                                        <tbody></tbody>
+                                                    </table>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button id="new_project_element_milestone" title="Add" data-toggle="tooltip"  class="btn-icon"><i class="fa-plus"></i></button>
-                                                    <button id="edit_project_element_milestone" data-toggle="tooltip" title="Edit"  class="btn-icon"><i class="fa-edit"></i></button>
-                                                    <button id="delete_project_element_milestone" data-toggle="tooltip" title="Delete"  class=" btn-icon"><i class="fa-trash"></i></button>
+                                                    <button id="new_project_element_milestone" title="Add" data-toggle="tooltip" class="btn-icon"><i class="fa-plus"></i></button>
+                                                    <button id="edit_project_element_milestone" data-toggle="tooltip" title="Edit" class="btn-icon"><i class="fa-edit"></i></button>
+                                                    <button id="delete_project_element_milestone" data-toggle="tooltip" title="Delete" class=" btn-icon"><i class="fa-trash"></i></button>
                                                 </div>
                                             </div>
+
                                         </form>
                                         <!--END-->
                                     </div>
