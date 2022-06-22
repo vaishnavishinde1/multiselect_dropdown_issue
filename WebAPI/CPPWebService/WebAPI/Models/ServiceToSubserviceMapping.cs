@@ -81,7 +81,8 @@ namespace WebAPI.Models
                     retreivedProjectClassPhase = ctx.ServiceToSubserviceMapping.Where(u => (u.ProjectClassID == serviceToSubservices.ProjectClassID
                                                                                   && u.PhaseID == serviceToSubservices.PhaseID)
                                                                                   || (u.Order == serviceToSubservices.Order && u.ProjectClassID == serviceToSubservices.ProjectClassID)).FirstOrDefault();
-
+                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                    serviceToSubservices.VersionId = latestVersion.Id;
                     if (retreivedProjectClassPhase == null)
                     {
                         //register
