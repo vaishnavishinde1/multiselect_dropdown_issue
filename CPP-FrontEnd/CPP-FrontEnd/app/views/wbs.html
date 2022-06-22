@@ -5246,7 +5246,7 @@
                                                         <textarea class="form-control" id="notice_reason" rows="3" cols="50"></textarea>
                                                     </div>
                                                     <div class="text-center col-xs-3 col-md-3 m-t-90">
-                                                        <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save w-100" >Add</button>
+                                                        <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save w-100" style="margin-left:5px;">Add</button>
                                                         <button type="button" id="btnUpdateNotice" class="btn btn-primary w-100">Update</button>
                                                         <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back w-100">Clear</button>
                                                     </div>
@@ -5335,7 +5335,7 @@
                                         <form id="wrap_options" style="display: inline-block; width: -webkit-fill-available;">
                                             <div>
                                                 <div class="col-md-4 m-b-15">
-                                                    <label for="additionalinfo_project_number" class="control-label _bold p-r-15">Wrap </label>&nbsp;
+                                                    <label for="additionalinfo_project_number" class="control-label _bold p-r-15" style="margin-right: 58px;">Wrap </label>&nbsp;
                                                     <input type="radio" class="control-group" name="wrap" value="Yes">&nbsp;Yes&nbsp;
                                                     <input type="radio" class="control-group" name="wrap" value="No">&nbsp;No
                                                 </div>
@@ -6624,6 +6624,10 @@
             } else {
                 $("#addNewDocumentTypeModal").modal('toggle');
                 $("#ProgramModal").css({ "opacity": "1" });
+                $(".modal-body #document_type_program").val('');
+                $(".modal-body #document_type_programContModification").val('');
+                $(".modal-body #document_type_programPrgElm").val('');
+                $(".modal-body #document_type_programPrg").val('');
             }
         });
 
@@ -6636,6 +6640,7 @@
             } else {
                 $("#addNewClientModal").modal('toggle');
                 $("#ProgramModal").css({ "opacity": "1" });
+                $(".modal-body #program_client_poc").val('');
             }
         });
         //Aditya Prime 07042022
@@ -6762,6 +6767,7 @@
             } else {
                 $("#DocUpdateModalContModification").modal('toggle');
                 $("#FutureTrendModal").css({ "opacity": "1" });
+                $(".modal-body #document_type_programContModification").val('');
             }
         });
 
@@ -6888,6 +6894,10 @@
             } else {
                 $("#addNewDocumentTypeModal").modal('toggle');
                 $("#ProjectModal").css({ "opacity": "1" });
+                $(".modal-body #document_type_program").val('');
+                $(".modal-body #document_type_programContModification").val('');
+                $(".modal-body #document_type_programPrgElm").val('');
+                $(".modal-body #document_type_programPrg").val('');
             }
         });
         // Tanmay-AddNewClientModal-30/12/2021
@@ -6899,6 +6909,7 @@
             } else {
                 $("#addNewClientModal").modal('toggle');
                 $("#ProjectModal").css({ "opacity": "1" });
+                $(".modal-body #program_client_poc").val('');
             }
         });
         //Aditya 070402022 Prime
@@ -6910,6 +6921,7 @@
             } else {
                 $("#addNewPrimeModal").modal('toggle');
                 $("#ProjectModal").css({ "opacity": "1" });
+                $(".modal-body #prime_dd").val('');
             }
         });
         $('#cancel_PdfViewerChangeorder_modal_xPrg').unbind('click').on('click', function () {

@@ -207,7 +207,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -329,7 +329,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -526,7 +526,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -642,7 +642,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -1074,7 +1074,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1195,7 +1195,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1477,7 +1477,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1601,7 +1601,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1669,13 +1669,16 @@ angular.module('cpp.controllers').
 
             //======================================= Jignesh-AddNewDocModal-18-02-2021 ==========================================
             $('#btnSaveDocType').unbind('click').on('click', function ($files) {
+                $('#btnSaveDocType').prop('disabled',true);
                 var docType = $('#txtDocType').val();
                 var description = $('#txtDocDescription').val();
                 if (docType == "" || docType.length == 0) {
+                    $('#btnSaveDocType').prop('disabled', false);
                     dhtmlx.alert('Enter Document Type.');
                     return;
                 }
                 if (description == "" || description.length == 0) {
+                    $('#btnSaveDocType').prop('disabled', false);
                     dhtmlx.alert('Enter Description.');
                     return;
                 }
@@ -1759,8 +1762,9 @@ angular.module('cpp.controllers').
             //======================= Aditya 07042022 Prime Add new//
             $('#btnSavePrime').unbind('click').on('click', function ($files) {
                 var primeName = $('#txtPrimeName').val();
-
+                $('#btnSavePrime').prop('disabled', true);
                 if (primeName == "" || primeName.length == 0) {
+                    $('#btnSavePrime').prop('disabled', false);
                     dhtmlx.alert('Enter Prime Name');
                     return;
                 }
@@ -1782,47 +1786,51 @@ angular.module('cpp.controllers').
                     data: JSON.stringify(listToSave),
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
+                    $('#btnSavePrime').prop('disabled', true);
                     debugger;
                     response.data.result.replace(/[\r]/g, '\n');
                     if (response.data.result) {
                         Prime.get({}, function (response) {
                             debugger;
-                            wbsTree.setPrimeList(response.result);
-                            var PrimeDropDownProgram;
+                        wbsTree.setPrimeList(response.result);
+                        var PrimeDropDownProgram;
 
-                            var primeList = wbsTree.getPrimeList();
-                            primeList.sort(function (a, b) {                 //vaishnavi
-                                return a.Name.localeCompare(b.Name); //vaishnavi
-                            });   //vaishnavi
-                            PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
-                            PrimeDropDownProgram.empty();
-                            // Jignesh-25-03-2021
-                            //if (wbsTree.getLocalStorage().role === "Admin") {
-                            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                                PrimeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
+                        var primeList = wbsTree.getPrimeList();
+                        primeList.sort(function (a, b) {                 //vaishnavi
+                            return a.Name.localeCompare(b.Name); //vaishnavi
+                        });   //vaishnavi
+                        PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
+                        PrimeDropDownProgram.empty();
+                        if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                            PrimeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
+                        }
+                        for (var x = 0; x < primeList.length; x++) {
+                            if (primeList[x].Name == primeName) {
+                                PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
                             }
-                            for (var x = 0; x < primeList.length; x++) {
-                                if (primeList[x].Name == primeName) {
-                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
-                                }
-                                else {
-                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
-                                }
+                            else {
+                                PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
                             }
-                        });
-                        $('#cancel_addNewPrimeModal_x').trigger('click');
+                        
+                        }
+                    });
+                $('#cancel_addNewPrimeModal_x').trigger('click');
+                        $('#btnSavePrime').prop('disabled', false);
                         dhtmlx.alert(response.data.result);
-                    } else {
+            } else {
+                $('#btnSavePrime').prop('disabled', false);
                         dhtmlx.alert('No changes to be saved.');
                     }
                     //$state.reload();
                 }, function error(response) {
+                    $('#btnSavePrime').prop('disabled', false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             });
             //========================================================//
             //======================================= Tanmay-AddNewClientModal-29/12/2021 ==========================================
             $('#btnSaveClient').unbind('click').on('click', function ($files) {
+                $('#btnSaveClient').prop('disabled', true);
                 var clientName = $('#txtClientName').val();
                 var clientPhone = $('#txtClientPhone').val();
                 var clientEmail = $('#txtClientEmail').val();
@@ -1834,16 +1842,19 @@ angular.module('cpp.controllers').
                 var uniqueIdentityNumber = $('#txtUniqueIdentityNumber').val();
 
                 if (clientName == "" || clientName.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Client Name');
                     return;
                 }
                 if (clientPhone == "" || clientPhone.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Phone Number.');
                     return;
                 }
                 if (clientPhone != null) {
                     if (clientPhone.length > 0) {
                         if (clientPhone.length != 12) {
+                            $('#btnSaveClient').prop('disabled', false);
                             dhtmlx.alert('Enter valid 10 digit Client Phone.');
                             isFilled = false;
                             return true;
@@ -1851,6 +1862,7 @@ angular.module('cpp.controllers').
                     }
                 }
                 if (clientEmail == "" || clientEmail.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Email Address.');
                     return;
                 }
@@ -1858,6 +1870,7 @@ angular.module('cpp.controllers').
                     if (clientEmail.length > 0) {
                         var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
                         if (!testEmail.test(clientEmail)) {
+                            $('#btnSaveClient').prop('disabled', false);
                             dhtmlx.alert('Please enter valid Email Address.');
                             isFilled = false;
                             return;
@@ -1865,26 +1878,32 @@ angular.module('cpp.controllers').
                     }
                 }
                 if (clientAddressLine1 == "" || clientAddressLine1.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Address Line 1');
                     return;
                 }
                 if (clientAddressLine2 == "" || clientAddressLine2.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Address Line 2');
                     return;
                 }
                 if (clientCity == "" || clientCity.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter City');
                     return;
                 }
                 if (clientState == "" || clientState.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter State');
                     return;
                 }
                 if (clientPONo == "" || clientPONo.length == 0) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert('Enter Zip Code');
                     return;
                 }
                 if (clientName == "" || uniqueIdentityNumber == "") {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert({
                         text: "Please fill data to all required fields before save (Row " + value.displayId + ")",
                         width: "400px"
@@ -1919,6 +1938,7 @@ angular.module('cpp.controllers').
                     headers: { 'Content-Type': 'application/json' }
                 }).then(function success(response) {
                     debugger;
+                    $('#btnSaveClient').prop('disabled', true);
                     response.data.result.replace(/[\r]/g, '\n');
                     if (response.data.result) {
                         Client.get({}, function (response) {
@@ -1969,13 +1989,16 @@ angular.module('cpp.controllers').
                         //        }
                         //    }
                         //});
+                        $('#btnSaveClient').prop('disabled', false);
                         $('#cancel_addNewClientModal_x').trigger('click');
                         dhtmlx.alert(response.data.result);
                     } else {
+                        $('#btnSaveClient').prop('disabled', false);
                         dhtmlx.alert('No changes to be saved.');
                     }
                     //$state.reload();
                 }, function error(response) {
+                    $('#btnSaveClient').prop('disabled', false);
                     dhtmlx.alert("Failed to save. Please contact your Administrator.");
                 });
             });
@@ -2357,7 +2380,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modId + ' - ' + modTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
                                 }
@@ -2404,7 +2427,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td><i class="fa fa-eye icon-btn" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2585,7 +2608,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modId + ' - ' + modTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2607,7 +2630,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
