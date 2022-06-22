@@ -100,7 +100,7 @@ angular.module('cpp.controllers').
                         angular.forEach($scope.orgPhaseCodeCollection, function (orgItem) {
                             if (value.PhaseID === orgItem.PhaseID &&
                                 value.PhaseDescription === orgItem.PhaseDescription &&
-                                value.Code === orgItem.Code) {
+                                value.ActivityPhaseCode === orgItem.ActivityPhaseCode) {  // value.Code === orgItem.Code
                                 //Do nothing on unchanged Item
                                 isChanged = false;
                             }

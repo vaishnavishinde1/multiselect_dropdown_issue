@@ -122,16 +122,18 @@ namespace WebAPI.Models
                     PhaseCode retrievedPhase = new PhaseCode();
                     retrievedPhase = ctx.PhaseCode.Where(p => p.Code == phase.Code && p.PhaseDescription == phase.PhaseDescription)
                         .FirstOrDefault();
-                    PhaseCode maxPhaseCode = ctx.PhaseCode.OrderByDescending(a=>a.ActivityPhaseCode).FirstOrDefault();
-                   int  maxCode = Convert.ToInt16(maxPhaseCode.ActivityPhaseCode);
-                    maxCode++;
+                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                    phase.VersionId = latestVersion.Id;
+                    // PhaseCode maxPhaseCode = ctx.PhaseCode.OrderByDescending(a=>a.ActivityPhaseCode).FirstOrDefault();
+                    //int  maxCode = Convert.ToInt16(maxPhaseCode.ActivityPhaseCode);
+                    // maxCode++;
 
-                    String newCode = maxCode.ToString().PadLeft(2,'0');
+                    // String newCode = maxCode.ToString().PadLeft(2,'0');
 
                     if (retrievedPhase == null)
                     {
                         //register
-                        phase.ActivityPhaseCode = newCode;
+                       // phase.ActivityPhaseCode = newCode;
                         ctx.PhaseCode.Add(phase);
                         ctx.SaveChanges();
                         register_result += phase.PhaseDescription + " has been created successfully.\n";
@@ -172,8 +174,10 @@ namespace WebAPI.Models
                     retrievedPhaseCode = ctx.PhaseCode.Where(p =>  p.PhaseID == phase.PhaseID).FirstOrDefault();
 
                     PhaseCode duplicatePhaseCode = new PhaseCode();
-                    duplicatePhaseCode = ctx.PhaseCode.Where(u => (u.Code == phase.Code || u.PhaseDescription == phase.PhaseDescription )
+                    duplicatePhaseCode = ctx.PhaseCode.Where(u => (u.Code == phase.ActivityPhaseCode || u.PhaseDescription == phase.PhaseDescription)    //u.Code == phase.Code
                                                                     && u.PhaseID != phase.PhaseID).FirstOrDefault();
+                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                    phase.VersionId = latestVersion.Id;
 
                     if (retrievedPhaseCode != null && retrievedPhaseCode.Code != phase.Code)
                     {

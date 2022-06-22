@@ -1397,6 +1397,9 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
 }
 
 .modal-sm {
+    width: 30% !important;
+}
+#FutureTrendModal .modal-sm, PastTrendModal .modal-sm {
     width: 40% !important;
 }
 
@@ -1671,11 +1674,41 @@ button[disabled=disabled], button:disabled {
 .bot-border {
     border-bottom: 1px solid #e3e3e3;
 }
-.icon-btn {
+.btntbl-icon {
     font-size: 20px !important;
     color: #000;
     cursor: pointer !important;
 }
-.icon-btn:hover {
+.btntbl-icon:hover {
     color:#000;
+}
+.grid-ui {
+    overflow:auto !important;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?pcz05c');
+    src: url('../fonts/icomoon.eot?pcz05c#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?pcz05c') format('truetype'), url('../fonts/icomoon.woff?pcz05c') format('woff'), url('../fonts/icomoon.svg?pcz05c#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.icon-72647 {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-72647:before {
+    content: "\e900";
 }
