@@ -1997,7 +1997,7 @@
                                 <!--<div class="_form-group">-->
                                 <div id="documentUploadProgramNew">
                                     <h4 class="label-heading">Contract Document Management</h4>
-                                    <div class="panel-body table-outline p-0" style="height: 311px !important;">
+                                    <div class="panel-body table-outline p-0" style="height: 335px !important;">
                                         <table id="gridUploadedDocumentProgramNew" class="table table-striped">
                                             <thead class="t-head" style="position:sticky">
                                                 <tr>
@@ -2026,14 +2026,14 @@
                                             <button id="downloadBtnProgram" class="btn-icon" title="Download"><i class="fa-download"></i></button>
 
 
-                                            <button id="ViewUploadFileProgram" class="btn-icon" title="View"><i class="fa-eye"></i></button>
+                                            <button id="ViewUploadFileProgram" class="btn-icon" title="View"><i class="icon-72647"></i></button>
 
 
                                             <button id="ViewAllUploadFileContracts" class="btn-icon" title="View All Documents"><i class="fa-list"></i></button>
 
 
                                             <button id="EditBtnProgram" class="btn-icon" title="Edit"><i class="fa-edit"></i></button>
-
+                                           
                                         </div>
                                     </div>
 
@@ -2052,38 +2052,40 @@
             </div>
             <div class="c-modal-footer">
                 <!--<button type="button" class="btn btn-default" id = "close_modal" data-dismiss="modal">Close</button>-->
-                <div class="row">
-                    <!--<div class="col-sm-3" style="margin-left:5px;text-align: left;">-->
-                    <span id="spnBtndelete_program" title="" class="col-sm-2" style="margin-left:5px;text-align: left;">
-                        <!--Manasi 24-02-2021-->
-                        <!--Manasi 23-02-2021-->
-                        <button id="delete_program" type="button"
-                                class="btn btn-primary c-btn-delete" data-toggle="modal" style="margin-left:15px;" href="#DeleteModal">
-                            Delete
-                        </button>
-                    </span>
-                    <!--</div>-->
-                    <!--<div class="col-sm-3" style="padding-right:130px;">-->
-                    <span id="spnBtnModification" title="" class="col-sm-3 text-center">
-                        <!--Manasi 23-02-2021-->
-                        <button type="button" style="background-color:#FF9407 !important;color:white;" class="btn btn-primary c-btn-save" id="btnModification">Modifications</button><!--Jignesh-01-03-2021-->
-                    </span>
+                <div class="container-fluid">
+                    <div class="row">
+                        <!--<div class="col-sm-3" style="margin-left:5px;text-align: left;">-->
+                        <span id="spnBtndelete_program" title="" class="col-sm-2" style="margin-left:5px;text-align: left;">
+                            <!--Manasi 24-02-2021-->
+                            <!--Manasi 23-02-2021-->
+                            <button id="delete_program" type="button"
+                                    class="btn btn-primary c-btn-delete" data-toggle="modal" style="margin-left:15px;" href="#DeleteModal">
+                                Delete
+                            </button>
+                        </span>
+                        <!--</div>-->
+                        <!--<div class="col-sm-3" style="padding-right:130px;">-->
+                        <span id="spnBtnModification" title="" class="col-sm-3 text-center">
+                            <!--Manasi 23-02-2021-->
+                            <button type="button" style="background-color:#FF9407 !important;color:white;" class="btn btn-primary c-btn-save" id="btnModification">Modifications</button><!--Jignesh-01-03-2021-->
+                        </span>
 
-                    <!--<div class="col-sm-3 text-center" style="padding-right:130px;">-->
-                    <span id="spnAdditionalInfo" title="" class="col-sm-2 text-center">
-                        <button type="button" id="btnAdditionalInfo" class="btn btn-primary c-btn-save" style="background-color: #4f07ff !important;color:white;">Additional Info</button>
-                    </span>
-                    <!--</div>-->
-                    <!--</div>-->
-                    <div class="col-sm-3 text-center">
-                        <!--style="padding-right:152px;"-->
-                        <button type="button" class="btn btn-primary c-btn-save" id="update_program">Save</button>
-                    </div>
-                    <div class="col-sm-2" style="margin-left:40px;margin-right:-50px;">
-                        <!--button type="button" style="margin-right:40px;" class="btn btn-primary c-btn-back" data-dismiss="modal" id = "cancel_program">Cancel</button-->
-                        <button id="cancel_program" type="button" style="margin-right:52px;" class="btn btn-primary c-btn-back">Exit</button> <!--Jignesh-22-03-2021-->
-                    </div>
+                        <!--<div class="col-sm-3 text-center" style="padding-right:130px;">-->
+                        <span id="spnAdditionalInfo" title="" class="col-sm-2 text-center">
+                            <button type="button" id="btnAdditionalInfo" class="btn btn-primary c-btn-save" style="background-color: #4f07ff !important;color:white;">Additional Info</button>
+                        </span>
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-sm-3 text-center">
+                            <!--style="padding-right:152px;"-->
+                            <button type="button" class="btn btn-primary c-btn-save" id="update_program">Save</button>
+                        </div>
+                        <div class="col-sm-2" style="margin-left:40px;margin-right:-50px;">
+                            <!--button type="button" style="margin-right:40px;" class="btn btn-primary c-btn-back" data-dismiss="modal" id = "cancel_program">Cancel</button-->
+                            <button id="cancel_program" type="button" style="margin-right:52px;" class="btn btn-primary c-btn-back">Exit</button> <!--Jignesh-22-03-2021-->
+                        </div>
 
+                    </div>
                 </div>
                 <!--<button type="button" class="btn btn-primary" id = "program_element_modal" data-dismiss="modal" data-toggle = "modal" href="#ProgramElementModal">Add Program Element </button>-->
             </div>
@@ -3115,7 +3117,7 @@
                                                     <button id="edit_program_element_change_order" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
                                                     <button id="delete_program_element_change_order" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>
                                                     <button id="downloadBtnChangeOrder" class="btn-icon" title="Download" data-toggle="tooltip"><i class="fa-download"></i></button>
-                                                    <button id="ViewUploadFileChangeOrder" class="btn-icon" title="View Documents" data-toggle="tooltip"><i class="fa-eye"></i></button>
+                                                    <button id="ViewUploadFileChangeOrder" class="btn-icon" title="View Documents" data-toggle="tooltip"><i class="icon-72647"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -3160,7 +3162,7 @@
                                                     <button id="DeleteUploadProgramPrg" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>  <!--Shweta 16-07-2020-->
                                                     <button id="updateBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                                     <button id="downloadBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
-                                                    <button id="ViewUploadFileProgramPrg" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="fa-eye"></i></button>   <!--Shweta 16-07-2020-->
+                                                    <button id="ViewUploadFileProgramPrg" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
                                                     <button id="ViewAllUploadFileProjects" class="btn-icon" data-toggle="tooltip" title="View All"><i class="fa-list"></i></button>   <!--Jignesh-03-03-2021-->
                                                     <button id="EditBtnProgramPrg" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i> </button>
                                                 </div>
@@ -3717,7 +3719,7 @@
                                                 <!--<div class="panel-body table-outline p-0" style="height : 275px !important;">
                                                     <table class="table table-condensed table-responsive " style="border: none;">
                                                         <thead class="t-head" style="height: 5%; position:sticky;">
-                                                            <tr class="table-background">
+                                                            <tr>
                                                                 <td class="t-head" style="width: 30px; padding-left:5px;"></td>
                                                                 <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="width: 20%;">
 
@@ -3738,10 +3740,10 @@
                                                         </thead>
                                                         <tfoot></tfoot>
                                                         <tbody>
-                                                            <tr class="table-background">
+                                                            <tr>
                                                                 <td colspan="9" style="border-bottom: none;">
                                                                     <div class="scrolable-table" style="height:70px;">
-                                                                        <table id="project_element_milestone_table_id" class="table table-condensed table-responsive" style="border:none;"></table>
+                                                                        <table id="project_element_milestone_table_id" class="table table-striped " style="border:none;"></table>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -3928,7 +3930,7 @@
                                                         <button id="DeleteUploadProgramPrgElm"  class="btn-icon" title="Delete" data-toggle="tooltip"  ><i class="fa-trash"></i></button> <!-- Shweta 16-07-2020 -->
                                                         <button id="updateBtnProgramPrgElm" class="btn-icon" title="Upload" data-toggle="tooltip"  ><i class="fa-upload"></i></button>     <!-- Shweta 16-07-2020 -->
                                                         <button id="downloadBtnProgramPrgElm" class="btn-icon" title="Download" data-toggle="tooltip"  ><i class="fa-download"></i></button>  <!-- Shweta 16-07-2020 -->
-                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Documents" data-toggle="tooltip"  ><i class="fa-eye"></i></button>   <!-- Shweta 16-07-2020 -->
+                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Documents" data-toggle="tooltip"  ><i class="icon-72647"></i></button>   <!-- Shweta 16-07-2020 -->
                                                         <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All" data-toggle="tooltip"  ><i class="fa-list"></i></button>   <!-- Swapnil 22-01-2021 -->
                                                         <button id="EditBtnProgramPrgElm" class="btn-icon" title="Edit" data-toggle="tooltip"  ><i class="fa-edit"></i></button>
 
@@ -4337,7 +4339,7 @@
                                                 </div>
                                                 <div class="row" id="buttonRow">
                                                     <div class="col-sm-12 text-center">
-                                                        <button type="button" id="ViewUploadFilePastTrend" class="btn-icon" data-toggle="tooltip" title="View"><i class="fa-eye"></i></button>
+                                                        <button type="button" id="ViewUploadFilePastTrend" class="btn-icon" data-toggle="tooltip" title="View"><i class="icon-72647"></i></button>
                                                     </div>
                                                 </div>
                                                 <div class="row" id="spinRowPrg" style="margin-top:0.3%; display: none;">
@@ -4543,7 +4545,7 @@
                                                 <button type="button" id="DeleteUploadTrend" class="btn-icon" data-toggle="tooltip" title="Delete"><i class="fa-trash"></i></button>  <!--Shweta 16-07-2020-->
                                                 <button type="button" id="updateDMBtnTrend" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                                 <button type="button" id="downloadBtnTrend" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
-                                                <button type="button" id="ViewUploadFileTrend" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="fa-eye"></i></button>   <!--Shweta 16-07-2020-->
+                                                <button type="button" id="ViewUploadFileTrend" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
                                                 <button type="button" id="EditBtnTrend" class="btn-icon" data-toggle="tooltip" title="Edit"><i class="fa-edit"></i></button>
                                             </div>
                                         </div>
@@ -4991,7 +4993,7 @@
                                         <form id="certified_payroll_options" style="display: inline-block; width: -webkit-fill-available;">
                                             <div class="form-group  p-b-30">
                                                 <div class="col-sm-5 col-md-5 p-0">
-                                                    <label for="program_element_project_number" class="control-label _bold p-r-15">Certified Payroll </label>&nbsp;
+                                                    <label for="program_element_project_number" class="control-label _bold p-r-15">Certified Payroll</label>&nbsp;&nbsp;&nbsp;
                                                     <input type="radio" class="control-group" name="certified_payroll" value="Yes">&nbsp;Yes&nbsp;
                                                     <input type="radio" class="control-group" name="certified_payroll" value="No">&nbsp;No
                                                 </div>
@@ -5007,7 +5009,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12 box-content bot-border" style="width:97%">
+                                    <div class="col-md-12 col-sm-12 box-content bot-border">
                                         <form id="prevailing_wages_options" style="display: inline-block; width: -webkit-fill-available;">
                                             <div class="form-group p-b-30">
                                                 <div class="col-sm-5 col-md-5 p-0">
@@ -5016,7 +5018,7 @@
                                                     <input type="radio" class="control-group" name="prevailing_wages" value="No">&nbsp;No
                                                 </div>
                                                 <div class="col-sm-4 col-md-4" id="prevailing_wages_select_div">
-                                                    <select type="text" class="form-control" style="width:50%;" id="prevailing_wages_select" multiple>
+                                                    <select type="text" class="form-control"  id="prevailing_wages_select" multiple>
                                                         <!--<option value="state">State</option>
                                                         <option value="federal">Federal </option>-->
                                                     </select>
