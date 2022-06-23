@@ -3704,7 +3704,7 @@ WBSTree = (function ($) {
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             //Manu 11/01/2022
-                            totalmod = totalmod + parseInt(changeOrderAmount);
+                            totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id').append(
@@ -9192,7 +9192,7 @@ WBSTree = (function ($) {
                         "Formdata": formdata,
                         "ChangeOrderName": updatedChangeOrder.ChangeOrderName,
                         "ChangeOrderNumber": updatedChangeOrder.ChangeOrderNumber,
-                        "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',',''),
+                        "ChangeOrderAmount": updatedChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": updatedChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
                         "ProjectEndDateCO": projectEndDate,
@@ -9333,7 +9333,7 @@ WBSTree = (function ($) {
                         "Formdata": formdata,
                         "ChangeOrderName": newChangeOrder.ChangeOrderName,
                         "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
-                        "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',', ''),
+                        "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                         "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                         "ProgramElementID": selectedNode.ProgramElementID,
                         "ProjectEndDateCO": projectEndDate,
@@ -9358,7 +9358,7 @@ WBSTree = (function ($) {
                             "DocumentName": fileName,
                             "ChangeOrderName": newChangeOrder.ChangeOrderName,
                             "ChangeOrderNumber": newChangeOrder.ChangeOrderNumber,
-                            "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', '').replaceAll(',',''),
+                            "ChangeOrderAmount": newChangeOrder.ChangeOrderAmount.replace('$', ''),
                             "ChangeOrderScheduleChange": newChangeOrder.ChangeOrderScheduleChange,
                             "ProgramElementID": wbsTree.getSelectedProgramElementID(),
                             "ProjectEndDateCO": projectEndDate,
@@ -9975,7 +9975,7 @@ WBSTree = (function ($) {
                 var limit = row.find("#history_limit").text();
                 $('#insurance_id').val(id);
                 $('#insurance_type_select').val(type);
-                $('#insurance_limit').val(limit.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
+                $('#insurance_limit').val(limit);
                 wbsTree.setContractInsuranceOperation(2);
                 $('#btnUpdateInsurance').show();
             });
@@ -15694,7 +15694,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
             //Nivedita Additional program
             var additionalContPageFieldIDs = '#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,' +
-                '#date_of_pre_notice, #notice_reason, #insurance_type_select, #insurance_limit,#txtPPNotes';
+                '#date_of_pre_notice, #notice_reason, #insurance_type_select,#insurance_limit,#txtPPNotes';
             // debugger;
             $(additionalContPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
