@@ -2183,7 +2183,7 @@ angular.module('cpp.controllers').
                     Description: description,
                     Date: date,
                     ModificationType: modType,
-                    Value: value.replace("$", "").replaceAll(",", ""),
+                    Value: value.replace("$", ""),
                     //DurationDate: durationDate,
                     ProgramID: programId,
                     CreatedBy: createdBy,
@@ -2321,6 +2321,7 @@ angular.module('cpp.controllers').
                         var totalValue = 0;
                         var totalDaysOfScheduleImpact = 0;
                         for (var x = 1; x < _modificationList.length; x++) {
+                            _modificationList[x].Value = _modificationList[x].Value.replace("$", "").replaceAll(",", "");
                             totalValue = totalValue + parseFloat((_modificationList[x].ModificationNo != "0" ? (_modificationList[x].Value != "" ? _modificationList[x].Value : 0) : 0));
                             totalDaysOfScheduleImpact = totalDaysOfScheduleImpact + parseInt(_modificationList[x].ScheduleImpact);
                             //if (_modificationList[x].DurationDate != "" && _modificationList[x].DurationDate != null) {
