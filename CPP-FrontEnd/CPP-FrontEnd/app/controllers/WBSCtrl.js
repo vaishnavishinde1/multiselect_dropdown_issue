@@ -207,7 +207,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -329,7 +329,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -526,7 +526,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -642,7 +642,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -1074,7 +1074,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1195,7 +1195,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1477,7 +1477,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1601,7 +1601,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2381,7 +2381,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modId + ' - ' + modTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
                                 }
@@ -2428,7 +2428,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2609,7 +2609,7 @@ angular.module('cpp.controllers').
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modId + ' - ' + modTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2631,7 +2631,7 @@ angular.module('cpp.controllers').
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="fa fa-eye icon-btn" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
