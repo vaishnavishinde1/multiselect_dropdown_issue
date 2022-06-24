@@ -298,6 +298,18 @@ WBSTree = (function ($) {
         function createSomething(request) {
         }
 
+        //Added by Nivedita
+        function comparer(index) {
+            return function (a, b) {
+                var valA = getCellValue(a, index),
+                    valB = getCellValue(b, index);
+                return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+            }
+        }
+
+        function getCellValue(row, index) {
+            return $(row).children('td').eq(index).text();
+        }
         //Added by Amruta
 
         function displayMenu(type, e, d) {
@@ -2038,6 +2050,7 @@ WBSTree = (function ($) {
             $(".wbs-col-heading").css("margin-right", "0px");
 
             var scale = zoomListener.scale();
+            scale = 1;
             var x = col_width / 2;
             var y = 0;
             d3.select('g').transition()
@@ -2412,15 +2425,13 @@ WBSTree = (function ($) {
                     if (d.level == "Root")
                         return "assets/js/wbs-tree/images/nodeA.png";
                     //----Vaishnavi 30-03-2022----//
-                    if (d.level == "Program")
-                    {
+                    if (d.level == "Program") {
                         if (d.Status == "Closed")
                             return "assets/js/wbs-tree/images/node.png";
                         else
                             return "assets/js/wbs-tree/images/nodeB.png";
                     }
-                    if (d.level == "ProgramElement")
-                    {
+                    if (d.level == "ProgramElement") {
                         if (d.Status == "Closed")
                             return "assets/js/wbs-tree/images/node.png";
                         else
@@ -2432,8 +2443,7 @@ WBSTree = (function ($) {
                         else
                             return "assets/js/wbs-tree/images/nodeD.png";
                     }
-                    else
-                    {
+                    else {
                         if (d.Status == "Closed")
                             return "assets/js/wbs-tree/images/node.png";
                         else
@@ -3492,11 +3502,11 @@ WBSTree = (function ($) {
 
                     var programNotesList = response.data.data;
 
-                    programNotesList= programNotesList.reverse();
+                    programNotesList = programNotesList.reverse();
                     gridNoteslist.empty();
                     for (var x = 0; x < programNotesList.length; x++) {
                         gridNoteslist.append(
-                            '<tr id="' + programNotesList[x].notes_id + '" class="fade-selection-animation clickable-row">' +
+                            '<tr class="contact-row" id="' + programNotesList[x].notes_id + '" >' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
@@ -3512,6 +3522,19 @@ WBSTree = (function ($) {
 
                 /* });*/
             }
+            $('#gridNoticehistoryList').on('click', 'th', function () {
+                var table = $(this).closest('table');
+                var rows = table.find('tr.contact-row')
+                    .toArray()
+                    .sort(comparer($(this).index()));
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    rows = rows.reverse();
+                }
+                for (var i = 0; i < rows.length; i++) {
+                    table.append(rows[i]);
+                }
+            });
 
             function populateNotesHistoryTableNew() {
                 $('#program_contract_table_body_id').empty();
@@ -3600,7 +3623,32 @@ WBSTree = (function ($) {
                         '</tr>'
                     );
                 }
+
+
+                $('#tblmilestone').on('click', 'th', function () {
+                    debugger;
+                    var table = $(this).closest('table');
+                    var table1 = table.closest('table');
+                    var rows = table1.find('tr.contact-row')
+                        .toArray()
+                        .sort(comparer(table1.index()));
+                    // this.asc = !this.asc;
+                    table1.asc = !table1.asc;
+                    if (!table1.asc) {
+                        rows = rows.reverse();
+                    }
+                    //if (!this.asc) {
+                    //    rows = rows.reverse();
+                    //}
+
+                    for (var i = 0; i < rows.length; i++) {
+                        table1.append(rows[i]);
+                    }
+                });
+
             }
+
+    
 
             //Program element milestone
             function populateProgramElementMilestoneTable(programElementID) {
@@ -3781,6 +3829,20 @@ WBSTree = (function ($) {
                     });
                 });
             }
+
+            $('#tblprojectchangeorder').on('click', 'th', function () {
+                var table = $(this).closest('table');
+                var rows = table.find('tr.contact-row')
+                    .toArray()
+                    .sort(comparer($(this).index()));
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    rows = rows.reverse();
+                }
+                for (var i = 0; i < rows.length; i++) {
+                    table.append(rows[i]);
+                }
+            });
 
             $('#fileUploadChangeOrder').change(function (ev)
             {
@@ -9855,8 +9917,8 @@ WBSTree = (function ($) {
                 //$('#btnClearWarranty').hide();
                 var row = $(this).closest("tr");
                 var id = row[0].id;
-                var AllWarranties = _WarrantyList;
                 if (id != undefined) {
+                var AllWarranties = _WarrantyList;
                     for (var i = 0; i < AllWarranties.length; i++) {
                         if (AllWarranties[i].Id == id) {
                             $('#warranty_id').val(AllWarranties[i].Id);
@@ -10702,7 +10764,7 @@ WBSTree = (function ($) {
                             _WarrantyList.reverse();
                             var WarrantyList = _WarrantyList;
                             for (var x = 0; x < WarrantyList.length; x++) {
-                                gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                                gridWarranty.append('<tr class="contact-row" id="' + _WarrantyList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -10717,6 +10779,20 @@ WBSTree = (function ($) {
                                     '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
+
+                            $('#gridWarrantyList').on('click', 'th', function () {
+                                var table = $(this).closest('table');
+                                var rows = table.find('tr.contact-row')
+                                    .toArray()
+                                    .sort(comparer($(this).index()));
+                                this.asc = !this.asc;
+                                if (!this.asc) {
+                                    rows = rows.reverse();
+                                }
+                                for (var i = 0; i < rows.length; i++) {
+                                    table.append(rows[i]);
+                                }
+                            });
 
                         }
                     });
@@ -10820,7 +10896,7 @@ WBSTree = (function ($) {
                                 if (_NoticeList[x].DurationDate != null) {
                                     durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
                                 }
-                                gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
+                                gridNotice.append('<tr class="contact-row" id="' + _NoticeList[x].Id + '" >' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
@@ -10831,6 +10907,20 @@ WBSTree = (function ($) {
                                     '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
+
+                            $('#gridNoticeList').on('click', 'th', function () {
+                                var table = $(this).closest('table');
+                                var rows = table.find('tr.contact-row')
+                                    .toArray()
+                                    .sort(comparer($(this).index()));
+                                this.asc = !this.asc;
+                                if (!this.asc) {
+                                    rows = rows.reverse();
+                                }
+                                for (var i = 0; i < rows.length; i++) {
+                                    table.append(rows[i]);
+                                }
+                            });
 
                         }
                     });
@@ -10914,7 +11004,7 @@ WBSTree = (function ($) {
                             _InsuranceList.reverse();
                             var InsuranceList = _InsuranceList;
                             for (var x = 0; x < InsuranceList.length; x++) {
-                                gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
+                                gridInsurance.append('<tr class="contact-row" id="' + _InsuranceList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '><a>' + (x + 1) + '</a></td> ' +
                                     '<td id="history_type" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -11706,7 +11796,7 @@ WBSTree = (function ($) {
                                         }
                                     }
                                 }
-                                gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '" class="contact-row"><td style="width: 20px">' +
                                     // '<input type="radio" group="prgrb" name="record">' +
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                     '</td > <td ' +
@@ -11753,7 +11843,7 @@ WBSTree = (function ($) {
                         for (var x = 0; x < _documentList.length; x++) {
 
 
-                            gridViewAllUploadedDocumentProgram.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridViewAllUploadedDocumentProgram.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
@@ -11775,6 +11865,19 @@ WBSTree = (function ($) {
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
                         }
+                        $('#tblgridViewAllDocumentInContract').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
 
                         $('input[name=rbCategories]').on('click', function (event) {
                             if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
@@ -11797,6 +11900,20 @@ WBSTree = (function ($) {
                             }).hide();
                         });
                         //==========================================================================================
+                    });
+
+                    $('#gridUploadedDocumentProgramNew').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
                     });
 
                     //====================================== Created By Jignesh 28-10-2020 =======================================
@@ -14095,7 +14212,7 @@ WBSTree = (function ($) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
                             // Edited by Jignesh (29/10/2020)
-                            gridViewAllUploadedDocumentProgramElement.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridViewAllUploadedDocumentProgramElement.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
@@ -14116,6 +14233,20 @@ WBSTree = (function ($) {
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
+
+                        $('#tblgridViewAllDocumentInProject').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
 
                         $('input[name=rbCategoriesPrg]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
@@ -14147,7 +14278,7 @@ WBSTree = (function ($) {
                         wbsTree.setDocumentList(response.result);
                         for (var x = 0; x < _documentList.length; x++) {
                             // Edited by Jignesh (29/10/2020)
-                            gridUploadedDocumentProgramElement.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridUploadedDocumentProgramElement.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
@@ -14209,6 +14340,20 @@ WBSTree = (function ($) {
                             //    'style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 40%;"' +
                             //    '>' + _documentList[x].DocumentTypeName + '</td><td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td><tr>');   //MM/DD/YYYY h:mm a'
                         }
+
+                        $('#gridUploadedDocumentProgramNewPrg').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
 
                         var deleteDocBtn = modal.find('.modal-body #delete-doc');
                         deleteDocBtn.attr('disabled', _documentList.length > 0 ? false : true);
@@ -15156,7 +15301,7 @@ WBSTree = (function ($) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
 
-                        gridViewAllUploadedDocumentProgramElement.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                        gridViewAllUploadedDocumentProgramElement.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                             // '<input type="radio" group="prgrb" name="record">' +
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                             '</td > <td ' +
@@ -15224,7 +15369,7 @@ WBSTree = (function ($) {
                     wbsTree.setDocumentList(response.result);
                     for (var x = 0; x < _documentList.length; x++) {
                         var viewBtnId = _documentList[x].ChangeOrderName ? "viewAllOrderDetail" : "viewDocumentDetail"; // Jignesh-01-03-2021
-                        gridViewAllUploadedDocumentProgramElement.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                        gridViewAllUploadedDocumentProgramElement.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                             // '<input type="radio" group="prgrb" name="record">' +
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                             '</td > <td ' +
@@ -15245,6 +15390,20 @@ WBSTree = (function ($) {
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
+
+                    $('#tblgridViewAllDocumentInProject').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
+                    });
 
                     $('input[name=rbCategoriesPrg]').on('click', function (event) {
 
@@ -15303,7 +15462,7 @@ WBSTree = (function ($) {
                                 }
                             }
                             var viewBtnId = _documentList[x].ChangeOrderName ? "viewAllOrderDetail" : "viewDocumentDetail"; // Jignesh-01-03-2021
-                            gridViewAllUploadedDocumentProgram.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridViewAllUploadedDocumentProgram.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
@@ -15327,6 +15486,19 @@ WBSTree = (function ($) {
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
                         }
+                        $('#tblgridViewAllDocumentInContract').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
                         $('#ViewAllUploadFileContracts').attr('disabled', false); //Aditya
                         $('input[name=rbCategories]').on('click', function (event) {
                             if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
@@ -16448,7 +16620,7 @@ WBSTree = (function ($) {
                         if (_NoticeList[x].DurationDate != null) {
                             durationDate = moment(_NoticeList[x].DurationDate).format('MM/DD/YYYY')
                         }
-                        gridNotice.append('<tr id="' + _NoticeList[x].Id + '">' +
+                        gridNotice.append('<tr class="contact-row" id="' + _NoticeList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
@@ -16461,7 +16633,19 @@ WBSTree = (function ($) {
                     }
                     //}
                 });
-
+                $('#gridNoticeList').on('click', 'th', function () {
+                    var table = $(this).closest('table');
+                    var rows = table.find('tr.contact-row')
+                        .toArray()
+                        .sort(comparer($(this).index()));
+                    this.asc = !this.asc;
+                    if (!this.asc) {
+                        rows = rows.reverse();
+                    }
+                    for (var i = 0; i < rows.length; i++) {
+                        table.append(rows[i]);
+                    }
+                });
 
 
                 // Narayan - get insurnace list for insurance history
@@ -16472,7 +16656,7 @@ WBSTree = (function ($) {
                     _InsuranceList.reverse();
                     var InsuranceList = _InsuranceList;
                     for (var x = 0; x < InsuranceList.length; x++) {
-                        gridInsurance.append('<tr id="' + _InsuranceList[x].Id + '">' +
+                        gridInsurance.append('<tr class="contact-row" id="' + _InsuranceList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_type" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -16486,6 +16670,20 @@ WBSTree = (function ($) {
                     }
                 });
 
+                $('#gridInsuranceList').on('click', 'th', function () {
+                    var table = $(this).closest('table');
+                    var rows = table.find('tr.contact-row')
+                        .toArray()
+                        .sort(comparer($(this).index()));
+                    this.asc = !this.asc;
+                    if (!this.asc) {
+                        rows = rows.reverse();
+                    }
+                    for (var i = 0; i < rows.length; i++) {
+                        table.append(rows[i]);
+                    }
+                });
+
                 // Narayan - get warranty list for warranty history
                 _Document.getWarrantyByProgramId().get({ programId: _selectedNode.ProgramID }, function (response) {
                     _WarrantyList = response.data;
@@ -16494,7 +16692,7 @@ WBSTree = (function ($) {
                     _WarrantyList.reverse();
                     var WarrantyList = _WarrantyList;
                     for (var x = 0; x < WarrantyList.length; x++) {
-                        gridWarranty.append('<tr id="' + _WarrantyList[x].Id + '">' +
+                        gridWarranty.append('<tr class="contact-row" id="' + _WarrantyList[x].Id + '">' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -16511,6 +16709,19 @@ WBSTree = (function ($) {
                     }
                 });
 
+                $('#gridWarrantyList').on('click', 'th', function () {
+                    var table = $(this).closest('table');
+                    var rows = table.find('tr.contact-row')
+                        .toArray()
+                        .sort(comparer($(this).index()));
+                    this.asc = !this.asc;
+                    if (!this.asc) {
+                        rows = rows.reverse();
+                    }
+                    for (var i = 0; i < rows.length; i++) {
+                        table.append(rows[i]);
+                    }
+                });
 
 
 
@@ -16659,7 +16870,7 @@ WBSTree = (function ($) {
                                     _ModificationList[x].ModificationType == 0 ? 'NA' :
                                         _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
 
-                                gridModification.append('<tr id="' + _ModificationList[x].Id + '">' + '<td style="width: 20px">' +
+                                gridModification.append('<tr class="contact-row" id="' + _ModificationList[x].Id + '">' + '<td style="width: 20px">' +
                                     '<input id=rb' + _ModificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
                                     '</td >' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16679,6 +16890,20 @@ WBSTree = (function ($) {
                                     $('#rb' + _ModificationList[x].Id).hide();
                                 }
                             }
+
+                            $('#gridModificationList').on('click', 'th', function () {
+                                var table = $(this).closest('table');
+                                var rows = table.find('tr.contact-row')
+                                    .toArray()
+                                    .sort(comparer($(this).index()));
+                                this.asc = !this.asc;
+                                if (!this.asc) {
+                                    rows = rows.reverse();
+                                }
+                                for (var i = 0; i < rows.length; i++) {
+                                    table.append(rows[i]);
+                                }
+                            });
 
                             $('#documentUploadContModification').removeAttr('title');    //Manasi 01-03-2021
                             $('input[name=rbModHistory]').on('click', function (event) {
@@ -16717,7 +16942,7 @@ WBSTree = (function ($) {
                                     modTitle = _ModificationList[i].Title;
                                 }
                             }
-                            gridUploadedModDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridUploadedModDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16733,6 +16958,20 @@ WBSTree = (function ($) {
                         }
 
                     }
+
+                    $('#gridUploadedDocumentContModification').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
+                    });
 
                     var deleteDocBtn = modal.find('.modal-body #delete-doc');
                     deleteDocBtn.attr('disabled', _documentList.length > 0 ? false : true);
@@ -18276,7 +18515,7 @@ WBSTree = (function ($) {
                         for (var x = 0; x < _documentList.length; x++) {
                             //==================== Jignesh-11-03-2021 ===========================================================
                             if (!_documentList[x].TrendNumber) {
-                                gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                     '</td > <td ' +
                                     'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -18291,6 +18530,19 @@ WBSTree = (function ($) {
                             //===================================================================================================
                         }
 
+                        $('#gridUploadedDocumentProgramNewPrgElm').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
                         var deleteDocBtn = modal.find('.modal-body #delete-doc');
                         deleteDocBtn.attr('disabled', _documentList.length > 0 ? false : true);
 
@@ -18328,7 +18580,7 @@ WBSTree = (function ($) {
                         for (var x = 0; x < _documentList.length; x++) {
 
                             // Edited by Jignesh (29-10-2020)
-                            gridViewAllUploadedDocumentProgramElement.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridViewAllUploadedDocumentProgramElement.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                 '</td > <td ' +
@@ -18345,6 +18597,20 @@ WBSTree = (function ($) {
 
 
                         }
+
+                        $('#tblViewAllDocumentInProgramElement').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
 
                         $('input[name=rbCategoriesPrgElm]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
