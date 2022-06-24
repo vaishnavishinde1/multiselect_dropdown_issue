@@ -147,7 +147,7 @@
 
         .gridView td, th {
             padding: 6px;
-            border: 1px solid #555;
+            /*border: 1px solid #555;*/
             text-align: left;
         }
 
@@ -891,7 +891,7 @@
                                         <button type="button" id="DeleteUploadContModification" class="btn-icon" data-toggle="tooltip" title="Delete"><i class="fa-trash"></i></button>  <!--Shweta 16-07-2020-->
                                         <button type="button" id="updateDMBtnContModification" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                         <button type="button" id="downloadBtnContModification" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
-                                        <button type="button" id="ViewUploadFileContModification" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="fa-file"></i></button>   <!--Shweta 16-07-2020-->
+                                        <button type="button" id="ViewUploadFileContModification" class="btn-icon" data-toggle="tooltip" title="View Document"><i class="fa-file"></i></button>   <!--Shweta 16-07-2020-->
                                     </div>
                                 </div>
                                 <div class="row" id="spinRowMod" style="margin-top:0.3%; display: none;">
@@ -1916,9 +1916,13 @@
                                 <form id="divNotesHistory">
 
                                     <div class="row">
-                                        <div class="col-md-12 m-b-15">
+                                        <div class="col-md-12 " style="height:37px">
                                             <label for="" class="_control-label _bold">Notes</label>
-                                            <button type="button" id="btnClearNotesDesc" class="btn btn-primary pull-right" style="">Clear</button>
+                                            <button type="button" id="btnClearNotesDesc" class="btn btn-primary pull-right w-100 ">Clear</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 m-b-10">
                                             <textarea rows="3" type="text" class="form-control" id="txtprogramNotes"></textarea>
                                         </div>
                                     </div>
@@ -1928,9 +1932,9 @@
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;" id="noteshistorygrid">
                                                 <div class="table-outline-wo-p" style="overflow-x: hidden; height: 169px !important; ">
                                                     <table id="gridNoticehistoryList" class="table table-striped  ">
-                                                        <thead  class="t-head" style="position:sticky">
-                                                            <tr  style="position:sticky">
-                                                                <td style="font-weight: 900; width: 12%; position: sticky " >ID</td>
+                                                        <thead class="t-head" style="position:sticky">
+                                                            <tr style="position:sticky">
+                                                                <td style="font-weight: 900; width: 12%; position: sticky ">ID</td>
                                                                 <td style="font-weight: 900; width: 42%; position: sticky"> Description</td>
                                                                 <td style="font-weight: 900; width: 16%; position: sticky"> Created Date</td>
                                                                 <td style="font-weight: 900; width: 16%; position: sticky"> Created By</td>
@@ -1983,7 +1987,7 @@
 
                 </table>-->
 
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -2026,7 +2030,7 @@
                                             <button id="downloadBtnProgram" class="btn-icon" title="Download"><i class="fa-download"></i></button>
 
 
-                                            <button id="ViewUploadFileProgram" class="btn-icon" title="View Documents"><i class="icon-72647"></i></button>
+                                            <button id="ViewUploadFileProgram" class="btn-icon" title="View Document"><i class="icon-72647"></i></button>
 
 
                                             <button id="ViewAllUploadFileContracts" class="btn-icon" title="View All Documents"><i class="fa-list"></i></button>
@@ -2804,7 +2808,7 @@
     </div>-->
                                             <!--Narayan - Restructure table for key milestone in project - 22/06/2022-->
                                             <div id="divmilestone" class="gadget-content ">
-                                                <div class="table-outline-wo-p" style="height: 180px !important;">
+                                                <div class="table-outline-wo-p" style="height: 170px !important;">
                                                     <table id="program_element_milestone_table_id" class="table table-striped ">
                                                         <thead class="t-head" style="height: 5%; position: sticky; top: 0;">
                                                             <tr>
@@ -3029,86 +3033,102 @@
                                         <div id="divChangeOrder" style=" height:290px;">
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Change Orders</label>
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;">
-                                                <div class="panel-body  table-outline p-0 " style=" height: 200px !important; overflow:auto">
-                                                    <table class="table table-striped">
-                                                        <thead  class="t-head" style="position:sticky">
-                                                            <tr class="table-background">
-                                                                <td class="t-head" style="width: 20px; padding-left:5px;"></td>
+                                                <!--<div class="panel-body  table-outline p-0 " style=" height: 200px !important; overflow:auto">
+        <table class="table table-striped">
+            <thead class="t-head" style="position:sticky">
+                <tr class="table-background">
+                    <td class="t-head" style="width: 20px; padding-left:5px;"></td>
 
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                                                                    Number (#)
-                                                                </td>
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                                                                    Title
-                                                                </td>
-
-
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; " data-sortable="true">
-                                                                    Change Order Type
-                                                                </td>
-
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                                                                    Value
-                                                                </td>
-
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                                                                    Schedule Impact
-                                                                </td>
-
-                                                                <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative;  text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                                                                    Order Detail
-                                                                </td>
-
-                                                                <!--Commented by Jignesh (29-10-2020)-->
-                                                                <!--<th class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                                                                    Title
-                                                                </th>
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                        Number (#)
+                    </td>
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                        Title
+                    </td>
 
 
-                                                                <th class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-                                                                    Client Order #     Manasi 24-07-2020
-                                                                </th>
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; " data-sortable="true">
+                        Change Order Type
+                    </td>
+
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                        Value
+                    </td>
+
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                        Schedule Impact
+                    </td>
+
+                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                        style="position: relative;  text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                        Order Detail
+                    </td>-->
+                                                <!--Commented by Jignesh (29-10-2020)-->
+                                                <!--<th class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+        Title
+    </th>
 
 
-                                                                <th class="th-c sortable" st-sort="Occupancy" scope="col"
-                                                                    style="position: relative; text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-                                                                    Amount
-                                                                </th>
-                                                                <th class="th-c sortable" st-sort="Occupancy" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-                                                                    Date
-                                                                </th>
-                                                                <th class="th-c sortable" data-field="AvgEntryTime" data-sortable="true" st-sort="AvgEntryTime" scope="col"
-                                                                    style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-                                                                    Note
-                                                                </th>-->
-                                                                <!--<th class="th-c sortable" data-sortable="true" st-sort="EntryRate" scope="col"
-                                                                    style="position: relative; width: 10%; text-align:left !important; padding-left: 0; padding: 2%; background: #F5F6FA !important; border-bottom: none; color: #A3A6B4 !important;">
-                                                                    File
-                                                                </th>-->
+    <th class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col"
+        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+        Client Order #     Manasi 24-07-2020
+    </th>
+
+
+    <th class="th-c sortable" st-sort="Occupancy" scope="col"
+        style="position: relative; text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+        Amount
+    </th>
+    <th class="th-c sortable" st-sort="Occupancy" scope="col"
+        style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+        Date
+    </th>
+    <th class="th-c sortable" data-field="AvgEntryTime" data-sortable="true" st-sort="AvgEntryTime" scope="col"
+        style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+        Note
+    </th>-->
+                                                <!--<th class="th-c sortable" data-sortable="true" st-sort="EntryRate" scope="col"
+        style="position: relative; width: 10%; text-align:left !important; padding-left: 0; padding: 2%; background: #F5F6FA !important; border-bottom: none; color: #A3A6B4 !important;">
+        File
+    </th>-->
+                                                <!--</tr>
+    </thead>
+    <tbody id="program_element_change_order_table_id"></tbody>-->
+                                                <!--<tfoot></tfoot>
+    <tbody>
+        <tr class="table-background">
+            <td colspan="9" style="border-bottom: none;">
+                <div class="scrolable-table" style="height:100px; overflow-y:scroll;">
+                    <table id="program_element_change_order_table_id" class="table table-condensed table-responsive" style="border:none;">
+                        <tbody id="program_element_change_order_table_body_id"></tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>-->
+                                                <!--</table>
+    </div>-->
+                                                <!--Narayan - Restructure table for change order in project - 23/06/2022-->
+                                                <div class="panel-body  table-outline-wo-p " style=" height: 200px !important; overflow:auto">
+                                                    <table id="program_element_change_order_table_id" class="table table-striped">
+                                                        <thead class="t-head" style="position:sticky">
+                                                            <tr>
+                                                                <th style="font-weight: 900; width: 20px;"></th>
+                                                                <th style="font-weight: 900; width: 23%;">Number (#)</th>
+                                                                <th style="font-weight: 900; width: 18%;">Title</th>
+                                                                <th style="font-weight: 900; width: 42%; ">Change Order Type</th>
+                                                                <th style="font-weight: 900; width: 18%;">Value</th>
+                                                                <th style="font-weight: 900; width: 18%;">Schedule Impact</th>
+                                                                <th style="font-weight: 900; width: 18%;">Order Detail</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody id="program_element_change_order_table_id"></tbody>
-                                                        <!--<tfoot></tfoot>
-                                                        <tbody>
-                                                            <tr class="table-background">
-                                                                <td colspan="9" style="border-bottom: none;">
-                                                                    <div class="scrolable-table" style="height:100px; overflow-y:scroll;">
-                                                                        <table id="program_element_change_order_table_id" class="table table-condensed table-responsive" style="border:none;">
-                                                                            <tbody id="program_element_change_order_table_body_id"></tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>-->
+                                                        <tbody></tbody>
                                                     </table>
                                                 </div>
 
@@ -3117,7 +3137,7 @@
                                                     <button id="edit_program_element_change_order" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
                                                     <button id="delete_program_element_change_order" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>
                                                     <button id="downloadBtnChangeOrder" class="btn-icon" title="Download" data-toggle="tooltip"><i class="fa-download"></i></button>
-                                                    <button id="ViewUploadFileChangeOrder" class="btn-icon" title="View Documents" data-toggle="tooltip"><i class="icon-72647"></i></button>
+                                                    <button id="ViewUploadFileChangeOrder" class="btn-icon" title="View Document" data-toggle="tooltip"><i class="icon-72647"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -3162,7 +3182,7 @@
                                                     <button id="DeleteUploadProgramPrg" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>  <!--Shweta 16-07-2020-->
                                                     <button id="updateBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                                     <button id="downloadBtnProgramPrg" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
-                                                    <button id="ViewUploadFileProgramPrg" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
+                                                    <button id="ViewUploadFileProgramPrg" class="btn-icon" data-toggle="tooltip" title="View Document"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
                                                     <button id="ViewAllUploadFileProjects" class="btn-icon" data-toggle="tooltip" title="View All"><i class="fa-list"></i></button>   <!--Jignesh-03-03-2021-->
                                                     <button id="EditBtnProgramPrg" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i> </button>
                                                 </div>
@@ -3930,7 +3950,7 @@
                                                         <button id="DeleteUploadProgramPrgElm"  class="btn-icon" title="Delete" data-toggle="tooltip"  ><i class="fa-trash"></i></button> <!-- Shweta 16-07-2020 -->
                                                         <button id="updateBtnProgramPrgElm" class="btn-icon" title="Upload" data-toggle="tooltip"  ><i class="fa-upload"></i></button>     <!-- Shweta 16-07-2020 -->
                                                         <button id="downloadBtnProgramPrgElm" class="btn-icon" title="Download" data-toggle="tooltip"  ><i class="fa-download"></i></button>  <!-- Shweta 16-07-2020 -->
-                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Documents" data-toggle="tooltip"  ><i class="icon-72647"></i></button>   <!-- Shweta 16-07-2020 -->
+                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Document" data-toggle="tooltip"  ><i class="icon-72647"></i></button>   <!-- Shweta 16-07-2020 -->
                                                         <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All" data-toggle="tooltip"  ><i class="fa-list"></i></button>   <!-- Swapnil 22-01-2021 -->
                                                         <button id="EditBtnProgramPrgElm" class="btn-icon" title="Edit" data-toggle="tooltip"  ><i class="fa-edit"></i></button>
 
@@ -4380,8 +4400,8 @@
                                         <!--=================================== Added by Jignesh 30-10-2020 ============================================-->
                                         <div class="_form-group  p-l-15 p-r-15">
                                             <input type="radio" id="pastchngreq" name="pastchngreq" value="Change_Request">
-                                            <label for="chng_req" class="control-label _bold">Change Request</label>
-                                            <input type="radio" id="pastnochngreq" name="pastchngreq" value="No_Change_Request">
+                                            <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
+                                            <input type="radio" id="pastnochngreq" name="pastchngreq" value="No_Change_Request" >
                                             <label for="no_chng_req" class="control-label _bold">No Change Request</label>
                                         </div>
                                     </div>
@@ -4523,7 +4543,7 @@
                         </div>
                         <!--======================== Jignesh-TDM-06-01-2020 ===============================-->
                         <div class="row">
-                            <div class="col-md-12 m-t-10">
+                            <div class="col-md-12">
                                 <div class="_form-group">
                                     <div id="documentUploadTrend" class="box-content">
                                         <h4 class="label-heading">Document Management</h4>
@@ -4545,7 +4565,7 @@
                                                 <button type="button" id="DeleteUploadTrend" class="btn-icon" data-toggle="tooltip" title="Delete"><i class="fa-trash"></i></button>  <!--Shweta 16-07-2020-->
                                                 <button type="button" id="updateDMBtnTrend" class="btn-icon" data-toggle="tooltip" title="Upload"><i class="fa-upload"></i></button>     <!--Shweta 16-07-2020-->
                                                 <button type="button" id="downloadBtnTrend" class="btn-icon" data-toggle="tooltip" title="Download"><i class="fa-download"></i></button>   <!--Shweta 16-07-2020-->
-                                                <button type="button" id="ViewUploadFileTrend" class="btn-icon" data-toggle="tooltip" title="View Documents"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
+                                                <button type="button" id="ViewUploadFileTrend" class="btn-icon" data-toggle="tooltip" title="View Document"><i class="icon-72647"></i></button>   <!--Shweta 16-07-2020-->
                                                 <button type="button" id="EditBtnTrend" class="btn-icon" data-toggle="tooltip" title="Edit"><i class="fa-edit"></i></button>
                                             </div>
                                         </div>
