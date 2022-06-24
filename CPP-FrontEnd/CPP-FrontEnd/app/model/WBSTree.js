@@ -16971,6 +16971,17 @@ WBSTree = (function ($) {
                     $(this).val('$' + $(this).val().replace('$', ''));
                 }
             });
+
+           
+            $("#insurance_limit").on({
+                keyup: function () {
+                    formatCurrency($(this));
+                },
+                blur: function () {
+                    formatCurrency($(this), "blur");
+                }
+            });
+
             //====================== Jignesh-25-03-2021 =================================
             $("#modification_value,#program_element_change_order_amount_modal").keypress(function (e) {
                 if (e.which != 46 && e.which != 45 && e.which != 46 &&
