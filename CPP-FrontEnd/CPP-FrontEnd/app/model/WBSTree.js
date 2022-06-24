@@ -3674,7 +3674,7 @@ WBSTree = (function ($) {
                 wbsTree.getChangeOrder().get({}, function (changeOrderData) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
-                    $('#program_element_change_order_table_id').empty();
+                    $('#program_element_change_order_table_id tbody').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
 
@@ -3708,7 +3708,7 @@ WBSTree = (function ($) {
                             totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
-                            $('#program_element_change_order_table_id').append(
+                            $('#program_element_change_order_table_id tbody').append(
                                 '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                                 ' <td style="width: 20px">' +
                                 '<input id=rbCo' + singeChangeOrder.ChangeOrderID + ' type="radio" name="rbChangeOrder" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeChangeOrder.DocumentID + '" />' +
@@ -3792,7 +3792,7 @@ WBSTree = (function ($) {
             //Program element change order
             //03-05-2022
             function populateProgramElementChangeOrderTableNew() {
-                $('#program_element_change_order_table_id').empty();
+                $('#program_element_change_order_table_id tbody').empty();
                 modal.find('.modal-body #program_element_PEnd_Date').removeAttr('disabled');
                 //  alert(FileName);
                 for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
@@ -3805,7 +3805,7 @@ WBSTree = (function ($) {
                     console.log(singeChangeOrder);
                     //  alert(singeChangeOrder.DocumentName);
 
-                    $('#program_element_change_order_table_id').append(
+                    $('#program_element_change_order_table_id tbody').append(
                         '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
@@ -9741,7 +9741,7 @@ WBSTree = (function ($) {
             //});
 
             // CLICK PROGRAM ELEMENT CHANGE ORDER TABLE ROW LEGACY
-            $('#program_element_change_order_table_id').on('click', '.clickable-row', function (event) {
+            $('#program_element_change_order_table_id tbody').on('click', '.clickable-row', function (event) {
                 var foundProgramElementChangeOrder = {};
 
                 if (g_newProgramElement) {
@@ -14624,7 +14624,7 @@ WBSTree = (function ($) {
                     console.log(selectedNode);
 
                     $('#program_element_milestone_table_id  tbody').empty();
-                    $('#program_element_change_order_table_id').empty();
+                    $('#program_element_change_order_table_id tbody').empty();
                     g_program_element_milestone_draft_list = [];
                     g_program_element_change_order_draft_list = [];
 
