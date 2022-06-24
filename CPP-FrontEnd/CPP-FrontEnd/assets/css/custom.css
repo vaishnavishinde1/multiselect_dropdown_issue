@@ -1062,15 +1062,15 @@ body {
     html {
         /*/zoom: 90% !important;*/
         font-family: Poppins;
-        zoom: 0.70;
+        zoom: 0.60;
         height: 105% !important;
-        -moz-transform: scale(1);
+        -moz-transform: scale(1.1);
         -moz-transform-origin: 0 0;
-        -o-transform: scale(1);
+        -o-transform: scale(1.1);
         -o-transform-origin: 0 0;
-        -webkit-transform: scale(1);
+        -webkit-transform: scale(1.1);
         -webkit-transform-origin: 0 0;
-        transform: scaleY(1); /* Standard Property */
+        transform: scaleY(1.1); /* Standard Property */
         transform-origin: 0 0; /* Standard Property */
     }
 
