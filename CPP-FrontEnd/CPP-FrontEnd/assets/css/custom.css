@@ -1724,6 +1724,10 @@ button[disabled=disabled], button:disabled {
 .btn:hover{
     border:1px solid transparent !important;
 }
+/*24062022 Aditya:  backdrop change*/
+.modal {
+    backdrop-filter: brightness(0.5);
+}
 .h-50{
     height:50px;
 }
