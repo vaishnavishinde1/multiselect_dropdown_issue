@@ -1565,7 +1565,14 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
     margin-bottom: 10px;
     position: relative;
 }
-
+    .input-icons span {
+        position: absolute;
+        margin-left: -34px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-size:18px;
+        pointer-events: all;
+    }
 .icon {
     padding: 10px;
     min-width: 40px;
@@ -1720,4 +1727,7 @@ button[disabled=disabled], button:disabled {
 /*24062022 Aditya:  backdrop change*/
 .modal {
     backdrop-filter: brightness(0.5);
+}
+.h-50{
+    height:50px;
 }
