@@ -9098,7 +9098,7 @@ WBSTree = (function ($) {
                 }
                 if (!g_editProjectChangeOrder)
                 {
-                    if (fileName == "" || fileName.length == 0) {
+                    if (fileName == "" || fileName.length == 0 || files.length == 0) { // Narayan - Adding condition if document not added - 24/06/2022
                         dhtmlx.alert('Please select a file.');
                         return;
                     }
@@ -9498,7 +9498,6 @@ WBSTree = (function ($) {
             // SHOW PROGRAM ELEMENT CHANGE ORDER MODAL LEGACY
             $('#ProgramElementChangeOrderModal').unbind().on('show.bs.modal', function (event) {
                 $('#message_div').hide();
-                g_editProjectChangeOrder = true;
                 defaultModalPosition();
                 var isProgramElementChangeOrderUpdate = !g_newProgramElementChangeOrder;
 
@@ -9568,6 +9567,7 @@ WBSTree = (function ($) {
 
                 if (isProgramElementChangeOrderUpdate) {
                     //luan Jquery - luan here
+                    g_editProjectChangeOrder = true; //Narayan - Maintain edit mode
                     console.log('applied jquery');
                     _Is_Program_Element_Change_Order_New = false;
                     //============================= Jignesh-ChangeOrderPopUpChanges ============================================
@@ -9635,6 +9635,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #ChangeOrderDate').val('');
                     modal.find('.modal-body #program_element_change_order_duration_date').val('');
                     modal.find('.modal-body #document_name_changeOrder').val('');
+                    modal.find('.modal-body #fileUploadChangeOrder').val(''); //Narayan - Empty Document value in create - 24/06/2022
+                    //modal.find('.modal-body #DocChangeOrderID').val('');
                 }
             });
 
@@ -9765,7 +9767,9 @@ WBSTree = (function ($) {
                 $('#ProgramElementChangeOrderModal').find('.modal-body #program_element_change_order_amount_modal').val('');
                 $('#ProgramElementChangeOrderModal').find('.modal-body #program_element_change_order_schedule_change_modal').val('');
                 $('#ProgramElementChangeOrderModal').find('.modal-body #document_name_changeOrder').val('');
-                $(this).addClass('active').siblings().removeClass('active');
+                $('#ProgramElementChangeOrderModal').find('.modal-body #fileUploadChangeOrder').val(''); //Narayan - Empty Document value in edit - 24/06/2022
+                //$('#ProgramElementChangeOrderModal').find('.modal-body #DocChangeOrderID').val('');
+                //$(this).addClass('active').siblings().removeClass('active');
             });
 
             // CLICK ADD PROGRAM ELEMENT CHANGE ORDER LEGACY
