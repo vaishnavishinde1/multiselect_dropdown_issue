@@ -5009,6 +5009,13 @@ WBSTree = (function ($) {
                                 //if (!displayMap)
                                 wbsTree.loadFullGridView();
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
+                                //Aditya 24062022 :scroll to bottom
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
+                                if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
 
                             } else {
                                 $("#update_program").attr("disabled", false); //Aditya
@@ -8171,7 +8178,7 @@ WBSTree = (function ($) {
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
 
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProjectElementMilestone);
 
@@ -8641,7 +8648,7 @@ WBSTree = (function ($) {
                 var maxPDate = $('#program_element_PEnd_Date').val();// Aditya
                 var minPDate = $('#program_element_PStart_Date').val();// Aditya
 
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProgramElementMilestone);
 
@@ -9502,7 +9509,7 @@ WBSTree = (function ($) {
                 defaultModalPosition();
                 var isProgramElementChangeOrderUpdate = !g_newProgramElementChangeOrder;
 
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProgramElementChangeOrder);
 
@@ -12552,7 +12559,7 @@ WBSTree = (function ($) {
 
             // Click fof Pop up pritesh Upload Pop up
             $('#DocUpdateModal').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDate").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -13053,7 +13060,7 @@ WBSTree = (function ($) {
             //=================  Jignesh-ModificationPopUpChanges Ends here ==================================
 
             $('#PdfViewer').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
             });
 
             $('#DeleteUploadProgram').unbind().on('click', function (event) { //off() Manasi
@@ -13106,7 +13113,7 @@ WBSTree = (function ($) {
 
             // Click for Pop up 2 pritesh Upload Pop up
             $('#DocUpdateModalPrg').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDatePrg").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -13378,7 +13385,7 @@ WBSTree = (function ($) {
             //------------------------------------------------------------------------------
 
             $('#PdfViewerPrg').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
             });
 
             $('#ViewUploadFileChangeOrder').unbind().on('click', function (event) {
@@ -15069,7 +15076,7 @@ WBSTree = (function ($) {
 
             // Click for Pop up 2 pritesh Upload Pop up
             $('#DocUpdateModalPrgElm').unbind().on('show.bs.modal', function (event) {
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDatePrgElm").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -15368,7 +15375,7 @@ WBSTree = (function ($) {
                 $('#txtUploadDateViewModel').val(moment(docData.CreatedDate).format('MM/DD/YYYY'));
                 $('#txtUploadByViewModel').val(docData.CreatedBy);
                 $('#txtDocNoteViewModel').val(docData.DocumentDescription);
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 //$("#documentUploadProgramNewPopup").css({ "opacity": "0.4" });
                 $('#DocViewModalPrg').modal({ show: true, backdrop: 'static' });
             });
@@ -15749,7 +15756,7 @@ WBSTree = (function ($) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
                             if (wbsTree.unsavedChanges("Program")) {
-                                $("#ProgramModal").css({ "opacity": "0.4" });
+                                //$("#ProgramModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -15761,7 +15768,7 @@ WBSTree = (function ($) {
                 }
                 else {
                     if (wbsTree.unsavedChanges("Program")) {
-                        $("#ProgramModal").css({ "opacity": "0.4" });
+                        //$("#ProgramModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -15961,7 +15968,7 @@ WBSTree = (function ($) {
                         if (result) {
                             if (wbsTree.unsavedChanges("ProgramElement")) {
                                 //exitConfirm("ProgramElement");
-                                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                                //$("#ProgramElementModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -15974,7 +15981,7 @@ WBSTree = (function ($) {
                 else {
                     if (wbsTree.unsavedChanges("ProgramElement")) {
                         //exitConfirm("ProgramElement");
-                        $("#ProgramElementModal").css({ "opacity": "0.4" });
+                        //$("#ProgramElementModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -16007,7 +16014,7 @@ WBSTree = (function ($) {
                         if (result) {
                             if (wbsTree.unsavedChanges("Project")) {
                                 //exitConfirm("Project");
-                                $("#ProjectModal").css({ "opacity": "0.4" });
+                                //$("#ProjectModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -16022,7 +16029,7 @@ WBSTree = (function ($) {
                 else {
                     if (wbsTree.unsavedChanges("Project")) {
                         //exitConfirm("Project");
-                        $("#ProjectModal").css({ "opacity": "0.4" });
+                        //$("#ProjectModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -16040,7 +16047,7 @@ WBSTree = (function ($) {
 
             //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
             $('#btnAdditionalInfo').on('click', function () {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $('#additionalInfoPopup').modal({ show: true, backdrop: 'static' });
 
                 //var certifiedpayrollDropDown = $('#ProgramModal').find('#certified_payroll_select');
@@ -16507,7 +16514,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
             //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
             $('#btnDocManagement').on('click', function () {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $('#documentUploadProgramNewPopup').modal({ show: true, backdrop: 'static' });
 
 
@@ -16589,7 +16596,7 @@ WBSTree = (function ($) {
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
             $('#btnModification').on('click', function () {
                 _ContractModificationOperation = 1;
-                $("#ProgramModal").css({ "opacity": "0.4" });  //Manasi 22-02-2021
+                //$("#ProgramModal").css({ "opacity": "0.4" });  //Manasi 22-02-2021
                 $('#DeleteUploadContModification').attr('disabled', 'disabled');
                 $('#ViewUploadFileContModification').attr('disabled', 'disabled');
                 $('#downloadBtnContModification').attr('disabled', 'disabled');
@@ -16983,7 +16990,7 @@ WBSTree = (function ($) {
             });
             //============================================================================
             $('#DocUpdateModalContModification').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $("#ContModificationExecutionDatePrg").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -17255,7 +17262,7 @@ WBSTree = (function ($) {
             //---------------------------------------------------------------------------------------
 
             $('#PdfViewerPrgElm').unbind().on('show.bs.modal', function (event) {
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
             });
 
             $('#DeleteUploadProgramPrgElm').unbind().on('click', function (event) {  //Manasi
