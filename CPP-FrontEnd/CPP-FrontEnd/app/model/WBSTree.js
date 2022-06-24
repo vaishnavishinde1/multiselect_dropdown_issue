@@ -27,6 +27,7 @@ WBSTree = (function ($) {
 
         $(".wbs").on("scroll", function () {
             scrollOffset = $(".wbs").scrollTop();
+            contextMenu.style.display = 'none';
         });
 
         //Aditya chek date 10062022
@@ -3512,7 +3513,7 @@ WBSTree = (function ($) {
                             '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                             '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                             //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            '<td> <i class="fa fa-eye" style="font-size:20px"  title="view"  id="notes_view"></i></td>' +
+                            '<td class="text-center"> <i class="fa fa-eye btntbl-icon"  title="View"  id="notes_view"></i></td>' +
                             '</tr>'
                         );
 
@@ -3573,7 +3574,7 @@ WBSTree = (function ($) {
                     var milestoneList = milestoneData.result;
                     wbsTree.setMilestoneList(milestoneList);
 
-                    $('#project_element_milestone_table_id').empty();
+                    $('#project_element_milestone_table_id tbody').empty();
 
                     for (var x = 0; x < milestoneList.length; x++) {
                         console.log(milestoneList[x].ProjectID, projectID);
@@ -3584,13 +3585,13 @@ WBSTree = (function ($) {
 
                             console.log(singeMilestone);
 
-                            $('#project_element_milestone_table_id').append(
+                            $('#project_element_milestone_table_id tbody').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;;">' + singeMilestone.MilestoneDescription + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                                 '</tr>'
                             );
@@ -3602,7 +3603,7 @@ WBSTree = (function ($) {
             //Project element milestone
             function populateProjectElementMilestoneTableNew() {
                 $("#update_project_element_milestone_modal").attr("disabled", false);
-                $('#project_element_milestone_table_id').empty();
+                $('#project_element_milestone_table_id tbody').empty();
 
                 for (var x = 0; x < g_project_element_milestone_draft_list.length; x++) {
                     var singeMilestone = {};
@@ -3611,13 +3612,13 @@ WBSTree = (function ($) {
 
                     console.log(singeMilestone);
 
-                    $('#project_element_milestone_table_id').append(
+                    $('#project_element_milestone_table_id tbody').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                         '</tr>'
                     );
@@ -3656,7 +3657,7 @@ WBSTree = (function ($) {
                     var milestoneList = milestoneData.result;
                     wbsTree.setMilestoneList(milestoneList);
 
-                    $('#program_element_milestone_table_id').empty();
+                    $('#program_element_milestone_table_id tbody').empty();
 
                     for (var x = 0; x < milestoneList.length; x++) {
                         console.log(milestoneList[x].ProgramElementID, programElementID);
@@ -3667,14 +3668,14 @@ WBSTree = (function ($) {
 
                             console.log(singeMilestone);
 
-                            $('#program_element_milestone_table_id').append(
+                            $('#program_element_milestone_table_id tbody').append(
                                 '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
                                 /*'<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +*/
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                                 '</tr>'
                             );
@@ -3687,7 +3688,7 @@ WBSTree = (function ($) {
 
             //Program element milestone
             function populateProgramElementMilestoneTableNew() {
-                $('#program_element_milestone_table_id').empty();
+                $('#program_element_milestone_table_id tbody').empty();
 
                 for (var x = 0; x < g_program_element_milestone_draft_list.length; x++) {
                     var singeMilestone = {};
@@ -3696,13 +3697,13 @@ WBSTree = (function ($) {
 
                     console.log(singeMilestone);
 
-                    $('#program_element_milestone_table_id').append(
+                    $('#program_element_milestone_table_id tbody').append(
                         '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDescription + '</td>' +
+                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap; max-width: 0; overflow: hidden;">' + singeMilestone.MilestoneDescription + '</td>' +
                         '<td class="class-td-LiveView" style=font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeMilestone.MilestoneDate + '</td>' +
                         '</tr>'
                     );
@@ -3721,7 +3722,7 @@ WBSTree = (function ($) {
                 wbsTree.getChangeOrder().get({}, function (changeOrderData) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
-                    $('#program_element_change_order_table_id').empty();
+                    $('#program_element_change_order_table_id tbody').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
 
@@ -3752,10 +3753,10 @@ WBSTree = (function ($) {
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             //Manu 11/01/2022
-                            totalmod = totalmod + parseInt(changeOrderAmount);
+                            totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
-                            $('#program_element_change_order_table_id').append(
+                            $('#program_element_change_order_table_id tbody').append(
                                 '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                                 ' <td style="width: 20px">' +
                                 '<input id=rbCo' + singeChangeOrder.ChangeOrderID + ' type="radio" name="rbChangeOrder" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeChangeOrder.DocumentID + '" />' +
@@ -3771,7 +3772,7 @@ WBSTree = (function ($) {
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" style="font-size:20px;" name="btnviewOrderDetail"  id="viewOrderDetail"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
                                 '</tr>'
                             );
@@ -3798,6 +3799,10 @@ WBSTree = (function ($) {
                     //Nivedita 14-01-2022
                     console.log('TotalMod == ' + totalmod + ';' + 'SchImpact ==' + schImp);
                     $('#program_element_total_modifications').val('$' + totalmod);
+                    $('#program_element_total_modifications').focus();
+                    $('#program_element_total_modifications').blur();
+                    $('#program_element_total_value').focus();
+                    $('#program_element_total_value').blur();
                     var projvalue = 0;
                     if ($('#program_element_total_value').val()) {
                         //dhtmlx.alert($('#program_element_total_value').val());.replace('$', '')
@@ -3806,6 +3811,8 @@ WBSTree = (function ($) {
                     }
                     //var projvalue = parseFloat($('#program_element_total_value').val());
                     $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
+                    $('#program_element_total_current_value').focus();
+                    $('#program_element_total_current_value').blur();
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -3847,7 +3854,7 @@ WBSTree = (function ($) {
             //Program element change order
             //03-05-2022
             function populateProgramElementChangeOrderTableNew() {
-                $('#program_element_change_order_table_id').empty();
+                $('#program_element_change_order_table_id tbody').empty();
                 modal.find('.modal-body #program_element_PEnd_Date').removeAttr('disabled');
                 //  alert(FileName);
                 for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
@@ -3860,7 +3867,7 @@ WBSTree = (function ($) {
                     console.log(singeChangeOrder);
                     //  alert(singeChangeOrder.DocumentName);
 
-                    $('#program_element_change_order_table_id').append(
+                    $('#program_element_change_order_table_id tbody').append(
                         '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
@@ -5064,6 +5071,13 @@ WBSTree = (function ($) {
                                 //if (!displayMap)
                                 wbsTree.loadFullGridView();
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
+                                //Aditya 24062022 :scroll to bottom
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
+                                if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
 
                             } else {
                                 $("#update_program").attr("disabled", false); //Aditya
@@ -8226,7 +8240,7 @@ WBSTree = (function ($) {
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
 
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProjectElementMilestone);
 
@@ -8329,7 +8343,7 @@ WBSTree = (function ($) {
             });
 
             // CLICK PROJECT ELEMENT MILESTONE TABLE ROW LEGACY
-            $('#project_element_milestone_table_id').on('click', '.clickable-row', function (event) {
+            $('#project_element_milestone_table_id tbody').on('click', '.clickable-row', function (event) {
                 var foundProjectElementMilestone = {};
 
                 if (g_newProject) {
@@ -8696,7 +8710,7 @@ WBSTree = (function ($) {
                 var maxPDate = $('#program_element_PEnd_Date').val();// Aditya
                 var minPDate = $('#program_element_PStart_Date').val();// Aditya
 
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProgramElementMilestone);
 
@@ -8808,7 +8822,7 @@ WBSTree = (function ($) {
             });
 
             // CLICK PROGRAM ELEMENT MILESTONE TABLE ROW LEGACY
-            $('#program_element_milestone_table_id').on('click', '.clickable-row', function (event) {
+            $('#program_element_milestone_table_id  tbody').on('click', '.clickable-row', function (event) {
                 var foundProgramElementMilestone = {};
 
                 if (g_newProgramElement) {
@@ -9055,7 +9069,7 @@ WBSTree = (function ($) {
                 var ChangeOrderTypedd = $("#program_element_change_order_ddModificationType").val();;
                 var OrderNo = $("#program_element_change_order_number_modal").val();
                 var OrderDte = $("#ChangeOrderDate").val();
-                var AmtOrder = $("#program_element_change_order_amount_modal").val();
+                var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
                 var SpNote = $("#program_element_change_order_schedule_change_modal").val();
                 var Reason = $("#program_element_change_order_Reason_modal").val();
                 var modType = $('#program_element_change_order_ddModificationType').val();
@@ -9153,7 +9167,7 @@ WBSTree = (function ($) {
                 }
                 if (!g_editProjectChangeOrder)
                 {
-                    if (fileName == "" || fileName.length == 0) {
+                    if (fileName == "" || fileName.length == 0 || files.length == 0) { // Narayan - Adding condition if document not added - 24/06/2022
                         dhtmlx.alert('Please select a file.');
                         return;
                     }
@@ -9553,11 +9567,10 @@ WBSTree = (function ($) {
             // SHOW PROGRAM ELEMENT CHANGE ORDER MODAL LEGACY
             $('#ProgramElementChangeOrderModal').unbind().on('show.bs.modal', function (event) {
                 $('#message_div').hide();
-                g_editProjectChangeOrder = true;
                 defaultModalPosition();
                 var isProgramElementChangeOrderUpdate = !g_newProgramElementChangeOrder;
 
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
 
                 console.log(g_selectedProgramElementChangeOrder);
 
@@ -9623,6 +9636,7 @@ WBSTree = (function ($) {
 
                 if (isProgramElementChangeOrderUpdate) {
                     //luan Jquery - luan here
+                    g_editProjectChangeOrder = true; //Narayan - Maintain edit mode
                     console.log('applied jquery');
                     _Is_Program_Element_Change_Order_New = false;
                     //============================= Jignesh-ChangeOrderPopUpChanges ============================================
@@ -9690,6 +9704,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #ChangeOrderDate').val('');
                     modal.find('.modal-body #program_element_change_order_duration_date').val('');
                     modal.find('.modal-body #document_name_changeOrder').val('');
+                    modal.find('.modal-body #fileUploadChangeOrder').val(''); //Narayan - Empty Document value in create - 24/06/2022
+                    //modal.find('.modal-body #DocChangeOrderID').val('');
                 }
             });
 
@@ -9789,7 +9805,7 @@ WBSTree = (function ($) {
             //});
 
             // CLICK PROGRAM ELEMENT CHANGE ORDER TABLE ROW LEGACY
-            $('#program_element_change_order_table_id').on('click', '.clickable-row', function (event) {
+            $('#program_element_change_order_table_id tbody').on('click', '.clickable-row', function (event) {
                 var foundProgramElementChangeOrder = {};
 
                 if (g_newProgramElement) {
@@ -9820,7 +9836,9 @@ WBSTree = (function ($) {
                 $('#ProgramElementChangeOrderModal').find('.modal-body #program_element_change_order_amount_modal').val('');
                 $('#ProgramElementChangeOrderModal').find('.modal-body #program_element_change_order_schedule_change_modal').val('');
                 $('#ProgramElementChangeOrderModal').find('.modal-body #document_name_changeOrder').val('');
-                $(this).addClass('active').siblings().removeClass('active');
+                $('#ProgramElementChangeOrderModal').find('.modal-body #fileUploadChangeOrder').val(''); //Narayan - Empty Document value in edit - 24/06/2022
+                //$('#ProgramElementChangeOrderModal').find('.modal-body #DocChangeOrderID').val('');
+                //$(this).addClass('active').siblings().removeClass('active');
             });
 
             // CLICK ADD PROGRAM ELEMENT CHANGE ORDER LEGACY
@@ -10008,17 +10026,18 @@ WBSTree = (function ($) {
             $("#gridNoticehistoryList").on('click', '#notes_view', function () {
                 var row = $(this).closest("tr");
                 var desc = row.find("#notes_desc").text();
-                modal.find('.modal-body #txtprogramNotes').val(desc);
+                $('#txtprogramNotes').val(desc);
                 $('#txtprogramNotes').prop("disabled", "disabled");
                 $('#btnClearNotesDesc').show();
             });
 
             // Narayan - on click clear button in common notes - 14-04-2022
             $('#btnClearNotesDesc').on('click', function () {
-                modal.find('.modal-body #txtprogramNotes').val('');
+                $('#txtprogramNotes').val('');
                 $("#txtprogramNotes").removeAttr('disabled');
                 $('#btnClearNotesDesc').hide();
             });
+            
 
             // Narayan - on click edit button in insurance - 24-05-2022
             $("#gridInsuranceList").on('click', '#update_insurance', function () {
@@ -10341,7 +10360,7 @@ WBSTree = (function ($) {
             //====================================== Created By Jignesh 28-10-2020 =======================================
             $('#program_contract_value').on('change', function () {
                 isFieldValueChanged = true;
-                var totalModification = $('#total_modification').val().replace("$", "");
+                var totalModification = $('#total_modification').val().replace("$", "").replaceAll(",", "");
                 var ogContractValue = $('#program_contract_value').val().replace("$", "").replaceAll(",", "");
                 var totalContractValue = parseFloat(ogContractValue) + parseFloat(totalModification);
                 $('#current_contract_value').val(totalContractValue);
@@ -10756,8 +10775,8 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -10884,8 +10903,8 @@ WBSTree = (function ($) {
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                                    '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -10994,7 +11013,7 @@ WBSTree = (function ($) {
                                     '>' + _InsuranceList[x].Limit + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                                    '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
+                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
                                     '<tr > ');
                             }
 
@@ -11788,7 +11807,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td><i class="fa fa-eye" style="font-size:20px"  title="View Details"  id="viewDocumentDetail"></i></td>' +
+                                    '<td class="text-center"><i class="fa fa-eye btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -11841,7 +11860,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12661,7 +12680,7 @@ WBSTree = (function ($) {
 
             // Click fof Pop up pritesh Upload Pop up
             $('#DocUpdateModal').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDate").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -13162,7 +13181,7 @@ WBSTree = (function ($) {
             //=================  Jignesh-ModificationPopUpChanges Ends here ==================================
 
             $('#PdfViewer').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
             });
 
             $('#DeleteUploadProgram').unbind().on('click', function (event) { //off() Manasi
@@ -13215,7 +13234,7 @@ WBSTree = (function ($) {
 
             // Click for Pop up 2 pritesh Upload Pop up
             $('#DocUpdateModalPrg').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDatePrg").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -13487,7 +13506,7 @@ WBSTree = (function ($) {
             //------------------------------------------------------------------------------
 
             $('#PdfViewerPrg').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                //$("#ProgramElementModal").css({ "opacity": "0.4" });
             });
 
             $('#ViewUploadFileChangeOrder').unbind().on('click', function (event) {
@@ -13746,7 +13765,7 @@ WBSTree = (function ($) {
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + modificatioTitle + '</td>' +
                                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -14096,6 +14115,8 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_element_client_phone').val(selectedNode.ClientPhoneNumber);
                     //modal.find('.modal-body #program_element_total_current_value').val('$0');
                     $('#program_element_total_current_value').val('$0');
+                    $('#program_element_total_current_value').focus();
+                    $('#program_element_total_current_value').blur();
                     console.log(selectedNode);
                     modal.find('.modal-body #program_element_contract_number').val(selectedNode.parent.ContractNumber);
                     modal.find('.modal-body #program_element_contract_name').val(selectedNode.parent.name);
@@ -14208,7 +14229,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -14272,7 +14293,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -14751,8 +14772,8 @@ WBSTree = (function ($) {
                     _Is_Program_Element_New = true;
                     console.log(selectedNode);
 
-                    $('#program_element_milestone_table_id').empty();
-                    $('#program_element_change_order_table_id').empty();
+                    $('#program_element_milestone_table_id  tbody').empty();
+                    $('#program_element_change_order_table_id tbody').empty();
                     g_program_element_milestone_draft_list = [];
                     g_program_element_change_order_draft_list = [];
 
@@ -15204,7 +15225,7 @@ WBSTree = (function ($) {
 
             // Click for Pop up 2 pritesh Upload Pop up
             $('#DocUpdateModalPrgElm').unbind().on('show.bs.modal', function (event) {
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
                 $("#PrgExecutionDatePrgElm").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -15291,7 +15312,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                            '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
 
@@ -15364,7 +15385,8 @@ WBSTree = (function ($) {
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             //'<td>' + _documentList[x].CreatedBy + '</td>' +
-                            '<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                            //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                            '<td  class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
@@ -15458,7 +15480,8 @@ WBSTree = (function ($) {
                                 '>' + _documentList[x].TrendName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
-                                '<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                                //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -15528,7 +15551,7 @@ WBSTree = (function ($) {
                 $('#txtUploadDateViewModel').val(moment(docData.CreatedDate).format('MM/DD/YYYY'));
                 $('#txtUploadByViewModel').val(docData.CreatedBy);
                 $('#txtDocNoteViewModel').val(docData.DocumentDescription);
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 //$("#documentUploadProgramNewPopup").css({ "opacity": "0.4" });
                 $('#DocViewModalPrg').modal({ show: true, backdrop: 'static' });
             });
@@ -15855,7 +15878,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
             //Nivedita Additional program
             var additionalContPageFieldIDs = '#certified_payroll_select,#prevailing_wages_select,#wrap_select,#reporting_to,' +
-                '#date_of_pre_notice, #notice_reason, #insurance_type_select, #insurance_limit,#txtPPNotes';
+                '#date_of_pre_notice, #notice_reason, #insurance_type_select,#insurance_limit,#txtPPNotes';
             // debugger;
             $(additionalContPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
@@ -15909,7 +15932,7 @@ WBSTree = (function ($) {
                     dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
                         if (result) {
                             if (wbsTree.unsavedChanges("Program")) {
-                                $("#ProgramModal").css({ "opacity": "0.4" });
+                                //$("#ProgramModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -15921,7 +15944,7 @@ WBSTree = (function ($) {
                 }
                 else {
                     if (wbsTree.unsavedChanges("Program")) {
-                        $("#ProgramModal").css({ "opacity": "0.4" });
+                        //$("#ProgramModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -16121,7 +16144,7 @@ WBSTree = (function ($) {
                         if (result) {
                             if (wbsTree.unsavedChanges("ProgramElement")) {
                                 //exitConfirm("ProgramElement");
-                                $("#ProgramElementModal").css({ "opacity": "0.4" });
+                                //$("#ProgramElementModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -16134,7 +16157,7 @@ WBSTree = (function ($) {
                 else {
                     if (wbsTree.unsavedChanges("ProgramElement")) {
                         //exitConfirm("ProgramElement");
-                        $("#ProgramElementModal").css({ "opacity": "0.4" });
+                        //$("#ProgramElementModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -16167,7 +16190,7 @@ WBSTree = (function ($) {
                         if (result) {
                             if (wbsTree.unsavedChanges("Project")) {
                                 //exitConfirm("Project");
-                                $("#ProjectModal").css({ "opacity": "0.4" });
+                                //$("#ProjectModal").css({ "opacity": "0.4" });
                                 $("#ExitConfirmModal").appendTo('body');
                                 $("#ExitConfirmModal").modal('toggle');
                             } else {
@@ -16182,7 +16205,7 @@ WBSTree = (function ($) {
                 else {
                     if (wbsTree.unsavedChanges("Project")) {
                         //exitConfirm("Project");
-                        $("#ProjectModal").css({ "opacity": "0.4" });
+                        //$("#ProjectModal").css({ "opacity": "0.4" });
                         $("#ExitConfirmModal").appendTo('body');
                         $("#ExitConfirmModal").modal('toggle');
                     } else {
@@ -16200,7 +16223,7 @@ WBSTree = (function ($) {
 
             //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
             $('#btnAdditionalInfo').on('click', function () {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $('#additionalInfoPopup').modal({ show: true, backdrop: 'static' });
 
                 //var certifiedpayrollDropDown = $('#ProgramModal').find('#certified_payroll_select');
@@ -16604,8 +16627,8 @@ WBSTree = (function ($) {
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_notice" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit" id="update_notice" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
                     //}
@@ -16642,7 +16665,7 @@ WBSTree = (function ($) {
                             '>' + _InsuranceList[x].Limit + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-edit" id="update_insurance" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -16680,8 +16703,8 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td style="white-space: nowrap"> <i class="fa fa-eye" id="view_warranty" style="font-size: 26px;" title="view"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit" id="update_warranty" style="font-size: 26px;" title="edit"></i> </td >' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                            '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
                 });
@@ -16706,7 +16729,7 @@ WBSTree = (function ($) {
             //=============================================================================================================
             //=========================  Nivedita-DocumentManagementPopUpChanges =====================================================
             $('#btnDocManagement').on('click', function () {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $('#documentUploadProgramNewPopup').modal({ show: true, backdrop: 'static' });
 
 
@@ -16741,7 +16764,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -16788,7 +16811,7 @@ WBSTree = (function ($) {
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
             $('#btnModification').on('click', function () {
                 _ContractModificationOperation = 1;
-                $("#ProgramModal").css({ "opacity": "0.4" });  //Manasi 22-02-2021
+                //$("#ProgramModal").css({ "opacity": "0.4" });  //Manasi 22-02-2021
                 $('#DeleteUploadContModification').attr('disabled', 'disabled');
                 $('#ViewUploadFileContModification').attr('disabled', 'disabled');
                 $('#downloadBtnContModification').attr('disabled', 'disabled');
@@ -16929,7 +16952,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modId + ' - ' + modTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
                         }
@@ -17198,6 +17221,17 @@ WBSTree = (function ($) {
                     $(this).val('$' + $(this).val().replace('$', ''));
                 }
             });
+
+           
+            $("#insurance_limit").on({
+                keyup: function () {
+                    formatCurrency($(this));
+                },
+                blur: function () {
+                    formatCurrency($(this), "blur");
+                }
+            });
+
             //====================== Jignesh-25-03-2021 =================================
             $("#modification_value,#program_element_change_order_amount_modal").keypress(function (e) {
                 if (e.which != 46 && e.which != 45 && e.which != 46 &&
@@ -17210,7 +17244,7 @@ WBSTree = (function ($) {
             });
             //============================================================================
             $('#DocUpdateModalContModification').unbind().on('show.bs.modal', function (event) {
-                $("#ProgramModal").css({ "opacity": "0.4" });
+                //$("#ProgramModal").css({ "opacity": "0.4" });
                 $("#ContModificationExecutionDatePrg").datepicker();
                 modal = $(this);
                 //load docTypeList
@@ -17482,7 +17516,7 @@ WBSTree = (function ($) {
             //---------------------------------------------------------------------------------------
 
             $('#PdfViewerPrgElm').unbind().on('show.bs.modal', function (event) {
-                $("#ProjectModal").css({ "opacity": "0.4" });
+                //$("#ProjectModal").css({ "opacity": "0.4" });
             });
 
             $('#DeleteUploadProgramPrgElm').unbind().on('click', function (event) {  //Manasi
@@ -18489,7 +18523,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                    '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');
                             }
@@ -18557,7 +18591,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -18714,7 +18748,7 @@ WBSTree = (function ($) {
                     wbsTree.setIsProjectNew(true);
                     _Is_Project_New = true;
                     wbsTree.setProjectFileDraft([]);
-                    $('#project_element_milestone_table_id').empty();
+                    $('#project_element_milestone_table_id tbody').empty();
                     g_project_element_milestone_draft_list = [];
 
 

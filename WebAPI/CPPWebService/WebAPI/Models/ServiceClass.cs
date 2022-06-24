@@ -113,7 +113,8 @@ namespace WebAPI.Models
                     ServiceClass retreivedServiceClass = new ServiceClass();
                     retreivedServiceClass = ctx.ServiceClass.Where(u => u.Description == serviceclass.Description
                                                                         || u.ID == serviceclass.ID || u.Code==serviceclass.Code).FirstOrDefault();
-                    
+                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                    serviceclass.VersionId = latestVersion.Id;
 
                     if (retreivedServiceClass == null)
                     {
@@ -161,8 +162,8 @@ namespace WebAPI.Models
                                                                                   && (a.Description == serviceclass.Description))
                                                                                   || (a.ID != serviceclass.ID
                                                                                   && (a.Code == serviceclass.Code))).FirstOrDefault();
-                                                                                  
-
+                    Versionmaster latestVersion = ctx.VersionMaster.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                    serviceclass.VersionId = latestVersion.Id;
                     if (retreivedServiceClass != null && retreivedServiceClass.ID!=serviceclass.ID)
                     {
                         return "Updating the project division code is unavailable at this moment (" + serviceclass.Description + "). \n";
