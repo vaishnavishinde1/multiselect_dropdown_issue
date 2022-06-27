@@ -2037,7 +2037,7 @@ WBSTree = (function ($) {
             if (svg_rect.height == 0)
                 g_height = svg_rect.height + 882;
             else
-                g_height = svg_rect.height + 200;
+                g_height = svg_rect.height + 800;
             //var g_height = svg_rect.height + 200;
             $("#wbs-tree").css("height", g_height + "px");
             //$("#tree-container").css("height", g_height+"px");
