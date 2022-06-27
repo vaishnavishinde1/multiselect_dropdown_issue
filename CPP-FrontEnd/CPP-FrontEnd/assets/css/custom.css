@@ -1617,18 +1617,19 @@ input:-webkit-autofill:active {
 }
 .t-head {
     background-color: #f2f2f2;
-    font-weight:900;
-    top:0;
+    font-weight:900; 
     position: sticky !important;
     border-top: 1px solid #ccc !important;
     border-bottom: 1px solid #ccc !important;
-
     text-align: left !important;
     padding: 10px 8px;   
     padding: 10px 8px;
     top: 0;
     height: 5%;
     color: #000 !important;
+}
+.t-head th{
+    text-align:left !important;
 }
 .t-head-dark {
     background-color: #153065;
