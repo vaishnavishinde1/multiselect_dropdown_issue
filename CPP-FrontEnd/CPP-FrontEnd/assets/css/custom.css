@@ -1438,10 +1438,23 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
     overflow-x: hidden;
     overflow-y: auto;
 }
-
+@media only screen and (max-width: 1920px) and (min-width: 1801px) {
+    .modal-height {
+        height: 875px !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+@media only screen and (max-width: 1600px) and (min-width: 1401px) {
+    .modal-height {
+        height: 875px !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
 @media only screen and (max-width: 1400px) and (min-width: 1201px) {
-    
-   /* .modal-height {
+
+    /* .modal-height {
         height: 133vh !important;
         overflow-x: hidden;
         overflow-y: auto;
@@ -1449,7 +1462,6 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
     .input-icons i {
         /* margin-left: -270px !important;*/
     }
-    
 }
 /*
 @media only screen and (max-width: 1200px) and (min-width: 901px) {
