@@ -860,10 +860,22 @@ namespace WebAPI.Models
                         {
                             var createDate = retrievedDocument.CreatedDate;
                             var modificationnumber = retrievedDocument.ModificationNumber;
+                            if (document.FileTye == null)
+                            {
+                                document.FileTye = retrievedDocument.FileTye;
+                            }
+                            if (document.DocumentBase64 == null)
+                            {
+                                document.DocumentBase64 = retrievedDocument.DocumentBase64;
+                            }
+                            if (document.DocumentBinaryData == null)
+                            {
+                                document.DocumentBinaryData = retrievedDocument.DocumentBinaryData;
+                            }
                             retrievedDocument = document;
                             retrievedDocument.CreatedDate = createDate;
                             retrievedDocument.ModificationNumber = modificationnumber;
-
+                            
                             dbCtx.Entry(retrievedDocument).State = System.Data.Entity.EntityState.Modified;
                             dbCtx.SaveChanges();
                             result += retrievedDocument.DocumentName + " has been updated successfully.\n";
