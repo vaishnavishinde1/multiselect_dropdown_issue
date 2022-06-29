@@ -8384,6 +8384,11 @@ WBSTree = (function ($) {
                 $("#ProjectElementMilestoneModal").find('.modal-body #project_element_milestone_date').val(foundProjectElementMilestone.MilestoneDate);
                 $(this).addClass('active').siblings().removeClass('active');
 
+                // Narayan - Select radio button by selecting table row - 29/06/2022
+                $('input:radio[name="rbmilestone"][id="rbCo' + this.id + '"]')
+                    .prop('checked', true)
+                    .trigger('change');
+
                 // Narayan - remove disable after selecting one of the record - 28/06/2022
                 $('#edit_project_element_milestone').removeAttr('disabled'); 
                 $('#delete_project_element_milestone').removeAttr('disabled');
@@ -8873,6 +8878,11 @@ WBSTree = (function ($) {
                 $("#ProgramElementMilestoneModal").find('.modal-body #program_element_milestone_description').val(foundProgramElementMilestone.MilestoneDescription);
                 $("#ProgramElementMilestoneModal").find('.modal-body #program_element_milestone_date').val(foundProgramElementMilestone.MilestoneDate);
                 $(this).addClass('active').siblings().removeClass('active');
+
+                // Narayan - Select radio button by selecting table row - 29/06/2022
+                $('input:radio[name="rbmilestone"][id="rbCo' + this.id + '"]')
+                    .prop('checked', true)
+                    .trigger('change');
 
                 // Narayan - remove disable after selecting one of the record - 28/06/2022
                 $('#edit_program_element_milestone').removeAttr('disabled');
@@ -9865,6 +9875,17 @@ WBSTree = (function ($) {
                 $('#ProgramElementChangeOrderModal').find('.modal-body #fileUploadChangeOrder').val(''); //Narayan - Empty Document value in edit - 24/06/2022
                 //$('#ProgramElementChangeOrderModal').find('.modal-body #DocChangeOrderID').val('');
                 //$(this).addClass('active').siblings().removeClass('active');
+
+                // Narayan - Select radio button by selecting table row - 29/06/2022
+                $('input:radio[name="rbChangeOrder"][id="rbCo' + this.id + '"]')
+                    .prop('checked', true)
+                    .trigger('change');
+
+                $('#downloadBtnChangeOrder').removeAttr('disabled');
+                $('#ViewUploadFileChangeOrder').removeAttr('disabled');
+                $('#edit_program_element_change_order').removeAttr('disabled');
+                $('#delete_program_element_change_order').removeAttr('disabled');
+
             });
 
             // CLICK ADD PROGRAM ELEMENT CHANGE ORDER LEGACY
@@ -14118,7 +14139,7 @@ WBSTree = (function ($) {
                     wbsTree.setIsProgramElementNew(false);
                     _Is_Program_Element_New = false;
                     populateProgramElementMilestoneTable(selectedNode.ProgramElementID);
-                    debugger;//this is used
+                    //debugger;//this is used
                     if (_selectedProgramElementID == null) {
                         _selectedProgramElementID = selectedNode.ProgramElementID;
                     }
@@ -14218,7 +14239,7 @@ WBSTree = (function ($) {
                     //modal.find('.modal-body #program_element_PO_Date').val(moment(selectedNode.ProjectPODate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
                     modal.find('.modal-body #program_element_PO_Date').val(selectedNode.ProjectPODate ? moment(selectedNode.ProjectPODate).format('MM/DD/YYYY') : ""); // Tanmay 09-11-2021
                     modal.find('.modal-body #program_element_PStart_Date').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
-                    debugger;
+                    //debugger;
                     // Added by Amruta for invalid date issue
                     if (selectedNode.ProjectPEndDate != "")
                         modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
