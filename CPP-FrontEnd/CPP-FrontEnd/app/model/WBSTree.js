@@ -623,6 +623,17 @@ WBSTree = (function ($) {
             return false;
 
         }
+
+        // Narayan - Function for check date in between start and end date - 28/06/2022
+        function isDateInBetween(date, sDate, eDate) {
+            if ((moment(date, 'MM/DD/YYYY') >= moment(sDate, 'MM/DD/YYYY'))
+                && (moment(date, 'MM/DD/YYYY') <= moment(eDate, 'MM/DD/YYYY'))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         obj.prototype.loadContextMenu = function () {
             //  var wbsTree = this;
             var gridView = $('#wbsGridView Table td a');
@@ -8372,6 +8383,10 @@ WBSTree = (function ($) {
                 $("#ProjectElementMilestoneModal").find('.modal-body #project_element_milestone_description').val(foundProjectElementMilestone.MilestoneDescription);
                 $("#ProjectElementMilestoneModal").find('.modal-body #project_element_milestone_date').val(foundProjectElementMilestone.MilestoneDate);
                 $(this).addClass('active').siblings().removeClass('active');
+
+                // Narayan - remove disable after selecting one of the record - 28/06/2022
+                $('#edit_project_element_milestone').removeAttr('disabled'); 
+                $('#delete_project_element_milestone').removeAttr('disabled');
             });
 
             // CLICK ADD PROJECT ELEMENT MILESTONE LEGACY
@@ -8525,6 +8540,8 @@ WBSTree = (function ($) {
                 var MileStoneTile = modal.find('.modal-body #program_element_milestone_name_modal').val();
                 var MilestoneDescp = modal.find('.modal-body #program_element_milestone_description_modal').val();
                 var MilestoneDate = modal.find('.modal-body #program_element_milestone_date_modal').val();
+                var proStartDate = $('#ProgramElementModal').find('.modal-body #program_element_PStart_Date').val();
+                var proEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
 
                 if (MileStoneTile == "" || MileStoneTile.length == 0) {
                     //dhtmlx.alert('Enter Tile.');
@@ -8537,6 +8554,11 @@ WBSTree = (function ($) {
                 }
                 if (MilestoneDate == "" || MilestoneDate.length == 0) {
                     dhtmlx.alert('Enter Date.');
+                    return;
+                }
+                // Narayan - Check is date is in between if not then throw msg - 28/06/2022
+                if (!isDateInBetween(MilestoneDate, proStartDate, proEndDate)) {
+                    dhtmlx.alert('Date Should be in between project start and end date.');
                     return;
                 }
                 //Vaishnavi 08-02-2022
@@ -8851,6 +8873,10 @@ WBSTree = (function ($) {
                 $("#ProgramElementMilestoneModal").find('.modal-body #program_element_milestone_description').val(foundProgramElementMilestone.MilestoneDescription);
                 $("#ProgramElementMilestoneModal").find('.modal-body #program_element_milestone_date').val(foundProgramElementMilestone.MilestoneDate);
                 $(this).addClass('active').siblings().removeClass('active');
+
+                // Narayan - remove disable after selecting one of the record - 28/06/2022
+                $('#edit_program_element_milestone').removeAttr('disabled');
+                $('#delete_program_element_milestone').removeAttr('disabled');
             });
 
             // CLICK ADD PROGRAM ELEMENT MILESTONE LEGACY
@@ -14082,8 +14108,10 @@ WBSTree = (function ($) {
 
                     //Nivedita 14-01-2022
                     $('#new_program_element_milestone').removeAttr('disabled');
-                    $('#edit_program_element_milestone').removeAttr('disabled');
-                    $('#delete_program_element_milestone').removeAttr('disabled');
+                    $("#edit_program_element_milestone").attr('disabled', 'disabled'); // Narayan - disable edit initially - 28/06/2022
+                    $("#delete_program_element_milestone").attr('disabled', 'disabled'); // Narayan - disable delete initiallye - 28/06/2022
+                    //$('#edit_program_element_milestone').removeAttr('disabled');
+                    //$('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
@@ -19113,15 +19141,21 @@ WBSTree = (function ($) {
 
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
-                    $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
-                    $('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                    //$('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                    //$('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+
+                    $('#edit_project_element_milestone').attr('disabled', 'disabled');
+                    $('#delete_project_element_milestone').attr('disabled', 'disabled');
 
                     if (selectedNode.level == "Project") {
                         // Edit
                         $('#updateBtnProgramPrgElm').removeAttr('disabled');
                         $('#new_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
-                        $('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
-                        $('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                        //$('#edit_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+                        //$('#delete_project_element_milestone').removeAttr('disabled'); //vaishnavi 10-03-2022
+
+                        $('#edit_project_element_milestone').attr('disabled', 'disabled');
+                        $('#delete_project_element_milestone').attr('disabled', 'disabled');
 
                     } else {
                         $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
