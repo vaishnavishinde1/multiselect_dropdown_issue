@@ -16,6 +16,16 @@ angular.module('cpp.controllers').
             TrendStatus.setStatus('');
             usSpinnerService.spin('spinner-1');//Use this if want to show spinner on data loading
             $scope.gridOPtions = {};
+
+            //start spinner
+            window.startSpin = function () {
+                usSpinnerService.spin('spinner-1');
+            }
+            //stop spinner
+            window.stopSpin = function () {
+                usSpinnerService.stop('spinner-1');
+            }
+
             $scope.$on('$locationChangeStart', function (event) {
                 var newUrl = $location.path();
             });
@@ -4469,7 +4479,7 @@ angular.module('cpp.controllers').
                         // modifyTableRowspan(column4);
 
                         function modifyTableRowspan(column) {
-
+                            
                             var topMatchTd;
                             var previousValue = "";
                             var rowSpan = 1;

@@ -830,6 +830,7 @@ WBSTree = (function ($) {
 
 
         obj.prototype.loadFullGridView = function () {
+            window.startSpin(); //start spinner on new contract
             var orgId = $("#selectOrg").val();
             var pgmId = $("#selectProgram").val();
             var pgmEltId = $("#selectProgramElement").val();
@@ -1098,6 +1099,7 @@ WBSTree = (function ($) {
                     });
 
                 }
+                window.stopSpin();//stop spinner
             });
 
 
