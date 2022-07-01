@@ -1798,7 +1798,7 @@ div.headline {
 }
 .table >thead>tr>th
 {
-    text-align: center !important;
+    text-align: left !important;
 }
 .table-responsive > tbody > tr > td ,.text-overflow
 {
