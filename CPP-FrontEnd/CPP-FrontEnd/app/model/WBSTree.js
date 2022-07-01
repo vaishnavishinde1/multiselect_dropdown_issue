@@ -3599,7 +3599,7 @@ WBSTree = (function ($) {
                             console.log(singeMilestone);
 
                             $('#project_element_milestone_table_id tbody').append(
-                                '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
+                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
@@ -3610,6 +3610,20 @@ WBSTree = (function ($) {
                             );
                         }
                     }
+
+                    $('#project_element_milestone_table_id').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
+                    });
                 });
             }
 
@@ -3682,7 +3696,7 @@ WBSTree = (function ($) {
                             console.log(singeMilestone);
 
                             $('#program_element_milestone_table_id tbody').append(
-                                '<tr id="' + singeMilestone.MilestoneID + '" class="fade-selection-animation clickable-row">' +
+                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
@@ -3696,6 +3710,20 @@ WBSTree = (function ($) {
 
                         }
                     }
+
+                    $('#program_element_milestone_table_id').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
+                    });
                 });
             }
 
@@ -3770,7 +3798,7 @@ WBSTree = (function ($) {
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id tbody').append(
-                                '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
+                                '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row">' +
                                 ' <td style="width: 20px">' +
                                 '<input id=rbCo' + singeChangeOrder.ChangeOrderID + ' type="radio" name="rbChangeOrder" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeChangeOrder.DocumentID + '" />' +
                                 '</td >' +
@@ -3808,6 +3836,20 @@ WBSTree = (function ($) {
                     }
                     // }, 3000);
 
+
+                    $('#program_element_change_order_table_id').on('click', 'th', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                            .toArray()
+                            .sort(comparer($(this).index()));
+                        this.asc = !this.asc;
+                        if (!this.asc) {
+                            rows = rows.reverse();
+                        }
+                        for (var i = 0; i < rows.length; i++) {
+                            table.append(rows[i]);
+                        }
+                    });
                     //Manu 11/01/2022
                     //Nivedita 14-01-2022
                     console.log('TotalMod == ' + totalmod + ';' + 'SchImpact ==' + schImp);
