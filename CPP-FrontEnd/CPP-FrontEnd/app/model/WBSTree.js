@@ -3599,7 +3599,7 @@ WBSTree = (function ($) {
                             console.log(singeMilestone);
 
                             $('#project_element_milestone_table_id tbody').append(
-                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row">' +
+                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
@@ -3640,7 +3640,7 @@ WBSTree = (function ($) {
                     console.log(singeMilestone);
 
                     $('#project_element_milestone_table_id tbody').append(
-                        '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
+                        '<tr id="' + singeMilestone.MilestoneName + '" class="contact-row fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
@@ -3696,7 +3696,7 @@ WBSTree = (function ($) {
                             console.log(singeMilestone);
 
                             $('#program_element_milestone_table_id tbody').append(
-                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row">' +
+                                '<tr id="' + singeMilestone.MilestoneID + '" class="contact-row fade-selection-animation clickable-row">' +
                                 '<td style="width: 30px">' +
                                 '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                                 '</td >' +
@@ -3739,7 +3739,7 @@ WBSTree = (function ($) {
                     console.log(singeMilestone);
 
                     $('#program_element_milestone_table_id tbody').append(
-                        '<tr id="' + singeMilestone.MilestoneName + '" class="fade-selection-animation clickable-row">' +
+                        '<tr id="' + singeMilestone.MilestoneName + '" class="contact-row fade-selection-animation clickable-row">' +
                         '<td style="width: 30px">' +
                         '<input id=rbCo' + singeMilestone.MilestoneID + ' type="radio" name="rbmilestone" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeMilestone.DocumentID + '" />' +
                         '</td >' +
@@ -3798,7 +3798,7 @@ WBSTree = (function ($) {
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id tbody').append(
-                                '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row">' +
+                                '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row fade-selection-animation clickable-row">' +
                                 ' <td style="width: 20px">' +
                                 '<input id=rbCo' + singeChangeOrder.ChangeOrderID + ' type="radio" name="rbChangeOrder" value="' + serviceBasePath + 'Request/DocumentByDocID/' + singeChangeOrder.DocumentID + '" />' +
                                 '</td >' +
@@ -3923,7 +3923,7 @@ WBSTree = (function ($) {
                     //  alert(singeChangeOrder.DocumentName);
 
                     $('#program_element_change_order_table_id tbody').append(
-                        '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
+                        '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' +
@@ -8895,7 +8895,7 @@ WBSTree = (function ($) {
             });
 
             // CLICK PROGRAM ELEMENT MILESTONE TABLE ROW LEGACY
-            $('#program_element_milestone_table_id  tbody').on('click', '.clickable-row', function (event) {
+            $('#program_element_milestone_table_id tbody').on('click', '.clickable-row', function (event) {
                 var foundProgramElementMilestone = {};
 
                 if (g_newProgramElement) {
