@@ -862,7 +862,8 @@ html, body {
     font-family: FontAwesome;
     content: '\f107';
     float: right;
-    color: #6d747a;
+    color: #fff;
+    font-size:18px;
     margin-left: 10px;
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
