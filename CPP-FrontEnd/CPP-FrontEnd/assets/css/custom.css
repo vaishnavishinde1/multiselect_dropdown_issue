@@ -1744,3 +1744,9 @@ button[disabled=disabled], button:disabled {
 .h-50{
     height:50px;
 }
+.h-60 {
+    height: 60px;
+}
+#wrap_select_div .multiselect-container.dropdown-menu {
+    top: -270%;
+}
