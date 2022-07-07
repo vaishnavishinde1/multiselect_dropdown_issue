@@ -14234,7 +14234,10 @@ WBSTree = (function ($) {
                     //});
 
                     //luan Jquery - luan here
-                    //$('#project_class').prop('disabled', true);
+                    // Narayan - if element is present for targeted project then disable dept. - 07/07/2022
+                    if (selectedNode.children && selectedNode.children.length > 0) {
+                        $('#project_class').prop('disabled', true);
+                    }
                     $("#project_start_date").datepicker();	//datepicker - program element
                     $("#contract_start_date").datepicker();	//datepicker - program element
                     //$('.selectpicker').selectpicker();
@@ -14986,6 +14989,7 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #program_element_PO_Date').val('');
                     modal.find('.modal-body #program_element_PStart_Date').val('');
                     modal.find('.modal-body #program_element_PEnd_Date').val('');
+                    modal.find('.modal-body #program_element_PEnd_Date').removeAttr('disabled'); // Narayan - 06/07/2022
 
                     //------------------------------------------------------------------------------------------
 
