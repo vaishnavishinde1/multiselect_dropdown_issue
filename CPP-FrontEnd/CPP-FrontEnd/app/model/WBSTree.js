@@ -14237,6 +14237,8 @@ WBSTree = (function ($) {
                     // Narayan - if element is present for targeted project then disable dept. - 07/07/2022
                     if (selectedNode.children && selectedNode.children.length > 0) {
                         $('#project_class').prop('disabled', true);
+                    } else {
+                        $('#project_class').removeAttr('disabled');
                     }
                     $("#project_start_date").datepicker();	//datepicker - program element
                     $("#contract_start_date").datepicker();	//datepicker - program element
