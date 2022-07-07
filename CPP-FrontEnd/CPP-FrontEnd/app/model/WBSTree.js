@@ -3491,7 +3491,7 @@ WBSTree = (function ($) {
                     console.log(singleContract);
 
                     $('#program_contract_table_body_id').append(
-                        '<tr id="' + singleContract.ContractNumber + '" class="fade-selection-animation clickable-row">' +
+                        '<tr id="' + singleContract.ContractNumber + '" class="documentUploadProgramNew fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractNumber + '</td>' +
                         '<td class="class-td-LiveView" style="width:30%;">' + singleContract.ContractName + '</td>' +
                         '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractStartDate + '</td>' +
@@ -13854,7 +13854,7 @@ WBSTree = (function ($) {
                                                                 modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
                                                             }
                                                         }
-                                                        gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                                        gridUploadedContDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                                             // '<input type="radio" group="prgrb" name="record">' +
                                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                                             '</td > <td ' +
@@ -16877,7 +16877,7 @@ WBSTree = (function ($) {
                                     }
                                 }
                             }
-                            gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                            gridUploadedContDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                 // '<input type="radio" group="prgrb" name="record">' +
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +

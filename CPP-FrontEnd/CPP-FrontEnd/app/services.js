@@ -47,6 +47,7 @@ angular.module('xenon.services', []).
 
 				if(item.link)
 				{
+					debugger;
 					if(item.link.match(/^\./))
 						item.link = parent.link + item.link.substring(1, link.length);
 
@@ -98,35 +99,34 @@ angular.module('xenon.services', []).
 				//Nivedita 22-03-2022
 				if (localStorageService.get('authorizationData').role.indexOf('Admin') != -1) {
 					var admin = this.addItem('Administration', '/app/admin', 'linecons-desktop');
-					admin.addItem('Actuals Upload', '-/actuals-upload');
-					admin.addItem('Application Security', '-/access-control'); // "-/" will append parents link
-					admin.addItem('Client', '-/client'); // Commented by Manasi
-					admin.addItem('Client POC', '-/clientPOC');  // Commented by Tanmay - 07-12-2021
-					admin.addItem('Department', '-/project-class');
-					//admin.addItem('Department to Phase Mapping', '-/project-class-phase');
-					admin.addItem('Services', '-/service-class');
-					admin.addItem('Services to Subservices Mapping', '-/service-to-subservice-mapping');
-					admin.addItem('Document Type', '-/document-type');
-					//admin.addItem('Location', '-/location'); //territoryCtrl // Aditya ---hide location from sidebar---
-					admin.addItem('Organization', '-/organization');
-					admin.addItem('Prime', '-/prime'); // Prime Aditya 30032022
-					/*admin.addItem('Holidays', '-/holiday'); // Holiday Aditya 11052022*/
-					//admin.addItem('Project Approval Requirements', '-/approval-matrix'); //Manasi
-                    admin.addItem('Trend Approval Requirements', '-/approval-matrix'); // Manasi
-					admin.addItem('Subservices', '-/phase-code');
-					//admin.addItem('Project Type', '-/project-type');   Commented Manasi
-					admin.addItem('Trend Status Code', '-/trend-status-code');
-					admin.addItem('User Management', '-/users');
-					admin.addItem('Vendor', '-/vendor');
-					admin.addItem('Manufacturer', '-/manufacturer');
-					admin.addItem('Inventory', '-/inventory');
-					admin.addItem('Certified Payroll', '-/certified-payroll');   //Vaishnavi 12-04-2022
-					admin.addItem('Wrap', '-/wrap');    //Vaishnavi 12-04-2022
-					admin.addItem('Work Breakdown Structure', '-/budget-categories'); // "-/" will append parents link					
-					//admin.addItem('File Download', '-/filedownload'); Commented Manasi
-					//admin.addItem('Whitelist', '-/whitelist'); Commented by Manasi
+					var admin_system = admin.addItem("System", "/app/admin");
+					admin_system.addItem('Application Security', '-/access-control');
+					admin_system.addItem('User Management', '-/users');
+					admin_system.addItem('Actuals Upload', '-/actuals-upload');
 
-			
+					var admin_contractsetup = admin.addItem("Contract Setup", '/app/admin');
+					admin_contractsetup.addItem('Organization', '-/organization');
+					admin_contractsetup.addItem('Client', '-/client');
+					admin_contractsetup.addItem('Client POC', '-/clientPOC');
+					admin_contractsetup.addItem('Prime', '-/prime');
+					admin_contractsetup.addItem('Certified Payroll', '-/certified-payroll');
+					admin_contractsetup.addItem('Wrap', '-/wrap');
+					admin_contractsetup.addItem('Document Type', '-/document-type');
+
+					var admin_projectelementsetup = admin.addItem("Project & Element Setup", "/app/admin");
+					admin_projectelementsetup.addItem('Department', '-/project-class');
+					admin_projectelementsetup.addItem('Services', '-/service-class');
+					admin_projectelementsetup.addItem('Subservices', '-/phase-code');
+					admin_projectelementsetup.addItem('Services to Subservices Mapping', '-/service-to-subservice-mapping');
+					admin_projectelementsetup.addItem('Work Breakdown Structure', '-/budget-categories');
+
+					var admin_trendsetup = admin.addItem("Trend setup", "/app/admin");
+					admin_trendsetup.addItem('Trend Approval Requirements', '-/approval-matrix');
+					admin_trendsetup.addItem('Trend Status Code', '-/trend-status-code');
+					admin_trendsetup.addItem('Vendor', '-/vendor');
+					admin_trendsetup.addItem('Manufacturer', '-/manufacturer');
+					admin_trendsetup.addItem('Inventory', '-/inventory');
+
 					var costSetting = this.addItem('Cost', '/app/admin', 'linecons-money');
 					costSetting.addItem('Cost Overhead', '-/cost-overhead');
 					costSetting.addItem('Employee', '-/employee');

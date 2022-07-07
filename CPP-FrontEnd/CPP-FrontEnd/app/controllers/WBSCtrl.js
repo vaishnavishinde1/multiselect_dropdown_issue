@@ -160,7 +160,7 @@ angular.module('cpp.controllers').
 
                         var rowSpecialNote = wbsTree.getProgramFileDraft()[x].SpecialNote;
                         var rowExecutionDate = wbsTree.getProgramFileDraft()[x].ExecutionDate;
-                        gridUploadedDocumentProgram.append('<tr id="' + x + '"><td style="width: 20px">' +
+                        gridUploadedDocumentProgram.append('<tr class="contact-row" id="' + x + '"><td style="width: 20px">' +
                             '<input type="radio" group="rbCategoriesPrg" name="record"></td> <td>' + rowFilename + '</td>' +
                             '<td>' + rowSpecialNote + '</td>' +
                             '<td>' + rowExecutionDate + '</td>' +
@@ -209,7 +209,7 @@ angular.module('cpp.controllers').
                                 for (var x = 0; x < _documentList.length; x++) {
                                     //==================== Jignesh-11-03-2021 ===========================================================
                                     if (!_documentList[x].TrendNumber) {
-                                        gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -331,7 +331,7 @@ angular.module('cpp.controllers').
                                 for (var x = 0; x < _documentList.length; x++) {
                                     //==================== Jignesh-11-03-2021 ===========================================================
                                     if (!_documentList[x].TrendNumber) {
-                                        gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -861,7 +861,7 @@ angular.module('cpp.controllers').
                             console.log(response);
                             wbsTree.setDocumentList(response.data.result);
                             for (var x = 0; x < _documentList.length; x++) {
-                                gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                     // '<input type="radio" group="prgrb" name="record">' +
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                     '</td > <td ' +
@@ -1019,7 +1019,7 @@ angular.module('cpp.controllers').
 
                         var rowSpecialNote = wbsTree.getProgramFileDraft()[x].SpecialNote;
                         var rowExecutionDate = wbsTree.getProgramFileDraft()[x].ExecutionDate;
-                        gridUploadedDocumentProgram.append('<tr id="' + x + '"><td style="width: 20px">' +
+                        gridUploadedDocumentProgram.append('<tr class="contact-row" id="' + x + '"><td style="width: 20px">' +
                             '<input type="radio" group="rbCategoriesPrg" name="record"></td> <td>' + rowFilename + '</td>' +
                             '<td>' + rowSpecialNote + '</td>' +
                             '<td>' + rowExecutionDate + '</td>' +
@@ -1069,7 +1069,7 @@ angular.module('cpp.controllers').
                                 for (var x = 0; x < _documentList.length; x++) {
 
                                     // Edited by Jignesh (29-10-2020)
-                                    gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                    gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                         // '<input type="radio" group="prgrb" name="record">' +
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
@@ -1190,7 +1190,7 @@ angular.module('cpp.controllers').
                                 for (var x = 0; x < _documentList.length; x++) {
 
                                     // Edited by Jignesh (29-10-2020)
-                                    gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                    gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                         // '<input type="radio" group="prgrb" name="record">' +
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
@@ -1413,7 +1413,7 @@ angular.module('cpp.controllers').
                         var rowSpecialNote = wbsTree.getProgramFileDraft()[x].SpecialNote;
                         var rowExecutionDate = wbsTree.getProgramFileDraft()[x].ExecutionDate;
 
-                        gridUploadedDocumentProgram.append('<tr id="' + x + '"><td style="width: 20px">' +
+                        gridUploadedDocumentProgram.append('<tr class="contact-row" class="contact-row" id="' + x + '"><td style="width: 20px">' +
                             '<input type="radio" group="rbCategories" name="record"></td> <td>' + rowFilename + '</td>' +
                             '<td>' + rowSpecialNote + '</td>' +
                             '<td>' + rowExecutionDate + '</td>' +
@@ -1476,7 +1476,7 @@ angular.module('cpp.controllers').
                                                 modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
                                             }
                                         }
-                                        gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                             // '<input type="radio" group="prgrb" name="record">' +
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
@@ -1600,7 +1600,7 @@ angular.module('cpp.controllers').
                                                 modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
                                             }
                                         }
-                                        gridUploadedDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        gridUploadedDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                             // '<input type="radio" group="prgrb" name="record">' +
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
@@ -2294,7 +2294,7 @@ angular.module('cpp.controllers').
                                 _modificationList[x].ModificationType == 0 ? 'NA' :
                                     _modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
 
-                            gridModification.append('<tr id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
+                            gridModification.append('<tr class="contact-row" id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
                                 '<input id=rb' + _modificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
                                 '</td >' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -2381,7 +2381,7 @@ angular.module('cpp.controllers').
                                             modTitle = _ModificationList[i].Title;
                                         }
                                     }
-                                    gridUploadedModDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                    gridUploadedModDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -2427,7 +2427,7 @@ angular.module('cpp.controllers').
                                             }
                                         }
                                     }
-                                    gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                    gridUploadedContDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                         // '<input type="radio" group="prgrb" name="record">' +
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
@@ -2609,7 +2609,7 @@ angular.module('cpp.controllers').
                                                 modTitle = _modificationList[i].Title;
                                             }
                                         }
-                                        gridUploadedModDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                        gridUploadedModDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -2630,7 +2630,7 @@ angular.module('cpp.controllers').
                                             modificatioTitle = _modificationList[i].ModificationNo + ' - ' + _modificationList[i].Title
                                         }
                                     }
-                                    gridUploadedContDocument.append('<tr id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
+                                    gridUploadedContDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
                                         // '<input type="radio" group="prgrb" name="record">' +
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
@@ -2813,7 +2813,7 @@ angular.module('cpp.controllers').
                         var rowFilename = wbsTree.getProgramFileDraft()[x].fileName;
                         var rowDocTypeName = wbsTree.getProgramFileDraft()[x].docTypeName;
                         //gridUploadedDocumentProgram.append('<tr id="' + x + '"><td style="width: 20px"><input type="checkbox" name="record"></td><td>' + rowFilename + '</td><td>' + rowDocTypeName + '</td><td>' + moment().format('MM/DD/YYYY') + '</td><tr>');
-                        gridUploadedDocumentProgram.append('<tr id="' + x +
+                        gridUploadedDocumentProgram.append('<tr  id="' + x +
                             '"><td style="width: 20px"><input type="checkbox" name="record"></td><td>' + rowFilename +
                             '</td><td>' + rowDocTypeName + '</td><td>' + moment().format('MM/DD/YYYY') + '</td><tr>');
                     }
