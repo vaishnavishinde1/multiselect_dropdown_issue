@@ -3491,7 +3491,7 @@ WBSTree = (function ($) {
                     console.log(singleContract);
 
                     $('#program_contract_table_body_id').append(
-                        '<tr id="' + singleContract.ContractNumber + '" class="documentUploadProgramNew fade-selection-animation clickable-row">' +
+                        '<tr id="' + singleContract.ContractNumber + '" class="fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractNumber + '</td>' +
                         '<td class="class-td-LiveView" style="width:30%;">' + singleContract.ContractName + '</td>' +
                         '<td class="class-td-LiveView" style="width:17.5%;">' + singleContract.ContractStartDate + '</td>' +
