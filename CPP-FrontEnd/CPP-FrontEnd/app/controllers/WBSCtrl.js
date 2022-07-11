@@ -4107,6 +4107,8 @@ angular.module('cpp.controllers').
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
 
+                usSpinnerService.spin('spinner-8'); // Narayan - start spinner on click search btn - 11/07/2022
+
                 $("#project_name").html("");
                 //  $("#project_name").hide();
                 wbsTree.setSelectedNode(null);
@@ -4144,7 +4146,9 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                             //dhtmlx('at #project_name  $http.get orgId:' + orgId + ' else...');
                         }
-
+                        usSpinnerService.stop('spinner-8'); // Narayan - stop spinner on data get api sucess - 11/07/2022
+                    }).catch(function (err) {
+                        usSpinnerService.stop('spinner-8'); // Narayan - start spinner on data get api fail - 11/07/2022
                     });
                 var sreachTxt = $('#txtQuickSearch').val();
                 $scope.SearchText = sreachTxt;
