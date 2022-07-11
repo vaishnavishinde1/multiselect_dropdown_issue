@@ -18260,7 +18260,7 @@ WBSTree = (function ($) {
 
                     $('#project_element_class').prop('disabled', true);
                     $('#service_class').prop('disabled', true);
-                    //$('#service_class').val(SelectedNode.Description);
+                    //$('#service_class').val(selectedNode.ServiceName);
                     $('#emp_classDiv').show();
 
                     $('#documentUploadProgramNewPrgElm').removeAttr('title');   //Manasi 23-02-2021
@@ -18448,22 +18448,43 @@ WBSTree = (function ($) {
 
                     //Populate project classes for dropdown
                     //Find the project class name given the id
+                    //var serviceClassDropDown = modal.find('.modal-body #service_class');
+                    //var serviceClassList = wbsTree.getServiceClassList();
+                    //var projectClassName = '';
+                    //serviceClassDropDown.empty();
+
+                    //for (var x = 0; x < serviceClassList.length; x++) {
+                    //    if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                    //        projectClassName = serviceClassList[x].Description
+                    //    }
+
+                    //    if (serviceClassList[x].Description == null) {
+                    //        continue;
+                    //    }
+                    //    serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
+                    //}
+                    //serviceClassDropDown.val(projectClassName.trim());
                     var serviceClassDropDown = modal.find('.modal-body #service_class');
-                    var serviceClassList = wbsTree.getServiceClassList();
-                    var projectClassName = '';
-                    serviceClassDropDown.empty();
+                    var serviceClassList; //= wbsTree.getServiceClassList();
+                    var angularHttp = wbsTree.getAngularHttp();
+                    angularHttp.get(serviceBasePath + 'Request/ServiceClass/' + selectedNode.ProjectID).then(function (response) {
 
-                    for (var x = 0; x < serviceClassList.length; x++) {
-                        if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
-                            projectClassName = serviceClassList[x].Description
-                        }
+                        serviceClassList = response.data.result;
+                        var projectClassName = '';
+                        serviceClassDropDown.empty();
 
-                        if (serviceClassList[x].Description == null) {
-                            continue;
+                        for (var x = 0; x < serviceClassList.length; x++) {
+                            if (serviceClassList[x].ID == selectedNode.ProjectClassID) {
+                                projectClassName = serviceClassList[x].Description
+                            }
+
+                            if (serviceClassList[x].Description == null) {
+                                continue;
+                            }
+                            serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
                         }
-                        serviceClassDropDown.append('<option>' + serviceClassList[x].Description + '</option>');
-                    }
-                    serviceClassDropDown.val(projectClassName.trim());
+                        serviceClassDropDown.val(projectClassName.trim());
+                    });
 
                     //Populate employee classes for dropdown 
                     //Find the employee selected names given the id
