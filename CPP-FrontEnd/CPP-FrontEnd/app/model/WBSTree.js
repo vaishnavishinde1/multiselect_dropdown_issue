@@ -2227,6 +2227,40 @@ WBSTree = (function ($) {
                 })
 
             });
+
+
+            $('#gridTable tr').click(function () {
+                var row = $(this);
+                var cell = $(this.cells);
+                $('#gridTable tbody tr td').removeClass('gridRowClass');
+                row.each(function () {
+                    if (row[0].cells.length == 7) {
+
+                        cell.each(function (j) {
+                            if (cell[j].cellIndex != 0) {
+                                cell[j].className = 'my-word-wrap gridRowClass';
+                            }
+                            else {
+                                cell[j].className = 'my-word-wrap ';
+                                $('#gridTable tbody tr td').removeClass('gridRowClass');
+                            }
+                        })
+                    }
+                    else {
+                        cell.each(function (j) {
+                            if (cell[j].className != 'my-word-wrap gridRowClass') {
+                                cell[j].className = 'my-word-wrap gridRowClass';
+                            }
+                            else {
+                                cell[j].className = 'my-word-wrap ';
+                                $('#gridTable tr').removeClass('gridRowClass');
+                            }
+                        })
+                    }
+
+                })
+
+            });
             //------------------------------------Aditya 11032022---------------------------------//
 
 
