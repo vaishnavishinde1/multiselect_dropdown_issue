@@ -6099,7 +6099,7 @@
     //    div.style.display = "block";
     //}
     //function HideDiv(divName) {
-    //    debugger;
+    //    //debugger;
     //    var div;
     //    div = document.getElementById(divName);
     //    radioNo = document.getElementById('costPartQNo');
@@ -7051,7 +7051,7 @@
 
         //	nhung ma ta
         $("#contextMenuDelete").bind("click", function () {
-            debugger;
+            //debugger;
             modal_mode = 'Update';
             $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
         });
@@ -7068,7 +7068,7 @@
             //uses local storage to retrieve organization
         });
         $("#DeleteModal").unbind().on('show.bs.modal', function () {
-            debugger;
+            //debugger;
             var type = $("#contextMenu").attr('contextType');
             console.log(type);
             console.debug("Before", $('#delete_message').text());
@@ -7118,7 +7118,7 @@
         });
         /*//----Vaishnavi 30-03-2022----//*/
         $("#ClosedModal").unbind().on('show.bs.modal', function () {
-            debugger;
+            //debugger;
             var type = $("#contextMenu").attr('contextType');
             console.log(type);
             console.debug("Before", $('#delete_message').text());
@@ -7385,13 +7385,14 @@
     }
     var displayMap = true;
     function toggle(x) {
-        debugger;
+        //debugger;
         var mode = localStorage.getItem('MODE');
         if (mode == 'mindmap') displayMap = true
         else displayMap = false
         displayMap = !displayMap;
         if (displayMap) {
-            $('#mindmap').show();
+            //$('#mindmap').show();
+            $('#mindmap').css('visibility', 'visible');
             $('#selectProject').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment').hide();
@@ -7399,7 +7400,9 @@
             localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
-            $('#mindmap').hide();
+            //$('#mindmap').hide();
+            $('#mindmap').css('visibility', 'hidden');
+            $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
             $('#wbsGridView').show();
             $('#selectManagingDepartment').show();
