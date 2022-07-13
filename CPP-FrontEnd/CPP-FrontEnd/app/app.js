@@ -138,7 +138,7 @@ app.factory('httpInterceptor', function ($q, $rootScope, $log, $timeout, usSpinn
             if (!config.ignore) {
                 numLoadings++;
                 angular.element(document.querySelector('#my-spinner')).addClass('fademe');
-                usSpinnerService.spin('spinner-1');
+                usSpinnerService.spin('spinner-29'); // Amruta
             }
 
             return config || $q.when(config)
@@ -150,7 +150,7 @@ app.factory('httpInterceptor', function ($q, $rootScope, $log, $timeout, usSpinn
             numLoadings--;
             if (numLoadings <= 0) {
                 angular.element(document.querySelector('#my-spinner')).removeClass('fademe');
-                usSpinnerService.stop('spinner-1');
+                usSpinnerService.stop('spinner-29'); // Amruta
             }
 
             return response || $q.when(response);
@@ -161,7 +161,7 @@ app.factory('httpInterceptor', function ($q, $rootScope, $log, $timeout, usSpinn
             numLoadings--;
             if (numLoadings <= 0) {
                 angular.element(document.querySelector('#my-spinner')).removeClass('fademe');
-                usSpinnerService.stop('spinner-1');
+                usSpinnerService.stop('spinner-29');
             }
 
             return $q.reject(response);

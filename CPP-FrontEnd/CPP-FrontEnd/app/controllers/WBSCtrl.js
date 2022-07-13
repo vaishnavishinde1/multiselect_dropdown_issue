@@ -4107,7 +4107,7 @@ angular.module('cpp.controllers').
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
 
-                usSpinnerService.spin('spinner-8'); // Narayan - start spinner on click search btn - 11/07/2022
+                usSpinnerService.spin('spinner-1'); // Narayan - start spinner on click search btn - 11/07/2022
 
                 $("#project_name").html("");
                 //  $("#project_name").hide();
@@ -4146,9 +4146,9 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                             //dhtmlx('at #project_name  $http.get orgId:' + orgId + ' else...');
                         }
-                        usSpinnerService.stop('spinner-8'); // Narayan - stop spinner on data get api sucess - 11/07/2022
+                        //usSpinnerService.stop('spinner-8'); // Narayan - stop spinner on data get api sucess - 11/07/2022
                     }).catch(function (err) {
-                        usSpinnerService.stop('spinner-8'); // Narayan - start spinner on data get api fail - 11/07/2022
+                        //usSpinnerService.stop('spinner-8'); // Narayan - start spinner on data get api fail - 11/07/2022
                     });
                 var sreachTxt = $('#txtQuickSearch').val();
                 $scope.SearchText = sreachTxt;
@@ -4215,12 +4215,13 @@ angular.module('cpp.controllers').
                 if (projId == "" || projId == '') {
                     projId = null;
                 }
+                usSpinnerService.spin('spinner-1');
+
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
                     .$promise.then(function (response) {
                         $("#FilterTrend").removeAttr('disabled');   //vaishnavi 02-03-2022
-                        usSpinnerService.spin('spinner-1');
                         $("#btnQuickSearch").removeAttr('disabled');   //vaishnavi 02-03-2022
 
                         //Add loader stop code here
@@ -4736,7 +4737,7 @@ angular.module('cpp.controllers').
                     finally(function () {
                         console.log($rootScope);
                         // $rootScope.buttonDisabled =false;
-                        //usSpinnerService.stop('spinner-1');
+                        usSpinnerService.stop('spinner-1');
                         //$scope.showSpinner = false;
                         //$('#spin').removeClass('fademe');
                     })
