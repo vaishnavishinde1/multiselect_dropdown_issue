@@ -234,7 +234,8 @@ namespace WebAPI.Controllers
                         project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, FieldName: "Start", NewFieldName: "Date1", Title: "Start", Width: 10, WrapText: true, ColumnPosition: 5);
                         project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, FieldName: "Finish", NewFieldName: "Date2", Title: "Finish", Width: 10, WrapText: true, ColumnPosition: 6);
                         project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, FieldName: "Cost1", Width: 10, WrapText: true, ColumnPosition: 7);
-                        project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, NewFieldName: "Work", Width: 10, WrapText: true, ColumnPosition: 8);
+                        project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, FieldName: "Cost2", Width: 10, WrapText: true, ColumnPosition: 8);
+                        project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, NewFieldName: "Work", Width: 10, WrapText: true, ColumnPosition: 9);
                         project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, NewFieldName: "Resource Names", Width: 10, WrapText: true, ShowAddNewColumn: true);
                         project1.Application.TableEditEx(Name: "&Entry", TaskTable: true, FieldName: "Predecessors", Width: 0); //COMException 0x80010105
 
@@ -267,6 +268,7 @@ namespace WebAPI.Controllers
                                 task.Date2 = Convert.ToDateTime(a.ActivityEndDate);
                                 task.ActualFinish = Convert.ToDateTime(a.ActivityEndDate);
                                 task.Cost1 = Convert.ToDouble(a.Price);
+                                task.Cost2 = Convert.ToDouble(a.Price1);
                                 task.Work = Convert.ToString(a.WorkingHours);
                                 task.SetField(PjField.pjTaskActualStart, Convert.ToDateTime(a.ActivityStartDate));
                                 task.SetField(PjField.pjTaskActualFinish, Convert.ToDateTime(a.ActivityEndDate));
@@ -325,6 +327,7 @@ namespace WebAPI.Controllers
                                     }
 
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.WorkingHours);
                                     //task1.ActualWork = Convert.ToString(t.WorkingHours);
@@ -427,6 +430,7 @@ namespace WebAPI.Controllers
                                         task1.ActualFinish = Convert.ToDateTime(t.ActivityEndDate);
                                     }
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.WorkingHours);
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
@@ -564,6 +568,7 @@ namespace WebAPI.Controllers
                                     }
 
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.Workinghours);
                                     //task1.ActualWork = Convert.ToString(t.WorkingHours);
@@ -664,6 +669,7 @@ namespace WebAPI.Controllers
                                         task1.ActualFinish = Convert.ToDateTime(t.ActivityEndDate);
                                     }
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.Workinghours);
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
@@ -806,6 +812,7 @@ namespace WebAPI.Controllers
                                     }
 
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.Workinghours);
                                     //task1.ActualWork = Convert.ToString(t.WorkingHours);
@@ -906,6 +913,7 @@ namespace WebAPI.Controllers
                                         task1.ActualFinish = Convert.ToDateTime(t.ActivityEndDate);
                                     }
                                     task1.Cost1 = Convert.ToDouble(t.Price);
+                                    task1.Cost2 = 0;
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.Workinghours);
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
