@@ -2048,7 +2048,7 @@ WBSTree = (function ($) {
 
             var g_height = 0;
             if (svg_rect.height == 0)
-                g_height = svg_rect.height + 882;
+                g_height = svgHeight; //g_height = svg_rect.height + 882;
             else
                 g_height = svg_rect.height + 250;
             //var g_height = svg_rect.height + 200;
