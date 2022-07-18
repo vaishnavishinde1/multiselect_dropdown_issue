@@ -268,7 +268,7 @@ namespace WebAPI.Controllers
                                 task.Date2 = Convert.ToDateTime(a.ActivityEndDate);
                                 task.ActualFinish = Convert.ToDateTime(a.ActivityEndDate);
                                 task.Cost1 = Convert.ToDouble(a.Price);
-                                task.Cost2 = Convert.ToDouble(a.Price1);
+                                task.Cost2 =0;
                                 task.Work = Convert.ToString(a.WorkingHours);
                                 task.SetField(PjField.pjTaskActualStart, Convert.ToDateTime(a.ActivityStartDate));
                                 task.SetField(PjField.pjTaskActualFinish, Convert.ToDateTime(a.ActivityEndDate));
@@ -327,7 +327,7 @@ namespace WebAPI.Controllers
                                     }
 
                                     task1.Cost1 = Convert.ToDouble(t.Price);
-                                    task1.Cost2 = 0;
+                                    task1.Cost2 = Convert.ToDouble(t.ETC);
                                     //task1.Number1 = Convert.ToDouble(t.WorkingHours);
                                     task1.Work = Convert.ToString(t.WorkingHours);
                                     //task1.ActualWork = Convert.ToString(t.WorkingHours);
