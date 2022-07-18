@@ -1037,7 +1037,8 @@ namespace WebAPI.Controllers
                 catch (System.Exception ex)
                 {
                     //logger.Info("ATTEMPT: " + attemptNum);
-                    //logger.Info(ex.ToString());
+                    logger.Info(ex.ToString());
+
                     MessageLogging.LogException(ex.ToString());
                     if (ex.ToString().Contains("0x80010105") || ex.ToString().Contains("0x80029C83"))
                     {
