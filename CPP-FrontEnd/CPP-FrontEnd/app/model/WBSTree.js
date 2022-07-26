@@ -18541,7 +18541,9 @@ WBSTree = (function ($) {
 
                     for (var x = 0; x < userList.length; x++) {
                         for (var y = 0; y < employeeList.length; y++) {
-                            if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                            if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')
+                                //&& userList[x].DepartmentID == selectedNode.parent.ProjectClassID
+                            ) {
                                 newEmployeeList.push(userList[x]);
                                 break;
                             }

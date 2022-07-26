@@ -17,7 +17,7 @@ angular.module('xenon.ViewProgramElementGanttController', []).
             //luan here 4/24
             var htmlDelete =
                 ' <div class="dropdown">'
-                + ' <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">'
+                + ' <button class="btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">'
                 + '<span class="caret"></span></button>'
                 + ' <ul class="dropdown-menu">'
                 + '<li><a ng-click="costDetails()">Cost Details</a></li>'
@@ -51,7 +51,7 @@ angular.module('xenon.ViewProgramElementGanttController', []).
                         var cells = row.find('.gantt_cell');
 
                         var dropdown = ' <div class="dropdown" style="position:unset !important;">';
-                        dropdown += ' <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">';
+                        dropdown += ' <button class="btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">';
                         dropdown += '<span class="caret"></span></button>';
                         dropdown += ' <ul class="dropdown-menu">';
                         if ($scope.isNewCost[id] == true) { //new cost disable it
@@ -5736,10 +5736,10 @@ angular.module('xenon.ViewProgramElementGanttController', []).
                                     //dropdown += ' <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">';
                                     // alert($scope.v_activity);
                                     if (!$scope.v_activity) {
-                                        dropdown += ' <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown" disabled>';
+                                        dropdown += ' <button class="btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown" disabled>';
                                     }
                                     else {
-                                        dropdown += ' <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">';
+                                        dropdown += ' <button class="btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">';
                                     }
                                     dropdown += '<span class="caret"></span></button>';
                                     dropdown += ' <ul class="dropdown-menu">';
