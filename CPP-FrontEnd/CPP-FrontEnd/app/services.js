@@ -47,7 +47,6 @@ angular.module('xenon.services', []).
 
 				if(item.link)
 				{
-					debugger;
 					if(item.link.match(/^\./))
 						item.link = parent.link + item.link.substring(1, link.length);
 
