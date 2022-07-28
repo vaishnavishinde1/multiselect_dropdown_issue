@@ -45,6 +45,7 @@ namespace WebAPI.Models.ExportToMPP
         public string BudgetCategory { get; set; }
         public string BudgetSubCategory { get; set; }
         public double Price { get; set; }
+        public double ETC { get; set; }
         public string ActivityStartDate { get; set; }
         public string ActivityEndDate { get; set; }
         public string OriginalActivityStartDate { get; set; }
