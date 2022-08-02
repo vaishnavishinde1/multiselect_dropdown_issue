@@ -269,6 +269,7 @@
 
 
             $scope.save = function () {
+                $('#savePO,#editPO').prop("disabled", true); //02082022 Aditya: Disable button after save
                 var purchaseOrderList = [];
                 angular.forEach($scope.purchaseOrderDetails, function (item) {
                     if (item.RequestedAmountOrQuantity > 0 && item.RequestedAmountOrQuantity != undefined) {
@@ -284,6 +285,7 @@
                 });
 
                 if (purchaseOrderList.length == 0) {
+                    $('#savePO,#editPO').prop("disabled", false); //02082022 Aditya: Disable button after save
                     dhtmlx.alert('Purchase List is empty, please add items');
                     return;
                 }
@@ -300,11 +302,12 @@
                     .$promise.then(function success(response) {
                         console.log("Response result data==>");
                         console.log(response.result);
+                        $('#savePO,#editPO').prop("disabled", false); //02082022 Aditya: Disable button after save
                         dhtmlx.alert('Purchase Order :' + ' ' + response.result + '\n' + 'has been created successfully.');
                         $scope.$close('close');
                         $scope.getPurchaseOrder();  //just for testing
                     }, function error(response) {
-
+                        $('#savePO,#editPO').prop("disabled", false); //02082022 Aditya: Disable button after save
                     });
 
                   
