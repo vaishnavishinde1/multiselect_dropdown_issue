@@ -132,6 +132,7 @@
                 $scope.category.Operation = 1;  //1 means to create
 
                 $scope.category.VersionId = parseInt(projectData.VersionId);
+                $scope.category.Services = parseInt(projectData.ProjectClassID);
 
                 var phaseCode = '';
                 for (var x = 0; x < $scope.params.phaseList.length; x++) {
