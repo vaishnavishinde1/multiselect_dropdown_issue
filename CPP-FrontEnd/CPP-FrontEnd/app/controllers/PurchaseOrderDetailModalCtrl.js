@@ -29,28 +29,29 @@
                 });
             }
 
-           // $scope.empids = [];
+            // $scope.empids = [];
             $scope.example14settings = {
-                scrollableHeight: '100px', scrollable:true,
-                enableSearch: false };
-           /* $scope.example14data = [{
-                "label": "Alabama",
-                "id": "AL"
-            }, {
-                "label": "Alaska",
-                "id": "AK"
-                }
-                ,
-                {
-                    "label": "Alaska",
-                    "id": "AKS"
-                },
-                {
-                    "label": "Alaska",
-                    "id": "AKA"
-                }
-
-            ]; */
+                scrollableHeight: '100px', scrollable: true,
+                enableSearch: false
+            };
+            /* $scope.example14data = [{
+                 "label": "Alabama",
+                 "id": "AL"
+             }, {
+                 "label": "Alaska",
+                 "id": "AK"
+                 }
+                 ,
+                 {
+                     "label": "Alaska",
+                     "id": "AKS"
+                 },
+                 {
+                     "label": "Alaska",
+                     "id": "AKA"
+                 }
+ 
+             ]; */
             console.log('selected dropdown elements:');
             console.log($scope.example14model);
             console.log("Organization Details==>");
@@ -64,7 +65,7 @@
 
 
             console.log("PO details");
-            
+
             for (var i in $scope.purchaseOrderDetails) {
                 if ($scope.purchaseOrderDetails[i].CostType == 'ODC') {
                     $scope.purchaseOrderDetails[i].EmployeeIDlist = [];
@@ -77,7 +78,7 @@
             function checkFields() {
 
                 var isChanges = false;
-                
+
                 for (var x = 0; x < $scope.purchaseOrderDetails.length; x++) {
 
                     if ($scope.purchaseOrderDetails[x].RequestedAmountOrQuantity > 0) {
@@ -138,7 +139,7 @@
             }
 
             $scope.exit = function (param) {
-            
+
                 $scope.$close(param);
             }
 
@@ -161,7 +162,7 @@
 
 
 
-           
+
 
             //Get all cost types
             CostType.get({}, function (response) {
@@ -198,7 +199,7 @@
                     $scope.empdata.push({
                         "id": $scope.employeesList[empno].ID, "label": $scope.employeesList[empno].Name
                     });
-                   
+
                 }
                 console.log('New emp data-->');
                 console.log($scope.empdata);
@@ -276,9 +277,9 @@
                             item.EmployeeID = [];
                             for (var empno in item.EmployeeIDlist)
                                 item.EmployeeID.push(item.EmployeeIDlist[empno].id);
-                            
+
                         }
-                       
+
                         purchaseOrderList.push(item);
                     }
                 });
@@ -296,7 +297,7 @@
                 //data.purchaseOrder.PurchaseOrderBaseNumber = "";
                 console.log('SAVE DATA-->');
                 console.log(data);
-               PurchaseOrderDetail.persist().save(data)
+                PurchaseOrderDetail.persist().save(data)
                     .$promise.then(function success(response) {
                         console.log("Response result data==>");
                         console.log(response.result);
@@ -307,7 +308,7 @@
 
                     });
 
-                  
+
 
                 //SAVE PROCESS--
                 /*PurchaseOrderDetail.persist().save(data)
@@ -412,11 +413,11 @@
                         $rootScope.modalInstance.result.then(function (response) {
                             setTimeout(function () {
                                 console.log("return data==>");
-                              //  $state.reload();
-                                
-                                $scope.getPurchaseOrder(); 
+                                //  $state.reload();
+
+                                $scope.getPurchaseOrder();
                                 //  applyExpandables();
-                               
+
                             }, 1000);
                         });
 
@@ -542,6 +543,65 @@
                     });
 
             }
+            $scope.deletePO = function (id) {
+                dhtmlx.confirm("Are you Sure. Want to Delete?", function (result) {
+                    if (result) {
 
+
+
+                        var purchaseOrderList = [];
+
+                        PurchaseOrderDetail.getPurchaseOrderIDDetail()
+                            .get({ PurchaseOrderID: id }, function success(response) {
+                                console.log(response.result);
+                                var purchaseOrderDetails = response.result.poDetails;
+                                angular.forEach(purchaseOrderDetails, function (item) {
+                                    if (item.RequestedAmountOrQuantity > 0 && item.RequestedAmountOrQuantity != undefined) {
+
+                                        purchaseOrderList.push(item);
+                                    }
+                                });
+
+                                console.log('PurchaseOrderList-->');
+                                console.log(purchaseOrderList);
+                                var data = {
+                                    purchaseOrder: response.result.po,
+                                    purchaseOrderDetails: purchaseOrderList
+                                }
+
+                                data.purchaseOrder.operation = "delete";
+                                //data.purchaseOrder.PurchaseOrderNumber = "";
+                                //data.purchaseOrder.PurchaseOrderBaseNumber = "";
+                                console.log('Purchase Order Details-->');
+                                console.log(data);
+
+
+
+                                data.purchaseOrder.Status = "Deleted";
+
+
+
+
+                                PurchaseOrderDetail.persist().save(data)
+                                    .$promise.then(function sucess(response) {
+                                        console.log("Response result data==>");
+                                        console.log(response.result);
+                                        dhtmlx.alert('Purchase Order :' + ' ' + purchaseOrderList[0].PurchaseOrderNumber + '\n' + 'has been deleted successfully.');
+
+                                    }, function error(response) {
+
+                                    });
+                                $scope.$close('close');
+                              //  $scope.getPurchaseOrder();
+                            });
+
+                      
+                        // $state.reload();
+                    }
+                })
+
+            }
         }
+
+
     ]);

@@ -31,7 +31,8 @@ namespace WebAPI.Models
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime ExpectedDate { get; set; }
-        
+        public int Deleted { get; set; }
+
         public static void savePurchaseOrderDetails(List<PurchaseOrderDetailSP> poDetails, PurchaseOrder po)
         {
             using (var ctx = new CPPDbContext())
@@ -122,6 +123,7 @@ namespace WebAPI.Models
 
         }
 
+
         public static String getClass(String costCode)
         {
             String result = "";
@@ -129,6 +131,49 @@ namespace WebAPI.Models
 
 
             return result;
+        }
+
+        public static void deletePurchaseOrderDetails(List<PurchaseOrderDetailSP> poDetails, PurchaseOrder po)
+        {
+            using (var ctx = new CPPDbContext())
+            {
+                List<PurchaseOrderDetail> list = ctx.PurchaseOrderDetail.Where(x => x.PurchaseOrderID == po.ID).ToList();
+                ctx.PurchaseOrderDetail.RemoveRange(list);
+
+                foreach (var poDetail in poDetails)
+                {
+                    double requestedAmountOrQuantity = Convert.ToDouble(poDetail.RequestedAmountOrQuantity);
+                    double unitPrice = poDetail.UnitPrice == "" ? 0 : Convert.ToDouble(poDetail.UnitPrice);
+
+                    PurchaseOrderDetail newPo = new PurchaseOrderDetail
+                    {
+                        PurchaseOrderID = po.ID,
+                        ClassRefFullName = poDetail.ClassRefFullName,//TBD
+                        TemplateFullName = "CPP Custom Template",
+                        TxnDate = DateTime.Now,
+                        Memo = "",
+                        ItemRefFullName = poDetail.UniqueIdentityNumber,
+                        Desc = poDetail.Description,
+                        Quantity = poDetail.CostType == "U" ? requestedAmountOrQuantity : 0,
+                        UnitOfMeasurement = poDetail.UnitOfMeasurement,
+                        Rate = unitPrice,
+                        Amount = poDetail.CostType == "U" ? (requestedAmountOrQuantity * unitPrice) : requestedAmountOrQuantity,
+                        CustomerRefFullName = poDetail.CustomerRefFullName,//TBD,
+                        CostCode = poDetail.CostLineItemID,
+                        Deleted = 1,
+
+                    };
+
+                    ctx.PurchaseOrderDetail.Add(newPo);
+                    ctx.SaveChanges();
+
+
+                }
+
+
+
+                }
+
         }
 
     }

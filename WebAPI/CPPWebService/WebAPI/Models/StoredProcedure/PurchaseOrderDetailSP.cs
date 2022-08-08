@@ -33,6 +33,9 @@ namespace WebAPI.Models.StoredProcedure
             try
             {
                 List<PurchaseOrderDetailSP> poDetails = new List<PurchaseOrderDetailSP>();
+                List<PurchaseOrderDetail> podetailslist = new List<PurchaseOrderDetail>();
+                List<PurchaseOrder> polist = new List<PurchaseOrder>();
+
                 using (var ctx = new CPPDbContext())
                 {
                     poDetails = ctx.Database.SqlQuery<PurchaseOrderDetailSP>("call get_purchase_order(@ProjectID)",
@@ -40,7 +43,26 @@ namespace WebAPI.Models.StoredProcedure
                                                    ).ToList();
 
 
+                    foreach (var j in poDetails)
+                    {
+                        podetailslist = ctx.PurchaseOrderDetail.Where(x => x.CostCode == j.CostLineItemID && x.Deleted == 1).ToList();
 
+                        string sum = podetailslist.Sum(x => x.Quantity).ToString();
+                        string amount = podetailslist.Sum(x => x.Amount).ToString();
+
+                        int convertsum = Convert.ToInt32(sum);
+                        int convertamount = Convert.ToInt32(amount);
+
+                        if (convertsum != 0)
+                        {
+                            j.BalancedAmountOrQuantity = j.BalancedAmountOrQuantity + convertsum;
+                        }
+                        else if (convertamount != 0)
+                        {
+                            j.BalancedAmountOrQuantity = j.BalancedAmountOrQuantity + convertamount;
+                        }
+
+                    }
 
                     /*dynamic Results = ctx
                             .MultipleResults($"CALL get_purchase_order ({projectID})")
@@ -79,9 +101,27 @@ namespace WebAPI.Models.StoredProcedure
                                                    new MySql.Data.MySqlClient.MySqlParameter("@PurchaseOrderID", purchaseOrderID)
                                                    ).ToList();
 
-
+                    List<PurchaseOrderDetail> podetailslist = new List<PurchaseOrderDetail>();
                     foreach (var item in poDetails)
                     {
+                        podetailslist = ctx.PurchaseOrderDetail.Where(x => x.CostCode == item.CostLineItemID && x.Deleted == 1).ToList();
+
+                        string sum = podetailslist.Sum(x => x.Quantity).ToString();
+                        string amount = podetailslist.Sum(x => x.Amount).ToString();
+
+                        int convertsum = Convert.ToInt32(sum);
+                        int convertamount = Convert.ToInt32(amount);
+
+                        if (convertsum != 0)
+                        {
+                            item.BalancedAmountOrQuantity = item.BalancedAmountOrQuantity + convertsum;
+                        }
+                        else if (convertamount != 0)
+                        {
+                            item.BalancedAmountOrQuantity = item.BalancedAmountOrQuantity + convertamount;
+                        }
+
+
                         if (item.CostType == "ODC")
                         {
                             List<int> poList =

@@ -56,6 +56,8 @@ namespace WebAPI.Models
 
             return order;
         }
+
+       
         public PurchaseOrder getNewPurchaseOrder(int projectID)
         {
             PurchaseOrder po = new PurchaseOrder();
@@ -153,8 +155,8 @@ namespace WebAPI.Models
                        UpdatedDate = po.UpdatedDate,
                        CreatedBy = po.CreatedBy,
                        UpdatedBy = po.UpdatedBy
-                       }).OrderByDescending(c => c.CreatedDate).ToList();
-                }
+                       }).Where(c => c.Status != "Deleted").OrderByDescending(x => x.CreatedDate).ToList();
+                    }
                 else
                 {
                     // poList = ctx.PurchaseOrder.Include("Project").Where(a => a.ProjectID == projectID).ToList();
@@ -182,8 +184,8 @@ namespace WebAPI.Models
                             UpdatedDate = po.UpdatedDate,
                             CreatedBy = po.CreatedBy,
                             UpdatedBy = po.UpdatedBy
-                        }).OrderByDescending(c => c.CreatedDate).ToList();
-                }
+                        }).OrderByDescending(x => x.CreatedDate).ToList();
+                    }
 
                  
             }

@@ -28,22 +28,32 @@ namespace WebAPI.Controllers
                 var purchaseOrderStr = first.FirstOrDefault().ToString();
                 var purchaseOrder = JsonConvert.DeserializeObject<PurchaseOrder>(purchaseOrderStr);
                 PurchaseOrder po = new PurchaseOrder();
-                if (purchaseOrder.operation == "update")
-                {
-                    po = PurchaseOrder.UpdatePurchaseOrder(purchaseOrder);
-                    poNumber = po.PurchaseOrderNumber;
-                }
-                else
-                {
-                    po = PurchaseOrder.createNewPurchaseOrder(purchaseOrder);
-                    poNumber = po.PurchaseOrderNumber;
-                }
 
                 var second = jobject.LastOrDefault();
                 var purchaseOrderDetailStr = second.LastOrDefault().ToString();
                 var purchaseOrderDetail = JsonConvert.DeserializeObject<List<PurchaseOrderDetailSP>>(purchaseOrderDetailStr);
+                if (purchaseOrder.operation != "delete")
+                {
+                    if (purchaseOrder.operation == "update")
+                    {
+                        po = PurchaseOrder.UpdatePurchaseOrder(purchaseOrder);
+                        poNumber = po.PurchaseOrderNumber;
+                    }
+                    else
+                    {
+                        po = PurchaseOrder.createNewPurchaseOrder(purchaseOrder);
+                        poNumber = po.PurchaseOrderNumber;
+                    }
+                  
+                    PurchaseOrderDetail.savePurchaseOrderDetails(purchaseOrderDetail, po);
+                }
+                else
+                {
 
-                PurchaseOrderDetail.savePurchaseOrderDetails(purchaseOrderDetail, po);
+                    po = PurchaseOrder.UpdatePurchaseOrder(purchaseOrder);
+                    poNumber = po.PurchaseOrderNumber;
+                    PurchaseOrderDetail.deletePurchaseOrderDetails(purchaseOrderDetail, po);
+                }
 
             }
             catch (Exception ex)
