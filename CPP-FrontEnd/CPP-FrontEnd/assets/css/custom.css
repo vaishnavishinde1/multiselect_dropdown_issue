@@ -1656,6 +1656,7 @@ input:-webkit-autofill:active {
     font-size: 20px;
     border-radius: 5px;
     margin: 10px 5px 2px;
+    color:#000;
 }
 button[disabled=disabled], button:disabled {
     opacity: 0.6;

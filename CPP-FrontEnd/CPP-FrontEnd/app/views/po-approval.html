@@ -51,10 +51,13 @@
             width: 1600px;
         }
 
-        .fa {
+      /*  .fa {
             color: white !important;
         }
-
+          */
+        .table > thead > tr > th {
+            text-align: center !important;
+        }
         /*.btn-info {
             color: #fff;
             background-color: #222;
@@ -112,12 +115,12 @@
                             <table st-table="rowCollection" class="table table-striped" style="width:100%; padding: 0;">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:left !important;width:15%; padding-left:0;">PO Number</th>
-                                        <th style="text-align:left !important;width:15%; padding-left:0;">Project Name</th>
-                                        <th style="text-align:left !important;width:15%; padding-left:0;">Element Name</th>
-                                        <th style="text-align:left !important;width:15%;">Created on</th>
-                                        <th style="text-align:left !important;width:15%; left: 5px;">Status</th>
-                                        <th style="text-align:left !important;width:15%; left: 5px;"></th>
+                                        <th style="text-align:center !important;width:15%; padding-left:0;">PO Number</th>
+                                        <th style="text-align: center !important; width: 15%; padding-left: 0;">Project Name</th>
+                                        <th style="text-align: center !important; width: 15%; padding-left: 0;">Element Name</th>
+                                        <th style="text-align: center !important; width: 15%;">Created on</th>
+                                        <th style="text-align: center !important; width: 15%; left: 5px;">Status</th>
+                                        <th style="text-align: center !important; width: 15%; left: 5px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody style="max-height:600px;overflow-y:auto;">
@@ -285,7 +288,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-dark btn-sm" ng-click="viewPO(row.ID)" id="{{row.ID}}"><i class="fa fa-pencil-square-o table-icons" aria-hidden="true"></i></button>
+                                                    <button type="submit" class="btn-icon" ng-click="viewPO(row.ID)" id="{{row.ID}}"><i class="fa fa-pencil-square-o table-icons" aria-hidden="true"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>

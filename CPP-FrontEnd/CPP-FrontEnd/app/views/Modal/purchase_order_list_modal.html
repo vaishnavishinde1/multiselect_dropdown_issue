@@ -51,8 +51,12 @@
             width: 1600px;
         }
 
-        .fa {
+        /*  .fa {
             color: white !important;
+        }
+          */
+        .table > thead > tr > th {
+            text-align: center !important;
         }
 
         /*.btn-info {
@@ -286,8 +290,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-dark btn-sm" ng-click="modifyPO(row.ID)" id="mod_{{row.ID}}"><i class="fa fa-pencil-square-o table-icons" aria-hidden="true"></i></button>
-                                                    <button type="submit" class="btn btn-dark btn-sm" ng-click="viewPO(row.ID)" id="{{row.ID}}"><i class="fa fa-eye table-icons" aria-hidden="true"></i></button>
+                                                    <button type="submit" class="btn-icon" ng-click="modifyPO(row.ID)" id="mod_{{row.ID}}"><i class="fa fa-pencil-square-o table-icons" aria-hidden="true"></i></button>
+                                                    <button type="submit" class="btn-icon" ng-click="viewPO(row.ID)" id="{{row.ID}}"><i class="fa fa-eye table-icons" aria-hidden="true"></i></button>
                                                     <button type="submit" class="btn btn-dark btn-sm" ng-click="deletePO(row.ID)" id="del_{{row.ID}}" ng-if="row.Status=='Created'"><i class="fa fa-trash table-icons" aria-hidden="true"></i></button>
                                                 </td>
                                             </tr>
