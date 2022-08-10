@@ -1326,7 +1326,7 @@ angular.module('xenon.Gantt_Controller', []).
                     //console.log($scope.newEmployees, $scope.employee_id);
                     //luan quest 3/26 TODO
                     if ($scope.employee_id[id].name == '----------Add New----------') {
-                        //$scope.newEmployees[id] = [];   //reset employees
+                        $scope.newEmployees[id] = [];   //reset employees
                         $scope.employee_id[id] = { name: '', value: '' };   //reset
                         //Modal to add new type
                         var scope = $rootScope.$new();
@@ -1410,10 +1410,15 @@ angular.module('xenon.Gantt_Controller', []).
                         });
 
                     }
+
+                    $scope.newEmployees[id] = getNewEmployees(id);
+                    updateBuffer($scope.selectedCost);
+
                 } else if ($scope.method[id] === "L") {
                     //luan quest 3/26 TODO
                     if ($scope.subcontractor_id[id].name == '----------Add New----------') {
                         $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
+                        $scope.newSubcontractors[id] = [];
                         //Modal to add new type
                         var scope = $rootScope.$new();
 
@@ -1482,10 +1487,16 @@ angular.module('xenon.Gantt_Controller', []).
                         });
                         return;
                     }
+                    $scope.newSubcontractors[id] = [];
+                    $scope.newSubcontractors[id] = getNewSubcontractors(id);
+
+                    updateBuffer($scope.selectedCost);
+
                 } else if ($scope.method[id] === "U") {
                     //luan quest 3/26 TODO
                     if ($scope.material_id[id].name == '----------Add New----------') {
                         $scope.material_id[id] = { name: '', value: '' };   //reset
+                        $scope.newMaterials[id] = [];
                         //Modal to add new type
                         var scope = $rootScope.$new();
 
@@ -1582,6 +1593,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                         }
                     });
+                    $scope.newMaterials[id] = getNewMaterials(id);
                     updateBuffer($scope.selectedCost);
 
                     //console.log($scope.unitCost);
