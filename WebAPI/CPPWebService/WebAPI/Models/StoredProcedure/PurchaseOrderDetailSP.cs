@@ -51,7 +51,7 @@ namespace WebAPI.Models.StoredProcedure
                         string amount = podetailslist.Sum(x => x.Amount).ToString();
 
                         int convertsum = Convert.ToInt32(sum);
-                        int convertamount = Convert.ToInt32(amount);
+                        decimal convertamount = Convert.ToDecimal(amount);
 
                         if (convertsum != 0)
                         {
@@ -110,7 +110,7 @@ namespace WebAPI.Models.StoredProcedure
                         string amount = podetailslist.Sum(x => x.Amount).ToString();
 
                         int convertsum = Convert.ToInt32(sum);
-                        int convertamount = Convert.ToInt32(amount);
+                        decimal convertamount = Convert.ToDecimal(amount);
 
                         if (convertsum != 0)
                         {
