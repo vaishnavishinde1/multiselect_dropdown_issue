@@ -92,6 +92,16 @@ WBSTree = (function ($) {
             return true;
         }
 
+        //negative value for modified value 18-08-2022
+        const getCurrecyFormat = function (value) {
+            const ammount = value.toString().replace('$', "").replaceAll(",", "");
+            let currency = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 2,
+            }).format(ammount);
+            return currency;
+        }
 
         function myFunc(div) {
             var scroll = document.body.scrollTop;
@@ -17392,7 +17402,7 @@ WBSTree = (function ($) {
                     formatCurrency($(this), "blur");
                 }
             });
-
+            
             //====================== Jignesh-25-03-2021 =================================
             $("#modification_value,#program_element_change_order_amount_modal").keypress(function (e) {
                 if (e.which != 46 && e.which != 45 && e.which != 46 &&
@@ -17401,6 +17411,18 @@ WBSTree = (function ($) {
                 }
                 else {
                     $(this).val('$' + $(this).val().replace('$', ''));
+                }
+            });
+
+            //negative value for modified value 18-08-2022
+            $("#modification_value,#total_modification").on({
+                change: function () {
+                    //formatCurrency($(this));
+                    $(this).val(getCurrecyFormat($(this).val()));
+                },
+                blur: function () {
+                    //formatCurrency($(this), "blur");
+                    $(this).val(getCurrecyFormat($(this).val()));
                 }
             });
             //============================================================================
