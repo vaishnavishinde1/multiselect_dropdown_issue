@@ -808,7 +808,8 @@
                                         <div class="col-md-3" id="divModificationValue">
                                             <label for="" class="control-label _bold required">Value</label>
                                             <!--<input type="number" class="form-control" id="modification_value" autocomplete="off">--> <!--Jignesh-17-02-2021-->
-                                            <input type="text" class="form-control" id="modification_value" autocomplete="off" data-type="currency"> <!--Jignesh-25-03-2021-->
+                                            <!--<input type="text" class="form-control" id="modification_value" autocomplete="off" data-type="currency">--> <!--Jignesh-25-03-2021-->
+                                            <input type="text" class="form-control" id="modification_value" autocomplete="off"> <!--Aditya-negative value--18-08-2022-->
                                         </div>
                                         <!--================ Jignesh-24-03-2021 Modification Changes ========================================-->
                                         <!--<div class="col-md-4" style="padding-left: 0;margin-top:5px;" id="divModDurationDate">
@@ -1015,7 +1016,8 @@
                                         </div>
                                         <div class="col-sm-4 col-md-4 p-r-0">
                                             <label for="program_element_class" class="control-label _bold">Total Modifications</label>
-                                            <input type="text" class="form-control" id="total_modification" data-type="currency" disabled> <!--jignesh21112020-->
+                                            <!--<input type="text" class="form-control" id="total_modification" data-type="currency" disabled>--> <!--jignesh21112020-->
+                                            <input type="text" class="form-control" id="total_modification" disabled> <!--Aditya--negative value--18-08-2022-->
                                         </div>
                                         <div class="col-sm-4 col-md-4">
                                             <label for="program_element_class" class="control-label _bold">Current Contract Value</label>
@@ -6638,6 +6640,7 @@
             } else {
                 $("#PdfViewerContModification22").modal('toggle');
                 $("#ProgramModal").css({ "opacity": "1" });
+                $("#mdlContractModification").css({ "opacity": "1" }); //Blur issue solved 18-08-2022
             }
         });
         // Jignesh-AddNewDocModal-18-02-2021
@@ -6909,6 +6912,7 @@
             } else {
                 $("#PdfViewerContModification22").modal('toggle');
                 $("#ProjectModal").css({ "opacity": "1" });
+                $("#mdlContractModification").css({ "opacity": "1" }); //Blur issue solved 18-08-2022
             }
         });
         // Jignesh-AddNewDocModal-18-02-2021
