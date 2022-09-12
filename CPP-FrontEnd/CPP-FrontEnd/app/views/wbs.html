@@ -532,7 +532,7 @@
 
                 </svg>
             </div>
-            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">
+            <div class="row wbs gridWBS" style="background-color: #ffffff;height: 100%; overflow: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
 
@@ -548,21 +548,21 @@
     -->
     <div class="col-md-4 col-sm-4" style="text-align: center;">
         <!--<div class="row" style="margin-top:-5px;margin-bottom:12px;">
-            <button type="button" class="btn btn-black w-auto" id="AddContractBtn">Add Contract</button>
-            <div class="toggle-btn d-inline-block pull-right">
-                <i onclick="toggle(this)" class="fa fa-th-large" title="Go To GridView" style="display:none"></i>
-            </div>
-        </div>-->
+        <button type="button" class="btn btn-black w-auto" id="AddContractBtn">Add Contract</button>
+        <div class="toggle-btn d-inline-block pull-right">
+            <i onclick="toggle(this)" class="fa fa-th-large" title="Go To GridView" style="display:none"></i>
+        </div>
+    </div>-->
         <div class="row" id="mindmap">
 
             <div id="trend-tree-container">
                 <!--<label>Capital Project Planner</label>-->
                 <!--<div id="spinTrend" us-spinner="{color:'white',length:8, radius:42,width:10}"
-                style="position:absolute;top:30%;left:50%;" class="fademe" spinner-key="spinner-2"  spinner-on="trendSpinner"></div>-->
+            style="position:absolute;top:30%;left:50%;" class="fademe" spinner-key="spinner-2"  spinner-on="trendSpinner"></div>-->
                 <!--<svg id="trendSvg" style="background-color: #ffffff" width="600" height="760" class="trendTree ">
-                    <g transform="translate(234.97900013335504,68.02577203176361)scale(0.6529129224720931)">
-                    </g>
-                </svg>-->
+                <g transform="translate(234.97900013335504,68.02577203176361)scale(0.6529129224720931)">
+                </g>
+            </svg>-->
                 <svg id="trendSvg" style="background-color: #ffffff" width="500" height="766" class="trendTree ">
                     <g transform="translate(234.97900013335504,68.02577203176361)scale(0.6529129224720931)">
                     </g>
@@ -575,153 +575,153 @@
             <!--<div id ="mapcontainer" style="padding-top: 80px">-->
             <div id="project-map-canvas" style="height:400px; display: none;"></div>
         </div>
-
+          
         <div class="container-fluid">
 
 
-            <div class="row" id="wbsGridiewProject">
-                <div class="col-md-12">
-                    <div class="grid__view">
-                        <div class="grid__title">Project (Release 1)</div>
-                        <div class="grid__scrollable">
-                            <table class="grid__table">
-                                <thead class="t-head">
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <th>Project Number</th>
-                                        <th>Project Value</th>
-                                        <th>Deparment</th>
-                                    </tr>
-                                </thead>
-                                <tr>
-                                    <td>LAWA CS</td>
-                                    <td>0921006</td>
-                                    <td>$0.00</td>
-                                    <td>Software Development</td>
-                                </tr>
-                                <tr>
-                                    <td>LAWA CS</td>
-                                    <td>0921006</td>
-                                    <td>$0.00</td>
-                                    <td>Software Development</td>
-                                </tr>
+                <div class="row" id="wbsGridiewProject">
+                       <!--<div class="col-md-12">
+            <div class="grid__view">
+                <div class="grid__title" id="titleProject">Project ()</div>
+                <div class="grid__scrollable">
+                     <table class="grid__table" id='tblProject'>
+                        <thead class="t-head">
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Project Number</th>
+                                <th>Project Value</th>
+                                <th>Deparment</th>
+                            </tr>
+                        </thead>
 
-                            </table>
-                        </div>
-                        <div class="center">
-                            <button type="button" class="grid__btn">Add Project</button>
-                            <button type="button" class="grid__btn">Delete</button>
-                            <button type="button" class="grid__btn">Close</button>
-                        </div>
-                    </div>
+                         <tr>
+            <td>LAWA CS</td>
+            <td>0921006</td>
+            <td>$0.00</td>
+            <td>Software Development</td>
+        </tr>
+        <tr>
+            <td>LAWA CS</td>
+            <td>0921006</td>
+            <td>$0.00</td>
+            <td>Software Development</td>
+        </tr>
+                    </table>
+                </div>
+                <div class="center">
+                    <button type="button" class="grid__btn">Add Project</button>
+                    <button type="button" class="grid__btn">Delete</button>
+                    <button type="button" class="grid__btn">Close</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="grid__view">
-                        <div class="grid__title">Project Element (LAWA CS)</div>
-                        <div class="grid__scrollable">
-                            <table class="grid__table">
-                                <thead class="t-head">
+        </div>-->
+                </div>
+                <div class="row" id="wbsGridiewElement">
+                    <!--<div class="col-md-12">
+                        <div class="grid__view">
+                            <div class="grid__title">Project Element (LAWA CS)</div>
+                            <div class="grid__scrollable">
+                                <table class="grid__table">
+                                    <thead class="t-head">
+                                        <tr>
+                                            <th>Element Name</th>
+                                            <th>Element Number</th>
+                                            <th>Element Value</th>
+                                            <th>Services</th>
+                                        </tr>
+                                    </thead>
                                     <tr>
-                                        <th>Element Name</th>
-                                        <th>Element Number</th>
-                                        <th>Element Value</th>
-                                        <th>Services</th>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
                                     </tr>
-                                </thead>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                </tr>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                </tr>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                </tr>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                <tr>
-                                    <td>LAWA APACS</td>
-                                    <td>01</td>
-                                    <td>$0.00</td>
-                                    <td>Software</td>
-                                </tr>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    </tr>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    </tr>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    <tr>
+                                        <td>LAWA APACS</td>
+                                        <td>01</td>
+                                        <td>$0.00</td>
+                                        <td>Software</td>
+                                    </tr>
 
-                            </table>
+                                </table>
+                            </div>
+                            <div>
+                                <button type="button" class="grid__btn">Add Element</button>
+                                <button type="button" class="grid__btn">Delete</button>
+                                <button type="button" class="grid__btn">Close</button>
+                            </div>
                         </div>
-                        <div>
-                            <button type="button" class="grid__btn">Add Element</button>
-                            <button type="button" class="grid__btn">Delete</button>
-                            <button type="button" class="grid__btn">Close</button>
-                        </div>
-                    </div>
+                    </div>-->
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="grid__view">
-                        <div class="grid__title">Trend (LAWA APACS)</div>
-                        <div class="grid__scrollable">
-                            <table class="grid__table">
-                                <thead class="t-head">
+                <div class="row" id="wbsGridiewTrend">
+                    <!--<div class="col-md-12">
+                        <div class="grid__view">
+                            <div class="grid__title">Trend (LAWA APACS)</div>
+                            <div class="grid__scrollable">
+                                <table class="grid__table">
+                                    <thead class="t-head">
+                                        <tr>
+                                            <th>Trend Name</th>
+                                            <th>Trend Status</th>
+                                        </tr>
+                                    </thead>
                                     <tr>
-                                        <th>Trend Name</th>
-                                        <th>Trend Status</th>
+                                        <td>Baseline</td>
+                                        <td>Approved</td>
                                     </tr>
-                                </thead>
-                                <tr>
-                                    <td>Baseline</td>
-                                    <td>Approved</td>
-                                </tr>
-                                <tr>
-                                    <td>Current</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Forecast</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Trend 1</td>
-                                    <td>Pending</td>
-                                </tr>
-                            </table>
+                                    <tr>
+                                        <td>Current</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Forecast</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trend 1</td>
+                                        <td>Pending</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <button type="button" class="grid__btn">Add Trend</button>
+                                <button type="button" class="grid__btn">Delete</button>
+                                <button type="button" class="grid__btn">Close</button>
+                            </div>
                         </div>
-                        <div>
-                            <button type="button" class="grid__btn">Add Trend</button>
-                            <button type="button" class="grid__btn">Delete</button>
-                            <button type="button" class="grid__btn">Close</button>
-                        </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
+
         </div>
-
     </div>
-</div>
 
 <!--Root Modal-->
 <div class="modal fade" id="RootModal" role="dialog" aria-labelledby="modal_heading" aria-hidden="true">
@@ -7221,7 +7221,15 @@
         });
         $("#DeleteModal").unbind().on('show.bs.modal', function () {
             //debugger;
-            var type = $("#contextMenu").attr('contextType');
+            var modal_mode = localStorage.getItem('modal_mode');
+            /*var type = $("#contextMenu").attr('contextType');*/
+            var view_mode = localStorage.getItem('MODE');
+            if (view_mode == 'gridview' || view_mode == '') {
+                var type = localStorage.getItem('contextType');
+            }
+            else {
+                var type = $("#contextMenu").attr('contextType');
+            }
             console.log(type);
             console.debug("Before", $('#delete_message').text());
 
@@ -7270,8 +7278,16 @@
         });
         /*//----Vaishnavi 30-03-2022----//*/
         $("#ClosedModal").unbind().on('show.bs.modal', function () {
-            //debugger;
-            var type = $("#contextMenu").attr('contextType');
+            debugger;
+            var scope = wbsTree.getScope();
+            var modal_mode = scope.modal_mode;
+            var type;
+            if (view_mode == 'gridview' || view_mode == '') {
+                type = localStorage.getItem('contextType');
+            }
+            else {
+                type = $("#contextMenu").attr('contextType');
+            }
             console.log(type);
             console.debug("Before", $('#delete_message').text());
 
@@ -7543,20 +7559,36 @@
         else displayMap = false
         displayMap = !displayMap;
         if (displayMap) {
-            //$('#mindmap').show();
+            debugger;
+            $('#mindmap').show();
+
+            $('#wbsGridView').hide();
+            $('#wbsGridiewProject').hide();
+            $('#wbsGridiewElement').hide();
+            $('#wbsGridiewTrend').hide();
+            $('#selectManagingDepartment').hide();
             $('#mindmap').css('visibility', 'visible');
             $('#selectProject,#selectprogramelement').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
+            $('#selectProject').show();
+            $('#trendSvg').show();
             $('#closed,#approved,#unapproved,#contract,#project').show();
             localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
-            //$('#mindmap').hide();
+            debugger;
+            $('#mindmap').hide();
             $('#mindmap').css('visibility', 'hidden');
             $('#mindmap').css('position', 'absolute');
+            $('#selectProject').hide();
+            $('#trendSvg').hide();
             $('#selectProject,#selectprogramelement').hide();
             $('#wbsGridView').show();
+            $('#wbsGridiewProject').show();
+            $('#wbsGridiewElement').show();
+            $('#wbsGridiewTrend').show();
+            $('#selectManagingDepartment').show();
             $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').show();
             $('#closed,#approved,#unapproved,#contract,#project').hide();
             localStorage.setItem('MODE', 'gridview');
