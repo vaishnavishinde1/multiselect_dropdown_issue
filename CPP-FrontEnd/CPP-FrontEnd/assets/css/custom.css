@@ -1535,7 +1535,7 @@ input.control-group[type=radio] {margin: 4px 5px 0 0 !important;}
         color: #fff !important;
         font-weight: bold !important;
         font-size: 14px;
-        -webkit-text-fill-color: white !important;
+        -webkit-background-color: white !important;
         transition: background-color 5000s ease-in-out 0s;
     }
 
@@ -1750,4 +1750,96 @@ button[disabled=disabled], button:disabled {
 }
 #wrap_select_div .multiselect-container.dropdown-menu {
     top: -270%;
+}
+.grid__title {
+    background: linear-gradient(90deg,#719bae,#5580bc);
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    display:flex;
+    justify-content:space-between;
+}
+.grid__title_left {    
+    color: #fff;   
+}
+.grid__title_rgt {   
+    text-align:right;
+    float:right;
+    font-size:14px;
+}
+.grid__title_rgt a{
+    color: #fff !important;
+    font-size: 14px;
+}
+
+.grid__title_rgt i {
+    font-size: 18px;
+    text-align: right;
+    padding-left: 5px;
+}
+.grid__table {
+    border-collapse:collapse;
+}
+    .grid__table thead {
+        background: rgb(232,242,248);
+        background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
+        border: 1px solid #c1d7e7;
+        position: sticky !important;
+    }
+    .grid__table th {
+        background: rgb(232,242,248);
+        background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
+      
+        position: sticky !important;
+    }
+.grid__table td{
+    border:1px solid #fff;
+    padding:5px;
+}
+    .grid__table tr:nth-child(even) {
+        background-color: #eef4fe;
+    }
+.grid__btn-icons {
+    font-size: 16px !important;
+    margin: 0 0.5rem;
+}
+.grid__btn-icons i {
+    margin:0 0.5rem;
+}
+.grid__table tr:hover {
+    background-color: #c5d4e9;
+}
+.grid__selected_row {
+    background-color: #c5d4e9;
+}
+.grid__view button {
+    margin:1.5rem 1rem;
+   
+}
+.grid__btn {
+    background-color: #e3effb;
+    border: 1px solid #dddddd;
+    padding: 5px 5px;
+    width: 120px;
+    margin:1rem;
+    border-radius: 5px;
+    color: #587789;
+}
+.grid__view{
+    background-color:#fff;
+    padding:5px;
+    border-radius:10px;
+    margin-bottom:20px;
+
+
+}
+.grid__scrollable{
+    overflow:auto;
+    height:180px;
+
+}
+.grid__scrollable_main {
+    overflow: auto;
+    height: 700px;
 }
