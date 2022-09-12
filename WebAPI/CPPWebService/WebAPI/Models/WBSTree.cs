@@ -1025,7 +1025,7 @@ namespace WebAPI.Models
         }
 
         public static List<ProgramWBSTree> getWBSTreeDetails(int uId, String OrganizationID, String ProgramID, String ProgramElementID, String ProjectID,
-            String TrendNumber, String PhaseCode, String ActivityID, String BudgetCategory, String BudgetSubCategory,string AllData = "null", String DeptID = "null")
+            String TrendNumber, String PhaseCode, String ActivityID, String BudgetCategory, String BudgetSubCategory,string AllData = "null", String DeptID = "null", String ClientID = "null")
         {
             List<ProgramWBSTree> matchedWBSTree = new List<ProgramWBSTree>();
             List<ProjectWBSTree> ProjectList = new List<ProjectWBSTree>();
@@ -1149,17 +1149,32 @@ namespace WebAPI.Models
                 //        ProjectList = getProjectWbSTree(tempProgramElement.ProgramElementID.ToString(), ProjectID, TrendNumber, PhaseCode, ActivityID
                 //            , BudgetCategory, BudgetSubCategory, AllData);
 
-                //        tempProgramElement.CurrentCost = Math.Round(Convert.ToDouble(tempProgramElement.CurrentCost), 2).ToString("F"); ; //luan here fix floating point
+                    //        tempProgramElement.CurrentCost = Math.Round(Convert.ToDouble(tempProgramElement.CurrentCost), 2).ToString("F"); ; //luan here fix floating point
 
-                //        ProgramElementList.Add(new ProgramElementWBSTree(tempProgramElement, ProjectList, uId));
-                //    }
+                    //        ProgramElementList.Add(new ProgramElementWBSTree(tempProgramElement, ProjectList, uId));
+                    //    }
 
-                //    tempProgram.CurrentCost = Math.Round(Convert.ToDouble(tempProgram.CurrentCost), 2).ToString("F"); //luan here fix floating point
+                    //    tempProgram.CurrentCost = Math.Round(Convert.ToDouble(tempProgram.CurrentCost), 2).ToString("F"); //luan here fix floating point
 
-                //    matchedWBSTree.Add(new ProgramWBSTree(null, tempProgram, ProgramElementList));
-                //    //ProgramElementList.Clear();
+                    //    matchedWBSTree.Add(new ProgramWBSTree(null, tempProgram, ProgramElementList));
+                    //    //ProgramElementList.Clear();
 
-                //}
+                    //}
+
+
+                if (ClientID != "null" && ClientID != "undefined")
+                {
+                    List<ProgramWBSTree> filterdClientWbsTree = new List<ProgramWBSTree>();
+                    foreach (ProgramWBSTree programWbs in matchedWBSTree)
+                    {
+                        if (programWbs.ClientID == ClientID)
+                        {
+                            filterdClientWbsTree.Add(programWbs);
+                        }
+                    }
+                    matchedWBSTree = filterdClientWbsTree;
+                }
+
             }
 
 

@@ -116,7 +116,7 @@ WBSTree = (function ($) {
 
         // changes mode on tabclose for mind map view
         window.onbeforeunload = function () {
-            localStorage.setItem('MODE', '');
+            localStorage.setItem('MODE', 'gridview');
         };
 
         var view_mode = localStorage.getItem('MODE');
@@ -124,20 +124,33 @@ WBSTree = (function ($) {
             //debugger;
             $('#mindmap').hide();
             $('#selectProject').hide();
+            $('#trendSvg').hide();
+            $('#selectProject,#selectprogramelement').hide();
             $('#wbsGridView').show();
+            $('#wbsGridiewProject').show();
+            $('#wbsGridiewElement').show();
+            $('#wbsGridiewTrend').show();
             $('#selectManagingDepartment').show();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').show();
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
             //$('#closed,#approved,#unapproved,#contract,#project').hide();
-            localStorage.setItem('MODE', 'gridview');
+            localStorage.setItem('MODE', '');
         }
         else {
             //debugger;
             $('#mindmap').show();
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
+            $('#trendSvg').show();
+            $('#selectProject,#selectprogramelement').show();
             $('#wbsGridView').hide();
+            
+            $('#wbsGridiewProject').hide();
+            $('#wbsGridiewElement').hide();
+            $('#wbsGridiewTrend').hide();
             $('#selectManagingDepartment').hide();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
             $('.toggle-btn i').attr('class', "fa fa-th-large");
             $('.toggle-btn i').attr('title', 'Go To GridView');
             localStorage.setItem('MODE', 'mindmap');
@@ -3187,8 +3200,18 @@ WBSTree = (function ($) {
 
             //DELETE NODE FUNCTION
             $('#delete_button').unbind('click').on('click', function () {
+                var scope = wbsTree.getScope();
+                var orgId = $("#selectOrg").val();
                 var selectedNode = wbsTree.getSelectedNode();
-                var type = $("#contextMenu").attr('contextType');
+                var view_mode = localStorage.getItem('MODE');
+                if (view_mode == 'gridview' || view_mode == '') {
+                    var type = localStorage.getItem('contextType');
+                }
+                else {
+                    var type = $("#contextMenu").attr('contextType');
+                }
+                var modal_mode = scope.modal_mode;
+                localStorage.setItem('modal_mode', modal_mode);
                 //if(selectedNode.level === "Root"){ Ivan here
                 //    modal_mode = "Update";
                 //}
@@ -3266,7 +3289,8 @@ WBSTree = (function ($) {
                                 //$('#FutureTrendModal').modal('hide');
                                 //$('#DeleteModal').modal('hide');
 
-                                wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                //wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+									wbsTree.getProgramFund().lookup().get({ "ProgramID": $scope.GridContractId }, function (response) {
                                     selectedNode.parent.parent.programFunds = response.result;
                                     if ($('#FutureTrendModal').hasClass('in'))
                                         $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
@@ -3321,7 +3345,8 @@ WBSTree = (function ($) {
                                     //console.log("-------DELETED ORGANIZATION--------");
                                     //wbsTree.updateTreeNodes(selectedNode);
                                     //if (!displayMap)
-                                    wbsTree.loadFullGridView();
+                                    //wbsTree.loadFullGridView();
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
                                     //wbsTree.loadContextMenu();
                                     rootScope.modalInstance.close();
                                     //wbsTree.getWBSTrendTree().trendGraph();
@@ -3349,7 +3374,8 @@ WBSTree = (function ($) {
                                         $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
                                     wbsTree.updateTreeNodes(selectedNode.parent);
                                     ////if (!displayMap)
-                                    wbsTree.loadFullGridView();
+                                    //wbsTree.loadFullGridView();
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
                                     wbsTree.getWBSTrendTree().trendGraph();
 
                                     // wbsTree.loadContextMenu();
@@ -3382,7 +3408,8 @@ WBSTree = (function ($) {
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                         //if (!displayMap)
-                                        wbsTree.loadFullGridView();
+                                        //wbsTree.loadFullGridView();
+                                        scope.loadWBSData(orgId, null, null, null, null, null, null);
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         // wbsTree.loadFullGridView();
 
@@ -3391,7 +3418,8 @@ WBSTree = (function ($) {
                                     if ($('#ProgramElementModal').hasClass('in'))
                                         $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
                                     //if (!displayMap)
-                                    wbsTree.loadFullGridView();
+                                    //wbsTree.loadFullGridView();
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     // wbsTree.loadFullGridView();
 
@@ -3435,7 +3463,8 @@ WBSTree = (function ($) {
                                         if ($('#ProjectModal').hasClass('in'))
                                             $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                         //if (!displayMap)
-                                        wbsTree.loadFullGridView();
+                                        //wbsTree.loadFullGridView();
+                                        scope.loadWBSData(orgId, null, null, null, null, null, null);
                                         wbsTree.getWBSTrendTree().trendGraph();
                                         console.log(wbsTree.getWBSTrendTree().getTrendNumber());
                                         //set the project location to organization's locaion on delete project
@@ -4661,7 +4690,10 @@ WBSTree = (function ($) {
                             });//vaishnavi 12-4-2022
                             $('#ProgramModal').modal('hide');
                             //if (!displayMap)
-                            wbsTree.loadFullGridView();
+                            //wbsTree.loadFullGridView();
+                            var orgId = $("#selectOrg").val();
+                            var scope = wbsTree.getScope()
+                            scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
                             selectedNode.name = temp_node.name;
@@ -5168,7 +5200,8 @@ WBSTree = (function ($) {
                                 wbsTree.setSelectedNode(selectedNode);
                                 wbsTree.updateTreeNodes(selectedNode);
                                 //if (!displayMap)
-                                wbsTree.loadFullGridView();
+                                //wbsTree.loadFullGridView();
+                                scope.loadWBSData(orgId, null, null, null, null, null, null);
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                                 //Aditya 24062022 :scroll to bottom
                                 var viewMode;
@@ -5872,7 +5905,8 @@ WBSTree = (function ($) {
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;// for update
                             if (!displayMap)
-                                wbsTree.loadFullGridView();
+                                //wbsTree.loadFullGridView();
+                                scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProgramElementModal').modal('hide');
@@ -6589,7 +6623,8 @@ WBSTree = (function ($) {
                             }
                             //debugger;
                             //if (!displayMap)
-                            wbsTree.loadFullGridView();
+                            //wbsTree.loadFullGridView();
+                            scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
                         } else {
@@ -7223,7 +7258,8 @@ WBSTree = (function ($) {
                             //wbsTree.updateTreeNodes(selectedNode);
                             debugger;
                             //if (!displayMap)
-                            wbsTree.loadFullGridView();
+                            //wbsTree.loadFullGridView();
+                            scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.getWBSTrendTree().trendGraph(true);
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
@@ -7790,7 +7826,8 @@ WBSTree = (function ($) {
                             //}
                             debugger;
                             //if (!displayMap)
-                            wbsTree.loadFullGridView();
+                            //wbsTree.loadFullGridView();
+                            scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //-----------------------------------------------------------------------
 
                             //Parameterize JSON
@@ -7838,7 +7875,8 @@ WBSTree = (function ($) {
                     wbsTree.getWBSTrendTree().trendGraph();
                     debugger;
                     //if (!displayMap)
-                    wbsTree.loadFullGridView();
+                    //wbsTree.loadFullGridView();
+                    scope.loadWBSData(orgId, null, null, null, null, null, null);
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                     //var uploadBtnProject = modal.find('.modal-body #uploadBtnProject');
