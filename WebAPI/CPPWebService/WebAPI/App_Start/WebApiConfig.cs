@@ -452,14 +452,15 @@ namespace WebAPI
 
             config.Routes.MapHttpRoute(
             name: "RequestWBS",
-            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}/{DeptID}",
+            routeTemplate: "Request/WBS/{uId}/{OrganizationID}/{ProgramID}/{ProgramElementID}/{ProjectID}/{TrendNumber}/{PhaseCode}/{ActivityID}/{BudgetCategory}/{BudgetSubCategory}/{SearchText}/{AllData}/{DeptID}/{ClientID}",
 
             //Returns: Complex/Nested JSON Object. NOTE: use string.replace("\\","") before parsing the returned JSON
             defaults: new { controller = "RequestWBS", OrganizationID = RouteParameter.Optional, ProgramID = RouteParameter.Optional, ProgramElementID = RouteParameter.Optional, ProjectID = RouteParameter.Optional,
                 TrendNumber = RouteParameter.Optional, PhaseCode = RouteParameter.Optional, ActivityID = RouteParameter.Optional,
                 BudgetCategory = RouteParameter.Optional, BudgetSubCategory = RouteParameter.Optional, SearchText = RouteParameter.Optional,
                 AllData = RouteParameter.Optional,
-                DeptID = RouteParameter.Optional
+                DeptID = RouteParameter.Optional,
+                ClientID = RouteParameter.Optional
             }
         );
 

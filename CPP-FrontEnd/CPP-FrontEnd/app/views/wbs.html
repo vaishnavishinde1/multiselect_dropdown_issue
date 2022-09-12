@@ -367,7 +367,6 @@
 
         .active, .accordion:hover {
             background-color: #0e111c;
-            
         }
 
     .panel {
@@ -406,7 +405,7 @@
                 <div class="gadget-content" style="flex-wrap:nowrap">
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>Organization</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterChangeOrg()" ng-model="filterOrgId" id="selectOrg">
                             <!--<option value="">Select Organization</option>-->
                             <option data-ng-repeat="filterOrg in organizationList" value={{filterOrg.OrganizationID}}>
@@ -414,9 +413,19 @@
                             </option>
                         </select>
                     </div>
+                    <div class="form-group col-md-3 col-sm-3 wbs-col-heading" id="clientFIlterDiv">
+                        <!--<label>Program Element</label>
+        <br/>-->
+                        <select class="input-medium form-control" ng-change="filterChangeClient()" ng-model="filterClient" id="selectClient">
+                            <option value="">Select Client</option>
+                            <option data-ng-repeat="filterClient in clientList" value={{filterClient.ClientID}}>
+                                {{filterClient.ClientName}}
+                            </option>
+                        </select>
+                    </div>
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>Program</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterChangeProgram()" ng-model="filterProgramId" id="selectProgram">
                             <option value="">Select Contract</option>
                             <option data-ng-repeat="filterProgram in programList" value={{filterProgram.ProgramID}}>
@@ -425,46 +434,44 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
-                        <!--<label>Program Element</label>
-                        <br/>-->
-                        <select class="input-medium form-control" ng-change="filterChangeProgramElement()" ng-model="filterProgramElement" id="selectProgramElement">
-                            <option value="">Select Project</option>
-                            <option data-ng-repeat="filterProgramElement in programElementList" value={{filterProgramElement.ProgramElementID}}>
-                                {{filterProgramElement.ProgramElementName}}
+                        <!--<label>program element</label>
+        <br/>-->
+                        <select class="input-medium form-control" ng-change="filterchangeprogramelement()" ng-model="filterprogramelement" id="selectprogramelement" style="display:none">
+                            <option value="">select project</option>
+                            <option data-ng-repeat="filterprogramelement in programelementlist" value={{filterprogramelement.programelementid}}>
+                                {{filterprogramelement.programelementname}}
                             </option>
                         </select>
                     </div>
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>Project</label>
-                        <br/>-->
-                        <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject">
+        <br/>-->
+                        <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject" style="display:none">
                             <option value="">Select Element</option>
                             <option data-ng-repeat="filterProject in projectList" value={{filterProject.ProjectID}}>
                                 {{filterProject.ProjectName}}
                             </option>
                         </select>
-                        <select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
+                        <!--<select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
                             <option value="">Select Managing Department</option>
                             <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
                                 {{filterDepartment.ProjectClassName}}
                             </option>
-                        </select>
+                        </select>-->
                     </div>
                 </div>
 
             </div>
             <!--<div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">-->
-
-                <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
-                <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
+            <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
+            <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
 
                 </svg>
             </div>
             <div class="row wbs gridWBS" style="background-color: #ffffff;height: 96%; overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" OnClientShowing="OnClientItemFocus" id="wbsGridView">-->
+            <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
 
-                <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-grid">
-
-                </svg>-->
+            </svg>-->
             <!--</div>-->
             <!--<div class="row grid" style="background-color: #ffffff; overflow-y: scroll; width: 100%; height: 96%;overflow: auto; overflow-x: hidden; margin-right: 0px; display: none" id="wbsGridView">
 
@@ -517,7 +524,7 @@
     <div class="col-sm-8 col-md-8" id="program_navigation">
 
         <div id="tree-container" style="height:800px;">
-           
+
             <div class="row wbs" style="height:96%;overflow: auto;overflow-x:hidden; margin-right:0px;display:block" id="mindmap">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
@@ -546,10 +553,7 @@
                 <i onclick="toggle(this)" class="fa fa-th-large" title="Go To GridView" style="display:none"></i>
             </div>
         </div>-->
-
-        
-
-        <div class="row">
+        <div class="row" id="mindmap">
 
             <div id="trend-tree-container">
                 <!--<label>Capital Project Planner</label>-->
@@ -567,10 +571,155 @@
         </div>
 
 
-        <div class="row" style="margin-top:5px;">
+        <div class="row" style="margin-top:5px;" id="mindmap">
             <!--<div id ="mapcontainer" style="padding-top: 80px">-->
             <div id="project-map-canvas" style="height:400px; display: none;"></div>
         </div>
+
+        <div class="container-fluid">
+
+
+            <div class="row" id="wbsGridiewProject">
+                <div class="col-md-12">
+                    <div class="grid__view">
+                        <div class="grid__title">Project (Release 1)</div>
+                        <div class="grid__scrollable">
+                            <table class="grid__table">
+                                <thead class="t-head">
+                                    <tr>
+                                        <th>Project Name</th>
+                                        <th>Project Number</th>
+                                        <th>Project Value</th>
+                                        <th>Deparment</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>LAWA CS</td>
+                                    <td>0921006</td>
+                                    <td>$0.00</td>
+                                    <td>Software Development</td>
+                                </tr>
+                                <tr>
+                                    <td>LAWA CS</td>
+                                    <td>0921006</td>
+                                    <td>$0.00</td>
+                                    <td>Software Development</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="center">
+                            <button type="button" class="grid__btn">Add Project</button>
+                            <button type="button" class="grid__btn">Delete</button>
+                            <button type="button" class="grid__btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="grid__view">
+                        <div class="grid__title">Project Element (LAWA CS)</div>
+                        <div class="grid__scrollable">
+                            <table class="grid__table">
+                                <thead class="t-head">
+                                    <tr>
+                                        <th>Element Name</th>
+                                        <th>Element Number</th>
+                                        <th>Element Value</th>
+                                        <th>Services</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                </tr>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                </tr>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                </tr>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                <tr>
+                                    <td>LAWA APACS</td>
+                                    <td>01</td>
+                                    <td>$0.00</td>
+                                    <td>Software</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div>
+                            <button type="button" class="grid__btn">Add Element</button>
+                            <button type="button" class="grid__btn">Delete</button>
+                            <button type="button" class="grid__btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="grid__view">
+                        <div class="grid__title">Trend (LAWA APACS)</div>
+                        <div class="grid__scrollable">
+                            <table class="grid__table">
+                                <thead class="t-head">
+                                    <tr>
+                                        <th>Trend Name</th>
+                                        <th>Trend Status</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>Baseline</td>
+                                    <td>Approved</td>
+                                </tr>
+                                <tr>
+                                    <td>Current</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Forecast</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Trend 1</td>
+                                    <td>Pending</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <button type="button" class="grid__btn">Add Trend</button>
+                            <button type="button" class="grid__btn">Delete</button>
+                            <button type="button" class="grid__btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -845,14 +994,14 @@
                                     <table id="gridModificationList" class="table table-striped  ">
                                         <thead class="t-head" style="height: 5%; position: sticky; top: 0; ">
                                             <tr>
-                                                <th  style="width: 20px; padding-left:5px;"></th>
-                                                <th > No #</th>
-                                                <th  width="500">Title</th> <!--Added by Jignesh-->
+                                                <th style="width: 20px; padding-left:5px;"></th>
+                                                <th> No #</th>
+                                                <th width="500">Title</th> <!--Added by Jignesh-->
                                                 <th>Mod. Type</th> <!-- Jignesh-17-02-2021 -->
                                                 <!-- Jignesh-19-02-2021 Reomove Reason from here -->
-                                                <th >Value</th>
+                                                <th>Value</th>
                                                 <th>Schedule Impact(days) </th>
-                                                <th >Date</th>
+                                                <th>Date</th>
 
                                             </tr>
                                         </thead>
@@ -862,7 +1011,7 @@
                                 </div>
                                 <div class="row" id="buttonRow">
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" id="btnDeleteConModification" class="btn-icon"  data-toggle="tooltip" title="Delete"><i class="fa-trash"></i></button>
+                                        <button type="button" id="btnDeleteConModification" class="btn-icon" data-toggle="tooltip" title="Delete"><i class="fa-trash"></i></button>
                                         <button type="button" id="btnEditConModification" class="btn-icon" data-toggle="tooltip" title="Edit"><i class="fa-edit"></i></button>
                                     </div>
                                 </div>
@@ -878,10 +1027,10 @@
                                         <thead class="t-head" style="position:sticky;top:0;">
                                             <tr>
                                                 <th style="width: 20px; padding-left:5px;"></th>
-                                                <th > Name</th>
+                                                <th> Name</th>
                                                 <th>Type</th>
                                                 <th>Modification</th>
-                                                <th  class="text-center">Document Detail</th> <!--Added by Jignesh (29-10-2020)-->
+                                                <th class="text-center">Document Detail</th> <!--Added by Jignesh (29-10-2020)-->
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -947,12 +1096,12 @@
                                 <form>
                                     <!--css changes by shweta-->
                                     <!--<div class="_form-group" style="margin-top:5px;">
-                            <div class="col-xs-12" style="padding-left: 0; padding-right:0; margin-bottom: 15px;">
-                                <label for="program_element_contract_number" class="control-label _bold required">Contract Name</label>
-                                <input type="text" class="form-control" id="program_name">
+                                        <div class="col-xs-12" style="padding-left: 0; padding-right:0; margin-bottom: 15px;">
+                                            <label for="program_element_contract_number" class="control-label _bold required">Contract Name</label>
+                                            <input type="text" class="form-control" id="program_name">
 
-                            </div>
-                        </div>-->
+                                        </div>
+                                    </div>-->
 
                                     <div class="row m-b-10">
                                         <div class="col-sm-6 col-md-6 p-r-0">
@@ -966,10 +1115,10 @@
                                             <input type="text" class="form-control" id="program_contract_number">
                                         </div>
                                         <!--Jignesh 13-11-2020
-                            <div class="col-xs-4" style="padding-left: 0;display:none;">
-                                <label for="program_element_class" class="control-label _bold required">Division</label>
-                                <select type="text" class="form-control" id="program_project_class"></select>
-                            </div>-->
+                                        <div class="col-xs-4" style="padding-left: 0;display:none;">
+                                            <label for="program_element_class" class="control-label _bold required">Division</label>
+                                            <select type="text" class="form-control" id="program_project_class"></select>
+                                        </div>-->
                                     </div>
 
                                     <div class="row m-b-10">
@@ -991,22 +1140,22 @@
                                             <input type="text" class="form-control" id="program_current_end_date" autocomplete="off" disabled="disabled"> <!--This Current End Date which is modified by Schedule impact-->
                                         </div>
                                         <!--<div class="col-md-4" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
-                            <input type="text" class="form-control" id="program_original_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                                        </div>
-                                        <div class="col-md-4" style="padding-left: 0; padding-right: 0;">
-                                            <label for="program_element_contract_number" class="control-label _bold">Contract End Date</label>
-                                            <input type="text" class="form-control" id="program_current_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                                        </div>-->
+                                        <label for="program_element_project_number" class="control-label _bold">Original Contract End Date</label>
+                                        <input type="text" class="form-control" id="program_original_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                                    </div>
+                                                    <div class="col-md-4" style="padding-left: 0; padding-right: 0;">
+                                                        <label for="program_element_contract_number" class="control-label _bold">Contract End Date</label>
+                                                        <input type="text" class="form-control" id="program_current_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                                    </div>-->
                                         <!--Commented by Jignesh 28-10-2020-->
                                         <!--<div class="col-md-4" style="padding-left: 0; padding-right: 0;">
-                                <label for="program_element_class" class="control-label _bold required">Division</label>
-                                <select type="text" class="form-control" id="program_project_class"></select>
-                            </div>
-                            <div class="col-md-4" style="padding-right: 0;">
-                                <label for="program_element_class" class="control-label _bold required">Job Number</label>
-                                <input type="text" class="form-control" id="job_number">
-                            </div>-->
+                                            <label for="program_element_class" class="control-label _bold required">Division</label>
+                                            <select type="text" class="form-control" id="program_project_class"></select>
+                                        </div>
+                                        <div class="col-md-4" style="padding-right: 0;">
+                                            <label for="program_element_class" class="control-label _bold required">Job Number</label>
+                                            <input type="text" class="form-control" id="job_number">
+                                        </div>-->
                                     </div>
                                     <!--jignesh21112020_leftpadding-->
                                     <div class="row m-b-20">
@@ -1040,72 +1189,72 @@
 
 
                                 <!--<div class="_form-group">
-                        <label for="program_name" class="_control-label _bold">Client</label>
-                        <input type="text" class="form-control" id="program_name">
-                    </div>-->
+                                    <label for="program_name" class="_control-label _bold">Client</label>
+                                    <input type="text" class="form-control" id="program_name">
+                                </div>-->
                                 <!--SELECT DROP DOWNS FOR PEOPLE-->
                                 <!--<div class="_form-group">
-                        <label for="program_element_class" class="control-label _bold">Client Manager</label>
-                        <select type="text" class="form-control" id="program_manager_id"></select>
-                    </div>-->
+                                    <label for="program_element_class" class="control-label _bold">Client Manager</label>
+                                    <select type="text" class="form-control" id="program_manager_id"></select>
+                                </div>-->
                                 <!--<div class="_form-group">
-                        <label for="program_element_class" class="control-label _bold">Program Sponsor</label>
-                        <select type="text" class="form-control" id="program_sponsor_id"></select>
-                    </div>-->
+                                    <label for="program_element_class" class="control-label _bold">Program Sponsor</label>
+                                    <select type="text" class="form-control" id="program_sponsor_id"></select>
+                                </div>-->
                                 <!--====== Jignesh-AddAddressField-21-01-2021 =======-->
                                 <!--<form style="height: 95px; border: .5px solid #a9a9a9; margin-left: 20px; padding: 5px; margin-bottom: 25px; background-color: #fbfbfb;">-->
                                 <!--css changes by shweta-->
                                 <!-- ================= Tanmay-AddPhoneEmailField-23-12-2021 =======================-->
                                 <!--<div class="_form-group" style="margin-bottom: 145px;">
-                    <div class="col-xs-6" style="padding-left: 0;">
-                        <label for="program_element_contract_number" class="control-label _bold">Client Phone #</label>
-                        <input type="text" maxlength="12" class="form-control" id="program_client_phone" placeholder="xxx-xxx-xxxx">-->
+                                <div class="col-xs-6" style="padding-left: 0;">
+                                    <label for="program_element_contract_number" class="control-label _bold">Client Phone #</label>
+                                    <input type="text" maxlength="12" class="form-control" id="program_client_phone" placeholder="xxx-xxx-xxxx">-->
                                 <!--Jignesh-01-03-2021-->
                                 <!--</div>
-                        <div class="col-xs-6" style="padding-left: 0; padding-right: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Client Email Address</label>
-                            <input type="text" class="form-control" id="program_client_email">
-                        </div>
-                    </div>-->
+                                    <div class="col-xs-6" style="padding-left: 0; padding-right: 0;">
+                                        <label for="program_element_project_number" class="control-label _bold">Client Email Address</label>
+                                        <input type="text" class="form-control" id="program_client_email">
+                                    </div>
+                                </div>-->
                                 <!-- ================= Jignesh-AddAddressField-21-01-2021 =======================-->
                                 <!--<div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
-                            <label for="program_element_contract_number" class="control-label _bold">Client Physical Address</label>
-                            <input type="text" class="form-control" id="program_client_address">
-                        </div>
-                    </div>-->
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right: 0;">
+                                        <label for="program_element_contract_number" class="control-label _bold">Client Physical Address</label>
+                                        <input type="text" class="form-control" id="program_client_address">
+                                    </div>
+                                </div>-->
                                 <!-- ================= Tanmay-AddPhoneEmailField-23-12-2021 =======================-->
                                 <!--<div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-12" style="padding-left: 0; padding-right: 0;margin-bottom:10px">
-                            <label for="program_element_contract_number" class="control-label _bold">Address Line 1</label>
-                            <input type="text" class="form-control" id="program_client_address_line1">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-12" style="padding-left: 0; padding-right: 0;margin-bottom:10px">
-                            <label for="program_element_contract_number" class="control-label _bold">Address Line 2</label>
-                            <input type="text" class="form-control" id="program_client_address_line2">
-                        </div>
-                    </div>-->
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right: 0;margin-bottom:10px">
+                                        <label for="program_element_contract_number" class="control-label _bold">Address Line 1</label>
+                                        <input type="text" class="form-control" id="program_client_address_line1">
+                                    </div>
+                                </div>
+                                <div class="_form-group" style="margin-top:10px;">
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right: 0;margin-bottom:10px">
+                                        <label for="program_element_contract_number" class="control-label _bold">Address Line 2</label>
+                                        <input type="text" class="form-control" id="program_client_address_line2">
+                                    </div>
+                                </div>-->
                                 <!--<div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0;">
-                            <label for="program_element_contract_number" class="control-label _bold">City</label>
-                            <input type="text" class="form-control" id="program_client_city">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0;">
-                            <label for="program_element_contract_number" class="control-label _bold">State</label>
-                            <input type="text" class="form-control" id="program_client_state">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0; padding-right: 0;">
-                            <label for="program_element_contract_number" class="control-label _bold">Zip Code</label>-->
+                                    <div class="col-xs-4" style="padding-left: 0;">
+                                        <label for="program_element_contract_number" class="control-label _bold">City</label>
+                                        <input type="text" class="form-control" id="program_client_city">
+                                    </div>
+                                </div>
+                                <div class="_form-group" style="margin-top:10px;">
+                                    <div class="col-xs-4" style="padding-left: 0;">
+                                        <label for="program_element_contract_number" class="control-label _bold">State</label>
+                                        <input type="text" class="form-control" id="program_client_state">
+                                    </div>
+                                </div>
+                                <div class="_form-group" style="margin-top:10px;">
+                                    <div class="col-xs-4" style="padding-left: 0; padding-right: 0;">
+                                        <label for="program_element_contract_number" class="control-label _bold">Zip Code</label>-->
                                 <!--Jignesh-24-02-2021-->
                                 <!--<input type="text" class="form-control" id="program_client_po_num">
-                        </div>
-                    </div>-->
+                                    </div>
+                                </div>-->
                                 <!--=====================================================================================================-->
                                 <!--</form>-->
 
@@ -1142,9 +1291,9 @@
 
                                     <!-- ================= Jignesh-AddAddressField-21-01-2021 =======================-->
                                     <!--<div class="_form-group">
-        <label for="program_name" class="_control-label _bold">Physical Address</label>
-        <input type="text" class="form-control" id="program_billing_poc_address">
-    </div>-->
+                                        <label for="program_name" class="_control-label _bold">Physical Address</label>
+                                        <input type="text" class="form-control" id="program_billing_poc_address">
+                                    </div>-->
                                     <div class="row m-b-10">
                                         <div class="col-md-6 col-sm-6 p-r-0">
                                             <label for="program_element_contract_number" class="control-label _bold">Address Line 1</label>
@@ -1218,7 +1367,7 @@
                                                 <label class="custom-control-label" for="defaultChecked2" style="font-size:15px;line-height:16px; margin-left:3px;margin-bottom:5px;font-weight:600;">Certified Payroll</label>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -1227,9 +1376,9 @@
                                 <form>
                                     <div class="row m-b-10 ">
                                         <!--<div class="col-sm-12 col-md-12 ">
-        <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
-        <input type="text" class="form-control" id="program_project_manager">
-    </div>-->
+                                            <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
+                                            <input type="text" class="form-control" id="program_project_manager">
+                                        </div>-->
                                         <!--Aditya PMDD 05052022-->
                                         <div class="col-sm-6 col-md-6  p-r-0 ">
                                             <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
@@ -1260,72 +1409,72 @@
                                     </div>
                                 </form>
                             </div>
-                            </div>
-                            </div>
-
-
-
-
-                            
                         </div>
+                    </div>
+
+
+
+
+
+                </div>
 
                 <div class="col-sm-6">
-                    
+
                     <!--style="height:400px;"-->
                     <!--Hide fund allocation-->
                     <!--<form>
 
-            <div class="_form-group">
-                <label for="program_element_name" class="control-label _bold" style="padding-left:0px !important;">Fund Allocation</label>
-                <div class=" row">
-                    <div class="col-sm-6">
-                        <select  class="form-control" id="fundSelect" ng-change="fundChange()" ng-model="fund"></select>
-                    </div>
-                    <div class="col-sm-4">
-                        <input  type="text" class="form-control" id="assignFund" placeholder="Fund Assign">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary" id="addFund" ng-click="add()" style="border-radius:50px;width:100%;"> Add</button>
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class=" _form-group">
-                <div  style="height: 300px;">
-                    <table id="fundTable" class="table table-responsive  table-expand table-condensed" style="height: 99%; width: 100%;">
-                        <thead>
-                        <tr>
-                            <th style="text-align:center;width:10%;"></th>
-                            <th scope="col" style="text-align:center;position: relative; width:18%;">Type</th>
-                            <th scope="col" style="text-align:center;position: relative; width: 18%;">Available</th>
-                            <th scope="col" style="text-align:center;position: relative; width: 18%;">Requested</th>
-                            <th scope="col" style="text-align:center;position: relative; width: 18%;">Approved</th>
-                            <th scope="col" style="text-align:center;position: relative; width: 18%;">Remaining</th>
-                        </tr>
-                        </thead>
-                        <tfoot></tfoot>
-                        <tbody>
-                        <tr>
-                            <td colspan="6" style="overflow-y:auto;">
-                                <div class="scrollable-table" style="height: 150px;">
-                                    <table  class=" fund table    table-responsive table-bordered">
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                        <div class="_form-group">
+                            <label for="program_element_name" class="control-label _bold" style="padding-left:0px !important;">Fund Allocation</label>
+                            <div class=" row">
+                                <div class="col-sm-6">
+                                    <select  class="form-control" id="fundSelect" ng-change="fundChange()" ng-model="fund"></select>
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="_form-control">
-                    <label class="label-control" style="font-weight: bold">Total Fund Available : <span id="total"></span></label>
-                </div>
-            </div>
-        </form>-->
+                                <div class="col-sm-4">
+                                    <input  type="text" class="form-control" id="assignFund" placeholder="Fund Assign">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary" id="addFund" ng-click="add()" style="border-radius:50px;width:100%;"> Add</button>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" _form-group">
+                            <div  style="height: 300px;">
+                                <table id="fundTable" class="table table-responsive  table-expand table-condensed" style="height: 99%; width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align:center;width:10%;"></th>
+                                        <th scope="col" style="text-align:center;position: relative; width:18%;">Type</th>
+                                        <th scope="col" style="text-align:center;position: relative; width: 18%;">Available</th>
+                                        <th scope="col" style="text-align:center;position: relative; width: 18%;">Requested</th>
+                                        <th scope="col" style="text-align:center;position: relative; width: 18%;">Approved</th>
+                                        <th scope="col" style="text-align:center;position: relative; width: 18%;">Remaining</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot></tfoot>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="6" style="overflow-y:auto;">
+                                            <div class="scrollable-table" style="height: 150px;">
+                                                <table  class=" fund table    table-responsive table-bordered">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="_form-control">
+                                <label class="label-control" style="font-weight: bold">Total Fund Available : <span id="total"></span></label>
+                            </div>
+                        </div>
+                    </form>-->
                     <!--<div class="divider"></div>-->
                 </div>
 
@@ -1334,48 +1483,48 @@
                     <!--css changes by shweta-->
                     <div id="project-map-canvas-edit" style="height:300px;width:98%; display: none;"></div>
                     <!--<form style="border: .5px solid #a9a9a9; margin-right: 16px;margin-left: 0; padding: 5px; margin-bottom:15px;">
-        <label for="program_element_milestone_name" class="control-label _bold" style="font-family: Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Key Project Element Milestones</label>
-        <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-            <div class="panel-body" style="overflow: scroll;height : 140px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
-                <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
-                    <thead style="height: 5%; position:sticky; top:0; background:#FFF">
-                        <tr class="table-background">
-                            <td style="width: 30px; padding-left:5px;"></td>
-                            <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align:left !important; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
+                        <label for="program_element_milestone_name" class="control-label _bold" style="font-family: Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Key Project Element Milestones</label>
+                        <div class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
+                            <div class="panel-body" style="overflow: scroll;height : 140px !important;padding-top: 0; background:#FFF;margin-bottom:10px">
+                                <table class="table table-condensed table-responsive " style="height: 99%; width: 100%; border: none;">
+                                    <thead style="height: 5%; position:sticky; top:0; background:#FFF">
+                                        <tr class="table-background">
+                                            <td style="width: 30px; padding-left:5px;"></td>
+                                            <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align:left !important; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
 
-                                Title
-                            </td>
+                                                Title
+                                            </td>
 
-                            <td class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align:right !important; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
+                                            <td class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align:right !important; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
 
-                                Description
-                            </td>
+                                                Description
+                                            </td>
 
-                            <td class="th-c sortable" st-sort="Occupancy" scope="col" style="position: relative; width: 31%; text-align:right !important; padding-left: 0; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
-                                Date
-                            </td>
-                            <td class="th-c sortable" st-sort="Occupancy" scope="col" style="position: relative; width: 31%; text-align:right !important; padding-left: 0; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
-                            </td>
-                        </tr>
-                    </thead>
-                    <tfoot></tfoot>
-                    <tbody>
-                        <tr class="table-background">
-                            <td colspan="9" style="border-bottom: none;">
-                                <div class="scrolable-table" style="height:70px;">
-                                    <table id="project_element_milestone_table_id" class="table table-condensed table-responsive" style="border:none;"></table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="text-align: center;">
-                <button id="new_project_element_milestone" class="btn btn-black">Add</button>
-                <button id="edit_project_element_milestone" class="btn btn-black">Edit</button>
-            </div>
-        </div>
-    </form>-->
+                                            <td class="th-c sortable" st-sort="Occupancy" scope="col" style="position: relative; width: 31%; text-align:right !important; padding-left: 0; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
+                                                Date
+                                            </td>
+                                            <td class="th-c sortable" st-sort="Occupancy" scope="col" style="position: relative; width: 31%; text-align:right !important; padding-left: 0; padding: 2%; background: #FFF !important; border-bottom: none; color: #000 !important;">
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tfoot></tfoot>
+                                    <tbody>
+                                        <tr class="table-background">
+                                            <td colspan="9" style="border-bottom: none;">
+                                                <div class="scrolable-table" style="height:70px;">
+                                                    <table id="project_element_milestone_table_id" class="table table-condensed table-responsive" style="border:none;"></table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="text-align: center;">
+                                <button id="new_project_element_milestone" class="btn btn-black">Add</button>
+                                <button id="edit_project_element_milestone" class="btn btn-black">Edit</button>
+                            </div>
+                        </div>
+                    </form>-->
                     <!--hiding accordion : Aditya 14042022-->
                     <div style="height: 510px; display:none; overflow-y: auto; border: .5px solid #a9a9a9; padding: 10px; margin-bottom: 8px; background-color: #fbfbfb;">
 
@@ -1404,39 +1553,39 @@
                         <div class="panel">
                             <form style="height:170px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
                                 <!--<div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
 
-                        <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="Yes" name="PPBond" id="PPBondYes" onclick="ShowDiv('ShowDivCost')">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="No" name="PPBond" id="PPBondNo" onclick="HideDiv('ShowDivCost')">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
+                                        <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="Yes" name="PPBond" id="PPBondYes" onclick="ShowDiv('ShowDivCost')">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="No" name="PPBond" id="PPBondNo" onclick="HideDiv('ShowDivCost')">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
+                                        </div>
 
-                    </div>
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
+                                    </div>
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
 
-                        <label for="program_P&P" class="control-label _bold required">Is the cost part of the contract?</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="Yes" name="costPartQ" id="costPartQYes" onclick="HideDiv('PPNotes')">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="No" name="costPartQ" id="costPartQNo" onclick="ShowDiv('PPNotes')">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
+                                        <label for="program_P&P" class="control-label _bold required">Is the cost part of the contract?</label>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="Yes" name="costPartQ" id="costPartQYes" onclick="HideDiv('PPNotes')">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="No" name="costPartQ" id="costPartQNo" onclick="ShowDiv('PPNotes')">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
+                                        </div>
 
-                    </div>
-                    <div class="col-xs-12" style="margin-top:2px;padding-left: 0; padding-right:0;display:none;" id="PPNotes">
-                        <label for="" class="_control-label _bold">Notes</label>
-                        <textarea style="height:70px;" type="text" class="form-control" id="txtPPNotes"></textarea>
-                    </div>
+                                    </div>
+                                    <div class="col-xs-12" style="margin-top:2px;padding-left: 0; padding-right:0;display:none;" id="PPNotes">
+                                        <label for="" class="_control-label _bold">Notes</label>
+                                        <textarea style="height:70px;" type="text" class="form-control" id="txtPPNotes"></textarea>
+                                    </div>
 
 
-                </div>-->
+                                </div>-->
                             </form>
                         </div>
                         <button class="accordion">Certified Payroll</button>
@@ -1444,18 +1593,18 @@
                             <div class="row" style="">
 
                                 <!--<form id="certified_payroll_options" style="height: 170px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                <div class="col-xs-4">
-                    <label for="program_element_project_number" class="control-label _bold">Certified Payroll </label>
-                    <input type="radio" class="control-group" name="certified_payroll" value="Yes">Yes
-                    <input type="radio" class="control-group" name="certified_payroll" value="No">No
-                </div>
-                <div class="col-xs-4" id="certified_payroll_select_div">
-                    <select type="text" class="form-control" style="width:50%;" id="certified_payroll_select" multiple>-->
+                                <div class="col-xs-4">
+                                    <label for="program_element_project_number" class="control-label _bold">Certified Payroll </label>
+                                    <input type="radio" class="control-group" name="certified_payroll" value="Yes">Yes
+                                    <input type="radio" class="control-group" name="certified_payroll" value="No">No
+                                </div>
+                                <div class="col-xs-4" id="certified_payroll_select_div">
+                                    <select type="text" class="form-control" style="width:50%;" id="certified_payroll_select" multiple>-->
                                 <!--<option value="state">A</option>
-                <option value="federal">B </option>-->
+                                <option value="federal">B </option>-->
                                 <!--</select>
-                    </div>
-                </form>-->
+                                    </div>
+                                </form>-->
                             </div>
                         </div>   <!--//Vaishnavi 12-04-2022-->
                         <button class="accordion">Prevailing Wage</button>
@@ -1463,241 +1612,241 @@
 
                             <div class="row" style="">
                                 <!--<form id="prevailing_wages_options" style="height: 170px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                    <div class="col-xs-4">
-                        <label for="program_element_project_number" class="control-label _bold">Prevailing Wages </label>
-                        <input type="radio" class="control-group" name="prevailing_wages" value="Yes">Yes
-                        <input type="radio" class="control-group" name="prevailing_wages" value="No">No
-                    </div>
-                    <div class="col-xs-4" id="prevailing_wages_select_div">
-                        <select type="text" class="form-control" style="width:50%;" id="prevailing_wages_select" multiple>
-                            <option value="state">State</option>
-                            <option value="federal">Federal </option>
-                        </select>
-                    </div>
-                </form>-->
+                                    <div class="col-xs-4">
+                                        <label for="program_element_project_number" class="control-label _bold">Prevailing Wages </label>
+                                        <input type="radio" class="control-group" name="prevailing_wages" value="Yes">Yes
+                                        <input type="radio" class="control-group" name="prevailing_wages" value="No">No
+                                    </div>
+                                    <div class="col-xs-4" id="prevailing_wages_select_div">
+                                        <select type="text" class="form-control" style="width:50%;" id="prevailing_wages_select" multiple>
+                                            <option value="state">State</option>
+                                            <option value="federal">Federal </option>
+                                        </select>
+                                    </div>
+                                </form>-->
                             </div>
                         </div>      <!--//Vaishnavi 12-04-2022-->
                         <button class="accordion">Prelimary Notices</button>
                         <div id="tabPrelimnaryNotices" class="panel">
                             <!--<form id="prelimnary_notice">
-            <div class="row" style="">
+                            <div class="row" style="">
 
-                <div class="col-xs-8">
-                    <label for="program_element_project_number" class="control-label _bold required">Date of Notice </label>
-                    <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">-->
+                                <div class="col-xs-8">
+                                    <label for="program_element_project_number" class="control-label _bold required">Date of Notice </label>
+                                    <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">-->
                             <!--</div>
-            <div class="col-xs-8">-->
+                            <div class="col-xs-8">-->
                             <!--<label for="program_element_project_number" class="control-label _bold required">Reason of Notice </label>
-                        <textarea class="form-control" id="notice_reason" rows="5" cols="30"></textarea>
-                    </div>
-                    <div class="text-center col-xs-4" style="margin-top: 158px">
-                        <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
-                        <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
-                    </div>
-                </div>
+                                        <textarea class="form-control" id="notice_reason" rows="5" cols="30"></textarea>
+                                    </div>
+                                    <div class="text-center col-xs-4" style="margin-top: 158px">
+                                        <button type="button" id="btnSaveNotice" class="btn btn-primary c-btn-save" style="width:100px;">Save</button>
+                                        <button type="button" id="btnClearNotice" class="btn btn-primary c-btn-back" style="width:100px;">Clear</button>
+                                    </div>
+                                </div>
 
 
-            </form>
-            <div>
-                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>
-                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
-                    <table id="gridNoticeList" class="table table-striped table-bordered">
-                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                            <tr>
-                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
-                                <td style="font-weight:900;" width="500">Reason</td>-->
+                            </form>
+                            <div>
+                                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Notice History</h4>
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
+                                    <table id="gridNoticeList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 150px;">Date of Notice	</td>
+                                                <td style="font-weight:900;" width="500">Reason</td>-->
                             <!--<td style="font-weight:900;">Date of Created</td>-->
                             <!--</tr>
-                        </thead>
-                        <tbody></tbody>
+                                        </thead>
+                                        <tbody></tbody>
 
-                    </table>
-                </div>
-            </div>-->
+                                    </table>
+                                </div>
+                            </div>-->
                         </div>
 
                         <button class="accordion">Insurance</button>
                         <!--<div class="panel">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>-->
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>-->
                         <!--<div id="tabInsurance" class="panel">
-            <form id="contract_insurance">
-                <div class="row" style="">
-                    <div class="col-xs-6">
-                        <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
-                        <select type="text" class="form-control" style="width:50%;" id="insurance_type_select">
-                            <option value="GL Policy Limits">GL Policy Limits</option>
-                            <option value="Auto Liability">Auto Liability</option>
-                            <option value="WC Liability">WC Liability</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                    <div class="col-xs-6">
-                        <label for="program_element_project_number" class="control-label _bold required">Limit </label>
-                        <input type="text" class="form-control" id="insurance_limit" autocomplete="off" style="width: 50%;">
-                    </div>
-                </div>
+                            <form id="contract_insurance">
+                                <div class="row" style="">
+                                    <div class="col-xs-6">
+                                        <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
+                                        <select type="text" class="form-control" style="width:50%;" id="insurance_type_select">
+                                            <option value="GL Policy Limits">GL Policy Limits</option>
+                                            <option value="Auto Liability">Auto Liability</option>
+                                            <option value="WC Liability">WC Liability</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label for="program_element_project_number" class="control-label _bold required">Limit </label>
+                                        <input type="text" class="form-control" id="insurance_limit" autocomplete="off" style="width: 50%;">
+                                    </div>
+                                </div>
 
-                <div class="text-center" style="margin-top: 10px">
-                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                </div>
-            </form>
-            <div>
-                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>
-                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
-                    <table id="gridInsuranceList" class="table table-striped table-bordered">
-                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                            <tr>
-                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
-                                <td style="font-weight:900;min-width: 300px;">Type</td>
-                                <td style="font-weight:900;">Limit</td>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
+                                <div class="text-center" style="margin-top: 10px">
+                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                </div>
+                            </form>
+                            <div>
+                                <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>
+                                <div class="panel-body" style="overflow: scroll; padding-top: 0;margin-top:10px; height: 175px !important;">
+                                    <table id="gridInsuranceList" class="table table-striped table-bordered">
+                                        <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                            <tr>
+                                                <td style="font-weight:900;min-width: 85px;">Sr. No.</td>
+                                                <td style="font-weight:900;min-width: 300px;">Type</td>
+                                                <td style="font-weight:900;">Limit</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
 
-                    </table>
-                </div>
-            </div>
-        </div>-->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>-->
                         <button class="accordion">WRAP</button>
                         <div class="panel">
                             <div class="row" style="">
                                 <!--//Vaishnavi 12-04-2022-->
                                 <!--<form id="wrap_options" style="height: 170px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px">
-                    <div class="col-xs-4">
-                        <label for="program_element_project_number" class="control-label _bold">Wrap </label>
-                        <input type="radio" class="control-group" name="wrap" value="Yes">Yes
-                        <input type="radio" class="control-group" name="wrap" value="No">No
-                    </div>
-                    <div id="wrap_select_div">
-                        <div class="col-xs-4">
-                            <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
-                            </select>
-                        </div>
-                        <div class="row" style="">
-                            <div class="col-xs-12">
-                                <label for="program_element_project_number" class="control-label _bold required">Reporting to</label>
-                                <textarea style="height:60px" type="text" class="form-control" id="reporting_to"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </form>-->
+                                    <div class="col-xs-4">
+                                        <label for="program_element_project_number" class="control-label _bold">Wrap </label>
+                                        <input type="radio" class="control-group" name="wrap" value="Yes">Yes
+                                        <input type="radio" class="control-group" name="wrap" value="No">No
+                                    </div>
+                                    <div id="wrap_select_div">
+                                        <div class="col-xs-4">
+                                            <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
+                                            </select>
+                                        </div>
+                                        <div class="row" style="">
+                                            <div class="col-xs-12">
+                                                <label for="program_element_project_number" class="control-label _bold required">Reporting to</label>
+                                                <textarea style="height:60px" type="text" class="form-control" id="reporting_to"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>-->
                             </div>
                         </div>                     <!--//Vaishnavi 12-04-2022-->
                         <button class="accordion">Warranty</button>
                         <div class="panel">
                             <!--<form id="labor_warranty_form" style="height: 167px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
 
-                <div class="row">
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Labor Warranty </label>
-                            <textarea style="height:45px" type="text" class="form-control" id="labor_warranty"></textarea>
+                                <div class="row">
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Labor Warranty </label>
+                                            <textarea style="height:45px" type="text" class="form-control" id="labor_warranty"></textarea>
 
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left:10px;">
-                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-                            <input type="text" class="form-control" id="labor_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 10px;">
-                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-                            <input type="text" class="form-control" id="labor_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left:10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                            <input type="text" class="form-control" id="labor_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                            <input type="text" class="form-control" id="labor_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-                        </div>
-                    </div>
+                                        </div>
+                                    </div>
 
-                </div>
-                <div class="row">
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-6" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Description</label>
-                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="labordescription"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </form>
-            <form id="materials_warranty_form" style="height: 167px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
-
-                <div class="row">
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Materials Warranty </label>
-                            <textarea style="height: 45px" type="text" class="form-control" id="materials_warranty"></textarea>
-
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left:10px;">
-                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-                            <input type="text" class="form-control" id="materials_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 10px;">
-                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-                            <input type="text" class="form-control" id="materials_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-6" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Description</label>
-                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="materialsdescription"></textarea>
-                        </div>
-                    </div>
-                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-6" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="labordescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
-            </form>
-            <form id="other_warranty_form" style="height: 167px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
+                            </form>
+                            <form id="materials_warranty_form" style="height: 167px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
 
-                <div class="row">
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Other Warranty </label>
-                            <textarea style="height:45px" type="text" class="form-control" id="other_warranty"></textarea>
+                                <div class="row">
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Materials Warranty </label>
+                                            <textarea style="height: 45px" type="text" class="form-control" id="materials_warranty"></textarea>
 
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left:10px;">
-                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-                            <input type="text" class="form-control" id="other_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-                        </div>
-                    </div>
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-4" style="padding-left: 10px;">
-                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-                            <input type="text" class="form-control" id="other_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left:10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                            <input type="text" class="form-control" id="materials_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                            <input type="text" class="form-control" id="materials_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                                        </div>
+                                    </div>
 
-                    <div class="_form-group" style="margin-top:10px;">
-                        <div class="col-xs-6" style="padding-left: 0;">
-                            <label for="program_element_project_number" class="control-label _bold">Description</label>
-                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="otherdescription"></textarea>
-                        </div>
-                    </div>
-                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-6" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="materialsdescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
-            </form>-->
+                            </form>
+                            <form id="other_warranty_form" style="height: 167px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb; margin-left: 20px; scroll-behavior:auto">
+
+                                <div class="row">
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Other Warranty </label>
+                                            <textarea style="height:45px" type="text" class="form-control" id="other_warranty"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left:10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                            <input type="text" class="form-control" id="other_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                        </div>
+                                    </div>
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-4" style="padding-left: 10px;">
+                                            <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                            <input type="text" class="form-control" id="other_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="_form-group" style="margin-top:10px;">
+                                        <div class="col-xs-6" style="padding-left: 0;">
+                                            <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                            <textarea type="text" style="height:40px;width:180%" class="form-control" id="otherdescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </form>-->
                             <!--//Vaishnavi 12-04-2022-->
                         </div>
 
@@ -1705,127 +1854,127 @@
                         <!--style="padding-left: 3%;"-->
                         <!--Pritesh Latest New Code-->
                         <!--<div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'tabGeneral')" id="defaultOpen">General</button>
-            <button class="tablinks" onclick="openTab(event, 'tabPrelimnaryNotices')">Prelimnary Notices</button>
-            <button class="tablinks" onclick="openTab(event, 'tabWarrenty')">Warrenty</button>
-            <button class="tablinks" onclick="openTab(event, 'documentUploadProgramNew')">Document Management</button>
-            <button class="tablinks" onclick="openTab(event, 'tabCommonNotes')">Common Notes</button>
-        </div>-->
+                            <button class="tablinks" onclick="openTab(event, 'tabGeneral')" id="defaultOpen">General</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabPrelimnaryNotices')">Prelimnary Notices</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabWarrenty')">Warrenty</button>
+                            <button class="tablinks" onclick="openTab(event, 'documentUploadProgramNew')">Document Management</button>
+                            <button class="tablinks" onclick="openTab(event, 'tabCommonNotes')">Common Notes</button>
+                        </div>-->
                         <!--<div id="tabGeneral" class="tabcontent">
-            <form style="height:2000px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
-                <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
+                            <form style="height:2000px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin-left:20px;">
+                                <div class="_form-group" style="margin-top:5px; margin-bottom: 75px;">
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right:0;">
 
-                        <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="yes" name="P&PBond" onclick="ShowDivCost(this)">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="no" name="P&PBond" checked="checked" id="P&PNo">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
+                                        <label for="program_P&P" class="control-label _bold required">P&P Bonds</label>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="yes" name="P&PBond" onclick="ShowDivCost(this)">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="no" name="P&PBond" checked="checked" id="P&PNo">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
+                                        </div>
 
-                    </div>
-                    <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
+                                    </div>
+                                    <div class="col-xs-12" style="padding-left: 0; padding-right:0; display:none;" id="ShowDivCost">
 
-                        <label for="program_P&P" class="control-label _bold required">Is it the cost part of the contract?</label>
-                        <div class="radio-inline">
-                            <input type="radio" value="yes" checked="checked" name="costPartQ">
-                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
-                        </div>
-                        <div class="radio-inline">
-                            <input type="radio" value="no" name="costPartQ">
-                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
-                        </div>
+                                        <label for="program_P&P" class="control-label _bold required">Is it the cost part of the contract?</label>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="yes" checked="checked" name="costPartQ">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultYes">Yes</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <input type="radio" value="no" name="costPartQ">
+                                            <label class="custom-control-label lblnxttoggle" for="defaultno">No</label>
+                                        </div>
 
-                    </div>
-                </div>
-            </form>
-        </div>-->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>-->
                         <!--<div id="tabPrelimnaryNotices" class="tabcontent"></div>
-        <div id="tabWarrenty" class="tabcontent"></div>
-        <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;" class="tabcontent">
-            <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Contract Document Management</h4>
-            <div class="panel-body" style="overflow: scroll; padding-top: 0; height: 410px !important;">
-                <table id="gridUploadedDocumentProgramNew" class="table table-striped">
-                    <thead style="position:sticky;top:0; background:#FFF">
-                        <tr>
-                            <td style="width: 20px; padding-left:5px;"></td>
-                            <td style="font-weight:900;"> Name</td>-->
+                        <div id="tabWarrenty" class="tabcontent"></div>
+                        <div id="documentUploadProgramNew" style="padding:5px; height:515px;float:right;width:97%;margin-right:5px;border: #a9a9a9;border-style: solid; border-width: thin;" class="tabcontent">
+                            <h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Contract Document Management</h4>
+                            <div class="panel-body" style="overflow: scroll; padding-top: 0; height: 410px !important;">
+                                <table id="gridUploadedDocumentProgramNew" class="table table-striped">
+                                    <thead style="position:sticky;top:0; background:#FFF">
+                                        <tr>
+                                            <td style="width: 20px; padding-left:5px;"></td>
+                                            <td style="font-weight:900;"> Name</td>-->
                         <!--<td style="font-weight:900;"> Execution Date</td>--> <!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;"> Special Notes</td>-->
                         <!--<td style="font-weight:900;"> Notes</td>-->  <!--Manasi--><!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;">Document Type</td>
-        <td style="font-weight:900;">Modification</td>-->
+                        <td style="font-weight:900;">Modification</td>-->
                         <!--Jignesh-ModificationPopUpChanges-->
                         <!--<td style="font-weight:900;">Upload Date</td>
-        <td style="font-weight:900;">Upload By</td>-->
+                        <td style="font-weight:900;">Upload By</td>-->
                         <!--Comment by Jignesh-->
                         <!--<td style="font-weight:900;">Document Details</td>--> <!--Added by Jignesh-->
                         <!--</tr>
-                </thead>
-                <tbody></tbody>
+                                </thead>
+                                <tbody></tbody>
 
-            </table>
-        </div>
+                            </table>
+                        </div>
 
-        <div class="row" id="buttonRow">
-            <div class="col-sm-12 text-center">-->
+                        <div class="row" id="buttonRow">
+                            <div class="col-sm-12 text-center">-->
                         <!--<button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip"
-        data-placement="top" title="Delete Selected Documents"></button>-->
+                        data-placement="top" title="Delete Selected Documents"></button>-->
                         <!--<button id="DeleteUploadProgram" class="btn btn-black" style="margin-top:8px;">Delete</button>-->  <!-- Shweta 16-07-2020 -->
                         <!--<button id="updateBtnProgram" class="btn btn-black" style="margin-top:8px;">Upload</button>-->      <!-- Shweta 16-07-2020 -->
                         <!--<button id="downloadBtnProgram" class="btn btn-black" style="margin-top:8px;">Download</button>-->   <!-- Shweta 16-07-2020 -->
                         <!--<button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:8px;width:145px;">View Document</button>-->  <!-- Shweta 16-07-2020 -->
                         <!--<button id="ViewAllUploadFileContracts" class="btn btn-black" style="margin-top:8px;">View All</button>-->   <!--Swapnil 29-01-2021-->
                         <!--<button id="EditBtnProgram" class="btn btn-black" style="margin-top:8px;">Edit</button>
-        </div>-->
+                        </div>-->
                         <!--<div class="col-sm-6" id="bfc-container" style="text-align:right;">
-            <button id="new_program_element_milestone">add</button>
-            <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
-            <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
-        </div>-->
+                            <button id="new_program_element_milestone">add</button>
+                            <button id="prgbtnuploadpopup" class="btn btn-black" style="margin-top:30px;">upload</button>
+                            <button id="updateBtnProgram" class="btn btn-black" style="margin-top:10px;">Upload</button>
+                        </div>-->
                         <!--<div class="col-sm-2" style="text-align: center; padding: 0;">
-            <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
-        </div>-->
+                            <button id="ViewUploadFileProgram" class="btn btn-black" style="margin-top:10px;">View</button>
+                        </div>-->
                         <!--</div>
-            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
-                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
-            </div>
-        </div>
-        <div id="tabCommonNotes" class="tabcontent"></div>-->
+                            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
+                                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
+                            </div>
+                        </div>
+                        <div id="tabCommonNotes" class="tabcontent"></div>-->
                         <!--PROGRAM DOCUMENT UPLOAD old working code-->
                         <!--<div id="documentUploadProgram" style="padding:5px; height:250px;width:99.5%;border: #a9a9a9;border-style: solid; border-width: thin;">
-            <div class="row" id="buttonRow" style="margin-top:0.3%;">
-                <div class="col-sm-3" style="margin-left:10px;">
-                    <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
-                    <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
-                </div>
-                <div class="col-sm-6" id="bfc-container" style="text-align:left;">
-                    <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
-                </div>
-                <div class="col-sm-2" style="text-align: center; padding: 0;">
-                    <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
-                </div>
-            </div>
-            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
-                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
-            </div>
-            <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
-                <table id="gridUploadedDocumentProgram" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
-                            <td style="font-weight:900;">Document Name</td>
-                            <td style="font-weight:900;">Document Type</td>
-                            <td style="font-weight:900;">Upload Date</td>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>-->
+                            <div class="row" id="buttonRow" style="margin-top:0.3%;">
+                                <div class="col-sm-3" style="margin-left:10px;">
+                                    <label for="program_class" class="control-label _bold" style="font-size: 14px;">Doc Type</label>
+                                    <select type="text" class="form-control col-sm-3" id="document_type_program"></select>
+                                </div>
+                                <div class="col-sm-6" id="bfc-container" style="text-align:left;">
+                                    <input class="fileInput" style="margin-top: 30px; margin-bottom: -10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
+                                </div>
+                                <div class="col-sm-2" style="text-align: center; padding: 0;">
+                                    <button id="uploadBtnProgram" class="btn btn-black" style="margin-top:30px;">Upload</button>
+                                </div>
+                            </div>
+                            <div class="row" id="spinRow" style="margin-top:0.3%; display: none;">
+                                <center><i class="fa-spinner fa-spin" style="font-size:24px;"></i>  Uploading...</center>
+                            </div>
+                            <div class="panel-body" style="overflow-y: scroll; padding-top: 0; height: 175px !important;">
+                                <table id="gridUploadedDocumentProgram" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 20px; padding-left:5px;"><button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete Selected Documents"></button></td>
+                                            <td style="font-weight:900;">Document Name</td>
+                                            <td style="font-weight:900;">Document Type</td>
+                                            <td style="font-weight:900;">Upload Date</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>-->
 
 
 
@@ -1884,11 +2033,11 @@
                     </div>
                     <!--Hide doc mang button : Aditya 14042022-->
                     <!--<div class="text-center">
-        <button id="btnDocManagement" style="margin-top:8px;" class="btn btn-black w-auto m-t-8">Document Management</button>
-    </div>-->
+                        <button id="btnDocManagement" style="margin-top:8px;" class="btn btn-black w-auto m-t-8">Document Management</button>
+                    </div>-->
                     <!--<form style="height: 130px; border: .5px solid #a9a9a9; padding: 5px; background-color: #fbfbfb;margin:0">
 
-    </form>-->
+                    </form>-->
                     <!--Add Prime on Top : Aditya 14042022-->
                     <div class="container-fluid">
                         <div class="row">
@@ -1934,14 +2083,14 @@
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;" id="noteshistorygrid">
                                                 <div class="table-outline-wo-p" style="overflow-x: hidden; height: 169px !important; ">
                                                     <table id="gridNoticehistoryList" class="table table-striped  ">
-                                                        <thead  class="t-head">
-                                                            <tr  style="position:sticky">
-                                                                <th style="width: 12%;" >ID</th>
+                                                        <thead class="t-head">
+                                                            <tr style="position:sticky">
+                                                                <th style="width: 12%;">ID</th>
                                                                 <th style=" width: 42%;"> Description</th>
                                                                 <th style="width: 16%;"> Created Date</th>
-                                                                <th style=" width: 16%;" > Created By</th>
+                                                                <th style=" width: 16%;"> Created By</th>
                                                                 <!--<td style="font-weight:900;">Date of Created</td>-->
-                                                                <th class="text-center" >Action</th>
+                                                                <th class="text-center">Action</th>
 
                                                             </tr>
                                                         </thead>
@@ -1951,43 +2100,43 @@
 
 
                                                 <!--<table class="table table-striped">
-                <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
-                    <tr class="table-background">
-                        <td style="width: 20px; padding-left:5px;"></td>
+                                                <thead style="height: 5%; position: sticky; top: 0; background: #FFF">
+                                                    <tr class="table-background">
+                                                        <td style="width: 20px; padding-left:5px;"></td>
 
-                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                            ID
-                        </td>
-                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                            Description
-                        </td>
+                                                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                            ID
+                                                        </td>
+                                                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                            Description
+                                                        </td>
 
 
-                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                            style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                           Created Date
-                        </td>
+                                                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                            style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                           Created Date
+                                                        </td>
 
-                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                          Created By
-                        </td>-->
+                                                        <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                            style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                          Created By
+                                                        </td>-->
                                                 <!--<td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                    Schedule Impact
-                </td>
+                                                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Schedule Impact
+                                                </td>
 
-                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-                    Order Detail
-                </td>-->
+                                                <td class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                    style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Order Detail
+                                                </td>-->
                                                 <!--</tr>
-                    </thead>
-                    <tbody id="program_element_notes_history_table_id"></tbody>
+                                                    </thead>
+                                                    <tbody id="program_element_notes_history_table_id"></tbody>
 
-                </table>-->
+                                                </table>-->
 
 
                                             </div>
@@ -2041,7 +2190,7 @@
 
 
                                             <button id="EditBtnProgram" class="btn-icon" title="Edit"><i class="fa-edit"></i></button>
-                                           
+
                                         </div>
                                     </div>
 
@@ -2051,9 +2200,9 @@
                                 <!--</div>-->
 
                             </div>
-</div>
+                        </div>
                     </div>
-                    
+
                 </div>
 
                 <!--TemporyRemovedCode.txt-->
@@ -2456,14 +2605,14 @@
                                     <label for="program_element_project_number" class="control-label _bold required">Document Name</label>
                                     <input type="text" class="form-control" id="change_order_view_doc_name_modal" disabled>
                                 </div>
-                                <div class="col-xs-12 col-md-12 m-b-10 p-0" >
+                                <div class="col-xs-12 col-md-12 m-b-10 p-0">
                                     <!--css changes by shweta-->
                                     <label for="program_element_project_number" class="control-label _bold required">Title</label>
                                     <input type="text" class="form-control" id="change_order_view_title_modal" disabled>
                                 </div>
                             </div>
 
-                            <div class="_form-group" >
+                            <div class="_form-group">
                                 <div class="col-xs-6 col-md-6 m-b-10 p-0">
                                     <!--css changes by shweta-->
                                     <label for="program_element_contract_number" class="control-label _bold required"> Client Change Order #</label>
@@ -2477,7 +2626,7 @@
                             </div>
 
 
-                            <div class="_form-group" >
+                            <div class="_form-group">
                                 <div class="col-xs-5  m-b-10 p-0">
                                     <!--css changes by shweta-->
                                     <label for="program_element_contract_number" class="control-label _bold required">Change Order Impact</label> <!--Jignesh-24-03-2021-->
@@ -2490,9 +2639,9 @@
                                 </div>
                                 <!--======================== Jignesh-24-03-2021 =============================================-->
                                 <!--<div class="col-xs-4 m-b-10" style="padding-left: 0; padding-right: 0;margin-top:10px;" id="divDurationDateE">
-            <label for="program_element_contract_number" class="control-label _bold required">Duration</label>
-            <input type="text" class="form-control" id="program_element_change_order_duration_date_E" disabled>
-        </div>-->
+                                    <label for="program_element_contract_number" class="control-label _bold required">Duration</label>
+                                    <input type="text" class="form-control" id="program_element_change_order_duration_date_E" disabled>
+                                </div>-->
                                 <div class="col-xs-3 col-md-3 p-r-0 m-b-10" id="divDurationDateE">
                                     <label for="program_element_contract_number" class="control-label _bold required">Schedule Impact</label>
                                     <input type="text" class="form-control" id="program_element_change_order_schedule_impact_E" disabled>
@@ -2505,7 +2654,7 @@
                                     <label for="program_element_project_number" class="control-label _bold required">Reason</label>
                                     <textarea class="form-control" id="program_element_change_order_Reason_modal_E" rows="5" cols="50" disabled></textarea>
                                 </div>
-                                <div class="col-xs-6 col-md-6 p-r-0" >
+                                <div class="col-xs-6 col-md-6 p-r-0">
                                     <!--css changes by shweta-->
                                     <label for="" class="control-label _bold required">Description</label>
                                     <textarea class="form-control" id="change_order_view_note_modal" rows="5" cols="50" disabled></textarea>
@@ -2514,7 +2663,7 @@
 
                         </form>
                     </div>
-                    
+
                 </div>
                 <!--Added by Jignesh 24-11-2020 -->
                 <div class="panel-body" style="overflow: auto;height: 200px !important;">
@@ -2759,60 +2908,60 @@
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Key Project Milestones</label> <!--Key Program Element Milestones--> <!--css changes by shweta-->
                                             <!--Nivedita 14-01-2022 -->
                                             <!--<div id="divmilestone" class="gadget-content " style="height: 50%;" st-table="liveViews" st-safe-src="copiedLiveViews">
-    <div class="panel-body  table-outline p-0 " style="height : 180px !important;">
-        <table class="table table-striped " style="height: 99%; width: 100%; border: none;">
-            <thead class="t-head" style="height:5%; position: sticky; top: 0;">
-                <tr class="table-background">
-                    <td class="t-head" style="width: 30px; padding-left:5px;"></td>
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align: left !important; text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <div class="panel-body  table-outline p-0 " style="height : 180px !important;">
+                                                <table class="table table-striped " style="height: 99%; width: 100%; border: none;">
+                                                    <thead class="t-head" style="height:5%; position: sticky; top: 0;">
+                                                        <tr class="table-background">
+                                                            <td class="t-head" style="width: 30px; padding-left:5px;"></td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col" style="position: relative; width: 20%; text-align: left !important; text-overflow: ellipsis; white-space: nowrap;">-->
                                             <!--css changes by shweta-->
                                             <!--Title
-    </td>
+                                            </td>
 
-    <td class="t-head sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align: right !important;  text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <td class="t-head sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col" style="position: relative; width: 35%; text-align: right !important;  text-overflow: ellipsis; white-space: nowrap;">-->
                                             <!--css changes by shweta-->
                                             <!--Description
-    </td>
+                                            </td>
 
-    <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 31%; text-align: right !important;text-overflow: ellipsis; white-space: nowrap;">-->
+                                            <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 31%; text-align: right !important;text-overflow: ellipsis; white-space: nowrap;">-->
                                             <!--css changes by shweta-->
                                             <!--Date
-    </td>
-    <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 30%; text-align: right !important; text-overflow: ellipsis; white-space: nowrap;">-->
+                                            </td>
+                                            <td class="t-head sortable" st-sort="Occupancy" scope="col" data-sortable="true" style="position: relative; width: 30%; text-align: right !important; text-overflow: ellipsis; white-space: nowrap;">-->
                                             <!--css changes by shweta-->
                                             <!--</td>
 
-        </tr>
-    </thead>-->
+                                                </tr>
+                                            </thead>-->
                                             <!--<tfoot></tfoot>-->
                                             <!--<tbody>
-                    <tr class="table-background">
-                        <td colspan="9" style="border-bottom: none;">
-                            <div class="scrolable-table" style="height:100px;">
-                                <table id="program_element_milestone_table_id" class="table table-striped" style="border:none;">
-                                    <tbody>
-                                        <tr id="241" class="fade-selection-animation clickable-row">
-                                            <td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td>
-                                            <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
-                                            <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
-                                            <td class="class-td-LiveView" style="font-family: Verdana, Arial, sans-serif !important; color: #333 !important; text-overflow: ellipsis; white-space: nowrap; width: 30%; text-align: right !important;">11/23/2021</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                                                            <tr class="table-background">
+                                                                <td colspan="9" style="border-bottom: none;">
+                                                                    <div class="scrolable-table" style="height:100px;">
+                                                                        <table id="program_element_milestone_table_id" class="table table-striped" style="border:none;">
+                                                                            <tbody>
+                                                                                <tr id="241" class="fade-selection-animation clickable-row">
+                                                                                    <td style="width: 28px"><input id="rbCo241" type="radio" name="rbmilestone" value="http://localhost:29980/api/Request/DocumentByDocID/undefined"></td>
+                                                                                    <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                                                                    <td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">Test</td>
+                                                                                    <td class="class-td-LiveView" style="font-family: Verdana, Arial, sans-serif !important; color: #333 !important; text-overflow: ellipsis; white-space: nowrap; width: 30%; text-align: right !important;">11/23/2021</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
-        <div class="text-center">
-            <button id="new_program_element_milestone" class="btn-icon" title="Add" data-toggle="tooltip"><i class="fa-plus"></i></button>
-            <button id="edit_program_element_milestone" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
-            <button id="delete_program_element_milestone" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>
-        </div>
+                                                <div class="text-center">
+                                                    <button id="new_program_element_milestone" class="btn-icon" title="Add" data-toggle="tooltip"><i class="fa-plus"></i></button>
+                                                    <button id="edit_program_element_milestone" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
+                                                    <button id="delete_program_element_milestone" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button>
+                                                </div>
 
-    </div>-->
+                                            </div>-->
                                             <!--Narayan - Restructure table for key milestone in project - 22/06/2022-->
                                             <div id="divmilestone" class="gadget-content ">
                                                 <div class="table-outline-wo-p" style="height: 170px !important;">
@@ -3041,86 +3190,86 @@
                                             <label for="program_element_milestone_name" class="control-label _bold label-heading">Change Orders</label>
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;">
                                                 <!--<div class="panel-body  table-outline p-0 " style=" height: 200px !important; overflow:auto">
-        <table class="table table-striped">
-            <thead class="t-head" style="position:sticky">
-                <tr class="table-background">
-                    <td class="t-head" style="width: 20px; padding-left:5px;"></td>
+                                                <table class="table table-striped">
+                                                    <thead class="t-head" style="position:sticky">
+                                                        <tr class="table-background">
+                                                            <td class="t-head" style="width: 20px; padding-left:5px;"></td>
 
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                        Number (#)
-                    </td>
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                        Title
-                    </td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                                                                Number (#)
+                                                            </td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                                                                Title
+                                                            </td>
 
 
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; " data-sortable="true">
-                        Change Order Type
-                    </td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap; " data-sortable="true">
+                                                                Change Order Type
+                                                            </td>
 
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                        Value
-                    </td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                                                                Value
+                                                            </td>
 
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                        Schedule Impact
-                    </td>
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative; text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                                                                Schedule Impact
+                                                            </td>
 
-                    <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-                        style="position: relative;  text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
-                        Order Detail
-                    </td>-->
+                                                            <td class="t-head sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
+                                                                style="position: relative;  text-overflow: ellipsis;white-space: nowrap;" data-sortable="true">
+                                                                Order Detail
+                                                            </td>-->
                                                 <!--Commented by Jignesh (29-10-2020)-->
                                                 <!--<th class="th-c sortable" data-sortable="true" st-sort="Lane" data-field="name" scope="col"
-        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
-        Title
-    </th>
+                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;" data-sortable="true">
+                                                    Title
+                                                </th>
 
 
-    <th class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col"
-        style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-        Client Order #     Manasi 24-07-2020
-    </th>
+                                                <th class="th-c sortable" data-sortable="true" st-sort="AvgDwellTime" scope="col"
+                                                    style="position: relative;  text-align:left !important; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+                                                    Client Order #     Manasi 24-07-2020
+                                                </th>
 
 
-    <th class="th-c sortable" st-sort="Occupancy" scope="col"
-        style="position: relative; text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-        Amount
-    </th>
-    <th class="th-c sortable" st-sort="Occupancy" scope="col"
-        style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-        Date
-    </th>
-    <th class="th-c sortable" data-field="AvgEntryTime" data-sortable="true" st-sort="AvgEntryTime" scope="col"
-        style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
-        Note
-    </th>-->
+                                                <th class="th-c sortable" st-sort="Occupancy" scope="col"
+                                                    style="position: relative; text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+                                                    Amount
+                                                </th>
+                                                <th class="th-c sortable" st-sort="Occupancy" scope="col"
+                                                    style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+                                                    Date
+                                                </th>
+                                                <th class="th-c sortable" data-field="AvgEntryTime" data-sortable="true" st-sort="AvgEntryTime" scope="col"
+                                                    style="position: relative;  text-align:left !important; padding-left: 0; padding: 12px 8px; text-overflow: ellipsis;white-space: nowrap;  background: #fff !important; color: #2c2e2f !important;">
+                                                    Note
+                                                </th>-->
                                                 <!--<th class="th-c sortable" data-sortable="true" st-sort="EntryRate" scope="col"
-        style="position: relative; width: 10%; text-align:left !important; padding-left: 0; padding: 2%; background: #F5F6FA !important; border-bottom: none; color: #A3A6B4 !important;">
-        File
-    </th>-->
+                                                    style="position: relative; width: 10%; text-align:left !important; padding-left: 0; padding: 2%; background: #F5F6FA !important; border-bottom: none; color: #A3A6B4 !important;">
+                                                    File
+                                                </th>-->
                                                 <!--</tr>
-    </thead>
-    <tbody id="program_element_change_order_table_id"></tbody>-->
+                                                </thead>
+                                                <tbody id="program_element_change_order_table_id"></tbody>-->
                                                 <!--<tfoot></tfoot>
-    <tbody>
-        <tr class="table-background">
-            <td colspan="9" style="border-bottom: none;">
-                <div class="scrolable-table" style="height:100px; overflow-y:scroll;">
-                    <table id="program_element_change_order_table_id" class="table table-condensed table-responsive" style="border:none;">
-                        <tbody id="program_element_change_order_table_body_id"></tbody>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </tbody>-->
+                                                <tbody>
+                                                    <tr class="table-background">
+                                                        <td colspan="9" style="border-bottom: none;">
+                                                            <div class="scrolable-table" style="height:100px; overflow-y:scroll;">
+                                                                <table id="program_element_change_order_table_id" class="table table-condensed table-responsive" style="border:none;">
+                                                                    <tbody id="program_element_change_order_table_body_id"></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>-->
                                                 <!--</table>
-    </div>-->
+                                                </div>-->
                                                 <!--Narayan - Restructure table for change order in project - 23/06/2022-->
                                                 <div class="panel-body  table-outline-wo-p p-0" style=" height: 200px !important; overflow:auto">
                                                     <table id="program_element_change_order_table_id" class="table table-striped">
@@ -3170,7 +3319,7 @@
 
                                                             <td style="font-weight:900;">Upload Date</td>
                                                             <td style="font-weight:900;">Upload By</td>-->
-                                                            <th >Type</th>
+                                                            <th>Type</th>
                                                             <th class="text-center">Document Detail</th> <!--Added by Jignesh (29-10-2020)-->
                                                         </tr>
                                                     </thead>
@@ -3777,7 +3926,6 @@
                                                         </tbody>
                                                     </table>
                                                 </div>-->
-                                                
                                                 <!--Narayan - Restructure table for key milestone in element - 22/06/2022-->
                                                 <div class="panel-body table-outline p-0" style="height : 275px !important;">
                                                     <table id="project_element_milestone_table_id" class="table table-striped">
@@ -3949,17 +4097,17 @@
 
                                                     </table>
                                                 </div>
-                                              
+
                                                 <div class="row" id="buttonRow">
                                                     <div class="col-sm-12 text-center">
                                                         <!--<button type="button" id="delete-doc-program" class="btn  btn-outline-danger fa fa-trash" data-toggle="tooltip"
                                                         data-placement="top" title="Delete Selected Documents"></button>-->
-                                                        <button id="DeleteUploadProgramPrgElm"  class="btn-icon" title="Delete" data-toggle="tooltip"  ><i class="fa-trash"></i></button> <!-- Shweta 16-07-2020 -->
-                                                        <button id="updateBtnProgramPrgElm" class="btn-icon" title="Upload" data-toggle="tooltip"  ><i class="fa-upload"></i></button>     <!-- Shweta 16-07-2020 -->
-                                                        <button id="downloadBtnProgramPrgElm" class="btn-icon" title="Download" data-toggle="tooltip"  ><i class="fa-download"></i></button>  <!-- Shweta 16-07-2020 -->
-                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Document" data-toggle="tooltip"  ><i class="icon-72647"></i></button>   <!-- Shweta 16-07-2020 -->
-                                                        <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All Documents" data-toggle="tooltip"  ><i class="fa-list"></i></button>   <!-- Swapnil 22-01-2021 -->
-                                                        <button id="EditBtnProgramPrgElm" class="btn-icon" title="Edit" data-toggle="tooltip"  ><i class="fa-edit"></i></button>
+                                                        <button id="DeleteUploadProgramPrgElm" class="btn-icon" title="Delete" data-toggle="tooltip"><i class="fa-trash"></i></button> <!-- Shweta 16-07-2020 -->
+                                                        <button id="updateBtnProgramPrgElm" class="btn-icon" title="Upload" data-toggle="tooltip"><i class="fa-upload"></i></button>     <!-- Shweta 16-07-2020 -->
+                                                        <button id="downloadBtnProgramPrgElm" class="btn-icon" title="Download" data-toggle="tooltip"><i class="fa-download"></i></button>  <!-- Shweta 16-07-2020 -->
+                                                        <button id="ViewUploadFileProgramPrgElm" class="btn-icon" title="View Document" data-toggle="tooltip"><i class="icon-72647"></i></button>   <!-- Shweta 16-07-2020 -->
+                                                        <button id="ViewAllUploadFileProgramPrgElm" class="btn-icon" title="View All Documents" data-toggle="tooltip"><i class="fa-list"></i></button>   <!-- Swapnil 22-01-2021 -->
+                                                        <button id="EditBtnProgramPrgElm" class="btn-icon" title="Edit" data-toggle="tooltip"><i class="fa-edit"></i></button>
 
                                                     </div>
                                                     <!--<div class="col-sm-6" id="bfc-container" style="text-align:right;">
@@ -4355,9 +4503,9 @@
                                                     <table id="gridUploadedDocumentTrend" class="table table-striped">
                                                         <thead class="t-head">
                                                             <tr>
-                                                                <th  style="width: 20px; padding-left:5px;"></th>
+                                                                <th style="width: 20px; padding-left:5px;"></th>
                                                                 <th> Name</th>
-                                                                <th >Type</th>
+                                                                <th>Type</th>
                                                                 <th class=" text-center">Document Detail</th>
                                                             </tr>
                                                         </thead>
@@ -4387,9 +4535,9 @@
                                             <label class="radio-inline"> <input type="radio" name="trend_impact" value="Schedule"> Schedule </label>
                                             <label class="radio-inline"> <input type="radio" name="trend_impact" value="Cost & Schedule"> Cost & Schedule </label>-->
                                             <!-- ---------------------------Manasi--------------------------------------  -->
-                                            <label class="p-l-15" ><input type="checkbox" name="pasttrend_impact" value="Cost" checked disabled> Cost</label>
-                                            <label class="p-l-15" > <input type="checkbox" name="pasttrend_impact_schedule" value="Schedule" disabled> Schedule </label>
-                                            <label class="p-l-15" > <input type="checkbox" name="pasttrend_impact_cost_schedule" value="Cost & Schedule"  disabled> Cost & Schedule </label>
+                                            <label class="p-l-15"><input type="checkbox" name="pasttrend_impact" value="Cost" checked disabled> Cost</label>
+                                            <label class="p-l-15"> <input type="checkbox" name="pasttrend_impact_schedule" value="Schedule" disabled> Schedule </label>
+                                            <label class="p-l-15"> <input type="checkbox" name="pasttrend_impact_cost_schedule" value="Cost & Schedule" disabled> Cost & Schedule </label>
                                             <!-- ---------------------------------------------------------------------------- -->
                                             <!--<div class="col-sm-4">
                                                 <label for="trend_impact" class="control-label _bold">Internal</label><br />
@@ -4408,12 +4556,12 @@
                                         <div class="_form-group  p-l-15 p-r-15">
                                             <input type="radio" id="pastchngreq" name="pastchngreq" value="Change_Request">
                                             <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
-                                            <input type="radio" id="pastnochngreq" name="pastchngreq" value="No_Change_Request" >
+                                            <input type="radio" id="pastnochngreq" name="pastchngreq" value="No_Change_Request">
                                             <label for="no_chng_req" class="control-label _bold">No Change Request</label>
                                         </div>
                                     </div>
-                                   
-                                        <!--============================ Jignesh-09-02-2021 ============================================-->
+
+                                    <!--============================ Jignesh-09-02-2021 ============================================-->
                                     <div class="_form-group p-l-15 p-r-15" id="divPastTrendChangeOrderDD">
                                         <div class="row">
                                             <div class="col-md-12 m-b-15  ">
@@ -4559,8 +4707,8 @@
                                                 <thead class="t-head">
                                                     <tr>
                                                         <th style="width: 20px; padding-left:5px;"></th>
-                                                        <th > Name</th>
-                                                        <th >Type</th>
+                                                        <th> Name</th>
+                                                        <th>Type</th>
                                                         <th class="text-center">Document Detail</th> <!--Added by Jignesh (29-10-2020)-->
                                                     </tr>
                                                 </thead>
@@ -4589,45 +4737,45 @@
 
                                 <div class="_form-group">
                                     <!--======================== Edited by Jignesh 30-10-2020 ============================================
-                Comment br tag & trend_internal, add margin-bottom:20px,-->
+                                    Comment br tag & trend_internal, add margin-bottom:20px,-->
                                     <div class="col-sm-12 m-b-15">
                                         <label for="trend_impact" class="control-label _bold">Project Impact</label><!--<br />-->
                                         <!--  <input type="text" class="form-control" id="trend_impact">-->
                                         <!--<label class="radio-inline"><input type="radio" name="trend_impact" value="Cost" checked> Cost</label>
-                    <label class="radio-inline"> <input type="radio" name="trend_impact" value="Schedule"> Schedule </label>
-                    <label class="radio-inline"> <input type="radio" name="trend_impact" value="Cost & Schedule"> Cost & Schedule </label>-->
+                                        <label class="radio-inline"> <input type="radio" name="trend_impact" value="Schedule"> Schedule </label>
+                                        <label class="radio-inline"> <input type="radio" name="trend_impact" value="Cost & Schedule"> Cost & Schedule </label>-->
                                         <!-- ---------------------------Manasi--------------------------------------  -->
-                                        <label class="p-l-15"><input type="checkbox" name="trend_impact" value="Cost" checked > Cost</label>
+                                        <label class="p-l-15"><input type="checkbox" name="trend_impact" value="Cost" checked> Cost</label>
                                         <label class="p-l-15"> <input type="checkbox" name="trend_impact_schedule" value="Schedule"> Schedule </label>
                                         <label class="p-l-15"> <input type="checkbox" name="trend_impact_cost_schedule" value="Cost & Schedule"> Cost & Schedule </label>
                                         <!-- ---------------------------------------------------------------------------- -->
                                     </div>
                                     <!--<div class="col-sm-4">
-                    <label for="trend_impact" class="control-label _bold">Internal</label><br />
-                    <input style="width: 20px;" type="checkbox" class="form-control" id="trend_is_internal">
-                </div>-->
+                                        <label for="trend_impact" class="control-label _bold">Internal</label><br />
+                                        <input style="width: 20px;" type="checkbox" class="form-control" id="trend_is_internal">
+                                    </div>-->
                                 </div>
 
                             </div>
                         </div>
                         <!--<div class="_form-group">
-        <label for="approval_from" class="control-label _bold">Approval Needed From</label>
-        <input type="text" class="form-control" id="approval_from">
-    </div>-->
+                            <label for="approval_from" class="control-label _bold">Approval Needed From</label>
+                            <input type="text" class="form-control" id="approval_from">
+                        </div>-->
                         <!--=================================== Added by Jignesh 30-10-2020 ============================================-->
-                       <div class="row">
-                           <div class="col-md-12">
-                               <div class="_form-group">
-                                   <input type="radio" id="chngreq" name="chngreq" value="Change_Request">
-                                   <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
-                                   <input type="radio" id="nochngreq" name="chngreq" value="No_Change_Request">
-                                   <label for="no_chng_req" class="control-label _bold">No Change Request</label>
-                               </div>
-                           </div>
-                       </div>
-                       
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="_form-group">
+                                    <input type="radio" id="chngreq" name="chngreq" value="Change_Request">
+                                    <label for="chng_req" class="control-label _bold p-r-15">Change Request</label>
+                                    <input type="radio" id="nochngreq" name="chngreq" value="No_Change_Request">
+                                    <label for="no_chng_req" class="control-label _bold">No Change Request</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <!--============================ Jignesh-09-02-2021 ============================================-->
-               
+
                         <div class="_form-group" id="divChangeOrderDD">
                             <label class="control-label _bold">Change Order: </label>
                             <select id="trend_change_order" type="text" class="form-control"></select>
@@ -4691,7 +4839,7 @@
 
                         <div class="col-md-4 col-sm-4 text-right">
                             <!--Jignesh-31-03-2021-->
-                            <button type="button" class="btn btn-primary c-btn-back"  id="cancel_futuretrend">Exit</button> <!--Jignesh-22-03-2021-->
+                            <button type="button" class="btn btn-primary c-btn-back" id="cancel_futuretrend">Exit</button> <!--Jignesh-22-03-2021-->
 
                         </div>
                     </div>
@@ -5045,7 +5193,7 @@
                                                     <input type="radio" class="control-group" name="prevailing_wages" value="No">&nbsp;No
                                                 </div>
                                                 <div class="col-sm-4 col-md-4" id="prevailing_wages_select_div">
-                                                    <select type="text" class="form-control"  id="prevailing_wages_select" multiple>
+                                                    <select type="text" class="form-control" id="prevailing_wages_select" multiple>
                                                         <!--<option value="state">State</option>
                                                         <option value="federal">Federal </option>-->
                                                     </select>
@@ -5056,97 +5204,97 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 box-content">
-                                      
+
                                         <form id="contract_warranty" style="display: inline-block; width: -webkit-fill-available;">
 
                                             <!--<div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Labor Warranty </label>
-            <textarea style="height:45px" type="text" class="form-control" id="labor_warranty" style="padding-left: 15px;"></textarea>
+                                                <label for="program_element_project_number" class="control-label _bold">Labor Warranty </label>
+                                                <textarea style="height:45px" type="text" class="form-control" id="labor_warranty" style="padding-left: 15px;"></textarea>
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left:10px;">
-            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-            <input type="text" class="form-control" id="labor_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                                <input type="text" class="form-control" id="labor_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 10px;">
-            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-            <input type="text" class="form-control" id="labor_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                                <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                                <input type="text" class="form-control" id="labor_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>
-        <div class="row">-->
+                                            <div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-6" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Description</label>
-            <textarea type="text" style="height:40px;width:180%" class="form-control" id="labordescription"></textarea>
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                                <textarea type="text" style="height:40px;width:180%" class="form-control" id="labordescription"></textarea>
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>-->
                                             <!--<div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Materials Warranty </label>
-            <textarea style="height: 45px" type="text" class="form-control" id="materials_warranty"></textarea>
+                                                <label for="program_element_project_number" class="control-label _bold">Materials Warranty </label>
+                                                <textarea style="height: 45px" type="text" class="form-control" id="materials_warranty"></textarea>
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left:10px;">
-            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-            <input type="text" class="form-control" id="materials_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                                <input type="text" class="form-control" id="materials_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 10px;">
-            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-            <input type="text" class="form-control" id="materials_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                                <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                                <input type="text" class="form-control" id="materials_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>
-        <div class="row">-->
+                                            <div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-6" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Description</label>
-            <textarea type="text" style="height:40px;width:180%" class="form-control" id="materialsdescription"></textarea>
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                                <textarea type="text" style="height:40px;width:180%" class="form-control" id="materialsdescription"></textarea>
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>-->
                                             <!--<div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Other Warranty </label>
-            <textarea style="height:45px" type="text" class="form-control" id="other_warranty"></textarea>
+                                                <label for="program_element_project_number" class="control-label _bold">Other Warranty </label>
+                                                <textarea style="height:45px" type="text" class="form-control" id="other_warranty"></textarea>
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left:10px;">
-            <label for="program_element_project_number" class="control-label _bold">Start Date</label>
-            <input type="text" class="form-control" id="other_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Start Date</label>
+                                                <input type="text" class="form-control" id="other_start_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                            </div>-->
                                             <!--</div>-->
                                             <!--<div class="_form-group" style="margin-top:3px;">-->
                                             <!--<div class="col-xs-4" style="padding-left: 10px;">
-            <label for="program_element_project_number" class="control-label _bold">End Date</label>
-            <input type="text" class="form-control" id="other_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
+                                                <label for="program_element_project_number" class="control-label _bold">End Date</label>
+                                                <input type="text" class="form-control" id="other_end_date" autocomplete="off" placeholder="MM/DD/YYYY">
 
-        </div>-->
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>
-        <div class="row">-->
+                                            <div class="row">-->
                                             <!--<div class="_form-group" style="margin-top:10px;">-->
                                             <!--<div class="col-xs-6" style="padding-left: 15px;">
-            <label for="program_element_project_number" class="control-label _bold">Description</label>
-            <textarea type="text" style="height:40px;width:180%" class="form-control" id="otherdescription" style="padding-left: 15px;"></textarea>
-        </div>-->
+                                                <label for="program_element_project_number" class="control-label _bold">Description</label>
+                                                <textarea type="text" style="height:40px;width:180%" class="form-control" id="otherdescription" style="padding-left: 15px;"></textarea>
+                                            </div>-->
                                             <!--</div>-->
                                             <!--</div>-->
 
@@ -5196,23 +5344,23 @@
                                             </div>
 
                                             <!--<div class="row" style="">
-            <div class="col-xs-4">
-                <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
-                <select type="text" class="form-control" id="insurance_type_select">
-                    <option value="Labor">Labor</option>
-                    <option value="Materials">Materials</option>
-                    <option value="Others">Others</option>
-                </select>
-            </div>
-            <div class="col-xs-4">
-                <label for="program_element_project_number" class="control-label _bold required">Limit </label>
-                <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
-            </div>
-            <div class="col-xs-4" style="margin-top: 23px;">
-                <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-            </div>
-        </div>
-        <hr />-->
+                                                <div class="col-xs-4">
+                                                    <label for="program_element_project_number" class="control-label _bold required">Insurance Type </label>
+                                                    <select type="text" class="form-control" id="insurance_type_select">
+                                                        <option value="Labor">Labor</option>
+                                                        <option value="Materials">Materials</option>
+                                                        <option value="Others">Others</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label for="program_element_project_number" class="control-label _bold required">Limit </label>
+                                                    <input type="text" class="form-control" id="insurance_limit" autocomplete="off">
+                                                </div>
+                                                <div class="col-xs-4" style="margin-top: 23px;">
+                                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                                </div>
+                                            </div>
+                                            <hr />-->
                                             <div>
                                                 <div class="table-outline-wo-p" style="height: 230px !important;">
                                                     <table id="gridWarrantyList" class="table table-striped  ">
@@ -5268,7 +5416,7 @@
                                                         <label for="program_element_project_number" class="control-label _bold ">Date of Notice </label>
                                                         <input type="text" class="form-control" id="date_of_pre_notice" autocomplete="off" placeholder="MM/DD/YYYY" style="width: 50%;">
                                                         <!--</div>
-                            <div class="col-xs-8">-->
+                                                        <div class="col-xs-8">-->
                                                         <label for="program_element_project_number" class="control-label _bold m-t-10">Reason of Notice </label>
                                                         <textarea class="form-control" id="notice_reason" rows="3" cols="50"></textarea>
                                                     </div>
@@ -5301,8 +5449,8 @@
                                         </form>
                                     </div>
                                 </div>
-                                
-                                <div class="row new-border" >
+
+                                <div class="row new-border">
                                     <div class="col-md-12 col-sm-12 box-content ">
 
                                         <form id="contract_insurance" style="display: inline-block; width: -webkit-fill-available;">
@@ -5332,8 +5480,8 @@
                                                 </div>
 
                                                 <!--<div class="text-center" style="margin-top: 10px">
-                        <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
-                    </div>-->
+                                                    <button type="button" id="btnSaveInsurance" class="btn btn-primary c-btn-save" style="width:100px;">Add</button>
+                                                </div>-->
 
                                                 <div>
                                                     <!--<h4 style="text-align:center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;">Insurance History</h4>-->
@@ -5366,12 +5514,12 @@
                                                     <input type="radio" class="control-group" name="wrap" value="Yes">&nbsp;Yes&nbsp;
                                                     <input type="radio" class="control-group" name="wrap" value="No">&nbsp;No
                                                 </div>
-                                               
-                                                    <div class="col-md-4 m-b-15" id="wrap_select_div">
-                                                        <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
-                                                        </select>
-                                                    </div>
-                                               
+
+                                                <div class="col-md-4 m-b-15" id="wrap_select_div">
+                                                    <select type="text" class="form-control" style="width:50%;" id="wrap_select" multiple>
+                                                    </select>
+                                                </div>
+
 
                                                 <div class="col-md-5 text-right p-0 form-inline">
                                                     <div class="form-group" style="width: 100%; margin: 0;">
@@ -5553,7 +5701,7 @@
             <div class="modal-body">
                 <div class="block-view">
                     <form>
-                        <div class="_form-group" >
+                        <div class="_form-group">
                             <div class="col-md-12">
                                 <label for="" class="control-label _bold required">Prime Name</label>
                                 <input type="text" class="form-control" id="txtPrimeName">
@@ -5955,11 +6103,11 @@
                                 <tr>
                                     <th style="width: 20px; padding-left:5px;"></th>
                                     <th> Document Name</th> <!--Jignesh-02-03-2021-->
-                                    <th > Change Order Name</th>
-                                    <th > Element Name</th>
+                                    <th> Change Order Name</th>
+                                    <th> Element Name</th>
                                     <th> Trend Name</th>
                                     <th> Document Type</th> <!--Jignesh-02-03-2021-->
-                                    <th  class="text-center"> Document Detail</th>
+                                    <th class="text-center"> Document Detail</th>
                                 </tr>
                             </thead>
                             <tbody id="gridViewAllDocumentInProject"></tbody>
@@ -7397,9 +7545,9 @@
         if (displayMap) {
             //$('#mindmap').show();
             $('#mindmap').css('visibility', 'visible');
-            $('#selectProject').show();
+            $('#selectProject,#selectprogramelement').show();
             $('#wbsGridView').hide();
-            $('#selectManagingDepartment').hide();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
             $('#closed,#approved,#unapproved,#contract,#project').show();
             localStorage.setItem('MODE', 'mindmap');
             $('.toggle-btn i').attr('title', 'Go To GridView');
@@ -7407,9 +7555,9 @@
             //$('#mindmap').hide();
             $('#mindmap').css('visibility', 'hidden');
             $('#mindmap').css('position', 'absolute');
-            $('#selectProject').hide();
+            $('#selectProject,#selectprogramelement').hide();
             $('#wbsGridView').show();
-            $('#selectManagingDepartment').show();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').show();
             $('#closed,#approved,#unapproved,#contract,#project').hide();
             localStorage.setItem('MODE', 'gridview');
             $('.toggle-btn i').attr('title', 'Go To TreeView');

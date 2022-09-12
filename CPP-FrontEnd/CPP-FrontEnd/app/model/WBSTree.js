@@ -123,9 +123,9 @@ WBSTree = (function ($) {
         if (view_mode == 'gridview') {
             //debugger;
             $('#mindmap').hide();
-            $('#selectProject').hide();
+            $('#selectProject,#selectprogramelement').hide();
             $('#wbsGridView').show();
-            $('#selectManagingDepartment').show();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').show();
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
             //$('#closed,#approved,#unapproved,#contract,#project').hide();
@@ -135,9 +135,9 @@ WBSTree = (function ($) {
             //debugger;
             $('#mindmap').show();
             $('#closed,#approved,#unapproved,#contract,#project').show();
-            $('#selectProject').show();
+            $('#selectProject,#selectprogramelement').show();
             $('#wbsGridView').hide();
-            $('#selectManagingDepartment').hide();
+            $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
             $('.toggle-btn i').attr('class', "fa fa-th-large");
             $('.toggle-btn i').attr('title', 'Go To GridView');
             localStorage.setItem('MODE', 'mindmap');

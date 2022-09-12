@@ -47,6 +47,19 @@ angular.module('cpp.controllers').
                 $("#document_name_project").val(fileUploadProject.files[0].name);
             });
 
+            //Added by Nivedita
+            function comparer(index) {
+                return function (a, b) {
+                    var valA = getCellValue(a, index),
+                        valB = getCellValue(b, index);
+                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+                }
+            }
+
+            function getCellValue(row, index) {
+                return $(row).children('td').eq(index).text();
+            }
+
             $('#uploadBtnProject').unbind('click').on('click', function ($files) {
                 debugger
                 //alert('Ready to Uplaod. Missing reference $http');
@@ -1679,7 +1692,7 @@ angular.module('cpp.controllers').
 
             //======================================= Jignesh-AddNewDocModal-18-02-2021 ==========================================
             $('#btnSaveDocType').unbind('click').on('click', function ($files) {
-                $('#btnSaveDocType').prop('disabled',true);
+                $('#btnSaveDocType').prop('disabled', true);
                 var docType = $('#txtDocType').val();
                 var description = $('#txtDocDescription').val();
                 if (docType == "" || docType.length == 0) {
@@ -1802,33 +1815,33 @@ angular.module('cpp.controllers').
                     if (response.data.result) {
                         Prime.get({}, function (response) {
                             debugger;
-                        wbsTree.setPrimeList(response.result);
-                        var PrimeDropDownProgram;
+                            wbsTree.setPrimeList(response.result);
+                            var PrimeDropDownProgram;
 
-                        var primeList = wbsTree.getPrimeList();
-                        primeList.sort(function (a, b) {                 //vaishnavi
-                            return a.Name.localeCompare(b.Name); //vaishnavi
-                        });   //vaishnavi
-                        PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
-                        PrimeDropDownProgram.empty();
-                        if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
-                            PrimeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
-                        }
-                        for (var x = 0; x < primeList.length; x++) {
-                            if (primeList[x].Name == primeName) {
-                                PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
+                            var primeList = wbsTree.getPrimeList();
+                            primeList.sort(function (a, b) {                 //vaishnavi
+                                return a.Name.localeCompare(b.Name); //vaishnavi
+                            });   //vaishnavi
+                            PrimeDropDownProgram = modal.find('.modal-body #prime_dd');
+                            PrimeDropDownProgram.empty();
+                            if (wbsTree.getLocalStorage().role.indexOf('Admin') != -1) {
+                                PrimeDropDownProgram.append('<option value="Add New"> ----------Add New---------- </option>');
                             }
-                            else {
-                                PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                            for (var x = 0; x < primeList.length; x++) {
+                                if (primeList[x].Name == primeName) {
+                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '" selected> ' + primeList[x].Name + '</option>');
+                                }
+                                else {
+                                    PrimeDropDownProgram.append('<option value="' + primeList[x].id + '"> ' + primeList[x].Name + '</option>');
+                                }
+
                             }
-                        
-                        }
-                    });
-                $('#cancel_addNewPrimeModal_x').trigger('click');
+                        });
+                        $('#cancel_addNewPrimeModal_x').trigger('click');
                         $('#btnSavePrime').prop('disabled', false);
                         dhtmlx.alert(response.data.result);
-            } else {
-                $('#btnSavePrime').prop('disabled', false);
+                    } else {
+                        $('#btnSavePrime').prop('disabled', false);
                         dhtmlx.alert('No changes to be saved.');
                     }
                     //$state.reload();
@@ -2947,7 +2960,7 @@ angular.module('cpp.controllers').
                                     // window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
 
                                 });
 
@@ -3028,7 +3041,7 @@ angular.module('cpp.controllers').
 
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
                                 });
                             } else if (selectedNode.level === "ProgramElement") {
                                 wbsTree.getProgramElement().persist().save({
@@ -3053,7 +3066,7 @@ angular.module('cpp.controllers').
                                     //window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
 
                                 })
                             } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
@@ -3071,7 +3084,7 @@ angular.module('cpp.controllers').
 
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
                                     var firstGNode = $('#trendSvg').children()[0];
                                     //$(firstGNode).children().remove();
                                     // window.location.reload();
@@ -4154,7 +4167,7 @@ angular.module('cpp.controllers').
                 $scope.SearchText = sreachTxt;
                 localStorage.setItem('SearchText', sreachTxt);
 
-                var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1', null);
+                var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1', null, $scope.filterClient);
             });
             $scope.FilterTrend = function (e) {
                 var oldsvg = d3.select("#wbs-tree");
@@ -4168,21 +4181,22 @@ angular.module('cpp.controllers').
                     $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
-                    $scope.loadWBSData(orgId, null, null, null, null, '0', null);
+                    $scope.loadWBSData(orgId, null, null, null, null, '0', null, $scope.filterClient);
 
 
                 } else {
                     $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey'); //vaishnavi 02-03-2022
-                    $scope.loadWBSData(orgId, null, null, null, null, '1', null);
+                    $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
 
 
                 }
 
             }
 
-            $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID) {
+
+            $scope.loadWBSData = function (orgId, pgmId, pgmEltId, projId, searchText, allData, deptID, clientID) {
                 $("#btnQuickSearch").prop('disabled', 'disabled');  //vaishnavi 02-03-2022
                 $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                 $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
@@ -4215,11 +4229,14 @@ angular.module('cpp.controllers').
                 if (projId == "" || projId == '') {
                     projId = null;
                 }
+                if (clientID == "" || clientID == '') {
+                    clientID = null;
+                }
                 usSpinnerService.spin('spinner-1');
 
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
-                WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID).get({})
+                WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID, clientID).get({})
                     .$promise.then(function (response) {
                         $("#FilterTrend").removeAttr('disabled');   //vaishnavi 02-03-2022
                         $("#btnQuickSearch").removeAttr('disabled');   //vaishnavi 02-03-2022
@@ -4244,6 +4261,65 @@ angular.module('cpp.controllers').
                         //$rootScope.fromWBS = true;
                         // Rename the project and project element nodes to include project number and project element number.
                         var organization = response;
+                        var str1 = "<div class='row'>";
+                        //< !--Grid view Left Side-- >
+                        //str1 += "<div class='col-md-8'>";
+                        str1 += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
+                        str1 += "<div class='grid__title'>Birdi System Inc.</div>";
+                        str1 += "<div class='grid__scrollable_main'><table class='grid__table' id='wbsContractGridTable'>";
+                        str1 += "<thead class='t-head'>";
+                        str1 += "<tr>" +
+                            "<th class='sort-by'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by'>Contract Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by'>Contract Number</th>" +
+                            "<th class='sort-by'>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by'>Current Contract Value</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by'>Current Forecast</th>" +
+                            "</tr>";
+                        str1 += "</thead>";
+                        for (programI = 0; programI < organization.children.length; programI++) {
+                            var program = organization.children[programI];
+                            str1 += "<tr class='contact-row'>";
+                            str1 += "<td>" + program.ClientPOC + "</td>";
+                            str1 += "<td>" + program.name + "</td>";
+                            str1 += "<td>" + program.ContractNumber + "</td>";
+                            str1 += "<td>" + program.ContractValue + "</td>";
+                            str1 += "<td>" + program.CurrentCost + "</td>";
+                            str1 += "<td>" + program.ForecastCost + "</td>";
+                            str1 += "</tr>";
+                        }
+                        //contract Details
+                        //str1 += "<tr>" +
+                        //    "<td>Los Angeles Worldwide Airport</td>" +
+                        //    "<td>Lawa Software Development</td>" +
+                        //    "<td>sddsds</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "</tr>";
+                        //str1 += "<tr>" +
+                        //    "<td>Los Angeles Worldwide Airport</td>" +
+                        //    "<td>Lawa Software Development</td>" +
+                        //    "<td>sddsds</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "<td>$67,867.00</td>" +
+                        //    "</tr>";
+                        str1 += "</table></div>";
+                        str1 += "<div class='m-t-25 m-b-10 center'>" +
+                            "<button type='button' class='grid__btn'> Add Contract</button>" +
+                            "<button type='button' class='grid__btn'>Edit/Open</button>" +
+                            "<button type='button' class='grid__btn'>View Gantt</button>" +
+                            "<button type='button' class='grid__btn'>Delete</button>" +
+                            "<button type='button' class='grid__btn'>Close</button>" +
+                            "</div>";
+                        str1 += "</div></div></div></div>";
+                        str1 += "</div>";
+                        //< !--Right side of the Grid-- >
+                        //str1 += "<div class='col-md-4' >";
+                        //str1 += "</div>";
+                        // str1 += "</div>";
+
                         var str = "<div class='row row-padding'>" +
                             "<div class='gadget color-my' style = 'height: 733px;' >" +
                             //  "<div class='gadget-head' style='display: block'>"+
@@ -4469,22 +4545,79 @@ angular.module('cpp.controllers').
                         //}
 
                         str += "</tbody></table ></div ></td ></tr > </tbody ></table ></div></div></div>";
-                        $('#wbsGridView').append(str);
+                        $('#wbsGridView').append(str1);
 
                         var column1 = $('#wbsGridView Table td:first-child');
                         var column2 = $('#wbsGridView Table td:nth-child(2)');
                         var column3 = $('#wbsGridView Table td:nth-child(3)');
                         var column4 = $('#wbsGridView Table td:nth-child(4)');
 
+
+                        $('#wbsContractGridTable').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+
+                        $('#wbsProjectGridTable').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+
+                        $('#wbsElementGridTable').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+
+                        $('#wbsTrendGridTable').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+
                         //modifyTableFirstColumnRowspan(column1, column2);
 
-                        modifyTableRowspan(column1);
+                        //modifyTableRowspan(column1);
                         //modifyTableRowspan(column2);
                         //  modifyTableRowspan(column3);
                         // modifyTableRowspan(column4);
 
                         function modifyTableRowspan(column) {
-                            
+
                             var topMatchTd;
                             var previousValue = "";
                             var rowSpan = 1;
@@ -4932,6 +5065,24 @@ angular.module('cpp.controllers').
                         $scope.programList.sort(function (a, b) {
                             return a.ProgramName.localeCompare(b.ProgramName);
                         });
+
+                        var allClientList = wbsTree.getClientList();
+                        var sortedClient = [];
+                        jQuery.each(allClientList, function (i, client) {
+                            jQuery.each($scope.programList, function (j, program) {
+                                if (program.ClientPOC == client.ClientName) {
+                                    sortedClient.push(client);
+                                    return false;
+                                }
+                            });
+                        });
+
+                        $scope.clientList = sortedClient;
+                        $scope.clientList.sort(function (a, b) {
+                            return a.ClientName.localeCompare(b.ClientName);
+                        });
+                        $scope.allWbsProgramList = $scope.programList;
+                        $scope.allClientList = $scope.clientList;
                     });
 
                     console.log($scope.programList);
@@ -4978,7 +5129,7 @@ angular.module('cpp.controllers').
                                     console.log(testobj);
                                     $scope.filterProject = (testobj.ProjectID).toString();
                                     console.log('ProjectId--' + $scope.filterProject);
-                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null, '1', null);
+                                    $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null, '1', null, $scope.filterClient);
                                 });
                             });
                         });
@@ -4997,7 +5148,7 @@ angular.module('cpp.controllers').
                                 console.log(testobj);
                                 $scope.filterProgramElement = (testobj.ProgramElementID).toString();
                                 console.log('PrgmElmnt:' + $scope.filterProgramElement);
-                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null, '1', null);
+                                $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null, '1', null, $scope.filterClient);
                                 Project.lookup().get({ ProgramID: $scope.filterProgramId, ProgramElementID: $scope.filterProgramElement }, function (projectData) {
                                     $scope.projectList = projectData.result;
                                 });
@@ -5005,13 +5156,14 @@ angular.module('cpp.controllers').
                         });
                     }
 
+                    //else if (localStorage.getItem('pgmId') || localStorage.getItem('cliId')) {
                     else if (localStorage.getItem('pgmId')) {
                         $scope.filterOrgId = ($scope.organizationList.find(elem => elem.OrganizationID == (localStorage.getItem('userSelectedOrgId')))).OrganizationID;
                         Program.lookup().get({ OrganizationID: $scope.filterOrgId }, function (programData) {
                             $scope.programList = programData.result;
                             var testobj = ($scope.programList.find(elem => elem.ProgramID == parseInt(localStorage.getItem('pgmId'))));
                             $scope.filterProgramId = (testobj.ProgramID).toString();
-                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null);
+                            $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
                             ProgramElement.lookup().get({ ProgramID: $scope.filterProgramId }, function (programElementData) {
                                 $scope.programElementList = programElementData.result;
                                 $("#selectProgramElement").val("");
@@ -5021,7 +5173,7 @@ angular.module('cpp.controllers').
                     }
 
                     else
-                        $scope.loadWBSData(orgId, null, null, null, null, '1', null);
+                        $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
 
                 });
 
@@ -5182,8 +5334,79 @@ angular.module('cpp.controllers').
                         }
 
                     });
-                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null, '1', null);
+                var loadfunc = $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
 
+            }
+
+            $scope.filterChangeClient = function () {
+                $scope.programList = "";
+                var orgId = $("#selectOrg").val();
+                var cliId = $("#selectClient").val();
+                localStorage.removeItem('cliId');
+                localStorage.removeItem('pgmId');
+                localStorage.removeItem('SearchText');
+                //if (orgId != null && cliId != "") {
+                //    localStorage.setItem('cliId', cliId);
+                //    ProgramElement.lookup().get({ ProgramID: pgmId }, function (programElementData) {
+                //        $scope.programElementList = programElementData.result;
+                //        $scope.programElementList.sort(function (a, b) {    //vaishnavi
+                //            return a.ProgramElementName.localeCompare(b.ProgramElementName);  //vaishnavi
+                //        }); //vaishnavi
+                //        $("#selectProgramElement").val("");
+                //    });
+
+                //    debugger;
+
+                //    ProjectClassByProgramId.get({ programID: pgmId }, function (response) {
+                //        debugger;
+                //        var data = response;
+                //        $scope.projectClassListDD = response.result;
+                //        //$("#selectProgramElement").val("");
+                //    });
+                //}
+                console.log($scope.programElementList);
+                var treedataaaa = _wbsTreeData;
+                var oldsvg = d3.select("#wbs-tree");
+                oldsvg.selectAll("*").remove();
+
+                if ($scope.filterClient != "") {
+                    localStorage.setItem('cliId', cliId);
+
+                    var allProgramList = $scope.allWbsProgramList;
+                    var sortedProgram = [];
+                    jQuery.each(allProgramList, function (i, program) {
+                        if (program.ClientID == $scope.filterClient) {
+                            sortedProgram.push(program);
+                        }
+                    });
+
+                    $scope.programList = sortedProgram;
+                } else {
+                    $scope.programList = $scope.allWbsProgramList;
+                }
+                
+
+                $http.get(serviceBasePath + "Request//ProjectByOid/" + orgId)
+                    .then(function (response) {
+                        var projectNameOnLoad = null;
+                        projectNameOnLoad = (localStorage.getItem('selectProjectNameDash'))
+                            ? localStorage.getItem('selectProjectNameDash')
+                            : response.data.result[0].ProjectElementNumber + ". " + response.data.result[0].ProjectName;
+                        localStorage.setItem('selectProjectIdDash', response.data.result[0].ProjectID);
+                        localStorage.setItem('selectProjectNameDash', projectNameOnLoad);
+
+                        //For App Sec
+                        myLocalStorage.set('selectProjectDataDash', response.data.result[0]);
+                        localStorage.setItem('selectProjectProjectManagerIDDash', response.data.result[0].ProjectManagerID);
+                        localStorage.setItem('selectProjectDirectorIDDash', response.data.result[0].DirectorID);
+                        localStorage.setItem('selectProjectSchedulerIDDash', response.data.result[0].SchedulerID);
+                        localStorage.setItem('selectProjectVicePresidentIDDash', response.data.result[0].VicePresidentID);
+                        localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
+                        localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
+                        //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
+                        $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
+
+                    });
             }
 
             $scope.filterChangeProgram = function () {
@@ -5201,6 +5424,29 @@ angular.module('cpp.controllers').
                 localStorage.removeItem('pgmEltId');
                 localStorage.removeItem('projId');
                 localStorage.removeItem('SearchText');
+
+                if ($scope.filterProgramId != "") {
+
+                    var allClientList = wbsTree.getClientList();
+                    var sortedClient = [];
+                    jQuery.each(allClientList, function (i, client) {
+                        jQuery.each($scope.programList, function (j, program) {
+                            if (program.ClientPOC == client.ClientName) {
+                                sortedClient.push(client);
+                                return false;
+                            }
+                        });
+                    });
+
+                    $scope.clientList = sortedClient;
+
+                    $("#selectClient").val(sortedClient[0].ClientID);
+
+                    localStorage.setItem('cliId', sortedClient[0].ClientID);
+
+                } else {
+                    $scope.clientList = $scope.allClientList;
+                }
 
                 if (orgId != null && pgmId != "") {
                     localStorage.setItem('pgmId', pgmId);
@@ -5261,7 +5507,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgram $http.get pgmId:' + pgmId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, null, null, null, null, null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
 
                         });
                 }
@@ -5284,7 +5530,7 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                            $scope.loadWBSData(orgId, pgmId, null, null, null, '1', null);
+                            $scope.loadWBSData(orgId, pgmId, null, null, null, '1', null, $scope.filterClient);
 
                         });
                 }
@@ -5363,7 +5609,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId + ' pgmEltId:' + pgmEltId + ' else...');
                             }
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null);
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null, $scope.filterClient);
                         });
                 } else {
                     $http.get(serviceBasePath + "Request/Project/" + pgmEltId)
@@ -5384,7 +5630,7 @@ angular.module('cpp.controllers').
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId);
-                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null);
+                            $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null, $scope.filterClient);
                         });
                 }
                 //filterChangeProject();
@@ -5408,7 +5654,7 @@ angular.module('cpp.controllers').
 
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
-                $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', deptEltId);
+                $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', deptEltId, $scope.filterClient);
                 //filterChangeProject();
 
             }
@@ -5469,7 +5715,7 @@ angular.module('cpp.controllers').
                         });
                 }
 
-                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null, '1', null);
+                $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null, '1', null, $scope.filterClient);
 
             }
 
