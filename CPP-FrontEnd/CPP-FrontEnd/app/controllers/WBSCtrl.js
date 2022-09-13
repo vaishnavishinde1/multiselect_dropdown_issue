@@ -4983,7 +4983,7 @@ angular.module('cpp.controllers').
                                         for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                             var projectElement = project.children[projectElementI];
                                             if (projectElementI == 0) {
-                                                strElement += "<tr id=" + projectElement.ProjectID + " class='selected'>";
+                                                strTrend += "<tr id=" + projectElement.ProjectID + " class='selected'>";
 												$('#wbsGridiewTrend').html('');							   
                                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
                                                 strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")</div>";
@@ -5401,14 +5401,14 @@ angular.module('cpp.controllers').
                                 selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                                 var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
                                 //Add Trend
-                                $("#AddTrendGridBtn").unbind('click').on("click", function () {
-                                    //var programId = $scope.GridContractId;
-                                    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                    wbsTree.setSelectedNode(selectedElement);
-                                    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+                                //$("#AddTrendGridBtn").unbind('click').on("click", function () {
+                                //    //var programId = $scope.GridContractId;
+                                //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //    wbsTree.setSelectedNode(selectedElement);
+                                //    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
 
-                                });
+                                //});
                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
                                 strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")</div>";
                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
