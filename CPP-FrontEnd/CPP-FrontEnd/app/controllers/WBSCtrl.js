@@ -4276,7 +4276,7 @@ angular.module('cpp.controllers').
                         //< !--Grid view Left Side-- >
                         //str1 += "<div class='col-md-8'>";
                         strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
-                        strContract += "<div class='grid__title'>Birdi System Inc.</div>";
+                        strContract += "<div class='grid__title'>Birdi System Inc.<div class='grid__title_rgt '><a href='#'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                         strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
@@ -4286,6 +4286,7 @@ angular.module('cpp.controllers').
                             "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
                             "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
                             "<th>Current Forecast</th>" +
+                            "<th>Action</th>"+
                             "</tr>";
                         strContract += "</thead>";
                         for (programI = 0; programI < organization.children.length; programI++)
@@ -4299,14 +4300,15 @@ angular.module('cpp.controllers').
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
                                  var strProject = "<div class='col-md-12'><div class='grid__view'>";
-                                 strProject += "<div class='grid__title'>Project (" + selectedProgram.name +")</div>";
+                                strProject += "<div class='grid__title'>Project (" + selectedProgram.name + ")<div class='grid__title_rgt'><a href='#'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                  strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
                                 strProject += "<thead class='t-head'>";
                                 strProject += "<tr>";
-                                strProject += "<th>Project Name</th>" +
-                                    "<th>Project Number</th>" +
-                                    "<th>Project Value</th>" +
+                                strProject += "<th>Name</th>" +
+                                    "<th>Number</th>" +
+                                    "<th>Value</th>" +
                                     "<th>Deparment</th>" +
+                                    "<th>Action</th>" +
                                     "</tr></thead>";
                                 for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
                                     var project = selectedProgram.children[projectI];
@@ -4318,28 +4320,31 @@ angular.module('cpp.controllers').
                                         //organization.children[0].ProgramIDproject
                                         var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
                                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                        strElement += "<div class='grid__title'>Project Element (" + project.name + ")</div>";
+                                        strElement += "<div class='grid__title'>Project Element (" + project.name + ")<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                         strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                         strElement += "<thead class='t-head'>";
                                         strElement += "<tr>";
-                                        strElement += "<th>Element Name</th>" +
-                                            "<th>Element Number</th>" +
-                                            "<th>Element Value</th>" +
-                                            "<th>Services</th>" + 
-                                            "</tr></thead>"; 
+                                        strElement += "<th>Name</th>" +
+                                            "<th>Number</th>" +
+                                            "<th>Value</th>" +
+                                            "<th>Services</th>" +
+                                            "<th>Action</th>" +
+                                            "</tr></thead>";
                                         for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                             var projectElement = project.children[projectElementI];
                                             if (projectElementI == 0)
                                             {
                                                 strElement += "<tr id=" + projectElement.ProjectID + " class='selected'>";
                                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.name + ")</div>";
+                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.name + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                                 strTrend += "<thead class='t-head'>";
                                                 strTrend += "<tr>";
-                                                strTrend += "<th>Trend Name</th>" +
-                                                    "<th>Trend Status</th>" +
-                                                    "</tr></thead>"; 
+                                                strTrend += "<th>Name</th>" +
+                                                    "<th>Imapact</th>" +
+                                                    "<th>Status</th>" +
+                                                    "<th>Action</th>" +
+                                                    "</tr></thead>";
                                                 _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
                                                     .then(function (response) {
                                                         console.log(response);
@@ -4353,7 +4358,9 @@ angular.module('cpp.controllers').
                                                         }
                                                         strTrend += "<tr>";
                                                         strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                                        strTrend += "<td></td>";
                                                         strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                                        strTrend += "<td></td>";
                                                         strTrend += "</tr>";
 
                                                         var strApproveTrend = "", strPendingTrend = "";
@@ -4363,7 +4370,13 @@ angular.module('cpp.controllers').
                                                                 for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                                                     strPendingTrend += "<tr>";
                                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                                    strPendingTrend += "<td>" +  + "</td>";
                                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                                    strPendingTrend += "<td>" +
+                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                        "</td> ";
                                                                     strPendingTrend += "</tr>";
 
                                                                 }
@@ -4372,7 +4385,13 @@ angular.module('cpp.controllers').
                                                                 for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                                                     strApproveTrend += "<tr>";
                                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                                    strApproveTrend += "<td>" + + "</td>";
                                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                                    strApproveTrend += "<td>" +
+                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                        "</td> ";
                                                                     strApproveTrend += "</tr>";
 
                                                                 }
@@ -4382,10 +4401,14 @@ angular.module('cpp.controllers').
                                                             strTrend += "<tr>";
                                                             strTrend += "<td>Current</td>";
                                                             strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "</tr>";
                                                             strTrend += strPendingTrend;
                                                             strTrend += "<tr>";
                                                             strTrend += "<td>Forecast</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "</tr>";
 
@@ -4393,11 +4416,11 @@ angular.module('cpp.controllers').
                                                         }
 
                                                         strTrend += "</table></div>";
-                                                        strTrend += "<div class='center'>" +
-                                                            "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                                            "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                                            "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                                            "</div>";
+                                                        //strTrend += "<div class='center'>" +
+                                                        //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                                        //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                                        //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                                        //    "</div>";
                                                         strTrend += "</div></div>";
                                                         $('#wbsGridiewTrend').append(strTrend);
                                                     });
@@ -4418,6 +4441,11 @@ angular.module('cpp.controllers').
                                                 strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
                                                 strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                                 strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     
+                                                strElement += "<td>" +
+                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                    "</td>";
                                                 strElement += "</tr>";
                                             }
                                             else {
@@ -4426,18 +4454,23 @@ angular.module('cpp.controllers').
                                                 strElement += "<td>" + projectElement.CurrentCost + "</td>";
                                                 strElement += "<td>" + projectElement.ServiceName + "</td>";
                                                 strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                                strElement += "<td>" +
+                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                    "</td>";
                                                 strElement += "</tr>";
 
                                             }
                                         }
 
                                         strElement += "</table></div>";
-                                        strElement += "<div class='center'>" +
-                                            "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
-                                            "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
-                                            "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
-                                            "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
-                                            "</div>";
+                                        //strElement += "<div class='center'>" +
+                                        //    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
+                                        //    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
+                                        //    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
+                                        //    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
+                                        //    "</div>";
                                         strElement += "</div></div>";
                                         $('#wbsGridiewElement').append(strElement);
                                     }
@@ -4457,6 +4490,11 @@ angular.module('cpp.controllers').
                                         strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                         strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
                                         strProject += "<td style='display:none'>" + project.Status + "</td>";     //close changes done by vaishnavi
+                                        strProject += "<td>" +
+                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "</td>";
                                         strProject += "</tr>";
                                     }
                                     else {
@@ -4466,18 +4504,23 @@ angular.module('cpp.controllers').
                                         strProject += "<td>" + project.CurrentCost + "</td>";
                                         strProject += "<td>" + project.ProjectClassName + "</td>";
                                         strProject += "<td style='display:none'>" + project.Status + "</td>";
+                                        strProject += "<td>" +
+                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "</td>";
                                         strProject += "</tr>";
 
                                     }
                                 }
 
                                 strProject += "</table></div>";
-                                strProject += "<div class='center'>" +
-                                    "<button type ='button' id='AddProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Add Project</button>" +
-                                    "<button type ='button' id='EditProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Edit Project</button>" +
-                                    "<button type ='button' id='DeleteProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Delete</button>" +
-                                    "<button type ='button' id='CloseProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Close</button>" +
-                                    "</div>";
+                                //strProject += "<div class='center'>" +
+                                //    "<button type ='button' id='AddProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Add Project</button>" +
+                                //    "<button type ='button' id='EditProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Edit Project</button>" +
+                                //    "<button type ='button' id='DeleteProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Delete</button>" +
+                                //    "<button type ='button' id='CloseProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Close</button>" +
+                                //    "</div>";
                                  strProject += "</div></div>";
                                 //-------------------------------------END-Project Details---------------------------------------------------------------
                                 $('#wbsGridiewProject').append(strProject);
@@ -4502,6 +4545,12 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
                                 strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>" +
+                                    "<a href ='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                    "<a href='#'><i class='icon-72647 grid__btn-icons' title='View Gantt'></i></a>" +
+                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                    "</td>";
                                 strContract += "</tr>";
 
                             }
@@ -4513,19 +4562,25 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" + program.CurrentCost + "</td>";
                                 strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>" +
+                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                    "<a href='#'><i class='icon-72647 grid__btn-icons' title='View Gantt'></i></a>" +
+                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                    "</td>";
                                 strContract += "</tr>";
 
                             }
                         }
                         
                         strContract += "</table></div>";
-                        strContract += "<div class='m-t-25 m-b-10 text-center'>"+
-                            "<button type='button' class='grid__btn' id='AddContractGridBtn'> Add Contract</button>" +
-                            "<button type='button' class='grid__btn' contextType='Program' id='EditContractGridBtn'>Edit/Open</button>" +
-                            "<button type='button' class='grid__btn' id='ViewGanttGridBtn'>View Gantt</button>" +
-                            "<button type='button' class='grid__btn' contextType='Program' id='DeleteContractGridBtn'>Delete</button>" +
-                            "<button type='button' class='grid__btn' contextType='Program' id='CloseContractGridBtn'>Close</button>" +
-                            "</div>";
+                        //strContract += "<div class='m-t-25 m-b-10 text-center'>"+
+                        //    "<button type='button' class='grid__btn' id='AddContractGridBtn'> Add Contract</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='EditContractGridBtn'>Edit/Open</button>" +
+                        //    "<button type='button' class='grid__btn' id='ViewGanttGridBtn'>View Gantt</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='DeleteContractGridBtn'>Delete</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='CloseContractGridBtn'>Close</button>" +
+                        //    "</div>";
                         strContract += "</div></div></div></div>";
                         strContract += "</div>";
                         
@@ -4913,26 +4968,28 @@ angular.module('cpp.controllers').
 //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
                             var strProject = "";
                             strProject += "<div class='col-md-12'><div class='grid__view'>";
-                            strProject += "<div class='grid__title'>Project (" + selectedProgram.name +")</div>";
+                            strProject += "<div class='grid__title'>Project (" + selectedProgram.name +")<div class='grid__title_rgt'><a href='#'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                             strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
                             strProject += "<thead class='t-head'>";
                             strProject += "<tr>";
-                            strProject += "<th>Project Name</th>" +
-                                "<th>Project Number</th>" +
-                                "<th>Project Value</th>" +
+                            strProject += "<th>Name</th>" +
+                                "<th>Number</th>" +
+                                "<th>Value</th>" +
                                 "<th>Deparment</th>" +
+                                "<th>Action</th>" +
                                 "</tr></thead>";
                             if (selectedProgram.children == undefined) {
                                 $('#wbsGridiewElement').html('');
                                 var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element ()</div>";
+                                strElement += "<div class='grid__title'>Project Element ()<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                 strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                 strElement += "<thead class='t-head'>";
                                 strElement += "<tr>";
-                                strElement += "<th>Element Name</th>" +
-                                    "<th>Element Number</th>" +
-                                    "<th>Element Value</th>" +
+                                strElement += "<th>Name</th>" +
+                                    "<th>Number</th>" +
+                                    "<th>Value</th>" +
                                     "<th>Services</th>" +
+                                    "<th>Action</th>" +
                                     "</tr></thead>";
                                 strElement += "</table></div>";
                                 strElement += "<div class='center'>" +
@@ -4945,12 +5002,14 @@ angular.module('cpp.controllers').
                                 $('#wbsGridiewElement').append(strElement);
                                 $('#wbsGridiewTrend').html('');
                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                strTrend += "<div class='grid__title'>Trend ()</div>";
+                                strTrend += "<div class='grid__title'>Trend ()<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
-                                strTrend += "<th>Trend Name</th>" +
-                                    "<th>Trend Status</th>" +
+                                strTrend += "<th>Name</th>" +
+                                    "<th>Imapact</th>" +
+                                    "<th>Status</th>" +
+                                    "<th>Action</th>" +
                                     "</tr></thead>"; 
                                 strTrend += "</table></div>";
                                 strTrend += "<div class='center'>" +
@@ -4971,14 +5030,15 @@ angular.module('cpp.controllers').
                                         //var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
                                         $('#wbsGridiewElement').html('');
                                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                        strElement += "<div class='grid__title'>Project Element (" + project.ProgramElementName + ")</div>";
+                                        strElement += "<div class='grid__title'>Project Element (" + project.ProgramElementName + ")<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                         strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                         strElement += "<thead class='t-head'>";
                                         strElement += "<tr>";
-                                        strElement += "<th>Element Name</th>" +
-                                            "<th>Element Number</th>" +
-                                            "<th>Element Value</th>" +
+                                        strElement += "<th>Name</th>" +
+                                            "<th>Number</th>" +
+                                            "<th>Value</th>" +
                                             "<th>Services</th>" +
+                                            "<th>Action</th>" +
                                             "</tr></thead>";
                                         for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                             var projectElement = project.children[projectElementI];
@@ -4986,12 +5046,14 @@ angular.module('cpp.controllers').
                                                 strTrend += "<tr id=" + projectElement.ProjectID + " class='selected'>";
 												$('#wbsGridiewTrend').html('');							   
                                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")</div>";
+                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                                 strTrend += "<thead class='t-head'>";
                                                 strTrend += "<tr>";
-                                                strTrend += "<th>Trend Name</th>" +
-                                                    "<th>Trend Status</th>" +
+                                                strTrend += "<th>Name</th>" +
+                                                    "<th>Imapact</th>" +
+                                                    "<th>Status</th>" +
+                                                    "<th>Action</th>" +
                                                     "</tr></thead>";
                                                 _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
                                                     .then(function (response) {
@@ -5002,7 +5064,9 @@ angular.module('cpp.controllers').
                                                         }
                                                         strTrend += "<tr>";
                                                         strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                                        strTrend += "<td></td>";
                                                         strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                                        strTrend += "<td></td>";
                                                         strTrend += "</tr>";
                                                         var strApproveTrend = "", strPendingTrend = "";
                                                         if (_baseline.TrendStatus == "Approved") {
@@ -5011,7 +5075,13 @@ angular.module('cpp.controllers').
                                                                 for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                                                     strPendingTrend += "<tr>";
                                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                                    strPendingTrend += "<td>" +  + "</td>";
                                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                                    strPendingTrend += "<td>" +
+                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                        "</td> ";
                                                                     strPendingTrend += "</tr>";
 
                                                                 }
@@ -5020,7 +5090,13 @@ angular.module('cpp.controllers').
                                                                 for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                                                     strApproveTrend += "<tr>";
                                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                                    strApproveTrend += "<td>" +  + "</td>";
                                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                                    strApproveTrend += "<td>" +
+                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                        "</td> ";
                                                                     strApproveTrend += "</tr>";
 
                                                                 }
@@ -5031,18 +5107,22 @@ angular.module('cpp.controllers').
                                                         strTrend += "<tr>";
                                                         strTrend += "<td>Current</td>";
                                                         strTrend += "<td>&nbsp;</td>";
+                                                        strTrend += "<td>&nbsp;</td>";
+                                                        strTrend += "<td>&nbsp;</td>";
                                                         strTrend += "</tr>";
                                                         strTrend += strPendingTrend;
                                                         strTrend += "<tr>";
                                                         strTrend += "<td>Forecast</td>";
                                                         strTrend += "<td>&nbsp;</td>";
+                                                        strTrend += "<td>&nbsp;</td>";
+                                                        strTrend += "<td>&nbsp;</td>";
                                                         strTrend += "</tr>";
                                                         strTrend += "</table></div>";
-                                                        strTrend += "<div class='center'>" +
-                                                            "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                                            "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                                            "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                                            "</div>";
+                                                        //strTrend += "<div class='center'>" +
+                                                        //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                                        //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                                        //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                                        //    "</div>";
                                                         strTrend += "</div></div>";
                                                         $('#wbsGridiewTrend').append(strTrend);
 
@@ -5062,6 +5142,11 @@ angular.module('cpp.controllers').
                                                 strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
                                                 strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
                                                 strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                                strElement += "<td>" +
+                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                    "</td>";
                                                 strElement += "</tr>";
                                             }
                                             else {
@@ -5069,16 +5154,21 @@ angular.module('cpp.controllers').
                                                 strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
                                                 strElement += "<td>" + projectElement.CurrentCost + "</td>";
                                                 strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                                strElement += "<td>" +
+                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                    "</td>";
                                                 strElement += "</tr>";
                                             }
                                         }
                                         strElement += "</table></div>";
-                                        strElement += "<div class='center'>" +
-                                            "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
-                                            "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
-                                            "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
-                                            "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
-                                            "</div>";
+                                        //strElement += "<div class='center'>" +
+                                        //    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
+                                        //    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
+                                        //    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
+                                        //    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
+                                        //    "</div>";
                                         strElement += "</div></div>";
                                         $('#wbsGridiewElement').append(strElement);
                                     }
@@ -5092,19 +5182,29 @@ angular.module('cpp.controllers').
                                     //strProject += "<td>" + project.ProjectClassName + "</td>";
                                     //strProject += "</tr>";
                                     if (project.Status == "Closed") {
-                                        strProject += "<tr id=" + project.ProgramElementID + ">";
+                                        //strProject += "<tr id=" + project.ProgramElementID + ">";
                                         strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
                                         strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
                                         strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                         strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                        strProject += "<td>" +
+                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "</td>";
                                         strProject += "</tr>";
                                     }
                                     else {
-                                        strProject += "<tr id=" + project.ProgramElementID + ">";
+                                        //strProject += "<tr id=" + project.ProgramElementID + ">";
                                         strProject += "<td>" + project.ProgramElementName + "</td>";
                                         strProject += "<td>" + project.ProjectNumber + "</td>";
                                         strProject += "<td>" + project.CurrentCost + "</td>";
                                         strProject += "<td>" + project.ProjectClassName + "</td>";
+                                        strProject += "<td>" +
+                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "</td>";
                                         strProject += "</tr>";
 
                                     }
@@ -5113,12 +5213,12 @@ angular.module('cpp.controllers').
                             
                             
                             strProject += "</table></div>";
-                            strProject += "<div class='center'>" +
-                                "<button type ='button' id='AddProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Add Project</button>" +
-                                "<button type ='button' id='EditProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Edit Project</button>" +
-                                "<button type ='button' id='DeleteProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Delete</button>" +
-                                "<button type ='button' id='CloseProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Close</button>" +
-                                "</div>";
+                            //strProject += "<div class='center'>" +
+                            //    "<button type ='button' id='AddProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Add Project</button>" +
+                            //    "<button type ='button' id='EditProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Edit Project</button>" +
+                            //    "<button type ='button' id='DeleteProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Delete</button>" +
+                            //    "<button type ='button' id='CloseProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Close</button>" +
+                            //    "</div>";
                             strProject += "</div></div>";
 //-------------------------------------END-Project Details---------------------------------------------------------------
                             $('#wbsGridiewProject').append(strProject);
@@ -5205,14 +5305,15 @@ angular.module('cpp.controllers').
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
 								selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);																						 
                                 var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element (" + selectedProgram.name + ")</div>";
+                                strElement += "<div class='grid__title'>Project Element (" + selectedProgram.name + ")<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                 strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                 strElement += "<thead class='t-head'>";
                                 strElement += "<tr>";
-                                strElement += "<th>Element Name</th>" +
-                                    "<th>Element Number</th>" +
-                                    "<th>Element Value</th>" +
+                                strElement += "<th>Name</th>" +
+                                    "<th>Number</th>" +
+                                    "<th>Value</th>" +
                                     "<th>Services</th>" +
+                                    "<th>Action</th>" +
                                     "</tr></thead>";
                                 for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
                                     selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
@@ -5221,12 +5322,14 @@ angular.module('cpp.controllers').
                                         if (projectElementI == 0) {
                                             strElement += "<tr id=" + projectElement.ProjectID + " class='selected'>";
                                             var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")</div>";
+                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                             strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                             strTrend += "<thead class='t-head'>";
                                             strTrend += "<tr>";
-                                            strTrend += "<th>Trend Name</th>" +
-                                                "<th>Trend Status</th>" +
+                                            strTrend += "<th>Name</th>" +
+                                                "<th>Imapact</th>" +
+                                                "<th>Status</th>" +
+                                                "<th>Action</th>" +
                                                 "</tr></thead>"; 
                                             _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
                                                 .then(function (response)
@@ -5238,7 +5341,9 @@ angular.module('cpp.controllers').
                                                     }
                                                     strTrend += "<tr>";
                                                     strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                                    strTrend += "<td></td>";
                                                     strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                                    strTrend += "<td></td>";
                                                     strTrend += "</tr>";
                                                     var strApproveTrend = "", strPendingTrend = "";
                                                     if (_baseline.TrendStatus == "Approved") {
@@ -5247,7 +5352,13 @@ angular.module('cpp.controllers').
                                                             for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                                                 strPendingTrend += "<tr>";
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                                strPendingTrend += "<td>" +  + "</td>";
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                                strPendingTrend += "<td>" +
+                                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                    "</td> ";
                                                                 strPendingTrend += "</tr>";
 
                                                             }
@@ -5256,7 +5367,13 @@ angular.module('cpp.controllers').
                                                             for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                                                 strApproveTrend += "<tr>";
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                                strApproveTrend += "<td>" +  + "</td>";
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                                strApproveTrend += "<td>" +
+                                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                    "</td> ";
                                                                 strApproveTrend += "</tr>";
 
                                                             }
@@ -5268,19 +5385,23 @@ angular.module('cpp.controllers').
                                                     strTrend += "<tr>";
                                                     strTrend += "<td>Current</td>";
                                                     strTrend += "<td>&nbsp;</td>";
+                                                    strTrend += "<td>&nbsp;</td>";
+                                                    strTrend += "<td>&nbsp;</td>";
                                                     strTrend += "</tr>";
                                                     strTrend += strPendingTrend;
                                                     strTrend += "<tr>";
                                                     strTrend += "<td>Forecast</td>";
                                                     strTrend += "<td>&nbsp;</td>";
+                                                    strTrend += "<td>&nbsp;</td>";
+                                                    strTrend += "<td>&nbsp;</td>";
                                                     strTrend += "</tr>";
 
                                                     strTrend += "</table></div>";
-                                                    strTrend += "<div class='center'>" +
-                                                        "<button type ='button' class='grid__btn'>Add Trend</button>" +
-                                                        "<button type='button' class='grid__btn'>Delete</button>" +
-                                                        "<button type='button' class='grid__btn'>Close</button>" +
-                                                        "</div>";
+                                                    //strTrend += "<div class='center'>" +
+                                                    //    "<button type ='button' class='grid__btn'>Add Trend</button>" +
+                                                    //    "<button type='button' class='grid__btn'>Delete</button>" +
+                                                    //    "<button type='button' class='grid__btn'>Close</button>" +
+                                                    //    "</div>";
                                                     strTrend += "</div></div>";
                                                     $('#wbsGridiewTrend').append(strTrend);
 
@@ -5300,6 +5421,11 @@ angular.module('cpp.controllers').
                                             strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
                                             strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                             strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
+                                            strElement += "<td>" +
+                                                "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                "</td>";
                                             strElement += "</tr>";
                                         }
                                         else {
@@ -5308,6 +5434,11 @@ angular.module('cpp.controllers').
                                             strElement += "<td>" + projectElement.CurrentCost + "</td>";
                                             strElement += "<td>" + projectElement.ServiceName + "</td>";
                                             strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                            strElement += "<td>" +
+                                                "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                "</td>";
                                             strElement += "</tr>";
 
                                         }
@@ -5315,12 +5446,12 @@ angular.module('cpp.controllers').
                                 }
 
                                 strElement += "</table></div>";
-                                strElement += "<div class='center'>" +
-                                    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
-                                    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
-                                    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
-                                    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
-                                    "</div>";
+                                //strElement += "<div class='center'>" +
+                                //    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
+                                //    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
+                                //    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
+                                //    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
+                                //    "</div>";
                                 strElement += "</div></div>";
                                 $('#wbsGridiewElement').append(strElement);
 								BindTrend(selectedProgramID, selectedProjectID);										   
@@ -5410,12 +5541,14 @@ angular.module('cpp.controllers').
 
                                 //});
                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")</div>";
+                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
-                                strTrend += "<th>Trend Name</th>" +
-                                    "<th>Trend Status</th>" +
+                                strTrend += "<th>Name</th>" +
+                                    "<th>Imapact</th>" +
+                                    "<th>Status</th>" +
+                                    "<th>Action</th>" +
                                     "</tr></thead>";
                                 _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
                                     .then(function (response) {
@@ -5426,7 +5559,9 @@ angular.module('cpp.controllers').
                                         }
                                         strTrend += "<tr>";
                                         strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                        strTrend += "<td></td>";
                                         strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                        strTrend += "<td></td>";
                                         strTrend += "</tr>";
                                         var strApproveTrend = "", strPendingTrend = "";
                                         if (_baseline.TrendStatus == "Approved") {
@@ -5435,7 +5570,13 @@ angular.module('cpp.controllers').
                                                 for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                                     strPendingTrend += "<tr>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                    strPendingTrend += "<td>" +  + "</td>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                    strPendingTrend += "<td>" +
+                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                        "</td> ";
                                                     strPendingTrend += "</tr>";
 
                                                 }
@@ -5444,7 +5585,13 @@ angular.module('cpp.controllers').
                                                 for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                                     strApproveTrend += "<tr>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                    strApproveTrend += "<td>" +  + "</td>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                    strApproveTrend += "<td>" +
+                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
+                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
+                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                        "</td> ";
                                                     strApproveTrend += "</tr>";
 
                                                 }
@@ -5455,18 +5602,22 @@ angular.module('cpp.controllers').
                                         strTrend += "<tr>";
                                         strTrend += "<td>Current</td>";
                                         strTrend += "<td>&nbsp;</td>";
+                                        strTrend += "<td>&nbsp;</td>";
+                                        strTrend += "<td>&nbsp;</td>";
                                         strTrend += "</tr>";
                                         strTrend += strPendingTrend;
                                         strTrend += "<tr>";
                                         strTrend += "<td>Forecast</td>";
                                         strTrend += "<td>&nbsp;</td>";
+                                        strTrend += "<td>&nbsp;</td>";
+                                        strTrend += "<td>&nbsp;</td>";
                                         strTrend += "</tr>";
                                         strTrend += "</table></div>";
-                                        strTrend += "<div class='center'>" +
-                                            "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                            "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                            "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                            "</div>";
+                                        //strTrend += "<div class='center'>" +
+                                        //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                        //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                        //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                        //    "</div>";
                                         strTrend += "</div></div>";
                                         $('#wbsGridiewTrend').append(strTrend);
 
