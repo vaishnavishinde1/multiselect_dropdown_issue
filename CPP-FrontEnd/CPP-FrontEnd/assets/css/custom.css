@@ -1352,11 +1352,15 @@ option[value='-1'] {
 
 /*Aditya 15032022 Hilight selected row*/
 .gridRowClass {
-    background-color: #c9dde1 !important;
+    background-color: #c5d4e9 !important;
+    color: #000;
 }
 
+
+
 .gridWBS tr:hover {
-    background-color: #c9dde1 !important;
+    background-color: #c5d4e9 !important;
+    color: #000;
 }
 
     .gridWBS tr:hover td.orgcell.my-word-wrap {
@@ -1861,17 +1865,24 @@ button[disabled=disabled], button:disabled {
         background: rgb(232,242,248);
         background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
         border: 1px solid #c1d7e7;
+        color: #000;
         position: sticky !important;
     }
+
+        .grid__table thead a, .grid__table th a {
+            color: #000 !important;
+        }
+
     .grid__table th {
         background: rgb(232,242,248);
         background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
-      
+        color: #000;
         position: sticky !important;
     }
 .grid__table td{
     border:1px solid #fff;
     padding:5px;
+    text-align: left;
 }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
