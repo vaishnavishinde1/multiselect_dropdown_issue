@@ -4229,7 +4229,7 @@ angular.module('cpp.controllers').
                 if (searchText == 'undefined' || searchText == null || searchText == '') {
                     searchText = null;
                 }
-                if (pgmId == "" || pgmId == '') {
+                if (pgmId == undefined || pgmId == "" || pgmId == '') {
                     pgmId = null;
                 }
                 if (pgmEltId == "" || pgmEltId == '') {
@@ -4238,7 +4238,7 @@ angular.module('cpp.controllers').
                 if (projId == "" || projId == '') {
                     projId = null;
                 }
-                if (clientID == "" || clientID == '') {
+                if (clientID == undefined || clientID == "" || clientID == '') {
                     clientID = null;
                 }
                 usSpinnerService.spin('spinner-1');
@@ -4276,7 +4276,7 @@ angular.module('cpp.controllers').
                         //< !--Grid view Left Side-- >
                         //str1 += "<div class='col-md-8'>";
                         strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
-                        strContract += "<div class='grid__title'>Birdi System Inc.<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strContract += "<div class='grid__title'>" + organization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
@@ -4293,7 +4293,7 @@ angular.module('cpp.controllers').
                         {
                             var program = organization.children[programI];
                             if (programI == 0) {
-                                strContract += "<tr id=" + program.ProgramID + " class='selected'>";
+                                strContract += "<tr id=" + program.ProgramID + " class='selected contact-row'>";
                                 $('#wbsGridiewProject').html('');
                                 var selectedProgramID = program.ProgramID;
                                 //organization.children[0].ProgramID
@@ -4314,7 +4314,7 @@ angular.module('cpp.controllers').
                                     for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
                                         var project = selectedProgram.children[projectI];
                                         if (projectI == 0) {
-                                            strProject += "<tr id=" + project.ProgramElementID + " class='selected'>";
+                                            strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
 
                                             $('#wbsGridiewElement').html('');
                                             var selectedProjectID = project.ProgramElementID;
@@ -4335,14 +4335,14 @@ angular.module('cpp.controllers').
                                                 for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                                     var projectElement = project.children[projectElementI];
                                                     if (projectElementI == 0) {
-                                                        strElement += "<tr id=" + projectElement.ProjectID + " class='selected'>";
+                                                        strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
                                                         var strTrend = "<div class='col-md-12'><div class='grid__view'>";
                                                         strTrend += "<div class='grid__title'>Trend (" + projectElement.name + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                                         strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                                         strTrend += "<thead class='t-head'>";
                                                         strTrend += "<tr>";
                                                         strTrend += "<th>Name</th>" +
-                                                            "<th>Imapact</th>" +
+                                                            "<th>Impact</th>" +
                                                             "<th>Status</th>" +
                                                             "<th>Action</th>" +
                                                             "</tr></thead>";
@@ -4357,7 +4357,7 @@ angular.module('cpp.controllers').
                                                                 } else {
                                                                     _baseline = response.data.result.FutureTrendList[0];
                                                                 }
-                                                                strTrend += "<tr>";
+                                                                strTrend += "<tr class='contact-row'>";
                                                                 strTrend += "<td>" + _baseline.TrendDescription + "</td>";
                                                                 strTrend += "<td></td>";
                                                                 strTrend += "<td>" + _baseline.TrendStatus + "</td>";
@@ -4369,7 +4369,7 @@ angular.module('cpp.controllers').
                                                                     if (response.data.result.FutureTrendList.length != 0) {
 
                                                                         for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                            strPendingTrend += "<tr>";
+                                                                            strPendingTrend += "<tr class='contact-row'>";
                                                                             strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                             strPendingTrend += "<td>" + + "</td>";
                                                                             strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -4384,7 +4384,7 @@ angular.module('cpp.controllers').
                                                                     }
                                                                     if (response.data.result.PastTrendList.length > 1) {
                                                                         for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                            strApproveTrend += "<tr>";
+                                                                            strApproveTrend += "<tr class='contact-row'>";
                                                                             strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                                             strApproveTrend += "<td>" + + "</td>";
                                                                             strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -4399,14 +4399,14 @@ angular.module('cpp.controllers').
                                                                     }
 
                                                                     strTrend += strApproveTrend;
-                                                                    strTrend += "<tr>";
+                                                                    strTrend += "<tr class='contact-row'>";
                                                                     strTrend += "<td>Current</td>";
                                                                     strTrend += "<td>&nbsp;</td>";
                                                                     strTrend += "<td>&nbsp;</td>";
                                                                     strTrend += "<td>&nbsp;</td>";
                                                                     strTrend += "</tr>";
                                                                     strTrend += strPendingTrend;
-                                                                    strTrend += "<tr>";
+                                                                    strTrend += "<tr class='contact-row'>";
                                                                     strTrend += "<td>Forecast</td>";
                                                                     strTrend += "<td>&nbsp;</td>";
                                                                     strTrend += "<td>&nbsp;</td>";
@@ -4427,7 +4427,7 @@ angular.module('cpp.controllers').
                                                             });
                                                     }
                                                     else {
-                                                        strElement += "<tr id=" + projectElement.ProjectID + ">";
+                                                        strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
                                                     }
                                                     //strElement += "<td>" + projectElement.name + "</td>";
                                                     //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
@@ -4477,7 +4477,7 @@ angular.module('cpp.controllers').
                                             $('#wbsGridiewElement').append(strElement);
                                         }
                                         else {
-                                            strProject += "<tr id=" + project.ProgramElementID + ">";
+                                            strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
                                         }
 
                                         //strProject += "<td>" + project.ProgramElementName + "</td>";
@@ -4528,7 +4528,7 @@ angular.module('cpp.controllers').
                                 $('#wbsGridiewProject').append(strProject);
                             }
                             else {
-                                strContract += "<tr id=" + program.ProgramID + ">";
+                                strContract += "<tr  class='contact-row' id=" + program.ProgramID + ">";
                             }
                             //strContract += "<tr id=" + program.ProgramID + ">";
                             //strContract += "<td>" + program.ClientPOC + "</td>";
@@ -4829,7 +4829,7 @@ angular.module('cpp.controllers').
                         var column4 = $('#wbsGridView Table td:nth-child(4)');
 
 
-                        $('#wbsContractGridTable').on('click', 'th', function () {
+                        $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
                             var table = $(this).closest('table');
                             var rows = table.find('tr.contact-row')
                                 .toArray()
@@ -4962,7 +4962,7 @@ angular.module('cpp.controllers').
                         });
 
                         //Select Contract
-                        $('#tblContract tr').on('click', function () {
+                        $('#tblContract tbody tr').on('click', function () {
                             //wbsTree.setSelectedNode(null);
                             $('#tblContract tr.selected').removeAttr('class');
                             $(this).addClass('selected');
@@ -5014,7 +5014,7 @@ angular.module('cpp.controllers').
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
                                 strTrend += "<th>Name</th>" +
-                                    "<th>Imapact</th>" +
+                                    "<th>Impact</th>" +
                                     "<th>Status</th>" +
                                     "<th>Action</th>" +
                                     "</tr></thead>"; 
@@ -5032,7 +5032,7 @@ angular.module('cpp.controllers').
                                     var project = selectedProgram.children[projectI];
                                     if (projectI == 0) {
                                         selectedProjectID = project.ProgramElementID;
-                                        strProject += "<tr id=" + project.ProgramElementID + " class='selected'>";
+                                        strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
                                         //var selectedProjectID = project.ProgramElementID;
                                         //var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
                                         $('#wbsGridiewElement').html('');
@@ -5051,7 +5051,7 @@ angular.module('cpp.controllers').
                                             for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                                 var projectElement = project.children[projectElementI];
                                                 if (projectElementI == 0) {
-                                                    strTrend += "<tr id=" + projectElement.ProjectID + " class='selected'>";
+                                                    strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
                                                     $('#wbsGridiewTrend').html('');
                                                     var strTrend = "<div class='col-md-12'><div class='grid__view'>";
                                                     strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
@@ -5059,7 +5059,7 @@ angular.module('cpp.controllers').
                                                     strTrend += "<thead class='t-head'>";
                                                     strTrend += "<tr>";
                                                     strTrend += "<th>Name</th>" +
-                                                        "<th>Imapact</th>" +
+                                                        "<th>Impact</th>" +
                                                         "<th>Status</th>" +
                                                         "<th>Action</th>" +
                                                         "</tr></thead>";
@@ -5070,7 +5070,7 @@ angular.module('cpp.controllers').
                                                             } else {
                                                                 _baseline = response.data.result.FutureTrendList[0];
                                                             }
-                                                            strTrend += "<tr>";
+                                                            strTrend += "<tr class='contact-row'>";
                                                             strTrend += "<td>" + _baseline.TrendDescription + "</td>";
                                                             strTrend += "<td></td>";
                                                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
@@ -5081,7 +5081,7 @@ angular.module('cpp.controllers').
                                                                 if (response.data.result.FutureTrendList.length != 0) {
 
                                                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                        strPendingTrend += "<tr>";
+                                                                        strPendingTrend += "<tr class='contact-row'>";
                                                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                         strPendingTrend += "<td>" + + "</td>";
                                                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -5096,7 +5096,7 @@ angular.module('cpp.controllers').
                                                                 }
                                                                 if (response.data.result.PastTrendList.length > 1) {
                                                                     for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                        strApproveTrend += "<tr>";
+                                                                        strApproveTrend += "<tr class='contact-row'>";
                                                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                                         strApproveTrend += "<td>" + + "</td>";
                                                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5111,14 +5111,14 @@ angular.module('cpp.controllers').
 
                                                             }
                                                             strTrend += strApproveTrend;
-                                                            strTrend += "<tr>";
+                                                            strTrend += "<tr class='contact-row'>";
                                                             strTrend += "<td>Current</td>";
                                                             strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "</tr>";
                                                             strTrend += strPendingTrend;
-                                                            strTrend += "<tr>";
+                                                            strTrend += "<tr class='contact-row'>";
                                                             strTrend += "<td>Forecast</td>";
                                                             strTrend += "<td>&nbsp;</td>";
                                                             strTrend += "<td>&nbsp;</td>";
@@ -5136,7 +5136,7 @@ angular.module('cpp.controllers').
                                                         });
                                                 }
                                                 else {
-                                                    strElement += "<tr id=" + projectElement.ProjectID + ">";
+                                                    strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
                                                 }
                                                 //strElement += "<td>" + projectElement.name + "</td>";
                                                 //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
@@ -5181,7 +5181,7 @@ angular.module('cpp.controllers').
                                         $('#wbsGridiewElement').append(strElement);
                                     }
                                     else {
-                                        strProject += "<tr id=" + project.ProgramElementID + ">";
+                                        strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
                                     }
                                     //strProject += "<tr id=" + project.ProgramElementID + ">";
                                     //strProject += "<td>" + project.ProgramElementName + "</td>";
@@ -5256,6 +5256,20 @@ angular.module('cpp.controllers').
                             //mydiv.appendChild(strProject);
                             //document.getElementById('wbsGridiewProject').insertAdjacentHTML('beforeend', strProject);
                             //$('#tblProject').append(strProject);
+
+                            $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                                var table = $(this).closest('table');
+                                var rows = table.find('tr.contact-row')
+                                    .toArray()
+                                    .sort(comparer($(this).index()));
+                                this.asc = !this.asc;
+                                if (!this.asc) {
+                                    rows = rows.reverse();
+                                }
+                                for (var i = 0; i < rows.length; i++) {
+                                    table.append(rows[i]);
+                                }
+                            });
                         });
 
                         function BindElement(selectedProgramID) {
@@ -5316,7 +5330,7 @@ angular.module('cpp.controllers').
                                 localStorage.setItem('contextType', 'ProgramElement');
                                 //BindElement(selectedProjectID);
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                                 var strElement = "<div class='col-md-12'><div class='grid__view'>";
                                 strElement += "<div class='grid__title'>Project Element (" + selectedProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                 strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
@@ -5561,7 +5575,7 @@ angular.module('cpp.controllers').
                                 $('#cancel_futuretrend').show();
                             });
                             
-                            $('#tblElement tr').on('click', function () {
+                            $('#tblElement tbody tr').on('click', function () {
                                 //wbsTree.setSelectedNode(null);
                                 $('#tblElement tr.selected').removeClass('selected');
                                 $(this).addClass('selected');
@@ -5585,7 +5599,7 @@ angular.module('cpp.controllers').
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
                                 strTrend += "<th>Name</th>" +
-                                    "<th>Imapact</th>" +
+                                    "<th>Impact</th>" +
                                     "<th>Status</th>" +
                                     "<th>Action</th>" +
                                     "</tr></thead>";
@@ -5596,7 +5610,7 @@ angular.module('cpp.controllers').
                                         } else {
                                             _baseline = response.data.result.FutureTrendList[0];
                                         }
-                                        strTrend += "<tr>";
+                                        strTrend += "<tr class='contact-row'>";
                                         strTrend += "<td>" + _baseline.TrendDescription + "</td>";
                                         strTrend += "<td></td>";
                                         strTrend += "<td>" + _baseline.TrendStatus + "</td>";
@@ -5607,7 +5621,7 @@ angular.module('cpp.controllers').
                                             if (response.data.result.FutureTrendList.length != 0) {
 
                                                 for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                    strPendingTrend += "<tr>";
+                                                    strPendingTrend += "<tr class='contact-row'>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                     strPendingTrend += "<td>" +  + "</td>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -5622,7 +5636,7 @@ angular.module('cpp.controllers').
                                             }
                                             if (response.data.result.PastTrendList.length > 1) {
                                                 for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                    strApproveTrend += "<tr>";
+                                                    strApproveTrend += "<tr class='contact-row'>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                     strApproveTrend += "<td>" +  + "</td>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5638,14 +5652,14 @@ angular.module('cpp.controllers').
 
                                         }
                                         strTrend += strApproveTrend;
-                                        strTrend += "<tr>";
+                                        strTrend += "<tr class='contact-row'>";
                                         strTrend += "<td>Current</td>";
                                         strTrend += "<td>&nbsp;</td>";
                                         strTrend += "<td>&nbsp;</td>";
                                         strTrend += "<td>&nbsp;</td>";
                                         strTrend += "</tr>";
                                         strTrend += strPendingTrend;
-                                        strTrend += "<tr>";
+                                        strTrend += "<tr class='contact-row'>";
                                         strTrend += "<td>Forecast</td>";
                                         strTrend += "<td>&nbsp;</td>";
                                         strTrend += "<td>&nbsp;</td>";
@@ -5661,6 +5675,19 @@ angular.module('cpp.controllers').
                                         $('#wbsGridiewTrend').append(strTrend);
 
                                     });
+                                $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                                    var table = $(this).closest('table');
+                                    var rows = table.find('tr.contact-row')
+                                        .toArray()
+                                        .sort(comparer($(this).index()));
+                                    this.asc = !this.asc;
+                                    if (!this.asc) {
+                                        rows = rows.reverse();
+                                    }
+                                    for (var i = 0; i < rows.length; i++) {
+                                        table.append(rows[i]);
+                                    }
+                                });
                             });
                         }							   
                         function modifyTableRowspan(column) {
@@ -6211,20 +6238,31 @@ angular.module('cpp.controllers').
                         });
                     }
 
-                    //else if (localStorage.getItem('pgmId') || localStorage.getItem('cliId')) {
-                    else if (localStorage.getItem('pgmId')) {
+                    else if (localStorage.getItem('pgmId') || localStorage.getItem('cliId')) {
+                        //else if (localStorage.getItem('pgmId')) {
                         $scope.filterOrgId = ($scope.organizationList.find(elem => elem.OrganizationID == (localStorage.getItem('userSelectedOrgId')))).OrganizationID;
                         Program.lookup().get({ OrganizationID: $scope.filterOrgId }, function (programData) {
                             $scope.programList = programData.result;
-                            var testobj = ($scope.programList.find(elem => elem.ProgramID == parseInt(localStorage.getItem('pgmId'))));
-                            $scope.filterProgramId = (testobj.ProgramID).toString();
+                            if (localStorage.getItem('cliId')) {
+                                var allClientList = wbsTree.getClientList();
+                                var selectedClient = allClientList.find(client => client.ClientID == parseInt(localStorage.getItem('cliId')));
+                                $scope.filterClient = (selectedClient.ClientID).toString();
+                                getSelectedClient();
+                            }
+                            if (localStorage.getItem('pgmId')) {
+                                var testobj = ($scope.programList.find(elem => elem.ProgramID == parseInt(localStorage.getItem('pgmId'))));
+                                $scope.filterProgramId = (testobj.ProgramID).toString();
+                                ProgramElement.lookup().get({ ProgramID: $scope.filterProgramId }, function (programElementData) {
+                                    $scope.programElementList = programElementData.result;
+                                    $("#selectProgramElement").val("");
+                                });
+                                getSelectedContract();
+                            }
+                            
                             $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
-                            ProgramElement.lookup().get({ ProgramID: $scope.filterProgramId }, function (programElementData) {
-                                $scope.programElementList = programElementData.result;
-                                $("#selectProgramElement").val("");
-                            });
-
+                            
                         });
+
                     }
 
                     else
@@ -6232,6 +6270,35 @@ angular.module('cpp.controllers').
 
                 });
 
+            }
+
+            function getSelectedClient() {
+                var allProgramList = $scope.allWbsProgramList;
+                var sortedProgram = [];
+                jQuery.each(allProgramList, function (i, program) {
+                    if (program.ClientID == $scope.filterClient) {
+                        sortedProgram.push(program);
+                    }
+                });
+
+                $scope.programList = sortedProgram;
+            }
+
+            function getSelectedContract() {
+                var allClientList = $scope.allClientList;
+                var allPrograms = $scope.programList;
+                var sortedClient = [];
+                var selectedProgram = allPrograms.find(prg => prg.ProgramID == $scope.filterProgramId);
+                jQuery.each(allClientList, function (i, client) {
+                    //jQuery.each($scope.programList, function (j, program) {
+                    if (selectedProgram.ClientID == client.ClientID) {
+                        sortedClient.push(client);
+                        return false;
+                    }
+                    //});
+                });
+
+                $scope.clientList = sortedClient;
             }
 
             $scope.editSelectedOrganization = function () {
@@ -6459,7 +6526,7 @@ angular.module('cpp.controllers').
                         localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                         localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                         //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                        $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
+                        $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
 
                     });
             }
@@ -6482,22 +6549,26 @@ angular.module('cpp.controllers').
 
                 if ($scope.filterProgramId != "") {
 
-                    var allClientList = wbsTree.getClientList();
+                    var allClientList = $scope.allClientList;
+                    var allPrograms = $scope.programList;
                     var sortedClient = [];
+                    var selectedProgram = allPrograms.find(prg => prg.ProgramID == $scope.filterProgramId);
                     jQuery.each(allClientList, function (i, client) {
-                        jQuery.each($scope.programList, function (j, program) {
-                            if (program.ClientPOC == client.ClientName) {
-                                sortedClient.push(client);
-                                return false;
-                            }
-                        });
+                        //jQuery.each($scope.programList, function (j, program) {
+                        if (selectedProgram.ClientID == client.ClientID) {
+                            sortedClient.push(client);
+                            return false;
+                        }
+                        //});
                     });
 
                     $scope.clientList = sortedClient;
 
-                    $("#selectClient").val(sortedClient[0].ClientID);
+                    //$("#selectClient").val(sortedClient[0].ClientID);
 
                     localStorage.setItem('cliId', sortedClient[0].ClientID);
+
+                    $scope.filterClient = (sortedClient[0].ClientID).toString(); 
 
                 } else {
                     $scope.clientList = $scope.allClientList;
@@ -6772,6 +6843,19 @@ angular.module('cpp.controllers').
 
                 $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null, '1', null, $scope.filterClient);
 
+                $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                    var table = $(this).closest('table');
+                    var rows = table.find('tr.contact-row')
+                        .toArray()
+                        .sort(comparer($(this).index()));
+                    this.asc = !this.asc;
+                    if (!this.asc) {
+                        rows = rows.reverse();
+                    }
+                    for (var i = 0; i < rows.length; i++) {
+                        table.append(rows[i]);
+                    }
+                });
             }
 
             $scope.getProjectFilter = function () {
