@@ -5288,7 +5288,7 @@ angular.module('cpp.controllers').
                             });
 
                             //Edit/Open Project
-                            $('#tblProject').on('click, #EditProjectGridBtn', function () {
+                            $('#tblProject').on('click', '#EditProjectGridBtn', function () {
                             //$('#EditProjectGridBtn').unbind('click').on('click', function () {
                                 //var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
@@ -5299,7 +5299,7 @@ angular.module('cpp.controllers').
                             });
 
                             //Delete Project
-                            $('#tblProject').on('click, #DeleteProjectGridBtn', function () {
+                            $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
                             //$("#DeleteProjectGridBtn").bind("click", function () {
                                 //var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
@@ -5310,7 +5310,7 @@ angular.module('cpp.controllers').
                             });
 
                             //Close Project
-                            $('#tblProject').on('click, #CloseProjectGridBtn', function () {
+                            $('#tblProject').on('click', '#CloseProjectGridBtn', function () {
                             //$("#CloseProjectGridBtn").unbind('click').on("click", function () {
                                 $scope.modal_mode = 'Update';
                                 // var programId = $scope.GridContractId;
@@ -5508,11 +5508,11 @@ angular.module('cpp.controllers').
                         {
                             //Add Element
                             //$('#tblElement').on('click, #EditElementGridBtn', function () {
-                                $('#AddElementGridBtn').unbind('click').on('click', function () {
-                                var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                            $('#AddElementGridBtn').unbind('click').on('click', function () {
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                                 //var elementId = $scope.GridProjectId;
                                 //var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                                 wbsTree.setSelectedNode(selectedProject);
@@ -5520,40 +5520,43 @@ angular.module('cpp.controllers').
                             });
 
                             //Edit/Open Element
-                            $('#tblElement').on('click, #EditElementGridBtn', function () {
+                            $('#tblElement').on('click', '#EditElementGridBtn', function () {
                             //$('#EditElementGridBtn').unbind('click').on('click', function () {
-                                var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                var elementId = $scope.GridProjectId;
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var elementId = this.parentElement.parentElement.id;
                                 var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                                 wbsTree.setSelectedNode(selectedElement);
                                 $('#ProjectModal').modal({ show: true, backdrop: 'static' });
                             });
 
                             //Delete Element
-                            $('#tblElement').on('click, #DeleteElementGridBtn', function () {
+                            $('#tblElement').on('click', '#DeleteElementGridBtn', function () {
                             //$("#DeleteElementGridBtn").bind("click", function () {
-                                var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                var elementId = $scope.GridProjectId;
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var elementId = this.parentElement.parentElement.id;
                                 var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                                 wbsTree.setSelectedNode(selectedElement);
                                 $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
                             });
 
                             //Close Element
-                            $('#tblElement').on('click, #CloseElementGridBtn', function () {
+                            $('#tblElement').on('click', '#CloseElementGridBtn', function () {
                             //$("#CloseElementGridBtn").unbind('click').on("click", function () {
                                 $scope.modal_mode = 'Update';
-                                var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                var elementId = $scope.GridProjectId;
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var elementId = this.parentElement.parentElement.id;
                                 var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                                 wbsTree.setSelectedNode(selectedElement);
                                 $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
