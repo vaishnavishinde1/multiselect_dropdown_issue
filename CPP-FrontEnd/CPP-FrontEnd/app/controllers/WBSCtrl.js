@@ -4280,7 +4280,7 @@ angular.module('cpp.controllers').
                         //< !--Grid view Left Side-- >
                         //str1 += "<div class='col-md-8'>";
                         strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
-                        strContract += "<div class='grid__title'>" + organization.name + "<div class='grid__title_rgt '><a href='#'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                        strContract += "<div class='grid__title'>" + organization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
@@ -4304,7 +4304,7 @@ angular.module('cpp.controllers').
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
                                  var strProject = "<div class='col-md-12'><div class='grid__view'>";
-                                strProject += "<div class='grid__title'>Project (" + selectedProgram.name + ")<div class='grid__title_rgt'><a href='#'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                strProject += "<div class='grid__title'>Project (" + selectedProgram.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                  strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
                                 strProject += "<thead class='t-head'>";
                                 strProject += "<tr>";
@@ -4314,210 +4314,212 @@ angular.module('cpp.controllers').
                                     "<th>Deparment</th>" +
                                     "<th>Action</th>" +
                                     "</tr></thead>";
-                                for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
-                                    var project = selectedProgram.children[projectI];
-                                    if (projectI == 0) {
-                                        strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
+                                if (selectedProgram.children.length > 0) {
+                                    for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
+                                        var project = selectedProgram.children[projectI];
+                                        if (projectI == 0) {
+                                            strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
 
-                                        $('#wbsGridiewElement').html('');
-                                        var selectedProjectID = project.ProgramElementID;
-                                        //organization.children[0].ProgramIDproject
-                                        var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
-                                        var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                        strElement += "<div class='grid__title'>Project Element (" + project.name + ")<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
-                                        strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
-                                        strElement += "<thead class='t-head'>";
-                                        strElement += "<tr>";
-                                        strElement += "<th>Name</th>" +
-                                            "<th>Number</th>" +
-                                            "<th>Value</th>" +
-                                            "<th>Services</th>" +
-                                            "<th>Action</th>" +
-                                            "</tr></thead>";
-                                        for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
-                                            var projectElement = project.children[projectElementI];
-                                            if (projectElementI == 0)
-                                            {
-                                                strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
-                                                var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.name + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
-                                                strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
-                                                strTrend += "<thead class='t-head'>";
-                                                strTrend += "<tr>";
-                                                strTrend += "<th>Name</th>" +
-                                                    "<th>Impact</th>" +
-                                                    "<th>Status</th>" +
-                                                    "<th>Action</th>" +
-                                                    "</tr></thead>";
-                                                _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
-                                                    .then(function (response) {
-                                                        console.log(response);
-                                                        // $http.get("http://localhost:29986/api/Request/TrendGraph/" + selProjId).then(function(response){
-                                                        var trendgraphData = response.data;
-                                                        var futureTrendList, pastTrendList;
-                                                        if (response.data.result.PastTrendList.length != 0) {
-                                                            _baseline = response.data.result.PastTrendList[0]; 
-                                                        } else {
-                                                            _baseline = response.data.result.FutureTrendList[0];
-                                                        }
-                                                        strTrend += "<tr class='contact-row'>";
-                                                        strTrend += "<td>" + _baseline.TrendDescription + "</td>";
-                                                        strTrend += "<td></td>";
-                                                        strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                                                        strTrend += "<td></td>";
-                                                        strTrend += "</tr>";
+                                            $('#wbsGridiewElement').html('');
+                                            var selectedProjectID = project.ProgramElementID;
+                                            //organization.children[0].ProgramIDproject
+                                            var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
+                                            var strElement = "<div class='col-md-12'><div class='grid__view'>";
+                                            strElement += "<div class='grid__title'>Project Element (" + project.name + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                                            strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
+                                            strElement += "<thead class='t-head'>";
+                                            strElement += "<tr>";
+                                            strElement += "<th>Name</th>" +
+                                                "<th>Number</th>" +
+                                                "<th>Value</th>" +
+                                                "<th>Services</th>" +
+                                                "<th>Action</th>" +
+                                                "</tr></thead>";
+                                            if (project.children != undefined && project.children.length > 0) {
+                                                for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
+                                                    var projectElement = project.children[projectElementI];
+                                                    if (projectElementI == 0) {
+                                                        strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
+                                                        var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                                                        strTrend += "<div class='grid__title'>Trend (" + projectElement.name + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                                                        strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                                                        strTrend += "<thead class='t-head'>";
+                                                        strTrend += "<tr>";
+                                                        strTrend += "<th>Name</th>" +
+                                                            "<th>Impact</th>" +
+                                                            "<th>Status</th>" +
+                                                            "<th>Action</th>" +
+                                                            "</tr></thead>";
+                                                        _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
+                                                            .then(function (response) {
+                                                                console.log(response);
+                                                                // $http.get("http://localhost:29986/api/Request/TrendGraph/" + selProjId).then(function(response){
+                                                                var trendgraphData = response.data;
+                                                                var futureTrendList, pastTrendList;
+                                                                if (response.data.result.PastTrendList.length != 0) {
+                                                                    _baseline = response.data.result.PastTrendList[0];
+                                                                } else {
+                                                                    _baseline = response.data.result.FutureTrendList[0];
+                                                                }
+                                                                strTrend += "<tr class='contact-row'>";
+                                                                strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                                                strTrend += "<td></td>";
+                                                                strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                                                strTrend += "<td></td>";
+                                                                strTrend += "</tr>";
 
-                                                        var strApproveTrend = "", strPendingTrend = "";
-                                                        if (_baseline.TrendStatus == "Approved") {
-                                                            if (response.data.result.FutureTrendList.length != 0) {
+                                                                var strApproveTrend = "", strPendingTrend = "";
+                                                                if (_baseline.TrendStatus == "Approved") {
+                                                                    if (response.data.result.FutureTrendList.length != 0) {
 
-                                                                for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                    strPendingTrend += "<tr class='contact-row'>";
-                                                                    strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                                                    strPendingTrend += "<td>" +  + "</td>";
-                                                                    strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
-                                                                    strPendingTrend += "<td>" +
-                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                                        "</td> ";
-                                                                    strPendingTrend += "</tr>";
+                                                                        for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
+                                                                            strPendingTrend += "<tr class='contact-row'>";
+                                                                            strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                                            strPendingTrend += "<td>" + + "</td>";
+                                                                            strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                                            strPendingTrend += "<td>" +
+                                                                                "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                                "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                                "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                                                "</td> ";
+                                                                            strPendingTrend += "</tr>";
+
+                                                                        }
+                                                                    }
+                                                                    if (response.data.result.PastTrendList.length > 1) {
+                                                                        for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
+                                                                            strApproveTrend += "<tr class='contact-row'>";
+                                                                            strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                                            strApproveTrend += "<td>" + + "</td>";
+                                                                            strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                                            strApproveTrend += "<td>" +
+                                                                                "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                                "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                                "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                                                "</td> ";
+                                                                            strApproveTrend += "</tr>";
+
+                                                                        }
+                                                                    }
+
+                                                                    strTrend += strApproveTrend;
+                                                                    strTrend += "<tr class='contact-row'>";
+                                                                    strTrend += "<td>Current</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "</tr>";
+                                                                    strTrend += strPendingTrend;
+                                                                    strTrend += "<tr class='contact-row'>";
+                                                                    strTrend += "<td>Forecast</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "<td>&nbsp;</td>";
+                                                                    strTrend += "</tr>";
+
 
                                                                 }
-                                                            }
-                                                            if (response.data.result.PastTrendList.length > 1) {
-                                                                for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                    strApproveTrend += "<tr class='contact-row'>";
-                                                                    strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
-                                                                    strApproveTrend += "<td>" + + "</td>";
-                                                                    strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
-                                                                    strApproveTrend += "<td>" +
-                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                                        "</td> ";
-                                                                    strApproveTrend += "</tr>";
 
-                                                                }
-                                                            }
+                                                                strTrend += "</table></div>";
+                                                                //strTrend += "<div class='center'>" +
+                                                                //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                                                //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                                                //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                                                //    "</div>";
+                                                                strTrend += "</div></div>";
+                                                                $('#wbsGridiewTrend').append(strTrend);
+                                                            });
+                                                    }
+                                                    else {
+                                                        strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
+                                                    }
+                                                    //strElement += "<td>" + projectElement.name + "</td>";
+                                                    //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                                    //strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                                    //strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                                    //strElement += "</tr>";
 
-                                                            strTrend += strApproveTrend;
-                                                            strTrend += "<tr class='contact-row'>";
-                                                            strTrend += "<td>Current</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "</tr>";
-                                                            strTrend += strPendingTrend;
-                                                            strTrend += "<tr class='contact-row'>";
-                                                            strTrend += "<td>Forecast</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "</tr>";
+                                                    //close changes done by vaishnavi
+                                                    if (projectElement.Status == "Closed") {
+                                                        strElement += "<td style='color:red'>" + projectElement.name + "</td>";
+                                                        strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
+                                                        strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
+                                                        strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                                        strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                                        strElement += "<td>" +
+                                                            "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                            "<i class='fa-trash grid__btn-icons ' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                            "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                            "</td>";
+                                                        strElement += "</tr>";
+                                                    }
+                                                    else {
+                                                        strElement += "<td>" + projectElement.name + "</td>";
+                                                        strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                                        strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                                        strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                                        strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                                        strElement += "<td>" +
+                                                            "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                            "<i class='fa-trash grid__btn-icons ' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                            "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                            "</td>";
+                                                        strElement += "</tr>";
 
-
-                                                        }
-
-                                                        strTrend += "</table></div>";
-                                                        //strTrend += "<div class='center'>" +
-                                                        //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                                        //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                                        //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                                        //    "</div>";
-                                                        strTrend += "</div></div>";
-                                                        $('#wbsGridiewTrend').append(strTrend);
-                                                    });
+                                                    }
+                                                }
                                             }
-                                            else {
-                                                strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
-                                            }
-                                            //strElement += "<td>" + projectElement.name + "</td>";
-                                            //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                            //strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                            //strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                            //strElement += "</tr>";
 
-                                            //close changes done by vaishnavi
-                                            if (projectElement.Status == "Closed") {
-                                                strElement += "<td style='color:red'>" + projectElement.name + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
-                                                strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     
-                                                strElement += "<td>" +
-                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                    "</td>";
-                                                strElement += "</tr>";
-                                            }
-                                            else {
-                                                strElement += "<td>" + projectElement.name + "</td>";
-                                                strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                                strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                                strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                                strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
-                                                strElement += "<td>" +
-                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                    "</td>";
-                                                strElement += "</tr>";
-
-                                            }
+                                            strElement += "</table></div>";
+                                            //strElement += "<div class='center'>" +
+                                            //    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
+                                            //    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
+                                            //    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
+                                            //    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
+                                            //    "</div>";
+                                            strElement += "</div></div>";
+                                            $('#wbsGridiewElement').append(strElement);
+                                        }
+                                        else {
+                                            strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
                                         }
 
-                                        strElement += "</table></div>";
-                                        //strElement += "<div class='center'>" +
-                                        //    "<button type ='button' id='AddElementGridBtn' contextType='Project' class='grid__btn'>Add Element</button>" +
-                                        //    "<button type ='button' id='EditElementGridBtn' contextType='Project' class='grid__btn'>Edit Element</button>" +
-                                        //    "<button type='button' id='DeleteElementGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
-                                        //    "<button type='button' id='CloseElementGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
-                                        //    "</div>";
-                                        strElement += "</div></div>";
-                                        $('#wbsGridiewElement').append(strElement);
-                                    }
-                                    else {
-                                        strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
-                                    }
-                                    
-                                    //strProject += "<td>" + project.ProgramElementName + "</td>";
-                                    //strProject += "<td>" + project.ProjectNumber + "</td>";
-                                    //strProject += "<td>" + project.CurrentCost + "</td>";
-                                    //strProject += "<td>" + project.ProjectClassName + "</td>";
-                                    //strProject += "</tr>";
-                                    if (project.Status == "Closed") {
-                                        //strProject += "<tr id=" + project.ProgramElementID + ">";
-                                        strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
-                                        strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
-                                        strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
-                                        strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                        strProject += "<td style='display:none'>" + project.Status + "</td>";     //close changes done by vaishnavi
-                                        strProject += "<td>" +
-                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                            "</td>";
-                                        strProject += "</tr>";
-                                    }
-                                    else {
-                                        //strProject += "<tr id=" + project.ProgramElementID + ">";
-                                        strProject += "<td>" + project.ProgramElementName + "</td>";
-                                        strProject += "<td>" + project.ProjectNumber + "</td>";
-                                        strProject += "<td>" + project.CurrentCost + "</td>";
-                                        strProject += "<td>" + project.ProjectClassName + "</td>";
-                                        strProject += "<td style='display:none'>" + project.Status + "</td>";
-                                        strProject += "<td>" +
-                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                            "</td>";
-                                        strProject += "</tr>";
+                                        //strProject += "<td>" + project.ProgramElementName + "</td>";
+                                        //strProject += "<td>" + project.ProjectNumber + "</td>";
+                                        //strProject += "<td>" + project.CurrentCost + "</td>";
+                                        //strProject += "<td>" + project.ProjectClassName + "</td>";
+                                        //strProject += "</tr>";
+                                        if (project.Status == "Closed") {
+                                            //strProject += "<tr id=" + project.ProgramElementID + ">";
+                                            strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
+                                            strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
+                                            strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
+                                            strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                            strProject += "<td style='display:none'>" + project.Status + "</td>";     //close changes done by vaishnavi
+                                            strProject += "<td>" +
+                                                "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                "</td>";
+                                            strProject += "</tr>";
+                                        }
+                                        else {
+                                            //strProject += "<tr id=" + project.ProgramElementID + ">";
+                                            strProject += "<td>" + project.ProgramElementName + "</td>";
+                                            strProject += "<td>" + project.ProjectNumber + "</td>";
+                                            strProject += "<td>" + project.CurrentCost + "</td>";
+                                            strProject += "<td>" + project.ProjectClassName + "</td>";
+                                            strProject += "<td style='display:none'>" + project.Status + "</td>";
+                                            strProject += "<td>" +
+                                                "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                "</td>";
+                                            strProject += "</tr>";
 
+                                        }
                                     }
                                 }
-
                                 strProject += "</table></div>";
                                 //strProject += "<div class='center'>" +
                                 //    "<button type ='button' id='AddProjectGridBtn' contextType='ProgramElement' class='grid__btn'>Add Project</button>" +
@@ -4550,10 +4552,10 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
-                                    "<a href ='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                    "<a href='#'><i class='icon-72647 grid__btn-icons' title='View Gantt'></i></a>" +
-                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                    "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
 
@@ -4567,10 +4569,10 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
-                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                    "<a href='#'><i class='icon-72647 grid__btn-icons' title='View Gantt'></i></a>" +
-                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                    "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
 
@@ -4674,8 +4676,8 @@ angular.module('cpp.controllers').
                             if (program.children.length == 0) {
                                 str +=
                                     "<tr class='fade-selection-animation'> " +
-                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
@@ -4904,13 +4906,13 @@ angular.module('cpp.controllers').
 
                         //});
 
-                        //If no contract selected in grid
-                        $('#EditContractGridBtn, #DeleteContractGridBtn, #CloseContractGridBtn, #ViewGanttGridBtn').unbind('click').on('click', function () {
-                            var programId = $scope.GridContractId;
-                            if (programId == undefined) {
-                                dhtmlx.alert("Please Select a Contract");
-                            }
-                        });
+                        //If no contract selected in grid : No use in action column
+                        //$('#EditContractGridBtn, #DeleteContractGridBtn, #CloseContractGridBtn, #ViewGanttGridBtn').unbind('click').on('click', function () {
+                        //    var programId = $scope.GridContractId;
+                        //    if (programId == undefined) {
+                        //        dhtmlx.alert("Please Select a Contract");
+                        //    }
+                        //});
 
                         //Add Contract
                         $("#AddContractGridBtn").unbind('click').on("click", function () {
@@ -4921,19 +4923,22 @@ angular.module('cpp.controllers').
                         });
 
                         //Edit/Open clicked
-                        $('#EditContractGridBtn').unbind('click').on('click', function () {
-                                if (programId != undefined) {
-                                    $scope.modal_mode = "Update"
-                                    localStorage.setItem('modal_mode', "Update");
-                                    var programId = $scope.GridContractId;
-                                    var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                    wbsTree.setSelectedNode(selectedProgram);
-                                    $('#ProgramModal').modal({ show: true, backdrop: 'static' });
-                                }
+                        $("#tblContract").on('click', '#EditContractGridBtn', function () {
+                        //$('#EditContractGridBtn').unbind('click').on('click', function () {
+                            var programId = this.parentElement.parentElement.id;
+                            if (programId != undefined) {
+                                $scope.modal_mode = "Update"
+                                localStorage.setItem('modal_mode', "Update");
+                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                                wbsTree.setSelectedNode(selectedProgram);
+                                $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                            }
+                            return false;
                         });
 
                         //View Gantt button click
-                        $("#ViewGanttGridBtn").click(function () {
+                        $("#tblContract").on('click', '#ViewGanttGridBtn', function () {
+                        //$("#ViewGanttGridBtn").click(function () {
                             var programId = $scope.GridContractId;
                             if (programId != undefined) {
                                 window.location.href = "#/app/view-gantt-Contract/" + programId + "/0/" + $("#selectOrg").val();
@@ -4941,7 +4946,8 @@ angular.module('cpp.controllers').
                         });
 
                         //Delete Contract
-                        $("#DeleteContractGridBtn").bind("click", function () {
+                        $("#tblContract").on('click', '#DeleteContractGridBtn', function () {
+                        //$("#DeleteContractGridBtn").bind("click", function () {
                             $scope.modal_mode = 'Update';
                             var programId = $scope.GridContractId;
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
@@ -4950,7 +4956,8 @@ angular.module('cpp.controllers').
                         });
 
                         //Close Contract
-                        $("#CloseContractGridBtn").unbind('click').on("click", function () {
+                        $("#tblContract").on('click', '#CloseContractGridBtn', function () {
+                        //$("#CloseContractGridBtn").unbind('click').on("click", function () {
                             $scope.modal_mode = 'Update';
                             var programId = $scope.GridContractId;
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
@@ -4960,7 +4967,7 @@ angular.module('cpp.controllers').
 
                         //Select Contract
                         $('#tblContract tbody tr').on('click', function () {
-                            wbsTree.setSelectedNode(null);
+                            //wbsTree.setSelectedNode(null);
                             $('#tblContract tr.selected').removeAttr('class');
                             $(this).addClass('selected');
                             $('#wbsGridiewProject').html('');
@@ -4972,7 +4979,7 @@ angular.module('cpp.controllers').
 //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
                             var strProject = "";
                             strProject += "<div class='col-md-12'><div class='grid__view'>";
-                            strProject += "<div class='grid__title'>Project (" + selectedProgram.name +")<div class='grid__title_rgt'><a href='#'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                            strProject += "<div class='grid__title'>Project (" + selectedProgram.name +")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                             strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
                             strProject += "<thead class='t-head'>";
                             strProject += "<tr>";
@@ -4985,7 +4992,7 @@ angular.module('cpp.controllers').
                             if (selectedProgram.children == undefined) {
                                 $('#wbsGridiewElement').html('');
                                 var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element ()<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                strElement += "<div class='grid__title'>Project Element ()<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                 strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                 strElement += "<thead class='t-head'>";
                                 strElement += "<tr>";
@@ -5006,7 +5013,7 @@ angular.module('cpp.controllers').
                                 $('#wbsGridiewElement').append(strElement);
                                 $('#wbsGridiewTrend').html('');
                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                strTrend += "<div class='grid__title'>Trend ()<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                strTrend += "<div class='grid__title'>Trend ()<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
@@ -5028,13 +5035,13 @@ angular.module('cpp.controllers').
                                 for (projectI = 0; projectI < selectedProgram.children.length; projectI++) {
                                     var project = selectedProgram.children[projectI];
                                     if (projectI == 0) {
-										selectedProjectID = project.ProgramElementID;											 
+                                        selectedProjectID = project.ProgramElementID;
                                         strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
                                         //var selectedProjectID = project.ProgramElementID;
                                         //var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
                                         $('#wbsGridiewElement').html('');
                                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                        strElement += "<div class='grid__title'>Project Element (" + project.ProgramElementName + ")<div class='grid__title_rgt'><a href='#'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                        strElement += "<div class='grid__title'>Project Element (" + project.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                         strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                         strElement += "<thead class='t-head'>";
                                         strElement += "<tr>";
@@ -5044,126 +5051,127 @@ angular.module('cpp.controllers').
                                             "<th>Services</th>" +
                                             "<th>Action</th>" +
                                             "</tr></thead>";
-                                        for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
-                                            var projectElement = project.children[projectElementI];
-                                            if (projectElementI == 0) {
-                                                strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
-												$('#wbsGridiewTrend').html('');							   
-                                                var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
-                                                strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
-                                                strTrend += "<thead class='t-head'>";
-                                                strTrend += "<tr>";
-                                                strTrend += "<th>Name</th>" +
-                                                    "<th>Impact</th>" +
-                                                    "<th>Status</th>" +
-                                                    "<th>Action</th>" +
-                                                    "</tr></thead>";
-                                                _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
-                                                    .then(function (response) {
-                                                        if (response.data.result.PastTrendList.length != 0) {
-                                                            _baseline = response.data.result.PastTrendList[0];
-                                                        } else {
-                                                            _baseline = response.data.result.FutureTrendList[0];
-                                                        }
-                                                        strTrend += "<tr class='contact-row'>";
-                                                        strTrend += "<td>" + _baseline.TrendDescription + "</td>";
-                                                        strTrend += "<td></td>";
-                                                        strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                                                        strTrend += "<td></td>";
-                                                        strTrend += "</tr>";
-                                                        var strApproveTrend = "", strPendingTrend = "";
-                                                        if (_baseline.TrendStatus == "Approved") {
-                                                            if (response.data.result.FutureTrendList.length != 0) {
-
-                                                                for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                    strPendingTrend += "<tr class='contact-row'>";
-                                                                    strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                                                    strPendingTrend += "<td>" +  + "</td>";
-                                                                    strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
-                                                                    strPendingTrend += "<td>" +
-                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                                        "</td> ";
-                                                                    strPendingTrend += "</tr>";
-
-                                                                }
+                                        if (project.children != undefined && project.children.length > 0) {
+                                            for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
+                                                var projectElement = project.children[projectElementI];
+                                                if (projectElementI == 0) {
+                                                    strElement += "<tr id=" + projectElement.ProjectID + " class='selected contact-row'>";
+                                                    $('#wbsGridiewTrend').html('');
+                                                    var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                                                    strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                                                    strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                                                    strTrend += "<thead class='t-head'>";
+                                                    strTrend += "<tr>";
+                                                    strTrend += "<th>Name</th>" +
+                                                        "<th>Impact</th>" +
+                                                        "<th>Status</th>" +
+                                                        "<th>Action</th>" +
+                                                        "</tr></thead>";
+                                                    _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
+                                                        .then(function (response) {
+                                                            if (response.data.result.PastTrendList.length != 0) {
+                                                                _baseline = response.data.result.PastTrendList[0];
+                                                            } else {
+                                                                _baseline = response.data.result.FutureTrendList[0];
                                                             }
-                                                            if (response.data.result.PastTrendList.length > 1) {
-                                                                for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                    strApproveTrend += "<tr class='contact-row'>";
-                                                                    strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
-                                                                    strApproveTrend += "<td>" +  + "</td>";
-                                                                    strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
-                                                                    strApproveTrend += "<td>" +
-                                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                                        "</td> ";
-                                                                    strApproveTrend += "</tr>";
+                                                            strTrend += "<tr class='contact-row'>";
+                                                            strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                                                            strTrend += "<td></td>";
+                                                            strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                                                            strTrend += "<td></td>";
+                                                            strTrend += "</tr>";
+                                                            var strApproveTrend = "", strPendingTrend = "";
+                                                            if (_baseline.TrendStatus == "Approved") {
+                                                                if (response.data.result.FutureTrendList.length != 0) {
 
+                                                                    for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
+                                                                        strPendingTrend += "<tr class='contact-row'>";
+                                                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                                                        strPendingTrend += "<td>" + + "</td>";
+                                                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                                                        strPendingTrend += "<td>" +
+                                                                            "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                            "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                            "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                                            "</td> ";
+                                                                        strPendingTrend += "</tr>";
+
+                                                                    }
                                                                 }
+                                                                if (response.data.result.PastTrendList.length > 1) {
+                                                                    for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
+                                                                        strApproveTrend += "<tr class='contact-row'>";
+                                                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                                                        strApproveTrend += "<td>" + + "</td>";
+                                                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                                                        strApproveTrend += "<td>" +
+                                                                            "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                            "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                            "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>";
+                                                                        strApproveTrend += "</tr>";
+
+                                                                    }
+                                                                }
+
                                                             }
+                                                            strTrend += strApproveTrend;
+                                                            strTrend += "<tr class='contact-row'>";
+                                                            strTrend += "<td>Current</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "</tr>";
+                                                            strTrend += strPendingTrend;
+                                                            strTrend += "<tr class='contact-row'>";
+                                                            strTrend += "<td>Forecast</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "<td>&nbsp;</td>";
+                                                            strTrend += "</tr>";
+                                                            strTrend += "</table></div>";
+                                                            //strTrend += "<div class='center'>" +
+                                                            //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                                            //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                                            //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                                            //    "</div>";
+                                                            strTrend += "</div></div>";
+                                                            $('#wbsGridiewTrend').append(strTrend);
 
-                                                        }
-                                                        strTrend += strApproveTrend;
-                                                        strTrend += "<tr class='contact-row'>";
-                                                        strTrend += "<td>Current</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "</tr>";
-                                                        strTrend += strPendingTrend;
-                                                        strTrend += "<tr class='contact-row'>";
-                                                        strTrend += "<td>Forecast</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "<td>&nbsp;</td>";
-                                                        strTrend += "</tr>";
-                                                        strTrend += "</table></div>";
-                                                        //strTrend += "<div class='center'>" +
-                                                        //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                                        //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                                        //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                                        //    "</div>";
-                                                        strTrend += "</div></div>";
-                                                        $('#wbsGridiewTrend').append(strTrend);
-
-                                                    });
-                                            }
-                                            else {
-                                                strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
-                                            }
-                                            //strElement += "<td>" + projectElement.name + "</td>";
-                                            //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                            //strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                            //strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                            //strElement += "</tr>";
-                                            if (projectElement.Status == "Closed") {
-                                                //strElement += "<tr id=" + project.ProgramElementID + ">";
-                                                strElement += "<td style='color:red'>" + projectElement.name + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
-                                                strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
-                                                strElement += "<td>" +
-                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                    "</td>";
-                                                strElement += "</tr>";
-                                            }
-                                            else {
-                                                strElement += "<td>" + projectElement.name + "</td>";
-                                                strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                                strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                                strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                                strElement += "<td>" +
-                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
-                                                    "</td>";
-                                                strElement += "</tr>";
+                                                        });
+                                                }
+                                                else {
+                                                    strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
+                                                }
+                                                //strElement += "<td>" + projectElement.name + "</td>";
+                                                //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                                //strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                                //strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                                //strElement += "</tr>";
+                                                if (projectElement.Status == "Closed") {
+                                                    //strElement += "<tr id=" + project.ProgramElementID + ">";
+                                                    strElement += "<td style='color:red'>" + projectElement.name + "</td>";
+                                                    strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
+                                                    strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
+                                                    strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                                    strElement += "<td>" +
+                                                        "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                        "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                        "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                        "</td>";
+                                                    strElement += "</tr>";
+                                                }
+                                                else {
+                                                    strElement += "<td>" + projectElement.name + "</td>";
+                                                    strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                                    strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                                    strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                                    strElement += "<td>" +
+                                                        "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                        "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                        "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                                        "</td>";
+                                                    strElement += "</tr>";
+                                                }
                                             }
                                         }
                                         strElement += "</table></div>";
@@ -5192,9 +5200,9 @@ angular.module('cpp.controllers').
                                         strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                         strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
                                         strProject += "<td>" +
-                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>>" +
+                                            "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                             "</td>";
                                         strProject += "</tr>";
                                     }
@@ -5205,9 +5213,9 @@ angular.module('cpp.controllers').
                                         strProject += "<td>" + project.CurrentCost + "</td>";
                                         strProject += "<td>" + project.ProjectClassName + "</td>";
                                         strProject += "<td>" +
-                                            "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                            "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                            "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                            "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                            "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                             "</td>";
                                         strProject += "</tr>";
 
@@ -5270,6 +5278,7 @@ angular.module('cpp.controllers').
 
                         function BindElement(selectedProgramID) {
                             //Add Project
+                            //$('#tblProject').on('click, #AddProjectGridBtn', function () {
                             $("#AddProjectGridBtn").unbind('click').on("click", function () {
                                 //var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
@@ -5279,7 +5288,8 @@ angular.module('cpp.controllers').
                             });
 
                             //Edit/Open Project
-                            $('#EditProjectGridBtn').unbind('click').on('click', function () {
+                            $('#tblProject').on('click, #EditProjectGridBtn', function () {
+                            //$('#EditProjectGridBtn').unbind('click').on('click', function () {
                                 //var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 var projectId = $scope.GridProjectId;
@@ -5289,7 +5299,8 @@ angular.module('cpp.controllers').
                             });
 
                             //Delete Project
-                            $("#DeleteProjectGridBtn").bind("click", function () {
+                            $('#tblProject').on('click, #DeleteProjectGridBtn', function () {
+                            //$("#DeleteProjectGridBtn").bind("click", function () {
                                 //var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 var projectId = $scope.GridProjectId;
@@ -5299,7 +5310,8 @@ angular.module('cpp.controllers').
                             });
 
                             //Close Project
-                            $("#CloseProjectGridBtn").unbind('click').on("click", function () {
+                            $('#tblProject').on('click, #CloseProjectGridBtn', function () {
+                            //$("#CloseProjectGridBtn").unbind('click').on("click", function () {
                                 $scope.modal_mode = 'Update';
                                 // var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
@@ -5312,7 +5324,7 @@ angular.module('cpp.controllers').
 
                             //Select Project
                             $('#tblProject tr').on('click', function () {
-                                wbsTree.setSelectedNode(null);
+                                //wbsTree.setSelectedNode(null);
                                 $('#tblProject tr.selected').removeClass('selected');
                                 $(this).addClass('selected');
                                 $('#wbsGridiewElement').html('');
@@ -5324,7 +5336,7 @@ angular.module('cpp.controllers').
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                                 var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element (" + selectedProject.ProgramElementName + ")</div>";
+                                strElement += "<div class='grid__title'>Project Element (" + selectedProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                 strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                                 strElement += "<thead class='t-head'>";
                                 strElement += "<tr>";
@@ -5343,7 +5355,7 @@ angular.module('cpp.controllers').
                                             $('#wbsGridiewTrend').html('');
                                             var selectedProjectElementID = projectElement.ProjectID;
                                             var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
                                             strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                             strTrend += "<thead class='t-head'>";
                                             strTrend += "<tr>";
@@ -5374,9 +5386,10 @@ angular.module('cpp.controllers').
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                 strPendingTrend += "<td>" + + "</td>";
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
-                                                                strPendingTrend += "<td>" + "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                strPendingTrend += "<td>"
+                                                                    + "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                    "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                    "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                                     "</td> ";
 
                                                                 strPendingTrend += "</tr>";
@@ -5390,9 +5403,9 @@ angular.module('cpp.controllers').
                                                                 strApproveTrend += "<td>" + + "</td>";
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                                 strApproveTrend += "<td>" +
-                                                                    "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                                    "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                                    "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                                    + "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                                    "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                    "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                                     "</td> ";
                                                                 strApproveTrend += "</tr>";
 
@@ -5442,9 +5455,9 @@ angular.module('cpp.controllers').
                                             strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                             strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
                                             strElement += "<td>" +
-                                                "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
                                                 "</td>";
                                             strElement += "</tr>";
                                         }
@@ -5455,9 +5468,9 @@ angular.module('cpp.controllers').
                                             strElement += "<td>" + projectElement.ServiceName + "</td>";
                                             strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
                                             strElement += "<td>" +
-                                                "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
                                                 "</td>";
                                             strElement += "</tr>";
                                         }
@@ -5493,8 +5506,22 @@ angular.module('cpp.controllers').
 
                         function BindTrend(selectedProgramID, selectedProjectID)
                         {
+                            //Add Element
+                            //$('#tblElement').on('click, #EditElementGridBtn', function () {
+                                $('#AddElementGridBtn').unbind('click').on('click', function () {
+                                var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                                var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                                //var elementId = $scope.GridProjectId;
+                                //var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                                wbsTree.setSelectedNode(selectedProject);
+                                $('#ProjectModal').modal({ show: true, backdrop: 'static' });
+                            });
+
                             //Edit/Open Element
-                            $('#EditElementGridBtn').unbind('click').on('click', function () {
+                            $('#tblElement').on('click, #EditElementGridBtn', function () {
+                            //$('#EditElementGridBtn').unbind('click').on('click', function () {
                                 var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                                 var projectId = $scope.GridProjectId;
@@ -5506,7 +5533,8 @@ angular.module('cpp.controllers').
                             });
 
                             //Delete Element
-                            $("#DeleteElementGridBtn").bind("click", function () {
+                            $('#tblElement').on('click, #DeleteElementGridBtn', function () {
+                            //$("#DeleteElementGridBtn").bind("click", function () {
                                 var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                                 var projectId = $scope.GridProjectId;
@@ -5518,7 +5546,8 @@ angular.module('cpp.controllers').
                             });
 
                             //Close Element
-                            $("#CloseElementGridBtn").unbind('click').on("click", function () {
+                            $('#tblElement').on('click, #CloseElementGridBtn', function () {
+                            //$("#CloseElementGridBtn").unbind('click').on("click", function () {
                                 $scope.modal_mode = 'Update';
                                 var programId = $scope.GridContractId;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === programId);
@@ -5546,17 +5575,12 @@ angular.module('cpp.controllers').
                                 }
                                 wbsTree.setNewTrend(true);
                                 var s = wbsTree.getWBSTrendTree().getTrendNumber();
-
-
-
                                 $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
                                 $('#cancel_futuretrend').show();
-
-
-
                             });
                             
                             $('#tblElement tbody tr').on('click', function () {
+                                //wbsTree.setSelectedNode(null);
                                 $('#tblElement tr.selected').removeClass('selected');
                                 $(this).addClass('selected');
                                 $('#wbsGridiewTrend').html('');
@@ -5565,16 +5589,16 @@ angular.module('cpp.controllers').
                                 selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                                 var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
                                 //Add Trend
-                                $("#AddTrendGridBtn").unbind('click').on("click", function () {
-                                    //var programId = $scope.GridContractId;
-                                    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                    wbsTree.setSelectedNode(selectedElement);
-                                    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+                                //$("#AddTrendGridBtn").unbind('click').on("click", function () {
+                                //    //var programId = $scope.GridContractId;
+                                //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //    wbsTree.setSelectedNode(selectedElement);
+                                //    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
 
-                                });
+                                //});
                                 var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                 strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                 strTrend += "<thead class='t-head'>";
                                 strTrend += "<tr>";
@@ -5606,9 +5630,9 @@ angular.module('cpp.controllers').
                                                     strPendingTrend += "<td>" +  + "</td>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                                     strPendingTrend += "<td>" +
-                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                        "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                        "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                        "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                         "</td> ";
                                                     strPendingTrend += "</tr>";
 
@@ -5621,9 +5645,9 @@ angular.module('cpp.controllers').
                                                     strApproveTrend += "<td>" +  + "</td>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                     strApproveTrend += "<td>" +
-                                                        "<a href='#'><i class='fa-pencil grid__btn-icons' title='Edit/Open' aria-hidden='true'></i></a >" +
-                                                        "<a href='#'><i class='fa-trash grid__btn-icons ' title='Delete' aria-hidden='true'></i></a>" +
-                                                        "<a href='#'><i class='fa-times grid__btn-icons' title='Close' aria-hidden='true'></i></a>" +
+                                                        "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                        "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                        "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                         "</td> ";
                                                     strApproveTrend += "</tr>";
 
