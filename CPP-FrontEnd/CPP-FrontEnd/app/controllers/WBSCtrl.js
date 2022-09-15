@@ -4259,6 +4259,10 @@ angular.module('cpp.controllers').
                         $("#btnQuickSearch").css('background-color', 'black');   //vaishnavi 02-03-2022
                         $('#wbs-tree').html('');    //vaishnavi 02-03-2022
                         $('#wbsGridView').html('');   //vaishnavi 02-03-2022
+
+                        $('#wbsGridiewProject').html('');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
                         console.log(response);
                         _wbsTreeData = response;
                         var treeData = response;
