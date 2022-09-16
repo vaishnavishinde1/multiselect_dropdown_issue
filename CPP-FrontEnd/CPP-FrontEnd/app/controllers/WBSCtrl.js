@@ -4355,6 +4355,7 @@ angular.module('cpp.controllers').
                                                                 console.log(response);
                                                                 // $http.get("http://localhost:29986/api/Request/TrendGraph/" + selProjId).then(function(response){
                                                                 var trendgraphData = response.data;
+                                                                $scope.gridTrendData = trendgraphData.result;
                                                                 var futureTrendList, pastTrendList;
                                                                 strTrend = "";
                                                                 if (response.data.result.PastTrendList.length != 0) {
@@ -4374,7 +4375,7 @@ angular.module('cpp.controllers').
                                                                     if (response.data.result.FutureTrendList.length != 0) {
 
                                                                         for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                            strPendingTrend += "<tr id=" + projectElement.ProjectID + " class='contact-row'>";
+                                                                            strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                                                             strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                             strPendingTrend += "<td>" + + "</td>";
                                                                             strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -4389,7 +4390,7 @@ angular.module('cpp.controllers').
                                                                     }
                                                                     if (response.data.result.PastTrendList.length > 1) {
                                                                         for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                            strApproveTrend += "<tr id=" + projectElement.ProjectID + " class='contact-row'>";
+                                                                            strApproveTrend += "<tr id=" + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
                                                                             strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                                             strApproveTrend += "<td>" + + "</td>";
                                                                             strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5073,6 +5074,7 @@ angular.module('cpp.controllers').
                                                         "</tr></thead><tbody>";
                                                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
                                                         .then(function (response) {
+                                                            $scope.gridTrendData = response.data.result;
                                                             if (response.data.result.PastTrendList.length != 0) {
                                                                 _baseline = response.data.result.PastTrendList[0];
                                                             } else {
@@ -5091,7 +5093,7 @@ angular.module('cpp.controllers').
                                                                 if (response.data.result.FutureTrendList.length != 0) {
 
                                                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                        strPendingTrend += "<tr class='contact-row'>";
+                                                                        strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                         strPendingTrend += "<td>" + + "</td>";
                                                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -5106,7 +5108,7 @@ angular.module('cpp.controllers').
                                                                 }
                                                                 if (response.data.result.PastTrendList.length > 1) {
                                                                     for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                        strApproveTrend += "<tr class='contact-row'>";
+                                                                        strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
                                                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                                         strApproveTrend += "<td>" + + "</td>";
                                                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5411,7 +5413,7 @@ angular.module('cpp.controllers').
                                             //$('#wbsGridiewTrend').html('');
                                             var selectedProjectElementID = projectElement.ProjectID;
                                             var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'><a href='#'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></a></div></div>";
+                                            strTrend += "<div class='grid__title'>Trend (" + projectElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                                             strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                                             strTrend += "<thead class='t-head'>";
                                             strTrend += "<tr>";
@@ -5422,6 +5424,8 @@ angular.module('cpp.controllers').
                                                 "</tr></thead><tbody>";
                                             _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + projectElement.ProjectID)
                                                 .then(function (response) {
+                                                    $scope.gridTrendData = response.data.result;
+
                                                     if (response.data.result.PastTrendList.length != 0) {
                                                         _baseline = response.data.result.PastTrendList[0];
                                                     } else {
@@ -5440,7 +5444,7 @@ angular.module('cpp.controllers').
                                                         if (response.data.result.FutureTrendList.length != 0) {
 
                                                             for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                                strPendingTrend += "<tr class='contact-row'>";
+                                                                strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                                 strPendingTrend += "<td>" + + "</td>";
                                                                 strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -5456,7 +5460,7 @@ angular.module('cpp.controllers').
                                                         }
                                                         if (response.data.result.PastTrendList.length > 1) {
                                                             for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                                strApproveTrend += "<tr class='contact-row'>";
+                                                                strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                                 strApproveTrend += "<td>" + + "</td>";
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5647,6 +5651,8 @@ angular.module('cpp.controllers').
                                 $('#tblElement tr.selected').removeClass('selected');
                                 $(this).addClass('selected');
                                 $('#wbsGridiewTrend').html('');
+                                localStorage.setItem('contextType', 'Project');
+
                                 var selectedProjectElementID = this.firstChild.parentElement.id;
                                 var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                                 selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
@@ -5673,6 +5679,8 @@ angular.module('cpp.controllers').
                                     "</tr></thead><tbody>";
                                 _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
                                     .then(function (response) {
+                                        $scope.gridTrendData = response.data.result;
+
                                         if (response.data.result.PastTrendList.length != 0) {
                                             _baseline = response.data.result.PastTrendList[0];
                                         } else {
@@ -5691,7 +5699,7 @@ angular.module('cpp.controllers').
                                             if (response.data.result.FutureTrendList.length != 0) {
 
                                                 for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                    strPendingTrend += "<tr class='contact-row'>";
+                                                    strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
                                                     strPendingTrend += "<td>" + + "</td>";
                                                     strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
@@ -5706,7 +5714,7 @@ angular.module('cpp.controllers').
                                             }
                                             if (response.data.result.PastTrendList.length > 1) {
                                                 for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                    strApproveTrend += "<tr class='contact-row'>";
+                                                    strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
                                                     strApproveTrend += "<td>" + + "</td>";
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
@@ -5785,10 +5793,149 @@ angular.module('cpp.controllers').
                                 wbsTree.setNewTrend(true);
                                 var s = wbsTree.getWBSTrendTree().getTrendNumber();
                                 wbsTree.setSelectedNode(selectedElement);
-                                
+                                var allElementTrendData = $scope.gridTrendData;
+                                var selectedTrend = {};
+                                selectedTrend.metadata = allElementTrendData.CurrentProjectList;
+                                wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
                                 $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
                                 //  $('#approve_trend').hide();
                                 $('#cancel_futuretrend').show();
+
+                            });
+
+                            //Edit/Open Trend
+                            $('#tblTrend').on('click', '#EditTrendGridBtn', function () {
+                                //$('#EditElementGridBtn').unbind('click').on('click', function () {
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                                var trendNumber = this.parentElement.parentElement.id;
+
+                                wbsTree.setSelectedNode(selectedElement);
+                                wbsTree.setNewTrend(false);
+                                var allElementTrendData = $scope.gridTrendData;
+                                var selectedTrend = {};
+                                
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                                    $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
+                                }
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                                    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+                                }
+                                //var selectedTrend = selectedElement.children.find(x => x.t);
+                                //wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                                //wbsTrendTree.setSelectedTreeNode(s);
+                                //  $('#approve_trend').hide();
+                                //$('#cancel_futuretrend').show();
+                            });
+
+                            //Delete Trend
+                            $('#tblTrend').on('click', '#DeleteTrendGridBtn', function () {
+                                //$("#DeleteElementGridBtn").bind("click", function () {
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var elementId = this.parentElement.parentElement.id;
+                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                                var trendNumber = this.parentElement.parentElement.id;
+
+                                wbsTree.setSelectedNode(selectedElement);
+                                wbsTree.setNewTrend(false);
+                                var allElementTrendData = $scope.gridTrendData;
+                                var selectedTrend = {};
+
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                                    localStorage.setItem('contextType', 'FutureTrend');
+
+                                    $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                                }
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                                    localStorage.setItem('contextType', 'PastTrend');
+
+                                    $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                                }
+                            });
+
+                            //Close Trend
+                            $('#tblTrend').on('click', '#CloseTrendGridBtn', function () {
+                                //$("#CloseElementGridBtn").unbind('click').on("click", function () {
+                                $scope.modal_mode = 'Update';
+                                //var programId = $scope.GridContractId;
+                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                                //var projectId = $scope.GridProjectId;
+                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                                //var elementId = $scope.GridProjectId;
+                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                                var trendNumber = this.parentElement.parentElement.id;
+
+                                wbsTree.setSelectedNode(selectedElement);
+                                wbsTree.setNewTrend(false);
+                                var allElementTrendData = $scope.gridTrendData;
+                                var selectedTrend = {};
+
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                                    localStorage.setItem('contextType', 'FutureTrend');
+
+                                    $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                                }
+                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                        if (trend.TrendNumber == trendNumber) {
+                                            selectedTrend.metadata = trend;
+                                            return false;
+                                        }
+                                    });
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                                    localStorage.setItem('contextType', 'PastTrend');
+
+                                    $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                                }
 
                             });
 
