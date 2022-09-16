@@ -601,6 +601,7 @@
     <Compile Include="Controllers\ContractExpiredMailCtrl.cs" />
     <Compile Include="Controllers\ContractInsuranceController.cs" />
     <Compile Include="Controllers\ContractModificationController.cs" />
+    <Compile Include="Controllers\ContractWarrantyController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\ExportToMPPController.cs" />
     <Compile Include="Controllers\FileUploadModificationController.cs" />
@@ -614,6 +615,7 @@
     <Compile Include="Controllers\RegisterChangeOrderController.cs" />
     <Compile Include="Controllers\RegisterClientPOCController.cs" />
     <Compile Include="Controllers\RegisterContractController.cs" />
+    <Compile Include="Controllers\RegisterHolidayController.cs" />
     <Compile Include="Controllers\RegisterImportCoAdDataController.cs" />
     <Compile Include="Controllers\RegisterInventoryController.cs" />
     <Compile Include="Controllers\RegisterManufacturerController.cs" />
@@ -628,6 +630,7 @@
     <Compile Include="Controllers\RegisterWrapController.cs" />
     <Compile Include="Controllers\RequestActivitiesForGanttAtContractLevelController.cs" />
     <Compile Include="Controllers\RequestActivitiesForGanttAtProjectLevelController.cs" />
+    <Compile Include="Controllers\RequestAdditionalInfoController.cs" />
     <Compile Include="Controllers\RequestApprovalTimerCountDownController.cs" />
     <Compile Include="Controllers\RequestApprovedCodeSubmitController.cs" />
     <Compile Include="Controllers\RequestBOMRequestController.cs" />
@@ -639,6 +642,7 @@
     <Compile Include="Controllers\RequestExportCostCodeToExcelController.cs" />
     <Compile Include="Controllers\RequestExportInsperityCostCodeToExcelController.cs" />
     <Compile Include="Controllers\RequestGanttViewCostController.cs" />
+    <Compile Include="Controllers\RequestHolidayController.cs" />
     <Compile Include="Controllers\RequestInventoryController.cs" />
     <Compile Include="Controllers\RequestManufacturerController.cs" />
     <Compile Include="Controllers\RequestMFAConfigurationController.cs" />
@@ -861,6 +865,7 @@
     <Compile Include="Models\Contract.cs" />
     <Compile Include="Models\ContractInsurance.cs" />
     <Compile Include="Models\ContractModification.cs" />
+    <Compile Include="Models\ContractProjectManager.cs" />
     <Compile Include="Models\ContractValueChangeMail.cs" />
     <Compile Include="Models\DataMigration.cs" />
     <Compile Include="Models\DocumentData.cs" />
@@ -873,6 +878,7 @@
     <Compile Include="Models\ExportToMPP\GraphDetails.cs" />
     <Compile Include="Models\ExportToMPP\ProjectModel.cs" />
     <Compile Include="Models\GanttViewCost.cs" />
+    <Compile Include="Models\Holidays.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\MFAConfiguration.cs" />

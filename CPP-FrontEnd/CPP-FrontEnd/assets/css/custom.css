@@ -1987,3 +1987,8 @@ th.sort-by {
 #CloseTrendGridBtn {
     cursor:pointer;
 }
+
+.disabledIcon {
+    color: #b1b1b1;
+    cursor: not-allowed !important;
+}

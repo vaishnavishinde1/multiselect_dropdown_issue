@@ -2913,6 +2913,7 @@ angular.module('cpp.controllers').
             //----------------------------Vaishnavi 30-03-2022 Start Here-------------------------------------------------//
             $('#closed_button').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
+                var selectedNodeTrend = wbsTrendTree.getSelectedTreeNode();
                 var view_mode = localStorage.getItem('MODE');
                 var type;
                 if (view_mode == 'gridview' || view_mode == '') {
@@ -2936,7 +2937,6 @@ angular.module('cpp.controllers').
                 }
 
                 else {
-                    var parentNode = selectedNode.parent;
 
                     //
 
@@ -2980,6 +2980,9 @@ angular.module('cpp.controllers').
                         }
                     }
                     else {
+
+                        var type = localStorage.getItem('contextType');
+
                         if (selectedNode.level === "Root") {
                             console.log(selectedNode);
                             var s = $("#update_organization");
@@ -3028,8 +3031,7 @@ angular.module('cpp.controllers').
                             });
 
 
-                        } else
-                            if (selectedNode.level === "Program") {
+                        } else if (selectedNode.level === "Program") {
                                 wbsTree.getProgram().persist().save({
                                     "Operation": 5,
                                     "ProgramID": selectedNode.ProgramID,
@@ -3078,32 +3080,71 @@ angular.module('cpp.controllers').
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
 
                                 })
-                            } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
-                                wbsTree.getProject().persist().save({
-                                    "Operation": 5,
-                                    "ProjectID": selectedNode.ProjectID,
-                                    "ProjectName": selectedNode.name,
-                                    "ProjectManager": selectedNode.ProjectManager,
-                                    "ProjectSponsor": selectedNode.ProjectSponsor,
-                                    "LatLong": wbsTree.getProjectMap().getCoordinates(),
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
-                                }, function (response) {
-                                    console.log("-------DELETED PROJECT--------");
-                                    console.log(selectedNode);
+                            } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend && type == "Project") {
 
-                                    var pgmId = $("#selectProgram").val();
-                                    var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                    var firstGNode = $('#trendSvg').children()[0];
-                                    //$(firstGNode).children().remove();
-                                    // window.location.reload();
+                                    wbsTree.getProject().persist().save({
+                                        "Operation": 5,
+                                        "ProjectID": selectedNode.ProjectID,
+                                        "ProjectName": selectedNode.name,
+                                        "ProjectManager": selectedNode.ProjectManager,
+                                        "ProjectSponsor": selectedNode.ProjectSponsor,
+                                        "LatLong": wbsTree.getProjectMap().getCoordinates(),
+                                        "DeletedBy": wbsTree.getLocalStorage().userName
+                                    }, function (response) {
+                                        console.log("-------DELETED PROJECT--------");
+                                        console.log(selectedNode);
+
+                                        var pgmId = $("#selectProgram").val();
+                                        var orgId = $("#selectOrg").val();
+                                        $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
+                                        var firstGNode = $('#trendSvg').children()[0];
+                                        //$(firstGNode).children().remove();
+                                        // window.location.reload();
+                                    });
+
+                            } else if ((type === "FutureTrend" || type === "PastTrend") && (selectedNodeTrend.metadata.level == "FutureTrend" || selectedNodeTrend.metadata.level == "PastTrend")) {
+                                var obj = {
+                                    "Operation": 6,
+                                    "OrganizationID": selectedNodeTrend.metadata.OrganizationID,
+                                    "ProjectID": selectedNodeTrend.metadata.ProjectID,
+                                    "ProjectName": selectedNodeTrend.metadata.ProjectName,
+                                    "TrendNumber": selectedNodeTrend.metadata.TrendNumber,
+                                    //Added by Nivedita on 23022022 for soft delete
+                                    "DeletedBy": wbsTree.getLocalStorage().userName
+
+                                };
+                                _Trend.persist().save(obj, function (response) {
+                                    //$('#FutureTrendModal').modal('hide');
+                                    //$('#DeleteModal').modal('hide');
+
+                                    wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                        selectedNode.parent.parent.programFunds = response.result;
+                                        if ($('#FutureTrendModal').hasClass('in'))
+                                            $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                        if ($('#PastTrendModal').hasClass('in'))
+                                            $('#PastTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                        wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
+                                        wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
+                                        wbsTree.getScope().trend = null;
+                                        // window.location.reload();
+                                        var pgmId = $("#selectProgram").val();
+                                        var orgId = $("#selectOrg").val();
+                                        $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
+
+                                    });
+
+
                                 });
+                                wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
                             }
-                        //Find  index of selected node
-                        if (selectedNode.level == "Root") return;
-                        var i = parentNode.children.indexOf(selectedNode);
-                        //Remove selected child index from parent
-                        parentNode.children.splice(i, 1);
+                        // Narayan - Commenting this section causing issue for undefined node level
+                        ////Find  index of selected node
+                        //if (selectedNode.level == "Root") return;
+                        //var parentNode = selectedNode.parent;
+
+                        //var i = parentNode.children.indexOf(selectedNode);
+                        ////Remove selected child index from parent
+                        //parentNode.children.splice(i, 1);
                         var tooltip = d3.select("#toolTip").style("opacity", 0);
 
                     }
@@ -4396,7 +4437,7 @@ angular.module('cpp.controllers').
                                                                             strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                                             strApproveTrend += "<td>" +
                                                                                 "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                                                "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                                "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
                                                                                 "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                                                 "</td> ";
                                                                             strApproveTrend += "</tr>";
@@ -4405,19 +4446,19 @@ angular.module('cpp.controllers').
                                                                     }
 
                                                                     strTrend += strApproveTrend;
-                                                                    strTrend += "<tr class='contact-row'>";
-                                                                    strTrend += "<td>Current</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "</tr>";
+                                                                    //strTrend += "<tr class='contact-row'>";
+                                                                    //strTrend += "<td>Current</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "</tr>";
                                                                     strTrend += strPendingTrend;
-                                                                    strTrend += "<tr class='contact-row'>";
-                                                                    strTrend += "<td>Forecast</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "<td>&nbsp;</td>";
-                                                                    strTrend += "</tr>";
+                                                                    //strTrend += "<tr class='contact-row'>";
+                                                                    //strTrend += "<td>Forecast</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "<td>&nbsp;</td>";
+                                                                    //strTrend += "</tr>";
 
 
                                                                 }
@@ -5114,7 +5155,7 @@ angular.module('cpp.controllers').
                                                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                                         strApproveTrend += "<td>" +
                                                                             "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                                            "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                            "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
                                                                             "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>";
                                                                         strApproveTrend += "</tr>";
 
@@ -5123,19 +5164,20 @@ angular.module('cpp.controllers').
 
                                                             }
                                                             strTrend += strApproveTrend;
-                                                            strTrend += "<tr class='contact-row'>";
-                                                            strTrend += "<td>Current</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "</tr>";
+                                                            //strTrend += "<tr class='contact-row'>";
+                                                            //strTrend += "<td>Current</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "</tr>";
                                                             strTrend += strPendingTrend;
-                                                            strTrend += "<tr class='contact-row'>";
-                                                            strTrend += "<td>Forecast</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "<td>&nbsp;</td>";
-                                                            strTrend += "</tr>";
+                                                            //strTrend += "<tr class='contact-row'>";
+                                                            //strTrend += "<td>Forecast</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "<td>&nbsp;</td>";
+                                                            //strTrend += "</tr>";
+
                                                             //strTrend += "<div class='center'>" +
                                                             //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
                                                             //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
@@ -5466,7 +5508,7 @@ angular.module('cpp.controllers').
                                                                 strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                                 strApproveTrend += "<td>" +
                                                                     + "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                                    "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
                                                                     "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                                     "</td> ";
                                                                 strApproveTrend += "</tr>";
@@ -5477,19 +5519,19 @@ angular.module('cpp.controllers').
 
                                                     }
                                                     strTrend += strApproveTrend;
-                                                    strTrend += "<tr class='contact-row'>";
-                                                    strTrend += "<td>Current</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "</tr>";
-                                                    strTrend += strPendingTrend;
-                                                    strTrend += "<tr class='contact-row'>";
-                                                    strTrend += "<td>Forecast</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "<td>&nbsp;</td>";
-                                                    strTrend += "</tr>";
+                                                    //strTrend += "<tr class='contact-row'>";
+                                                    //strTrend += "<td>Current</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "</tr>";
+                                                    //strTrend += strPendingTrend;
+                                                    //strTrend += "<tr class='contact-row'>";
+                                                    //strTrend += "<td>Forecast</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "<td>&nbsp;</td>";
+                                                    //strTrend += "</tr>";
 
                                                     $('#tblTrend tbody').append(strTrend);
 
@@ -5720,7 +5762,7 @@ angular.module('cpp.controllers').
                                                     strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                                     strApproveTrend += "<td>" +
                                                         "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                        "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                        "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
                                                         "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
                                                         "</td> ";
                                                     strApproveTrend += "</tr>";
@@ -5730,19 +5772,19 @@ angular.module('cpp.controllers').
 
                                         }
                                         strTrend += strApproveTrend;
-                                        strTrend += "<tr class='contact-row'>";
-                                        strTrend += "<td>Current</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "</tr>";
+                                        //strTrend += "<tr class='contact-row'>";
+                                        //strTrend += "<td>Current</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "</tr>";
                                         strTrend += strPendingTrend;
-                                        strTrend += "<tr class='contact-row'>";
-                                        strTrend += "<td>Forecast</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "<td>&nbsp;</td>";
-                                        strTrend += "</tr>";
+                                        //strTrend += "<tr class='contact-row'>";
+                                        //strTrend += "<td>Forecast</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "<td>&nbsp;</td>";
+                                        //strTrend += "</tr>";
 
                                         $('#tblTrend tbody').append(strTrend);
 

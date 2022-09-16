@@ -3203,6 +3203,8 @@ WBSTree = (function ($) {
                 var scope = wbsTree.getScope();
                 var orgId = $("#selectOrg").val();
                 var selectedNode = wbsTree.getSelectedNode();
+                var selectedNodeTrend = wbsTrendTree.getSelectedTreeNode();
+
                 var view_mode = localStorage.getItem('MODE');
                 if (view_mode == 'gridview' || view_mode == '') {
                     var type = localStorage.getItem('contextType');
@@ -3308,6 +3310,9 @@ WBSTree = (function ($) {
                         }
                     }
                     else {
+
+                        var type = localStorage.getItem('contextType');
+
                         if (selectedNode.level === "Root") {
                             console.log(selectedNode);
                             var s = $("#update_organization");
@@ -3357,125 +3362,153 @@ WBSTree = (function ($) {
                             });
 
 
-                        } else
-                            if (selectedNode.level === "Program") {
-                                wbsTree.getProgram().persist().save({
-                                    "Operation": 3,
-                                    "ProgramID": selectedNode.ProgramID,
-                                    "ProgramName": selectedNode.name,
-                                    "ProgramManager": selectedNode.ProgramManager,
-                                    "ProgramSponsor": selectedNode.ProgramSponsor,
-                                    "programFunds": selectedNode.programFunds,
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
+                        } else if (selectedNode.level === "Program") {
+                            wbsTree.getProgram().persist().save({
+                                "Operation": 3,
+                                "ProgramID": selectedNode.ProgramID,
+                                "ProgramName": selectedNode.name,
+                                "ProgramManager": selectedNode.ProgramManager,
+                                "ProgramSponsor": selectedNode.ProgramSponsor,
+                                "programFunds": selectedNode.programFunds,
+                                "DeletedBy": wbsTree.getLocalStorage().userName
 
-                                }, function (response) {
-                                    console.log("-------DELETED PROGRAM--------");
-                                    if ($('#ProgramModal').hasClass('in'))
-                                        $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
-                                    wbsTree.updateTreeNodes(selectedNode.parent);
-                                    ////if (!displayMap)
-                                    //wbsTree.loadFullGridView();
-                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
-                                    wbsTree.getWBSTrendTree().trendGraph();
+                            }, function (response) {
+                                console.log("-------DELETED PROGRAM--------");
+                                if ($('#ProgramModal').hasClass('in'))
+                                    $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
+                                wbsTree.updateTreeNodes(selectedNode.parent);
+                                ////if (!displayMap)
+                                //wbsTree.loadFullGridView();
+                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                wbsTree.getWBSTrendTree().trendGraph();
 
-                                    // wbsTree.loadContextMenu();
-                                    //window.location.reload();   //Manasi 28-07-2020
-                                });
-                            } else if (selectedNode.level === "ProgramElement") {
-                                wbsTree.getProgramElement().persist().save({
-                                    "Operation": 3,
-                                    "ProgramID": selectedNode.ProgramID,
-                                    "ProgramElementID": selectedNode.ProgramElementID,
-                                    "ProgramElementName": selectedNode.name,
-                                    "ProgramElementManager": selectedNode.ProgramElementManager,
-                                    "ProgramElementSponsor": selectedNode.ProgramElementSponsor,
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
+                                // wbsTree.loadContextMenu();
+                                //window.location.reload();   //Manasi 28-07-2020
+                            });
+                        } else if (selectedNode.level === "ProgramElement") {
+                            wbsTree.getProgramElement().persist().save({
+                                "Operation": 3,
+                                "ProgramID": selectedNode.ProgramID,
+                                "ProgramElementID": selectedNode.ProgramElementID,
+                                "ProgramElementName": selectedNode.name,
+                                "ProgramElementManager": selectedNode.ProgramElementManager,
+                                "ProgramElementSponsor": selectedNode.ProgramElementSponsor,
+                                "DeletedBy": wbsTree.getLocalStorage().userName
 
-                                }, function (response) {
-                                    console.log("-------DELETED PROGRAM ELEMENT--------");
+                            }, function (response) {
+                                console.log("-------DELETED PROGRAM ELEMENT--------");
 
-                                    wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.ProgramID }, function (response) {
-                                        console.log(response);
-                                        selectedNode.parent.programFunds = response.result;
-                                        var programElementList = selectedNode.parent.children;
-                                        var total = 0;
-                                        angular.forEach(programElementList, function (item) {
-                                            total += parseFloat(item.CurrentCost);
-                                        });
-
-                                        selectedNode.parent.CurrentCost = total.toString();
-                                        wbsTree.updateTreeNodes(selectedNode.parent);
-                                        if ($('#ProjectModal').hasClass('in'))
-                                            $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
-                                        //if (!displayMap)
-                                        //wbsTree.loadFullGridView();
-                                        scope.loadWBSData(orgId, null, null, null, null, null, null);
-                                        wbsTree.getWBSTrendTree().trendGraph();
-                                        // wbsTree.loadFullGridView();
-
-                                        //window.location.reload();   //Manasi 28-07-2020
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.ProgramID }, function (response) {
+                                    console.log(response);
+                                    selectedNode.parent.programFunds = response.result;
+                                    var programElementList = selectedNode.parent.children;
+                                    var total = 0;
+                                    angular.forEach(programElementList, function (item) {
+                                        total += parseFloat(item.CurrentCost);
                                     });
-                                    if ($('#ProgramElementModal').hasClass('in'))
-                                        $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+
+                                    selectedNode.parent.CurrentCost = total.toString();
+                                    wbsTree.updateTreeNodes(selectedNode.parent);
+                                    if ($('#ProjectModal').hasClass('in'))
+                                        $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                     //if (!displayMap)
                                     //wbsTree.loadFullGridView();
                                     scope.loadWBSData(orgId, null, null, null, null, null, null);
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     // wbsTree.loadFullGridView();
 
-                                })
-                            } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend) {
-                                wbsTree.getProject().persist().save({
-                                    "Operation": 3,
-                                    "ProjectID": selectedNode.ProjectID,
-                                    "ProjectName": selectedNode.name,
-                                    "ProjectManager": selectedNode.ProjectManager,
-                                    "ProjectSponsor": selectedNode.ProjectSponsor,
-                                    "LatLong": wbsTree.getProjectMap().getCoordinates(),
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
-                                }, function (response) {
-                                    console.log("-------DELETED PROJECT--------");
-                                    console.log(selectedNode);
-                                    wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
-                                        console.log(response);
-                                        var projectList = selectedNode.parent.children;
-                                        var programElementList = selectedNode.parent.parent.children;
-                                        var total = 0;
-                                        angular.forEach(projectList, function (item) {
-                                            console.log(item);
-                                            if (item.CurrentCost)
-                                                total += parseFloat(item.CurrentCost);
-                                        });
-                                        console.debug("Total1", total);
-                                        selectedNode.parent.CurrentCost = total.toString();
-                                        total = 0;
-                                        angular.forEach(programElementList, function (item) {
-                                            if (item.CurrentCost)
-                                                total += parseFloat(item.CurrentCost);
-                                        });
-                                        console.debug("Total2", total);
-                                        selectedNode.parent.parent.CurrentCost = total.toString();
+                                    //window.location.reload();   //Manasi 28-07-2020
+                                });
+                                if ($('#ProgramElementModal').hasClass('in'))
+                                    $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+                                //if (!displayMap)
+                                //wbsTree.loadFullGridView();
+                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                wbsTree.getWBSTrendTree().trendGraph();
+                                // wbsTree.loadFullGridView();
 
-
-                                        selectedNode.parent.parent.programFunds = response.result;
-                                        wbsTree.updateTreeNodes(selectedNode.parent);
-
-                                        if ($('#ProjectModal').hasClass('in'))
-                                            $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
-                                        //if (!displayMap)
-                                        //wbsTree.loadFullGridView();
-                                        scope.loadWBSData(orgId, null, null, null, null, null, null);
-                                        wbsTree.getWBSTrendTree().trendGraph();
-                                        console.log(wbsTree.getWBSTrendTree().getTrendNumber());
-                                        //set the project location to organization's locaion on delete project
-                                        selectedNode.LatLong = "";
-                                        wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
-
-                                        //window.location.reload();   //Manasi 28-07-2020
+                            })
+                        } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend && type == "Project") {
+                            wbsTree.getProject().persist().save({
+                                "Operation": 3,
+                                "ProjectID": selectedNode.ProjectID,
+                                "ProjectName": selectedNode.name,
+                                "ProjectManager": selectedNode.ProjectManager,
+                                "ProjectSponsor": selectedNode.ProjectSponsor,
+                                "LatLong": wbsTree.getProjectMap().getCoordinates(),
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+                            }, function (response) {
+                                console.log("-------DELETED PROJECT--------");
+                                console.log(selectedNode);
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                    console.log(response);
+                                    var projectList = selectedNode.parent.children;
+                                    var programElementList = selectedNode.parent.parent.children;
+                                    var total = 0;
+                                    angular.forEach(projectList, function (item) {
+                                        console.log(item);
+                                        if (item.CurrentCost)
+                                            total += parseFloat(item.CurrentCost);
                                     });
+                                    console.debug("Total1", total);
+                                    selectedNode.parent.CurrentCost = total.toString();
+                                    total = 0;
+                                    angular.forEach(programElementList, function (item) {
+                                        if (item.CurrentCost)
+                                            total += parseFloat(item.CurrentCost);
+                                    });
+                                    console.debug("Total2", total);
+                                    selectedNode.parent.parent.CurrentCost = total.toString();
+
+
+                                    selectedNode.parent.parent.programFunds = response.result;
+                                    wbsTree.updateTreeNodes(selectedNode.parent);
+
+                                    if ($('#ProjectModal').hasClass('in'))
+                                        $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
+                                    //if (!displayMap)
+                                    //wbsTree.loadFullGridView();
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                    wbsTree.getWBSTrendTree().trendGraph();
+                                    console.log(wbsTree.getWBSTrendTree().getTrendNumber());
+                                    //set the project location to organization's locaion on delete project
+                                    selectedNode.LatLong = "";
+                                    wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
+
+                                    //window.location.reload();   //Manasi 28-07-2020
+                                });
+
+                            });
+                        } else if ((type === "FutureTrend" || type === "PastTrend") && (selectedNodeTrend.metadata.level == "FutureTrend" || selectedNodeTrend.metadata.level == "PastTrend")) {
+                            var obj = {
+                                "Operation": 3,
+                                "OrganizationID": selectedNodeTrend.metadata.OrganizationID,
+                                "ProjectID": selectedNodeTrend.metadata.ProjectID,
+                                "ProjectName": selectedNodeTrend.metadata.ProjectName,
+                                "TrendNumber": selectedNodeTrend.metadata.TrendNumber,
+                                //Added by Nivedita on 23022022 for soft delete
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+
+                            };
+                            _Trend.persist().save(obj, function (response) {
+                                //$('#FutureTrendModal').modal('hide');
+                                //$('#DeleteModal').modal('hide');
+
+                                //wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": $scope.GridContractId }, function (response) {
+                                    selectedNode.parent.parent.programFunds = response.result;
+                                    if ($('#FutureTrendModal').hasClass('in'))
+                                        $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
+                                    wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
+                                    wbsTree.getScope().trend = null;
+
 
                                 });
-                            }
+
+
+                            });
+                        }
                         //Find  index of selected node
                         if (selectedNode.level == "Root") return;
                         var i = parentNode.children.indexOf(selectedNode);
