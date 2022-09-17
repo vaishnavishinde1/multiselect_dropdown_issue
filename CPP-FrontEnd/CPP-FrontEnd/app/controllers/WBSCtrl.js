@@ -4547,7 +4547,8 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
                                 strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
-                                strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
+                                strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
+                                //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -4966,6 +4967,9 @@ angular.module('cpp.controllers').
                             $('#tblContract tr.selected').removeAttr('class');
                             $(this).addClass('selected');
                             $('#wbsGridiewProject').html('');
+                            $('#wbsGridiewElement').html('');
+                            $('#wbsGridiewTrend').html('');
+                            
                             $scope.GridContractId = $('#tblContract tr.selected').attr('id');
                             localStorage.setItem('contextType', 'Program');
                             var selectedProgramID = this.firstChild.parentElement.id;
@@ -5033,7 +5037,7 @@ angular.module('cpp.controllers').
                                         selectedProjectID = project.ProgramElementID;
                                         strProject += "<tr id=" + project.ProgramElementID + " class='selected contact-row'>";
                                         //var selectedProjectID = project.ProgramElementID;
-                                        var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
+                                        //var selectedProject = project.children.find(x => x.ProgramElementID === selectedProjectID);
                                         $('#wbsGridiewElement').html('');
                                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
                                         strElement += "<div class='grid__title'>Project Element (" + project.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
@@ -5046,7 +5050,8 @@ angular.module('cpp.controllers').
                                             "<th>Services</th>" +
                                             "<th>Action</th>" +
                                             "</tr></thead>";
-                                        if (project.children != undefined && project.children.length > 0) {
+                                        if (project.children != undefined && project.children.length > 0)
+                                        {
                                             for (projectElementI = 0; projectElementI < project.children.length; projectElementI++) {
                                                 var projectElement = project.children[projectElementI];
                                                 if (projectElementI == 0) {
@@ -5169,6 +5174,26 @@ angular.module('cpp.controllers').
                                                     strElement += "</tr>";
                                                 }
                                             }
+                                        }
+                                        else {
+                                            var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                                            strTrend += "<div class='grid__title'>Trend ()<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                                            strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                                            strTrend += "<thead class='t-head'>";
+                                            strTrend += "<tr>";
+                                            strTrend += "<th>Name</th>" +
+                                                "<th>Impact</th>" +
+                                                "<th>Status</th>" +
+                                                "<th>Action</th>" +
+                                                "</tr></thead>";
+                                            strTrend += "</table></div>";
+                                            strTrend += "<div class='center'>" +
+                                                //"<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                                //"<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                                //"<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                                "</div>";
+                                            strTrend += "</div></div>";
+                                            $('#wbsGridiewTrend').append(strTrend);
                                         }
                                         strElement += "</table></div>";
                                         //strElement += "<div class='center'>" +
@@ -5370,7 +5395,7 @@ angular.module('cpp.controllers').
                                 $('#tblProject tr.selected').removeClass('selected');
                                 $(this).addClass('selected');
                                 $('#wbsGridiewElement').html('');
-
+                                $('#wbsGridiewTrend').html('');
                                 var selectedProjectID = this.firstChild.parentElement.id;
                                 $scope.GridProjectId = selectedProjectID;
                                 localStorage.setItem('contextType', 'ProgramElement');
@@ -5388,7 +5413,7 @@ angular.module('cpp.controllers').
                                     "<th>Services</th>" +
                                     "<th>Action</th>" +
                                     "</tr></thead>";
-                                if (selectedProject.children.length > 0) {
+                                if (selectedProject.children!= undefined && selectedProject.children.length > 0) {
 
                                     for (projectElementI = 0; projectElementI < selectedProject.children.length; projectElementI++) {
                                         var projectElement = selectedProject.children[projectElementI];
@@ -5517,17 +5542,48 @@ angular.module('cpp.controllers').
                                             strElement += "</tr>";
                                         }
                                     }
+                                    strElement += "</table></div>";
+                                    //strElement += "<div class='center'>" +
+                                    //    "<button type ='button' id='AddElementGridBtn' contextType='ProjectElement' class='grid__btn'>Add Element</button>" +
+                                    //    "<button type ='button' id='EditElementGridBtn' contextType='ProjectElement' class='grid__btn'>Edit Element</button>" +
+                                    //    "<button type='button' id='id='DeleteElementGridBtn' contextType='ProjectElement' class='grid__btn'>Delete</button>" +
+                                    //    "<button type='button' id='CloseElementGridBtn' contextType='ProjectElement' class='grid__btn'>Close</button>" +
+                                    //    "</div>";
+                                    strElement += "</div></div>";
+                                    $('#wbsGridiewElement').append(strElement);
+                                }
+                                else {
+                                    strElement += "</table></div>";
+                                    //strElement += "<div class='center'>" +
+                                    //    //"<button type ='button' id='AddElementGridBtn' contextType='ProjectElement' class='grid__btn'>Add Element</button>" +
+                                    //    //"<button type ='button' id='EditElementGridBtn' contextType='ProjectElement' class='grid__btn'>Edit Element</button>" +
+                                    //    //"<button type='button' id='id='DeleteElementGridBtn' contextType='ProjectElement' class='grid__btn'>Delete</button>" +
+                                    //    //"<button type='button' id='CloseElementGridBtn' contextType='ProjectElement' class='grid__btn'>Close</button>" +
+                                    //    "</div>";
+                                    //strElement += "</div></div>";
+                                    $('#wbsGridiewElement').append(strElement);
+                                    $('#wbsGridiewTrend').html('');
+                                    var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                                    strTrend += "<div class='grid__title'>Trend ()<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                                    strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                                    strTrend += "<thead class='t-head'>";
+                                    strTrend += "<tr>";
+                                    strTrend += "<th>Name</th>" +
+                                        "<th>Impact</th>" +
+                                        "<th>Status</th>" +
+                                        "<th>Action</th>" +
+                                        "</tr></thead>";
+                                    strTrend += "</table></div>";
+                                    strTrend += "<div class='center'>" +
+                                        //"<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                                        //"<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                                        //"<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                                        "</div>";
+                                    strTrend += "</div></div>";
+                                    $('#wbsGridiewTrend').append(strTrend);
                                 }
 
-                                strElement += "</table></div>";
-                                //strElement += "<div class='center'>" +
-                                //    "<button type ='button' id='AddElementGridBtn' contextType='ProjectElement' class='grid__btn'>Add Element</button>" +
-                                //    "<button type ='button' id='EditElementGridBtn' contextType='ProjectElement' class='grid__btn'>Edit Element</button>" +
-                                //    "<button type='button' id='id='DeleteElementGridBtn' contextType='ProjectElement' class='grid__btn'>Delete</button>" +
-                                //    "<button type='button' id='CloseElementGridBtn' contextType='ProjectElement' class='grid__btn'>Close</button>" +
-                                //    "</div>";
-                                strElement += "</div></div>";
-                                $('#wbsGridiewElement').append(strElement);
+                                
                                 BindTrend(selectedProgramID, selectedProjectID);
                                 //BindTrendEvent(selectedProgramID, selectedProjectID, selectedProjectElementID)
                                 $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
