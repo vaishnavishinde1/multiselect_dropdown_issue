@@ -1569,7 +1569,7 @@ input.control-group[type=radio] {
 .login-box {
     background: rgba(25,25,25,0.8);
     border-radius: 10px;
-    color: #fff;
+    color: #fff !important;
     width: 30%;
     margin-top: -100px;
     align-self: center;
@@ -1587,7 +1587,7 @@ input.control-group[type=radio] {
         color: #fff !important;
         font-weight: bold !important;
         font-size: 14px;
-        -webkit-background-color: white !important;
+        -webkit-text-fill-color: white !important;
         transition: background-color 5000s ease-in-out 0s;
     }
 
