@@ -408,7 +408,7 @@ label input[type="checkbox"] {
     width: 98% !important;
     width: 230px;
     font-weight: bold;
-    margin-top: 10px !important;
+    margin-top: 15px !important; /*changes by sarab*/
 }
 
 #address-bar {
@@ -793,6 +793,7 @@ body {
     overflow-y: hidden !important;
     height: 100%;
     padding-right: 0 !important;
+    background: linear-gradient(#1e263d,#000); /*Changes by sarbjeet */
 }
 
 .modal-open {
@@ -891,7 +892,7 @@ body {
 }
 
     .filterCheckBoxWrap label {
-        padding-top: 3px;
+        padding-top: 14px;  /*Changes by Sarbjeet*/
     }
 
 .loginAlertModal .modal-dialog {
@@ -916,7 +917,7 @@ body {
 
 .quicksearchwrap {
     display: inline-block;
-    margin-top: 4px;
+    margin-top: 14px; /*changes by Sarbjeet */
     min-width: 40%;
 }
 
@@ -1568,7 +1569,7 @@ input.control-group[type=radio] {
 .login-box {
     background: rgba(25,25,25,0.8);
     border-radius: 10px;
-    color: #fff;
+    color: #fff !important;
     width: 30%;
     margin-top: -100px;
     align-self: center;
@@ -1586,7 +1587,7 @@ input.control-group[type=radio] {
         color: #fff !important;
         font-weight: bold !important;
         font-size: 14px;
-        -webkit-background-color: white !important;
+        -webkit-text-fill-color: white !important;
         transition: background-color 5000s ease-in-out 0s;
     }
 
@@ -1831,6 +1832,12 @@ button[disabled=disabled], button:disabled {
 #wrap_select_div .multiselect-container.dropdown-menu {
     top: -270%;
 }
+.search-bar {
+    background-color:#ffffff;
+    border-radius:10px;
+    padding:5px;
+    margin-bottom:10px;
+}
 .grid__title {
     background: linear-gradient(90deg,#719bae,#5580bc);
     border-radius: 5px;
@@ -1881,8 +1888,8 @@ button[disabled=disabled], button:disabled {
     }
 .grid__table td{
     border:1px solid #fff;
-    padding:5px;
-    text-align: left;
+    padding:7px;
+    
 }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
@@ -1966,4 +1973,7 @@ th.sort-by {
     th.sort-by:after {
         border-top-color: #666;
         margin-top: 1px;
+    }
+    .curved-border {
+        border-radius:10px;
     }
