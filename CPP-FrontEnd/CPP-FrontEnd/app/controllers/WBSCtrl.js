@@ -5163,11 +5163,11 @@ angular.module('cpp.controllers').
                                         strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
                                         strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                         strContract += "<td style='display:none'>" + program.Status + "</td>";
-                                        strContract += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                            "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        strContract += "<td style='pointer-events:none'>" +
+                                            "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                            "<i class='icon-72647 grid__btn-icons' style='color:lightgray' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                            "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                             "</td>";
                                         strContract += "</tr>";
                                     }
@@ -5248,10 +5248,10 @@ angular.module('cpp.controllers').
                                         strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
                                         strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                         strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                        strProject += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        strProject += "<td style='pointer-events:none'>" +
+                                            "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>>" +
+                                            "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                             "</td>";
                                         strProject += "</tr>";
                                     }
@@ -5329,10 +5329,10 @@ angular.module('cpp.controllers').
                                             strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
                                             strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                             strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
-                                            strElement += "<td>" +
-                                                "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                                "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                            strElement += "<td style='pointer-events:none'>" +
+                                                "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                                "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                                "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
                                                 "</td>";
                                             strElement += "</tr>";
                                         }
