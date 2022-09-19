@@ -13,7 +13,7 @@
                     <a href="#/app/wbs" class="exit-button">X</a>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped  table-condensed c-admin-table">
+                    <table class="grid__table">
                         <thead>
                             <tr>
                                 <th class="t-head">Role</th>
@@ -39,7 +39,7 @@
                     </table>
 
                     <div class="panel-height">
-                        <table class="table table-striped  table-bordered " style="table-layout: fixed;">
+                        <table class="grid__table " style="table-layout: fixed;">
                             <tbody>
                                 <tr id="tbl" class="fade-selection-animation" ng-repeat="row in rowCollection" ng-class="{'selected':row.Role===ACItem.Role}"
                                     ng-click="setAccessControl(row)">
