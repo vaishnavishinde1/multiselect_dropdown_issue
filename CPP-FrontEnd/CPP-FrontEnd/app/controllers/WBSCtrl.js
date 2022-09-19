@@ -5157,7 +5157,7 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td>" +
-                                    "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
