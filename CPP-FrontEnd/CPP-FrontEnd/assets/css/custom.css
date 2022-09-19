@@ -408,7 +408,7 @@ label input[type="checkbox"] {
     width: 98% !important;
     width: 230px;
     font-weight: bold;
-    margin-top: 10px !important;
+    margin-top: 15px !important; /*changes by sarab*/
 }
 
 #address-bar {
@@ -793,6 +793,7 @@ body {
     overflow-y: hidden !important;
     height: 100%;
     padding-right: 0 !important;
+    background: linear-gradient(#1e263d,#000); /*Changes by sarbjeet */
 }
 
 .modal-open {
@@ -891,7 +892,7 @@ body {
 }
 
     .filterCheckBoxWrap label {
-        padding-top: 3px;
+        padding-top: 14px;  /*Changes by Sarbjeet*/
     }
 
 .loginAlertModal .modal-dialog {
@@ -916,7 +917,7 @@ body {
 
 .quicksearchwrap {
     display: inline-block;
-    margin-top: 4px;
+    margin-top: 14px; /*changes by Sarbjeet */
     min-width: 40%;
 }
 
@@ -1831,6 +1832,12 @@ button[disabled=disabled], button:disabled {
 #wrap_select_div .multiselect-container.dropdown-menu {
     top: -270%;
 }
+.search-bar {
+    background-color:#ffffff;
+    border-radius:10px;
+    padding:5px;
+    margin-bottom:10px;
+}
 .grid__title {
     background: linear-gradient(90deg,#719bae,#5580bc);
     border-radius: 5px;
@@ -1881,8 +1888,8 @@ button[disabled=disabled], button:disabled {
     }
 .grid__table td{
     border:1px solid #fff;
-    padding:5px;
-    text-align: left;
+    padding:7px;
+    
 }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
@@ -1967,28 +1974,6 @@ th.sort-by {
         border-top-color: #666;
         margin-top: 1px;
     }
-
-#AddContractGridBtn,
-#EditContractGridBtn,
-#ViewGanttGridBtn,
-#DeleteContractGridBtn,
-#CloseContractGridBtn,
-#AddProjectGridBtn,
-#EditProjectGridBtn,
-#DeleteProjectGridBtn,
-#CloseProjectGridBtn,
-#AddElementGridBtn,
-#EditElementGridBtn,
-#DeleteElementGridBtn,
-#CloseElementGridBtn,
-#AddTrendGridBtn,
-#EditTrendGridBtn,
-#DeleteTrendGridBtn,
-#CloseTrendGridBtn {
-    cursor:pointer;
-}
-
-.disabledIcon {
-    color: #b1b1b1;
-    cursor: not-allowed !important;
-}
+    .curved-border {
+        border-radius:10px;
+    }
