@@ -1974,6 +1974,31 @@ th.sort-by {
         border-top-color: #666;
         margin-top: 1px;
     }
+
+#AddContractGridBtn,
+#EditContractGridBtn,
+#ViewGanttGridBtn,
+#DeleteContractGridBtn,
+#CloseContractGridBtn,
+#AddProjectGridBtn,
+#EditProjectGridBtn,
+#DeleteProjectGridBtn,
+#CloseProjectGridBtn,
+#AddElementGridBtn,
+#EditElementGridBtn,
+#DeleteElementGridBtn,
+#CloseElementGridBtn,
+#AddTrendGridBtn,
+#EditTrendGridBtn,
+#DeleteTrendGridBtn,
+#CloseTrendGridBtn {
+    cursor:pointer;
+}
+
+.disabledIcon {
+    color: #b1b1b1;
+    cursor: not-allowed !important;
+}
     .curved-border {
         border-radius:10px;
     }

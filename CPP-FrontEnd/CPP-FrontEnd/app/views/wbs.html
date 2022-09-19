@@ -3998,6 +3998,7 @@
                                                     <div class="col-xs-6 col-md-6  m-b-20" id="emp_classDiv">
                                                         <label for="lob" class="control-label _bold required">Element Administrators</label>  <!--Vaishnavi 03-03-2022-->
                                                         <select type="text" class="form-control" id="emp_class" multiple></select>
+                                                        <select type="text" class="form-control" id="emp_classAdmin" multiple style='display:none'></select> <!--Kavita 19-09-2022-->
                                                     </div>
                                                 </div>
                                                 <div class="row m-b-15">
@@ -7583,7 +7584,7 @@
         });
         /*//----Vaishnavi 30-03-2022----//*/
         $("#ClosedModal").unbind().on('show.bs.modal', function () {
-            debugger;
+            //debugger;
             var scope = wbsTree.getScope();
             var modal_mode = scope.modal_mode;
             var type;

@@ -211,6 +211,42 @@ angular.module('xenon.ViewContractGanttController', []).
             });
 
             $scope.exit = function () {
+                //Aditya: Exits to grid
+                var view_mode = localStorage.getItem('MODE');
+                if (view_mode == 'gridview' || view_mode == '' || view_mode == undefined || view_mode == null) {
+                    $('#mindmap').hide();
+                    $('#mindmap').css('visibility', 'hidden');
+                    $('#mindmap').css('position', 'absolute');
+                    $('#selectProject').hide();
+                    $('#trendSvg').hide();
+                    $('#selectProject,#selectprogramelement').hide();
+                    $('#wbsGridView').show();
+                    $('#wbsGridiewProject').show();
+                    $('#wbsGridiewElement').show();
+                    $('#wbsGridiewTrend').show();
+                    $('#selectManagingDepartment').show();
+                    $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').show();
+                    $('#closed,#approved,#unapproved,#contract,#project').hide();
+                    localStorage.setItem('MODE', 'gridview');
+                    $('.toggle-btn i').attr('title', 'Go To TreeView');
+                }
+                else {
+                    $('#mindmap').show();
+                    $('#wbsGridView').hide();
+                    $('#wbsGridiewProject').hide();
+                    $('#wbsGridiewElement').hide();
+                    $('#wbsGridiewTrend').hide();
+                    $('#selectManagingDepartment').hide();
+                    $('#mindmap').css('visibility', 'visible');
+                    $('#selectProject,#selectprogramelement').show();
+                    $('#wbsGridView').hide();
+                    $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
+                    $('#selectProject').show();
+                    $('#trendSvg').show();
+                    $('#closed,#approved,#unapproved,#contract,#project').show();
+                    localStorage.setItem('MODE', 'mindmap');
+                    $('.toggle-btn i').attr('title', 'Go To GridView');
+                }
                 window.location.href = "#/app/wbs";
             }
 
