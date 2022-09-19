@@ -2200,6 +2200,9 @@ WBSTree = (function ($) {
 
             var wbsTree = this;
 
+            var scope = wbsTree.getScope();
+
+
             var gridView = $('#wbsGridView Table td a');
 
 
@@ -4726,7 +4729,8 @@ WBSTree = (function ($) {
                             //wbsTree.loadFullGridView();
                             var orgId = $("#selectOrg").val();
                             var scope = wbsTree.getScope()
-                            scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                            //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //window.location.reload();   //Manasi 28-07-2020
                         } else {
                             selectedNode.name = temp_node.name;
@@ -4757,6 +4761,7 @@ WBSTree = (function ($) {
                             }
                         }
 
+                        scope.loadWBSData.GetContractGridSection(selectedNode.parent);
                     });
                 }
 
@@ -5234,7 +5239,8 @@ WBSTree = (function ($) {
                                 wbsTree.updateTreeNodes(selectedNode);
                                 //if (!displayMap)
                                 //wbsTree.loadFullGridView();
-                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                                //scope.loadWBSData(orgId, null, null, null, null, null, null);
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                                 //Aditya 24062022 :scroll to bottom
                                 var viewMode;
@@ -5257,6 +5263,9 @@ WBSTree = (function ($) {
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 //  $('#ProgramModal').modal('hide');
                             }
+
+                            scope.loadWBSData.GetContractGridSection(selectedNode.parent);
+
                         });
                 }
             });
@@ -5271,6 +5280,8 @@ WBSTree = (function ($) {
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
                 console.log(selectedNode);
+                var scope = wbsTree.getScope();
+
                 var orgName = wbsTree.getOrgProjectName();
                 console.log(orgName);
                 var orgClientPONumber = wbsTree.getOrgClientPONumber;
@@ -5939,7 +5950,7 @@ WBSTree = (function ($) {
                             debugger;// for update
                             if (!displayMap)
                                 //wbsTree.loadFullGridView();
-                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.getWBSTrendTree().trendGraph();
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProgramElementModal').modal('hide');
@@ -5964,6 +5975,8 @@ WBSTree = (function ($) {
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
                         }
+
+                        scope.loadWBSData.getProjectGridSection(selectedNode.parent);
 
                     });
 
@@ -6657,7 +6670,8 @@ WBSTree = (function ($) {
                             //debugger;
                             //if (!displayMap)
                             //wbsTree.loadFullGridView();
-                            scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                            //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
                         } else {
@@ -6675,6 +6689,8 @@ WBSTree = (function ($) {
                             }
                             //  wbsTree.setSelectedNode(temp_node);
                         }
+
+                        scope.loadWBSData.getProjectGridSection(selectedNode.parent);
                     });
                 }
             });
@@ -6735,6 +6751,8 @@ WBSTree = (function ($) {
             $('#update_project').unbind('click').on('click', function () {
                 console.log("In element save");
                 var selectedNode = wbsTree.getSelectedNode();
+
+                var scope = wbsTree.getScope();
 
                 var selected = $('.picklist').find('.select.selected select');
                 var projectWhiteListToSave = [];
@@ -7292,7 +7310,8 @@ WBSTree = (function ($) {
                             debugger;
                             //if (!displayMap)
                             //wbsTree.loadFullGridView();
-                            scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                            //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.getWBSTrendTree().trendGraph(true);
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
@@ -7316,6 +7335,7 @@ WBSTree = (function ($) {
                             //     wbsTree.setSelectedNode(temp_node);
                         }
 
+                        scope.loadWBSData.getElementGridSection(selectedNode.parent);
                     });
 
                 }
@@ -7860,7 +7880,8 @@ WBSTree = (function ($) {
                             debugger;
                             //if (!displayMap)
                             //wbsTree.loadFullGridView();
-                            scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                            //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //-----------------------------------------------------------------------
 
                             //Parameterize JSON
@@ -7902,6 +7923,9 @@ WBSTree = (function ($) {
                             }
 
                         }
+
+                        scope.loadWBSData.getElementGridSection(selectedNode.parent);
+
                     });
 
                     wbsTree.updateTreeNodes(selectedNode);
