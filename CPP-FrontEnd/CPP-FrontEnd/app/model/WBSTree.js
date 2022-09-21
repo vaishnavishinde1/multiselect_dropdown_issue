@@ -122,7 +122,9 @@ WBSTree = (function ($) {
         var view_mode = localStorage.getItem('MODE');
         if (view_mode == 'gridview') {
             //debugger;
-            $('#mindmap').hide();
+            //$('#mindmap').hide();
+            $('#mindmap').css('visibility', 'hidden');
+            $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
             $('#trendSvg').hide();
             $('#selectProject,#selectprogramelement').hide();
@@ -139,7 +141,8 @@ WBSTree = (function ($) {
         }
         else {
             //debugger;
-            $('#mindmap').show();
+            //$('#mindmap').show();
+            $('#mindmap').css('visibility', 'visible');
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
             $('#trendSvg').show();
