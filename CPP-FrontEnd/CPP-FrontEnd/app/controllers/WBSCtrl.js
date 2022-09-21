@@ -5200,7 +5200,7 @@ angular.module('cpp.controllers').
                             strTrend = "";
 
                             strTrend += "<tr class='contact-row'>";
-                            strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                            strTrend += "<td><a href="+"#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
                             strTrend += "<td></td>";
                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
                             strTrend += "<td></td>";
