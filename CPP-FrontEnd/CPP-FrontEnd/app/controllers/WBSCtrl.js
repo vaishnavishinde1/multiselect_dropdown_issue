@@ -4954,7 +4954,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
                                 strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
-                                strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
+                                /*strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";*/
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -4970,7 +4970,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" + program.ContractNumber + "</td>";
                                 strContract += "<td>" + program.ContractValue + "</td>";
                                 strContract += "<td>" + program.CurrentCost + "</td>";
-                                strContract += "<td>" + program.ForecastCost + "</td>";
+                                /*strContract += "<td>" + program.ForecastCost + "</td>";*/
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
