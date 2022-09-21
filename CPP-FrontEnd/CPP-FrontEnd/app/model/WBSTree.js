@@ -135,7 +135,7 @@ WBSTree = (function ($) {
             $('.toggle-btn i').attr('class', "fa fa-th-large fa-sitemap");
             $('.toggle-btn i').attr('title', 'Go To TreeView');
             //$('#closed,#approved,#unapproved,#contract,#project').hide();
-            localStorage.setItem('MODE', '');
+            localStorage.setItem('MODE', 'gridview');
         }
         else {
             //debugger;
@@ -3359,7 +3359,7 @@ WBSTree = (function ($) {
                                     //wbsTree.updateTreeNodes(selectedNode);
                                     //if (!displayMap)
                                     //wbsTree.loadFullGridView();
-                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
                                     //wbsTree.loadContextMenu();
                                     rootScope.modalInstance.close();
                                     //wbsTree.getWBSTrendTree().trendGraph();
@@ -3387,7 +3387,7 @@ WBSTree = (function ($) {
                                 wbsTree.updateTreeNodes(selectedNode.parent);
                                 ////if (!displayMap)
                                 //wbsTree.loadFullGridView();
-                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
                                 wbsTree.getWBSTrendTree().trendGraph();
 
                                 // wbsTree.loadContextMenu();
@@ -3421,7 +3421,7 @@ WBSTree = (function ($) {
                                         $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                     //if (!displayMap)
                                     //wbsTree.loadFullGridView();
-                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     // wbsTree.loadFullGridView();
 
@@ -3431,7 +3431,7 @@ WBSTree = (function ($) {
                                     $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
                                 //if (!displayMap)
                                 //wbsTree.loadFullGridView();
-                                scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
                                 wbsTree.getWBSTrendTree().trendGraph();
                                 // wbsTree.loadFullGridView();
 
@@ -3476,7 +3476,7 @@ WBSTree = (function ($) {
                                         $('#ProjectModal').css({ "opacity": "1" }).modal('toggle');
                                     //if (!displayMap)
                                     //wbsTree.loadFullGridView();
-                                    scope.loadWBSData(orgId, null, null, null, null, null, null);
+                                    scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
                                     wbsTree.getWBSTrendTree().trendGraph();
                                     console.log(wbsTree.getWBSTrendTree().getTrendNumber());
                                     //set the project location to organization's locaion on delete project
@@ -3503,7 +3503,7 @@ WBSTree = (function ($) {
                                 //$('#DeleteModal').modal('hide');
 
                                 //wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
-                                wbsTree.getProgramFund().lookup().get({ "ProgramID": $scope.GridContractId }, function (response) {
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": scope.GridContractId }, function (response) {
                                     selectedNode.parent.parent.programFunds = response.result;
                                     if ($('#FutureTrendModal').hasClass('in'))
                                         $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
@@ -3513,7 +3513,7 @@ WBSTree = (function ($) {
 
 
                                 });
-
+                                scope.loadWBSData(orgId, null, null, null, null, null, null, scope.filterClient);
 
                             });
                         }
@@ -4078,6 +4078,7 @@ WBSTree = (function ($) {
             $('#update_program').unbind('click').on('click', function () {
                 console.log("In save==");
                 var selectedNode = wbsTree.getSelectedNode();
+                var scope = wbsTree.getScope();
                 var fundToBeAdded = wbsTree.getFundToBeAdded();
                 if (fundToBeAdded == null) {
                     fundToBeAdded = [];
@@ -5278,7 +5279,7 @@ WBSTree = (function ($) {
                                 //  $('#ProgramModal').modal('hide');
                             }
 
-                            scope.loadWBSData.GetContractGridSection(selectedNode.parent);
+                            scope.loadWBSData.GetContractGridSection(selectedNode);
 
                         });
                 }
@@ -5465,6 +5466,7 @@ WBSTree = (function ($) {
                             selectedNode.ProjectClassID = projectClassList[x].ProjectClassID;
                         }
                     }
+                    selectedNode.ProjectClassName = selectedProjectClass.val();
 
                     //luan here - Find the client id
                     // var clientList = wbsTree.getClientList();
@@ -6109,6 +6111,7 @@ WBSTree = (function ($) {
                             newNode.ProjectClassID = projectClassList[x].ProjectClassID;
                         }
                     }
+                    newNode.ProjectClassName = selectedProjectClass.val();
 
                     //luan here - Find the client id
                     /*var clientList = wbsTree.getClientList();
@@ -6704,7 +6707,7 @@ WBSTree = (function ($) {
                             //  wbsTree.setSelectedNode(temp_node);
                         }
 
-                        scope.loadWBSData.getProjectGridSection(selectedNode.parent);
+                        scope.loadWBSData.getProjectGridSection(selectedNode);
                     });
                 }
             });
@@ -6954,6 +6957,7 @@ WBSTree = (function ($) {
                             selectedNode.ProjectClassID = serviceClassList[x].ID;
                         }
                     }
+                    selectedNode.ServiceName = selectedServiceClass.val();
 
 
                     // selectedNode.ProjectClassID = "7";
@@ -7468,6 +7472,7 @@ WBSTree = (function ($) {
                             newNode.ProjectClassID = serviceClassList[x].ID;
                         }
                     }
+                    newNode.ServiceName = selectedServiceClass.val();
 
                     //luan here - Find the client id
                     var clientList = wbsTree.getClientList();
@@ -7938,7 +7943,7 @@ WBSTree = (function ($) {
 
                         }
 
-                        scope.loadWBSData.getElementGridSection(selectedNode.parent);
+                        scope.loadWBSData.getElementGridSection(selectedNode);
 
                     });
 
@@ -7947,7 +7952,8 @@ WBSTree = (function ($) {
                     debugger;
                     //if (!displayMap)
                     //wbsTree.loadFullGridView();
-                    scope.loadWBSData(orgId, null, null, null, null, null, null);
+
+                    //scope.loadWBSData(orgId, null, null, null, null, null, null);
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
 
                     //var uploadBtnProject = modal.find('.modal-body #uploadBtnProject');
@@ -18076,6 +18082,8 @@ WBSTree = (function ($) {
             $('#ProjectModal').unbind().on('show.bs.modal', function (event) {
                 var angularHttp = wbsTree.getAngularHttp();
                 modal = $(this);
+                var type = localStorage.getItem('contextType');
+
                 if (displayMap) {
                     selectedNode = wbsTree.getSelectedNode();
                 }

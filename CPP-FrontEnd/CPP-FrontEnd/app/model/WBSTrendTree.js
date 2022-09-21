@@ -1525,7 +1525,7 @@ WBSTrendTree = (function ($) {
                         metadata.ClientApprovedDate = modal.find('.modal-body #client_approved_date').val(); // Jignesh-09-02-2021
                         $('#FutureTrendModal').modal('hide');
                         wbsTrendTree.trendGraph();
-                        scope.loadWBSData.getProjectGridSection(metadata.ProjectID);
+                        scope.loadWBSData.getTrendByProjectId(metadata.ProjectID);
                     });
                 }
                 if (modal_mode == "Create") {
@@ -1626,7 +1626,7 @@ WBSTrendTree = (function ($) {
                         //wbsTrendTree.trendGraph();
                         wbsTrendTree.trendGraph(true);   //Manasi
 
-                        scope.loadWBSData.getProjectGridSection(_selectedProjectID);
+                        scope.loadWBSData.getTrendByProjectId(_selectedProjectID);
                     });
                 }
             });

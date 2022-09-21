@@ -4253,7 +4253,7 @@ angular.module('cpp.controllers').
                 searchText = myLocalStorage.get('SearchText');
                 $scope.SearchText = searchText;
                 var pagedata = Page;
-                $('#wbsGridView').html('');
+                //$('#wbsGridView').html('');
                 $scope.showSpinner = true;
                 $scope.trendSpinner = false;
                 $('#spin').addClass('fademe');
@@ -4603,119 +4603,7 @@ angular.module('cpp.controllers').
                         //    }
                         //});
 
-                        //Add Contract
-                        $("#AddContractGridBtn").unbind('click').on("click", function () {
-                            selectedNode = Treedata;
-                            wbsTree.setSelectedNode(selectedNode);
-                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
-
-                        });
-
-                        //Edit/Open clicked
-                        $("#tblContract").on('click', '#EditContractGridBtn', function () {
-                            //$('#EditContractGridBtn').unbind('click').on('click', function () {
-                            var programId = this.parentElement.parentElement.id;
-                            if (programId != undefined) {
-                                $scope.modal_mode = "Update"
-                                localStorage.setItem('modal_mode', "Update");
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                wbsTree.setSelectedNode(selectedProgram);
-                                $('#ProgramModal').modal({ show: true, backdrop: 'static' });
-                            }
-                            return false;
-                        });
-
-                        //View Gantt button click
-                        $("#tblContract").on('click', '#ViewGanttGridBtn', function () {
-                            //$("#ViewGanttGridBtn").click(function () {
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            if (programId != undefined) {
-                                window.location.href = "#/app/view-gantt-Contract/" + programId + "/0/" + $("#selectOrg").val();
-                            }
-                        });
-
-                        //Delete Contract
-                        $("#tblContract").on('click', '#DeleteContractGridBtn', function () {
-                            //$("#DeleteContractGridBtn").bind("click", function () {
-                            $scope.modal_mode = 'Update';
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                            wbsTree.setSelectedNode(selectedProgram);
-                            $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                        });
-
-                        //Close Contract
-                        $("#tblContract").on('click', '#CloseContractGridBtn', function () {
-                            //$("#CloseContractGridBtn").unbind('click').on("click", function () {
-                            $scope.modal_mode = 'Update';
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                            wbsTree.setSelectedNode(selectedProgram);
-                            $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                        });
-
-                        //Select Contract
-                        $('#tblContract tbody tr').on('click', function () {
-                            //wbsTree.setSelectedNode(null);
-                            $('#tblContract tr.selected').removeAttr('class');
-                            $(this).addClass('selected');
-                            $('#wbsGridiewProject').html('');
-                            $('#wbsGridiewElement').html('');
-                            $('#wbsGridiewTrend').html('');
-
-                            $scope.GridContractId = $('#tblContract tr.selected').attr('id');
-                            localStorage.setItem('contextType', 'Program');
-                            var selectedProgramID = this.firstChild.parentElement.id;
-                            //organization.children[0].ProgramID
-                            $('#wbsGridiewProject').html('');
-                            $('#wbsGridiewElement').html('');
-                            $('#wbsGridiewTrend').html('');
-                            var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                            //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
-
-                            getProjectGridSection(selectedProgram);
-
-                            $('#tblContract tr.selected').find('td').each(function (i) {
-                                var isclosed = $('.selected').find("td:eq(" + i + ")").text();
-                                if (isclosed == "Closed") {
-                                    $("#EditContracttGridBtn").hide();
-                                    $("#DeleteContractGridBtn").hide();
-                                    $("#ViewGanttGridBtn").hide();
-                                    $("#CloseContractGridBtn").hide();
-                                }
-                                else {
-                                    $("#EditContracttGridBtn").show();
-                                    $("#DeleteContractGridBtn").show();
-                                    $("#ViewGanttGridBtn").show();
-                                    $("#CloseContractGridBtn").show();
-                                }
-                            }); //close changes done by vaishnavi
-                            var mydiv = document.getElementById("wbsGridiewProject");
-
-                            // var mydiv = document.getElementById("wbsGridiewProject");
-                            // mydiv.appendChild(document.(strProject));
-                            //document.getElementById('wbsGridiewProject').insertAdjacentHTML('beforeend', strProject);
-                            //$('#tblProject').append(strProject);
-                            $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
-                                var table = $(this).closest('table');
-                                var rows = table.find('tr.contact-row')
-                                    .toArray()
-                                    .sort(comparer($(this).index()));
-                                this.asc = !this.asc;
-                                if (!this.asc) {
-                                    rows = rows.reverse();
-                                }
-                                for (var i = 0; i < rows.length; i++) {
-                                    table.append(rows[i]);
-                                }
-                            });
-                        });
+                        
 
 
                         //$('#tblProject tr').on('click', function () {
@@ -5068,11 +4956,11 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
                                 strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
-                                strContract += "<td style='pointer-events:none'>" +
-                                    "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                    "<i class='icon-72647 grid__btn-icons' style='color:lightgray' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                    "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                strContract += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
                             }
@@ -5111,6 +4999,8 @@ angular.module('cpp.controllers').
                     else {
                         emptyTablesGridSection(selOrganization);
                     }
+
+                    BindProject();
                 }
 
                 function getProjectGridSection(selContract) {
@@ -5123,7 +5013,7 @@ angular.module('cpp.controllers').
                     if (selContract.children != undefined && selContract.children.length > 0) {
                         var strProject = "";
                         strProject += "<div class='col-md-12'><div class='grid__view'>";
-                        strProject += "<div class='grid__title'>Project (" + selectedProgram.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
@@ -5156,10 +5046,10 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                strProject += "<td style='pointer-events:none'>" +
-                                    "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                    "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                strProject += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
                             }
@@ -5190,7 +5080,7 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewProject').append(strProject);
                     }
                     else {
-                        emptyTablesGridSection(selContract, selectedProgram.name);
+                        emptyTablesGridSection(selContract, selContract.name);
                     }
                     BindElement(selectedProgramID);
                 }
@@ -5221,6 +5111,7 @@ angular.module('cpp.controllers').
                             for (projectElementI = 0; projectElementI < selProject.children.length; projectElementI++) {
                                 var projectElement = selProject.children[projectElementI];
                                 if (projectElementI == 0) {
+                                    _selectedProjectID = projectElement.ProjectID;
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
                                     getTrendGridSection(projectElement);
@@ -5239,10 +5130,10 @@ angular.module('cpp.controllers').
                                     strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
-                                    strElement += "<td style='pointer-events:none'>" +
-                                        "<i class='fa-pencil grid__btn-icons' style='color:lightgray' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='fa-trash grid__btn-icons' style='color:lightgray' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                        "<i class='fa-times grid__btn-icons' style='color:lightgray' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    strElement += "<td>" +
+                                        "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                        "<i class='fa-times grid__btn-icons disabledIcon' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
                                         "</td>";
                                     strElement += "</tr>";
                                 }
@@ -5386,7 +5277,7 @@ angular.module('cpp.controllers').
                     let isElementEmpty = false;
                     var emptyTitle = " ";
 
-                    if (selectedRow.level === "Program" && selectedRow.children == undefined) {
+                    if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
                         $('#wbsGridiewProject').html('');
 
                         var strProject = "<div class='col-md-12'><div class='grid__view'>";
@@ -5406,7 +5297,7 @@ angular.module('cpp.controllers').
 
                         isProjectEmpty = isElementEmpty = true;
                     }
-                    if ((selectedRow.level === "ProgramElement" && selectedRow.children == undefined) || isProjectEmpty) {
+                    if ((selectedRow.level === "ProgramElement" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isProjectEmpty) {
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
@@ -5426,7 +5317,7 @@ angular.module('cpp.controllers').
 
                         isElementEmpty = true;
                     }
-                    if ((selectedRow.level === "Project" && selectedRow.children == undefined) || isElementEmpty) {
+                    if ((selectedRow.level === "Project" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isElementEmpty) {
                         $('#wbsGridiewTrend').html('');
 
                         var strTrend = "<div class='col-md-12'><div class='grid__view'>";
@@ -5455,6 +5346,121 @@ angular.module('cpp.controllers').
                     getTrendGridSection(selectedElement);
                 }
 
+                function BindProject() {
+                    //Add Contract
+                    $("#AddContractGridBtn").unbind('click').on("click", function () {
+                        selectedNode = Treedata;
+                        wbsTree.setSelectedNode(selectedNode);
+                        $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+
+                    });
+
+                    //Edit/Open clicked
+                    $("#tblContract").on('click', '#EditContractGridBtn', function () {
+                        //$('#EditContractGridBtn').unbind('click').on('click', function () {
+                        var programId = this.parentElement.parentElement.id;
+                        if (programId != undefined) {
+                            $scope.modal_mode = "Update"
+                            localStorage.setItem('modal_mode', "Update");
+                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                            wbsTree.setSelectedNode(selectedProgram);
+                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                        }
+                        return false;
+                    });
+
+                    //View Gantt button click
+                    $("#tblContract").on('click', '#ViewGanttGridBtn', function () {
+                        //$("#ViewGanttGridBtn").click(function () {
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        if (programId != undefined) {
+                            window.location.href = "#/app/view-gantt-Contract/" + programId + "/0/" + $("#selectOrg").val();
+                        }
+                    });
+
+                    //Delete Contract
+                    $("#tblContract").on('click', '#DeleteContractGridBtn', function () {
+                        //$("#DeleteContractGridBtn").bind("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                        wbsTree.setSelectedNode(selectedProgram);
+                        $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Close Contract
+                    $("#tblContract").on('click', '#CloseContractGridBtn', function () {
+                        //$("#CloseContractGridBtn").unbind('click').on("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                        wbsTree.setSelectedNode(selectedProgram);
+                        $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Select Contract
+                    $('#tblContract tbody tr').on('click', function () {
+                        //wbsTree.setSelectedNode(null);
+                        $('#tblContract tr.selected').removeAttr('class');
+                        $(this).addClass('selected');
+                        $('#wbsGridiewProject').html('');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+
+                        $scope.GridContractId = $('#tblContract tr.selected').attr('id');
+                        localStorage.setItem('contextType', 'Program');
+                        var selectedProgramID = this.firstChild.parentElement.id;
+                        //organization.children[0].ProgramID
+                        $('#wbsGridiewProject').html('');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
+
+                        getProjectGridSection(selectedProgram);
+
+                        $('#tblContract tr.selected').find('td').each(function (i) {
+                            var isclosed = $('.selected').find("td:eq(" + i + ")").text();
+                            if (isclosed == "Closed") {
+                                $("#EditContracttGridBtn").hide();
+                                $("#DeleteContractGridBtn").hide();
+                                $("#ViewGanttGridBtn").hide();
+                                $("#CloseContractGridBtn").hide();
+                            }
+                            else {
+                                $("#EditContracttGridBtn").show();
+                                $("#DeleteContractGridBtn").show();
+                                $("#ViewGanttGridBtn").show();
+                                $("#CloseContractGridBtn").show();
+                            }
+                        }); //close changes done by vaishnavi
+                        var mydiv = document.getElementById("wbsGridiewProject");
+
+                        // var mydiv = document.getElementById("wbsGridiewProject");
+                        // mydiv.appendChild(document.(strProject));
+                        //document.getElementById('wbsGridiewProject').insertAdjacentHTML('beforeend', strProject);
+                        //$('#tblProject').append(strProject);
+                        $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+                    });
+                }
 
                 function BindElement(selectedProgramID) {
                     //Add Project
@@ -5669,6 +5675,7 @@ angular.module('cpp.controllers').
                         }
                         wbsTree.setNewTrend(true);
                         var s = wbsTree.getWBSTrendTree().getTrendNumber();
+                        wbsTree.getWBSTrendTree().trendGraph(true);
                         wbsTree.setSelectedNode(selectedElement);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};

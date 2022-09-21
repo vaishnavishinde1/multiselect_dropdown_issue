@@ -1977,3 +1977,29 @@ th.sort-by {
     .curved-border {
         border-radius:10px;
     }
+
+#AddContractGridBtn,
+#EditContractGridBtn,
+#ViewGanttGridBtn,
+#DeleteContractGridBtn,
+#CloseContractGridBtn,
+#AddProjectGridBtn,
+#EditProjectGridBtn,
+#DeleteProjectGridBtn,
+#CloseProjectGridBtn,
+#AddElementGridBtn,
+#EditElementGridBtn,
+#DeleteElementGridBtn,
+#CloseElementGridBtn,
+#AddTrendGridBtn,
+#EditTrendGridBtn,
+#DeleteTrendGridBtn,
+#CloseTrendGridBtn {
+    cursor: pointer;
+}
+
+.disabledIcon {
+    color: #b1b1b1;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
