@@ -4253,7 +4253,7 @@ angular.module('cpp.controllers').
                 searchText = myLocalStorage.get('SearchText');
                 $scope.SearchText = searchText;
                 var pagedata = Page;
-                $('#wbsGridView').html('');
+                //$('#wbsGridView').html('');
                 $scope.showSpinner = true;
                 $scope.trendSpinner = false;
                 $('#spin').addClass('fademe');
@@ -4283,6 +4283,11 @@ angular.module('cpp.controllers').
                     clientID = null;
                 }
                 usSpinnerService.spin('spinner-1');
+
+                var organization;
+                var selectedContract;
+                var selectedProject;
+                var selectedElement;
 
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
@@ -4314,7 +4319,8 @@ angular.module('cpp.controllers').
                         var isProjectIdSet = false;
                         //$rootScope.fromWBS = true;
                         // Rename the project and project element nodes to include project number and project element number.
-                        var organization = response;
+
+                        organization = response;
 
                         //-------------------------------------Nivedita-contract Details---------------------------------------------------------------
                         GetContractGridSection(organization);
@@ -4397,8 +4403,8 @@ angular.module('cpp.controllers').
                             if (program.children.length == 0) {
                                 str +=
                                     "<tr class='fade-selection-animation'> " +
-                                "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
-                                "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
+                                    "<td class='my-word-wrap orgcell' style='width: 14.28%;'><a level=" + organization.level + " OrganizationId=" + organization.organizationID + ">" + organization.name + "</a></td>" +
+                                    "<td class='my-word-wrap' style='width: 14.28%;'><a level=" + program.level + " ProgramId=" + program.ProgramID + " title=" + currentProgramCost + ">" + program.name + "</a></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
                                     "<td class='my-word-wrap' style='width: 14.28%;'></td>" +
@@ -4545,7 +4551,7 @@ angular.module('cpp.controllers').
                         //}
 
                         str += "</tbody></table ></div ></td ></tr > </tbody ></table ></div></div></div>";
-                        
+
                         var column1 = $('#wbsGridView Table td:first-child');
                         var column2 = $('#wbsGridView Table td:nth-child(2)');
                         var column3 = $('#wbsGridView Table td:nth-child(3)');
@@ -4597,119 +4603,7 @@ angular.module('cpp.controllers').
                         //    }
                         //});
 
-                        //Add Contract
-                        $("#AddContractGridBtn").unbind('click').on("click", function () {
-                            selectedNode = Treedata;
-                            wbsTree.setSelectedNode(selectedNode);
-                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
-
-                        });
-
-                        //Edit/Open clicked
-                        $("#tblContract").on('click', '#EditContractGridBtn', function () {
-                        //$('#EditContractGridBtn').unbind('click').on('click', function () {
-                            var programId = this.parentElement.parentElement.id;
-                            if (programId != undefined) {
-                                $scope.modal_mode = "Update"
-                                localStorage.setItem('modal_mode', "Update");
-                                var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                                wbsTree.setSelectedNode(selectedProgram);
-                                $('#ProgramModal').modal({ show: true, backdrop: 'static' });
-                            }
-                            return false;
-                        });
-
-                        //View Gantt button click
-                        $("#tblContract").on('click', '#ViewGanttGridBtn', function () {
-                        //$("#ViewGanttGridBtn").click(function () {
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            if (programId != undefined) {
-                                window.location.href = "#/app/view-gantt-Contract/" + programId + "/0/" + $("#selectOrg").val();
-                            }
-                        });
-
-                        //Delete Contract
-                        $("#tblContract").on('click', '#DeleteContractGridBtn', function () {
-                        //$("#DeleteContractGridBtn").bind("click", function () {
-                            $scope.modal_mode = 'Update';
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                            wbsTree.setSelectedNode(selectedProgram);
-                            $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                        });
-
-                        //Close Contract
-                        $("#tblContract").on('click', '#CloseContractGridBtn', function () {
-                        //$("#CloseContractGridBtn").unbind('click').on("click", function () {
-                            $scope.modal_mode = 'Update';
-                            //var programId = $scope.GridContractId;
-                            var programId = this.parentElement.parentElement.id;
-
-                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
-                            wbsTree.setSelectedNode(selectedProgram);
-                            $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                        });
-
-                        //Select Contract
-                        $('#tblContract tbody tr').on('click', function () {
-                            //wbsTree.setSelectedNode(null);
-                            $('#tblContract tr.selected').removeAttr('class');
-                            $(this).addClass('selected');
-                            $('#wbsGridiewProject').html('');
-                            $('#wbsGridiewElement').html('');
-                            $('#wbsGridiewTrend').html('');
-                            
-                            $scope.GridContractId = $('#tblContract tr.selected').attr('id');
-                            localStorage.setItem('contextType', 'Program');
-                            var selectedProgramID = this.firstChild.parentElement.id;
-                            //organization.children[0].ProgramID
-                            $('#wbsGridiewProject').html('');
-                            $('#wbsGridiewElement').html('');
-                            $('#wbsGridiewTrend').html('');
-                            var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                            //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
-                            
-                            getProjectGridSection(selectedProgram);
-
-                            $('#tblContract tr.selected').find('td').each(function (i) {
-                                var isclosed = $('.selected').find("td:eq(" + i + ")").text();
-                                if (isclosed == "Closed") {
-                                    $("#EditContracttGridBtn").hide();
-                                    $("#DeleteContractGridBtn").hide();
-                                    $("#ViewGanttGridBtn").hide();
-                                    $("#CloseContractGridBtn").hide();
-                                }
-                                else {
-                                    $("#EditContracttGridBtn").show();
-                                    $("#DeleteContractGridBtn").show();
-                                    $("#ViewGanttGridBtn").show();
-                                    $("#CloseContractGridBtn").show();
-                                }
-                            }); //close changes done by vaishnavi
-                            var mydiv = document.getElementById("wbsGridiewProject");
-                            
-                            // var mydiv = document.getElementById("wbsGridiewProject");
-                            // mydiv.appendChild(document.(strProject));
-                            //document.getElementById('wbsGridiewProject').insertAdjacentHTML('beforeend', strProject);
-                            //$('#tblProject').append(strProject);
-                            $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
-                                var table = $(this).closest('table');
-                                var rows = table.find('tr.contact-row')
-                                    .toArray()
-                                    .sort(comparer($(this).index()));
-                                this.asc = !this.asc;
-                                if (!this.asc) {
-                                    rows = rows.reverse();
-                                }
-                                for (var i = 0; i < rows.length; i++) {
-                                    table.append(rows[i]);
-                                }
-                            });
-                        });
+                        
 
 
                         //$('#tblProject tr').on('click', function () {
@@ -4761,781 +4655,6 @@ angular.module('cpp.controllers').
                         //    $('#wbsGridiewElement').append(strElement);
                         //});
 
-
-                        function BindElement(selectedProgramID) {
-                            //Add Project
-                            //$('#tblProject').on('click, #AddProjectGridBtn', function () {
-                            $("#AddProjectGridBtn").unbind('click').on("click", function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                wbsTree.setSelectedNode(selectedProgram);
-                                $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
-
-                            });
-
-                            //Edit/Open Project
-                            $('#tblProject').on('click', '#EditProjectGridBtn', function () {
-                            //$('#EditProjectGridBtn').unbind('click').on('click', function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                wbsTree.setSelectedNode(selectedProject);
-                                $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
-                            });
-
-                            //Delete Project
-                            $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
-                            //$("#DeleteProjectGridBtn").bind("click", function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                wbsTree.setSelectedNode(selectedProject);
-                                $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                            });
-
-                            //Close Project
-                            $('#tblProject').on('click', '#CloseProjectGridBtn', function () {
-                            //$("#CloseProjectGridBtn").unbind('click').on("click", function () {
-                                $scope.modal_mode = 'Update';
-                                // var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                                wbsTree.setSelectedNode(selectedProject);
-                                $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                            });
-
-                            //Select Project
-                            $('#tblProject tr').on('click', function () {
-                                //wbsTree.setSelectedNode(null);
-                                $('#tblProject tr.selected').removeClass('selected');
-                                $(this).addClass('selected');
-                                $('#wbsGridiewElement').html('');
-                                $('#wbsGridiewTrend').html('');
-                                var selectedProjectID = this.firstChild.parentElement.id;
-                                $scope.GridProjectId = selectedProjectID;
-                                localStorage.setItem('contextType', 'ProgramElement');
-                                //BindElement(selectedProjectID);
-                                $('#wbsGridiewElement').html('');
-                                $('#wbsGridiewTrend').html('');
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-
-                                getElementGridSection(selectedProject);
-
-                                $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
-                                    var table = $(this).closest('table');
-                                    var rows = table.find('tr.contact-row')
-                                        .toArray()
-                                        .sort(comparer($(this).index()));
-                                    this.asc = !this.asc;
-                                    if (!this.asc) {
-                                        rows = rows.reverse();
-                                    }
-                                    for (var i = 0; i < rows.length; i++) {
-                                        table.append(rows[i]);
-                                    }
-                                });
-                            });
-                        }
-
-                        function BindTrend(selectedProgramID, selectedProjectID)
-                        {
-                            //Add Element
-                            //$('#tblElement').on('click, #EditElementGridBtn', function () {
-                            $('#AddElementGridBtn').unbind('click').on('click', function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                //var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
-                                wbsTree.setSelectedNode(selectedProject);
-                                $('#ProjectModal').modal({ show: true, backdrop: 'static' });
-                            });
-
-                            //Edit/Open Element
-                            $('#tblElement').on('click', '#EditElementGridBtn', function () {
-                            //$('#EditElementGridBtn').unbind('click').on('click', function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var elementId = this.parentElement.parentElement.id;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
-                                wbsTree.setSelectedNode(selectedElement);
-                                $('#ProjectModal').modal({ show: true, backdrop: 'static' });
-                            });
-
-                            //Delete Element
-                            $('#tblElement').on('click', '#DeleteElementGridBtn', function () {
-                            //$("#DeleteElementGridBtn").bind("click", function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var elementId = this.parentElement.parentElement.id;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
-                                wbsTree.setSelectedNode(selectedElement);
-                                $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-                            });
-
-                            //Close Element
-                            $('#tblElement').on('click', '#CloseElementGridBtn', function () {
-                            //$("#CloseElementGridBtn").unbind('click').on("click", function () {
-                                $scope.modal_mode = 'Update';
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var elementId = this.parentElement.parentElement.id;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
-                                wbsTree.setSelectedNode(selectedElement);
-                                $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                            });
-
-                            ////Add Trend
-                            //$("#AddTrendGridBtn").unbind('click').on("click", function () {
-                            //    //var programId = $scope.GridContractId;
-                            //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                            //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                            //    var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
-                            //    if (_baseline.TrendStatus != "Approved") {
-                            //        dhtmlx.alert({
-                            //            text: "Before adding a new trend, baseline needs to be approved first",
-                            //            width: '400px'
-                            //        });
-                            //        return;
-                            //    }
-                            //    wbsTree.setNewTrend(true);
-                            //    var s = wbsTree.getWBSTrendTree().getTrendNumber();
-                            //    $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
-                            //    $('#cancel_futuretrend').show();
-                            //});
-
-                            $('#tblElement tbody tr').on('click', function () {
-                                //wbsTree.setSelectedNode(null);
-                                $('#tblElement tr.selected').removeClass('selected');
-                                $(this).addClass('selected');
-                                $('#wbsGridiewTrend').html('');
-                                localStorage.setItem('contextType', 'Project');
-
-                                var selectedProjectElementID = this.firstChild.parentElement.id;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
-
-                                //Add Trend
-                                //$("#AddTrendGridBtn").unbind('click').on("click", function () {
-                                //    //var programId = $scope.GridContractId;
-                                //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //    wbsTree.setSelectedNode(selectedElement);
-                                //    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
-
-                                //});
-
-                                getTrendGridSection(selectedElement);
-
-                                $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
-                                    var table = $(this).closest('table');
-                                    var rows = table.find('tr.contact-row')
-                                        .toArray()
-                                        .sort(comparer($(this).index()));
-                                    this.asc = !this.asc;
-                                    if (!this.asc) {
-                                        rows = rows.reverse();
-                                    }
-                                    for (var i = 0; i < rows.length; i++) {
-                                        table.append(rows[i]);
-                                    }
-                                });
-                            });
-                        }
-
-
-                        function BindTrendEvent(selectedProgramID, selectedProjectID, selectedElementID)
-                        {
-                            //Add Trend
-                            $("#AddTrendGridBtn").unbind('click').on("click", function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                                if (_baseline.TrendStatus != "Approved") {
-                                    dhtmlx.alert({
-                                        text: "Before adding a new trend, baseline needs to be approved first",
-                                        width: '400px'
-                                    });
-                                    return;
-                                }
-                                wbsTree.setNewTrend(true);
-                                var s = wbsTree.getWBSTrendTree().getTrendNumber();
-                                wbsTree.setSelectedNode(selectedElement);
-                                var allElementTrendData = $scope.gridTrendData;
-                                var selectedTrend = {};
-                                selectedTrend.metadata = allElementTrendData.CurrentProjectList;
-                                wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
-                                //  $('#approve_trend').hide();
-                                $('#cancel_futuretrend').show();
-
-                            });
-
-                            //Edit/Open Trend
-                            $('#tblTrend').on('click', '#EditTrendGridBtn', function () {
-                                //$('#EditElementGridBtn').unbind('click').on('click', function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                                var trendNumber = this.parentElement.parentElement.id;
-
-                                wbsTree.setSelectedNode(selectedElement);
-                                wbsTree.setNewTrend(false);
-                                var allElementTrendData = $scope.gridTrendData;
-                                var selectedTrend = {};
-                                
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-
-                                    $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
-                                }
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-
-                                    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
-                                }
-                                //var selectedTrend = selectedElement.children.find(x => x.t);
-                                //wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                //wbsTrendTree.setSelectedTreeNode(s);
-                                //  $('#approve_trend').hide();
-                                //$('#cancel_futuretrend').show();
-                            });
-
-                            //Delete Trend
-                            $('#tblTrend').on('click', '#DeleteTrendGridBtn', function () {
-                                //$("#DeleteElementGridBtn").bind("click", function () {
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var elementId = this.parentElement.parentElement.id;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                                var trendNumber = this.parentElement.parentElement.id;
-
-                                wbsTree.setSelectedNode(selectedElement);
-                                wbsTree.setNewTrend(false);
-                                var allElementTrendData = $scope.gridTrendData;
-                                var selectedTrend = {};
-
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                    localStorage.setItem('contextType', 'FutureTrend');
-
-                                    $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                                }
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                    localStorage.setItem('contextType', 'PastTrend');
-
-                                    $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                                }
-                            });
-
-                            //Close Trend
-                            $('#tblTrend').on('click', '#CloseTrendGridBtn', function () {
-                                //$("#CloseElementGridBtn").unbind('click').on("click", function () {
-                                $scope.modal_mode = 'Update';
-                                //var programId = $scope.GridContractId;
-                                var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                                //var projectId = $scope.GridProjectId;
-                                var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
-                                //var elementId = $scope.GridProjectId;
-                                var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                                var trendNumber = this.parentElement.parentElement.id;
-
-                                wbsTree.setSelectedNode(selectedElement);
-                                wbsTree.setNewTrend(false);
-                                var allElementTrendData = $scope.gridTrendData;
-                                var selectedTrend = {};
-
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                    localStorage.setItem('contextType', 'FutureTrend');
-
-                                    $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                                }
-                                if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
-                                    jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
-                                        if (trend.TrendNumber == trendNumber) {
-                                            selectedTrend.metadata = trend;
-                                            return false;
-                                        }
-                                    });
-                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
-                                    localStorage.setItem('contextType', 'PastTrend');
-
-                                    $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
-
-                                }
-
-                            });
-
-                        }
-
-                        function GetContractGridSection(selOrganization) {
-                            if (selOrganization.children != undefined && selOrganization.children.length > 0) {
-                                var strContract = "";
-                                strContract = "<div class='row'>";
-                                strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
-                                strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
-                                strContract += "<thead class='t-head'>";
-                                strContract += "<tr>" +
-                                    "<th>Client Name</th>" + //$scope.programList[0].ClientPOC
-                                    "<th>Contract Name</th>" + //$scope.programList[0].program.name
-                                    "<th>Contract Number</th>" +
-                                    "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
-                                    "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
-                                    "<th>Current Forecast</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr>";
-                                strContract += "</thead>";
-                                for (programI = 0; programI < selOrganization.children.length; programI++) {
-                                    var program = selOrganization.children[programI];
-                                    if (programI == 0) {
-                                        selectedProgramID = program.ProgramID;
-                                        strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";
-                                        getProjectGridSection(program);
-                                    }
-                                    else {
-                                        strContract += "<tr class='contact-row' id=" + program.ProgramID + ">";
-                                    }
-                                    if (program.Status == "Closed") {
-                                        strContract += "<td style='color:red'>" + program.ClientPOC + "</td>";
-                                        strContract += "<td style='color:red'>" + program.name + "</td>";
-                                        strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
-                                        strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
-                                        strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
-                                        strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
-                                        strContract += "<td style='display:none'>" + program.Status + "</td>";
-                                        strContract += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                            "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
-                                            "</td>";
-                                        strContract += "</tr>";
-                                    }
-                                    else {
-                                        strContract += "<td>" + program.ClientPOC + "</td>";
-                                        strContract += "<td>" + program.name + "</td>";
-                                        strContract += "<td>" + program.ContractNumber + "</td>";
-                                        strContract += "<td>" + program.ContractValue + "</td>";
-                                        strContract += "<td>" + program.CurrentCost + "</td>";
-                                        strContract += "<td>" + program.ForecastCost + "</td>";
-                                        strContract += "<td style='display:none'>" + program.Status + "</td>";
-                                        strContract += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                            "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
-                                            "</td>";
-                                        strContract += "</tr>";
-                                    }
-                                }
-
-
-                                strContract += "</table></div>";
-                                //strContract += "<div class='m-t-25 m-b-10 center'>"+
-                                //    "<button type='button' class='grid__btn' id='AddContractGridBtn'> Add Contract</button>" +
-                                //    "<button type='button' class='grid__btn' contextType='Program' id='EditContractGridBtn'>Edit/Open</button>" +
-                                //    "<button type='button' class='grid__btn' id='ViewGanttGridBtn'>View Gantt</button>" +
-                                //    "<button type='button' class='grid__btn' contextType='Program' id='DeleteContractGridBtn'>Delete</button>" +
-                                //    "<button type='button' class='grid__btn' contextType='Program' id='CloseContractGridBtn'>Close</button>" +
-                                //    "</div>";
-                                strContract += "</div></div></div></div>";
-                                strContract += "</div>";
-
-                                $('#wbsGridView').append(strContract);
-                            }
-                            else {
-                                emptyTablesGridSection(selOrganization);
-                            }
-                        }
-
-                        function getProjectGridSection(selContract) {
-
-                            var selectedProgramID = selContract.ProgramID;
-                            var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-
-                            if (selContract.children != undefined && selContract.children.length > 0) {
-                                var strProject = "";
-                                strProject += "<div class='col-md-12'><div class='grid__view'>";
-                                strProject += "<div class='grid__title'>Project (" + selectedProgram.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
-                                strProject += "<thead class='t-head'>";
-                                strProject += "<tr>";
-                                strProject += "<th>Name</th>" +
-                                    "<th>Number</th>" +
-                                    "<th>Value</th>" +
-                                    "<th>Deparment</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr></thead>";
-
-                                for (projectI = 0; projectI < selContract.children.length; projectI++) {
-                                    var project = selContract.children[projectI];
-                                    if (projectI == 0) {
-                                        selectedProjectID = project.ProgramElementID;
-                                        strProject += "<tr class='selected contact-row' id=" + project.ProgramElementID + ">";
-                                        getElementGridSection(project);
-                                    }
-                                    else {
-                                        strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
-                                    }
-                                    //strProject += "<tr id=" + project.ProgramElementID + ">";
-                                    //strProject += "<td>" + project.ProgramElementName + "</td>";
-                                    //strProject += "<td>" + project.ProjectNumber + "</td>";
-                                    //strProject += "<td>" + project.CurrentCost + "</td>";
-                                    //strProject += "<td>" + project.ProjectClassName + "</td>";
-                                    //strProject += "</tr>";
-                                    if (project.Status == "Closed") {
-                                        strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
-                                        strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
-                                        strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
-                                        strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                        strProject += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
-                                            "</td>";
-                                        strProject += "</tr>";
-                                    }
-                                    else {
-                                        strProject += "<td>" + project.ProgramElementName + "</td>";
-                                        strProject += "<td>" + project.ProjectNumber + "</td>";
-                                        strProject += "<td>" + project.CurrentCost + "</td>";
-                                        strProject += "<td>" + project.ProjectClassName + "</td>";
-                                        strProject += "<td>" +
-                                            "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                            "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                            "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
-                                            "</td>";
-                                        strProject += "</tr>";
-                                    }
-                                }
-
-
-                                strProject += "</table></div>";
-                                //strProject += "<div class='center'>" +
-                                //    "<button type ='button' id='AddProjectGridBtn' contextType='Project' class='grid__btn'>Add Project</button>" +
-                                //    "<button type ='button' id='EditProjectGridBtn' contextType='Project' class='grid__btn'>Edit Project</button>" +
-                                //    "<button type ='button' id='DeleteProjectGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
-                                //    "<button type ='button' id='CloseProjectGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
-                                //    "</div>";
-                                strProject += "</div></div>";
-
-                                $('#wbsGridiewProject').append(strProject);
-                            }
-                            else {
-                                emptyTablesGridSection(selContract, selectedProgram.name);
-                            }
-                            BindElement(selectedProgramID);
-                        }
-
-                        function getElementGridSection(selProject) {
-
-                            var selectedProjectID = selProject.ProgramElementID;
-                            //var selectedProject = selProject.children.find(x => x.ProgramElementID === selectedProjectID);
-                            var selectedProgramID = selProject.ProgramID;
-
-
-                            if (selProject.children != undefined && selProject.children.length > 0) {
-                                var strElement = "";
-                                strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
-                                strElement += "<thead class='t-head'>";
-                                strElement += "<tr>";
-                                strElement += "<th>Name</th>" +
-                                    "<th>Number</th>" +
-                                    "<th>Value</th>" +
-                                    "<th>Services</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr></thead>";
-                                if (selProject.children.length > 0) {
-
-                                    for (projectElementI = 0; projectElementI < selProject.children.length; projectElementI++) {
-                                        var projectElement = selProject.children[projectElementI];
-                                        if (projectElementI == 0) {
-                                            strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
-                                            getTrendGridSection(projectElement);
-                                        }
-                                        else {
-                                            strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
-                                        }
-                                        //strElement += "<td>" + projectElement.ProjectName + "</td>";
-                                        //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                        //strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                        //strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                        //strElement += "</tr>";
-                                        if (projectElement.Status == "Closed") {
-                                            strElement += "<td style='color:red'>" + projectElement.name + "</td>";
-                                            strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
-                                            strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
-                                            strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
-                                            strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
-                                            strElement += "<td>" +
-                                                "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                                "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
-                                                "</td>";
-                                            strElement += "</tr>";
-                                        }
-                                        else {
-                                            strElement += "<td>" + projectElement.name + "</td>";
-                                            strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                            strElement += "<td>" + projectElement.CurrentCost + "</td>";
-                                            strElement += "<td>" + projectElement.ServiceName + "</td>";
-                                            strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
-                                            strElement += "<td>" +
-                                                "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                                "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
-                                                "</td>";
-                                            strElement += "</tr>";
-                                        }
-                                    }
-                                }
-
-                                strElement += "</table></div>";
-                                //strElement += "<div class='center'>" +
-                                //    "<button type ='button' id='AddElementGridBtn' contextType='ProjectElement' class='grid__btn'>Add Element</button>" +
-                                //    "<button type ='button' id='EditElementGridBtn' contextType='ProjectElement' class='grid__btn'>Edit Element</button>" +
-                                //    "<button type='button' id='id='DeleteElementGridBtn' contextType='ProjectElement' class='grid__btn'>Delete</button>" +
-                                //    "<button type='button' id='CloseElementGridBtn' contextType='ProjectElement' class='grid__btn'>Close</button>" +
-                                //    "</div>";
-                                strElement += "</div></div>";
-
-                                $('#wbsGridiewElement').append(strElement);
-                            }
-                            else {
-                                emptyTablesGridSection(selProject, selProject.ProgramElementName);
-                            }
-                            BindTrend(selectedProgramID, selectedProjectID);
-                        }
-
-                        function getTrendGridSection(selElement) {
-                            var selectedProjectElementID = selElement.ProjectID;
-                            var selectedProjectID = selElement.ProgramElementID;
-                            var selectedProgramID = selElement.ProgramID ;
-                            var strTrend = "";
-                            strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                            strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                            strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
-                            strTrend += "<thead class='t-head'>";
-                            strTrend += "<tr>";
-                            strTrend += "<th>Name</th>" +
-                                "<th>Impact</th>" +
-                                "<th>Status</th>" +
-                                "<th>Action</th>" +
-                                "</tr></thead><tbody>";
-                            _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
-                                .then(function (response) {
-                                    $scope.gridTrendData = response.data.result;
-
-                                    if (response.data.result.PastTrendList.length != 0) {
-                                        _baseline = response.data.result.PastTrendList[0];
-                                    } else {
-                                        _baseline = response.data.result.FutureTrendList[0];
-                                    }
-                                    strTrend = "";
-
-                                    strTrend += "<tr class='contact-row'>";
-                                    strTrend += "<td>" + _baseline.TrendDescription + "</td>";
-                                    strTrend += "<td></td>";
-                                    strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                                    strTrend += "<td></td>";
-                                    strTrend += "</tr>";
-                                    var strApproveTrend = "", strPendingTrend = "";
-                                    if (_baseline.TrendStatus == "Approved") {
-                                        if (response.data.result.FutureTrendList.length != 0) {
-
-                                            for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
-                                                strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
-                                                strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                                strPendingTrend += "<td></td>";
-                                                strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
-                                                strPendingTrend += "<td>" +
-                                                    "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                    "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                                    "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
-                                                    "</td> ";
-                                                strPendingTrend += "</tr>";
-
-                                            }
-                                        }
-                                        if (response.data.result.PastTrendList.length > 1) {
-                                            for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
-                                                strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
-                                                strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
-                                                strApproveTrend += "<td></td>";
-                                                strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
-                                                strApproveTrend += "<td>" +
-                                                    "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                                    "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
-                                                    "</td> ";
-                                                strApproveTrend += "</tr>";
-
-                                            }
-                                        }
-
-                                    }
-                                    strTrend += strApproveTrend;
-                                    //strTrend += "<tr class='contact-row'>";
-                                    //strTrend += "<td>Current</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "</tr>";
-                                    strTrend += strPendingTrend;
-                                    //strTrend += "<tr class='contact-row'>";
-                                    //strTrend += "<td>Forecast</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "<td>&nbsp;</td>";
-                                    //strTrend += "</tr>";
-
-                                    $('#tblTrend tbody').append(strTrend);
-
-                                    //strTrend += "<div class='center'>" +
-                                    //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                    //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                    //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                    //    "</div>";
-
-                                });
-                            strTrend += "</tbody></table></div>";
-                            strTrend += "</div></div>";
-
-                            $('#wbsGridiewTrend').append(strTrend);
-
-                            BindTrendEvent(selectedProgramID, selectedProjectID, selectedProjectElementID);
-                        }
-
-                        function emptyTablesGridSection(selectedRow, tblParentName) {
-                            let isProjectEmpty = false;
-                            let isElementEmpty = false;
-                            var emptyTitle = " ";
-
-                            if (selectedRow.level === "Program" && selectedRow.children == undefined) {
-                                $('#wbsGridiewProject').html('');
-
-                                var strProject = "<div class='col-md-12'><div class='grid__view'>";
-                                strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
-                                strProject += "<thead class='t-head'>";
-                                strProject += "<tr>";
-                                strProject += "<th>Name</th>" +
-                                    "<th>Number</th>" +
-                                    "<th>Value</th>" +
-                                    "<th>Deparment</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr></thead>";
-                                strProject += "</table></div>";
-                                strProject += "</div></div>";
-                                $('#wbsGridiewProject').append(strProject);
-
-                                isProjectEmpty = isElementEmpty = true;
-                            }
-                            if ((selectedRow.level === "ProgramElement" && selectedRow.children == undefined) || isProjectEmpty) {
-                                $('#wbsGridiewElement').html('');
-
-                                var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                                strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
-                                strElement += "<thead class='t-head'>";
-                                strElement += "<tr>";
-                                strElement += "<th>Name</th>" +
-                                    "<th>Number</th>" +
-                                    "<th>Value</th>" +
-                                    "<th>Services</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr></thead>";
-                                strElement += "</table></div>";
-                                strElement += "</div></div>";
-                                $('#wbsGridiewElement').append(strElement);
-
-                                isElementEmpty = true;
-                            }
-                            if ((selectedRow.level === "Project" && selectedRow.children == undefined) || isElementEmpty) {
-                                $('#wbsGridiewTrend').html('');
-
-                                var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                                strTrend += "<div class='grid__title'>Trend (" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                                strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
-                                strTrend += "<thead class='t-head'>";
-                                strTrend += "<tr>";
-                                strTrend += "<th>Name</th>" +
-                                    "<th>Impact</th>" +
-                                    "<th>Status</th>" +
-                                    "<th>Action</th>" +
-                                    "</tr></thead>";
-                                strTrend += "</table></div>";
-                                strTrend += "<div class='center'>" +
-                                    //"<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
-                                    //"<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
-                                    //"<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
-                                    "</div>";
-                                strTrend += "</div></div>";
-                                $('#wbsGridiewTrend').append(strTrend);
-                            }
-                        }
 
                         function modifyTableRowspan(column) {
 
@@ -5794,7 +4913,924 @@ angular.module('cpp.controllers').
                         usSpinnerService.stop('spinner-1');
                         //$scope.showSpinner = false;
                         //$('#spin').removeClass('fademe');
-                    })
+                    });
+
+
+                function GetContractGridSection(selOrganization) {
+
+                    $('#wbsGridView').html('');
+
+                    if (selOrganization.children != undefined && selOrganization.children.length > 0) {
+                        var strContract = "";
+                        strContract = "<div class='row'>";
+                        strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
+                        strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
+                        strContract += "<thead class='t-head'>";
+                        strContract += "<tr>" +
+                            "<th>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th>Contract Name</th>" + //$scope.programList[0].program.name
+                            "<th>Contract Number</th>" +
+                            "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
+                            "<th>Current Forecast</th>" +
+                            "<th>Action</th>" +
+                            "</tr>";
+                        strContract += "</thead>";
+                        for (programI = 0; programI < selOrganization.children.length; programI++) {
+                            var program = selOrganization.children[programI];
+                            if (programI == 0) {
+                                selectedProgramID = program.ProgramID;
+                                selectedContract = program;
+                                strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";
+                                getProjectGridSection(program);
+                            }
+                            else {
+                                strContract += "<tr class='contact-row' id=" + program.ProgramID + ">";
+                            }
+                            if (program.Status == "Closed") {
+                                strContract += "<td style='color:red'>" + program.ClientPOC + "</td>";
+                                strContract += "<td style='color:red'>" + program.name + "</td>";
+                                strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
+                                strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
+                                strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
+                                strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
+                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "</td>";
+                                strContract += "</tr>";
+                            }
+                            else {
+                                strContract += "<td>" + program.ClientPOC + "</td>";
+                                strContract += "<td>" + program.name + "</td>";
+                                strContract += "<td>" + program.ContractNumber + "</td>";
+                                strContract += "<td>" + program.ContractValue + "</td>";
+                                strContract += "<td>" + program.CurrentCost + "</td>";
+                                strContract += "<td>" + program.ForecastCost + "</td>";
+                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>" +
+                                    "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "</td>";
+                                strContract += "</tr>";
+                            }
+                        }
+
+
+                        strContract += "</table></div>";
+                        //strContract += "<div class='m-t-25 m-b-10 center'>"+
+                        //    "<button type='button' class='grid__btn' id='AddContractGridBtn'> Add Contract</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='EditContractGridBtn'>Edit/Open</button>" +
+                        //    "<button type='button' class='grid__btn' id='ViewGanttGridBtn'>View Gantt</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='DeleteContractGridBtn'>Delete</button>" +
+                        //    "<button type='button' class='grid__btn' contextType='Program' id='CloseContractGridBtn'>Close</button>" +
+                        //    "</div>";
+                        strContract += "</div></div></div></div>";
+                        strContract += "</div>";
+
+                        $('#wbsGridView').append(strContract);
+                    }
+                    else {
+                        emptyTablesGridSection(selOrganization);
+                    }
+
+                    BindProject();
+                }
+
+                function getProjectGridSection(selContract) {
+
+                    var selectedProgramID = selContract.ProgramID;
+                    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+
+                    $('#wbsGridiewProject').html('');
+
+                    if (selContract.children != undefined && selContract.children.length > 0) {
+                        var strProject = "";
+                        strProject += "<div class='col-md-12'><div class='grid__view'>";
+                        strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
+                        strProject += "<thead class='t-head'>";
+                        strProject += "<tr>";
+                        strProject += "<th>Name</th>" +
+                            "<th>Number</th>" +
+                            "<th>Value</th>" +
+                            "<th>Deparment</th>" +
+                            "<th>Action</th>" +
+                            "</tr></thead>";
+
+                        for (projectI = 0; projectI < selContract.children.length; projectI++) {
+                            var project = selContract.children[projectI];
+                            if (projectI == 0) {
+                                selectedProjectID = project.ProgramElementID;
+                                selectedProject = project;
+                                strProject += "<tr class='selected contact-row' id=" + project.ProgramElementID + ">";
+                                getElementGridSection(project);
+                            }
+                            else {
+                                strProject += "<tr class='contact-row' id=" + project.ProgramElementID + ">";
+                            }
+                            //strProject += "<tr id=" + project.ProgramElementID + ">";
+                            //strProject += "<td>" + project.ProgramElementName + "</td>";
+                            //strProject += "<td>" + project.ProjectNumber + "</td>";
+                            //strProject += "<td>" + project.CurrentCost + "</td>";
+                            //strProject += "<td>" + project.ProjectClassName + "</td>";
+                            //strProject += "</tr>";
+                            if (project.Status == "Closed") {
+                                strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
+                                strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
+                                strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                strProject += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "</td>";
+                                strProject += "</tr>";
+                            }
+                            else {
+                                strProject += "<td>" + project.ProgramElementName + "</td>";
+                                strProject += "<td>" + project.ProjectNumber + "</td>";
+                                strProject += "<td>" + project.CurrentCost + "</td>";
+                                strProject += "<td>" + project.ProjectClassName + "</td>";
+                                strProject += "<td>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "</td>";
+                                strProject += "</tr>";
+                            }
+                        }
+
+
+                        strProject += "</table></div>";
+                        //strProject += "<div class='center'>" +
+                        //    "<button type ='button' id='AddProjectGridBtn' contextType='Project' class='grid__btn'>Add Project</button>" +
+                        //    "<button type ='button' id='EditProjectGridBtn' contextType='Project' class='grid__btn'>Edit Project</button>" +
+                        //    "<button type ='button' id='DeleteProjectGridBtn' contextType='Project' class='grid__btn'>Delete</button>" +
+                        //    "<button type ='button' id='CloseProjectGridBtn' contextType='Project' class='grid__btn'>Close</button>" +
+                        //    "</div>";
+                        strProject += "</div></div>";
+
+                        $('#wbsGridiewProject').append(strProject);
+                    }
+                    else {
+                        emptyTablesGridSection(selContract, selContract.name);
+                    }
+                    BindElement(selectedProgramID);
+                }
+
+                function getElementGridSection(selProject) {
+
+                    var selectedProjectID = selProject.ProgramElementID;
+                    //var selectedProject = selProject.children.find(x => x.ProgramElementID === selectedProjectID);
+                    var selectedProgramID = selProject.ProgramID;
+
+                    $('#wbsGridiewElement').html('');
+
+                    if (selProject.children != undefined && selProject.children.length > 0) {
+                        var strElement = "";
+                        strElement = "<div class='col-md-12'><div class='grid__view'>";
+                        strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
+                        strElement += "<thead class='t-head'>";
+                        strElement += "<tr>";
+                        strElement += "<th>Name</th>" +
+                            "<th>Number</th>" +
+                            "<th>Value</th>" +
+                            "<th>Services</th>" +
+                            "<th>Action</th>" +
+                            "</tr></thead>";
+                        if (selProject.children.length > 0) {
+
+                            for (projectElementI = 0; projectElementI < selProject.children.length; projectElementI++) {
+                                var projectElement = selProject.children[projectElementI];
+                                if (projectElementI == 0) {
+                                    _selectedProjectID = projectElement.ProjectID;
+                                    selectedElement = projectElement;
+                                    strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
+                                    getTrendGridSection(projectElement);
+                                }
+                                else {
+                                    strElement += "<tr class='contact-row' id=" + projectElement.ProjectID + ">";
+                                }
+                                //strElement += "<td>" + projectElement.ProjectName + "</td>";
+                                //strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                //strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                //strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                //strElement += "</tr>";
+                                if (projectElement.Status == "Closed") {
+                                    strElement += "<td style='color:red'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
+                                    strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
+                                    strElement += "<td>" +
+                                        "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                        "<i class='fa-times grid__btn-icons disabledIcon' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        "</td>";
+                                    strElement += "</tr>";
+                                }
+                                else {
+                                    strElement += "<td>" + projectElement.name + "</td>";
+                                    strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                    strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                    strElement += "<td>" +
+                                        "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                        "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        "</td>";
+                                    strElement += "</tr>";
+                                }
+                            }
+                        }
+
+                        strElement += "</table></div>";
+                        //strElement += "<div class='center'>" +
+                        //    "<button type ='button' id='AddElementGridBtn' contextType='ProjectElement' class='grid__btn'>Add Element</button>" +
+                        //    "<button type ='button' id='EditElementGridBtn' contextType='ProjectElement' class='grid__btn'>Edit Element</button>" +
+                        //    "<button type='button' id='id='DeleteElementGridBtn' contextType='ProjectElement' class='grid__btn'>Delete</button>" +
+                        //    "<button type='button' id='CloseElementGridBtn' contextType='ProjectElement' class='grid__btn'>Close</button>" +
+                        //    "</div>";
+                        strElement += "</div></div>";
+
+                        $('#wbsGridiewElement').append(strElement);
+                    }
+                    else {
+                        emptyTablesGridSection(selProject, selProject.ProgramElementName);
+                    }
+                    BindTrend(selectedProgramID, selectedProjectID);
+                }
+
+                function getTrendGridSection(selElement) {
+                    var selectedProjectElementID = selElement.ProjectID;
+                    var selectedProjectID = selElement.ProgramElementID;
+                    var selectedProgramID = selElement.ProgramID;
+
+                    $('#wbsGridiewTrend').html('');
+
+                    var strTrend = "";
+                    strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                    strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                    strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                    strTrend += "<thead class='t-head'>";
+                    strTrend += "<tr>";
+                    strTrend += "<th>Name</th>" +
+                        "<th>Impact</th>" +
+                        "<th>Status</th>" +
+                        "<th>Action</th>" +
+                        "</tr></thead><tbody>";
+                    _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
+                        .then(function (response) {
+                            $scope.gridTrendData = response.data.result;
+
+                            if (response.data.result.PastTrendList.length != 0) {
+                                _baseline = response.data.result.PastTrendList[0];
+                            } else {
+                                _baseline = response.data.result.FutureTrendList[0];
+                            }
+                            strTrend = "";
+
+                            strTrend += "<tr class='contact-row'>";
+                            strTrend += "<td>" + _baseline.TrendDescription + "</td>";
+                            strTrend += "<td></td>";
+                            strTrend += "<td>" + _baseline.TrendStatus + "</td>";
+                            strTrend += "<td></td>";
+                            strTrend += "</tr>";
+                            var strApproveTrend = "", strPendingTrend = "";
+                            if (_baseline.TrendStatus == "Approved") {
+                                if (response.data.result.FutureTrendList.length != 0) {
+
+                                    for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
+                                        strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
+                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                        strPendingTrend += "<td></td>";
+                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
+                                        strPendingTrend += "<td>" +
+                                            "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                            "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
+                                            "</td> ";
+                                        strPendingTrend += "</tr>";
+
+                                    }
+                                }
+                                if (response.data.result.PastTrendList.length > 1) {
+                                    for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
+                                        strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
+                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                        strApproveTrend += "<td></td>";
+                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
+                                        strApproveTrend += "<td>" +
+                                            "<i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                            "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                            "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i>" +
+                                            "</td> ";
+                                        strApproveTrend += "</tr>";
+
+                                    }
+                                }
+
+                            }
+                            strTrend += strApproveTrend;
+                            //strTrend += "<tr class='contact-row'>";
+                            //strTrend += "<td>Current</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "</tr>";
+                            strTrend += strPendingTrend;
+                            //strTrend += "<tr class='contact-row'>";
+                            //strTrend += "<td>Forecast</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "<td>&nbsp;</td>";
+                            //strTrend += "</tr>";
+
+                            $('#tblTrend tbody').append(strTrend);
+
+                            //strTrend += "<div class='center'>" +
+                            //    "<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                            //    "<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                            //    "<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                            //    "</div>";
+
+                        });
+                    strTrend += "</tbody></table></div>";
+                    strTrend += "</div></div>";
+
+                    $('#wbsGridiewTrend').append(strTrend);
+
+                    BindTrendEvent(selectedProgramID, selectedProjectID, selectedProjectElementID);
+                }
+
+                function emptyTablesGridSection(selectedRow, tblParentName) {
+                    let isProjectEmpty = false;
+                    let isElementEmpty = false;
+                    var emptyTitle = " ";
+
+                    if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
+                        $('#wbsGridiewProject').html('');
+
+                        var strProject = "<div class='col-md-12'><div class='grid__view'>";
+                        strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
+                        strProject += "<thead class='t-head'>";
+                        strProject += "<tr>";
+                        strProject += "<th>Name</th>" +
+                            "<th>Number</th>" +
+                            "<th>Value</th>" +
+                            "<th>Deparment</th>" +
+                            "<th>Action</th>" +
+                            "</tr></thead>";
+                        strProject += "</table></div>";
+                        strProject += "</div></div>";
+                        $('#wbsGridiewProject').append(strProject);
+
+                        isProjectEmpty = isElementEmpty = true;
+                    }
+                    if ((selectedRow.level === "ProgramElement" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isProjectEmpty) {
+                        $('#wbsGridiewElement').html('');
+
+                        var strElement = "<div class='col-md-12'><div class='grid__view'>";
+                        strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
+                        strElement += "<thead class='t-head'>";
+                        strElement += "<tr>";
+                        strElement += "<th>Name</th>" +
+                            "<th>Number</th>" +
+                            "<th>Value</th>" +
+                            "<th>Services</th>" +
+                            "<th>Action</th>" +
+                            "</tr></thead>";
+                        strElement += "</table></div>";
+                        strElement += "</div></div>";
+                        $('#wbsGridiewElement').append(strElement);
+
+                        isElementEmpty = true;
+                    }
+                    if ((selectedRow.level === "Project" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isElementEmpty) {
+                        $('#wbsGridiewTrend').html('');
+
+                        var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                        strTrend += "<div class='grid__title'>Trend (" + (isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                        strTrend += "<thead class='t-head'>";
+                        strTrend += "<tr>";
+                        strTrend += "<th>Name</th>" +
+                            "<th>Impact</th>" +
+                            "<th>Status</th>" +
+                            "<th>Action</th>" +
+                            "</tr></thead>";
+                        strTrend += "</table></div>";
+                        strTrend += "<div class='center'>" +
+                            //"<button type ='button' id='AddTrendGridBtn' contextType='Trend' class='grid__btn'>Add Trend</button>" +
+                            //"<button type='button' id='id='DeleteTrendGridBtn' contextType='Trend' class='grid__btn'>Delete</button>" +
+                            //"<button type='button' id='CloseTrendGridBtn' contextType='Trend' class='grid__btn'>Close</button>" +
+                            "</div>";
+                        strTrend += "</div></div>";
+                        $('#wbsGridiewTrend').append(strTrend);
+                    }
+                }
+
+                function getTrendByProjectId(elementtId) {
+                    var selectedElement = selectedProject.children.find(x => x.ProjectID === elementtId);
+                    getTrendGridSection(selectedElement);
+                }
+
+                function BindProject() {
+                    //Add Contract
+                    $("#AddContractGridBtn").unbind('click').on("click", function () {
+                        selectedNode = Treedata;
+                        wbsTree.setSelectedNode(selectedNode);
+                        $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+
+                    });
+
+                    //Edit/Open clicked
+                    $("#tblContract").on('click', '#EditContractGridBtn', function () {
+                        //$('#EditContractGridBtn').unbind('click').on('click', function () {
+                        var programId = this.parentElement.parentElement.id;
+                        if (programId != undefined) {
+                            $scope.modal_mode = "Update"
+                            localStorage.setItem('modal_mode', "Update");
+                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                            wbsTree.setSelectedNode(selectedProgram);
+                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                        }
+                        return false;
+                    });
+
+                    //View Gantt button click
+                    $("#tblContract").on('click', '#ViewGanttGridBtn', function () {
+                        //$("#ViewGanttGridBtn").click(function () {
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        if (programId != undefined) {
+                            window.location.href = "#/app/view-gantt-Contract/" + programId + "/0/" + $("#selectOrg").val();
+                        }
+                    });
+
+                    //Delete Contract
+                    $("#tblContract").on('click', '#DeleteContractGridBtn', function () {
+                        //$("#DeleteContractGridBtn").bind("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                        wbsTree.setSelectedNode(selectedProgram);
+                        $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Close Contract
+                    $("#tblContract").on('click', '#CloseContractGridBtn', function () {
+                        //$("#CloseContractGridBtn").unbind('click').on("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var programId = this.parentElement.parentElement.id;
+
+                        var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                        wbsTree.setSelectedNode(selectedProgram);
+                        $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Select Contract
+                    $('#tblContract tbody tr').on('click', function () {
+                        //wbsTree.setSelectedNode(null);
+                        $('#tblContract tr.selected').removeAttr('class');
+                        $(this).addClass('selected');
+                        $('#wbsGridiewProject').html('');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+
+                        $scope.GridContractId = $('#tblContract tr.selected').attr('id');
+                        localStorage.setItem('contextType', 'Program');
+                        var selectedProgramID = this.firstChild.parentElement.id;
+                        //organization.children[0].ProgramID
+                        $('#wbsGridiewProject').html('');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
+
+                        getProjectGridSection(selectedProgram);
+
+                        $('#tblContract tr.selected').find('td').each(function (i) {
+                            var isclosed = $('.selected').find("td:eq(" + i + ")").text();
+                            if (isclosed == "Closed") {
+                                $("#EditContracttGridBtn").hide();
+                                $("#DeleteContractGridBtn").hide();
+                                $("#ViewGanttGridBtn").hide();
+                                $("#CloseContractGridBtn").hide();
+                            }
+                            else {
+                                $("#EditContracttGridBtn").show();
+                                $("#DeleteContractGridBtn").show();
+                                $("#ViewGanttGridBtn").show();
+                                $("#CloseContractGridBtn").show();
+                            }
+                        }); //close changes done by vaishnavi
+                        var mydiv = document.getElementById("wbsGridiewProject");
+
+                        // var mydiv = document.getElementById("wbsGridiewProject");
+                        // mydiv.appendChild(document.(strProject));
+                        //document.getElementById('wbsGridiewProject').insertAdjacentHTML('beforeend', strProject);
+                        //$('#tblProject').append(strProject);
+                        $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+                    });
+                }
+
+                function BindElement(selectedProgramID) {
+                    //Add Project
+                    //$('#tblProject').on('click, #AddProjectGridBtn', function () {
+                    $("#AddProjectGridBtn").unbind('click').on("click", function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        wbsTree.setSelectedNode(selectedProgram);
+                        $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+
+                    });
+
+                    //Edit/Open Project
+                    $('#tblProject').on('click', '#EditProjectGridBtn', function () {
+                        //$('#EditProjectGridBtn').unbind('click').on('click', function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Delete Project
+                    $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
+                        //$("#DeleteProjectGridBtn").bind("click", function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Close Project
+                    $('#tblProject').on('click', '#CloseProjectGridBtn', function () {
+                        //$("#CloseProjectGridBtn").unbind('click').on("click", function () {
+                        $scope.modal_mode = 'Update';
+                        // var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                    });
+
+                    //Select Project
+                    $('#tblProject tr').on('click', function () {
+                        //wbsTree.setSelectedNode(null);
+                        $('#tblProject tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+                        var selectedProjectID = this.firstChild.parentElement.id;
+                        $scope.GridProjectId = selectedProjectID;
+                        localStorage.setItem('contextType', 'ProgramElement');
+                        //BindElement(selectedProjectID);
+                        $('#wbsGridiewElement').html('');
+                        $('#wbsGridiewTrend').html('');
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+
+                        getElementGridSection(selectedProject);
+
+                        $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+                    });
+                }
+
+                function BindTrend(selectedProgramID, selectedProjectID) {
+                    //Add Element
+                    //$('#tblElement').on('click, #EditElementGridBtn', function () {
+                    $('#AddElementGridBtn').unbind('click').on('click', function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        //var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        $('#ProjectModal').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Edit/Open Element
+                    $('#tblElement').on('click', '#EditElementGridBtn', function () {
+                        //$('#EditElementGridBtn').unbind('click').on('click', function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var elementId = this.parentElement.parentElement.id;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                        wbsTree.setSelectedNode(selectedElement);
+                        $('#ProjectModal').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Delete Element
+                    $('#tblElement').on('click', '#DeleteElementGridBtn', function () {
+                        //$("#DeleteElementGridBtn").bind("click", function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var elementId = this.parentElement.parentElement.id;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                        wbsTree.setSelectedNode(selectedElement);
+                        $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+                    });
+
+                    //Close Element
+                    $('#tblElement').on('click', '#CloseElementGridBtn', function () {
+                        //$("#CloseElementGridBtn").unbind('click').on("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var elementId = this.parentElement.parentElement.id;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                        wbsTree.setSelectedNode(selectedElement);
+                        $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                    });
+
+                    ////Add Trend
+                    //$("#AddTrendGridBtn").unbind('click').on("click", function () {
+                    //    //var programId = $scope.GridContractId;
+                    //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                    //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                    //    var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
+                    //    if (_baseline.TrendStatus != "Approved") {
+                    //        dhtmlx.alert({
+                    //            text: "Before adding a new trend, baseline needs to be approved first",
+                    //            width: '400px'
+                    //        });
+                    //        return;
+                    //    }
+                    //    wbsTree.setNewTrend(true);
+                    //    var s = wbsTree.getWBSTrendTree().getTrendNumber();
+                    //    $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
+                    //    $('#cancel_futuretrend').show();
+                    //});
+
+                    $('#tblElement tbody tr').on('click', function () {
+                        //wbsTree.setSelectedNode(null);
+                        $('#tblElement tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                        $('#wbsGridiewTrend').html('');
+                        localStorage.setItem('contextType', 'Project');
+
+                        var selectedProjectElementID = this.firstChild.parentElement.id;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
+
+                        //Add Trend
+                        //$("#AddTrendGridBtn").unbind('click').on("click", function () {
+                        //    //var programId = $scope.GridContractId;
+                        //    var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //    var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //    wbsTree.setSelectedNode(selectedElement);
+                        //    $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+
+                        //});
+
+                        getTrendGridSection(selectedElement);
+
+                        $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
+                            var table = $(this).closest('table');
+                            var rows = table.find('tr.contact-row')
+                                .toArray()
+                                .sort(comparer($(this).index()));
+                            this.asc = !this.asc;
+                            if (!this.asc) {
+                                rows = rows.reverse();
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                table.append(rows[i]);
+                            }
+                        });
+                    });
+                }
+
+                function BindTrendEvent(selectedProgramID, selectedProjectID, selectedElementID) {
+                    //Add Trend
+                    $("#AddTrendGridBtn").unbind('click').on("click", function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                        if (_baseline.TrendStatus != "Approved") {
+                            dhtmlx.alert({
+                                text: "Before adding a new trend, baseline needs to be approved first",
+                                width: '400px'
+                            });
+                            return;
+                        }
+                        wbsTree.setNewTrend(true);
+                        var s = wbsTree.getWBSTrendTree().getTrendNumber();
+                        wbsTree.getWBSTrendTree().trendGraph(true);
+                        wbsTree.setSelectedNode(selectedElement);
+                        var allElementTrendData = $scope.gridTrendData;
+                        var selectedTrend = {};
+                        selectedTrend.metadata = allElementTrendData.CurrentProjectList;
+                        wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                        $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
+                        //  $('#approve_trend').hide();
+                        $('#cancel_futuretrend').show();
+
+                    });
+
+                    //Edit/Open Trend
+                    $('#tblTrend').on('click', '#EditTrendGridBtn', function () {
+                        //$('#EditElementGridBtn').unbind('click').on('click', function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                        var trendNumber = this.parentElement.parentElement.id;
+
+                        wbsTree.setSelectedNode(selectedElement);
+                        wbsTree.setNewTrend(false);
+                        var allElementTrendData = $scope.gridTrendData;
+                        var selectedTrend = {};
+
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                            $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
+                        }
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                            $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+                        }
+                        //var selectedTrend = selectedElement.children.find(x => x.t);
+                        //wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                        //wbsTrendTree.setSelectedTreeNode(s);
+                        //  $('#approve_trend').hide();
+                        //$('#cancel_futuretrend').show();
+                    });
+
+                    //Delete Trend
+                    $('#tblTrend').on('click', '#DeleteTrendGridBtn', function () {
+                        //$("#DeleteElementGridBtn").bind("click", function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var elementId = this.parentElement.parentElement.id;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                        var trendNumber = this.parentElement.parentElement.id;
+
+                        wbsTree.setSelectedNode(selectedElement);
+                        wbsTree.setNewTrend(false);
+                        var allElementTrendData = $scope.gridTrendData;
+                        var selectedTrend = {};
+
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                            localStorage.setItem('contextType', 'FutureTrend');
+
+                            $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                        }
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                            localStorage.setItem('contextType', 'PastTrend');
+
+                            $('#DeleteModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                        }
+                    });
+
+                    //Close Trend
+                    $('#tblTrend').on('click', '#CloseTrendGridBtn', function () {
+                        //$("#CloseElementGridBtn").unbind('click').on("click", function () {
+                        $scope.modal_mode = 'Update';
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                        var trendNumber = this.parentElement.parentElement.id;
+
+                        wbsTree.setSelectedNode(selectedElement);
+                        wbsTree.setNewTrend(false);
+                        var allElementTrendData = $scope.gridTrendData;
+                        var selectedTrend = {};
+
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                            localStorage.setItem('contextType', 'FutureTrend');
+
+                            $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                        }
+                        if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+                            localStorage.setItem('contextType', 'PastTrend');
+
+                            $('#ClosedModal').appendTo('body').modal({ show: true, backdrop: 'static' });
+
+                        }
+
+                    });
+
+                }
+
+
+                $scope.loadWBSData.GetContractGridSection = GetContractGridSection;
+                $scope.loadWBSData.getProjectGridSection = getProjectGridSection;
+                $scope.loadWBSData.getElementGridSection = getElementGridSection;
+                $scope.loadWBSData.getTrendGridSection = getTrendGridSection;
+                $scope.loadWBSData.getTrendByProjectId = getTrendByProjectId;
             }
 
             function setUserNode() {
