@@ -2533,7 +2533,7 @@
 
                         <!--<div class="col-sm-3 text-center" style="padding-right:130px;">-->
                         <span id="spnAdditionalInfo" title="" class="col-sm-2 text-center">
-                            <button type="button" id="btnAdditionalInfo" class="btn btn-primary c-btn-save" style="background-color: #4f07ff !important;color:white;">Additional Info</button>
+                            <button type="button" id="btnAdditionalInfo" class="btn btn-primary c-btn-save" style="background-color: #4f07ff !important;color:white;">Compliances</button>
                         </span>
                         <!--</div>-->
                         <!--</div>-->
@@ -5418,7 +5418,7 @@
                 <button id="cancel_additionalInfoPopup_x" type="button" class="exit-button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title modal_heading">Additional Info</h4>
+                <h4 class="modal-title modal_heading">Compliances</h4>
             </div>
             <div class="modal-body modal-height">
                 <div class="container-fluid">
@@ -7865,14 +7865,14 @@
         displayMap = !displayMap;
         if (displayMap) {
             //debugger;
-            $('#mindmap').show();
-
+            //$('#mindmap').show();
+            $('#mindmap').css('visibility', 'visible');
             $('#wbsGridView').hide();
             $('#wbsGridiewProject').hide();
             $('#wbsGridiewElement').hide();
             $('#wbsGridiewTrend').hide();
             $('#selectManagingDepartment').hide();
-            $('#mindmap').css('visibility', 'visible');
+            
             $('#selectProject,#selectprogramelement').show();
             $('#wbsGridView').hide();
             $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
@@ -7883,7 +7883,7 @@
             $('.toggle-btn i').attr('title', 'Go To GridView');
         } else {
             //debugger;
-            $('#mindmap').hide();
+            //$('#mindmap').hide();
             $('#mindmap').css('visibility', 'hidden');
             $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
