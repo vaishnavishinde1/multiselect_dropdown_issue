@@ -5301,7 +5301,7 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12'><div class='grid__view'>";
-                        strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
@@ -5321,7 +5321,7 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewTrend').html('');
 
                         var strTrend = "<div class='col-md-12'><div class='grid__view'>";
-                        strTrend += "<div class='grid__title'>Trend (" + (isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend (" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
                         strTrend += "<tr>";
