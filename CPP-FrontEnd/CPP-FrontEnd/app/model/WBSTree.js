@@ -14203,7 +14203,7 @@ WBSTree = (function ($) {
                                     for (var x = 0; x < roleWiseUserList.length; x++) {
                                         if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
                                             for (var y = 0; y < employeeList.length; y++) {
-                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && employeeList[y].isActive == 1 && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
                                                     newEmployeeList.push(employeeList[y]);
                                                     break;
                                                 }
@@ -17943,7 +17943,16 @@ WBSTree = (function ($) {
             // 3 Pritesh pop up for Project Element
             async function getApprovalMatrix() {
                 var angularHttp = wbsTree.getAngularHttp();
-                return angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
+
+                let eleApprovers;
+
+                const getElementApprovers = async function () {
+                    await angularHttp.get(serviceBasePath + 'Request/Project/null/null/' + selectedNode.ProjectID).then(await function (response) {
+                        if (response.data.result.length > 0)
+                            eleApprovers = response.data.result[0].ApproversDetails;
+                    });
+                }
+                return angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(async function (approversData) {
 
                     //var employeeList = wbsTree.getEmployeeList();
                     //var userList = wbsTree.getUserList();
@@ -17968,6 +17977,9 @@ WBSTree = (function ($) {
                     //employeeList.sort(function (a, b) {
                     //    return a.Name.localeCompare(b.Name);
                     //})
+
+                    //await getElementApprovers();
+
                     $('#divProjectElememtApprovers').html('');
                     var approvers = approversData.data.result;
                     if (approvers != null && approvers.length > 0) {
@@ -18372,6 +18384,10 @@ WBSTree = (function ($) {
                     }, function (response) {
                         console.log(response);
                         allTredndData = response.result;
+                        var employeeList = wbsTree.getEmployeeList();
+
+                        let authRole = wbsTree.getLocalStorage().role;
+                        console.log(authRole.indexOf('Admin') != -1);
 
                         for (var x = 0; x < allTredndData.length; x++) {
 
@@ -18380,7 +18396,22 @@ WBSTree = (function ($) {
 
                                 var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
                                 for (var i = 0; i < approversDdl.length; i++) {
-                                    $('#' + approversDdl[i].id).attr("disabled", true);
+                                    var EmpId = $('#' + approversDdl[i].id).val();
+                                    //var UserId = $('#' + approversDdl[i].id).find(':selected').attr('data-userid');
+                                    for (var x = 0; x < employeeList.length; x++) {
+                                        if (employeeList[x].ID == EmpId) {
+                                            $('#' + approversDdl[i].id).attr("disabled", true);
+                                            if (employeeList[x].isActive == 0 && authRole.search(/\bAdmin\b/) >= 0) {
+                                                $('#' + approversDdl[i].id).attr("disabled", false);
+                                                for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                                    if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
+                                                        $(approversDdl[i].childNodes[k]).attr("hidden", true);
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
                                 }
                                 break;
 
@@ -19127,8 +19158,8 @@ WBSTree = (function ($) {
                     angularHttp.get(serviceBasePath + 'Request/Project/null/null/' + selectedNode.ProjectID).then(function (response) {
 
                         const processApprovalMatirx = async () => {
-                            const result = await getApprovalMatrix();
-                            console.log(result);
+                            //const result = await getApprovalMatrix();
+                            //console.log(result);
                             projEleApproverDetails = response.data.result[0].ApproversDetails;
                             console.log("asf");
                             selectedNode.ProjectElementNumber = response.data.result[0].ProjectElementNumber;
@@ -19177,7 +19208,22 @@ WBSTree = (function ($) {
 
                         processApprovalMatirx();
 
+                        var employeeList = wbsTree.getEmployeeList();
 
+                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                        for (var i = 0; i < approversDdl.length; i++) {
+                            var EmpId = $('#' + approversDdl[i].id).val();;
+                            for (var x = 0; x < employeeList.length; x++) {
+                                if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
+                                            $(approversDdl[i].childNodes[k]).attr("hidden", true);
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
 
                     });
 
@@ -19504,6 +19550,21 @@ WBSTree = (function ($) {
                                             $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
                                         }
                                     }
+                                }
+                            }
+                        }
+
+                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                        for (var i = 0; i < approversDdl.length; i++) {
+                            var EmpId = $('#' + approversDdl[i].id).val();;
+                            for (var x = 0; x < employeeList.length; x++) {
+                                if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
+                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                                        if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
+                                            $(approversDdl[i].childNodes[k]).remove();
+                                        }
+                                    }
+                                    break;
                                 }
                             }
                         }
