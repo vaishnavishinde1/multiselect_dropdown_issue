@@ -4956,7 +4956,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
                                 strContract += "<td style='color:red'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
-                                /*strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";*/
+                                //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -4972,7 +4972,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" + program.ContractNumber + "</td>";
                                 strContract += "<td>" + program.ContractValue + "</td>";
                                 strContract += "<td>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
-                                /*strContract += "<td>" + program.ForecastCost + "</td>";*/
+                                //strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -5014,9 +5014,9 @@ angular.module('cpp.controllers').
 
                     if (selContract.children != undefined && selContract.children.length > 0) {
                         var strProject = "";
-                        strProject += "<div class='col-md-12'><div class='grid__view'>";
+                        strProject += "<div class='col-md-12 p-0'><div class='grid__view'>";
                         strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                        strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
+                        strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
                         strProject += "<th>Name</th>" +
@@ -5030,6 +5030,7 @@ angular.module('cpp.controllers').
                             var project = selContract.children[projectI];
                             if (projectI == 0) {
                                 selectedProjectID = project.ProgramElementID;
+                                wbsTree.SelectedProjectId = project.ProgramElementID;
                                 selectedProject = project;
                                 strProject += "<tr class='selected contact-row' id=" + project.ProgramElementID + ">";
                                 getElementGridSection(project);
@@ -5097,9 +5098,9 @@ angular.module('cpp.controllers').
 
                     if (selProject.children != undefined && selProject.children.length > 0) {
                         var strElement = "";
-                        strElement = "<div class='col-md-12'><div class='grid__view'>";
+                        strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                        strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
+                        strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
                         strElement += "<th>Name</th>" +
@@ -5180,9 +5181,9 @@ angular.module('cpp.controllers').
                     $('#wbsGridiewTrend').html('');
 
                     var strTrend = "";
-                    strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                    strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
                     strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                    strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                    strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
                     strTrend += "<tr>";
                     strTrend += "<th>Name</th>" +

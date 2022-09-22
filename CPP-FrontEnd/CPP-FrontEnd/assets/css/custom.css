@@ -1928,14 +1928,15 @@ button[disabled=disabled], button:disabled {
 
 
 }
-.grid__scrollable{
-    overflow:auto;
-    height:180px;
-
+.grid__scrollable {
+    overflow: auto;
+    height: 190px;
 }
+
+
 .grid__scrollable_main {
     overflow: auto;
-    height: 691px;
+    height: 721px;
 }
 
 /*a:link,
@@ -2002,4 +2003,18 @@ th.sort-by {
     color: #b1b1b1;
     cursor: not-allowed !important;
     pointer-events: none;
+}
+
+#weekBtn,
+#monthBtn,
+#yearBtn {
+    background-color: gray !important;
+    color: azure!important;
+}
+
+#weekBtn.btn.active,
+#monthBtn.btn.active,
+#yearBtn.btn.active {
+    background-color: white !important;
+    color: black !important;
 }
