@@ -1935,7 +1935,7 @@ button[disabled=disabled], button:disabled {
 }
 .grid__scrollable_main {
     overflow: auto;
-    height: 700px;
+    height: 691px;
 }
 
 /*a:link,
