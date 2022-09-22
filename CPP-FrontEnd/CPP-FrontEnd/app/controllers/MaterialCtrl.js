@@ -1,7 +1,7 @@
 ﻿angular.module('cpp.controllers').
     //Material Controller
-    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor',
-        function (MaterialCategory, Material, UnitType, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout, UniqueIdentityNumber, Vendor) {
+    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor','Manufacturer',
+        function (MaterialCategory, Material, UnitType, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout, UniqueIdentityNumber, Vendor, Manufacturer) {
             Page.setTitle('Material');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -99,6 +99,52 @@
                             $scope.gridOptions.data = $scope.materialCollection;
                         });
                     });
+
+                    //Get all manufacturer Names ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                    Manufacturer.get({}, function (ManufacturerName) {
+                        $scope.ManufacturerCollection = ManufacturerName.result;
+                        console.log(ManufacturerName.result);
+
+                        angular.forEach($scope.ManufacturerCollection, function (Manufacturer) {
+                            Manufacturer.ManufacturerName = Manufacturer.ManufacturerName; //here
+                        });
+                        $scope.gridOptions.columnDefs[4].editDropdownOptionsArray = $scope.ManufacturerCollection;
+
+                        //Get all materials ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                        Material.get({}, function (materialData) {
+                            $scope.checkList = [];
+                            $scope.materialCollection = materialData.result;
+                            $scope.orgMaterialCollection = angular.copy(materialData.result);
+                            addIndex($scope.materialCollection);
+                            angular.forEach($scope.materialCollection, function (item, index) {
+                                item.checkbox = false;
+                                $scope.checkList[index + 1] = false;
+
+                                //Find material category name for a material
+                                for (var x = 0; x < $scope.materialCategoryCollection.length; x++) {
+                                    if ($scope.materialCategoryCollection[x].ID == item.MaterialCategoryID) {
+                                        item.MaterialCategoryName = $scope.materialCategoryCollection[x].Name;
+                                    }
+                                }
+
+                                //Find unit type for a material
+                                for (var x = 0; x < $scope.unitTypeCollection.length; x++) {
+                                    if ($scope.unitTypeCollection[x].UnitID == item.UnitTypeID) {
+                                        item.UnitTypeName = $scope.unitTypeCollection[x].UnitName;
+                                    }
+                                }
+
+                                // Find Manufacturer names for a material
+                                for (var x = 0; x < $scope.ManufacturerCollection.length; x++) {
+                                    console.log($scope.ManufacturerCollection[x].ManufacturerID, item.ManufacturerID)
+                                    if ($scope.ManufacturerCollection[x].ManufacturerID == item.ManufacturerID) {
+                                        item.ManufacturerName = $scope.ManufacturerCollection[x].ManufacturerName;
+                                    }
+                                }
+                            });
+                            $scope.gridOptions.data = $scope.materialCollection;
+                        });
+                    });
                 });
             });
 
@@ -134,7 +180,8 @@
                     Name: '',
                     Description: '',
                     MaterialCategoryName: '',
-                    Vendor: '',
+                    //Vendor: '',  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                    Manufacturer: '',
                     UnitTypeID: '',
                     Cost: '',
                     UniqueIdentityNumber: '',
@@ -198,16 +245,28 @@
                     editDropDownChange: 'test',
                     cellFilter: 'mapPhase',
                     width: 170
-                }, {
-                    field: 'VendorName',
-                    name: 'Vendor',
-                    editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'VendorName', //code
-                    editDropdownIdLabel: 'VendorName',    //phase
-                    editDropDownChange: 'Gucci',
-                    cellFilter: 'mapPhase',
-                    width: 180
-                }, {
+                        //
+                //::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                //}, {
+                //    field: 'VendorName',
+                //    name: 'Vendor',
+                //    editableCellTemplate: 'ui-grid/dropdownEditor',
+                //    editDropdownValueLabel: 'VendorName', //code
+                //    editDropdownIdLabel: 'VendorName',    //phase
+                //    editDropDownChange: 'Gucci',
+                //    cellFilter: 'mapPhase',
+                //    width: 180
+                //    }, { 
+                    }, {
+                        field: 'ManufacturerName',
+                        name: 'Manufacturer',
+                        editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'ManufacturerName', //code
+                    editDropdownIdLabel: 'ManufacturerName',    //phase
+                        editDropDownChange: 'Gucci',
+                        cellFilter: 'mapPhase',
+                        width: 180
+                    }, {
                     field: 'UnitTypeName',
                     name: 'Unit Type*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -359,13 +418,22 @@
                         }
                     }
                    
-                    //Find vendor id for a material
+                    ////Find vendor id for a material  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
 
-                    for (var x = 0; x < $scope.VendorCollection.length; x++) {
-                        if ($scope.VendorCollection[x].VendorName == value.VendorName) {
-                            value.VendorID = $scope.VendorCollection[x].VendorID;
-                        }
+                    //for (var x = 0; x < $scope.VendorCollection.length; x++) {
+                    //    if ($scope.VendorCollection[x].VendorName == value.VendorName) {
+                    //        value.VendorID = $scope.VendorCollection[x].VendorID;
+                    //    }
                         
+                    //}
+
+                    //Find Manufacturer id for a material  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+
+                    for (var x = 0; x < $scope.ManufacturerCollection.length; x++) {
+                        if ($scope.ManufacturerCollection[x].ManufacturerName == value.ManufacturerName) {
+                            value.ManufacturerID = $scope.ManufacturerCollection[x].ManufacturerID;
+                        }
+
                     }
                    
                     //Find vendor id for a material
@@ -384,7 +452,7 @@
                     } else if (
                         //value.Description == "" ||  // Aditya 3-2-2022 
                         value.MaterialCategoryName == "" ||
-                        value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.VendorID == ""
+                        value.MaterialCategoryID == "" || value.Name == "" || value.UnitTypeID == "" || value.Cost == "" || value.UniqueIdentityNumber == "" || value.ManufacturerID == ""//value.VendorID == ""  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
                     ) {
                         $("#save_Material").attr("disabled", false);
                         dhtmlx.alert({
@@ -424,7 +492,8 @@
                             UnitTypeID: value.UnitTypeID,
                             UniqueIdentityNumber: value.UniqueIdentityNumber,
                             Cost: value.Cost,
-                            VendorID: value.VendorID
+                            ManufacturerID: value.ManufacturerID
+                            //VendorID: value.VendorID  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
                         }
                         console.log(dataObj);
                         listToSave.push(dataObj);
@@ -435,7 +504,8 @@
                             if (value.ID === orgItem.ID && value.Description === orgItem.Description
                                 && value.Name === orgItem.Name && value.MaterialCategoryID === orgItem.MaterialCategoryID
                                 && value.UnitTypeID === orgItem.UnitTypeID && value.Cost === orgItem.Cost
-                                && value.VendorID == orgItem.VendorID
+                                //&& value.VendorID == orgItem.VendorID  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                && value.ManufacturerID == orgItem.ManufacturerID
                                 && value.UniqueIdentityNumber === orgItem.UniqueIdentityNumber) {
                                 //Do nothing on unchanged Item
                                 isChanged = false;
@@ -459,7 +529,8 @@
                                 UnitTypeID: value.UnitTypeID,
                                 UniqueIdentityNumber: value.UniqueIdentityNumber,
                                 Cost: value.Cost,
-                                VendorID: value.VendorID
+                                //VendorID: value.VendorID  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                ManufacturerID: value.ManufacturerID
                             }
                             console.log(dataObj);
 
@@ -480,7 +551,8 @@
                                 UnitTypeID: value.UnitTypeID,
                                 UniqueIdentityNumber: value.UniqueIdentityNumber,
                                 Cost: value.Cost,
-                                VendorID: value.VendorID
+                                //VendorID: value.VendorID ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                ManufacturerID: value.ManufacturerID
                             }
                             console.log(dataObj);
                         }
@@ -541,10 +613,16 @@
                                         item.UnitTypeName = $scope.unitTypeCollection[x].UnitName;
                                     }
                                 }
-                                //Find Venor Name for a material
-                                for (var x = 0; x < $scope.VendorCollection.length; x++) {
-                                    if ($scope.VendorCollection[x].VendorID == item.VendorID) {
-                                        item.VendorName = $scope.VendorCollection[x].VendorName;
+                                ////Find Venor Name for a material
+                                //for (var x = 0; x < $scope.VendorCollection.length; x++) {
+                                //    if ($scope.VendorCollection[x].VendorID == item.VendorID) {
+                                //        item.VendorName = $scope.VendorCollection[x].VendorName;
+                                //    }
+                                //}
+                                //Find Venor Name for a material ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                for (var x = 0; x < $scope.ManufacturerCollection.length; x++) {
+                                    if ($scope.ManufacturerCollection[x].ManufacturerID == item.ManufacturerID) {
+                                        item.ManufacturerName = $scope.ManufacturerCollection[x].ManufacturerName;
                                     }
                                 }
                             });
@@ -582,7 +660,8 @@
                                 UnitTypeID: item.UnitTypeID,
                                 UniqueIdentityNumber: item.UniqueIdentityNumber,
                                 Cost: item.Cost,
-                                VendorID: item.VendorID,
+                                //VendorID: item.VendorID, ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                ManufacturerID: item.ManufacturerID,
                                 displayId: item.displayId
                             }
                             listToSave.push(dataObj);
@@ -648,7 +727,8 @@
                                     originalObject.Description !== currentObject.Description ||
                                     originalObject.Name !== currentObject.Name ||
                                     originalObject.UnitTypeID !== currentObject.UnitTypeID ||
-                                    originalObject.VendorID !== currentObject.VendorID ||
+                                    //originalObject.VendorID !== currentObject.VendorID || ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                                    originalObject.ManufacturerID !== currentObject.ManufacturerID ||
                                     originalObject.Cost !== currentObject.Cost ||
                                     originalObject.UniqueIdentityNumber !== currentObject.UniqueIdentityNumber) {
                                     // alert if a change has not been save

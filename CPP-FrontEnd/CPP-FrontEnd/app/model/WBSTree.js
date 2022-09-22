@@ -14244,7 +14244,7 @@ WBSTree = (function ($) {
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
                                                 if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                                                    append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else {
                                                     append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
@@ -14261,7 +14261,7 @@ WBSTree = (function ($) {
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
                                                 if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                                                    append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].FirstName + '</option>';//Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else {
                                                     append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
@@ -16421,8 +16421,11 @@ WBSTree = (function ($) {
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
-                                            if (employeeList[x].Name != null) { //universal
-                                                if (x == 0) {
+                                            if (employeeList[x].Name != null) { //universal1
+                                                if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
+                                                }
+                                                else if (x == 0) {
                                                     append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
                                                 }
                                                 else {
@@ -16439,7 +16442,10 @@ WBSTree = (function ($) {
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
-                                                if (x == 0) {
+                                                if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
+                                                }
+                                                else if (x == 0) {
                                                     append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
                                                 }
                                                 else {
@@ -18059,7 +18065,12 @@ WBSTree = (function ($) {
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
                                                 //append += '<option value="' + employeeList[x].ID + ',' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
-                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
+                                                if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
+                                                }
+                                                else {
+                                                    append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
+                                                }
                                             }
 
                                         }
@@ -18069,7 +18080,12 @@ WBSTree = (function ($) {
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
                                             if (employeeList[x].Name != null) { //universal
-                                                append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
+                                                if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
+                                                }
+                                                else {
+                                                    append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
+                                                }
                                             }
 
                                         }

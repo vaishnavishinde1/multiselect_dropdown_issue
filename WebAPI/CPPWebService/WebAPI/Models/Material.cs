@@ -23,7 +23,8 @@ namespace WebAPI.Models
         public Double Cost { get; set; }
         public int UnitTypeID { get; set; }
         public int MaterialCategoryID { get; set; }
-        public int? VendorID { get; set; }
+        //public int? VendorID { get; set; } ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+        public int? ManufacturerID { get; set; }
         public String Description { get; set; }
         public String UniqueIdentityNumber { get; set; }
         public String PartNumber { get; set; }
@@ -40,9 +41,13 @@ namespace WebAPI.Models
         [ForeignKey("MaterialCategoryID")]
         public virtual MaterialCategory MaterialCategory { get; set; }
 
+        ////ON DELETE RESTRICT 
+        //[ForeignKey("VendorID")]
+        //public virtual Vendor Vendor { get; set; } ::In Material, the vendor should be manufacture::Aditya 22092022 ::
+
         //ON DELETE RESTRICT
-        [ForeignKey("VendorID")]
-        public virtual Vendor Vendor { get; set; }
+        [ForeignKey("ManufacturerID")]
+        public virtual Manufacturer Manufacturer { get; set; }
 
 
         public static List<Material> getMaterial()
