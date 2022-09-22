@@ -45,7 +45,8 @@ namespace WebAPI.Models
 				using (var ctx = new CPPDbContext())
 				{
 					var modificationNumber = from cm in ctx.ContractModification
-											 orderby cm.ModificationNo descending //Jignesh-ModificationPopUpChanges
+												 //orderby cm.ModificationNo descending //Jignesh-ModificationPopUpChanges // Changes by Kavita
+											 orderby cm.Id descending // Changes by Kavita
 											 where cm.ProgramID == contractModification.ProgramID
 										     select cm.ModificationNo;
 

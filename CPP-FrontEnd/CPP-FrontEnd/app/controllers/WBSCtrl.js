@@ -2305,7 +2305,9 @@ angular.module('cpp.controllers').
                             // Jignesh-17-02-2021
                             var modificationType = _modificationList[x].ModificationType == 1 ? 'Value' :
                                 _modificationList[x].ModificationType == 0 ? 'NA' :
-                                    _modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
+                                    //_modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
+                                    _modificationList[x].ModificationType == 2 ? 'Schedule Impact' :
+                                        _modificationList[x].ModificationType == 3 ? 'Value & Schedule Impact' : 'Scope Impact';// Code Change by Kavita 01/09/2022
 
                             gridModification.append('<tr class="contact-row" id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
                                 '<input id=rb' + _modificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"

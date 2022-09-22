@@ -3906,7 +3906,8 @@ WBSTree = (function ($) {
 
                             // Jignesh-ChangeOrderPopUpChanges
                             var changeOrderType = singeChangeOrder.ModificationTypeId == 1 ? 'Value' :
-                                singeChangeOrder.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact'
+                                singeChangeOrder.ModificationTypeId == 2 ? 'Schedule Impact' :
+                                    singeChangeOrder.ModificationTypeId == 3 ? 'Value & Schedule Impact' : 'Scope Impact'; //code by kavita
 
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
@@ -9944,6 +9945,13 @@ WBSTree = (function ($) {
                         $('#divChangeOrderAmount').show();
                         $('#divDurationDate').show();
                     }
+                    else if (ddValue == 4) {
+                        modal.find('.modal-body #program_element_change_order_amount_modal').val('$' + g_selectedProgramElementChangeOrder.ChangeOrderAmount); //code by kavita
+                        //modal.find('.modal-body #program_element_change_order_duration_date').val(moment(g_selectedProgramElementChangeOrder.DurationDate).format('MM/DD/YYYY')); // Jignesh-24-03-2021 //code by kavita
+                        modal.find('.modal-body #program_element_change_order_schedule_impact').val(g_selectedProgramElementChangeOrder.ScheduleImpact); // Jignesh-24-03-2021// code by kavita
+                        $('#divChangeOrderAmount').hide(); //code by kavita
+                        $('#divDurationDate').hide();// code by kavita
+                    }
                     //==========================================================================================================
                 }
                 else {	//create new
@@ -10441,6 +10449,13 @@ WBSTree = (function ($) {
                     $('#program_element_change_order_schedule_impact').val(); // vaishnavi 04-03-2022
                     $('#divChangeOrderAmount').show();
                     $('#divDurationDate').show();
+                }
+                else if (ddValue == 4) {
+                    $('#program_element_change_order_amount_modal').val(); // code by kavita
+                    //$('#program_element_change_order_duration_date').val('');
+                    $('#program_element_change_order_schedule_impact').val(); //  code by kavita
+                    $('#divChangeOrderAmount').hide();
+                    $('#divDurationDate').hide();
                 }
             });
             //==========================================================================================================
@@ -17242,7 +17257,8 @@ WBSTree = (function ($) {
                                 // Jignesh-17-02-2021
                                 var modificationType = _ModificationList[x].ModificationType == 1 ? 'Value' :
                                     _ModificationList[x].ModificationType == 0 ? 'NA' :
-                                        _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
+                                        _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' :
+                                            _ModificationList[x].ModificationType == 3 ? 'Value & Schedule Impact' : 'Scope Impact'; // Code Change by Kavita 01/09/2022
 
                                 gridModification.append('<tr class="contact-row" id="' + _ModificationList[x].Id + '">' + '<td style="width: 20px">' +
                                     '<input id=rb' + _ModificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
@@ -17389,6 +17405,13 @@ WBSTree = (function ($) {
                     $('#divModificationValue').show();
                     $('#divModDurationDate').show();
                 }
+                else if (ddValue == 4) {
+                    $('#modification_value').val();    //kavita 30-08-2022
+                    //$('#duration_date').val('');
+                    $('#schedule_impact').val();        //kavita 30-08-2022
+                    $('#divModificationValue').hide();
+                    $('#divModDurationDate').hide();
+                }
             });
 
             $('#updateDMBtnContModification').unbind().on('click', function (event) {
@@ -17431,6 +17454,13 @@ WBSTree = (function ($) {
                                 $('#schedule_impact').val(response.data.ScheduleImpact);
                                 $('#divModificationValue').show();
                                 $('#divModDurationDate').show();
+                            }
+                            //kavita 30-08-2022
+                            else if (response.data.ModificationType == 4) {
+                                $('#modification_value').val('$' + response.data.Value);
+                                $('#schedule_impact').val(response.data.ScheduleImpact);
+                                $('#divModificationValue').hide();
+                                $('#divModDurationDate').hide();
                             }
                         });
                     }
