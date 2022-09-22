@@ -2846,7 +2846,8 @@ angular.module('xenon.Gantt_Controller', []).
                                             (cost.CostType === "ODC") ? "ODC" :
                                                 (cost.CostType === "P") ? "% Basis" : "Error";
                             costActivity.description = cost.Description;
-                            costActivity.unit_type = (cost.CostType === "F") ? "FTE" :
+                            //costActivity.unit_type = (cost.CostType === "F") ? "FTE" :
+                            costActivity.unit_type = (cost.CostType === "F") ? "Hours" :
                                 //(cost.CostType === "L") ? "Contractor" :
                                 //(cost.CostType === "L") ? "Subcontractor" :   //Manasi 17-07-2020
                                 (cost.CostType === "L") ? "USD" :   //Manasi 05-08-2020
@@ -4297,7 +4298,8 @@ angular.module('xenon.Gantt_Controller', []).
                                         cost["description"] = costs[i].Description;
                                         cost["material_id"] = costs[i].MaterialID;
                                         cost["unit_type"] =
-                                            (costs[i].CostType === "F") ? "FTE" :
+                                            //(costs[i].CostType === "F") ? "FTE" :
+                                            (costs[i].CostType === "F") ? "Hours" :
                                                 //(costs[i].CostType === "L") ? "Contractor" :
                                                 //(costs[i].CostType === "L") ? "Subcontractor" :    //Manasi 17-07-2020
                                                 (costs[i].CostType === "L") ? "USD" :    //Manasi 05-08-2020
@@ -9838,7 +9840,7 @@ angular.module('xenon.Gantt_Controller', []).
                                     else if ($scope.method[id] == "F") {
                                         $(this).html(
                                             $compile(
-                                                "<input disabled='true' value='FTE' style='width:100%;height:100%; text-align:center; vertical-align: top;'></input>"
+                                                "<input disabled='true' value='Hours' style='width:100%;height:100%; text-align:center; vertical-align: top;'></input>"
                                             )($scope)
                                         )
                                     } else if ($scope.method[id] == "ODC") {

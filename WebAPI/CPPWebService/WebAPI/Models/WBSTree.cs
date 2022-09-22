@@ -647,7 +647,8 @@ namespace WebAPI.Models
             CurrentEndDate = (wbspe.CurrentEndDate != null ? wbspe.CurrentEndDate.Value.ToString("yyyy-MM-dd") : "");
             ForecastStartDate = (wbspe.ForecastStartDate != null ? wbspe.ForecastStartDate.Value.ToString("yyyy-MM-dd") : "");
             ForecastEndDate = (wbspe.ForecastEndDate != null ? wbspe.ForecastEndDate.Value.ToString("yyyy-MM-dd") : "");
-            CurrentCost = wbspe.CurrentCost; ForecastCost = wbspe.ForecastCost;
+            CurrentCost = wbspe.CurrentCost; 
+            ForecastCost = wbspe.ForecastCost;
             BillingPOC = wbspe.BillingPOC;
             BillingPOCPhone1 = wbspe.BillingPOCPhone1;
             BillingPOCPhone2 = wbspe.BillingPOCPhone2;
@@ -896,6 +897,9 @@ namespace WebAPI.Models
         [DataMember]
         public String Status;   //----Vaishnavi 30-03-2022----//
 
+        [DataMember]
+        public string ContractModificationValue;
+
         //Aditya PMDD 05052022
         //[DataMember]
         //public List<ContractProjectManager> ContractProjectManager;
@@ -963,6 +967,7 @@ namespace WebAPI.Models
             PPBondNotes = wbsprg.PPBondNotes;
             //List<ProgramNotes> ProgramNotesList = new List<ProgramNotes>();
             programnotesList = ProgramNotes.getProgramNotes(Convert.ToInt32(ProgramID));
+            ContractModificationValue = ContractModification.GetContractModificationValue(Convert.ToInt32(ProgramID)).ToString();
             ProgramNote = programnotesList.Max(m => m.notes_desc);
             //ProgramNote = LatestNote.ToString(;
 

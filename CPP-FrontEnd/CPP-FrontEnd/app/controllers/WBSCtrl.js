@@ -4933,12 +4933,14 @@ angular.module('cpp.controllers').
                             "<th>Contract Number</th>" +
                             "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
                             "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
-                            "<th>Current Forecast</th>" +
+                            //"<th>Current Forecast</th>" +
                             "<th>Action</th>" +
                             "</tr>";
                         strContract += "</thead>";
                         for (programI = 0; programI < selOrganization.children.length; programI++) {
                             var program = selOrganization.children[programI];
+                            var originalContractVal = program.ContractValue;
+                            var CurrentContractVal = parseFloat(program.ContractModificationValue) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));
                             if (programI == 0) {
                                 selectedProgramID = program.ProgramID;
                                 selectedContract = program;
@@ -4953,7 +4955,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td style='color:red'>" + program.name + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
-                                strContract += "<td style='color:red'>" + program.CurrentCost + "</td>";
+                                strContract += "<td style='color:red'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 /*strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";*/
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
@@ -4969,7 +4971,7 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" + program.name + "</td>";
                                 strContract += "<td>" + program.ContractNumber + "</td>";
                                 strContract += "<td>" + program.ContractValue + "</td>";
-                                strContract += "<td>" + program.CurrentCost + "</td>";
+                                strContract += "<td>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 /*strContract += "<td>" + program.ForecastCost + "</td>";*/
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +

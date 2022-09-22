@@ -321,5 +321,28 @@ namespace WebAPI.Models
 			return contractModification;
 		}
 
+		public static decimal GetContractModificationValue(int ProgramId)
+        {
+			decimal modificationValue=0;
+			List<ContractModification> contractModificationsList = new List<ContractModification>();
+			try
+			{
+				using (var ctx = new CPPDbContext())
+				{
+					contractModificationsList = ctx.ContractModification.Where(u => u.ProgramID == ProgramId && u.ModificationType != 0).ToList();
+					modificationValue = contractModificationsList.Sum(a => Convert.ToDecimal(a.Value));
+				}
+			}
+			catch (Exception ex)
+			{
+				var stackTrace = new StackTrace(ex, true);
+				var line = stackTrace.GetFrame(0).GetFileLineNumber();
+				Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+			}
+			finally
+			{
+			}
+			return modificationValue;
+		}
 	}
 }
