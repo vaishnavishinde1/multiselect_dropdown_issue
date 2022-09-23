@@ -5403,7 +5403,7 @@ angular.module('cpp.controllers').
                     if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
                         $('#wbsGridiewProject').html('');
 
-                        var strProject = "<div class='col-md-12'><div class='grid__view'>";
+                        var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         if (ModifyProject == "1") {
                             strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
@@ -5411,7 +5411,7 @@ angular.module('cpp.controllers').
                         else {
                             strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        strProject += "<div class='grid__scrollable'> <table class='grid__table' id='tblProject'>";
+                        strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
                         strProject += "<th>Name</th>" +
@@ -5429,14 +5429,14 @@ angular.module('cpp.controllers').
                     if ((selectedRow.level === "ProgramElement" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isProjectEmpty) {
                         $('#wbsGridiewElement').html('');
 
-                        var strElement = "<div class='col-md-12'><div class='grid__view'>";
+                        var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (ModifyProjectElement == "1") {
                             strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
                             strElement += "<div class='grid__title'>Project Element (" + tblParentName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        strElement += "<div class='grid__scrollable'> <table class='grid__table' id='tblElement'>";
+                        strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
                         strElement += "<th>Name</th>" +
@@ -5454,14 +5454,14 @@ angular.module('cpp.controllers').
                     if ((selectedRow.level === "Project" && (selectedRow.children == undefined || selectedRow.children.length == 0)) || isElementEmpty) {
                         $('#wbsGridiewTrend').html('');
 
-                        var strTrend = "<div class='col-md-12'><div class='grid__view'>";
+                        var strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (ModifyTrend == "1") {
                             strTrend += "<div class='grid__title'>Trend (" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
                             strTrend += "<div class='grid__title'>Trend (" + tblParentName + ")<div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        strTrend += "<div class='grid__scrollable'> <table class='grid__table' id='tblTrend'>";
+                        strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
                         strTrend += "<tr>";
                         strTrend += "<th>Name</th>" +
