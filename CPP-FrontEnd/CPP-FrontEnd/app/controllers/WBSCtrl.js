@@ -2104,12 +2104,33 @@ angular.module('cpp.controllers').
 
 
                 var pgmogenddate = $('#program_original_end_date').val(); // Aditya ogDate
-
+                //Code Start by Kavita 23/09/2022
+                if (modType == 1) {
+                    var scheduleImpact = "";
+                    var value = $('#modification_value').val();
+                }
+                else if (modType == 2) {
+                    var scheduleImpact = $('#schedule_impact').val();
+                    var value = "";
+                }
+                else if (modType == 3) {
+                    var scheduleImpact = $('#schedule_impact').val();
+                    var value = $('#modification_value').val();
+                }
+                else if (modType == 3) {
+                    var scheduleImpact = $('#schedule_impact').val();
+                    var value = $('#modification_value').val();
+                }
+                else if (modType == 4) {
+                    var scheduleImpact = "";
+                    var value = "";
+                }
+                //Code end by Kavita 23/09/2022
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
-                var scheduleImpact = $('#schedule_impact').val();
+              //  var scheduleImpact = $('#schedule_impact').val(); //Code by Kavita 23/09/2022
 
-                var value = $('#modification_value').val();
+               // var value = $('#modification_value').val(); //Code by Kavita 23/09/2022
 
                 //if (modNumber == "" || modNumber.length == 0) {
                 //    dhtmlx.alert('Enter Modification Number.');

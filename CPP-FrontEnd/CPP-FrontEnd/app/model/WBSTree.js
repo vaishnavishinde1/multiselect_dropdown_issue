@@ -9327,16 +9327,33 @@ WBSTree = (function ($) {
                 var ChangeOrderTypedd = $("#program_element_change_order_ddModificationType").val();;
                 var OrderNo = $("#program_element_change_order_number_modal").val();
                 var OrderDte = $("#ChangeOrderDate").val();
-                var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
+               // var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");  // code start by kavita 
                 var SpNote = $("#program_element_change_order_schedule_change_modal").val();
                 var Reason = $("#program_element_change_order_Reason_modal").val();
                 var modType = $('#program_element_change_order_ddModificationType').val();
                 //var durationDate = $('#program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
-                var scheduleImpact = $('#program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
+               // var scheduleImpact = $('#program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021  // code start by kavita 
                 var DocID = $("#DocChangeOrderID").val();
 
                 var currendDtBkp = new Date($('#program_element_PEnd_Date').val());
-
+                // code start by kavita 23/09/2022 
+                if (modType == 1) {
+                    var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
+                    var scheduleImpact = "";
+                }
+                else if (modType == 2) {
+                    var AmtOrder = "";
+                    var scheduleImpact = $('#program_element_change_order_schedule_impact').val();
+                }
+                else if (modType == 3) {
+                    var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
+                    var scheduleImpact = $('#program_element_change_order_schedule_impact').val();
+                }
+                else if (modType == 4) {
+                    var AmtOrder = "";
+                    var scheduleImpact = "";
+                }
+                //code end by kavita 23/09/2022
                 if (CoTitle == "" || CoTitle.length == 0) {
                     dhtmlx.alert('Enter Title.');
                     return;
@@ -9466,7 +9483,24 @@ WBSTree = (function ($) {
                     //updatedChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
                     updatedChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
-
+                    // code start by kavita 
+                    if (updatedChangeOrder.ModificationTypeId == 1) {
+                        updatedChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+                        updatedChangeOrder.ScheduleImpact = ""; // Jignesh-24-03-202
+                    }
+                    else if (updatedChangeOrder.ModificationTypeId == 2) {
+                        updatedChangeOrder.ChangeOrderAmount = "";
+                        updatedChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val();
+                    }
+                    else if (updatedChangeOrder.ModificationTypeId == 3) {
+                        updatedChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+                        updatedChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val();
+                    }
+                    else if (updatedChangeOrder.ModificationTypeId == 4) {
+                        updatedChangeOrder.ChangeOrderAmount = "";
+                        updatedChangeOrder.ScheduleImpact = "";
+                    }
+                     // code start by kavita
                     if (g_newProgramElement) {
                         //Find the one in the draft list
                         for (var x = 0; x < g_program_element_change_order_draft_list.length; x++) {
