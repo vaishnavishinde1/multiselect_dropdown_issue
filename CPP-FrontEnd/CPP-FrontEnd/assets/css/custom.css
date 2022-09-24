@@ -1850,10 +1850,11 @@ button[disabled=disabled], button:disabled {
 .grid__title_left {    
     color: #fff;   
 }
-.grid__title_rgt {   
-    text-align:right;
-    float:right;
-    font-size:14px;
+.grid__title_rgt {
+    text-align: right;
+    float: right;
+    font-size: 14px;
+    cursor: pointer;
 }
 .grid__title_rgt a{
     color: #fff !important;
@@ -1897,6 +1898,7 @@ button[disabled=disabled], button:disabled {
 .grid__btn-icons {
     font-size: 16px !important;
     margin: 0 0.5rem;
+    cursor: pointer;
 }
 .grid__btn-icons i {
     margin:0 0.5rem;
@@ -2018,3 +2020,14 @@ th.sort-by {
     background-color: white !important;
     color: black !important;
 }
+.bom__search {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+
+    .bom__search input {
+        padding: 5px 10px;
+        width: 410px;
+        border: 1px solid #ccc;
+    }
