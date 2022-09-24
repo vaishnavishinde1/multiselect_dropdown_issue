@@ -9539,11 +9539,23 @@ WBSTree = (function ($) {
 
                     if (updatedChangeOrder.ScheduleImpact != "") {
                         var curendt = new Date($('#program_element_PEnd_Date').val());
+                        if (progelem_scheduleImp != "") {
+                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                        }
+                        else {
                         curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                        }
                         $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
                     }
                     debugger;
+                    //code by kavita
+                    if (updatedChangeOrder.ModificationTypeId == 4) {
+                        var curendt = new Date($('#program_element_PEnd_Date').val());
+                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+
+                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                    }
                     var pendDate = $('#program_element_PEnd_Date').val();
                     var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                     $("#update_program_element_change_order_modal").attr("disabled", true);
