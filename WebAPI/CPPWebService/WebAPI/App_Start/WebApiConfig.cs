@@ -1872,6 +1872,21 @@ namespace WebAPI
                  routeTemplate: "contractWarranty/getContractWarranty/{programId}",
                  defaults: new { controller = "ContractWarranty", action = "Get", programId = RouteParameter.Optional }
              );
+
+            //vaishnavi - 24/09/2022
+            config.Routes.MapHttpRoute(
+                 name: "BillOfMaterial",
+                 routeTemplate: "billOfMaterial/saveBillOfMaterial/{SearchText}",
+                 defaults: new { controller = "BillOfMaterial", action = "Post", SearchText = RouteParameter.Optional }
+             );
+
+
+            //vaishnavi - 24/09/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetBillOfMaterial",
+                 routeTemplate: "billOfMaterial/getBillOfMaterial/{programelementId}/{SearchText}",
+                 defaults: new { controller = "BillOfMaterial", action = "Get", programelementId = RouteParameter.Optional, SearchText = RouteParameter.Optional }
+             );
             //Narayan - 04/04/2022
             config.Routes.MapHttpRoute(
                  name: "PrelimnaryNotice",

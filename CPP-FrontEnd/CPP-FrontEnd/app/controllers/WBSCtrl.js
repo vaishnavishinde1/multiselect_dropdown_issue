@@ -4,13 +4,13 @@ angular.module('cpp.controllers').
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
         'ProjectScope', '$timeout', 'PhaseCode', 'ProgramCategory', 'ProjectType', 'ProjectClass', 'ProjectClassByProgramId', 'ProjectClassByProgramElementId', 'Client', 'Prime', 'Location', 'ProjectNumber',
         'Employee', 'AllEmployee', 'DocumentType', 'Document', 'TrendStatusCode', 'User', 'ProjectElementNumber', 'TrendId', 'LineOfBusiness', 'ProjectWhiteList', 'UpdateProjectWhiteList', 'UpdateContract',
-        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber', 'CertifiedPayroll', 'Wrap',
+        'Contract', 'ProgramContract', 'Milestone', 'ChangeOrder', 'UpdateMilestone', 'UpdateChangeOrder', 'ServiceClass', 'WbsService', '$cacheFactory', 'ClientPOC', 'UniqueIdentityNumber', 'CertifiedPayroll', 'Wrap', 'MaterialCategory', 'Material', 'Manufacturer', 'UnitType',
         function ($state, ProjectTitle, UserName, $http, $location, $scope, $rootScope, $uibModal, $sce, Page, Organization, Program, ProgramElement,
             Project, Trend, currentTrend, myLocalStorage, localStorageService, RequestApproval, TrendStatus, FundType,
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -3979,6 +3979,25 @@ angular.module('cpp.controllers').
                 wbsTree.setWrapList(response.result);
             });
 
+            MaterialCategory.get({}, function (response) {
+                console.log(response);
+                wbsTree.setMaterialCategoryList(response.result);
+            });
+
+            Material.get({}, function (response) {
+                console.log(response);
+                wbsTree.setMaterialList(response.result);
+            });
+            Manufacturer.get({}, function (response) {
+                console.log(response);
+                wbsTree.setManufacturerList(response.result);
+            });
+            UnitType.get({}, function (response) {
+                console.log(response);
+                wbsTree.setUnitTypeList(response.result);
+            });
+
+
             //Document.get({ ProjectID: localStorage.getItem('selectProjectIdDash') }, function (response) { // _selectedProjectID
             //    alert('selected project id ' + localStorage.getItem('selectProjectIdDash')); //+ _selectedProjectID
             //    console.log('Doc ...');
@@ -5114,6 +5133,7 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
@@ -5126,7 +5146,8 @@ angular.module('cpp.controllers').
                                 strProject += "<td>" + project.ProjectClassName + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
-                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='icons icon-bom grid__btn-icons' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>";
                                     //Delete Project
                                     if (role == "Admin") {
                                         strProject += "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
@@ -5141,6 +5162,7 @@ angular.module('cpp.controllers').
                                     strProject += "<td>" +
                                         //Edit Project
                                         "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                         //Delete Project
                                         "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                         // Close Project
@@ -5644,6 +5666,15 @@ angular.module('cpp.controllers').
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                     });
 
+                    $('#tblProject').on('click', '#BillOfMaterialProjectGridBtn', function () {
+                        //$('#EditProjectGridBtn').unbind('click').on('click', function () {
+                        //var programId = $scope.GridContractId;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        $('#BillOfMaterialModal').modal({ show: true, backdrop: 'static' });
+                    });
                     //Delete Project
                     $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
                         //$("#DeleteProjectGridBtn").bind("click", function () {

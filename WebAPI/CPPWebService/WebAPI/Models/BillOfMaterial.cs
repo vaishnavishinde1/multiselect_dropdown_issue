@@ -224,7 +224,7 @@ namespace WebAPI.Models
                         }
                         else
                         {
-                            result = "Bill of Material is using in following project.\n"; // Narayan - Show message bill of material is in use
+                            result = "Material is in use.\n"; // Narayan - Show message bill of material is in use
                         }
                     }
 
