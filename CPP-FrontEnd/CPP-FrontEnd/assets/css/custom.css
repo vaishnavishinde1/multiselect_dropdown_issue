@@ -1787,6 +1787,37 @@ button[disabled=disabled], button:disabled {
     overflow: auto !important;
 }
 
+.icons {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-72647:before {
+    content: "\e901";
+}
+
+.icon-bom:before {
+    content: "\e902";
+    font-size: 15px;
+}
+
+.icon-program-overview:before {
+    content: "\e900";
+}
+
+
+
+
+
 @font-face {
     font-family: 'icomoon';
     src: url('../fonts/icomoon.eot?pcz05c');
@@ -1795,6 +1826,7 @@ button[disabled=disabled], button:disabled {
     font-style: normal;
     font-display: block;
 }
+
 
 .icon-72647 {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -1810,9 +1842,6 @@ button[disabled=disabled], button:disabled {
     -moz-osx-font-smoothing: grayscale;
 }
 
-    .icon-72647:before {
-        content: "\e900";
-    }
 
 .btn:hover {
     border: 1px solid transparent !important;
