@@ -672,24 +672,38 @@ namespace WebAPI.Models
 
             // Jignesh-21-10-2021
             List<ProjectAccessControl> projectAccessControlsList = ProjectAccessControl.GetContractModificationList(uId);
-            foreach (ProjectAccessControl item in projectAccessControlsList)
+            List<UserRoleRelation> isUserAdmin = new List<UserRoleRelation>();
+            using (var ctx = new CPPDbContext())
             {
-                if (item.ProgramElementID == wbspe.ProgramElementID)
+                List<UserRole> role = WebAPI.Models.UserRole.getRole("Admin");
+                int adminID = role.Find(r => r.Role == "Admin").Id;
+                isUserAdmin = ctx.UserRoleRelation.Where(u => u.UserId == uId && u.UserRoleId == adminID).ToList();
+            }
+            if (isUserAdmin.Count > 0)
+            {
+                children = prj;
+            }
+            else
+            {
+                foreach (ProjectAccessControl item in projectAccessControlsList)
                 {
-                    if (item.IsProgramEleCreator == true)
+                    if (item.ProgramElementID == wbspe.ProgramElementID)
                     {
-                        children = prj;
-                        break;
-                    }
-                    else
-                    {
-                        foreach (var project in prj)
+                        if (item.IsProgramEleCreator == true)
                         {
-                            if (item.IsProjectCreator == true || item.IsProjectApprover == true || item.IsAllowedUser == true)
+                            children = prj;
+                            break;
+                        }
+                        else
+                        {
+                            foreach (var project in prj)
                             {
-                                if (Convert.ToInt32(project.ProjectID) == item.ProjectID)
+                                if (item.IsProjectCreator == true || item.IsProjectApprover == true || item.IsAllowedUser == true)
                                 {
-                                    children.Add(project);
+                                    if (Convert.ToInt32(project.ProjectID) == item.ProjectID)
+                                    {
+                                        children.Add(project);
+                                    }
                                 }
                             }
                         }

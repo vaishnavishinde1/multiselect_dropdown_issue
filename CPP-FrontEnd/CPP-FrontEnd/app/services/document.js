@@ -14,6 +14,9 @@ angular.module('cpp.services').
                 //    http://localhost:29986/api/Request/FundTypeByOrgID/79
                 return $resource(serviceBasePath + "Register/Document/:docIDs");
             },
+            getBillOfMaterialByProgramElementId: function (programelementId, SearchText) {
+                return $resource(serviceBasePath + "billOfMaterial/getBillOfMaterial/:programelementId/:SearchText");
+            },
 
             getWarrantyByProgramId: function (programId) {
                 return $resource(serviceBasePath + "contractWarranty/getContractWarranty/:programId");

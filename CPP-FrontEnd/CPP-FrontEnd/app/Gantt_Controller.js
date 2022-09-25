@@ -4,11 +4,11 @@
 angular.module('xenon.Gantt_Controller', []).
     controller('CostGanttCtrl', ['MainActivityCategory', 'currentTrend', 'TrendId', 'ProjectTitle', 'UnitType', 'Vendor', 'SubActivityCategory', 'Category', 'GetActivity', '$http', '$q', '$state', '$scope', '$compile', 'Program', 'ProgramElement',
         'Project', 'Trend', 'Activity', 'Cost', 'InsertCost', 'fteposition', 'FTEPositionCost', 'delayedData', 'Page', 'UpdateActivity', 'localStorageService', 'RequestApproval', 'TrendStatus',
-        '$rootScope', '$uibModal', 'ProgramFund', 'TrendFund', '$timeout', 'usSpinnerService', '$filter', '$location', 'alertBox', 'usSpinnerConfig', 'GanttCategory', 'ProgramCategory', 'MaterialCategory', 'Material', 'ODCType', 'SubcontractorType', 'Subcontractor', 'PhaseCode', 'UserByEmployeeListID', 'AllEmployee', 'TrendStatusCode', '$stateParams', 'Employee',
+        '$rootScope', '$uibModal', 'ProgramFund', 'TrendFund', '$timeout', 'usSpinnerService', '$filter', '$location', 'alertBox', 'usSpinnerConfig', 'GanttCategory', 'ProgramCategory', 'MaterialCategory', 'Material', 'ODCType', 'SubcontractorType', 'Subcontractor', 'PhaseCode', 'UserByEmployeeListID', 'AllEmployee', 'TrendStatusCode', '$stateParams', 'Employee', 'Document',
         'LaborRate', 'PurchaseOrder', 'PurchaseOrderDetail', 'MFAConfiguration', 'ApprovalMatrix',
         function (MainActivityCategory, currentTrend, TrendId, ProjectTitle, UnitType, Vendor, SubActivityCategory, Category, GetActivity, $http, $q, $state, $scope, $compile, Program, ProgramElement,
             Project, Trend, Activity, Cost, InsertCost, FTEPositions, FTEPositionCost, delayedData, Page, UpdateActivity, localStorageSrevice, RequestApproval, TrendStatus,
-            $rootScope, $uibModal, ProgramFund, TrendFund, $timeout, usSpinnerService, $filter, $location, alertBox, usSpinnerConfig, GanttCategory, ProgramCategory, MaterialCategory, Material, ODCType, SubcontractorType, Subcontractor, PhaseCode, UserByEmployeeListID, AllEmployee, TrendStatusCode, $stateParams, Employee,
+            $rootScope, $uibModal, ProgramFund, TrendFund, $timeout, usSpinnerService, $filter, $location, alertBox, usSpinnerConfig, GanttCategory, ProgramCategory, MaterialCategory, Material, ODCType, SubcontractorType, Subcontractor, PhaseCode, UserByEmployeeListID, AllEmployee, TrendStatusCode, $stateParams, Employee, Document,
             LaborRate, PurchaseOrder, PurchaseOrderDetail, MFAConfiguration, ApprovalMatrix) {
 
             function roundToTwo(num) {
@@ -266,6 +266,7 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.materialCategories = []; //An array to store all material categories
             $scope.unitTypes = [];         //Array to store unitTypes
             $scope.materials = [];          //Array to store materials
+            $scope.materialsfilter = [];
             $scope.isScaleChanged = false;  //a variable to keep track of the scale change
             $scope.isUpdateTaskFromLightbox = true;  //A variable to keep track if an activity is updated from the lightbox
             $scope.schedule = { data: [] };   //store all the activity for schedule Gantt
@@ -378,6 +379,28 @@ angular.module('xenon.Gantt_Controller', []).
 
             }
 
+            var materialnamesandmaterialquantities = [];
+            $scope.BillOfMaterialByProgramElementId = delayedData[6].data;
+            $scope.billofmateriallist = [];
+            $scope.billofmateriallistUnique = [];
+            for (var i = 0; i < $scope.BillOfMaterialByProgramElementId.length; i++) {
+                billofmaterial = {};
+                billofmaterial["name"] = $scope.BillOfMaterialByProgramElementId[i].MaterialCategoryName;
+                billofmaterial["value"] = $scope.BillOfMaterialByProgramElementId[i].MaterialCategoryID;
+
+                $scope.billofmateriallist.push(billofmaterial);
+
+            }
+
+            $scope.billofmateriallist.forEach(function (item) {
+
+                var isPresent = $scope.billofmateriallistUnique.filter(function (elem) {
+                    return elem.name === item.name && elem.value === item.value
+                })
+                if (isPresent.length == 0) {
+                    $scope.billofmateriallistUnique.push(item)
+                }
+            });
 
 
 
@@ -755,13 +778,18 @@ angular.module('xenon.Gantt_Controller', []).
                     $scope.totalUnits[id] = 0; // Jignesh-CostLieneItem-13_01_2021
                     $scope.material_id[id] = ""; // Jignesh-10-02-2021
 
+                    if ($scope.billofmateriallistUnique.length == 0) {
+
+                        dhtmlx.alert("Bill of Material is not added for this element");
+
+                    }
                     //console.log('here');
 
                     //$scope.unit_type = {name: ""};
 
 
                     $(cells[3]).html(   //Type
-                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in materialCategories track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")'></select>"
                         )($scope)
                     );
 
@@ -1141,67 +1169,67 @@ angular.module('xenon.Gantt_Controller', []).
 
                 } else if ($scope.method[id] === "U") { //MATERIALS category
                     //luan quest 3/26 TODO
-                    if ($scope.description[id].name == '----------Add New----------') {
-                        $scope.newMaterials[id] = [];   //reset employees
-                        $scope.description[id] = { name: '', value: '' };   //reset
-                        //Modal to add new type
-                        var scope = $rootScope.$new();
+                    //if ($scope.description[id].name == '----------Add New----------') {
+                    //    $scope.newMaterials[id] = [];   //reset employees
+                    //    $scope.description[id] = { name: '', value: '' };   //reset
+                    //    //Modal to add new type
+                    //    var scope = $rootScope.$new();
 
-                        scope.params = {}
+                    //    scope.params = {}
 
-                        $rootScope.modalInstance = $uibModal.open({
-                            backdrop: 'static',
-                            keyboard: false,
-                            scope: scope,
-                            templateUrl: "app/views/modal/add_material_category_modal.html",
-                            size: "md",
-                            controller: "AddMaterialCategoryModalCtrl"
-                        });
-                        $rootScope.modalInstance.result.then(function (response) {
-                            //console.log(response);
-                            if (response.status == 'Success') {
-                                MaterialCategory.get({}, function (MaterialCategoryData) {
-                                    $scope.materialCategories = [];
-                                    var materialCategory = {};
-                                    var selectedMaterialCategory = {};
-                                    var newlyAddedID = null;
-                                    materialCategoryList = MaterialCategoryData.result;    //curse of silence
+                    //    $rootScope.modalInstance = $uibModal.open({
+                    //        backdrop: 'static',
+                    //        keyboard: false,
+                    //        scope: scope,
+                    //        templateUrl: "app/views/modal/add_material_category_modal.html",
+                    //        size: "md",
+                    //        controller: "AddMaterialCategoryModalCtrl"
+                    //    });
+                    //    $rootScope.modalInstance.result.then(function (response) {
+                    //        //console.log(response);
+                    //        if (response.status == 'Success') {
+                    //            MaterialCategory.get({}, function (MaterialCategoryData) {
+                    //                $scope.materialCategories = [];
+                    //                var materialCategory = {};
+                    //                var selectedMaterialCategory = {};
+                    //                var newlyAddedID = null;
+                    //                materialCategoryList = MaterialCategoryData.result;    //curse of silence
 
-                                    // Jignesh-25-03-2021
-                                    var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    //if (authRole === "Admin") {
-                                    if (authRole.indexOf('Admin') != -1) {
-                                        //luan quest 3/26
-                                        //luan quest 3/26
-                                        materialCategory["name"] = '----------Add New----------';
-                                        materialCategory["value"] = 0;
-                                        $scope.materialCategories.push(materialCategory);
-                                    }
+                    //                // Jignesh-25-03-2021
+                    //                var authRole = $scope.localStorageSrevice.get('authorizationData').role;
+                    //                //if (authRole === "Admin") {
+                    //                if (authRole.indexOf('Admin') != -1) {
+                    //                    //luan quest 3/26
+                    //                    //luan quest 3/26
+                    //                    materialCategory["name"] = '----------Add New----------';
+                    //                    materialCategory["value"] = 0;
+                    //                    $scope.materialCategories.push(materialCategory);
+                    //                }
 
 
-                                    for (var i = 0; i < materialCategoryList.length; i++) {
-                                        materialCategory = {};
-                                        materialCategory["name"] = materialCategoryList[i].Name;
-                                        materialCategory["value"] = materialCategoryList[i].ID;
-                                        $scope.materialCategories.push(materialCategory);
+                    //                for (var i = 0; i < materialCategoryList.length; i++) {
+                    //                    materialCategory = {};
+                    //                    materialCategory["name"] = materialCategoryList[i].Name;
+                    //                    materialCategory["value"] = materialCategoryList[i].ID;
+                    //                    $scope.materialCategories.push(materialCategory);
 
-                                        if (materialCategoryList[i].Name == response.objectSaved.Name) {
-                                            selectedMaterialCategory = materialCategory;
-                                        }
-                                    }
+                    //                    if (materialCategoryList[i].Name == response.objectSaved.Name) {
+                    //                        selectedMaterialCategory = materialCategory;
+                    //                    }
+                    //                }
 
-                                    //select the newly added
-                                    $scope.description[id] = selectedMaterialCategory;
-                                    $scope.changedDescription(id);
-                                });
-                            } else {
+                    //                //select the newly added
+                    //                $scope.description[id] = selectedMaterialCategory;
+                    //                $scope.changedDescription(id);
+                    //            });
+                    //        } else {
 
-                            }
-                        }, function error(response) {
-                            //console.log(response);
-                        });
-                        return;
-                    }
+                    //        }
+                    //    }, function error(response) {
+                    //        //console.log(response);
+                    //    });
+                    //    return;
+                    //}
 
                     $scope.newMaterials[id] = getNewMaterials(id);
 
@@ -1579,10 +1607,11 @@ angular.module('xenon.Gantt_Controller', []).
                     //console.log($scope.unit_type);
                     var unitTypeId = 0;
                     angular.forEach($scope.orgMaterials, function (item) {
-                        if (item.ID == $scope.material_id[id].value) {
+                        if (item.MaterialID == $scope.material_id[id].value) {
                             //console.log($scope.material_id);
-                            unitTypeId = item.UnitTypeID;
-                            $scope.unitCost[id] = item.Cost;// * MATERIAL_RATE * CUSTOM_MATERIAL_RATE;//IVAN 03-12
+                            unitTypeId = item.Unit_Type;
+                            $scope.unitCost[id] = item.CostPerItem;// * MATERIAL_RATE * CUSTOM_MATERIAL_RATE;//IVAN 03-12
+
                             $scope.unitBudget[id] = $scope.unitCost[id] * MATERIAL_RATE;//* CUSTOM_MATERIAL_RATE;;
                             $scope.selectedCost.Quantity = item.Quantity;
                             $scope.selectedCost.IsMaterialCategoryChanged = true;
@@ -1590,7 +1619,7 @@ angular.module('xenon.Gantt_Controller', []).
                         }
                     });
                     angular.forEach($scope.unitTypes, function (item) {
-                        if (item.UnitID == unitTypeId) {
+                        if (item.name == unitTypeId) {
                             $scope.unit_type[id] = item;
 
                         }
@@ -1848,6 +1877,7 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.subcontractors = [];
             $scope.subcontractorTypes = [];
             $scope.materials = [];
+            $scope.materialsfilter = [];
             $scope.materialCategories = [];
 
             function refreshEmployees() {
@@ -1861,12 +1891,22 @@ angular.module('xenon.Gantt_Controller', []).
             refreshEmployees();
 
 
-            $scope.orgMaterials = delayedData[6].result;
-            function refreshMaterials() {
-                angular.forEach($scope.orgMaterials, function (item) {
+            Material.get({}, function (response) {
+                //console.log(response.result);
+                $scope.materialslist = response.result;
+                angular.forEach($scope.materialslist, function (item) {
                     var temp = {};
                     temp.name = item.Name;
                     temp.value = item.ID;
+                    $scope.materialsfilter.push(temp);
+                });
+            });
+            $scope.orgMaterials = delayedData[6].data;
+            function refreshMaterials() {
+                angular.forEach($scope.orgMaterials, function (item) {
+                    var temp = {};
+                    temp.name = item.MaterialName;
+                    temp.value = item.MaterialID;
                     $scope.materials.push(temp);
                 });
             }
@@ -2260,6 +2300,14 @@ angular.module('xenon.Gantt_Controller', []).
                         }
                     }
                 });
+                if (validateCostQuantity() == true) {
+                    dhtmlx.alert({
+                        text: "Entered Material Count Exceeded Maximum Quantity",
+                        width: "400px"
+                    });
+
+                    return;
+                }
                 // alert("Current Login Id : " + authData.employeeID + "  --- Trend Current Approval Id : " + $scope.trend.CurrentApprover_EmployeeID);
                 if ($scope.trend.CurrentThreshold != null) {
                     //$scope.approve(); // Previous Code
@@ -2563,6 +2611,14 @@ angular.module('xenon.Gantt_Controller', []).
                 if (isValid == false) {
                     dhtmlx.alert({
                         text: "One of the input is invalid. Please double check that all input are valid value.",
+                        width: "400px"
+                    });
+                    return;
+                }
+                if (validateCostQuantity() == true) {
+
+                    dhtmlx.alert({
+                        text: "Entered Material Count Exceeded Maximum Quantity",
                         width: "400px"
                     });
                     return;
@@ -3939,11 +3995,12 @@ angular.module('xenon.Gantt_Controller', []).
             }
 
             //Initialize material categories
+            
             var materialCategoryList;
             $scope.filterMaterialCategory = [];   //Manasi 30-04-2021   Filter on cost line items   Version 2
-            MaterialCategory.get({}, function (materialCategoryData) {
+            MaterialCategory.get({}, function (materialCategoryData1) {
                 //console.log(materialCategoryData);
-                materialCategoryList = materialCategoryData.result;
+                materialCategoryData = delayedData[6].data;
 
                 //luan quest 3/26
                 var temp = { name: '', value: '' };
@@ -3958,10 +4015,10 @@ angular.module('xenon.Gantt_Controller', []).
                 }
 
 
-                for (var x = 0; x < materialCategoryData.result.length; x++) {
+                for (var x = 0; x < materialCategoryData.length; x++) {
                     temp = {};
-                    temp.name = materialCategoryData.result[x].Name;
-                    temp.value = materialCategoryData.result[x].ID;
+                    temp.name = materialCategoryData[x].MaterialCategoryName;
+                    temp.value = materialCategoryData[x].MaterialCategoryID;
                     $scope.materialCategories.push(temp);
                     //$scope.filterMaterialCategory = $scope.materialCategories; //Manasi 30-04-2021   Filter on cost line items   Version 2
                     $scope.filterMaterialCategory.push(temp); //Manasi 30-04-2021   Filter on cost line items   Version 2
@@ -3969,7 +4026,6 @@ angular.module('xenon.Gantt_Controller', []).
 
                 //console.log($scope.materialCategories);
             });
-
             //Initialize subcontractor types
             $scope.orgSubcontractorTypes = null;
             $scope.filterSubcontractorTypes = [];   //Manasi 30-04-2021   Filter on cost line items   Version 2
@@ -4568,7 +4624,7 @@ angular.module('xenon.Gantt_Controller', []).
 
 
                                             //console.log($scope.materials);
-                                            angular.forEach($scope.materials, function (item) {
+                                            angular.forEach($scope.materialsfilter, function (item) {
 
                                                 if (item.value == costs[i].MaterialID) {
                                                     //console.log(item);
@@ -9758,14 +9814,14 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(
                                                 $compile(
 
-                                                    "<select class='select-disabled' disabled='true'   tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in materialCategories track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select class='select-disabled' disabled='true'   tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")'></select>"
                                                 )($scope)
                                             );
                                         } else {
                                             $(this).html(
                                                 $compile(
                                                     // "<input tabindex=" + index + " ng-model='description[" + id + "].name'  style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-keyup='changeDescription(" + id + ")' ng-change='changedDescription(" + id + ")'></input>"
-                                                    "<select  tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in materialCategories track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select  tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")'></select>"
                                                 )($scope)
                                             );
                                         }
@@ -9932,7 +9988,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         } else {
                                             $(this).html(
                                                 $compile(
-                                                    "<input  tabindex=" + index + " ng-model='unitCost[" + id + "]' ng-keyup='changedUnitCost(" + id + ")'   style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-keyup='changedUnitCost(" + id + ")'></input>"
+                                                    "<input disabled='true' tabindex=" + index + " ng-model='unitCost[" + id + "]' ng-keyup='changedUnitCost(" + id + ")'   style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-keyup='changedUnitCost(" + id + ")'></input>"
                                                     //Jignesh-CostLieneItem-13_01_2021
                                                     //"<input  tabindex=" + index + " ng-model='unitBudget[" + id + "]' ng-blur='changedUnitCost(" + id + ")'   style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-change='isUnitValueChanged(" + id + ")'></input>"  //Manasi 10-07-2020
                                                 )($scope)
@@ -10922,47 +10978,71 @@ angular.module('xenon.Gantt_Controller', []).
                 return resultAr;
             }
 
+            //function getNewMaterials(id) {
+            //    var resultAr = [];
+            //    var allMaterialCategories = materialCategoryList;
+            //    var allMaterials = $scope.orgMaterials;
+            //    //console.log(allMaterialCategories);
+            //    //console.log(allMaterials);
+            //    for (var x = 0; x < allMaterials.length; x++) {
+            //        var found = false;
+            //        for (var y = 0; y < allMaterialCategories.length; y++) {
+            //            if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
+            //                allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
+            //                found = true;
+            //                //console.log(allMaterials[x]);
+            //                break;
+            //            }
+            //        }
+            //        if (!found) {
+            //            allMaterials[x].MaterialCategoryName = 'N/A';
+            //        }
+            //    }
+
+            //    if ($scope.description && $scope.description[id]) {
+
+            //        //luan quest 3/26
+            //        if ($scope.description[id].name != '----------Add New----------') {
+            //            // Jignesh-25-03-2021
+            //            var authRole = $scope.localStorageSrevice.get('authorizationData').role;
+            //            //if (authRole === "Admin") {
+            //            if (authRole.indexOf('Admin') != -1) {
+            //                var temp = { name: '----------Add New----------', value: '0' };
+            //                resultAr.push(temp);
+            //            }
+            //        }
+
+            //        for (var x = 0; x < allMaterials.length; x++) {
+            //            //console.log(allMaterials[x], $scope.description[id].name);
+            //            if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
+            //                var temp = { name: '', value: '' };
+            //                //console.log(allMaterials[x]);
+            //                temp.name = allMaterials[x].Name;
+            //                temp.value = allMaterials[x].ID;
+            //                resultAr.push(temp);
+            //            }
+            //        }
+            //    }
+            //    return resultAr;
+            //}
+
+
             function getNewMaterials(id) {
                 var resultAr = [];
                 var allMaterialCategories = materialCategoryList;
                 var allMaterials = $scope.orgMaterials;
-                //console.log(allMaterialCategories);
-                //console.log(allMaterials);
-                for (var x = 0; x < allMaterials.length; x++) {
-                    var found = false;
-                    for (var y = 0; y < allMaterialCategories.length; y++) {
-                        if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
-                            allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
-                            found = true;
-                            //console.log(allMaterials[x]);
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        allMaterials[x].MaterialCategoryName = 'N/A';
-                    }
-                }
 
+            
                 if ($scope.description && $scope.description[id]) {
 
-                    //luan quest 3/26
-                    if ($scope.description[id].name != '----------Add New----------') {
-                        // Jignesh-25-03-2021
-                        var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                        //if (authRole === "Admin") {
-                        if (authRole.indexOf('Admin') != -1) {
-                            var temp = { name: '----------Add New----------', value: '0' };
-                            resultAr.push(temp);
-                        }
-                    }
 
                     for (var x = 0; x < allMaterials.length; x++) {
                         //console.log(allMaterials[x], $scope.description[id].name);
-                        if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
+                        if (allMaterials[x].MaterialCategoryID == $scope.description[id].value) {
                             var temp = { name: '', value: '' };
                             //console.log(allMaterials[x]);
-                            temp.name = allMaterials[x].Name;
-                            temp.value = allMaterials[x].ID;
+                            temp.name = allMaterials[x].MaterialName;
+                            temp.value = allMaterials[x].MaterialID;
                             resultAr.push(temp);
                         }
                     }
@@ -12424,6 +12504,43 @@ angular.module('xenon.Gantt_Controller', []).
 
             }
 
+            function validateCostQuantity() {
+                materialnamesandmaterialquantities = [];
+                var mycond = false;
+
+                $scope.costGanttInstance.eachTask(function (item) {
+
+                    if ($scope.method[item.id] == "U") {
+
+
+                        //var materialid = $scope.material_id[id].value;
+
+
+
+                        $.each($scope.BillOfMaterialByProgramElementId, function (index) {
+
+                            if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == $scope.material_id[item.id].value && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
+                                materialname = $scope.BillOfMaterialByProgramElementId[index].MaterialName;
+                                materialquantity = $scope.BillOfMaterialByProgramElementId[index].Quantity;
+                                materialnamesandmaterialquantities.push({ materialname: materialname, materialquantity: materialquantity });
+                                mycond = true;
+                                return true;
+                            }
+
+
+
+                        });
+
+                    }
+                });
+
+                if (mycond == true)
+                    return true;
+                else
+                    return false;
+
+            }
+
             function getWeekDifferences(startDate, endDate) {
                 var st = moment(startDate).format(sqlDateFormat);
                 var ed = moment(endDate).format(sqlDateFormat);
@@ -13350,6 +13467,7 @@ angular.module('xenon.Gantt_Controller', []).
                                     item.employee_id = angular.copy($scope.employee_id);
                                     item.subcontractor_id = angular.copy($scope.subcontractor_id);
                                     item.material_id = angular.copy($scope.material_id);
+                                    item.totalUnits = angular.copy($scope.totalUnits);
                                     item.textBoxIds = angular.copy($scope.textBoxIds);
                                     item.unitCost = angular.copy($scope.unitCost);
                                     item.unitBudget = angular.copy($scope.unitBudget);
@@ -13398,6 +13516,7 @@ angular.module('xenon.Gantt_Controller', []).
                         item.employee_id = angular.copy($scope.employee_id);
                         item.subcontractor_id = angular.copy($scope.subcontractor_id);
                         item.material_id - angular.copy($scope.material_id);
+                        item.totalUnits = angular.copy($scope.totalUnits);
                     }
                 });
             }

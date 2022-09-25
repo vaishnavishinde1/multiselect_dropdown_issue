@@ -20,13 +20,15 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
                         //"http://export.dhtmlx.com/gantt/api.js"
                     ]);
                 },
-                delayedData: function($stateParams, $q, Activity, PhaseCode, Project, Material, Employee, TrendCostOverhead) { // Inject resources named 'Activity' and 'Phases'
+                delayedData: function ($stateParams, $q, Activity, PhaseCode, Project, Material, Employee, TrendCostOverhead, Document) { // Inject resources named 'Activity' and 'Phases'
                     console.log($stateParams);
                     // Set up our resource calls
                     var ActivityData = Activity.get({ ProjectID: $stateParams.ProjectID, TrendNumber: $stateParams.TrendNumber, ProgramID: 'null', ProgramElementID: 'null' });
                     var PhaseData = PhaseCode.get({ PhaseDescription: 'null', Code: 'null', ProjectID: $stateParams.ProjectID });   //luan here
                     var Project = Project.lookup().get({ ProgramID: 'null', ProgramElementID: 'null', ProjectID: $stateParams.ProjectID });
-                    var Materials = Material.get({});
+                    /* var Materials = Material.get({});*/
+                    var programelementId = localStorage.getItem('selectProgramElementIDDash');
+                    var Materials = Document.getBillOfMaterialByProgramElementId().get({ programelementId: programelementId, SearchText: '' });
                     var Employees = Employee.get({ OrganizationID: $stateParams.OrganizationID });
                     var CostOverhead = TrendCostOverhead.get( {ProjectID : $stateParams.ProjectID , TrendNumber :  $stateParams.TrendNumber });
                     
