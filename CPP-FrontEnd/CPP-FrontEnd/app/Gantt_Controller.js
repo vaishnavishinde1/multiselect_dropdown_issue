@@ -1584,6 +1584,8 @@ angular.module('xenon.Gantt_Controller', []).
                             unitTypeId = item.UnitTypeID;
                             $scope.unitCost[id] = item.Cost;// * MATERIAL_RATE * CUSTOM_MATERIAL_RATE;//IVAN 03-12
                             $scope.unitBudget[id] = $scope.unitCost[id] * MATERIAL_RATE;//* CUSTOM_MATERIAL_RATE;;
+                            $scope.selectedCost.Quantity = item.Quantity;
+                            $scope.selectedCost.IsMaterialCategoryChanged = true;
                             // $scope.unitTypes[id] = item.
                         }
                     });
@@ -1602,6 +1604,7 @@ angular.module('xenon.Gantt_Controller', []).
                     //        " ng-change='changedUnitCost(" + id + ")'></input>"
                     //    )($scope)
                     //);
+                    $scope.changedCost(id, 0);
                     costCalculation(id);//recalculate cost based on new FTE position
                 } else if ($scope.method[id] === "ODC") {
                     //Nothing
@@ -1757,6 +1760,28 @@ angular.module('xenon.Gantt_Controller', []).
                         $('#' + strFlagId).css('display', 'none');
                     }
                 }
+                else if ($scope.method[id] === "U") {
+
+                    if ($scope.selectedCost.IsMaterialCategoryChanged == true) {
+
+                        var rowBox = $("#cost-gantt .costBar[task_id='" + id + "']");
+                        var cellBox = rowBox.find('.' + id + '_costText');
+                        var boxb = cellBox.get(0);
+
+                        $(cellBox).on('mouseover', function () {
+                            $(this).addClass('hover');
+                            $(boxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "right" }).tooltip('show');
+                        });
+                        $(cellBox).on('mouseleave', function () {
+                            $(this).removeClass('hover');
+                        });
+                    }
+
+
+                }
+                    
+                    
+                
 
 
 
@@ -7162,8 +7187,12 @@ angular.module('xenon.Gantt_Controller', []).
 
                 $scope.scheduleGanttInstance.ext.tooltips.tooltip.hide();
                 var row = $("#cost-gantt .gantt_row[task_id='" + task.id + "']");
+                //var rowCostBox = $("#cost-gantt .gantt_task_row[task_id='" + task.id + "']");
                 var cells = row.find('.gantt_cell');
 
+                
+                //var rowCostBox = $('#costCell10');//$('div[task_id="' + taskID + '"].gantt_task_line');
+                //var cssClass = "costBox " + id.toString() + "_cost";
                 var bbb = cells.get(0);
                 if (isCurrentTrend)
                     bbb = cells.get(1);
@@ -7196,14 +7225,33 @@ angular.module('xenon.Gantt_Controller', []).
                     }
 
                 });
+
+
                 $(bbb).on('mouseleave', function () {
                     $(this).removeClass('hover');
                 });
+                
+
+                //$(box).on('mouseover', function () {
+                   
+                //    //if (task.cost_type == "U") {
+                //        $(this).addClass('hover');
+                //        $(box).tooltip({ title: "Available Quanitity", placement: "right" }).tooltip('show');
+                //   // }
+                //});
+                //$(box).on('mouseleave', function () {
+                //    $(this).removeClass('hover');
+                //});
+
                 //show dhtmlx tooltip on mouseover on any other columns
                 if ($(bbb).hasClass('hover')) {
-                } else {
+                }
+                //else if ($(box).hasClass('hover')) {
+                //    return "Available Quantity";
+                //}
+                else {
 
-
+                    
                     var costLineItemID = task.CostLineItemID;
 
                     if (task.CostLineItemID && (task.cost_track_type_id == 3 || task.cost_track_type_id == 4)) {
@@ -7219,6 +7267,7 @@ angular.module('xenon.Gantt_Controller', []).
                     }
                 }
 
+               
             }
 
             $scope.costGanttInstance.templates.task_class = function (start, end, task) {
