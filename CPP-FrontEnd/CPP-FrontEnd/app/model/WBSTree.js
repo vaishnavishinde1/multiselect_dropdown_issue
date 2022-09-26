@@ -15797,7 +15797,7 @@ WBSTree = (function ($) {
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#delete_bill_of_material', function () {
+                $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
                     var row = $(this).closest("tr");
                     var id = row[0].id;
                     wbsTree.setBillOfMaterialOperation(3);
