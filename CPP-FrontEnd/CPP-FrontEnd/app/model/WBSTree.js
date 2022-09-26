@@ -15674,12 +15674,11 @@ WBSTree = (function ($) {
 
 
                 var selectedNode = wbsTree.getSelectedNode();
-
-
                 modal = $(this);
 
                 modal.find('.modal-body #txtprojectname').val(selectedNode.ProgramElementName);
-                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                //modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramElementManager); // Aditya 26092022 :: Fetch Project Manager
                 modal.find('.modal-body #txtprojectnumber').val(selectedNode.ProgramElementNumber);
                 modal.find('.modal-body #txtprojectstartdate').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY'));
 
@@ -15703,7 +15702,7 @@ WBSTree = (function ($) {
                     gridbillofmaterial.empty();
                     _BillOfMaterialList.reverse();
                     BillOfMaterialList = _BillOfMaterialList;
-
+                    $('#txtprojectmanager').val(response.projectManager); // Aditya 26092022 :: Fetch Project Manager
                     gridloadforbillofmaterial();
 
                 });

@@ -241,6 +241,48 @@ namespace WebAPI.Models
             //return status;
         }
 
+        // Aditya 26092022 :: Fetch Project Manager
+        public static string getProjectManager(int PragramelementId)
+        {
+
+            var result = "";
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+
+            String projectManager = "";
+
+            Program programid = new Program();
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    
+                    ApprovalMatrix projectManagerApproval = ctx.ApprovalMatrix.Where(a => a.Role == "Project Manager").FirstOrDefault();
+                    ProjectApproversDetails ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == PragramelementId && p.ApproverMatrixId == projectManagerApproval.Id).FirstOrDefault();
+                    //Employee employeData = ctx.Employee.Where(e => e.ID == ApproversDetails.EmpId).FirstOrDefault();
+                    
+                    if(ApproversDetails.EmpId != 10000) {
+                        projectManager = ApproversDetails.EmpName;
+                    }
+                    else
+                    {
+                        projectManager = "TBD";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var info = ex.ToString();
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            finally
+            {
+            }
+            return projectManager;
+            
+        }
 
     }
 }
