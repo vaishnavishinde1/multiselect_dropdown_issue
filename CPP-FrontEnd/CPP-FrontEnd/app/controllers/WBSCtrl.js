@@ -5603,6 +5603,9 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
                         $('#wbsGridiewTrend').html('');
                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+
+                        wbsTree.setSelectedProgramID(selectedProgramID);
+
                         //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
 
                         getProjectGridSection(selectedProgram);
