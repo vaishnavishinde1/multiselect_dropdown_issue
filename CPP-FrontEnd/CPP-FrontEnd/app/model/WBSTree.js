@@ -4300,6 +4300,7 @@ WBSTree = (function ($) {
                         selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
                     }
                     selectedNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();   //Manasi 04-08-2020
+                    selectedNode.ContractModificationValue = $('#ProgramModal').find('.modal-body #total_modification').val();   //Manasi 04-08-2020
 
                     //Nivedita 13-01-2022
                     //selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
@@ -4878,6 +4879,7 @@ WBSTree = (function ($) {
                     newNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
                     newNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     newNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();      //Manasi 14-07-2020
+                    newNode.ContractModificationValue = $('#ProgramModal').find('.modal-body #total_modification').val();      //Manasi 14-07-2020
                     newNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate
                     newNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();      //Manasi 04-08-2020
 
