@@ -2275,13 +2275,15 @@ angular.module('xenon.Gantt_Controller', []).
                         }
                     }
                 });
-                if (validateCostQuantity() == true) {
-                    dhtmlx.alert({
-                        text: "Entered Material Count Exceeded Maximum Quantity",
-                        width: "400px"
-                    });
+                if ($scope.trend.CurrentThreshold == "0") {
+                    if (validateCostQuantity() == true) {
+                        dhtmlx.alert({
+                            text: "Entered Material Count Exceeded Maximum Quantity",
+                            width: "400px"
+                        });
 
-                    return;
+                        return;
+                    }
                 }
                 // alert("Current Login Id : " + authData.employeeID + "  --- Trend Current Approval Id : " + $scope.trend.CurrentApprover_EmployeeID);
                 if ($scope.trend.CurrentThreshold != null) {
@@ -4608,6 +4610,8 @@ angular.module('xenon.Gantt_Controller', []).
                                                     bufferObj.material_id[$scope.currentCostIndex] = item;
                                                 }
                                             });
+
+                                            $scope.totalUnits[$scope.currentCostIndex] = totalUnits;
                                         } else if (costs[i].CostType === "ODC") {
                                             cost["total_units"] = "N/A";
                                             cost["unit_cost"] = 'N/A';

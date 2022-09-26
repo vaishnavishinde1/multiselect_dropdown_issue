@@ -10270,6 +10270,7 @@ WBSTree = (function ($) {
 
             $('#btnaddmaterial').unbind().on('click', function (event) {
                 event.preventDefault();
+                wbsTree.setBillOfMaterialOperation(1);
 
                 $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
 
@@ -15771,7 +15772,7 @@ WBSTree = (function ($) {
 
                                 for (var z = 0; z < ManufacturerData.length; z++) {
 
-                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ID) {
+                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
 
                                         manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
                                     }
@@ -15797,8 +15798,8 @@ WBSTree = (function ($) {
 
                 });
 
-
                 $("#bill_of_material_table_id").on('click', '#delete_bill_of_material', function () {
+                
                     var row = $(this).closest("tr");
                     var id = row[0].id;
                     wbsTree.setBillOfMaterialOperation(3);
@@ -15818,10 +15819,11 @@ WBSTree = (function ($) {
                                 SearchText = '';
                                 PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
                             }
-                            $(this).parents("tr").remove();
+                           
                         }
 
                     });
+                  
                 });
 
 
@@ -15984,14 +15986,12 @@ WBSTree = (function ($) {
                             ResetBillOfMaterialFields();
                             $("#BillOfMaterialDetailModal").modal('toggle');
                         }
-                        wbsTree.setBillOfMaterialOperation(1);
                         _BillOfMaterialList = d.data.data;
                         var gridbillofmaterial = $("#bill_of_material_table_id tbody");
                         gridbillofmaterial.empty();
                         _BillOfMaterialList.reverse();
                         BillOfMaterialList = _BillOfMaterialList;
                         gridloadforbillofmaterial();
-                        wbsTree.setBillOfMaterialOperation(1);
                         $('#bill_of_material_table_id').on('click', 'th', function () {
                             var table = $(this).closest('table');
                             var rows = table.find('tr.contact-row')
