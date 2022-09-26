@@ -15675,12 +15675,11 @@ WBSTree = (function ($) {
 
 
                 var selectedNode = wbsTree.getSelectedNode();
-
-
                 modal = $(this);
 
                 modal.find('.modal-body #txtprojectname').val(selectedNode.ProgramElementName);
-                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                //modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramElementManager); // Aditya 26092022 :: Fetch Project Manager
                 modal.find('.modal-body #txtprojectnumber').val(selectedNode.ProgramElementNumber);
                 modal.find('.modal-body #txtprojectstartdate').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY'));
 
@@ -15704,7 +15703,7 @@ WBSTree = (function ($) {
                     gridbillofmaterial.empty();
                     _BillOfMaterialList.reverse();
                     BillOfMaterialList = _BillOfMaterialList;
-
+                    $('#txtprojectmanager').val(response.projectManager); // Aditya 26092022 :: Fetch Project Manager
                     gridloadforbillofmaterial();
 
                 });
@@ -15798,8 +15797,8 @@ WBSTree = (function ($) {
 
                 });
 
-                $("#bill_of_material_table_id").on('click', '#delete_bill_of_material', function () {
-                
+
+                $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
                     var row = $(this).closest("tr");
                     var id = row[0].id;
                     wbsTree.setBillOfMaterialOperation(3);

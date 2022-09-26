@@ -15,10 +15,12 @@ namespace WebAPI.Controllers
             if (programelementId != null)
             {
                 List<BillOfMaterial> billsofmaterialList = BillOfMaterial.GetBillsofmaterialList((int)programelementId,(string)SearchText);
+                String projectManager = BillOfMaterial.getProjectManager((int)programelementId); // Aditya 26092022 :: Fetch Project Manager
                 var jsonNew = new
                 {
                     result = "success",
-                    data = billsofmaterialList
+                    data = billsofmaterialList,
+                    projectManager = projectManager // Aditya 26092022 :: Fetch Project Manager
                 };
                 return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
             }
