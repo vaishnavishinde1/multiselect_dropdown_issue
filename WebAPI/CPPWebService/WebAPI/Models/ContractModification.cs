@@ -251,7 +251,7 @@ namespace WebAPI.Models
 						var cvalue = programid.ContractValue.Trim('$');
 
 						contractModificationforaddoriginalvalue.ModificationNo = "0";
-						contractModificationforaddoriginalvalue.Title = "Original Contract Value";
+						contractModificationforaddoriginalvalue.Title = "Original Contract";
 						contractModificationforaddoriginalvalue.ModificationType = 0;
 						contractModificationforaddoriginalvalue.Value = cvalue;
 						contractModificationforaddoriginalvalue.ScheduleImpact = 0;
