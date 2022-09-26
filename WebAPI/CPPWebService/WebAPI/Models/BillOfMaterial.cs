@@ -71,13 +71,13 @@ namespace WebAPI.Models
                     if (retreivebillofMaterial != null)
                     {
 
-                        status = "Bill of Material Failed to Add its Already Exist.\n";
+                        status = "Material Failed to Add its Already Exist.\n";
                     }
                     else
                     {
                         ctx.BillOfMaterial.Add(billOfMaterialdata);
                         ctx.SaveChanges();
-                        status = "Bill of Material Added Successfully!!!";
+                        status = "Material Added Successfully!!!";
                     }
 
 
@@ -127,11 +127,11 @@ namespace WebAPI.Models
                         CopyUtil.CopyFields<BillOfMaterial>(billOfMaterialdata, retreivebillofMaterial);
                         ctx.Entry(retreivebillofMaterial).State = System.Data.Entity.EntityState.Modified;
                         ctx.SaveChanges();
-                        result = "Bill of Material has been updated successfully.\n";
+                        result = "Material has been updated successfully.\n";
                     }
                     else
                     {
-                        result += "Bill of Material Failed to Update its Already Exist.\n";
+                        result += "Material Failed to Update its Already Exist.\n";
                     }
 
 
@@ -220,7 +220,7 @@ namespace WebAPI.Models
                             CopyUtil.CopyFields<BillOfMaterial>(billOfMaterialdata, retreivebillofMaterial);
                             ctx.Entry(retreivebillofMaterial).State = System.Data.Entity.EntityState.Modified;
                             ctx.SaveChanges();
-                            result = "Bill of Material has been deleted successfully.\n";
+                            result = "Material has been deleted successfully.\n";
                         }
                         else
                         {
