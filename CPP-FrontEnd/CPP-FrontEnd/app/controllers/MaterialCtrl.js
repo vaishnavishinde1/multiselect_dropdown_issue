@@ -1,6 +1,6 @@
 ﻿angular.module('cpp.controllers').
     //Material Controller
-    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor','Manufacturer',
+    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor', 'Manufacturer',
         function (MaterialCategory, Material, UnitType, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout, UniqueIdentityNumber, Vendor, Manufacturer) {
             Page.setTitle('Material');
             ProjectTitle.setTitle('');
@@ -190,12 +190,12 @@
                 });
 
                 if (isFresh) {
-                	UniqueIdentityNumber.get({
-                		NumberType: 'Material',
-                		'OrganizationID': 0,
-                		'PhaseID': 0,
-                		'CategoryID': 0
-                	}, function (response) {
+                    UniqueIdentityNumber.get({
+                        NumberType: 'Material',
+                        'OrganizationID': 0,
+                        'PhaseID': 0,
+                        'CategoryID': 0
+                    }, function (response) {
                         $scope.materialCollection[$scope.materialCollection.length - 1].UniqueIdentityNumber = response.result;
                         isFresh = false;
                         currentPoint = response.result;
@@ -210,7 +210,7 @@
                 $scope.gridApi.core.clearAllFilters();//Nivedita-T on 17/11/2021
                 $timeout(function () {
                     console.log($scope.gridOptions.data[$scope.gridOptions.data.length - 1], $scope.gridOptions.columnDefs[0]);
-                    
+
                     $scope.gridApi.core.scrollTo($scope.gridOptions.data[$scope.gridOptions.data.length - 1], $scope.gridOptions.columnDefs[0]);
                 }, 1);
 
@@ -245,28 +245,28 @@
                     editDropDownChange: 'test',
                     cellFilter: 'mapPhase',
                     width: 170
-                        //
-                //::In Material, the vendor should be manufacture::Aditya 22092022 ::
-                //}, {
-                //    field: 'VendorName',
-                //    name: 'Vendor',
-                //    editableCellTemplate: 'ui-grid/dropdownEditor',
-                //    editDropdownValueLabel: 'VendorName', //code
-                //    editDropdownIdLabel: 'VendorName',    //phase
-                //    editDropDownChange: 'Gucci',
-                //    cellFilter: 'mapPhase',
-                //    width: 180
-                //    }, { 
-                    }, {
-                        field: 'ManufacturerName',
-                        name: 'Manufacturer',
-                        editableCellTemplate: 'ui-grid/dropdownEditor',
+                    //
+                    //::In Material, the vendor should be manufacture::Aditya 22092022 ::
+                    //}, {
+                    //    field: 'VendorName',
+                    //    name: 'Vendor',
+                    //    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    //    editDropdownValueLabel: 'VendorName', //code
+                    //    editDropdownIdLabel: 'VendorName',    //phase
+                    //    editDropDownChange: 'Gucci',
+                    //    cellFilter: 'mapPhase',
+                    //    width: 180
+                    //    }, { 
+                }, {
+                    field: 'ManufacturerName',
+                    name: 'Manufacturer',
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'ManufacturerName', //code
                     editDropdownIdLabel: 'ManufacturerName',    //phase
-                        editDropDownChange: 'Gucci',
-                        cellFilter: 'mapPhase',
-                        width: 180
-                    }, {
+                    editDropDownChange: 'Gucci',
+                    cellFilter: 'mapPhase',
+                    width: 180
+                }, {
                     field: 'UnitTypeName',
                     name: 'Unit Type*',
                     editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -278,14 +278,14 @@
                 }, {
                     field: 'Cost',
                     name: 'Cost*',
-                        width: 140,
-                        cellClass: 'c-col-Num', //Manasi
-                        cellFilter: 'currency' //Manasi
+                    width: 140,
+                    cellClass: 'c-col-Num', //Manasi
+                    cellFilter: 'currency' //Manasi
                 }, {
                     field: 'UniqueIdentityNumber',
                     name: 'Unique Identifier',
-                        width: 200,
-                        enableCellEdit: false,
+                    width: 200,
+                    enableCellEdit: false,
                     //  editableCellTemplate: $scope.cellInputEditableTemplate,
                     //cellFilter :'mapStatus'
 
@@ -399,7 +399,7 @@
                 var isChanged = true;
                 var isFilled = true;
                 var listToSave = [];
-                
+
                 angular.forEach($scope.materialCollection, function (value, key, obj) {
 
 
@@ -417,14 +417,14 @@
                             value.UnitTypeID = $scope.unitTypeCollection[x].UnitID;
                         }
                     }
-                   
+
                     ////Find vendor id for a material  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
 
                     //for (var x = 0; x < $scope.VendorCollection.length; x++) {
                     //    if ($scope.VendorCollection[x].VendorName == value.VendorName) {
                     //        value.VendorID = $scope.VendorCollection[x].VendorID;
                     //    }
-                        
+
                     //}
 
                     //Find Manufacturer id for a material  ::In Material, the vendor should be manufacture::Aditya 22092022 ::
@@ -435,14 +435,14 @@
                         }
 
                     }
-                   
+
                     //Find vendor id for a material
-               //     console.log($scope.vendorIDCollection, value);
-                 //   for (var x = 0; x < $scope.vendorIDCollection.length; x++) {
-                   //     if ($scope.vendorIDCollection[x].UnitName == value.VendorName) {
-                     //       value.VendorID = $scope.vendorIDCollection[x].UnitID;
-                       // }
-//                    }
+                    //     console.log($scope.vendorIDCollection, value);
+                    //   for (var x = 0; x < $scope.vendorIDCollection.length; x++) {
+                    //     if ($scope.vendorIDCollection[x].UnitName == value.VendorName) {
+                    //       value.VendorID = $scope.vendorIDCollection[x].UnitID;
+                    // }
+                    //                    }
 
                     if (isNaN(value.Cost) || Number.parseFloat(value.Cost) <= 0) {
                         $("#save_Material").attr("disabled", false);
@@ -765,8 +765,8 @@
                     else if (scope.params.confirm === "save") {
                         isTest = true;
                         $scope.save();
-                    //    onRouteChangeOff();
-                    //    $location.path(newUrl);
+                        //    onRouteChangeOff();
+                        //    $location.path(newUrl);
                     }
                     else if (scope.params.confirm === "back") {
                         //do nothing
@@ -777,21 +777,21 @@
 
         }])
 
-.filter('mapProjectType', function () {
-    return function (input) {
-        if (!input)
-            return ""
-        if (!input.Type) {
+    .filter('mapProjectType', function () {
+        return function (input) {
+            if (!input)
+                return ""
+            if (!input.Type) {
 
-            return input;
-        } else if (input.Type) {
+                return input;
+            } else if (input.Type) {
+                return input.Type;
+            } else {
+                return 'unknown';
+            }
             return input.Type;
-        } else {
-            return 'unknown';
         }
-        return input.Type;
-    }
-});
+    });
 
 function gridLoad() {
 }
