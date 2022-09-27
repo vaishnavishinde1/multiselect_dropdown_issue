@@ -71,13 +71,13 @@ namespace WebAPI.Models
                     if (retreivebillofMaterial != null)
                     {
 
-                        status = "Bill of Material Failed to Add its Already Exist.\n";
+                        status = "Material Failed to Add its Already Exist.\n";
                     }
                     else
                     {
                         ctx.BillOfMaterial.Add(billOfMaterialdata);
                         ctx.SaveChanges();
-                        status = "Bill of Material Added Successfully!!!";
+                        status = "Material Added Successfully!!!";
                     }
 
 
@@ -127,11 +127,11 @@ namespace WebAPI.Models
                         CopyUtil.CopyFields<BillOfMaterial>(billOfMaterialdata, retreivebillofMaterial);
                         ctx.Entry(retreivebillofMaterial).State = System.Data.Entity.EntityState.Modified;
                         ctx.SaveChanges();
-                        result = "Bill of Material has been updated successfully.\n";
+                        result = "Material has been updated successfully.\n";
                     }
                     else
                     {
-                        result += "Bill of Material Failed to Update its Already Exist.\n";
+                        result += "Material Failed to Update its Already Exist.\n";
                     }
 
 
@@ -220,7 +220,7 @@ namespace WebAPI.Models
                             CopyUtil.CopyFields<BillOfMaterial>(billOfMaterialdata, retreivebillofMaterial);
                             ctx.Entry(retreivebillofMaterial).State = System.Data.Entity.EntityState.Modified;
                             ctx.SaveChanges();
-                            result = "Bill of Material has been deleted successfully.\n";
+                            result = "Material has been deleted successfully.\n";
                         }
                         else
                         {
@@ -241,6 +241,48 @@ namespace WebAPI.Models
             //return status;
         }
 
+        // Aditya 26092022 :: Fetch Project Manager
+        public static string getProjectManager(int PragramelementId)
+        {
+
+            var result = "";
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+
+            String projectManager = "";
+
+            Program programid = new Program();
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    
+                    ApprovalMatrix projectManagerApproval = ctx.ApprovalMatrix.Where(a => a.Role == "Project Manager").FirstOrDefault();
+                    ProjectApproversDetails ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == PragramelementId && p.ApproverMatrixId == projectManagerApproval.Id).FirstOrDefault();
+                    //Employee employeData = ctx.Employee.Where(e => e.ID == ApproversDetails.EmpId).FirstOrDefault();
+                    
+                    if(ApproversDetails.EmpId != 10000) {
+                        projectManager = ApproversDetails.EmpName;
+                    }
+                    else
+                    {
+                        projectManager = "TBD";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var info = ex.ToString();
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            finally
+            {
+            }
+            return projectManager;
+            
+        }
 
     }
 }

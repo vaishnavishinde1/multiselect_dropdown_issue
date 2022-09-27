@@ -4300,6 +4300,7 @@ WBSTree = (function ($) {
                         selectedNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();   //Manasi 14-07-2020  
                     }
                     selectedNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();   //Manasi 04-08-2020
+                    selectedNode.ContractModificationValue = $('#ProgramModal').find('.modal-body #total_modification').val();   //Manasi 04-08-2020
 
                     //Nivedita 13-01-2022
                     //selectedNode.BillingPOC = $('#ProgramModal').find('.modal-body #program_billing_poc').val();
@@ -4878,6 +4879,7 @@ WBSTree = (function ($) {
                     newNode.CurrentStartDate = $('#ProgramModal').find('.modal-body #program_current_start_date').val();
                     newNode.CurrentEndDate = $('#ProgramModal').find('.modal-body #program_current_end_date').val();
                     newNode.ContractValue = $('#ProgramModal').find('.modal-body #program_contract_value').val();      //Manasi 14-07-2020
+                    newNode.ContractModificationValue = $('#ProgramModal').find('.modal-body #total_modification').val();      //Manasi 14-07-2020
                     newNode.originalEndDate = $('#ProgramModal').find('.modal-body #program_original_end_date').val(); // Aditya ogDate
                     newNode.JobNumber = $('#ProgramModal').find('.modal-body #job_number').val();      //Manasi 04-08-2020
 
@@ -10270,6 +10272,7 @@ WBSTree = (function ($) {
 
             $('#btnaddmaterial').unbind().on('click', function (event) {
                 event.preventDefault();
+                wbsTree.setBillOfMaterialOperation(1);
 
                 $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
 
@@ -15674,12 +15677,11 @@ WBSTree = (function ($) {
 
 
                 var selectedNode = wbsTree.getSelectedNode();
-
-
                 modal = $(this);
 
                 modal.find('.modal-body #txtprojectname').val(selectedNode.ProgramElementName);
-                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                //modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramManager);
+                modal.find('.modal-body #txtprojectmanager').val(selectedNode.ProgramElementManager); // Aditya 26092022 :: Fetch Project Manager
                 modal.find('.modal-body #txtprojectnumber').val(selectedNode.ProgramElementNumber);
                 modal.find('.modal-body #txtprojectstartdate').val(moment(selectedNode.ProjectPStartDate).format('MM/DD/YYYY'));
 
@@ -15703,7 +15705,7 @@ WBSTree = (function ($) {
                     gridbillofmaterial.empty();
                     _BillOfMaterialList.reverse();
                     BillOfMaterialList = _BillOfMaterialList;
-
+                    $('#txtprojectmanager').val(response.projectManager); // Aditya 26092022 :: Fetch Project Manager
                     gridloadforbillofmaterial();
 
                 });
@@ -15771,7 +15773,7 @@ WBSTree = (function ($) {
 
                                 for (var z = 0; z < ManufacturerData.length; z++) {
 
-                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ID) {
+                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
 
                                         manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
                                     }
@@ -15798,7 +15800,7 @@ WBSTree = (function ($) {
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#delete_bill_of_material', function () {
+                $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
                     var row = $(this).closest("tr");
                     var id = row[0].id;
                     wbsTree.setBillOfMaterialOperation(3);
@@ -15818,10 +15820,11 @@ WBSTree = (function ($) {
                                 SearchText = '';
                                 PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
                             }
-                            $(this).parents("tr").remove();
+                           
                         }
 
                     });
+                  
                 });
 
 
@@ -15984,14 +15987,12 @@ WBSTree = (function ($) {
                             ResetBillOfMaterialFields();
                             $("#BillOfMaterialDetailModal").modal('toggle');
                         }
-                        wbsTree.setBillOfMaterialOperation(1);
                         _BillOfMaterialList = d.data.data;
                         var gridbillofmaterial = $("#bill_of_material_table_id tbody");
                         gridbillofmaterial.empty();
                         _BillOfMaterialList.reverse();
                         BillOfMaterialList = _BillOfMaterialList;
                         gridloadforbillofmaterial();
-                        wbsTree.setBillOfMaterialOperation(1);
                         $('#bill_of_material_table_id').on('click', 'th', function () {
                             var table = $(this).closest('table');
                             var rows = table.find('tr.contact-row')

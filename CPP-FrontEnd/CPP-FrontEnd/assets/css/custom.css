@@ -2049,6 +2049,7 @@ th.sort-by {
     background-color: white !important;
     color: black !important;
 }
+
 .bom__search {
     display: flex;
     justify-content: space-between;
@@ -2060,3 +2061,15 @@ th.sort-by {
         width: 410px;
         border: 1px solid #ccc;
     }
+.gantt_data_area div, .gantt_grid div {
+  
+    overflow: visible ;
+    
+}
+.gantt_data_area .tooltip {
+    position: absolute;
+    top: 0 !important;
+}
+.gantt_data_area .tooltip.right .tooltip-arrow {
+    top: 50% !important;
+}

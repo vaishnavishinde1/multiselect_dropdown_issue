@@ -388,7 +388,7 @@ namespace WebAPI.Models
                             var cvalue = plist.ContractValue.Trim('$');
                            
                             contractModificationsList.ModificationNo = "0";
-                            contractModificationsList.Title = "Original Contract Value";
+                            contractModificationsList.Title = "Original Contract";
                             contractModificationsList.ModificationType = 0;
                             contractModificationsList.Value = cvalue;
                             contractModificationsList.ScheduleImpact = 0;
