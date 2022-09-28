@@ -2094,8 +2094,8 @@ angular.module('cpp.controllers').
                 var programId = wbsTree.getSelectedNode().ProgramID;
                 var createdBy = _selectedNode.ProgramElementID;
                 //var modNumber = $('#modification_number').val();
-                var title = $('#modification_title').val();
-                var date = $('#modification_date').val();
+                  var title = $('#modification_title').val();
+                 var date = $('#modification_date').val();
                 var reason = $('#modification_reason').val();
                 var description = $('#modification_description').val();
                 var modType = $('#ddModificationType').val();
@@ -4967,11 +4967,12 @@ angular.module('cpp.controllers').
                         strContract = "<div class='row'>";
                         strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
                         if (ModifyContract == "1") {
-                            strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
                             strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt disabledIcon'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
+                        
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
                         strContract += "<thead class='t-head'>";
@@ -4992,7 +4993,7 @@ angular.module('cpp.controllers').
                             if (programI == 0) {
                                 selectedProgramID = program.ProgramID;
                                 selectedContract = program;
-                                strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";
+                                strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";0
                                 getProjectGridSection(program);
                             }
                             else {
@@ -5000,26 +5001,26 @@ angular.module('cpp.controllers').
                             }
                             if (program.Status == "Closed") {
                                 strContract += "<td style='color:red'>" + program.ClientPOC + "</td>";
-                                strContract += "<td style='color:red'>" + program.name + "</td>";
+                                strContract += "<td style='color:red' title='" + program.name + "'>" + program.name + "</td>";
                                 strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
-                                strContract += "<td style='color:red'>" + program.ContractValue + "</td>";
-                                strContract += "<td style='color:red'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
+                                strContract += "<td style='color:red' align ='right'>$" + program.ContractValue + "</td>";
+                                strContract += "<td style='color:red' align ='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 strContract += "<td>" +
-                                    "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
-                            }
+                            } 
                             else {
                                 strContract += "<td>" + program.ClientPOC + "</td>";
-                                strContract += "<td>" + program.name + "</td>";
+                                strContract += "<td title='"+ program.name +"'>" + program.name + "</td>";
                                 strContract += "<td>" + program.ContractNumber + "</td>";
-                                strContract += "<td>" + program.ContractValue + "</td>";
-                                strContract += "<td>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
+                                strContract += "<td align='right'>" + program.ContractValue + "</td>";
+                                strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 //Edit Contract 
@@ -5046,17 +5047,17 @@ angular.module('cpp.controllers').
                                 
                                 //Delete Contract
                                 if (role == "Admin") {
-                                    strContract += "<i class='fa-trash grid__btn-icons' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>";
+                                    strContract += "<i class='fa-trash grid__btn-icons' style='display:none'  id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>";
                                 }
                                 else {
-                                    strContract += "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>";
+                                    strContract += "<i class='fa-trash grid__btn-icons' style='display:none'  id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>";
                                 }
                                 //Close Contract
                                 if (ModifyContract == "1") {
-                                    strContract += "<i class='fa-times grid__btn-icons' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
+                                    strContract += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
                                 }
                                 else {
-                                    strContract += "<i class='fa-times grid__btn-icons disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
+                                    strContract += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
                                 }
                             }
                         }
@@ -5086,18 +5087,23 @@ angular.module('cpp.controllers').
 
                     var selectedProgramID = selContract.ProgramID;
                     var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-
+                    
                     $('#wbsGridiewProject').html('');
 
                     if (selContract.children != undefined && selContract.children.length > 0) {
                         var strProject = "";
                         strProject += "<div class='col-md-12 p-0'><div class='grid__view'>";
-                        if (ModifyProject == "1") {
+                        if (selContract.Status == "Closed") {
+                            strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
+
+                        else if (ModifyProject == "1") {
                             strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
                             strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
+                        
                         
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
@@ -5105,7 +5111,7 @@ angular.module('cpp.controllers').
                         strProject += "<th>Name</th>" +
                             "<th>Number</th>" +
                             "<th>Value</th>" +
-                            "<th>Deparment</th>" +
+                            "<th>Department</th>" +
                             "<th>Action</th>" +
                             "</tr></thead>";
 
@@ -5128,21 +5134,21 @@ angular.module('cpp.controllers').
                             //strProject += "<td>" + project.ProjectClassName + "</td>";
                             //strProject += "</tr>";
                             if (project.Status == "Closed") {
-                                strProject += "<td style='color:red'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='color:red'title='" + project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
-                                strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
+                                strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                strProject += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
-                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons  disabledIcon'  style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons  disabledIcon'  style='display:none'  id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
                             }
                             else {
-                                strProject += "<td>" + project.ProgramElementName + "</td>";
+                                strProject += "<td title='"+ project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td>" + project.ProjectNumber + "</td>";
-                                strProject += "<td>" + project.CurrentCost + "</td>";
+                                strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
                                 strProject += "<td>" + project.ProjectClassName + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
@@ -5150,13 +5156,13 @@ angular.module('cpp.controllers').
                                         "<i class='icons icon-bom grid__btn-icons' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>";
                                     //Delete Project
                                     if (role == "Admin") {
-                                        strProject += "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
+                                        strProject += "<i class='fa-trash grid__btn-icons' style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
                                     }
                                     else {
-                                        strProject += "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
+                                        strProject += "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
                                     }
                                     // Close Project
-                                    strProject += "<i class='fa-times grid__btn-icons' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i></td>";
+                                    strProject += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i></td>";
                                 }
                                 else {
                                     strProject += "<td>" +
@@ -5164,9 +5170,9 @@ angular.module('cpp.controllers').
                                         "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                         "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                         //Delete Project
-                                        "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                        "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                         // Close Project
-                                        "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        "<i class='fa-times grid__btn-icons disabledIcon ' style='display:none' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                         "</td>";
                                 }
                                 strProject += "</tr>";
@@ -5201,8 +5207,12 @@ angular.module('cpp.controllers').
 
                     if (selProject.children != undefined && selProject.children.length > 0) {
                         var strElement = "";
+                       
                         strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                        if (ModifyProjectElement == "1") {
+                        if (selProject.Status == "Closed") {
+                            strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
+                        else if (ModifyProjectElement == "1") {
                             strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
@@ -5236,22 +5246,22 @@ angular.module('cpp.controllers').
                                 //strElement += "<td>" + projectElement.ServiceName + "</td>";
                                 //strElement += "</tr>";
                                 if (projectElement.Status == "Closed") {
-                                    strElement += "<td style='color:red'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='color:red' title='" + projectElement.name + "'>" + projectElement.name + "</td>";
                                     strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
-                                    strElement += "<td style='color:red'>" + projectElement.CurrentCost + "</td>";
+                                    strElement += "<td style='color:red' align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
                                     strElement += "<td>" +
-                                        "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                        "<i class='fa-times grid__btn-icons disabledIcon' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
+                                        "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                        "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                        "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
                                         "</td>";
                                     strElement += "</tr>";
                                 }
                                 else {
-                                    strElement += "<td>" + projectElement.name + "</td>";
+                                    strElement += "<td  title='" + projectElement.name + "'>" + projectElement.name + "</td>";
                                     strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
-                                    strElement += "<td>" + projectElement.CurrentCost + "</td>";
+                                    strElement += "<td align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
                                     //Edit Element
@@ -5263,18 +5273,18 @@ angular.module('cpp.controllers').
                                     }
                                     //Delete Element
                                     if (role == "Admin") {
-                                        strElement += "<i class='fa-trash grid__btn-icons' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>";
+                                        strElement += "<i class='fa-trash grid__btn-icons'style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>";
                                     }
                                     else {
                                         debugger;
-                                        strElement += "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>";
+                                        strElement += "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>";
                                     }
                                     //Close Element
                                     if (ModifyProjectElement == "1") {
-                                        strElement += "<i class='fa-times grid__btn-icons' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
+                                        strElement += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
                                     }
                                     else {
-                                        strElement += "<i class='fa-times grid__btn-icons disabledIcon' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
+                                        strElement += "<i class='fa-times grid__btn-icons disabledIcon' style='display:none'  id='CloseElementGridBtn' title='Close' aria-hidden='true'></i></td></tr>";
                                     }
                                 }
                             }
@@ -5306,7 +5316,11 @@ angular.module('cpp.controllers').
 
                     var strTrend = "";
                     strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                    if (ModifyTrend == "1") {
+                  
+                    if (selElement.Status == "Closed") {
+                        strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                    }
+                    else if (ModifyTrend == "1") {
                         strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     else {
@@ -5355,18 +5369,18 @@ angular.module('cpp.controllers').
                                         }
                                         //Delete Trend
                                         if (role == "Admin") {
-                                            strPendingTrend += "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
+                                            strPendingTrend += "<i class='fa-trash grid__btn-icons' style='display:none' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
                                         }
                                         else {
-                                            strPendingTrend += "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
+                                            strPendingTrend += "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
                                         }
                                         
                                         //Close Trend
                                         if (ModifyTrend == "1") {
-                                            strPendingTrend += "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
+                                            strPendingTrend += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
                                         }
                                         else {
-                                            strPendingTrend += "<i class='fa-times grid__btn-icons disabledIcon' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
+                                            strPendingTrend += "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
                                         }
                                         strPendingTrend += "</tr>";
 
@@ -5383,22 +5397,22 @@ angular.module('cpp.controllers').
                                             strApproveTrend += "<td><i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         else {
-                                            strApproveTrend += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                            strApproveTrend += "<td><i class='fa-pencil grid__btn-icons disabledIcon'  id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         //Delete Trend
                                         if (role == "Admin") {
-                                            strApproveTrend += "<i class='fa-trash grid__btn-icons' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
+                                            strApproveTrend += "<i class='fa-trash grid__btn-icons' style='display:none' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
                                         }
                                         else {
-                                            strApproveTrend += "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
+                                            strApproveTrend += "<i class='fa-trash grid__btn-icons disabledIcon'  style='display:none' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
                                         }
 
                                         //Close Trend
                                         if (ModifyTrend == "1") {
-                                            strApproveTrend += "<i class='fa-times grid__btn-icons' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
+                                            strApproveTrend += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
                                         }
                                         else {
-                                            strApproveTrend += "<i class='fa-times grid__btn-icons disabledIcon' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
+                                            strApproveTrend += "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
                                         }
                                         strApproveTrend += "</tr>";
 
@@ -5445,10 +5459,13 @@ angular.module('cpp.controllers').
 
                     if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
                         $('#wbsGridiewProject').html('');
-
                         var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                        if (ModifyProject == "1") {
+                          if (strProject.Status == "Closed") {
+                            strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
+                       
+                        else if (ModifyProject == "1") {
                             strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
@@ -5460,7 +5477,7 @@ angular.module('cpp.controllers').
                         strProject += "<th>Name</th>" +
                             "<th>Number</th>" +
                             "<th>Value</th>" +
-                            "<th>Deparment</th>" +
+                            "<th>Department</th>" +
                             "<th>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
@@ -5473,6 +5490,9 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
+                        if (strElement.Status == "Closed") {
+                            strElement += "<div class='grid__title'>Project Element (" + tblParentName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
                         if (ModifyProjectElement == "1") {
                             strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
@@ -5548,7 +5568,27 @@ angular.module('cpp.controllers').
                             wbsTree.setSelectedNode(selectedProgram);
                             $('#ProgramModal').modal({ show: true, backdrop: 'static' });
                         }
-                        return false;
+
+                        //code started to add by kavita
+                        if (selectedProgram.Status == "Closed") {
+                            $('#delete_program').removeClass('btn btn-black');
+                            $('#delete_program').addClass('btn btn-primary c-btn-delete');
+                            $('#delete_program').attr('style', 'width:150px;margin-left:15px;');
+                            $('#delete_program').prop('disabled',true);  //Manasi 24-02-2021
+                            $('#spnBtndelete_program').removeAttr('title');  //Manasi 24-02-2021
+
+                            $("#updateBtnProgram").prop('disabled', true);
+                            $("#ViewAllUploadFileContracts").prop('disabled', true);
+
+
+                            $('#update_program').removeClass('btn btn-black');
+                            $('#update_program').addClass('btn btn-primary c-btn-delete');
+                            $('#update_program').attr('style', 'width:150px;margin-left:15px;');
+                            $('#update_program').prop('disabled', true);  //Manasi 24-02-2021
+                      //  $('#spnBtnupdate_program').removeAttr('title');  //Manasi 24-02-2021
+                        }
+                         //code ended to add by kavita
+                                               return false;
                     });
 
                     //View Gantt button click
@@ -5611,15 +5651,16 @@ angular.module('cpp.controllers').
                             var isclosed = $('.selected').find("td:eq(" + i + ")").text();
                             if (isclosed == "Closed") {
                                 $("#EditContracttGridBtn").hide();
-                                $("#DeleteContractGridBtn").hide();
+                                //$("#DeleteContractGridBtn").hide();
                                 $("#ViewGanttGridBtn").hide();
-                                $("#CloseContractGridBtn").hide();
+                              //  $("#CloseContractGridBtn").hide();
+
                             }
                             else {
                                 $("#EditContracttGridBtn").show();
-                                $("#DeleteContractGridBtn").show();
+                               // $("#DeleteContractGridBtn").show();
                                 $("#ViewGanttGridBtn").show();
-                                $("#CloseContractGridBtn").show();
+                               // $("#CloseContractGridBtn").show();
                             }
                         }); //close changes done by vaishnavi
                         var mydiv = document.getElementById("wbsGridiewProject");
@@ -5664,6 +5705,26 @@ angular.module('cpp.controllers').
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+                        //code started to add by kavita
+                        if (selectedProject.Status == "Closed") {
+                            $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
+                            $('#delete_program_element').removeClass('btn btn-black');
+                            $('#delete_program_element').addClass('btn btn-primary c-btn-delete');
+                            $('#spnBtndelete_program_element').removeAttr('title');
+
+                            $("#new_program_element_milestone").prop('disabled', true);
+                            $("#updateBtnProgramPrg").prop('disabled', true);
+                            $("#ViewUploadFileProgramPrg").prop('disabled', true);
+                            $("#new_program_element_change_order").prop('disabled', true);
+                            $("#delete_program_element_change_order").prop('disabled', true);
+
+                            
+                            $('#update_program_element').removeClass('btn btn-primary c-btn-save');
+                            $('#update_program_element').addClass('btn btn-black');
+                            $('#update_program_element').attr('style', 'width:150px;');
+                            $("#update_program_element").prop('disabled', true);
+                        }
+                        //code ended by kavita
                     });
 
                     $('#tblProject').on('click', '#BillOfMaterialProjectGridBtn', function () {
@@ -5759,6 +5820,27 @@ angular.module('cpp.controllers').
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                         wbsTree.setSelectedNode(selectedElement);
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
+                         //code started to add by kavita
+                        if (selectedElement.Status == "Closed") {
+                          
+                                $('#delete_project').removeClass('btn btn-black');
+                                $('#delete_project').addClass('btn btn-primary c-btn-delete');
+                                $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
+                                $('#delete_project').prop('disabled', true);  //Manasi 24-02-2021
+                            $('#spnBtndelete_project').removeAttr('title');
+
+                            $("#new_project_element_milestone").prop('disabled', true);
+                            $("#updateBtnProgramPrgElm").prop('disabled', true);
+                            $("#ViewAllUploadFileProgramPrgElm").prop('disabled', true);
+
+                                $('#update_project').removeClass('btn btn-black');
+                                $('#update_project').addClass('btn btn-primary c-btn-delete');
+                                $('#update_project').attr('style', 'width:150px;margin-left:15px;');
+                                $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
+                                //$('#spnBtndelete_project').removeAttr('title'); /
+
+                        }
+                         //code ended to add by kavita
                     });
 
                     //Delete Element
@@ -6031,7 +6113,8 @@ angular.module('cpp.controllers').
                 //var ViewReport= wbsTree.getLocalStorage().acl[10];
                 //var ViewLabor= wbsTree.getLocalStorage().acl[11];
 
-                $scope.loadWBSData.GetContractGridSection = GetContractGridSection;
+                $scope.loadWBSData.GetContractGridSection = GetContractGr
+                idSection;
                 $scope.loadWBSData.getProjectGridSection = getProjectGridSection;
                 $scope.loadWBSData.getElementGridSection = getElementGridSection;
                 $scope.loadWBSData.getTrendGridSection = getTrendGridSection;

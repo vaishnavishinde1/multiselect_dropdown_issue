@@ -2035,6 +2035,9 @@ th.sort-by {
     cursor: not-allowed !important;
     pointer-events: none;
 }
+.hiddenIcon {
+      display:none;
+}
 
 #weekBtn,
 #monthBtn,
