@@ -1797,9 +1797,14 @@ angular.module('xenon.Gantt_Controller', []).
                         var cellBox = rowBox.find('.' + id + '_costText');
                         var boxb = cellBox.get(0);
 
+                        var prevId = id + 1;
+                        var prevRow = $("#cost-gantt .costBar[task_id='" + prevId + "']");
+                        var prevcellBox = prevRow.find('.' + prevId + '_costText');
+                        var prevboxb = prevcellBox.get(0);
+
                         $(cellBox).on('mouseover', function () {
                             $(this).addClass('hover');
-                            $(boxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "right" }).tooltip('show');
+                            $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "right" }).tooltip('show');
                         });
                         $(cellBox).on('mouseleave', function () {
                             $(this).removeClass('hover');
@@ -9661,6 +9666,23 @@ angular.module('xenon.Gantt_Controller', []).
                         //console.log(cells);
 
                         //luan here 4/24 coup de grace
+                        if ($scope.method[id] == "U") {
+                            angular.forEach($scope.orgMaterials, function (item) {
+                                if (item.MaterialID == $scope.material_id[id].value) {
+                                    //console.log($scope.material_id);
+                                    unitTypeId = item.Unit_Type;
+                                    $scope.unitCost[id] = item.CostPerItem;// * MATERIAL_RATE * CUSTOM_MATERIAL_RATE;//IVAN 03-12
+
+                                    $scope.unitBudget[id] = $scope.unitCost[id] * MATERIAL_RATE;//* CUSTOM_MATERIAL_RATE;;
+                                    $scope.selectedCost.Quantity = item.Quantity;
+                                    $scope.selectedCost.IsMaterialCategoryChanged = true;
+                                    // $scope.unitTypes[id] = item.
+                                }
+                            });
+
+                            $scope.changedCost(id, 0);
+                        }
+                        
                         $(cells).each(function (index) {
                             var zero = (isCurrentTrend) ? 1 : 0;
 
