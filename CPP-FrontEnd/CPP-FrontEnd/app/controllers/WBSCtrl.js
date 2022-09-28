@@ -4336,7 +4336,7 @@ angular.module('cpp.controllers').
                 var selectedContract;
                 var selectedProject;
                 var selectedElement;
-
+                
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID, clientID).get({})
@@ -5118,6 +5118,7 @@ angular.module('cpp.controllers').
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
                             var project = selContract.children[projectI];
                             if (projectI == 0) {
+                                localStorage.setItem('selectProgramElementIDDash', project.ProgramElementID);
                                 selectedProjectID = project.ProgramElementID;
                                 wbsTree.SelectedProjectId = project.ProgramElementID;
                                 selectedProject = project;
@@ -5139,7 +5140,6 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red'>" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                    "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
@@ -5152,8 +5152,8 @@ angular.module('cpp.controllers').
                                 strProject += "<td>" + project.ProjectClassName + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
-                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='icons icon-bom grid__btn-icons' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>";
+                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                      
                                     //Delete Project
                                     if (role == "Admin") {
                                         strProject += "<i class='fa-trash grid__btn-icons' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
@@ -5168,7 +5168,6 @@ angular.module('cpp.controllers').
                                     strProject += "<td>" +
                                         //Edit Project
                                         "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                         //Delete Project
                                         "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                         // Close Project
@@ -5675,15 +5674,6 @@ angular.module('cpp.controllers').
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                     });
 
-                    $('#tblProject').on('click', '#BillOfMaterialProjectGridBtn', function () {
-                        //$('#EditProjectGridBtn').unbind('click').on('click', function () {
-                        //var programId = $scope.GridContractId;
-                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                        var projectId = $scope.GridProjectId;
-                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                        wbsTree.setSelectedNode(selectedProject);
-                        $('#BillOfMaterialModal').modal({ show: true, backdrop: 'static' });
-                    });
                     //Delete Project
                     $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
                         //$("#DeleteProjectGridBtn").bind("click", function () {
@@ -5710,6 +5700,7 @@ angular.module('cpp.controllers').
 
                     //Select Project
                     $('#tblProject tr').on('click', function () {
+                       
                         //wbsTree.setSelectedNode(null);
                         $('#tblProject tr.selected').removeClass('selected');
                         $(this).addClass('selected');
@@ -5723,6 +5714,7 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewTrend').html('');
                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                         selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        localStorage.setItem('selectProgramElementIDDash', selectedProjectID);
 
                         getElementGridSection(selectedProject);
 
@@ -5820,6 +5812,7 @@ angular.module('cpp.controllers').
                     //});
 
                     $('#tblElement tbody tr').on('click', function () {
+                      
                         //wbsTree.setSelectedNode(null);
                         $('#tblElement tr.selected').removeClass('selected');
                         $(this).addClass('selected');
