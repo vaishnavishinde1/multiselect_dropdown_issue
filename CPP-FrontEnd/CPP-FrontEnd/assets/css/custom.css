@@ -1896,30 +1896,46 @@ button[disabled=disabled], button:disabled {
     padding-left: 5px;
 }
 .grid__table {
-    border-collapse:collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 }
     .grid__table thead {
         background: rgb(232,242,248);
         background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
         border: 1px solid #c1d7e7;
         color: #000;
+        text-align: center !important;
         position: sticky !important;
     }
 
         .grid__table thead a, .grid__table th a {
             color: #000 !important;
+            cursor:pointer;
         }
 
     .grid__table th {
         background: rgb(232,242,248);
         background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
         color: #000;
+        text-align: center !important;
+        font-size: 16px;
         position: sticky !important;
+        top: 0;
+        
     }
-.grid__table td{
-    border:1px solid #fff;
-    padding:7px;
-    
+    .grid__table td {
+        border: 1px solid #fff;
+        padding: 7px;
+        font-family: Arial;
+        font-size: 14px;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+.grid__td__wrap {
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    border: 1px solid #000000;
 }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
@@ -2052,6 +2068,7 @@ th.sort-by {
     background-color: white !important;
     color: black !important;
 }
+
 .bom__search {
     display: flex;
     justify-content: space-between;
@@ -2063,3 +2080,28 @@ th.sort-by {
         width: 410px;
         border: 1px solid #ccc;
     }
+/**
+.gantt_side_content, .gantt_task_content, .gantt_task_progress {    
+    overflow:visible !important;
+}
+.gantt_data_area .tooltip {
+    position: absolute;
+    z-index:99999 !important;
+    top: 22px !important;
+   
+}
+    .gantt_data_area .tooltip.bottom .tooltip-arrow {
+        top: 50% !important;
+        display: none !important;
+    }*/
+.table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+.table thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: inset 0 1px 0 red, inset 0 -2px 0 red;
+}

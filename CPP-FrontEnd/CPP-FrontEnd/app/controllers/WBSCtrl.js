@@ -2092,6 +2092,7 @@ angular.module('cpp.controllers').
             $('#btnSaveModification').unbind().on('click', function (event) {
                 var operation = wbsTree.getContractModificationOperation();
                 var programId = wbsTree.getSelectedNode().ProgramID;
+                var selectedNode = wbsTree.getSelectedNode();
                 var createdBy = _selectedNode.ProgramElementID;
                 //var modNumber = $('#modification_number').val();
                   var title = $('#modification_title').val();
@@ -2101,7 +2102,6 @@ angular.module('cpp.controllers').
                 var modType = $('#ddModificationType').val();
                 var pgmcurrentstartdate = $('#program_current_start_date').val();
                 var pgmcurrentenddate = $('#program_current_end_date').val();
-
 
                 var pgmogenddate = $('#program_original_end_date').val(); // Aditya ogDate
                 //Code Start by Kavita 23/09/2022
@@ -2498,6 +2498,12 @@ angular.module('cpp.controllers').
 
                         });
                     }
+                    if (contractModification.ModificationType == 1 || contractModification.ModificationType == 3) {
+                        selectedNode.ContractModificationValue = $('#total_modification').val();
+                        $scope.loadWBSData.GetContractGridSection(selectedNode);
+                    }
+                    
+
                 });
             }
 
@@ -5643,6 +5649,9 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
                         $('#wbsGridiewTrend').html('');
                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+
+                        wbsTree.setSelectedProgramID(selectedProgramID);
+
                         //-------------------------------------Nivedita-Project Details---------------------------------------------------------------
 
                         getProjectGridSection(selectedProgram);
