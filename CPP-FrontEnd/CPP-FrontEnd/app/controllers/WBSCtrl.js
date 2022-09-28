@@ -5023,7 +5023,7 @@ angular.module('cpp.controllers').
                             } 
                             else {
                                 strContract += "<td>" + program.ClientPOC + "</td>";
-                                strContract += "<td title='"+ program.name +"'>" + program.name + "</td>";
+                                strContract += "<td  style='max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap' title='"+ program.name +"'>" + program.name + "</td>";
                                 strContract += "<td>" + program.ContractNumber + "</td>";
                                 strContract += "<td align='right'>" + program.ContractValue + "</td>";
                                 strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
@@ -5586,10 +5586,6 @@ angular.module('cpp.controllers').
                             $("#updateBtnProgram").prop('disabled', true);
                             $("#ViewAllUploadFileContracts").prop('disabled', true);
 
-
-                            $('#update_program').removeClass('btn btn-black');
-                            $('#update_program').addClass('btn btn-primary c-btn-delete');
-                            $('#update_program').attr('style', 'width:150px;margin-left:15px;');
                             $('#update_program').prop('disabled', true);  //Manasi 24-02-2021
                       //  $('#spnBtnupdate_program').removeAttr('title');  //Manasi 24-02-2021
                         }
@@ -5727,11 +5723,7 @@ angular.module('cpp.controllers').
                             $("#new_program_element_change_order").prop('disabled', true);
                             $("#delete_program_element_change_order").prop('disabled', true);
 
-                            
-                            $('#update_program_element').removeClass('btn btn-primary c-btn-save');
-                            $('#update_program_element').addClass('btn btn-black');
-                            $('#update_program_element').attr('style', 'width:150px;');
-                            $("#update_program_element").prop('disabled', true);
+                               $("#update_program_element").prop('disabled', true);
                         }
                         //code ended by kavita
                     });
