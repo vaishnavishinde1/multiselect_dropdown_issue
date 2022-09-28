@@ -4999,7 +4999,7 @@ angular.module('cpp.controllers').
                             if (programI == 0) {
                                 selectedProgramID = program.ProgramID;
                                 selectedContract = program;
-                                strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";0
+                                strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";
                                 getProjectGridSection(program);
                             }
                             else {
@@ -6114,8 +6114,7 @@ angular.module('cpp.controllers').
                 //var ViewReport= wbsTree.getLocalStorage().acl[10];
                 //var ViewLabor= wbsTree.getLocalStorage().acl[11];
 
-                $scope.loadWBSData.GetContractGridSection = GetContractGr
-                idSection;
+                $scope.loadWBSData.GetContractGridSection = GetContractGridSection;
                 $scope.loadWBSData.getProjectGridSection = getProjectGridSection;
                 $scope.loadWBSData.getElementGridSection = getElementGridSection;
                 $scope.loadWBSData.getTrendGridSection = getTrendGridSection;
