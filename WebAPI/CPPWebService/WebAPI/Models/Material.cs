@@ -92,13 +92,13 @@ namespace WebAPI.Models
                 {
                     Material retrievedMaterial = new Material();
                     retrievedMaterial = ctx.Material.Where(u => u.Name == material.Name && u.MaterialCategoryID == material.MaterialCategoryID).FirstOrDefault();
-            //        Material retrievedMaterial2 = new Material();
-              //      retrievedMaterial2 = ctx.Material.Where(u => u.MaterialCategory == material.MaterialCategory).FirstOrDefault();
+                    //        Material retrievedMaterial2 = new Material();
+                    //      retrievedMaterial2 = ctx.Material.Where(u => u.MaterialCategory == material.MaterialCategory).FirstOrDefault();
 
                     Material duplicateUniqueIdentityNumber = new Material();
                     duplicateUniqueIdentityNumber = ctx.Material.Where(u => u.UniqueIdentityNumber == material.UniqueIdentityNumber).FirstOrDefault();
 
-                    if(duplicateUniqueIdentityNumber != null)
+                    if (duplicateUniqueIdentityNumber != null)
                     {
                         result += material.Name + "' failed to be created, duplicate unique identifier found.\n";
                     }
@@ -110,14 +110,14 @@ namespace WebAPI.Models
                         //result = "Success";
                         result += material.Name + " has been created successfully.\n";
                     }
-       //             else if (retrievedMaterial2 == null)
-         //           {
-                        //register
-           //             ctx.Material.Add(material);
-             //           ctx.SaveChanges();
-               //         result = "Success";
-                 //       result += material.Name + " has been created successfully.\n";
-                  //  }
+                    //             else if (retrievedMaterial2 == null)
+                    //           {
+                    //register
+                    //             ctx.Material.Add(material);
+                    //           ctx.SaveChanges();
+                    //         result = "Success";
+                    //       result += material.Name + " has been created successfully.\n";
+                    //  }
                     else
                     {
                         result += material.Name + "' failed to be created, it already exist.\n";

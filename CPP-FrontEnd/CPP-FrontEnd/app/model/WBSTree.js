@@ -11892,7 +11892,7 @@ WBSTree = (function ($) {
                     $('#btnModification').attr('style', 'width:150px;background-color:#FF9407 !important;color:white;');
                     $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
                     $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
-
+                    
                     $('#btnAdditionalInfo').removeClass('btn btn-black');
                     $('#btnAdditionalInfo').addClass('btn btn-primary c-btn-save');
                     $('#btnAdditionalInfo').attr('style', 'width:150px;background-color: #4f07ff !important;color:white;');
@@ -11927,7 +11927,7 @@ WBSTree = (function ($) {
                         $('#btnAdditionalInfo').addClass('btn btn-black');
                         $('#btnAdditionalInfo').attr('style', 'width:150px;');
                         $('#btnAdditionalInfo').attr('disabled', 'disabled');
-
+     
                     }
                     else {
                         $('#btnModification').removeAttr('disabled');
@@ -15594,7 +15594,7 @@ WBSTree = (function ($) {
                     $('#update_program_element').removeClass('btn btn-primary c-btn-save');
                     $('#update_program_element').addClass('btn btn-black');
                     $('#update_program_element').attr('style', 'width:150px;');
-                    $("#update_program_element").attr('disabled', 'disabled');
+                    $("#update_program_element").prop('disabled', true);
 
                     // $('#ProgramElementModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrg').attr('disabled', 'disabled');
@@ -19175,7 +19175,7 @@ WBSTree = (function ($) {
                     $('#delete_project').removeClass('btn btn-black');
                     $('#delete_project').addClass('btn btn-primary c-btn-delete');
                     $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
-                    $('#delete_project').removeAttr('disabled');  //Manasi 24-02-2021
+                    $('#delete_project').prop('disabled',true);  //Manasi 24-02-2021
                     $('#spnBtndelete_project').removeAttr('title');  //Manasi 24-02-2021
 
                     //luan Jquery - luan here
@@ -20212,12 +20212,12 @@ WBSTree = (function ($) {
                     $('#delete_project').removeClass('btn btn-primary c-btn-delete');
                     $('#delete_project').addClass('btn btn-black');
                     $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
-                    $("#delete_project").attr('disabled', 'disabled');
+                    $("#delete_project").prop('disabled', true);
 
                     $('#update_project').removeClass('btn btn-primary c-btn-save');
                     $('#update_project').addClass('btn btn-black');
                     $('#update_project').attr('style', 'width:150px;margin-left:15px;');
-                    $("#update_project").attr('disabled', 'disabled');
+                    $("#update_project").prop('disabled', true);
                     // $('#ProjectModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
