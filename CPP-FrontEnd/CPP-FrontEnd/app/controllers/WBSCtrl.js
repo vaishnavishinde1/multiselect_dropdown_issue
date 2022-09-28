@@ -4982,13 +4982,13 @@ angular.module('cpp.controllers').
                         strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th>Contract Name</th>" + //$scope.programList[0].program.name
-                            "<th>Contract Number</th>" +
-                            "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
+                            "<th width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th width=28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th width='10%' >ID</th>" +
+                            "<th width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
-                            "<th>Action</th>" +
+                            "<th width=8%'>Action</th>" +
                             "</tr>";
                         strContract += "</thead>";
                         for (programI = 0; programI < selOrganization.children.length; programI++) {
@@ -5015,17 +5015,17 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                   "<i class='fa-trash grid__btn-icons_hidden disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons_hidden disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
                             }
                             else {
                                 strContract += "<td>" + program.ClientPOC + "</td>";
-                                strContract += "<td>" + program.name + "</td>";
-                                strContract += "<td>" + program.ContractNumber + "</td>";
-                                strContract += "<td>" + program.ContractValue + "</td>";
-                                strContract += "<td>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
+                                strContract += "<td >" + program.name + "</td>";
+                                strContract += "<td class='text-right'>" + program.ContractNumber + "</td>";
+                                strContract += "<td class='text-right'>" + program.ContractValue + "</td>";
+                                strContract += "<td class='text-right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 //Edit Contract 
@@ -5108,11 +5108,11 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Deparment</th>" +
-                            "<th>Action</th>" +
+                        strProject += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Deparment</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
 
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
@@ -5217,11 +5217,11 @@ angular.module('cpp.controllers').
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Services</th>" +
-                            "<th>Action</th>" +
+                        strElement += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Services</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
 
@@ -5321,10 +5321,10 @@ angular.module('cpp.controllers').
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
                     strTrend += "<tr>";
-                    strTrend += "<th>Name</th>" +
-                        "<th>Impact</th>" +
-                        "<th>Status</th>" +
-                        "<th>Action</th>" +
+                    strTrend += "<th width='30%'>Name</th>" +
+                        "<th width='18%'>Impact</th>" +
+                        "<th  width='30%'>Status</th>" +
+                        "<th width='12%'> Action</th>" +
                         "</tr></thead><tbody>";
                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
                         .then(function (response) {
@@ -5463,11 +5463,11 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Deparment</th>" +
-                            "<th>Action</th>" +
+                        strProject += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Deparment</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
                         strProject += "</div></div>";
@@ -5488,11 +5488,11 @@ angular.module('cpp.controllers').
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Services</th>" +
-                            "<th>Action</th>" +
+                        strElement += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Services</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strElement += "</table></div>";
                         strElement += "</div></div>";
@@ -5513,10 +5513,10 @@ angular.module('cpp.controllers').
                         strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
                         strTrend += "<tr>";
-                        strTrend += "<th>Name</th>" +
-                            "<th>Impact</th>" +
-                            "<th>Status</th>" +
-                            "<th>Action</th>" +
+                        strTrend += "<th width='30%'>Name</th>" +
+                            "<th width='18%'>Impact</th>" +
+                            "<th width='30%'>Status</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strTrend += "</table></div>";
                         strTrend += "<div class='center'>" +

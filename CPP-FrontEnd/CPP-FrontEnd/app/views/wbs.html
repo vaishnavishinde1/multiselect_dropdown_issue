@@ -437,7 +437,7 @@
                         <!--<label>program element</label>
                         <br/>-->
                         <select class="input-medium form-control" ng-change="filterchangeprogramelement()" ng-model="filterprogramelement" id="selectprogramelement" style="display:none">
-                            <option value="">select project</option>
+                            <option value="">Select Project</option>
                             <option data-ng-repeat="filterprogramelement in programelementlist" value={{filterprogramelement.programelementid}}>
                                 {{filterprogramelement.programelementname}}
                             </option>
@@ -827,9 +827,9 @@
 <div class="row">
     <div class="col-sm-8 col-md-8" id="program_navigation">
 
-        <div id="tree-container" style="height:800px;">
+        <div id="tree-container" style="height:765px;">
 
-            <div class="row wbs curved-border" style="background-color: #ffffff; height: 96%; overflow: auto; overflow-x: hidden; margin-right: 30px; display: block" id="mindmap">
+            <div class="row wbs curved-border" style="background-color: #ffffff; height: 101%; overflow: auto; overflow-x: hidden; margin-right: 30px; display: block" id="mindmap">
 
                 <!--<svg style="background-color: #ffffff; overflow-y: scroll;width : 100%; height: 100%;" id="wbs-tree" viewBox="0 0 1407 20800">-->
                 <svg style="overflow-y: scroll;width : 100%; height: 100%;padding-top:10px;" id="wbs-tree">
@@ -3032,7 +3032,7 @@
                                 </div>
                                 <div class="col-xs-4 m-b-10 p-r-0" id="divValueE">
                                     <!--css changes by shweta-->
-                                    <label for="program_element_contract_number" class="control-label _bold required"> Value</label>
+                                    <label for="program_element_contract_number" class="control-label _bold required"> Cost($)</label>
                                     <input type="text" class="form-control" id="change_order_view_Amount_modal" disabled>
                                 </div>
                                 <!--======================== Jignesh-24-03-2021 =============================================-->
@@ -3041,7 +3041,7 @@
                                     <input type="text" class="form-control" id="program_element_change_order_duration_date_E" disabled>
                                 </div>-->
                                 <div class="col-xs-3 col-md-3 p-r-0 m-b-10" id="divDurationDateE">
-                                    <label for="program_element_contract_number" class="control-label _bold required">Schedule Impact</label>
+                                    <label for="program_element_contract_number" class="control-label _bold required">Days</label>
                                     <input type="text" class="form-control" id="program_element_change_order_schedule_impact_E" disabled>
                                 </div>
                             </div>
@@ -3678,8 +3678,8 @@
                                                                 <th style="width: 23%;">Number (#)</th>
                                                                 <th style="width: 18%;">Title</th>
                                                                 <th style="width: 42%; ">Change Order Type</th>
-                                                                <th style="width: 18%;">Value</th>
-                                                                <th style=" width: 18%;">Schedule Impact</th>
+                                                                <th style="width: 18%;">Cost ($)</th>
+                                                                <th style=" width: 18%;">Days</th>
                                                                 <th class="text-center" style="width: 18%;">Order Detail</th>
                                                             </tr>
                                                         </thead>

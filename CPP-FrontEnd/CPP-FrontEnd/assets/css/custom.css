@@ -1906,6 +1906,7 @@ button[disabled=disabled], button:disabled {
         color: #000;
         text-align: center !important;
         position: sticky !important;
+        white-space:nowrap;
     }
 
         .grid__table thead a, .grid__table th a {
@@ -1918,7 +1919,7 @@ button[disabled=disabled], button:disabled {
         background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
         color: #000;
         text-align: center !important;
-        font-size: 16px;
+        font-size: 14px;
         position: sticky !important;
         top: 0;
         
@@ -1931,23 +1932,28 @@ button[disabled=disabled], button:disabled {
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
     }
-.grid__td__wrap {
-    white-space: nowrap;
-    width: 200px;
-    overflow: hidden;
-    border: 1px solid #000000;
-}
+
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
     }
 .grid__btn-icons {
     font-size: 16px !important;
-    margin: 0 0.5rem;
+    margin: 0 1rem;
+
     cursor: pointer;
+   
 }
-.grid__btn-icons i {
-    margin:0 0.5rem;
+#DeleteContractGridBtn,
+#CloseContractGridBtn,
+#DeleteProjectGridBtn,
+#CloseProjectGridBtn,
+#DeleteElementGridBtn,
+#CloseElementGridBtn,
+#DeleteTrendGridBtn,
+#CloseTrendGridBtn{
+    display: none !important;
 }
+
 .grid__table tr:hover {
     background-color: #c5d4e9;
 }
@@ -1971,7 +1977,7 @@ button[disabled=disabled], button:disabled {
     background-color:#fff;
     padding:5px;
     border-radius:10px;
-    margin-bottom:20px;
+    margin-bottom:10px;
 
 
 }
@@ -1983,7 +1989,7 @@ button[disabled=disabled], button:disabled {
 
 .grid__scrollable_main {
     overflow: auto;
-    height: 721px;
+    height: 700px;
 }
 
 /*a:link,
@@ -2025,7 +2031,7 @@ th.sort-by {
     .curved-border {
         border-radius:10px;
     }
-
+/*
 #AddContractGridBtn,
 #EditContractGridBtn,
 #ViewGanttGridBtn,
@@ -2045,7 +2051,7 @@ th.sort-by {
 #CloseTrendGridBtn {
     cursor: pointer;
 }
-
+*/
 .disabledIcon {
     color: #b1b1b1;
     cursor: not-allowed !important;
@@ -2100,5 +2106,5 @@ th.sort-by {
     position: sticky;
     top: 0;
     z-index: 2;
-    box-shadow: inset 0 1px 0 red, inset 0 -2px 0 red;
+    box-shadow: inset 0 1px 0 #ccc, inset 0 -2px 0 #ccc;
 }
