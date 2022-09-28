@@ -1,4 +1,31 @@
+<head>
+    <style type="text/css">
+        .tooltip {
+            top: -9999px;
+            left: -9999px;
+            opacity: 1;
+        }
 
+
+        .tooltip-inner {
+            max-width: 500px;
+            background-color: white;
+            color: black;
+            font-weight: 500;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid gray;
+        }
+
+        .gantt_task_content {
+            position: initial;
+        }
+
+        .tooltip-arrow {
+            display: none;
+        }
+    </style>
+</head>
 <div>
     <script>$('#closed,#approved,#unapproved,#contract,#project').hide();</script>
     <script type="text/ng-template" id="modal-3">        
