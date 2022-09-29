@@ -4336,7 +4336,7 @@ angular.module('cpp.controllers').
                 var selectedContract;
                 var selectedProject;
                 var selectedElement;
-
+                
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID, clientID).get({})
@@ -4983,13 +4983,13 @@ angular.module('cpp.controllers').
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th>Contract Name</th>" + //$scope.programList[0].program.name
-                            "<th>Contract Number</th>" +
-                            "<th>Original Contract Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th>Current Contract Value</th>" +//$scope.programList[0].ContractValue
+                            "<th width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th width=28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th width='10%' >ID</th>" +
+                            "<th width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
-                            "<th>Action</th>" +
+                            "<th width=8%'>Action</th>" +
                             "</tr>";
                         strContract += "</thead>";
                         for (programI = 0; programI < selOrganization.children.length; programI++) {
@@ -5023,8 +5023,8 @@ angular.module('cpp.controllers').
                                 strContract += "<td>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                    "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
+                                   "<i class='fa-trash grid__btn-icons_hidden disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons_hidden disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
                             } 
@@ -5121,11 +5121,11 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable' id='projectScroll'> <table class='grid__table p-0' id='tblProject'>"; //Aditya :: 27092022 
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Department</th>" +
-                            "<th>Action</th>" +
+                        strProject += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Deparment</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
 
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
@@ -5140,6 +5140,7 @@ angular.module('cpp.controllers').
                                 getElementGridSection(project);
                             }
                             else if (projectI == 0 && selProjectId == undefined) {
+                                localStorage.setItem('selectProgramElementIDDash', project.ProgramElementID);
                                 selectedProjectID = project.ProgramElementID;
                                 wbsTree.SelectedProjectId = project.ProgramElementID;
                                 selectedProject = project;
@@ -5160,10 +5161,9 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
                                 strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                    "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
-                                    "<i class='fa-trash grid__btn-icons  disabledIcon'  style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
-                                    "<i class='fa-times grid__btn-icons  disabledIcon'  style='display:none'  id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
+                                strProject += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
                             }
@@ -5174,8 +5174,8 @@ angular.module('cpp.controllers').
                                 strProject += "<td>" + project.ProjectClassName + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
-                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='icons icon-bom grid__btn-icons' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>";
+                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                      
                                     //Delete Project
                                     if (role == "Admin") {
                                         strProject += "<i class='fa-trash grid__btn-icons' style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>";
@@ -5190,7 +5190,6 @@ angular.module('cpp.controllers').
                                     strProject += "<td>" +
                                         //Edit Project
                                         "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
-                                        "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                         //Delete Project
                                         "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                         // Close Project
@@ -5243,11 +5242,11 @@ angular.module('cpp.controllers').
                         strElement += "<div class='grid__scrollable' id='elementScroll'> <table class='grid__table p-0' id='tblElement'>"; //Aditya :: 27092022 
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Services</th>" +
-                            "<th>Action</th>" +
+                        strElement += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Services</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
 
@@ -5358,10 +5357,10 @@ angular.module('cpp.controllers').
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
                     strTrend += "<tr>";
-                    strTrend += "<th>Name</th>" +
-                        "<th>Impact</th>" +
-                        "<th>Status</th>" +
-                        "<th>Action</th>" +
+                    strTrend += "<th width='30%'>Name</th>" +
+                        "<th width='18%'>Impact</th>" +
+                        "<th  width='30%'>Status</th>" +
+                        "<th width='12%'> Action</th>" +
                         "</tr></thead><tbody>";
                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
                         .then(function (response) {
@@ -5503,11 +5502,11 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Department</th>" +
-                            "<th>Action</th>" +
+                        strProject += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Deparment</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
                         strProject += "</div></div>";
@@ -5531,11 +5530,11 @@ angular.module('cpp.controllers').
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Services</th>" +
-                            "<th>Action</th>" +
+                        strElement += "<th width='29%'>Name</th>" +
+                            "<th width='15%'>Number</th>" +
+                            "<th width='17%'>Value</th>" +
+                            "<th width='27%'>Services</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strElement += "</table></div>";
                         strElement += "</div></div>";
@@ -5556,10 +5555,10 @@ angular.module('cpp.controllers').
                         strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
                         strTrend += "<tr>";
-                        strTrend += "<th>Name</th>" +
-                            "<th>Impact</th>" +
-                            "<th>Status</th>" +
-                            "<th>Action</th>" +
+                        strTrend += "<th width='30%'>Name</th>" +
+                            "<th width='18%'>Impact</th>" +
+                            "<th width='30%'>Status</th>" +
+                            "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         strTrend += "</table></div>";
                         strTrend += "<div class='center'>" +
@@ -5751,15 +5750,6 @@ angular.module('cpp.controllers').
                         //code ended by kavita
                     });
 
-                    $('#tblProject').on('click', '#BillOfMaterialProjectGridBtn', function () {
-                        //$('#EditProjectGridBtn').unbind('click').on('click', function () {
-                        //var programId = $scope.GridContractId;
-                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                        var projectId = $scope.GridProjectId;
-                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
-                        wbsTree.setSelectedNode(selectedProject);
-                        $('#BillOfMaterialModal').modal({ show: true, backdrop: 'static' });
-                    });
                     //Delete Project
                     $('#tblProject').on('click', '#DeleteProjectGridBtn', function () {
                         //$("#DeleteProjectGridBtn").bind("click", function () {
@@ -5785,7 +5775,7 @@ angular.module('cpp.controllers').
                     });
 
                     //Select Project
-                    $('#tblProject tr').on('click', function () {
+                    $('#tblProject tbody tr').on('click', function () {
                         //wbsTree.setSelectedNode(null);
                         $('#tblProject tr.selected').removeClass('selected');
                         $(this).addClass('selected');
@@ -5799,6 +5789,7 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewTrend').html('');
                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                         selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        localStorage.setItem('selectProgramElementIDDash', selectedProjectID);
 
                         getElementGridSection(selectedProject);
 
@@ -5917,6 +5908,7 @@ angular.module('cpp.controllers').
                     //});
 
                     $('#tblElement tbody tr').on('click', function () {
+                      
                         //wbsTree.setSelectedNode(null);
                         $('#tblElement tr.selected').removeClass('selected');
                         $(this).addClass('selected');
