@@ -4983,11 +4983,11 @@ angular.module('cpp.controllers').
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th width=28%'>Name</th>" + //$scope.programList[0].program.name
-                            "<th width='10%' >ID</th>" +
-                            "<th width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width=28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='10%' >ID</th>" +
+                            "<th class='sort-by' width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
                             "<th width=8%'>Action</th>" +
                             "</tr>";
@@ -5121,10 +5121,10 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable' id='projectScroll'> <table class='grid__table p-0' id='tblProject'>"; //Aditya :: 27092022 
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th width='29%'>Name</th>" +
-                            "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Deparment</th>" +
+                        strProject += "<th class='sort-by' width='29%'>Name</th>" +
+                            "<th class='sort-by' width='15%'>Number</th>" +
+                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='27%'>Deparment</th>" +
                             "<th width='12%'>Action</th>" +
                             "</tr></thead>";
 
@@ -5242,10 +5242,10 @@ angular.module('cpp.controllers').
                         strElement += "<div class='grid__scrollable' id='elementScroll'> <table class='grid__table p-0' id='tblElement'>"; //Aditya :: 27092022 
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th width='29%'>Name</th>" +
-                            "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Services</th>" +
+                        strElement += "<th class='sort-by' width='29%'>Name</th>" +
+                            "<th class='sort-by' width='15%'>Number</th>" +
+                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='27%'>Services</th>" +
                             "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
@@ -5357,9 +5357,9 @@ angular.module('cpp.controllers').
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
                     strTrend += "<tr>";
-                    strTrend += "<th width='30%'>Name</th>" +
-                        "<th width='18%'>Impact</th>" +
-                        "<th  width='30%'>Status</th>" +
+                    strTrend += "<th class='sort-by' width='30%'>Name</th>" +
+                        "<th class='sort-by' width='18%'>Impact</th>" +
+                        "<th class='sort-by' width='30%'>Status</th>" +
                         "<th width='12%'> Action</th>" +
                         "</tr></thead><tbody>";
                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
