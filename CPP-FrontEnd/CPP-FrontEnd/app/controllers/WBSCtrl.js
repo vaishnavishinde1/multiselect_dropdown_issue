@@ -4964,7 +4964,7 @@ angular.module('cpp.controllers').
                     });
 
 
-                function GetContractGridSection(selOrganization) {
+                function GetContractGridSection(selOrganization,selectedContractID) { //Aditya :: Add selected contract ID for keeping the contract selected after save :: 27092022 
 
                     $('#wbsGridView').html('');
 
@@ -4980,14 +4980,14 @@ angular.module('cpp.controllers').
                         }
                         
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                        strContract += "<div class='grid__scrollable_main'><table class='grid__table' id='tblContract'>";
+                        strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th width=28%'>Name</th>" + //$scope.programList[0].program.name
-                            "<th width='10%' >ID</th>" +
-                            "<th width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width=28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='10%' >ID</th>" +
+                            "<th class='sort-by' width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
                             "<th width=8%'>Action</th>" +
                             "</tr>";
@@ -4996,7 +4996,14 @@ angular.module('cpp.controllers').
                             var program = selOrganization.children[programI];
                             var originalContractVal = program.ContractValue;
                             var CurrentContractVal = parseFloat(program.ContractModificationValue) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));
-                            if (programI == 0) {
+                            //Aditya :: for keeping the contract selected after save :: 27092022 
+                            if (selectedContractID != undefined && selectedContractID == program.ProgramID && localStorage.getItem('MODE') == 'gridview') {
+                                selectedProgramID = selectedContractID;
+                                selectedContract = program;
+                                strContract += "<tr class='selected contact-row' id=" + selectedContractID + ">";
+                                getProjectGridSection(program);
+                            }
+                            else if (programI == 0 && selectedContractID == undefined) {
                                 selectedProgramID = program.ProgramID;
                                 selectedContract = program;
                                 strContract += "<tr class='selected contact-row' id=" + program.ProgramID + ">";
@@ -5089,7 +5096,7 @@ angular.module('cpp.controllers').
                     BindProject();
                 }
 
-                function getProjectGridSection(selContract) {
+                function getProjectGridSection(selContract, selProjectId) { //Aditya :: Add selected Project ID for keeping the project selected after save :: 27092022 
 
                     var selectedProgramID = selContract.ProgramID;
                     var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
@@ -5111,19 +5118,28 @@ angular.module('cpp.controllers').
                         }
                         
                         
-                        strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
+                        strProject += "<div class='grid__scrollable' id='projectScroll'> <table class='grid__table p-0' id='tblProject'>"; //Aditya :: 27092022 
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th width='29%'>Name</th>" +
-                            "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Deparment</th>" +
+                        strProject += "<th class='sort-by' width='29%'>Name</th>" +
+                            "<th class='sort-by' width='15%'>Number</th>" +
+                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='27%'>Deparment</th>" +
                             "<th width='12%'>Action</th>" +
                             "</tr></thead>";
 
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
                             var project = selContract.children[projectI];
-                            if (projectI == 0) {
+                            //Aditya :: for keeping the project selected after save :: 27092022 
+                            if (selProjectId != undefined && selProjectId == project.ProgramElementID && localStorage.getItem('MODE') == 'gridview') {
+                                debugger;
+                                selectedProjectID = selProjectId;
+                                wbsTree.SelectedProjectId = selProjectId;
+                                selectedProject = project;
+                                strProject += "<tr class='selected contact-row' id=" + selProjectId + ">";
+                                getElementGridSection(project);
+                            }
+                            else if (projectI == 0 && selProjectId == undefined) {
                                 localStorage.setItem('selectProgramElementIDDash', project.ProgramElementID);
                                 selectedProjectID = project.ProgramElementID;
                                 wbsTree.SelectedProjectId = project.ProgramElementID;
@@ -5202,7 +5218,7 @@ angular.module('cpp.controllers').
                     BindElement(selectedProgramID);
                 }
 
-                function getElementGridSection(selProject) {
+                function getElementGridSection(selProject, selElementID) { //Aditya :: Add selected Element ID for keeping the element selected after save :: 27092022 
 
                     var selectedProjectID = selProject.ProgramElementID;
                     //var selectedProject = selProject.children.find(x => x.ProgramElementID === selectedProjectID);
@@ -5223,20 +5239,27 @@ angular.module('cpp.controllers').
                         else {
                             strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
+                        strElement += "<div class='grid__scrollable' id='elementScroll'> <table class='grid__table p-0' id='tblElement'>"; //Aditya :: 27092022 
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
-                        strElement += "<th width='29%'>Name</th>" +
-                            "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Services</th>" +
+                        strElement += "<th class='sort-by' width='29%'>Name</th>" +
+                            "<th class='sort-by' width='15%'>Number</th>" +
+                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='27%'>Services</th>" +
                             "<th width='12%'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
 
                             for (projectElementI = 0; projectElementI < selProject.children.length; projectElementI++) {
                                 var projectElement = selProject.children[projectElementI];
-                                if (projectElementI == 0) {
+                                //Aditya :: for keeping the element selected after save :: 27092022 
+                                if (selElementID != undefined && selElementID == projectElement.ProjectID && localStorage.getItem('MODE') == 'gridview') {
+                                    _selectedProjectID = selElementID;
+                                    selectedElement = projectElement;
+                                    strElement += "<tr class='selected contact-row' id=" + selElementID + ">";
+                                    getTrendGridSection(projectElement);
+                                }
+                                else if (projectElementI == 0 && selElementID == undefined) {
                                     _selectedProjectID = projectElement.ProjectID;
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
@@ -5334,9 +5357,9 @@ angular.module('cpp.controllers').
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
                     strTrend += "<tr>";
-                    strTrend += "<th width='30%'>Name</th>" +
-                        "<th width='18%'>Impact</th>" +
-                        "<th  width='30%'>Status</th>" +
+                    strTrend += "<th class='sort-by' width='30%'>Name</th>" +
+                        "<th class='sort-by' width='18%'>Impact</th>" +
+                        "<th class='sort-by' width='30%'>Status</th>" +
                         "<th width='12%'> Action</th>" +
                         "</tr></thead><tbody>";
                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
