@@ -1,34 +1,6 @@
-<head>
-    <style type="text/css">
-        .tooltip {
-            top: -9999px;
-            left: -9999px;
-            opacity: 1;
-        }
-
-
-        .tooltip-inner {
-            max-width: 500px;
-            background-color: white;
-            color: black;
-            font-weight: 500;
-            max-height: 600px;
-            overflow-y: auto;
-            border: 1px solid gray;
-        }
-
-        .gantt_task_content {
-            position: initial;
-        }
-
-        .tooltip-arrow {
-            display: none;
-        }
-    </style>
-</head>
 <div>
     <script>$('#closed,#approved,#unapproved,#contract,#project').hide();</script>
-    <script type="text/ng-template" id="modal-3">        
+    <script type="text/ng-template" id="modal-3">
         <div class="modal-header">
             <h4 class="modal-title">Confirm Modal</h4>
         </div>
@@ -185,9 +157,6 @@
                             <!--<div class="col-md-6">
 
                             </div>-->
-
-
-
                             <!--<div class="col-md-1">
                                 <label style="font-size: 12px">Status Code: </label>
                             </div>
@@ -340,33 +309,30 @@
         <div class="panel panel-default" style="padding-top:10px;">
             <div class="panel-body" style="padding-top:5px;">
                 <div id="schedule-gantt" style='width:100%; height:300px;'></div>
-                        <!--==========Manasi 30-04-2021   Filter on cost line items   Version 2========================-->
-                        <div style=" display:inline-block;margin:10px 0;">
-                            <h6 style='margin-top:15px;color: black; font-weight: 600; opacity: .75; padding-bottom: 5px;display:inline-block;'>Cost Line Items</h6>
-                            <div class="phase-widget" style="display:inline-block;margin-left:30px;">
-                                <div ng-init="CostType = 'ALL'" class="form-inline">
-                                    <div class="form-group">
-                                        <label>Cost Type : </label>
-                                        <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostType" ng-change="filterCostType()" data-ng-options="option.value as option.name for option in FilterCostType">
-                                            
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Cost Type Category : </label>
-                                        <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostCategory" data-ng-options="option.name as option.name for option in CostTypeCategory" ng-change="filterCostTypeCategory()">
-                                            
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Name : </label>
-                                        <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostCategoryName" ng-change="filterCostTypeCategoryName()" data-ng-options="option.name as option.name for option in CostCategoryTypeName">
-                                            
-                                        </select>
-                                    </div>
-                                </div>
+                <!--==========Manasi 30-04-2021   Filter on cost line items   Version 2========================-->
+                <div style=" display:inline-block;margin:10px 0;">
+                    <h6 style='margin-top:15px;color: black; font-weight: 600; opacity: .75; padding-bottom: 5px;display:inline-block;'>Cost Line Items</h6>
+                    <div class="phase-widget" style="display:inline-block;margin-left:30px;">
+                        <div ng-init="CostType = 'ALL'" class="form-inline">
+                            <div class="form-group">
+                                <label>Cost Type : </label>
+                                <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostType" ng-change="filterCostType()" data-ng-options="option.value as option.name for option in FilterCostType">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Cost Type Category : </label>
+                                <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostCategory" data-ng-options="option.name as option.name for option in CostTypeCategory" ng-change="filterCostTypeCategory()">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Name : </label>
+                                <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostCategoryName" ng-change="filterCostTypeCategoryName()" data-ng-options="option.name as option.name for option in CostCategoryTypeName">
+                                </select>
                             </div>
                         </div>
-                         <!--================================================================================================================-->
+                    </div>
+                </div>
+                <!--================================================================================================================-->
                 <div id="cost-gantt" style='width:100%;'></div>
                 <div class="row" id="buttonRow" style="margin-top:20px;">
 
@@ -393,7 +359,7 @@
                     <div id="loading" style="display:none;"></div> <!--Manasi  -->
                     <div class="pull-right" style="display: inline-block; text-align: right; margin-right:1%">
                         <!--Shweta  -->
-                        
+
                         <button id="ExportToMPP" style="width:160px;margin:0px;" class="btn btn-black" ng-click="ExportToMPP()">Export to MS Project</button>
                         <div class="dropdown" style="display:inline-block;">
                             <!--Shweta  -->
@@ -415,9 +381,9 @@
 
                         <button ng-show="trend.TrendNumber!=1000" id="customCostOverhead" class="btn btn-black" ng-click="customCostOverhead()" style="width:190px;margin:0px;">Custom Cost Overhead</button>  <!--Manasi 22-07-2020-->
                         <!--<button id="actualButton" class="btn btn-black" ng-click="createActual()" style="width:90px;margin:0px;">Actual</button>
-        <button id="estimateButton" class="btn btn-black" ng-click="createEstimate()" style="width:90px;margin:0px;">Estimate</button>-->
+                        <button id="estimateButton" class="btn btn-black" ng-click="createEstimate()" style="width:90px;margin:0px;">Estimate</button>-->
                         <!--Swapnil 18-09-2020------------------------------------------------------------------------------->
-                        <button id="reportManagerBtn"  ng-show="trend.TrendNumber!= 2000 && trend.TrendNumber!= 3000" class="btn btn-black" ng-click="openReports()" style="width:140px;margin:0px;">Report Manager</button>
+                        <button id="reportManagerBtn" ng-show="trend.TrendNumber!= 2000 && trend.TrendNumber!= 3000" class="btn btn-black" ng-click="openReports()" style="width:140px;margin:0px;">Report Manager</button>
                         <span id="spnSubmitForApproval" title="">
                             <button id="submitForApproval" data-toggle="tooltip" data-placement="left" class="btn btn-black"
                                     ng-click="submitForApproval()" title="" style="width:90px;margin:0px;">
@@ -464,7 +430,7 @@
         }
 
         ::-webkit-scrollbar {
-            width: auto !important;
+            /* width: auto !important;     changes by sarab         */
             height: 12px;
             background-color: #F5F5F5;
         }
@@ -493,5 +459,33 @@
             height: 100%;
             background: url(loader.gif) no-repeat center center; /*Luan here - making same pathing for IIS deployment, Original: ../../assets/js/select2/loader.gif*/
             z-index: 9999;
+        }
+    </style>
+
+    <!--Css change by sarab for BOM tooltip-->
+    <style type="text/css">
+        .tooltip {
+            top: -9999px;
+            left: -9999px;
+            opacity: 1;
+        }
+
+
+        .tooltip-inner {
+            max-width: 500px;
+            background-color: white;
+            color: black;
+            font-weight: 500;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid gray;
+        }
+
+        .gantt_task_content {
+            position: initial;
+        }
+
+        .tooltip-arrow {
+            display: none;
         }
     </style>
