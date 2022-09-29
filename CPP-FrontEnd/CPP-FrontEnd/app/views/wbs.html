@@ -2719,7 +2719,11 @@
     </div>
 </div>
 
+
+
 <!--=========================================== Jignesh-ChangeOrderPopUpChanges =============================================-->
+
+
 
 <div class="modal fade" id="ProgramElementChangeOrderModal" role="dialog" aria-labelledby="modal_heading" aria-hidden="true">
     <div class="modal-dialog" style="width:30%;">
@@ -3469,6 +3473,7 @@
                                                     <div class="col-sm-12 col-md-12">
                                                         <label for="program_name" class="_control-label _bold">Special Instructions</label>
                                                         <textarea rows="3" type="text" class="form-control" id="program_billing_poc_special_instruction1"></textarea>
+                                                        <button id="program_billing_poc_special_instruction1" class="btn-icon" title="Special Instructions">Special Instructions</button>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -6294,8 +6299,8 @@
         <li><a tabindex="-1" id="contextMenuClosed" href="javascript:void(0);">Close</a></li>    <!--//----Vaishnavi 30-03-2022----//-->
         <li><a tabindex="-1" id="contextMenuBillOfMaterial" href="javascript:void(0);" style="display:none">Bill Of Material</a></li>
         <!--<li><a tabindex="-1" id="contextMenuBaseline" href="javascript:void(0);">Baseline View</a></li>
-    <li><a tabindex="-1" id="contextMenuCurrent" href="javascript:void(0);">Current View</a></li>
-    <li><a tabindex="-1" id="contextMenuForecast" href="javascript:void(0);">Forecast View</a></li>-->
+        <li><a tabindex="-1" id="contextMenuCurrent" href="javascript:void(0);">Current View</a></li>
+        <li><a tabindex="-1" id="contextMenuForecast" href="javascript:void(0);">Forecast View</a></li>-->
         <!--  <li><a tabindex="-1" id="contextMenuMap" href="javascript:void(0);">Map</a></li>-->
         <!--<li><a tabindex="-1" id="contextMenuScope" href="javascript:void(0);">Project Scope</a></li>-->
     </ul>
@@ -7176,6 +7181,17 @@
                 $("#ProgramElementMilestoneModal").modal('toggle');
                 $("#ProgramElementModal").css({ "opacity": "1" });
             }
+        });
+
+        $('#program_billing_poc_special_instruction1').unbind().on('click', function (event) {
+            alert("hello");
+            event.preventDefault();
+            // var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+            //var projectId = $scope.GridProjectId;
+            //var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+            //wbsTree.setSelectedNode(selectedProject);
+            $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+
         });
         //ProgramElementChangeOrderViewModal
         $('#cancel_program_element_change_order_modal').unbind('click').on('click', function () {

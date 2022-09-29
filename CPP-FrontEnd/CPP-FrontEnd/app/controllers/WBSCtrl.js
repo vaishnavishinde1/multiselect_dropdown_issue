@@ -5006,9 +5006,9 @@ angular.module('cpp.controllers').
                                 strContract += "<tr class='contact-row' id=" + program.ProgramID + ">";
                             }
                             if (program.Status == "Closed") {
-                                strContract += "<td style='color:red'>" + program.ClientPOC + "</td>";
-                                strContract += "<td style='color:red' title='" + program.name + "'>" + program.name + "</td>";
-                                strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ClientPOC + "'>" + program.ClientPOC + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.name + "'>" + program.name + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber+ "'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red' align ='right'>$" + program.ContractValue + "</td>";
                                 strContract += "<td style='color:red' align ='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
@@ -5022,10 +5022,10 @@ angular.module('cpp.controllers').
                                 strContract += "</tr>";
                             } 
                             else {
-                                strContract += "<td>" + program.ClientPOC + "</td>";
-                                strContract += "<td  style='max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap' title='"+ program.name +"'>" + program.name + "</td>";
-                                strContract += "<td>" + program.ContractNumber + "</td>";
-                                strContract += "<td align='right'>" + program.ContractValue + "</td>";
+                                strContract += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ClientPOC+"'>" + program.ClientPOC + "</td>";
+                                strContract += "<td  style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='"+ program.name +"'>" + program.name + "</td>";
+                                strContract += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber +"'>" + program.ContractNumber + "</td>";
+                                strContract += "<td align='right'>$" + program.ContractValue + "</td>";
                                 strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
@@ -5114,11 +5114,11 @@ angular.module('cpp.controllers').
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
-                        strProject += "<th>Name</th>" +
-                            "<th>Number</th>" +
-                            "<th>Value</th>" +
-                            "<th>Department</th>" +
-                            "<th>Action</th>" +
+                        strProject += "<th style='white-space: nowrap;'>Name</th>" +
+                            "<th style='white-space: nowrap;'>Number</th>" +
+                            "<th style='white-space: nowrap;'>Value</th>" +
+                            "<th style='white-space: nowrap;'>Department</th>" +
+                            "<th style='white-space: nowrap;'>Action</th>" +
                             "</tr></thead>";
 
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
@@ -5140,10 +5140,10 @@ angular.module('cpp.controllers').
                             //strProject += "<td>" + project.ProjectClassName + "</td>";
                             //strProject += "</tr>";
                             if (project.Status == "Closed") {
-                                strProject += "<td style='color:red'title='" + project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
+                                strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber +"' >" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icons icon-bom grid__btn-icons disabledIcon' id='BillOfMaterialProjectGridBtn' title='Bill of Material' aria-hidden='true'></i>"+
                                     "<i class='fa-trash grid__btn-icons  disabledIcon'  style='display:none' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
@@ -5152,10 +5152,10 @@ angular.module('cpp.controllers').
                                 strProject += "</tr>";
                             }
                             else {
-                                strProject += "<td title='"+ project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
-                                strProject += "<td>" + project.ProjectNumber + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='"+ project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber +"'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td>" + project.ProjectClassName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName+ "'>" + project.ProjectClassName + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -5252,10 +5252,10 @@ angular.module('cpp.controllers').
                                 //strElement += "<td>" + projectElement.ServiceName + "</td>";
                                 //strElement += "</tr>";
                                 if (projectElement.Status == "Closed") {
-                                    strElement += "<td style='color:red' title='" + projectElement.name + "'>" + projectElement.name + "</td>";
-                                    strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'  title='" + projectElement.name + "'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber +"'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td style='color:red' align='right'>$" + projectElement.CurrentCost + "</td>";
-                                    strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName +"'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
                                     strElement += "<td>" +
                                         "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
@@ -5265,10 +5265,10 @@ angular.module('cpp.controllers').
                                     strElement += "</tr>";
                                 }
                                 else {
-                                    strElement += "<td  title='" + projectElement.name + "'>" + projectElement.name + "</td>";
-                                    strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.name + "'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber +"'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td align='right'>$" + projectElement.CurrentCost + "</td>";
-                                    strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
                                     //Edit Element
                                     if (ModifyProjectElement == "1") {
@@ -6114,8 +6114,7 @@ angular.module('cpp.controllers').
                 //var ViewReport= wbsTree.getLocalStorage().acl[10];
                 //var ViewLabor= wbsTree.getLocalStorage().acl[11];
 
-                $scope.loadWBSData.GetContractGridSection = GetContractGr
-                idSection;
+                $scope.loadWBSData.GetContractGridSection = GetContractGridSection;
                 $scope.loadWBSData.getProjectGridSection = getProjectGridSection;
                 $scope.loadWBSData.getElementGridSection = getElementGridSection;
                 $scope.loadWBSData.getTrendGridSection = getTrendGridSection;
