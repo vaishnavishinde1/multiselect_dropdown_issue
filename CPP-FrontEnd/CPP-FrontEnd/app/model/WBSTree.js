@@ -4807,6 +4807,14 @@ WBSTree = (function ($) {
 
                             //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //window.location.reload();   //Manasi 28-07-2020
+                            var prevScroll = $('#contractScroll').scrollTop();
+                            scope.loadWBSData.GetContractGridSection(selectedNode.parent, selectedNode.ProgramID);
+                            //Aditya :: Scroll to selected position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                debugger;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') $('#contractScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             selectedNode.name = temp_node.name;
                             selectedNode.ProgramNote = temp_node.ProgramNote;
@@ -4836,7 +4844,6 @@ WBSTree = (function ($) {
                             }
                         }
 
-                        scope.loadWBSData.GetContractGridSection(selectedNode.parent);
                     });
                 }
 
@@ -5318,13 +5325,25 @@ WBSTree = (function ($) {
 
                                 //scope.loadWBSData(orgId, null, null, null, null, null, null);
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
-                                //Aditya 24062022 :scroll to bottom
-                                var viewMode;
-                                var view_mode = localStorage.getItem('MODE');
-                                if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
-                                if (view_mode == 'mindmap') viewMode = 'mindmap';
-                                var divToScroll = document.getElementById(viewMode);
-                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                                // //Aditya 24062022 :scroll to bottom
+                                // var viewMode;
+                                // var view_mode = localStorage.getItem('MODE');
+                                // if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
+                                // if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                // var divToScroll = document.getElementById(viewMode);
+                                // divToScroll.scrollTop = divToScroll.scrollHeight;
+
+                                scope.loadWBSData.GetContractGridSection(selectedNode, newNode.ProgramID);
+                                //Aditya :: Scroll to new position :: 27092022 
+                                if (response.result.split(',')[0].trim() === "Success") {
+                                    var viewMode;
+                                    var view_mode = localStorage.getItem('MODE');
+                                    if (view_mode == 'gridview') viewMode = 'contractScroll';
+                                    if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                    /*$('#contractScroll').scrollTop();//for position*/
+                                    var divToScroll = document.getElementById(viewMode);
+                                    divToScroll.scrollTop = divToScroll.scrollHeight;
+                                }
 
                             } else {
                                 $("#update_program").attr("disabled", false); //Aditya
@@ -5339,9 +5358,7 @@ WBSTree = (function ($) {
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 //  $('#ProgramModal').modal('hide');
                             }
-
-                            scope.loadWBSData.GetContractGridSection(selectedNode);
-
+														   
                         });
                 }
             });
@@ -6032,6 +6049,15 @@ WBSTree = (function ($) {
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProgramElementModal').modal('hide');
                             //window.location.reload();   //Manasi 28-07-2020
+
+                            var prevScroll = $('#projectScroll').scrollTop();
+                            scope.loadWBSData.getProjectGridSection(selectedNode.parent, selectedNode.ProgramElementID);
+                            //Aditya :: Scroll to selected position :: 27092022
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var view_mode = localStorage.getItem('MODE');
+                                //if (view_mode == 'gridview') $('#projectScroll').scrollTop = $('#projectScroll').position().top;
+                                if (view_mode == 'gridview') $('#projectScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             $("#update_program_element").attr("disabled", false);
 
@@ -6051,10 +6077,8 @@ WBSTree = (function ($) {
                             //     selectedNode.CapitalProjectAssistant =  temp_node.CapitalProjectAssistant;
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
-                        }
-
-                        scope.loadWBSData.getProjectGridSection(selectedNode.parent);
-
+                        } 
+                        
                     });
 
                 }
@@ -6752,6 +6776,17 @@ WBSTree = (function ($) {
                             //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
+
+                            scope.loadWBSData.getProjectGridSection(selectedNode, newNode.ProgramElementID);
+                            //Aditya :: Scroll to new position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                debugger;
+                                if (view_mode == 'gridview') viewMode = 'projectScroll';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                            }
                         } else {
 
                             selectedNode.ProgramElementName = temp_node.ProgramElementName;	//luan eats
@@ -6768,7 +6803,6 @@ WBSTree = (function ($) {
                             //  wbsTree.setSelectedNode(temp_node);
                         }
 
-                        scope.loadWBSData.getProjectGridSection(selectedNode);
                     });
                 }
             });
@@ -7394,6 +7428,15 @@ WBSTree = (function ($) {
                             wbsTree.getWBSTrendTree().trendGraph(true);
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
+
+                            var prevScroll = $('#elementScroll').scrollTop();
+                            scope.loadWBSData.getElementGridSection(selectedNode.parent, selectedNode.ProjectID);
+                            //Aditya :: Scroll to selected position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                debugger;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') $('#elementScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             $("#update_project").attr("disabled", false);
                             dhtmlx.alert({
@@ -7413,8 +7456,7 @@ WBSTree = (function ($) {
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
                         }
-
-                        scope.loadWBSData.getElementGridSection(selectedNode.parent);
+                        
                     });
 
                 }
@@ -7983,7 +8025,16 @@ WBSTree = (function ($) {
                                 wbsTree.getWBSTrendTree().trendGraph();
                                 //window.location.reload();  //Manasi 28-07-2020
                             });
-
+                            scope.loadWBSData.getElementGridSection(selectedNode, newNode.ProjectID);
+                            //Aditya :: Scroll to new position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                debugger;
+                                if (view_mode == 'gridview') viewMode = 'elementScroll';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                            }
                         } else {
                             $("#update_project").attr("disabled", false);
 
@@ -8004,8 +8055,7 @@ WBSTree = (function ($) {
 
                         }
 
-                        scope.loadWBSData.getElementGridSection(selectedNode);
-
+                        
                     });
 
                     wbsTree.updateTreeNodes(selectedNode);
@@ -15692,6 +15742,8 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialModal').unbind().on('show.bs.modal', function (event) {
                 defaultModalPosition();
+                
+
                 //using on('click','li') will activate on li's click
 
 
@@ -15730,121 +15782,116 @@ WBSTree = (function ($) {
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
 
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    if (id != undefined) {
-                        wbsTree.setBillOfMaterialOperation(2);
-                        $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+            });
+            $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                wbsTree.setBillOfMaterialOperation(3);
+                operation = wbsTree.getBillOfMaterialOperation();
+                dhtmlx.confirm("Are you Sure. Want to Delete?", function (result) {
 
-                        materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
-                        materialCategoryDropDown.empty();
+                    if (result) {
 
-                        materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
-                        materialDropDown.empty();
-
-                        manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
-                        manufacturerDown.empty();
-
-                        for (i = 0; i < _BillOfMaterialList.length; i++) {
-                            if (id == _BillOfMaterialList[i].Id) {
-                                var MaterialCategoryData = wbsTree.getMaterialCategoryList();
-                                for (j = 0; j < MaterialCategoryData.length; j++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
-
-
-                                        materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
-
-                                    }
-                                }
-
-                                fetchmaterial();
-
-                                var MaterialDropdowndata = materialArray;
-
-                                materialDropDown.empty();
-
-                                for (x = 0; x < MaterialDropdowndata.length; x++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
-
-
-                                        materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
-
-                                    }
-                                }
-
-
-
-                                var ManufacturerData = wbsTree.getManufacturerList();
-
-                                for (var z = 0; z < ManufacturerData.length; z++) {
-
-                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
-
-                                        manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-                                    else {
-                                        manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-
-                                }
-                                $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
-
-                                $("#txtDescription").val(_BillOfMaterialList[i].Description);
-                                $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
-                                $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
-                                $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
-                                $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
-
-
-                            }
-                        }
-
+                        var billofmaterialdetails = {
+                            Operation: operation,
+                            Id: id,
+                            Deleted: 1,
+                            ProgramElementID: _selectedNode.ProgramElementID,
+                        };
+                        SearchText = '';
+                        PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
                     }
 
-
                 });
 
 
-                $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    wbsTree.setBillOfMaterialOperation(3);
-                    operation = wbsTree.getBillOfMaterialOperation();
-                    dhtmlx.confirm({
-                        type: "confirm-warning",
-                        text: "Are you sure you want to delete?",
-                        callback: function (result) {
-                            if (result) {
+            });
 
-                                var billofmaterialdetails = {
-                                    Operation: operation,
-                                    Id: id,
-                                    Deleted: 1,
-                                    ProgramElementID: _selectedNode.ProgramElementID,
-                                };
-                                SearchText = '';
-                                PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
+            $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                if (id != undefined) {
+                    wbsTree.setBillOfMaterialOperation(2);
+                    $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+
+                    materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
+                    materialCategoryDropDown.empty();
+
+                    materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
+                    materialDropDown.empty();
+
+                    manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
+                    manufacturerDown.empty();
+
+                    for (i = 0; i < _BillOfMaterialList.length; i++) {
+                        if (id == _BillOfMaterialList[i].Id) {
+                            var MaterialCategoryData = wbsTree.getMaterialCategoryList();
+                            for (j = 0; j < MaterialCategoryData.length; j++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
+
+
+                                    materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
+                                }
+                                else {
+
+                                    materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
+
+                                }
                             }
-                           
-                        }
 
-                    });
-                  
-                });
+                            fetchmaterial();
+
+                            var MaterialDropdowndata = materialArray;
+
+                            materialDropDown.empty();
+
+                            for (x = 0; x < MaterialDropdowndata.length; x++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
+
+
+                                    materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
+                                }
+                                else {
+
+                                    materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
+
+                                }
+                            }
+
+
+
+                            var ManufacturerData = wbsTree.getManufacturerList();
+
+                            for (var z = 0; z < ManufacturerData.length; z++) {
+
+                                if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
+
+                                    manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+                                else {
+                                    manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+
+                            }
+                            $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
+
+                            $("#txtDescription").val(_BillOfMaterialList[i].Description);
+                            $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
+                            $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
+                            $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
+                            $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
+
+
+                        }
+                    }
+
+                }
 
 
             });
@@ -15862,6 +15909,10 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialDetailModal').unbind().on('show.bs.modal', function (event) {
                 $('#update_bill_of_material_detail_modal').prop('disabled', false);
+                $("#txtquantity").val('');
+                $("#txtContractwarranty").val('');
+                
+
                 defaultModalPosition();
 
                 /*  modal = $(this);*/
@@ -15910,11 +15961,7 @@ WBSTree = (function ($) {
                         return;
                     }
 
-                    if (txtdesc == "" || txtdesc.length == 0) {
-
-                        dhtmlx.alert('Description is a required field.');
-                        return;
-                    }
+                 
 
                     if (txtqnty == "" || txtqnty.length == 0) {
 
@@ -20706,7 +20753,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "block");
+                    $("#contextMenuBillOfMaterial").css("display", "inline-block");
                     //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
