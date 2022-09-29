@@ -976,7 +976,6 @@ namespace WebAPI.Models
                             tr.NextApproverEmailDate = DateTime.Now.Date; // Swapnil 18/09/2020
                             tr.LastApprover_UserID = requestingUser.UserID; // Swapnil 18/09/2020
                             ctx.SaveChanges();
-                            deductQuantity(tr);
                             return "Official Approved";
                         }
 
@@ -1687,23 +1686,27 @@ namespace WebAPI.Models
         {
             CPPDbContext ctx = new CPPDbContext();
             Project project = new Project();
-            List<Activity> activity = new List<Activity>();
+            List<Activity> activitylist = new List<Activity>();
+            List<CostUnit> costUnitlist = new List<CostUnit>();
             CostUnit costUnit = new CostUnit();
-            List<int> sumofunitquantiy = new List<int>();
-            string unitqunatity;
+            decimal unitqunatity;
             project = ctx.Project.Where(p => p.ProjectID == tr.ProjectID).FirstOrDefault();
 
-            activity = ctx.Activity.Where(a => a.ProjectID == project.ProjectID).ToList();
-            foreach (var i in activity)
-            {
-                unitqunatity = ctx.CostUnit.Where(cu => cu.ActivityID == i.ActivityID && cu.Granularity == "year").Select(cu => cu.UnitQuantity).FirstOrDefault();
+            activitylist = ctx.Activity.Where(a => a.ProjectID == project.ProjectID).ToList();
 
-                costUnit = ctx.CostUnit.Where(cu => cu.ActivityID == i.ActivityID && cu.Granularity == "year").FirstOrDefault();
-                decimal convertunitqunatity = Convert.ToDecimal(unitqunatity);
-                BillOfMaterial billOfMaterial = new BillOfMaterial();
-                billOfMaterial = ctx.BillOfMaterial.Where(bl => bl.ProgramElementID == project.ProgramElementID && bl.MaterialID == costUnit.MaterialID && bl.MaterialCategoryID == costUnit.MaterialCategoryID).FirstOrDefault();
-                billOfMaterial.Quantity = billOfMaterial.Quantity - convertunitqunatity;
-                ctx.SaveChanges();
+            foreach (var i in activitylist)
+            {
+
+                costUnitlist = ctx.CostUnit.Where(cu => cu.ActivityID == i.ActivityID && cu.Granularity == "week").ToList();
+
+                foreach(var j in costUnitlist) 
+                {
+                    unitqunatity = Convert.ToDecimal(j.UnitQuantity);
+                     BillOfMaterial billOfMaterial = new BillOfMaterial();
+                    billOfMaterial = ctx.BillOfMaterial.Where(bl => bl.ProgramElementID == project.ProgramElementID && bl.MaterialID == j.MaterialID && bl.MaterialCategoryID == j.MaterialCategoryID).FirstOrDefault();
+                    billOfMaterial.Quantity = billOfMaterial.Quantity - unitqunatity;
+                    ctx.SaveChanges();
+                }
 
             }
         }

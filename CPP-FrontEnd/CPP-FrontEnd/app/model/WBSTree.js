@@ -11892,7 +11892,7 @@ WBSTree = (function ($) {
                     $('#btnModification').attr('style', 'width:150px;background-color:#FF9407 !important;color:white;');
                     $('#btnModification').removeAttr('disabled');   //Manasi 23-02-2021
                     $('#spnBtnModification').removeAttr('title');   //Manasi 23-02-2021
-
+                    
                     $('#btnAdditionalInfo').removeClass('btn btn-black');
                     $('#btnAdditionalInfo').addClass('btn btn-primary c-btn-save');
                     $('#btnAdditionalInfo').attr('style', 'width:150px;background-color: #4f07ff !important;color:white;');
@@ -11927,7 +11927,7 @@ WBSTree = (function ($) {
                         $('#btnAdditionalInfo').addClass('btn btn-black');
                         $('#btnAdditionalInfo').attr('style', 'width:150px;');
                         $('#btnAdditionalInfo').attr('disabled', 'disabled');
-
+     
                     }
                     else {
                         $('#btnModification').removeAttr('disabled');
@@ -15594,7 +15594,7 @@ WBSTree = (function ($) {
                     $('#update_program_element').removeClass('btn btn-primary c-btn-save');
                     $('#update_program_element').addClass('btn btn-black');
                     $('#update_program_element').attr('style', 'width:150px;');
-                    $("#update_program_element").attr('disabled', 'disabled');
+                    $("#update_program_element").prop('disabled', true);
 
                     // $('#ProgramElementModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrg').attr('disabled', 'disabled');
@@ -15673,6 +15673,8 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialModal').unbind().on('show.bs.modal', function (event) {
                 defaultModalPosition();
+                
+
                 //using on('click','li') will activate on li's click
 
 
@@ -15711,121 +15713,116 @@ WBSTree = (function ($) {
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
 
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    if (id != undefined) {
-                        wbsTree.setBillOfMaterialOperation(2);
-                        $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+            });
+            $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                wbsTree.setBillOfMaterialOperation(3);
+                operation = wbsTree.getBillOfMaterialOperation();
+                dhtmlx.confirm("Are you Sure. Want to Delete?", function (result) {
 
-                        materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
-                        materialCategoryDropDown.empty();
+                    if (result) {
 
-                        materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
-                        materialDropDown.empty();
-
-                        manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
-                        manufacturerDown.empty();
-
-                        for (i = 0; i < _BillOfMaterialList.length; i++) {
-                            if (id == _BillOfMaterialList[i].Id) {
-                                var MaterialCategoryData = wbsTree.getMaterialCategoryList();
-                                for (j = 0; j < MaterialCategoryData.length; j++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
-
-
-                                        materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
-
-                                    }
-                                }
-
-                                fetchmaterial();
-
-                                var MaterialDropdowndata = materialArray;
-
-                                materialDropDown.empty();
-
-                                for (x = 0; x < MaterialDropdowndata.length; x++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
-
-
-                                        materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
-
-                                    }
-                                }
-
-
-
-                                var ManufacturerData = wbsTree.getManufacturerList();
-
-                                for (var z = 0; z < ManufacturerData.length; z++) {
-
-                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
-
-                                        manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-                                    else {
-                                        manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-
-                                }
-                                $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
-
-                                $("#txtDescription").val(_BillOfMaterialList[i].Description);
-                                $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
-                                $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
-                                $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
-                                $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
-
-
-                            }
-                        }
-
+                        var billofmaterialdetails = {
+                            Operation: operation,
+                            Id: id,
+                            Deleted: 1,
+                            ProgramElementID: _selectedNode.ProgramElementID,
+                        };
+                        SearchText = '';
+                        PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
                     }
 
-
                 });
 
 
-                $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    wbsTree.setBillOfMaterialOperation(3);
-                    operation = wbsTree.getBillOfMaterialOperation();
-                    dhtmlx.confirm({
-                        type: "confirm-warning",
-                        text: "Are you sure you want to delete?",
-                        callback: function (result) {
-                            if (result) {
+            });
 
-                                var billofmaterialdetails = {
-                                    Operation: operation,
-                                    Id: id,
-                                    Deleted: 1,
-                                    ProgramElementID: _selectedNode.ProgramElementID,
-                                };
-                                SearchText = '';
-                                PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
+            $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                if (id != undefined) {
+                    wbsTree.setBillOfMaterialOperation(2);
+                    $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+
+                    materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
+                    materialCategoryDropDown.empty();
+
+                    materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
+                    materialDropDown.empty();
+
+                    manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
+                    manufacturerDown.empty();
+
+                    for (i = 0; i < _BillOfMaterialList.length; i++) {
+                        if (id == _BillOfMaterialList[i].Id) {
+                            var MaterialCategoryData = wbsTree.getMaterialCategoryList();
+                            for (j = 0; j < MaterialCategoryData.length; j++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
+
+
+                                    materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
+                                }
+                                else {
+
+                                    materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
+
+                                }
                             }
-                           
-                        }
 
-                    });
-                  
-                });
+                            fetchmaterial();
+
+                            var MaterialDropdowndata = materialArray;
+
+                            materialDropDown.empty();
+
+                            for (x = 0; x < MaterialDropdowndata.length; x++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
+
+
+                                    materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
+                                }
+                                else {
+
+                                    materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
+
+                                }
+                            }
+
+
+
+                            var ManufacturerData = wbsTree.getManufacturerList();
+
+                            for (var z = 0; z < ManufacturerData.length; z++) {
+
+                                if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
+
+                                    manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+                                else {
+                                    manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+
+                            }
+                            $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
+
+                            $("#txtDescription").val(_BillOfMaterialList[i].Description);
+                            $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
+                            $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
+                            $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
+                            $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
+
+
+                        }
+                    }
+
+                }
 
 
             });
@@ -15843,6 +15840,10 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialDetailModal').unbind().on('show.bs.modal', function (event) {
                 $('#update_bill_of_material_detail_modal').prop('disabled', false);
+                $("#txtquantity").val('');
+                $("#txtContractwarranty").val('');
+                
+
                 defaultModalPosition();
 
                 /*  modal = $(this);*/
@@ -15891,11 +15892,7 @@ WBSTree = (function ($) {
                         return;
                     }
 
-                    if (txtdesc == "" || txtdesc.length == 0) {
-
-                        dhtmlx.alert('Description is a required field.');
-                        return;
-                    }
+                 
 
                     if (txtqnty == "" || txtqnty.length == 0) {
 
@@ -19178,7 +19175,7 @@ WBSTree = (function ($) {
                     $('#delete_project').removeClass('btn btn-black');
                     $('#delete_project').addClass('btn btn-primary c-btn-delete');
                     $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
-                    $('#delete_project').removeAttr('disabled');  //Manasi 24-02-2021
+                    $('#delete_project').prop('disabled',true);  //Manasi 24-02-2021
                     $('#spnBtndelete_project').removeAttr('title');  //Manasi 24-02-2021
 
                     //luan Jquery - luan here
@@ -20215,12 +20212,12 @@ WBSTree = (function ($) {
                     $('#delete_project').removeClass('btn btn-primary c-btn-delete');
                     $('#delete_project').addClass('btn btn-black');
                     $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
-                    $("#delete_project").attr('disabled', 'disabled');
+                    $("#delete_project").prop('disabled', true);
 
                     $('#update_project').removeClass('btn btn-primary c-btn-save');
                     $('#update_project').addClass('btn btn-black');
                     $('#update_project').attr('style', 'width:150px;margin-left:15px;');
-                    $("#update_project").attr('disabled', 'disabled');
+                    $("#update_project").prop('disabled', true);
                     // $('#ProjectModal :input').attr('disabled', 'disabled');
                     $('#updateBtnProgramPrgElm').attr('disabled', 'disabled');
                     $('#new_project_element_milestone').attr('disabled', 'disabled');  //vaishnavi 10-03-2022
