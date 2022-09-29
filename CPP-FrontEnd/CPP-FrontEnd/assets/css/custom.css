@@ -1786,6 +1786,14 @@ button[disabled=disabled], button:disabled {
 .grid-ui {
     overflow: auto !important;
 }
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?d5jw1g');
+    src: url('../fonts/icomoon.eot?d5jw1g#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?d5jw1g') format('truetype'), url('../fonts/icomoon.woff?d5jw1g') format('woff'), url('../fonts/icomoon.svg?d5jw1g#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
 
 .icons {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -1801,32 +1809,21 @@ button[disabled=disabled], button:disabled {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-doc-view:before {
+    content: "\e900";
+}
+
 .icon-72647:before {
     content: "\e901";
 }
 
 .icon-bom:before {
     content: "\e902";
-    font-size: 15px;
 }
 
 .icon-program-overview:before {
-    content: "\e900";
+    content: "\e903";
 }
-
-
-
-
-
-@font-face {
-    font-family: 'icomoon';
-    src: url('../fonts/icomoon.eot?pcz05c');
-    src: url('../fonts/icomoon.eot?pcz05c#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?pcz05c') format('truetype'), url('../fonts/icomoon.woff?pcz05c') format('woff'), url('../fonts/icomoon.svg?pcz05c#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
-
 
 .icon-72647 {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -1889,7 +1886,15 @@ button[disabled=disabled], button:disabled {
     color: #fff !important;
     font-size: 14px;
 }
-
+.grid__overflow__project {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left:70px;
+ 
+}
 .grid__title_rgt i {
     font-size: 18px;
     text-align: right;
@@ -1932,7 +1937,12 @@ button[disabled=disabled], button:disabled {
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
     }
-
+    .grid__table tbody td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
     }
@@ -2002,7 +2012,7 @@ a:active {
 th.sort-by {
     /*display: block;
     width: 100%;*/
-    padding-right: 18px;
+    /*   padding-right: 18px;  changes by sarab     */
     position: relative;
     cursor: pointer;
 }
