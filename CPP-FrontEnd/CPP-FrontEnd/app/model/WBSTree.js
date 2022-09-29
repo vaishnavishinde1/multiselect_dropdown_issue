@@ -20684,7 +20684,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "block");
+                    $("#contextMenuBillOfMaterial").css("display", "inline-block");
                     //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
