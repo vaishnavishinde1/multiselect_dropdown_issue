@@ -5752,8 +5752,7 @@ angular.module('cpp.controllers').
                     });
 
                     //Select Project
-                    $('#tblProject tr').on('click', function () {
-                       
+                    $('#tblProject tbody tr').on('click', function () {
                         //wbsTree.setSelectedNode(null);
                         $('#tblProject tr.selected').removeClass('selected');
                         $(this).addClass('selected');
