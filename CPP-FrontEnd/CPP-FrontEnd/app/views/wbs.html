@@ -3686,13 +3686,13 @@
                                                 </div>-->
                                                 <!--Narayan - Restructure table for change order in project - 23/06/2022-->
                                                 <div class="panel-body  table-outline-wo-p p-0" style=" height: 200px !important; overflow:auto">
-                                                    <table id="program_element_change_order_table_id" class="table table-striped">
+                                                    <table id="program_element_change_order_table_id" class="table table-striped p-0 m-0">
                                                         <thead class="t-head">
                                                             <tr>
                                                                 <th style="width: 20px;"></th>
                                                                 <th style="width: 23%;">Number (#)</th>
                                                                 <th style="width: 18%;">Title</th>
-                                                                <th style="width: 42%; ">Change Order Type</th>
+                                                                <th style="width: 42%; ">Type</th>
                                                                 <th style="width: 18%;">Cost ($)</th>
                                                                 <th style=" width: 18%;">Days</th>
                                                                 <th class="text-center" style="width: 18%;">Order Detail</th>
@@ -3720,8 +3720,8 @@
 
                                         <div id="documentUploadProgramNewPrg">
 
-                                            <h4 class="label-heading">Documents</h4>
-                                            <div class="panel-body table-outline p-0 " id="documentUploadProgramNewPrgTbl" style="overflow: auto;">
+                                            <h4 class="label-heading m-b-10">Documents</h4>
+                                            <div class="panel-body table-outline p-0 m-0" id="documentUploadProgramNewPrgTbl" style="overflow: auto;">
                                                 <table id="gridUploadedDocumentProgramNewPrg" class="table table-striped">
                                                     <thead class="t-head">
                                                         <tr>
@@ -6602,10 +6602,10 @@
                 <button id="cancel_doc_ViewAll_modal_xPrgElm" type="button" class="exit-button">X</button>
                 <h4 class="modal-title modal_heading">All Documents</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body  p-l-15 p-r-15">
                 <!--============================ Jignesh-SearchField-05022021 ================================-->
-                <div class="_form-group" style="">
-                    <div class="col-xs-6 m-b-10" style="padding-left: 82px;">
+                <div class="_form-group">
+                    <div class="col-xs-12 col-md-12 m-b-10">
                         <!--Jignesh-10-02-2021-->
                         <!--css changes by shweta-->
                         <label for="program_element_project_number" class="control-label _bold">Search : </label>
@@ -6614,7 +6614,8 @@
                 </div>
                 <!--==========================================================================================-->
                 <div class="block-view">
-                    <div class="panel-body" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                    <div class="panel-body table-outline p-0" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                        <!--css changes by sarab-->
                         <table id="tblViewAllDocumentInProgramElement" class="table table-striped">
                             <thead class="t-head">
                                 <tr>
@@ -6629,15 +6630,16 @@
                             <!-- Jignesh-SearchField-05022021 Put id in tbody instead of table tag-->
                         </table>
                     </div>
-                    <div class="row" id="buttonRow">
-                        <div class="col-sm-12 text-center">
-                            <button id="downloadBtnInViewAllProgramElement" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
-                            <button id="ViewUploadFileInViewAllProgramElement" class="btn btn-black" style="margin-top:8px;width:145px;">View Document</button>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div class="c-modal-footer">
+                <div class="row" id="buttonRow">
+                    <div class="col-sm-12 text-center">
+                        <button id="downloadBtnInViewAllProgramElement" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
+                        <button id="ViewUploadFileInViewAllProgramElement" class="btn btn-black" style="margin-top:8px;width:145px;">View Document</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -6651,11 +6653,11 @@
                 <button id="cancel_doc_ViewAll_modal_xproject" type="button" class="exit-button">X</button>
                 <h4 class="modal-title modal_heading">All Documents</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-l-15 p-r-15">
 
                 <!--============================ Jignesh-10-02-2021 (Please put this section in "modal-body") ================================-->
-                <div class="_form-group" style="">
-                    <div class="col-xs-6 m-b-10">
+                <div class="_form-group">
+                    <div class="col-xs-12 col-md-12 m-b-10">
                         <!--Jignesh-02-03-2021-->
                         <!--css changes by shweta-->
                         <label for="program_element_project_number" class="control-label _bold">Search : </label>
@@ -6663,9 +6665,9 @@
                     </div>
                 </div>
                 <!--==========================================================================================-->
-
-                <div class="block-view">
-                    <div class="panel-body" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                <!--css changes by sarab-->
+                <div class="block-view panel-body">
+                    <div class="table-outline-wo-p" style="overflow: auto; padding-top: 0; height: 350px !important;">
                         <table id="tblgridViewAllDocumentInProject" class="table table-striped">
                             <thead class="t-head">
                                 <tr>
@@ -6682,15 +6684,16 @@
                             <!-- Jignesh-SearchField-05022021 Put id in tbody instead of table tag-->
                         </table>
                     </div>
-                    <div class="row" id="buttonRow">
-                        <div class="col-sm-12 text-center">
-                            <button id="downloadBtnInViewAllProject" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
-                            <button id="ViewUploadFileInViewAllProject" class="btn btn-black" style="margin-top:8px;width:145px;">View Document</button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="c-modal-footer">
+                <div class="row" id="buttonRow">
+                    <div class="col-sm-12 text-center">
+                        <button id="downloadBtnInViewAllProject" class="btn btn-black" style="margin-top: 8px; width: 100px;">Download</button>
+                        <button id="ViewUploadFileInViewAllProject" class="btn btn-black" style="margin-top:8px;width:145px;">View Document</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

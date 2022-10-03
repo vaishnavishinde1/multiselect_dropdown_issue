@@ -2130,6 +2130,7 @@ th.sort-by {
 .table {
     border-collapse: separate !important;
     border-spacing: 0 !important;
+
 }
 .table thead th {
     position: -webkit-sticky;

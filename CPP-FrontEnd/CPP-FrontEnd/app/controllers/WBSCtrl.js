@@ -5107,14 +5107,14 @@ angular.module('cpp.controllers').
                         var strProject = "";
                         strProject += "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (selContract.Status == "Closed") {
-                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + selContract.name + "'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
 
                         else if (ModifyProject == "1") {
-                            strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project' title='" + selContract.name + "'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project'> (" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + selContract.name + "'> (" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         
                         
@@ -5231,13 +5231,13 @@ angular.module('cpp.controllers').
                        
                         strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (selProject.Status == "Closed") {
-                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else if (ModifyProjectElement == "1") {
-                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element'> (" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'> (" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strElement += "<div class='grid__scrollable' id='elementScroll'> <table class='grid__table p-0' id='tblElement'>"; //Aditya :: 27092022 
                         strElement += "<thead class='t-head'>";
@@ -5346,13 +5346,13 @@ angular.module('cpp.controllers').
                     strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
                   
                     if (selElement.Status == "Closed") {
-                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     else if (ModifyTrend == "1") {
-                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     else {
-                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
@@ -5490,14 +5490,14 @@ angular.module('cpp.controllers').
                         var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                           if (strProject.Status == "Closed") {
-                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                        
                         else if (ModifyProject == "1") {
-                              strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                              strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project'> (" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
@@ -5519,13 +5519,13 @@ angular.module('cpp.controllers').
 
                         var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (strElement.Status == "Closed") {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         if (ModifyProjectElement == "1") {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
@@ -5547,10 +5547,10 @@ angular.module('cpp.controllers').
 
                         var strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (ModifyTrend == "1") {
-                            strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend'>(" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strTrend += "<div class='grid__title'>Trend  <span class='grid__overflow__trend'>(" + tblParentName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strTrend += "<div class='grid__title'>Trend  <span class='grid__overflow__trend' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
