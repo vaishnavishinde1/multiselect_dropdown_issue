@@ -344,10 +344,10 @@ a {
   border-width: 1px;
   border-style: none dotted none none;
 }
-
+/* changes by sarab - 30-09-2022
 #tree-container .gridView td, #tree-container th {
     border-color: #ddd !important;
-}
+}*/
 
 #tree-container .gadget {
     border: none;
