@@ -1,3 +1,4 @@
+
 WBSTree = (function ($) {
     var obj = function WBSTree() {
         if (!this instanceof WBSTree) {
@@ -309,6 +310,9 @@ WBSTree = (function ($) {
         var g_newProgramElement = false;
         var g_program_element_milestone_draft_list = [];
 
+        var g_selectedSpecialInstruction = null;
+        var g_newSpecialInstruction = false;
+        var g_Special_instruction_draft_list = [];
         //Program Element Change Order globals
         var g_selectedProgramElementChangeOrder = null;
         var g_newProgramElement = false;
@@ -3929,7 +3933,7 @@ WBSTree = (function ($) {
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
                     var flag = true; //added by kavita
-                    var totalmod = 0;
+                    var  totalmod = 0;
                     var schImp = 0;
                     for (var x = 0; x < changeOrderList.length; x++) {
                         console.log(changeOrderList[x].ProgramElementID, programElementID);
@@ -3957,7 +3961,7 @@ WBSTree = (function ($) {
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             //Manu 11/01/2022
-                            totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
+                            totalmod = totalmod + parseFloat(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id tbody').append(
@@ -4912,7 +4916,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramModal').find('.modal-body #program_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction//$('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
                     // Aditya prime
                     newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
@@ -5369,10 +5373,48 @@ WBSTree = (function ($) {
                 modal.find('.modal-body #program_element_contract_end_date').val(contract.ContractEndDate);
             }
 
+            
+            //$('#btnSpecialInstruction').unbind('click').on('click', function () {
+            //    var selectedNode = wbsTree.getSelectedNode();
+            //    console.log(selectedNode);
+            //    var projectID = selectedNode.projectID;
+            //    if (wbsTree.getSelectedOrganizationID() == null) {
+            //        wbsTree.setSelectedOrganizationID($("#selectOrg").val());
+            //    }
+            //    var SpecialInstruction = modal.find('.modal-body #program_billing_poc_special_instruction1').val();
+
+            //    if (SpecialInstruction == "" || SpecialInstruction.length == 0) {
+            //        //dhtmlx.alert('Enter Tile.');
+            //        dhtmlx.alert('Enter Specail Instruction.');   //Manasi
+            //        return;
+            //    }
+            //    if (modal_mode == 'Update') {
+            //        selectedNode.BillingPOCSpecialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+            //    }
+            //        var obj = {
+            //            "Operation": 2,
+            //            "ProjectID": selectedNode.ProjectID,
+            //            "BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction
+            //        }
+
+            //        var listToSave = [];
+            //        listToSave.push(obj);
+            //});
             //luan quest 3/22
+
+            $('#btnSpecialInstruction').bind('click', function () {
+                event.preventDefault();    //Manasi 09-03-2021
+                g_newSpecialInstruction = true;
+               
+                $('#SpecialInstructoinModal').modal({ show: true, backdrop: 'static' });
+                $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+            });
+
+
+
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
-                console.log(selectedNode);
+                rbChangeOrderconsole.log(selectedNode);
                 var scope = wbsTree.getScope();
 
                 var orgName = wbsTree.getOrgProjectName();
@@ -5467,7 +5509,7 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
 
-                    selectedNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
                     selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
 
 
@@ -6149,7 +6191,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
@@ -8596,6 +8638,42 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_milestone_date_modal').val('');
                 }
             });
+          //code added by kavita
+            $('#SpecialInstructoinModal').unbind().on('show.bs.modal', function (event) {
+                 $('#message_div').hide();
+                defaultModalPosition();
+                var isProjectSpecialInstrucion = !g_newSpecialInstruction;
+                  //blur
+                $("#ProgramElementModal").css({ "opacity": "0.9" });
+
+                //console.log(g_selectedSpecialInstruction)
+                modal = $(this);
+                modal.find('.modal-body #SpecialInstructoinModal').focus();
+                if (isProjectSpecialInstrucion) {
+                    //luan Jquery - luan here
+                    console.log('applied jquery');
+                  
+                    modal.find('.modal-SpecialInstructoinModal').text('hello');
+                 
+                }
+                else {	//create new
+                    modal.find('.modal-SpecialInstructoinModal').text('hello');
+                  
+
+                }
+            });
+             //code added by kavita
+            $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
+                // debugger;
+                //$("#BillOfMaterialModal").css({ "opacity": "0.8" });
+               $("#SpecialInstructoinModal").modal('toggle');
+
+            });
+             //code added by kavita
+            $('#update_special_instruction').unbind('click').on('click', function () {
+                localStorage.specialInstruction = $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#SpecialInstructoinModal").modal('toggle');
+            });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
             //$('#delete_project_element_milestone_modal').click(function () {
@@ -8712,7 +8790,7 @@ WBSTree = (function ($) {
                 if (localStorage.Status== 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
-                    localStorage.Status = "";
+                    nailocalStorage.Status = "";
 
                 }
             });
@@ -8723,7 +8801,7 @@ WBSTree = (function ($) {
                 event.preventDefault();    //Manasi 09-03-2021
                 g_newProjectElementMilestone = true;
                $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
-                //$('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+               $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
                 $('#delete_project_element_milestone_modal').hide();
                 g_selectedProjectElementMilestone = {
                     MilestoneID: 0,
@@ -8734,9 +8812,24 @@ WBSTree = (function ($) {
                     ProjectID: 0
                 }
             });
-
-
             
+           
+            //$('#btnModification').unbind().on('click', function (event) {
+
+            //    event.preventDefault();    //Manasi 09-03-2021
+            //    g_newProjectElementMilestone = true;
+            //    $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#delete_project_element_milestone_modal').hide();
+            //    //g_selectedProjectElementMilestone = {
+            //    //    MilestoneID: 0,
+            //    //    MilestoneName: 0,
+            //    //    MilestoneDescription: '',
+            //    //    MilestoneDate: '',
+            //    //    ProgramElementID: 0,
+            //    //    ProjectID: 0
+            //    //}
+            //});
             // CLICK EDIT PROJECT ELEMENT MIELSTONE LEGACY
             $('#edit_project_element_milestone').unbind().on('click', function (event) {  //Manasi
                 event.preventDefault();    //Manasi 09-03-2021
@@ -9258,9 +9351,9 @@ WBSTree = (function ($) {
                     return;
                 }
                 //------------------------*/
-                g_newProgramElementMilestone = false;
-                //$('#delete_program_contract_modal').show();
-                $('#delete_program_element_milestone_modal').show();
+                g_newProgramElementMilestone = true;
+                
+               
                 if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
                     g_selectedProgramElementMilestone = { MilestoneID: 0 };
                 }
@@ -9272,6 +9365,8 @@ WBSTree = (function ($) {
                 console.log(g_selectedProgramElementMilestone);
                 $('#ProgramElementMilestoneModal').modal({ show: true, backdrop: 'static' });
             });
+
+
 
 
             //Added by Amruta for delete
@@ -15178,6 +15273,7 @@ WBSTree = (function ($) {
 
                         if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
                             modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                       
                         }
 
                         document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
@@ -17186,7 +17282,7 @@ WBSTree = (function ($) {
                 $("#BillOfMaterialModal").modal('toggle');
 
             });
-
+           
 
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
@@ -19358,6 +19454,7 @@ WBSTree = (function ($) {
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                        localstorage.specialInstruction = val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'))
                     }
 
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
