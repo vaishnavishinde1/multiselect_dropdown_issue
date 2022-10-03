@@ -705,8 +705,7 @@ fieldset.scheduler-border {
 
 .btn-va {
     padding: 0;
-    margin: 0;
-    !important;
+    margin: 0 !important;
 }
 
 /* am main */
@@ -1786,6 +1785,14 @@ button[disabled=disabled], button:disabled {
 .grid-ui {
     overflow: auto !important;
 }
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?d5jw1g');
+    src: url('../fonts/icomoon.eot?d5jw1g#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?d5jw1g') format('truetype'), url('../fonts/icomoon.woff?d5jw1g') format('woff'), url('../fonts/icomoon.svg?d5jw1g#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
 
 .icons {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -1801,32 +1808,21 @@ button[disabled=disabled], button:disabled {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-doc-view:before {
+    content: "\e900";
+}
+
 .icon-72647:before {
     content: "\e901";
 }
 
 .icon-bom:before {
     content: "\e902";
-    font-size: 15px;
 }
 
 .icon-program-overview:before {
-    content: "\e900";
+    content: "\e903";
 }
-
-
-
-
-
-@font-face {
-    font-family: 'icomoon';
-    src: url('../fonts/icomoon.eot?pcz05c');
-    src: url('../fonts/icomoon.eot?pcz05c#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?pcz05c') format('truetype'), url('../fonts/icomoon.woff?pcz05c') format('woff'), url('../fonts/icomoon.svg?pcz05c#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
-
 
 .icon-72647 {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -1870,11 +1866,12 @@ button[disabled=disabled], button:disabled {
 .grid__title {
     background: linear-gradient(90deg,#719bae,#5580bc);
     border-radius: 5px;
+    font-size: 16px;
     color: #fff;
     padding: 10px;
     margin-bottom: 5px;
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
 }
 .grid__title_left {    
     color: #fff;   
@@ -1889,7 +1886,31 @@ button[disabled=disabled], button:disabled {
     color: #fff !important;
     font-size: 14px;
 }
-
+.grid__overflow__project {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left:80px;
+ 
+}
+.grid__overflow__project-element {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left: 151px;
+}
+.grid__overflow__trend {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left: 70px;
+}
 .grid__title_rgt i {
     font-size: 18px;
     text-align: right;
@@ -1922,17 +1943,23 @@ button[disabled=disabled], button:disabled {
         font-size: 14px;
         position: sticky !important;
         top: 0;
-        
+        border: 1px solid #beddea;
     }
+
     .grid__table td {
         border: 1px solid #fff;
-        padding: 7px;
+        padding: 9px;
         font-family: Arial;
-        font-size: 14px;
+        font-size: 16px;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
     }
-
+    .grid__table tbody td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .grid__table tr:nth-child(even) {
         background-color: #eef4fe;
     }
@@ -2002,7 +2029,7 @@ a:active {
 th.sort-by {
     /*display: block;
     width: 100%;*/
-    padding-right: 18px;
+    /*   padding-right: 18px;  changes by sarab     */
     position: relative;
     cursor: pointer;
 }
@@ -2013,7 +2040,7 @@ th.sort-by {
         content: "";
         display: block;
         height: 0;
-        right: 5px;
+        right: 10px;
         top: 50%;
         position: absolute;
         width: 0;
@@ -2103,6 +2130,7 @@ th.sort-by {
 .table {
     border-collapse: separate !important;
     border-spacing: 0 !important;
+
 }
 .table thead th {
     position: -webkit-sticky;
