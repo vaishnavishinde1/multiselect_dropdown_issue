@@ -5751,6 +5751,7 @@ angular.module('cpp.controllers').
                         var projectId = $scope.GridProjectId;
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
+                        
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
                         if (selectedProject.Status == "Closed") {

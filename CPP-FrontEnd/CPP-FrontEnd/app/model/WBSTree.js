@@ -1347,7 +1347,7 @@ WBSTree = (function ($) {
             _selectedNode = selectedNode;
             console.log("selectedNode==");
             console.log(selectedNode);
-        }
+            program_element_total_value}
         obj.prototype.getSelectedNode = function () {
             return _selectedNode;
         }
@@ -5410,11 +5410,9 @@ WBSTree = (function ($) {
                 $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
             });
 
-
-
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
-                rbChangeOrderconsole.log(selectedNode);
+                //rbChangeOrderconsole.log(selectedNode);
                 var scope = wbsTree.getScope();
 
                 var orgName = wbsTree.getOrgProjectName();
@@ -6122,7 +6120,7 @@ WBSTree = (function ($) {
                         } 
                         
                     });
-
+            
                 }
 
 
@@ -6777,6 +6775,7 @@ WBSTree = (function ($) {
                             /////////aaa
                             // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
+                            localstorage.specialInstruction = "";
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
@@ -15273,7 +15272,10 @@ WBSTree = (function ($) {
 
                         if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
                             modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                       
+                            localStorage.specialInstruction = selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
+                        }
+                        else {
+                            localStorage.specialInstruction = "";
                         }
 
                         document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
