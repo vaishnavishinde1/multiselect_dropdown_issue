@@ -6006,6 +6006,8 @@ angular.module('cpp.controllers').
                         selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
 
+                        wbsTree.setSelectedProjectID(selectedProjectElementID);
+
                         //Add Trend
                         //$("#AddTrendGridBtn").unbind('click').on("click", function () {
                         //    //var programId = $scope.GridContractId;
