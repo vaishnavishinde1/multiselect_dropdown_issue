@@ -18768,34 +18768,34 @@ WBSTree = (function ($) {
                 modal = $(this);
                 var type = localStorage.getItem('contextType');
 
-                if (displayMap) {
+                //if (displayMap) {
                     selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
-                            $.each(Treedata.children, function (i, Contract) {
-                                if (Contract.children) {
-                                    $.each(Contract.children, function (j, Project) {
-                                        if (Project.children) {
-                                            $.each(Project.children, function (k, Element) {
+                //        if (SelectedProjectId) {
+                //            $.each(Treedata.children, function (i, Contract) {
+                //                if (Contract.children) {
+                //                    $.each(Contract.children, function (j, Project) {
+                //                        if (Project.children) {
+                //                            $.each(Project.children, function (k, Element) {
 
-                                                if (Element.ProjectID == SelectedProjectId) {
-                                                    selectedNode = Element;
-                                                    wbsTree.setSelectedNode(selectedNode);
-                                                }
+                //                                if (Element.ProjectID == SelectedProjectId) {
+                //                                    selectedNode = Element;
+                //                                    wbsTree.setSelectedNode(selectedNode);
+                //                                }
 
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
+                //                            });
+                //                        }
+                //                    });
+                //                }
+                //            });
+                //        }
+                //    }
 
 
-                }
+                //}
 
                 defaultModalPosition();
 
@@ -19175,18 +19175,18 @@ WBSTree = (function ($) {
 
 
 
-                if (displayMap) {
-                    selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //if (displayMap) {
+                //    selectedNode = wbsTree.getSelectedNode();
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
+                //        if (SelectedProjectId) {
 
-                        }
-                    }
+                //        }
+                //    }
 
-                }
+                //}
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 _selectedProgramElement = {};
