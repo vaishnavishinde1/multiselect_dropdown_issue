@@ -5162,7 +5162,7 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
                                 /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
-                                strProject += "<td style='color:red'>" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td style='color:red' align ='right'>$" + project.ProjectForecastValue + "</td>";
                                 strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
@@ -5174,7 +5174,7 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
                                // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
-                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "'>" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "' align ='right'>$" + project.ProjectForecastValue + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
