@@ -3930,6 +3930,7 @@ WBSTree = (function ($) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
                     $('#program_element_change_order_table_id tbody').empty();
+                    $('#program_element_change_order_table_id tfoot').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
                     var flag = true; //added by kavita
@@ -3944,9 +3945,6 @@ WBSTree = (function ($) {
                             //Added By Amruta for locking the project end date
                             $('#program_element_PEnd_Date').attr('disabled', 'disabled');
                             
-
-
-
                             var singeChangeOrder = {};
                             singeChangeOrder = changeOrderList[x];
 
@@ -4003,11 +4001,14 @@ WBSTree = (function ($) {
                         }
                       
                     }
+                  
                     //change by kavita 
                     if (flag != true) {
-                        $('#program_element_change_order_table_id').append('<tfoot><tr ><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"   style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+
+                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
                         '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
-                        '</tr></tfoot>');
+                            '</tr></tfoot>');
+                        flag = true;
                     }
                     // }, 3000);
 
@@ -8642,7 +8643,8 @@ WBSTree = (function ($) {
                 defaultModalPosition();
                 var isProjectSpecialInstrucion = !g_newSpecialInstruction;
                   //blur
-                $("#ProgramElementModal").css({ "opacity": "0.9" });
+                $("#ProgramElementModal").css({ "opacity": "1" });
+          
 
                 //console.log(g_selectedSpecialInstruction)
                 modal = $(this);

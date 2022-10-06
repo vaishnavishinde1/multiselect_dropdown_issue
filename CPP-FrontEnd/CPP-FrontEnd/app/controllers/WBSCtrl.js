@@ -10,7 +10,7 @@ angular.module('cpp.controllers').
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType,) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -5755,6 +5755,9 @@ angular.module('cpp.controllers').
                         
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
+                        $("#btnSpecialInstruction").prop('disabled', false);
+                        $("#contextMenuBillOfMaterial").prop('disabled', false);
+
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
                             $('#delete_program_element').removeClass('btn btn-black');
