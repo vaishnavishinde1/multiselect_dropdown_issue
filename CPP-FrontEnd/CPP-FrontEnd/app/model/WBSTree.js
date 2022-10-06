@@ -1,3 +1,4 @@
+
 WBSTree = (function ($) {
     var obj = function WBSTree() {
         if (!this instanceof WBSTree) {
@@ -309,6 +310,9 @@ WBSTree = (function ($) {
         var g_newProgramElement = false;
         var g_program_element_milestone_draft_list = [];
 
+        var g_selectedSpecialInstruction = null;
+        var g_newSpecialInstruction = false;
+        var g_Special_instruction_draft_list = [];
         //Program Element Change Order globals
         var g_selectedProgramElementChangeOrder = null;
         var g_newProgramElement = false;
@@ -412,7 +416,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuClosed").parent().hide();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                       
                     }
 
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
@@ -464,7 +468,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                       
                     }
                     //----Vaishnavi 30-03-2022----//
 
@@ -480,7 +484,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
 
@@ -542,7 +546,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                         
                     }
 
                 }
@@ -556,7 +560,7 @@ WBSTree = (function ($) {
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
                     localStorage.Status = "Closed";
-                    localStorage.Status1 = "Closed";      //Code added by Kavita 
+                   
 
                 }
                 //----Vaishnavi 30-03-2022----//
@@ -1343,7 +1347,7 @@ WBSTree = (function ($) {
             _selectedNode = selectedNode;
             console.log("selectedNode==");
             console.log(selectedNode);
-        }
+            program_element_total_value}
         obj.prototype.getSelectedNode = function () {
             return _selectedNode;
         }
@@ -3688,7 +3692,7 @@ WBSTree = (function ($) {
                             '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                             '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                             //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            '<td class="text-center"> <i class="fa fa-eye btntbl-icon"  title="View"  id="notes_view"></i></td>' +
+                            '<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
                             '</tr>'
                         );
 
@@ -3928,8 +3932,8 @@ WBSTree = (function ($) {
                     $('#program_element_change_order_table_id tbody').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
-
-                    var totalmod = 0;
+                    var flag = true; //added by kavita
+                    var  totalmod = 0;
                     var schImp = 0;
                     for (var x = 0; x < changeOrderList.length; x++) {
                         console.log(changeOrderList[x].ProgramElementID, programElementID);
@@ -3939,7 +3943,7 @@ WBSTree = (function ($) {
 
                             //Added By Amruta for locking the project end date
                             $('#program_element_PEnd_Date').attr('disabled', 'disabled');
-
+                            
 
 
 
@@ -3957,7 +3961,7 @@ WBSTree = (function ($) {
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             //Manu 11/01/2022
-                            totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
+                            totalmod = totalmod + parseFloat(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id tbody').append(
@@ -3976,11 +3980,12 @@ WBSTree = (function ($) {
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
-                                '</tr>'
+                                 '</tr>'
+                               
                             );
-
+                            flag = false;
                             //$('#program_element_change_order_table_id').append(
                             //    '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                             //    ' <td style="width: 20px">' +
@@ -3996,6 +4001,13 @@ WBSTree = (function ($) {
                             //    '</tr>'
                             //);
                         }
+                      
+                    }
+                    //change by kavita 
+                    if (flag != true) {
+                        $('#program_element_change_order_table_id').append('<tfoot><tr ><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"   style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+                        '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
+                        '</tr></tfoot>');
                     }
                     // }, 3000);
 
@@ -4045,12 +4057,13 @@ WBSTree = (function ($) {
                         }
 
                         //Code added by Kavita 
-                        if (localStorage.Status1 == "Closed") {
+                        if (localStorage.Status == "Closed") {
                             $('#new_program_element_change_order').prop('disabled', true);
                             $('#edit_program_element_change_order').prop('disabled', true);
                             $('#delete_program_element_change_order').prop('disabled', true);
                             $('#downloadBtnChangeOrder').prop('disabled', true);
                             $('#ViewUploadFileChangeOrder').prop('disabled', true);
+                            localStorage.Status= "";
                         }
 
                     });
@@ -4797,6 +4810,14 @@ WBSTree = (function ($) {
 
                             //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             //window.location.reload();   //Manasi 28-07-2020
+                            var prevScroll = $('#contractScroll').scrollTop();
+                            scope.loadWBSData.GetContractGridSection(selectedNode.parent, selectedNode.ProgramID);
+                            //Aditya :: Scroll to selected position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                debugger;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') $('#contractScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             selectedNode.name = temp_node.name;
                             selectedNode.ProgramNote = temp_node.ProgramNote;
@@ -4826,7 +4847,6 @@ WBSTree = (function ($) {
                             }
                         }
 
-                        scope.loadWBSData.GetContractGridSection(selectedNode.parent);
                     });
                 }
 
@@ -4895,7 +4915,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramModal').find('.modal-body #program_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction//$('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
                     // Aditya prime
                     newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
@@ -5308,13 +5328,25 @@ WBSTree = (function ($) {
 
                                 //scope.loadWBSData(orgId, null, null, null, null, null, null);
                                 wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
-                                //Aditya 24062022 :scroll to bottom
-                                var viewMode;
-                                var view_mode = localStorage.getItem('MODE');
-                                if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
-                                if (view_mode == 'mindmap') viewMode = 'mindmap';
-                                var divToScroll = document.getElementById(viewMode);
-                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                                // //Aditya 24062022 :scroll to bottom
+                                // var viewMode;
+                                // var view_mode = localStorage.getItem('MODE');
+                                // if (view_mode == 'gridview') viewMode = 'wbsGridView'; 
+                                // if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                // var divToScroll = document.getElementById(viewMode);
+                                // divToScroll.scrollTop = divToScroll.scrollHeight;
+
+                                scope.loadWBSData.GetContractGridSection(selectedNode, newNode.ProgramID);
+                                //Aditya :: Scroll to new position :: 27092022 
+                                if (response.result.split(',')[0].trim() === "Success") {
+                                    var viewMode;
+                                    var view_mode = localStorage.getItem('MODE');
+                                    if (view_mode == 'gridview') viewMode = 'contractScroll';
+                                    if (view_mode == 'mindmap') viewMode = 'mindmap';
+                                    /*$('#contractScroll').scrollTop();//for position*/
+                                    var divToScroll = document.getElementById(viewMode);
+                                    divToScroll.scrollTop = divToScroll.scrollHeight;
+                                }
 
                             } else {
                                 $("#update_program").attr("disabled", false); //Aditya
@@ -5329,9 +5361,7 @@ WBSTree = (function ($) {
                                     dhtmlx.alert({ text: response.result, width: '500px' });
                                 //  $('#ProgramModal').modal('hide');
                             }
-
-                            scope.loadWBSData.GetContractGridSection(selectedNode);
-
+														   
                         });
                 }
             });
@@ -5342,10 +5372,46 @@ WBSTree = (function ($) {
                 modal.find('.modal-body #program_element_contract_end_date').val(contract.ContractEndDate);
             }
 
+            
+            //$('#btnSpecialInstruction').unbind('click').on('click', function () {
+            //    var selectedNode = wbsTree.getSelectedNode();
+            //    console.log(selectedNode);
+            //    var projectID = selectedNode.projectID;
+            //    if (wbsTree.getSelectedOrganizationID() == null) {
+            //        wbsTree.setSelectedOrganizationID($("#selectOrg").val());
+            //    }
+            //    var SpecialInstruction = modal.find('.modal-body #program_billing_poc_special_instruction1').val();
+
+            //    if (SpecialInstruction == "" || SpecialInstruction.length == 0) {
+            //        //dhtmlx.alert('Enter Tile.');
+            //        dhtmlx.alert('Enter Specail Instruction.');   //Manasi
+            //        return;
+            //    }
+            //    if (modal_mode == 'Update') {
+            //        selectedNode.BillingPOCSpecialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+            //    }
+            //        var obj = {
+            //            "Operation": 2,
+            //            "ProjectID": selectedNode.ProjectID,
+            //            "BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction
+            //        }
+
+            //        var listToSave = [];
+            //        listToSave.push(obj);
+            //});
             //luan quest 3/22
+
+            $('#btnSpecialInstruction').bind('click', function () {
+                event.preventDefault();    //Manasi 09-03-2021
+                g_newSpecialInstruction = true;
+               
+                $('#SpecialInstructoinModal').modal({ show: true, backdrop: 'static' });
+                $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+            });
+
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
-                console.log(selectedNode);
+                //rbChangeOrderconsole.log(selectedNode);
                 var scope = wbsTree.getScope();
 
                 var orgName = wbsTree.getOrgProjectName();
@@ -5440,7 +5506,7 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
 
-                    selectedNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
                     selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
 
 
@@ -6022,6 +6088,15 @@ WBSTree = (function ($) {
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProgramElementModal').modal('hide');
                             //window.location.reload();   //Manasi 28-07-2020
+
+                            var prevScroll = $('#projectScroll').scrollTop();
+                            scope.loadWBSData.getProjectGridSection(selectedNode.parent, selectedNode.ProgramElementID);
+                            //Aditya :: Scroll to selected position :: 27092022
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var view_mode = localStorage.getItem('MODE');
+                                //if (view_mode == 'gridview') $('#projectScroll').scrollTop = $('#projectScroll').position().top;
+                                if (view_mode == 'gridview') $('#projectScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             $("#update_program_element").attr("disabled", false);
 
@@ -6041,12 +6116,10 @@ WBSTree = (function ($) {
                             //     selectedNode.CapitalProjectAssistant =  temp_node.CapitalProjectAssistant;
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
-                        }
-
-                        scope.loadWBSData.getProjectGridSection(selectedNode.parent);
-
+                        } 
+                        
                     });
-
+            
                 }
 
 
@@ -6115,7 +6188,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
@@ -6701,6 +6774,7 @@ WBSTree = (function ($) {
                             /////////aaa
                             // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
+                            localstorage.specialInstruction = "";
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
@@ -6742,6 +6816,17 @@ WBSTree = (function ($) {
                             //scope.loadWBSData(orgId, null, null, null, null, null, null);
                             wbsTree.setSelectedNode(selectedNode);
                             wbsTree.updateTreeNodes(selectedNode);
+
+                            scope.loadWBSData.getProjectGridSection(selectedNode, newNode.ProgramElementID);
+                            //Aditya :: Scroll to new position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                debugger;
+                                if (view_mode == 'gridview') viewMode = 'projectScroll';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                            }
                         } else {
 
                             selectedNode.ProgramElementName = temp_node.ProgramElementName;	//luan eats
@@ -6758,7 +6843,6 @@ WBSTree = (function ($) {
                             //  wbsTree.setSelectedNode(temp_node);
                         }
 
-                        scope.loadWBSData.getProjectGridSection(selectedNode);
                     });
                 }
             });
@@ -7384,6 +7468,15 @@ WBSTree = (function ($) {
                             wbsTree.getWBSTrendTree().trendGraph(true);
                             wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
                             $('#ProjectModal').modal('hide');
+
+                            var prevScroll = $('#elementScroll').scrollTop();
+                            scope.loadWBSData.getElementGridSection(selectedNode.parent, selectedNode.ProjectID);
+                            //Aditya :: Scroll to selected position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                debugger;
+                                var view_mode = localStorage.getItem('MODE');
+                                if (view_mode == 'gridview') $('#elementScroll').scrollTop(prevScroll);
+                            }
                         } else {
                             $("#update_project").attr("disabled", false);
                             dhtmlx.alert({
@@ -7403,8 +7496,7 @@ WBSTree = (function ($) {
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
                         }
-
-                        scope.loadWBSData.getElementGridSection(selectedNode.parent);
+                        
                     });
 
                 }
@@ -7973,7 +8065,16 @@ WBSTree = (function ($) {
                                 wbsTree.getWBSTrendTree().trendGraph();
                                 //window.location.reload();  //Manasi 28-07-2020
                             });
-
+                            scope.loadWBSData.getElementGridSection(selectedNode, newNode.ProjectID);
+                            //Aditya :: Scroll to new position :: 27092022 
+                            if (response.result.split(',')[0].trim() === "Success") {
+                                var viewMode;
+                                var view_mode = localStorage.getItem('MODE');
+                                debugger;
+                                if (view_mode == 'gridview') viewMode = 'elementScroll';
+                                var divToScroll = document.getElementById(viewMode);
+                                divToScroll.scrollTop = divToScroll.scrollHeight;
+                            }
                         } else {
                             $("#update_project").attr("disabled", false);
 
@@ -7994,8 +8095,7 @@ WBSTree = (function ($) {
 
                         }
 
-                        scope.loadWBSData.getElementGridSection(selectedNode);
-
+                        
                     });
 
                     wbsTree.updateTreeNodes(selectedNode);
@@ -8536,6 +8636,42 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_milestone_date_modal').val('');
                 }
             });
+          //code added by kavita
+            $('#SpecialInstructoinModal').unbind().on('show.bs.modal', function (event) {
+                 $('#message_div').hide();
+                defaultModalPosition();
+                var isProjectSpecialInstrucion = !g_newSpecialInstruction;
+                  //blur
+                $("#ProgramElementModal").css({ "opacity": "0.9" });
+
+                //console.log(g_selectedSpecialInstruction)
+                modal = $(this);
+                modal.find('.modal-body #SpecialInstructoinModal').focus();
+                if (isProjectSpecialInstrucion) {
+                    //luan Jquery - luan here
+                    console.log('applied jquery');
+                  
+                    modal.find('.modal-SpecialInstructoinModal').text('hello');
+                 
+                }
+                else {	//create new
+                    modal.find('.modal-SpecialInstructoinModal').text('hello');
+                  
+
+                }
+            });
+             //code added by kavita
+            $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
+                // debugger;
+                //$("#BillOfMaterialModal").css({ "opacity": "0.8" });
+               $("#SpecialInstructoinModal").modal('toggle');
+
+            });
+             //code added by kavita
+            $('#update_special_instruction').unbind('click').on('click', function () {
+                localStorage.specialInstruction = $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#SpecialInstructoinModal").modal('toggle');
+            });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
             //$('#delete_project_element_milestone_modal').click(function () {
@@ -8649,9 +8785,10 @@ WBSTree = (function ($) {
                 $('#delete_project_element_milestone').removeAttr('disabled');
 
                 //Code added by Kavita 
-                if (localStorage.Status1 == 'Closed') {
+                if (localStorage.Status== 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
+                    nailocalStorage.Status = "";
 
                 }
             });
@@ -8661,7 +8798,8 @@ WBSTree = (function ($) {
 
                 event.preventDefault();    //Manasi 09-03-2021
                 g_newProjectElementMilestone = true;
-                $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
+               $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
+               $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
                 $('#delete_project_element_milestone_modal').hide();
                 g_selectedProjectElementMilestone = {
                     MilestoneID: 0,
@@ -8672,7 +8810,24 @@ WBSTree = (function ($) {
                     ProjectID: 0
                 }
             });
+            
+           
+            //$('#btnModification').unbind().on('click', function (event) {
 
+            //    event.preventDefault();    //Manasi 09-03-2021
+            //    g_newProjectElementMilestone = true;
+            //    $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#delete_project_element_milestone_modal').hide();
+            //    //g_selectedProjectElementMilestone = {
+            //    //    MilestoneID: 0,
+            //    //    MilestoneName: 0,
+            //    //    MilestoneDescription: '',
+            //    //    MilestoneDate: '',
+            //    //    ProgramElementID: 0,
+            //    //    ProjectID: 0
+            //    //}
+            //});
             // CLICK EDIT PROJECT ELEMENT MIELSTONE LEGACY
             $('#edit_project_element_milestone').unbind().on('click', function (event) {  //Manasi
                 event.preventDefault();    //Manasi 09-03-2021
@@ -9151,9 +9306,10 @@ WBSTree = (function ($) {
                 $('#edit_program_element_milestone').removeAttr('disabled');
                 $('#delete_program_element_milestone').removeAttr('disabled');
                 //Code added by Kavita 
-                if (localStorage.Status1 == 'Closed') {
+                if (localStorage.Status == 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
+                    localStorage.Status = "";
 
                 }
             });
@@ -9193,9 +9349,9 @@ WBSTree = (function ($) {
                     return;
                 }
                 //------------------------*/
-                g_newProgramElementMilestone = false;
-                //$('#delete_program_contract_modal').show();
-                $('#delete_program_element_milestone_modal').show();
+                g_newProgramElementMilestone = true;
+                
+               
                 if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
                     g_selectedProgramElementMilestone = { MilestoneID: 0 };
                 }
@@ -9207,6 +9363,8 @@ WBSTree = (function ($) {
                 console.log(g_selectedProgramElementMilestone);
                 $('#ProgramElementMilestoneModal').modal({ show: true, backdrop: 'static' });
             });
+
+
 
 
             //Added by Amruta for delete
@@ -10214,13 +10372,13 @@ WBSTree = (function ($) {
                 $('#edit_program_element_change_order').removeAttr('disabled');
                 $('#delete_program_element_change_order').removeAttr('disabled');
                 //Code added by Kavita 
-                if (localStorage.Status1 == "Closed") {
+                if (localStorage.Status == "Closed") {
                     $('#new_program_element_change_order').prop('disabled', true);
                     $('#edit_program_element_change_order').prop('disabled', true);
                     $('#delete_program_element_change_order').prop('disabled', true);
                     $('#downloadBtnChangeOrder').prop('disabled', true);
                     $('#ViewUploadFileChangeOrder').prop('disabled', true);
-                    // localStorage.Status1 = "";
+                    localStorage.Status= "";
                 }
 
             });
@@ -11188,7 +11346,7 @@ WBSTree = (function ($) {
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
                                     '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
@@ -11316,7 +11474,7 @@ WBSTree = (function ($) {
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _NoticeList[x].Reason + '</td>' +
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
                                     '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
                                     '<tr > ');
                             }
@@ -12220,7 +12378,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="fa fa-eye btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
+                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12237,12 +12395,13 @@ WBSTree = (function ($) {
                                     $('#downloadBtnProgram').removeAttr('disabled');
                                 }
                                 //Code added by Kavita 
-                                if (localStorage.Status1 == 'Closed') {
+                                if (localStorage.Status == 'Closed') {
 
                                     $('#DeleteUploadProgram').prop('disabled', true);
                                     $('#ViewUploadFileProgram').prop('disabled', true);
                                     $('#EditBtnProgram').prop('disabled', true);
                                     $('#downloadBtnProgram').prop('disabled', true);
+                                    localStorage.Status = "";
                                 }
                                 localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                                 //g_selectedProjectDocument = null;
@@ -12281,7 +12440,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12309,11 +12468,12 @@ WBSTree = (function ($) {
                                 $('#downloadBtnInViewAllContracts').removeAttr('disabled');
                             }
                             //Code added by Kavita 
-                            if (localstorage.status1 == 'Closed') {
+                            if (localstorage.Status== 'Closed') {
                                 $('#DeleteUploadProgram').prop('disabled', true);
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
+                                localstorage.Status = "";
                             }
                         });
                         //============================ Jignesh-SearchField-05022021 ================================
@@ -14198,7 +14358,7 @@ WBSTree = (function ($) {
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + modificatioTitle + '</td>' +
                                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -14669,7 +14829,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -14699,12 +14859,13 @@ WBSTree = (function ($) {
                             }
 
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgramPrg').prop('disabled', true);
                                 $('#downloadBtnProgramPrg').prop('disabled', true);
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
 
@@ -14742,7 +14903,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -14821,12 +14982,13 @@ WBSTree = (function ($) {
                             }
 
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgramPrg').prop('disabled', true);
                                 $('#downloadBtnProgramPrg').prop('disabled', true);
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
                         });
@@ -15109,6 +15271,10 @@ WBSTree = (function ($) {
 
                         if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
                             modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                            localStorage.specialInstruction = selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
+                        }
+                        else {
+                            localStorage.specialInstruction = "";
                         }
 
                         document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
@@ -15662,7 +15828,7 @@ WBSTree = (function ($) {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
                     document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
-                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
+                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 0;
                     document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
@@ -15673,6 +15839,8 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialModal').unbind().on('show.bs.modal', function (event) {
                 defaultModalPosition();
+                
+
                 //using on('click','li') will activate on li's click
 
 
@@ -15711,121 +15879,116 @@ WBSTree = (function ($) {
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
 
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    if (id != undefined) {
-                        wbsTree.setBillOfMaterialOperation(2);
-                        $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+            });
+            $("#bill_of_material_table_id").unbind().on('click', '#delete_bill_of_material', function () {
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                wbsTree.setBillOfMaterialOperation(3);
+                operation = wbsTree.getBillOfMaterialOperation();
+                dhtmlx.confirm("Are you Sure. Want to Delete?", function (result) {
 
-                        materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
-                        materialCategoryDropDown.empty();
+                    if (result) {
 
-                        materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
-                        materialDropDown.empty();
-
-                        manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
-                        manufacturerDown.empty();
-
-                        for (i = 0; i < _BillOfMaterialList.length; i++) {
-                            if (id == _BillOfMaterialList[i].Id) {
-                                var MaterialCategoryData = wbsTree.getMaterialCategoryList();
-                                for (j = 0; j < MaterialCategoryData.length; j++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
-
-
-                                        materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
-
-                                    }
-                                }
-
-                                fetchmaterial();
-
-                                var MaterialDropdowndata = materialArray;
-
-                                materialDropDown.empty();
-
-                                for (x = 0; x < MaterialDropdowndata.length; x++) {
-
-
-                                    if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
-
-
-                                        materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
-                                    }
-                                    else {
-
-                                        materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
-
-                                    }
-                                }
-
-
-
-                                var ManufacturerData = wbsTree.getManufacturerList();
-
-                                for (var z = 0; z < ManufacturerData.length; z++) {
-
-                                    if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
-
-                                        manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-                                    else {
-                                        manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
-                                    }
-
-                                }
-                                $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
-
-                                $("#txtDescription").val(_BillOfMaterialList[i].Description);
-                                $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
-                                $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
-                                $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
-                                $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
-
-
-                            }
-                        }
-
+                        var billofmaterialdetails = {
+                            Operation: operation,
+                            Id: id,
+                            Deleted: 1,
+                            ProgramElementID: _selectedNode.ProgramElementID,
+                        };
+                        SearchText = '';
+                        PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
                     }
 
-
                 });
 
 
-                $("#bill_of_material_table_id").on('click', '#delete_bill_of_material', function () {
-                    var row = $(this).closest("tr");
-                    var id = row[0].id;
-                    wbsTree.setBillOfMaterialOperation(3);
-                    operation = wbsTree.getBillOfMaterialOperation();
-                    dhtmlx.confirm({
-                        type: "confirm-warning",
-                        text: "Are you sure you want to delete?",
-                        callback: function (result) {
-                            if (result) {
+            });
 
-                                var billofmaterialdetails = {
-                                    Operation: operation,
-                                    Id: id,
-                                    Deleted: 1,
-                                    ProgramElementID: _selectedNode.ProgramElementID,
-                                };
-                                SearchText = '';
-                                PerformOperationOnBillofMaterialgrid(billofmaterialdetails, SearchText);
+            $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+
+                var row = $(this).closest("tr");
+                var id = row[0].id;
+                if (id != undefined) {
+                    wbsTree.setBillOfMaterialOperation(2);
+                    $('#BillOfMaterialDetailModal').modal({ show: true, backdrop: 'static' });
+
+                    materialCategoryDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddCategory');
+                    materialCategoryDropDown.empty();
+
+                    materialDropDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddMaterial');
+                    materialDropDown.empty();
+
+                    manufacturerDown = $('#BillOfMaterialDetailModal').find('.modal-body #ddManufaturer');
+                    manufacturerDown.empty();
+
+                    for (i = 0; i < _BillOfMaterialList.length; i++) {
+                        if (id == _BillOfMaterialList[i].Id) {
+                            var MaterialCategoryData = wbsTree.getMaterialCategoryList();
+                            for (j = 0; j < MaterialCategoryData.length; j++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialCategoryID == MaterialCategoryData[j].ID) {
+
+
+                                    materialCategoryDropDown.append('<option value=' + MaterialCategoryData[j].ID + ' selected="true">' + MaterialCategoryData[j].Name + '</option>');
+                                }
+                                else {
+
+                                    materialCategoryDropDown.append('<option value="' + MaterialCategoryData[j].ID + '"> ' + MaterialCategoryData[j].Name + '</option>');
+
+                                }
                             }
-                           
-                        }
 
-                    });
-                  
-                });
+                            fetchmaterial();
+
+                            var MaterialDropdowndata = materialArray;
+
+                            materialDropDown.empty();
+
+                            for (x = 0; x < MaterialDropdowndata.length; x++) {
+
+
+                                if (_BillOfMaterialList[i].MaterialID == MaterialDropdowndata[x].ID) {
+
+
+                                    materialDropDown.append('<option value=' + MaterialDropdowndata[x].ID + ' selected="true">' + MaterialDropdowndata[x].Name + '</option>');
+                                }
+                                else {
+
+                                    materialDropDown.append('<option value="' + MaterialDropdowndata[x].ID + '"> ' + MaterialDropdowndata[x].Name + '</option>');
+
+                                }
+                            }
+
+
+
+                            var ManufacturerData = wbsTree.getManufacturerList();
+
+                            for (var z = 0; z < ManufacturerData.length; z++) {
+
+                                if (_BillOfMaterialList[i].ManufacturerID == ManufacturerData[z].ManufacturerID) {
+
+                                    manufacturerDown.append('<option value=' + ManufacturerData[z].ManufacturerID + ' selected="true">' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+                                else {
+                                    manufacturerDown.append('<option value="' + ManufacturerData[z].ManufacturerID + '"> ' + ManufacturerData[z].ManufacturerName + '</option>');
+                                }
+
+                            }
+                            $('#billofmaterial_id').val(_BillOfMaterialList[i].Id);
+
+                            $("#txtDescription").val(_BillOfMaterialList[i].Description);
+                            $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
+                            $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
+                            $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
+                            $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
+
+
+                        }
+                    }
+
+                }
 
 
             });
@@ -15843,6 +16006,10 @@ WBSTree = (function ($) {
 
             $('#BillOfMaterialDetailModal').unbind().on('show.bs.modal', function (event) {
                 $('#update_bill_of_material_detail_modal').prop('disabled', false);
+                $("#txtquantity").val('');
+                $("#txtContractwarranty").val('');
+                
+
                 defaultModalPosition();
 
                 /*  modal = $(this);*/
@@ -15891,11 +16058,7 @@ WBSTree = (function ($) {
                         return;
                     }
 
-                    if (txtdesc == "" || txtdesc.length == 0) {
-
-                        dhtmlx.alert('Description is a required field.');
-                        return;
-                    }
+                 
 
                     if (txtqnty == "" || txtqnty.length == 0) {
 
@@ -16190,7 +16353,7 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                            '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
 
@@ -16209,7 +16372,7 @@ WBSTree = (function ($) {
                             $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
                         }
                         //Code added by Kavita 
-                        if (localStorage.Status1 == 'Closed') {
+                        if (localStorage.Status == 'Closed') {
 
                             $('# DeleteUploadProgramPrgElm').prop('disabled', true);
                             $('# downloadBtnProgramPrgElm').prop('disabled', true);
@@ -16217,6 +16380,7 @@ WBSTree = (function ($) {
                             $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                             $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                             $('#EditBtnProgramPrgElm').prop('disabled', true);
+                            localStorage.Status = "";
                         }
                         g_selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
@@ -16277,7 +16441,7 @@ WBSTree = (function ($) {
                             //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             //'<td>' + _documentList[x].CreatedBy + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                            '<td  class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
+                            '<td  class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
@@ -16306,12 +16470,13 @@ WBSTree = (function ($) {
                             $('#downloadBtnInViewAllProject').removeAttr('disabled');
                         }
                         //Code added by Kavita 
-                        if (localStorage.status1 == 'Closed') {
+                        if (localStorage.Status == 'Closed') {
                             $('#DeleteUploadProgramPrg').prop('disabled', true);
                             $('#downloadBtnProgramPrg').prop('disabled', true);
                             $('#ViewUploadFileProgramPrg').prop('disabled', true);
                             $('#ViewAllUploadFileProjects').prop('disabled', true);
                             $('#EditBtnProgramPrg').prop('disabled', true);
+                            localStorage.Status = "";
                         }
 
                     });
@@ -16381,7 +16546,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -17118,7 +17283,7 @@ WBSTree = (function ($) {
                 $("#BillOfMaterialModal").modal('toggle');
 
             });
-
+           
 
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
@@ -17583,7 +17748,7 @@ WBSTree = (function ($) {
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _NoticeList[x].Reason + '</td>' +
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
                             '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
@@ -17659,7 +17824,7 @@ WBSTree = (function ($) {
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-eye btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
                             '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
                             '<tr > ');
                     }
@@ -17721,7 +17886,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -17738,11 +17903,12 @@ WBSTree = (function ($) {
                                 $('#downloadBtnProgram').removeAttr('disabled');
                             }
                             //Code added by Kavita 
-                            if (localStorage.status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgram').prop('disabled', true);
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                             //g_selectedProjectDocument = null;
@@ -17918,7 +18084,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modId + ' - ' + modTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
                         }
@@ -18721,34 +18887,34 @@ WBSTree = (function ($) {
                 modal = $(this);
                 var type = localStorage.getItem('contextType');
 
-                if (displayMap) {
+                //if (displayMap) {
                     selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
-                            $.each(Treedata.children, function (i, Contract) {
-                                if (Contract.children) {
-                                    $.each(Contract.children, function (j, Project) {
-                                        if (Project.children) {
-                                            $.each(Project.children, function (k, Element) {
+                //        if (SelectedProjectId) {
+                //            $.each(Treedata.children, function (i, Contract) {
+                //                if (Contract.children) {
+                //                    $.each(Contract.children, function (j, Project) {
+                //                        if (Project.children) {
+                //                            $.each(Project.children, function (k, Element) {
 
-                                                if (Element.ProjectID == SelectedProjectId) {
-                                                    selectedNode = Element;
-                                                    wbsTree.setSelectedNode(selectedNode);
-                                                }
+                //                                if (Element.ProjectID == SelectedProjectId) {
+                //                                    selectedNode = Element;
+                //                                    wbsTree.setSelectedNode(selectedNode);
+                //                                }
 
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
+                //                            });
+                //                        }
+                //                    });
+                //                }
+                //            });
+                //        }
+                //    }
 
 
-                }
+                //}
 
                 defaultModalPosition();
 
@@ -19128,18 +19294,18 @@ WBSTree = (function ($) {
 
 
 
-                if (displayMap) {
-                    selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //if (displayMap) {
+                //    selectedNode = wbsTree.getSelectedNode();
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
+                //        if (SelectedProjectId) {
 
-                        }
-                    }
+                //        }
+                //    }
 
-                }
+                //}
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 _selectedProgramElement = {};
@@ -19289,6 +19455,7 @@ WBSTree = (function ($) {
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                        localStorage.specialInstruction = selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
                     }
 
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
@@ -19600,7 +19767,7 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');
                             }
@@ -19640,7 +19807,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                             }
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status== 'Closed') {
 
                                 $('#DeleteUploadProgramPrgElm').prop('disabled', true);
                                 $('#downloadBtnProgramPrgElm').prop('disabled', true);
@@ -19648,6 +19815,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
@@ -19678,7 +19846,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="fa fa-eye btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -19711,7 +19879,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                             }
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
 
                                 $('# DeleteUploadProgramPrgElm').prop('disabled', true);
                                 $('# downloadBtnProgramPrgElm').prop('disabled', true);
@@ -19719,6 +19887,7 @@ WBSTree = (function ($) {
                                 $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
+                                localStorage.Status = "";
                             }
 
                         });
@@ -20288,11 +20457,6 @@ WBSTree = (function ($) {
             });
 
 
-
-
-
-
-
             function appendFundAndReturnTotal(selectedNode, fundTable) {
                 var total = 0;
                 var filter = wbsTree.getFilter();
@@ -20645,7 +20809,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuClosed").parent().hide();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";  //Code added by Kavita 
+                      
                     }
                 }
                 if (node.Status == "Closed" && wbsTree.getLocalStorage().role == "Admin") {
@@ -20660,7 +20824,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";     //Code added by Kavita 
+                        
                     }
 
                     //----Vaishnavi 30-03-2022----//
@@ -20687,7 +20851,7 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "block");
+                    $("#contextMenuBillOfMaterial").css("display", "inline-block");
                     //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
@@ -20698,7 +20862,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
@@ -20715,7 +20879,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
 
@@ -20779,7 +20943,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuBillOfMaterial").css("display", "none");
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
@@ -20794,7 +20958,7 @@ WBSTree = (function ($) {
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
                     localStorage.Status = "Closed";
-                    localStorage.Status1 = "Closed";      //Code added by Kavita 
+                   
                 }
                 //----Vaishnavi 30-03-2022----//
             }

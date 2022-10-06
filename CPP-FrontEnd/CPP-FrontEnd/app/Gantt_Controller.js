@@ -1804,7 +1804,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                         $(cellBox).on('mouseover', function () {
                             $(this).addClass('hover');
-                            $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "right" }).tooltip('show');
+                            $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "bottom" }).tooltip('show');
                         });
                         $(cellBox).on('mouseleave', function () {
                             $(this).removeClass('hover');
@@ -2305,7 +2305,7 @@ angular.module('xenon.Gantt_Controller', []).
                         }
                     }
                 });
-                if ($scope.trend.CurrentThreshold == "0") {
+                if ($scope.trend.CurrentThreshold == "0" || $scope.trend.CurrentThreshold==null) {
                     if (validateCostQuantity() == true) {
                         dhtmlx.alert({
                             text: "Entered Material Count Exceeded Maximum Quantity",
@@ -2622,13 +2622,15 @@ angular.module('xenon.Gantt_Controller', []).
                     });
                     return;
                 }
-                if (validateCostQuantity() == true) {
+                if ($scope.trend.CurrentThreshold == "0" || $scope.trend.CurrentThreshold == null) {
+                    if (validateCostQuantity() == true) {
 
-                    dhtmlx.alert({
-                        text: "Entered Material Count Exceeded Maximum Quantity",
-                        width: "400px"
-                    });
-                    return;
+                        dhtmlx.alert({
+                            text: "Entered Material Count Exceeded Maximum Quantity",
+                            width: "400px"
+                        });
+                        return;
+                    }
                 }
                 var prom = [];
                 var isNothingToSave = true;
@@ -12545,7 +12547,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                         $.each($scope.BillOfMaterialByProgramElementId, function (index) {
 
-                            if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == $scope.material_id[item.id].value && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
+                            if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == item.material_id && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
                                 materialname = $scope.BillOfMaterialByProgramElementId[index].MaterialName;
                                 materialquantity = $scope.BillOfMaterialByProgramElementId[index].Quantity;
                                 materialnamesandmaterialquantities.push({ materialname: materialname, materialquantity: materialquantity });
