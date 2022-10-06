@@ -5254,13 +5254,13 @@ angular.module('cpp.controllers').
                                 var projectElement = selProject.children[projectElementI];
                                 //Aditya :: for keeping the element selected after save :: 27092022 
                                 if (selElementID != undefined && selElementID == projectElement.ProjectID && localStorage.getItem('MODE') == 'gridview') {
-                                    _selectedProjectID = selElementID;
+                                    wbsTree.setSelectedProjectID(selElementID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + selElementID + ">";
                                     getTrendGridSection(projectElement);
                                 }
                                 else if (projectElementI == 0 && selElementID == undefined) {
-                                    _selectedProjectID = projectElement.ProjectID;
+                                    wbsTree.setSelectedProjectID(projectElement.ProjectID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
                                     getTrendGridSection(projectElement);
@@ -5372,12 +5372,13 @@ angular.module('cpp.controllers').
                                 _baseline = response.data.result.FutureTrendList[0];
                             }
                             strTrend = "";
+                            $('#tblTrend tbody').html('');
 
                             strTrend += "<tr class='contact-row'>";
                             strTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
                             strTrend += "<td></td>";
                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                            strTrend += "<td style='display:none' ></td>";
+                            strTrend += "<td style='display:none'></td>";
                             strTrend += "</tr>";
                             var strApproveTrend = "", strPendingTrend = "";
                             if (_baseline.TrendStatus == "Approved") {
@@ -5386,7 +5387,7 @@ angular.module('cpp.controllers').
                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                         strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                        strPendingTrend += "<td  style='display:none'></td>";
+                                        strPendingTrend += "<td></td>";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
                                         if (ModifyTrend == "1") {
@@ -6037,6 +6038,9 @@ angular.module('cpp.controllers').
                 }
 
                 function BindTrendEvent(selectedProgramID, selectedProjectID, selectedElementID) {
+
+                    wbsTree.getWBSTrendTree().trendGraph(true);
+
                     //Add Trend
                     $("#AddTrendGridBtn").unbind('click').on("click", function () {
                         //var programId = $scope.GridContractId;
@@ -6052,7 +6056,6 @@ angular.module('cpp.controllers').
                         }
                         wbsTree.setNewTrend(true);
                         var s = wbsTree.getWBSTrendTree().getTrendNumber();
-                        wbsTree.getWBSTrendTree().trendGraph(true);
                         wbsTree.setSelectedNode(selectedElement);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};
