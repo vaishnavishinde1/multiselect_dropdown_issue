@@ -3982,8 +3982,7 @@ WBSTree = (function ($) {
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
-                                
-                                '</tr>'
+                                 '</tr>'
                                
                             );
                             flag = false;
@@ -4006,9 +4005,9 @@ WBSTree = (function ($) {
                     }
                     //change by kavita 
                     if (flag != true) {
-                        $('#program_element_change_order_table_id tbody').append('<tr><td></td><td></td><td></td><td Class="Total"  style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+                        $('#program_element_change_order_table_id').append('<tfoot><tr ><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"></td><td class="sticky-column"   style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
                         '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
-                        '</tr>');
+                        '</tr></tfoot>');
                     }
                     // }, 3000);
 
@@ -15829,7 +15828,7 @@ WBSTree = (function ($) {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
                     document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
-                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
+                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 0;
                     document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
@@ -19456,7 +19455,7 @@ WBSTree = (function ($) {
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                        localstorage.specialInstruction = val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'))
+                        localStorage.specialInstruction = selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
                     }
 
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;

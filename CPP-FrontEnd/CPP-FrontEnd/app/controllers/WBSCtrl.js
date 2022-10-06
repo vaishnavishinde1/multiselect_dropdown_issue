@@ -6067,20 +6067,20 @@ angular.module('cpp.controllers').
 
                     });
                     //code added by kavita
-                    $('#tblTrend').on('dblclick',  function () {
-                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                    $('#tblTrend tbody').on('dblclick','tr', function () {
+                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                         //var projectId = $scope.GridProjectId;
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                         //var elementId = $scope.GridProjectId;
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                        var trendNumber = selectedElement.projectID;//this.parentElement.parentElement.id;
-
+                        var trendNumber = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
+                        
                         wbsTree.setSelectedNode(selectedElement);
                         wbsTree.setNewTrend(false);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};
 
-                        if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
                             jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
                                 if (trend.TrendNumber == trendNumber) {
                                     selectedTrend.metadata = trend;
@@ -6091,7 +6091,7 @@ angular.module('cpp.controllers').
 
                             $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
                         }
-                        if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
                             jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
                                 if (trend.TrendNumber == trendNumber) {
                                     selectedTrend.metadata = trend;
