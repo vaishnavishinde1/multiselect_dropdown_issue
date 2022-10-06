@@ -5124,7 +5124,8 @@ angular.module('cpp.controllers').
                         strProject += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
                             "<th class='sort-by' width='17%'>Value</th>" +
-                            "<th class='sort-by' width='27%'>Department</th>" +
+                        /*"<th class='sort-by' width='27%'>Department</th>" +*/
+                            "<th class='sort-by' width='27%'>Forecast</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
@@ -5160,7 +5161,8 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
+                                strProject += "<td style='color:red'>" + project.ProjectForecastValue + "</td>";
                                 strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
@@ -5171,7 +5173,8 @@ angular.module('cpp.controllers').
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
+                               // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "'>" + project.ProjectForecastValue + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5506,7 +5509,8 @@ angular.module('cpp.controllers').
                         strProject += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
                             "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Department</th>" +
+                        /*"<th width='27%'>Department</th>" +*/
+                            "<th width='27%'>Forecast</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
