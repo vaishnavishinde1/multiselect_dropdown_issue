@@ -5377,7 +5377,7 @@ angular.module('cpp.controllers').
                             strTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
                             strTrend += "<td></td>";
                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                            strTrend += "<td style='display:none' ></td>";
+                            strTrend += "<td style='display:none'></td>";
                             strTrend += "</tr>";
                             var strApproveTrend = "", strPendingTrend = "";
                             if (_baseline.TrendStatus == "Approved") {
@@ -5386,7 +5386,7 @@ angular.module('cpp.controllers').
                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                         strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                        strPendingTrend += "<td  style='display:none'></td>";
+                                        strPendingTrend += "<td></td>";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
                                         if (ModifyTrend == "1") {

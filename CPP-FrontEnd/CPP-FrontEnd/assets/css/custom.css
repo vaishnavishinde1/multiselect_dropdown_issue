@@ -347,6 +347,14 @@ label input[type="checkbox"] {
     border-radius: 7px !important;
     padding: 5px !important;
 }
+.sticky-column {
+    position: sticky;
+    position: -webkit-sticky;
+    left: 0;
+    color: white;
+    z-index: 1;
+    width: 100px; /* How can I make this dynamic? */
+}
 
 /*.c-input{*/
 /*margin:0; border:none; text-align:center; background-color:transparent;*/
