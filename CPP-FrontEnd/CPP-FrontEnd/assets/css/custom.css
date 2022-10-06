@@ -209,7 +209,9 @@ input[type=file] {
 .m-t-10 {
     margin-top: 10px;
 }
-
+.m-t-15{
+    margin-top:15px;
+}
 .m-b-0 {
     margin-bottom: 0 !important;
 }
@@ -1726,7 +1728,7 @@ input:-webkit-autofill:active {
     padding: 4px 8px;
     font-size: 20px;
     border-radius: 5px;
-    margin: 10px 5px 2px;
+    margin: 10px 5px 0px;
     color: #000;
 }
 
