@@ -171,6 +171,7 @@ namespace WebAPI
             modelBuilder.Entity<clientPOC>().ToTable("client_poc");   //Tanmay - 15/12/2021
             modelBuilder.Entity<UserRoleRelation>().ToTable("user_role_relation");
             modelBuilder.Entity<ProgramNotes>().ToTable("program_notes");
+            modelBuilder.Entity<TotalBudgetForecastValue>().ToTable("tbltotalbudgetforecastvalue"); //Nivedita29-09-2022
         }
 
         public DbSet<Program> Program { get; set; }
@@ -302,6 +303,8 @@ namespace WebAPI
         public DbSet<ContractInsurance> ContractInsurances { get; set; }   // Narayan - 07-04-2022
 
         public DbSet<ContractProjectManager> ContractProjectManagers { get; set; } // Narayan - 03-05-2022
+
+        public DbSet<TotalBudgetForecastValue> TotalBudgetForecastValue { get; set; } // Nivedita - 29-09-2022
 
     }
 

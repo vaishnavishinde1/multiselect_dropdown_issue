@@ -322,6 +322,7 @@ namespace WebAPI.Models
 			return contractModification;
 		}
 
+		//Nivedita 29-09-2022
 		public static decimal GetContractModificationValue(int ProgramId)
         {
 			decimal modificationValue=0;
@@ -331,7 +332,11 @@ namespace WebAPI.Models
 				using (var ctx = new CPPDbContext())
 				{
 					contractModificationsList = ctx.ContractModification.Where(u => u.ProgramID == ProgramId && u.ModificationType != 0).ToList();
-					modificationValue = contractModificationsList.Sum(a => Convert.ToDecimal(a.Value));
+                    if (contractModificationsList != null)
+                    {
+						modificationValue = contractModificationsList.Sum(a => Convert.ToDecimal(a.Value));
+					}
+					
 				}
 			}
 			catch (Exception ex)
