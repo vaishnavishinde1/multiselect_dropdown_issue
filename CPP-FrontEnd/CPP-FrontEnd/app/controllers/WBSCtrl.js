@@ -52,6 +52,12 @@ angular.module('cpp.controllers').
                 return function (a, b) {
                     var valA = getCellValue(a, index),
                         valB = getCellValue(b, index);
+                    if (valA.charAt(0) == '$') {
+                        valA = parseFloat(valA.split('$')[1].replace(/,/g, ''));
+                    }
+                    if (valB.charAt(0) == '$') {
+                        valB = parseFloat(valB.split('$')[1].replace(/,/g, ''));
+                    }
                     return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
                 }
             }
