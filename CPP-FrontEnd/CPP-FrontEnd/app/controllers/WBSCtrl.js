@@ -4986,8 +4986,8 @@ angular.module('cpp.controllers').
                             "<th class='sort-by' width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
                             "<th class='sort-by' width=28%'>Name</th>" + //$scope.programList[0].program.name
                             "<th class='sort-by' width='10%' >ID</th>" +
-                            "<th class='sort-by' width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th class='sort-by' width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width=13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
                             "<th width=8%' style='display:none'>Action</th>" +
                             "</tr>";
@@ -5123,9 +5123,9 @@ angular.module('cpp.controllers').
                         strProject += "<tr>";
                         strProject += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
-                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='17%'>Value ($)</th>" +
                         /*"<th class='sort-by' width='27%'>Department</th>" +*/
-                            "<th class='sort-by' width='27%'>Forecast</th>" +
+                            "<th class='sort-by' width='27%'>Forecast ($)</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
@@ -5247,7 +5247,7 @@ angular.module('cpp.controllers').
                         strElement += "<tr>";
                         strElement += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
-                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='17%'>Value ($)</th>" +
                             "<th class='sort-by' width='27%'>Services</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
@@ -5508,9 +5508,9 @@ angular.module('cpp.controllers').
                         strProject += "<tr>";
                         strProject += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
+                            "<th width='17%'>Value ($)</th>" +
                         /*"<th width='27%'>Department</th>" +*/
-                            "<th width='27%'>Forecast</th>" +
+                            "<th width='27%'>Forecast ($)</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
@@ -5537,7 +5537,7 @@ angular.module('cpp.controllers').
                         strElement += "<tr>";
                         strElement += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
+                            "<th width='17%'>Value ($)</th>" +
                             "<th width='27%'>Services</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
