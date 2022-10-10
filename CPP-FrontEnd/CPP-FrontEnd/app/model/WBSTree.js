@@ -8806,8 +8806,7 @@ WBSTree = (function ($) {
 
                 event.preventDefault();    //Manasi 09-03-2021
                 g_newProjectElementMilestone = true;
-               $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
-               $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+                $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
                 $('#delete_project_element_milestone_modal').hide();
                 g_selectedProjectElementMilestone = {
                     MilestoneID: 0,
@@ -9357,7 +9356,7 @@ WBSTree = (function ($) {
                     return;
                 }
                 //------------------------*/
-                g_newProgramElementMilestone = true;
+                g_newProgramElementMilestone = false;
                 
                
                 if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
