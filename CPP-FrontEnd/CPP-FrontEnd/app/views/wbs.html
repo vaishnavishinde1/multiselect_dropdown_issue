@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
     .toggle-btn {
@@ -403,9 +403,9 @@
                 </button>-->
                 <!--</div>-->
                 <div class="gadget-content" style="flex-wrap:nowrap">
-                    <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
+                    <div class="form-group col-md-3 col-sm-3 wbs-col-heading" id="selectOrgDiv">
                         <!--<label>Organization</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterChangeOrg()" ng-model="filterOrgId" id="selectOrg">
                             <!--<option value="">Select Organization</option>-->
                             <option data-ng-repeat="filterOrg in organizationList" value={{filterOrg.OrganizationID}}>
@@ -413,19 +413,19 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3 col-sm-3 wbs-col-heading" id="clientFIlterDiv">
+                    <!--<div class="form-group col-md-3 col-sm-3 wbs-col-heading" id="clientFIlterDiv">-->
                         <!--<label>Program Element</label>
-                        <br/>-->
-                        <select class="input-medium form-control" ng-change="filterChangeClient()" ng-model="filterClient" id="selectClient">
+        <br/>-->
+                        <!--<select class="input-medium form-control" ng-change="filterChangeClient()" ng-model="filterClient" id="selectClient">
                             <option value="">Select Client</option>
                             <option data-ng-repeat="filterClient in clientList" value={{filterClient.ClientID}}>
                                 {{filterClient.ClientName}}
                             </option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>Program</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterChangeProgram()" ng-model="filterProgramId" id="selectProgram">
                             <option value="">Select Contract</option>
                             <option data-ng-repeat="filterProgram in programList" value={{filterProgram.ProgramID}}>
@@ -433,9 +433,10 @@
                             </option>
                         </select>
                     </div>
+                    
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>program element</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterchangeprogramelement()" ng-model="filterprogramelement" id="selectprogramelement" style="display:none">
                             <option value="">Select Project</option>
                             <option data-ng-repeat="filterprogramelement in programelementlist" value={{filterprogramelement.programelementid}}>
@@ -445,7 +446,7 @@
                     </div>
                     <div class="form-group col-md-3 col-sm-3 wbs-col-heading">
                         <!--<label>Project</label>
-                        <br/>-->
+        <br/>-->
                         <select class="input-medium form-control" ng-change="filterChangeProject(filterProject)" ng-model="filterProject" id="selectProject" style="display:none">
                             <option value="">Select Element</option>
                             <option data-ng-repeat="filterProject in projectList" value={{filterProject.ProjectID}}>
@@ -453,11 +454,11 @@
                             </option>
                         </select>
                         <!--<select class="input-medium form-control" ng-change="filterChangeDepartment(filterDepartment)" ng-model="filterDepartment" id="selectManagingDepartment" style="display:none">
-                            <option value="">Select Managing Department</option>
-                            <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
-                                {{filterDepartment.ProjectClassName}}
-                            </option>
-                        </select>-->
+            <option value="">Select Managing Department</option>
+            <option data-ng-repeat="filterDepartment in projectClassListDD" value={{filterDepartment.ProjectClassID}}>
+                {{filterDepartment.ProjectClassName}}
+            </option>
+        </select>-->
                     </div>
                 </div>
 
@@ -8233,7 +8234,7 @@
                         $('#wbsGridiewTrend').hide();
                         $('#selectManagingDepartment').hide();
 
-                        $('#selectProject,#selectprogramelement').show();
+                        $('#selectProject,#selectprogramelement,#selectOrgDiv,#selectProgram').show();
                         $('#wbsGridView').hide();
                         $('#selectManagingDepartment,#selectClient,#clientFIlterDiv').hide();
                         $('#selectProject').show();
@@ -8249,7 +8250,7 @@
                         $('#mindmap').css('position', 'absolute');
                         $('#selectProject').hide();
                         $('#trendSvg').hide();
-                        $('#selectProject,#selectprogramelement').hide();
+                        $('#selectProject,#selectprogramelement,#selectProgram').hide();
                         $('#wbsGridView').show();
                         $('#wbsGridiewProject').show();
                         $('#wbsGridiewElement').show();

@@ -128,7 +128,7 @@ WBSTree = (function ($) {
             $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
             $('#trendSvg').hide();
-            $('#selectProject,#selectprogramelement').hide();
+            $('#selectProject,#selectprogramelement,#selectProgram').hide(); // Aditya :: 10102022 :: hide contract filter in grid
             $('#wbsGridView').show();
             $('#wbsGridiewProject').show();
             $('#wbsGridiewElement').show();
@@ -147,7 +147,7 @@ WBSTree = (function ($) {
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
             $('#trendSvg').show();
-            $('#selectProject,#selectprogramelement').show();
+            $('#selectProject,#selectprogramelement,#selectOrgDiv,#selectProgram').show();  // Aditya :: 10102022 :: hide contract filter in grid
             $('#wbsGridView').hide();
             
             $('#wbsGridiewProject').hide();
@@ -18357,7 +18357,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-            $("#insurance_limit").keypress(function (e) {
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").keypress(function (e) {
                 if (e.which != 46 && e.which != 46 &&
                     !(e.which >= 48 && e.which <= 57)) {
                     return false;
@@ -18366,9 +18366,8 @@ WBSTree = (function ($) {
                     $(this).val('$' + $(this).val().replace('$', ''));
                 }
             });
-
            
-            $("#insurance_limit").on({
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").on({
                 keyup: function () {
                     formatCurrency($(this));
                 },

@@ -1,4 +1,4 @@
-angular.module('cpp.controllers').
+﻿angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
@@ -4978,15 +4978,26 @@ angular.module('cpp.controllers').
                         else {
                             strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt disabledIcon'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        //Client Filter
+                        strContract += "<div class='gadget-content grid__Filter row' style='flex-wrap: nowrap'> <div title='Client Filter' style='width: 28%; padding:0; margin-left:15px;' class='form-group col-md-3 col-sm-3'><select class='input-medium form-control' id='clientFilter'></select></div>";
+                        //Contract Filter
+                        strContract += "<div style='width: 28%; padding:0; margin-left:15px;' title='Contract Filter' class='form-group col-md-3 col-sm-3'><select class='input-medium form-control' id='contractFilter'></select></div>";
+                        //Contract Number Filter
+                        strContract += "<div style='width: 9%; padding:0;margin-right:11px; margin-left:15px;' title='Search Contract Id' class='form-group col-md-3 col-sm-3' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></div>";
+                        // Original Value filter
+                        strContract += "<div title='Search for greater than entered original value' style='width: 13%; padding:0;' class='form-group col-md-3 col-sm-3'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></div> ";
+                        //current value filter
+                        strContract += "<div title='Search for greater than entered current value' style='width: 13%; padding:0;' class='form-group col-md-3 col-sm-3'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></div></div>";
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th class='sort-by' width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th class='sort-by' width=28%'>Name</th>" + //$scope.programList[0].program.name
-                            "<th class='sort-by' width='10%' >ID</th>" +
-                            "<th class='sort-by' width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width='28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width='28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
+                            "<th class='sort-by' width='13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
                             "<th class='sort-by' width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
                             "<th width=8%' style='display:none'>Action</th>" +
@@ -5088,6 +5099,7 @@ angular.module('cpp.controllers').
                         strContract += "</div>";
 
                         $('#wbsGridView').append(strContract);
+                        $scope.allContractRowsInTable = $("#tblContract tr"); // Aditya :: save contract table rows in scope
                     }
                     else {
                         emptyTablesGridSection(selOrganization);
@@ -5577,6 +5589,182 @@ angular.module('cpp.controllers').
                 }
 
                 function BindProject() {
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: filters code >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    //let tr = $("#tblContract tr");
+                    let tr = $scope.allContractRowsInTable;
+                    var selectClient = $('#clientFilter');
+                    var selectContract = $('#contractFilter');
+                    var allProgramList = $scope.allWbsProgramList;
+                    var allClientList = $scope.allClientList;
+
+                    fillClientOptions(allClientList);
+                    //on selecting client
+                    selectClient.on('change', function () {
+                        $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        //change contract filter
+                        var sortedProgram = [];
+                        var selectedClientID = this.selectedOptions[0].id;
+                        if ($(this).val() != "Select Client") {
+                            jQuery.each(allProgramList, function (i, program) {
+                                if (program.ClientID == selectedClientID) {
+                                    sortedProgram.push(program);
+                                }
+                            });
+                        }
+                        else {
+                            tr = $scope.allContractRowsInTable;
+                            sortedProgram=allProgramList;
+                        }
+                        fillContractOptions(sortedProgram);
+                        //selectContract.append(contractOpt);
+
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Client = td[0].innerText;
+                            if (i != 0) {
+                                if (td_Client == filter_Id || filter_Id == "Select Client") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //Contract Name Filter
+                    //fill option in select
+                    fillContractOptions(allProgramList);
+
+                    //on selecting contract
+                    selectContract.on('change', function () {
+                        //change contract filter
+                        var sortedClient = [];
+                        var selectedContractID = this.selectedOptions[0].id;
+                        var selectedProgram = allProgramList.find(prg => prg.ProgramID == selectedContractID);
+                        if ($(this).val() != "Select Contract") {
+                            $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').attr('disabled', true);
+                            jQuery.each(allClientList, function (i, client) {
+                                //jQuery.each($scope.programList, function (j, program) {
+                                if (selectedProgram.ClientID == client.ClientID) {
+                                    sortedClient.push(client);
+                                    return false;
+                                }
+                                //});
+                            });
+                        }
+                        else {
+                            tr = $scope.allContractRowsInTable;
+                            $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                            sortedClient=allClientList;
+                        }
+                        fillClientOptions(sortedClient);
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Contract = td[1].innerText;
+                            if (i != 0) {
+                                if (td_Contract == filter_Id || filter_Id == "Select Contract") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //search contract number
+                    $("#contractNumberSearch").on("keyup", function search() {
+                        $('#contractOgValueFilter, #currrentContractValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Id = td[2].innerText;
+                            if (i != 0) {
+                                if (selectedClientName == 'Select Client' && td_Id.indexOf(filter_Id) > -1) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && td_Id.indexOf(filter_Id) > -1 && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+                    
+                    //search og contract value
+                    $("#contractOgValueFilter").on("keyup", function search() {
+                        $('#contractNumberSearch, #currrentContractValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        var originalValueInput;
+                        if ($(this).val() == '' || $(this).val() == '$') {
+                            originalValueInput = '0';
+                        }
+                        else {
+                            originalValueInput = $(this).val().replace('$', '').replaceAll(',', '');
+                        }
+                        originalValueInput = parseInt(originalValueInput);
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var tdOriginalValue = td[3].innerText;
+                            tdOriginalValue = tdOriginalValue.replace('$', '').replaceAll(',', '');
+                            if (i != 0) {
+                                //if (tdOriginalValue >= originalValueInput && tr[i].style.display != "none") {
+                                //    tr[i].style.display = "";
+                                //} else {
+                                //    tr[i].style.display = "none";
+                                //}
+                                if (selectedClientName == 'Select Client' && tdOriginalValue >= originalValueInput) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && tdOriginalValue >= originalValueInput && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //search current contract value
+                    $("#currrentContractValueFilter").on("keyup", function search() {
+                        $('#contractNumberSearch, #contractOgValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        var currentValueInput;
+                        if ($(this).val() == '' || $(this).val() == '$') {
+                            currentValueInput = '0';
+                        }
+                        else {
+                            currentValueInput = $(this).val().replace('$', '').replaceAll(',', '');
+                        }
+                        currentValueInput = parseInt(currentValueInput);
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var tdCurrentValue = td[4].innerText;
+                            tdCurrentValue = tdCurrentValue.replace('$', '').replaceAll(',', '');
+                            if (i != 0) {
+                                //if (tdCurrentValue >= currentValueInput && tr[i].style.display != "none") {
+                                //    tr[i].style.display = "";
+                                //} else {
+                                //    tr[i].style.display = "none";
+                                //}
+                                if (selectedClientName == 'Select Client' && tdCurrentValue >= currentValueInput) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && tdCurrentValue >= currentValueInput && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     //Add Contract
                     $("#AddContractGridBtn").unbind('click').on("click", function () {
                         selectedNode = Treedata;
@@ -6232,6 +6420,38 @@ angular.module('cpp.controllers').
                         }
 
                     });
+
+                }
+                // Aditya :: Fill client options
+                function fillClientOptions(clientList) {
+                    var selectClient = $('#clientFilter');
+                    var clientOpt = '';
+                    selectClient.html('');
+                    clientOpt = "<option>Select Client</option>";
+                    for (var k = 0; k < clientList.length; k++) {
+                        if (clientList.length == 1) {
+                            clientOpt += "<option selected id='" + clientList[k].ClientID + "' value='" + clientList[k].ClientName + "'>" + clientList[k].ClientName + "</option>";
+                        }
+                        else {
+                            clientOpt += "<option id='" + clientList[k].ClientID + "' value='" + clientList[k].ClientName + "'>" + clientList[k].ClientName + "</option>";
+                        }
+                    }
+                    selectClient.append(clientOpt);
+
+                }
+
+                // Aditya :: Filter Contract Options
+                function fillContractOptions(programList) {
+                    var selectContract = $('#contractFilter');
+                    var contractOpt = '';
+                    selectContract.html('');
+                    contractOpt = "<option>Select Contract</option>";
+                    for (var k = 0; k < programList.length; k++) {
+                        //if (selectedClientId == contractOptionArr[k].ClientID) {
+                        //sortedProgram.push(contractOptionArr[k]);
+                        contractOpt += "<option id='" + programList[k].ProgramID + "' value='" + programList[k].ProgramName + "'>" + programList[k].ProgramName + "</option>";
+                    }
+                    selectContract.append(contractOpt);
 
                 }
 

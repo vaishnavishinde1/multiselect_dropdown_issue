@@ -410,6 +410,12 @@ label input[type="checkbox"] {
     font-weight: bold;
     margin-top: 15px !important; /*changes by sarab*/
 }
+.wbs-col-heading > input {
+    width: 98% !important;
+    width: 230px;
+    font-weight: bold;
+    margin-top: 15px !important; /*Aditya :: 10102022 :: changes by sarab*/
+}
 
 #address-bar {
     background-color: #fff;
@@ -2016,7 +2022,7 @@ button[disabled=disabled], button:disabled {
 
 .grid__scrollable_main {
     overflow: auto;
-    height: 700px;
+    height: 658px; /*change height after adding filter*/
 }
 
 /*a:link,
@@ -2101,7 +2107,13 @@ th.sort-by {
     background-color: white !important;
     color: black !important;
 }
-
+/*Aditya:10102022:Grid Filter*/
+.grid__Filter {
+    background: linear-gradient(90deg,#719bae,#5580bc);
+    margin-top: -11px !important;
+    border-radius: 5px;
+    margin-bottom: 5px !important;
+}
 .bom__search {
     display: flex;
     justify-content: space-between;
