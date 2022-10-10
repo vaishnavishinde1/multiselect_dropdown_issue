@@ -1347,7 +1347,7 @@ WBSTree = (function ($) {
             _selectedNode = selectedNode;
             console.log("selectedNode==");
             console.log(selectedNode);
-        }
+            program_element_total_value}
         obj.prototype.getSelectedNode = function () {
             return _selectedNode;
         }
@@ -3930,6 +3930,7 @@ WBSTree = (function ($) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
                     $('#program_element_change_order_table_id tbody').empty();
+                    $('#program_element_change_order_table_id tfoot').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
                     var flag = true; //added by kavita
@@ -3944,9 +3945,6 @@ WBSTree = (function ($) {
                             //Added By Amruta for locking the project end date
                             $('#program_element_PEnd_Date').attr('disabled', 'disabled');
                             
-
-
-
                             var singeChangeOrder = {};
                             singeChangeOrder = changeOrderList[x];
 
@@ -3982,8 +3980,7 @@ WBSTree = (function ($) {
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
-                                
-                                '</tr>'
+                                 '</tr>'
                                
                             );
                             flag = false;
@@ -4004,11 +4001,14 @@ WBSTree = (function ($) {
                         }
                       
                     }
+                  
                     //change by kavita 
                     if (flag != true) {
-                        $('#program_element_change_order_table_id tbody').append('<tr><td></td><td></td><td></td><td Class="Total"  style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+
+                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
                         '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
-                        '</tr>');
+                            '</tr></tfoot>');
+                        flag = true;
                     }
                     // }, 3000);
 
@@ -5404,17 +5404,13 @@ WBSTree = (function ($) {
 
             $('#btnSpecialInstruction').bind('click', function () {
                 event.preventDefault();    //Manasi 09-03-2021
-                g_newSpecialInstruction = true;
-               
-                $('#SpecialInstructoinModal').modal({ show: true, backdrop: 'static' });
-                $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
+                $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
             });
-
-
-
+          
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
-                rbChangeOrderconsole.log(selectedNode);
+                //rbChangeOrderconsole.log(selectedNode);
                 var scope = wbsTree.getScope();
 
                 var orgName = wbsTree.getOrgProjectName();
@@ -6122,7 +6118,7 @@ WBSTree = (function ($) {
                         } 
                         
                     });
-
+            
                 }
 
 
@@ -6777,6 +6773,7 @@ WBSTree = (function ($) {
                             /////////aaa
                             // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
+                            localstorage.specialInstruction = "";
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
@@ -8422,8 +8419,7 @@ WBSTree = (function ($) {
             //===================================================================================== PROJECT ELEMENT MILESTONE START ===================================================================
             // UPDATE PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#update_project_element_milestone_modal').unbind('click').on('click', function () {
-
-                var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
+             var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
                 var MilestoneDescp = modal.find('.modal-body #project_element_milestone_description_modal').val();
                 var MilestoneDate = modal.find('.modal-body #project_element_milestone_date_modal').val();
 
@@ -8602,20 +8598,14 @@ WBSTree = (function ($) {
 
             // SHOW PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#ProjectElementMilestoneModal').unbind().on('show.bs.modal', function (event) {
-
-                $('#message_div').hide();
+                  $('#message_div').hide();
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
-
-                //blur
+                                //blur
                 $("#ProjectModal").css({ "opacity": "0.8" });
-
-                console.log(g_selectedProjectElementMilestone);
-
-
-                modal = $(this);
+                  console.log(g_selectedProjectElementMilestone);
+               modal = $(this);
                 modal.find('.modal-body #project_element_name').focus();
-
 
                 if (isProjectElementMilestoneUpdate) {
                     //luan Jquery - luan here
@@ -8638,41 +8628,17 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_milestone_date_modal').val('');
                 }
             });
-          //code added by kavita
-            $('#SpecialInstructoinModal').unbind().on('show.bs.modal', function (event) {
-                 $('#message_div').hide();
-                defaultModalPosition();
-                var isProjectSpecialInstrucion = !g_newSpecialInstruction;
-                  //blur
-                $("#ProgramElementModal").css({ "opacity": "0.9" });
-
-                //console.log(g_selectedSpecialInstruction)
-                modal = $(this);
-                modal.find('.modal-body #SpecialInstructoinModal').focus();
-                if (isProjectSpecialInstrucion) {
-                    //luan Jquery - luan here
-                    console.log('applied jquery');
-                  
-                    modal.find('.modal-SpecialInstructoinModal').text('hello');
-                 
-                }
-                else {	//create new
-                    modal.find('.modal-SpecialInstructoinModal').text('hello');
-                  
-
-                }
-            });
-             //code added by kavita
+         
             $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
                 // debugger;
                 //$("#BillOfMaterialModal").css({ "opacity": "0.8" });
-               $("#SpecialInstructoinModal").modal('toggle');
+               $("#SpecialInstructionModal").modal('toggle');
 
             });
              //code added by kavita
             $('#update_special_instruction').unbind('click').on('click', function () {
-                localStorage.specialInstruction = $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val();
-                $("#SpecialInstructoinModal").modal('toggle');
+                localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#SpecialInstructionModal").modal('toggle');
             });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
@@ -15273,7 +15239,10 @@ WBSTree = (function ($) {
 
                         if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
                             modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                       
+                            localStorage.specialInstruction = selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
+                        }
+                        else {
+                            localStorage.specialInstruction = "";
                         }
 
                         document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
@@ -15826,9 +15795,9 @@ WBSTree = (function ($) {
                 window.setTimeout(function () {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
-                    document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
-                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
-                    document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
+                 //   document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
+                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 0;
+                   // document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
             });
@@ -18885,34 +18854,34 @@ WBSTree = (function ($) {
                 modal = $(this);
                 var type = localStorage.getItem('contextType');
 
-                if (displayMap) {
+                //if (displayMap) {
                     selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
-                            $.each(Treedata.children, function (i, Contract) {
-                                if (Contract.children) {
-                                    $.each(Contract.children, function (j, Project) {
-                                        if (Project.children) {
-                                            $.each(Project.children, function (k, Element) {
+                //        if (SelectedProjectId) {
+                //            $.each(Treedata.children, function (i, Contract) {
+                //                if (Contract.children) {
+                //                    $.each(Contract.children, function (j, Project) {
+                //                        if (Project.children) {
+                //                            $.each(Project.children, function (k, Element) {
 
-                                                if (Element.ProjectID == SelectedProjectId) {
-                                                    selectedNode = Element;
-                                                    wbsTree.setSelectedNode(selectedNode);
-                                                }
+                //                                if (Element.ProjectID == SelectedProjectId) {
+                //                                    selectedNode = Element;
+                //                                    wbsTree.setSelectedNode(selectedNode);
+                //                                }
 
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
+                //                            });
+                //                        }
+                //                    });
+                //                }
+                //            });
+                //        }
+                //    }
 
 
-                }
+                //}
 
                 defaultModalPosition();
 
@@ -19292,18 +19261,18 @@ WBSTree = (function ($) {
 
 
 
-                if (displayMap) {
-                    selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //if (displayMap) {
+                //    selectedNode = wbsTree.getSelectedNode();
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
+                //        if (SelectedProjectId) {
 
-                        }
-                    }
+                //        }
+                //    }
 
-                }
+                //}
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 _selectedProgramElement = {};
@@ -19453,7 +19422,7 @@ WBSTree = (function ($) {
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
-                        localstorage.specialInstruction = val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'))
+                        localStorage.specialInstruction = selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
                     }
 
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;

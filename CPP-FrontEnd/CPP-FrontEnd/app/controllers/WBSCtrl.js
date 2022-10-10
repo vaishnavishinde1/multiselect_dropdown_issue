@@ -10,7 +10,7 @@
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType,) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -5136,7 +5136,8 @@
                         strProject += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
                             "<th class='sort-by' width='17%'>Value</th>" +
-                            "<th class='sort-by' width='27%'>Department</th>" +
+                        /*"<th class='sort-by' width='27%'>Department</th>" +*/
+                            "<th class='sort-by' width='27%'>Forecast</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
@@ -5172,7 +5173,8 @@
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
+                                /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
+                                strProject += "<td style='color:red' align ='right'>$" + project.ProjectForecastValue + "</td>";
                                 strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
@@ -5183,7 +5185,8 @@
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
+                               // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "' align ='right'>$" + project.ProjectForecastValue + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5266,13 +5269,13 @@
                                 var projectElement = selProject.children[projectElementI];
                                 //Aditya :: for keeping the element selected after save :: 27092022 
                                 if (selElementID != undefined && selElementID == projectElement.ProjectID && localStorage.getItem('MODE') == 'gridview') {
-                                    _selectedProjectID = selElementID;
+                                    wbsTree.setSelectedProjectID(selElementID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + selElementID + ">";
                                     getTrendGridSection(projectElement);
                                 }
                                 else if (projectElementI == 0 && selElementID == undefined) {
-                                    _selectedProjectID = projectElement.ProjectID;
+                                    wbsTree.setSelectedProjectID(projectElement.ProjectID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
                                     getTrendGridSection(projectElement);
@@ -5384,12 +5387,13 @@
                                 _baseline = response.data.result.FutureTrendList[0];
                             }
                             strTrend = "";
+                            $('#tblTrend tbody').html('');
 
                             strTrend += "<tr class='contact-row'>";
                             strTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
                             strTrend += "<td></td>";
                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                            strTrend += "<td style='display:none' ></td>";
+                            strTrend += "<td style='display:none'></td>";
                             strTrend += "</tr>";
                             var strApproveTrend = "", strPendingTrend = "";
                             if (_baseline.TrendStatus == "Approved") {
@@ -5398,7 +5402,7 @@
                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                         strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
-                                        strPendingTrend += "<td  style='display:none'></td>";
+                                        strPendingTrend += "<td></td>";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
                                         if (ModifyTrend == "1") {
@@ -5517,7 +5521,8 @@
                         strProject += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
                             "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Department</th>" +
+                        /*"<th width='27%'>Department</th>" +*/
+                            "<th width='27%'>Forecast</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
@@ -5939,8 +5944,12 @@
                         var projectId = $scope.GridProjectId;
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
+                        
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
+                        $("#btnSpecialInstruction").prop('disabled', false);
+                        $("#contextMenuBillOfMaterial").prop('disabled', false);
+
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
                             $('#delete_program_element').removeClass('btn btn-black');
@@ -6193,6 +6202,8 @@
                         selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
 
+                        wbsTree.setSelectedProjectID(selectedProjectElementID);
+
                         //Add Trend
                         //$("#AddTrendGridBtn").unbind('click').on("click", function () {
                         //    //var programId = $scope.GridContractId;
@@ -6222,6 +6233,9 @@
                 }
 
                 function BindTrendEvent(selectedProgramID, selectedProjectID, selectedElementID) {
+
+                    wbsTree.getWBSTrendTree().trendGraph(true);
+
                     //Add Trend
                     $("#AddTrendGridBtn").unbind('click').on("click", function () {
                         //var programId = $scope.GridContractId;
@@ -6237,7 +6251,6 @@
                         }
                         wbsTree.setNewTrend(true);
                         var s = wbsTree.getWBSTrendTree().getTrendNumber();
-                        wbsTree.getWBSTrendTree().trendGraph(true);
                         wbsTree.setSelectedNode(selectedElement);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};
@@ -6249,20 +6262,20 @@
 
                     });
                     //code added by kavita
-                    $('#tblTrend').on('dblclick',  function () {
-                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                    $('#tblTrend tbody').on('dblclick','tr', function () {
+                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                         //var projectId = $scope.GridProjectId;
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                         //var elementId = $scope.GridProjectId;
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
-                        var trendNumber = selectedElement.projectID;//this.parentElement.parentElement.id;
-
+                        var trendNumber = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
+                        
                         wbsTree.setSelectedNode(selectedElement);
                         wbsTree.setNewTrend(false);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};
 
-                        if (this.parentElement.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
                             jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
                                 if (trend.TrendNumber == trendNumber) {
                                     selectedTrend.metadata = trend;
@@ -6273,7 +6286,7 @@
 
                             $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
                         }
-                        if (this.parentElement.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
                             jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
                                 if (trend.TrendNumber == trendNumber) {
                                     selectedTrend.metadata = trend;

@@ -209,7 +209,9 @@ input[type=file] {
 .m-t-10 {
     margin-top: 10px;
 }
-
+.m-t-15{
+    margin-top:15px;
+}
 .m-b-0 {
     margin-bottom: 0 !important;
 }
@@ -346,6 +348,14 @@ label input[type="checkbox"] {
     width: 100%;
     border-radius: 7px !important;
     padding: 5px !important;
+}
+.sticky-column {
+    position: sticky;
+    position: -webkit-sticky;
+    left: 0;
+    color: white;
+    z-index: 1;
+    width: 100px; /* How can I make this dynamic? */
 }
 
 /*.c-input{*/
@@ -1724,7 +1734,7 @@ input:-webkit-autofill:active {
     padding: 4px 8px;
     font-size: 20px;
     border-radius: 5px;
-    margin: 10px 5px 2px;
+    margin: 10px 5px 0px;
     color: #000;
 }
 
