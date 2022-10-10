@@ -5410,12 +5410,10 @@ WBSTree = (function ($) {
 
             $('#btnSpecialInstruction').bind('click', function () {
                 event.preventDefault();    //Manasi 09-03-2021
-                g_newSpecialInstruction = true;
-               
-                $('#SpecialInstructoinModal').modal({ show: true, backdrop: 'static' });
-                $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
+                $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
             });
-
+          
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
                 //rbChangeOrderconsole.log(selectedNode);
@@ -8427,8 +8425,7 @@ WBSTree = (function ($) {
             //===================================================================================== PROJECT ELEMENT MILESTONE START ===================================================================
             // UPDATE PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#update_project_element_milestone_modal').unbind('click').on('click', function () {
-
-                var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
+             var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
                 var MilestoneDescp = modal.find('.modal-body #project_element_milestone_description_modal').val();
                 var MilestoneDate = modal.find('.modal-body #project_element_milestone_date_modal').val();
 
@@ -8607,20 +8604,14 @@ WBSTree = (function ($) {
 
             // SHOW PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#ProjectElementMilestoneModal').unbind().on('show.bs.modal', function (event) {
-
-                $('#message_div').hide();
+                  $('#message_div').hide();
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
-
-                //blur
+                                //blur
                 $("#ProjectModal").css({ "opacity": "0.8" });
-
-                console.log(g_selectedProjectElementMilestone);
-
-
-                modal = $(this);
+                  console.log(g_selectedProjectElementMilestone);
+               modal = $(this);
                 modal.find('.modal-body #project_element_name').focus();
-
 
                 if (isProjectElementMilestoneUpdate) {
                     //luan Jquery - luan here
@@ -8643,42 +8634,17 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_milestone_date_modal').val('');
                 }
             });
-          //code added by kavita
-            $('#SpecialInstructoinModal').unbind().on('show.bs.modal', function (event) {
-                 $('#message_div').hide();
-                defaultModalPosition();
-                var isProjectSpecialInstrucion = !g_newSpecialInstruction;
-                  //blur
-                $("#ProgramElementModal").css({ "opacity": "1" });
-          
-
-                //console.log(g_selectedSpecialInstruction)
-                modal = $(this);
-                modal.find('.modal-body #SpecialInstructoinModal').focus();
-                if (isProjectSpecialInstrucion) {
-                    //luan Jquery - luan here
-                    console.log('applied jquery');
-                  
-                    modal.find('.modal-SpecialInstructoinModal').text('hello');
-                 
-                }
-                else {	//create new
-                    modal.find('.modal-SpecialInstructoinModal').text('hello');
-                  
-
-                }
-            });
-             //code added by kavita
+         
             $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
                 // debugger;
                 //$("#BillOfMaterialModal").css({ "opacity": "0.8" });
-               $("#SpecialInstructoinModal").modal('toggle');
+               $("#SpecialInstructionModal").modal('toggle');
 
             });
              //code added by kavita
             $('#update_special_instruction').unbind('click').on('click', function () {
-                localStorage.specialInstruction = $('#SpecialInstructoinModal').find('.modal-body #program_billing_poc_special_instruction1').val();
-                $("#SpecialInstructoinModal").modal('toggle');
+                localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#SpecialInstructionModal").modal('toggle');
             });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
