@@ -335,6 +335,12 @@ WBSTree = (function ($) {
             return function (a, b) {
                 var valA = getCellValue(a, index),
                     valB = getCellValue(b, index);
+                if (valA.charAt(0) == '$') {
+                    valA = parseFloat(valA.split('$')[1].replace(/,/g, ''));
+                }
+                if (valB.charAt(0) == '$') {
+                    valB = parseFloat(valB.split('$')[1].replace(/,/g, ''));
+                }
                 return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
             }
         }
@@ -8766,8 +8772,7 @@ WBSTree = (function ($) {
 
                 event.preventDefault();    //Manasi 09-03-2021
                 g_newProjectElementMilestone = true;
-               $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
-               $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+                $('#ProjectElementMilestoneModal').modal({ show: true, backdrop: 'static' });
                 $('#delete_project_element_milestone_modal').hide();
                 g_selectedProjectElementMilestone = {
                     MilestoneID: 0,
@@ -9317,7 +9322,7 @@ WBSTree = (function ($) {
                     return;
                 }
                 //------------------------*/
-                g_newProgramElementMilestone = true;
+                g_newProgramElementMilestone = false;
                 
                
                 if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
