@@ -128,7 +128,7 @@ WBSTree = (function ($) {
             $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
             $('#trendSvg').hide();
-            $('#selectProject,#selectprogramelement,#selectProgram').hide(); // Aditya :: 10102022 :: hide contract filter in grid
+            $('#selectProject,#selectprogramelement,#selectProgram,#selectOrgDiv').hide(); // Aditya :: 10102022 :: hide contract filter in grid
             $('#wbsGridView').show();
             $('#wbsGridiewProject').show();
             $('#wbsGridiewElement').show();
@@ -3694,11 +3694,11 @@ WBSTree = (function ($) {
                             '<tr class="contact-row" id="' + programNotesList[x].notes_id + '" >' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
-                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
+                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td>' +
                             '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                             '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                             //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            '<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
+                            //'<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
                             '</tr>'
                         );
 
@@ -3975,7 +3975,7 @@ WBSTree = (function ($) {
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
                                 '</td >' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;"><a  id="viewOrderDetail" title="Click to view" class="clickableFont">' + singeChangeOrder.ChangeOrderName + '</a></td>' + //Aditya :: Hide Column :: 11102022
                                 '</td >' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
@@ -3984,8 +3984,8 @@ WBSTree = (function ($) {
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
-                                '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
+                                '<td class="docId"><span style="display:none;">' + singeChangeOrder.DocumentID + '</span></td>' +
                                  '</tr>'
                                
                             );
@@ -5408,8 +5408,8 @@ WBSTree = (function ($) {
             //});
             //luan quest 3/22
 
-            $('#btnSpecialInstruction').bind('click', function () {
-                event.preventDefault();    //Manasi 09-03-2021
+            $('#btnSpecialInstruction').unbind('click').bind('click', function () {
+                //event.preventDefault();    //Manasi 09-03-2021
                 $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
                 $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
             });
@@ -6325,7 +6325,7 @@ WBSTree = (function ($) {
                     newNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
 
                     //------------------------------------------------------------------------------------------------------
-
+                    newNode.ProjectForecastValue = 0;
 
                     //----------------- Swapnil save approvers details 25/10/2020------------------------------------------
 
@@ -6779,7 +6779,7 @@ WBSTree = (function ($) {
                             /////////aaa
                             // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
-                            localstorage.specialInstruction = "";
+                            localStorage.specialInstruction = "";
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
@@ -8637,13 +8637,14 @@ WBSTree = (function ($) {
          
             $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
                 // debugger;
-                //$("#BillOfMaterialModal").css({ "opacity": "0.8" });
+                $("#ProgramElementModal").css({ "opacity": "1" });
                $("#SpecialInstructionModal").modal('toggle');
 
             });
              //code added by kavita
             $('#update_special_instruction').unbind('click').on('click', function () {
                 localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#ProgramElementModal").css({ "opacity": "1" });
                 $("#SpecialInstructionModal").modal('toggle');
             });
 
@@ -10204,6 +10205,12 @@ WBSTree = (function ($) {
                 }
             });
 
+            $('#SpecialInstructionModal').unbind().on('show.bs.modal', function () {
+                defaultModalPosition();
+                //blur
+                $("#ProgramElementModal").css({ "opacity": "0.8" });
+            });
+
             // DELETE PROGRAM ELEMENT CHANGE ORDER MODAL LEGACY
 
             $('#delete_program_element_change_order_modal').unbind().on('click', function (event) {  //Manasi
@@ -10436,7 +10443,8 @@ WBSTree = (function ($) {
             });
 
             // Narayan - on click edit button in warranty grid - 23-05-2022
-            $("#gridWarrantyList").on('click', '#update_warranty', function () {
+            //$("#gridWarrantyList").on('click', '#update_warranty', function () {
+            $("#gridWarrantyList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveWarranty').hide();
                 //$('#btnClearWarranty').hide();
                 var row = $(this).closest("tr");
@@ -10517,7 +10525,8 @@ WBSTree = (function ($) {
             });
 
             // Narayan - on click edit button in prelimnary notice - 23-05-2022
-            $("#gridNoticeList").on('click', '#update_notice', function () {
+            //$("#gridNoticeList").on('click', '#update_notice', function () {
+            $("#gridNoticeList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveNotice').hide();
                 //$('#btnClearNotice').hide();
                 var row = $(this).closest("tr");
@@ -10577,7 +10586,8 @@ WBSTree = (function ($) {
             
 
             // Narayan - on click edit button in insurance - 24-05-2022
-            $("#gridInsuranceList").on('click', '#update_insurance', function () {
+            //$("#gridInsuranceList").on('click', '#update_insurance', function () {
+            $("#gridInsuranceList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveInsurance').hide();
 
                 var row = $(this).closest("tr");
@@ -11311,16 +11321,15 @@ WBSTree = (function ($) {
                                 gridWarranty.append('<tr class="contact-row" id="' + _WarrantyList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                    '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"<a id="view_warranty" title="Click to view" class="clickableFont">' +
+                                    '>' + _WarrantyList[x].WarrantyType + '<a></td > ' + //Aditya :: Hide Action Column :: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' + //Aditya :: Hide Action Column :: 11102022
                                     '<tr > ');
                             }
 
@@ -11445,10 +11454,10 @@ WBSTree = (function ($) {
                                     '><a>' + (x + 1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                    '>' + _NoticeList[x].Reason + '</td>' +
+                                    '><a id="view_notice" title="Click to view" class="clickableFont">' + _NoticeList[x].Reason + '</a></td>' + // Aditya :: Hide Action Column :: 1102022
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                                    //'<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' + // Aditya :: Hide Action Column :: 1102022
                                     '<tr > ');
                             }
 
@@ -11557,7 +11566,7 @@ WBSTree = (function ($) {
                                     '>' + _InsuranceList[x].Limit + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +  // Aditya :: Hide Action Column :: 1102022
                                     '<tr > ');
                             }
 
@@ -12345,13 +12354,13 @@ WBSTree = (function ($) {
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                     '</td > <td ' +
                                     'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                    '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
+                                    //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12401,7 +12410,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].ProjectElementName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -12413,7 +12422,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -14159,7 +14168,7 @@ WBSTree = (function ($) {
             });
 
             //$('#PdfViewerChangeorder').unbind().on('show.bs.modal', function (event) {
-            //    $("#ProgramElementModal").css({ "opacity": "0.4" });
+            //    $("#ProgramElementModal").css({ "opacity": "0.8" });
             //});
 
             $('#downloadBtnChangeOrder').unbind('click').on('click', function (event) {
@@ -14325,13 +14334,13 @@ WBSTree = (function ($) {
                                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                                             '</td > <td ' +
                                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + modificatioTitle + '</td>' +
                                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -14790,7 +14799,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].ChangeOrderName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -14802,7 +14811,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -14866,7 +14875,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 //'>' + _documentList[x].ExecutionDate + '</td>' +
                                 //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -14876,7 +14885,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -15800,9 +15809,9 @@ WBSTree = (function ($) {
                 window.setTimeout(function () {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
-                 //   document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
-                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 0;
-                   // document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
+                    document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight; //13102022 uncomment
+                    var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
+                    document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px'; //13102022 uncomment
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
             });
@@ -15878,7 +15887,8 @@ WBSTree = (function ($) {
 
             });
 
-            $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+            //$("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+            $("#bill_of_material_table_id").on('dblclick', 'tr', function () {
 
                 var row = $(this).closest("tr");
                 var id = row[0].id;
@@ -16214,8 +16224,7 @@ WBSTree = (function ($) {
                         '>' + _BillOfMaterialList[x].CostPerItem + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
-                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;' +
-                        '<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
                         '<tr > ');
                 }
             }
@@ -16320,13 +16329,13 @@ WBSTree = (function ($) {
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                             '</td > <td ' +
                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].TrendName + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
 
@@ -16402,7 +16411,7 @@ WBSTree = (function ($) {
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                             '</td > <td ' +
                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                            '><a id="' + viewBtnId + '" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].ChangeOrderName + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16414,7 +16423,7 @@ WBSTree = (function ($) {
                             //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             //'<td>' + _documentList[x].CreatedBy + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                            '<td  class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
+                            //'<td  class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
@@ -16505,7 +16514,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="' + viewBtnId + '" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16519,7 +16528,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -17719,10 +17728,10 @@ WBSTree = (function ($) {
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '>' + _NoticeList[x].Reason + '</td>' +
+                            '><a id="view_notice" title="Click to view" class="clickableFont"> ' + _NoticeList[x].Reason + '</a></td>' + // Aditya :: Hide Action Column :: 11102022
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                            //'<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' + // Aditya :: Hide Action Column :: 11102022
                             '<tr > ');
                     }
                     //}
@@ -17759,7 +17768,7 @@ WBSTree = (function ($) {
                             '>' + _InsuranceList[x].Limit + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' + // Aditya :: Hide Action Column :: 1102022
                             '<tr > ');
                     }
                 });
@@ -17790,15 +17799,14 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                            '><a id="view_warranty" title="Click to view" class="clickableFont">' + _WarrantyList[x].WarrantyType + '</a></td > ' + //Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' + //Aditya :: Hide Action Column :: 11102022
                             '<tr > ');
                     }
                 });
@@ -17853,13 +17861,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + //Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -18051,13 +18059,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + //Aditya :: Hide COlumn :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modId + ' - ' + modTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
                         }
@@ -19735,11 +19743,11 @@ WBSTree = (function ($) {
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                     '</td > <td ' +
                                     'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                    '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya ::HIde Column ::: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                    //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');
                             }
@@ -19812,13 +19820,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].TrendName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 

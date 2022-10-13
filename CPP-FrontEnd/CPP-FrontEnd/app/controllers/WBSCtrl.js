@@ -14,7 +14,7 @@
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
-            usSpinnerService.spin('spinner-1');//Use this if want to show spinner on data loading
+            //usSpinnerService.spin('spinner-1');//Use this if want to show spinner on data loading // removed :: loader stays spinning after auto logoout :: 12102022
             $scope.gridOPtions = {};
 
             //start spinner
@@ -232,11 +232,11 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -354,11 +354,11 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -551,11 +551,11 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -667,11 +667,11 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -1093,7 +1093,7 @@
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         //'>' + _documentList[x].ExecutionDate + '</td>' +
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -1103,7 +1103,7 @@
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1214,7 +1214,7 @@
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         //'>' + _documentList[x].ExecutionDate + '</td>' +
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -1224,7 +1224,7 @@
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1500,13 +1500,13 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1624,13 +1624,13 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2427,13 +2427,13 @@
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modId + ' - ' + modTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
                                 }
@@ -2474,13 +2474,13 @@
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2661,13 +2661,13 @@
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modId + ' - ' + modTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2683,13 +2683,13 @@
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -4375,10 +4375,10 @@
                         // Rename the project and project element nodes to include project number and project element number.
 
                         organization = response;
-
+                        usSpinnerService.spin('spinner-29');
                         //-------------------------------------Nivedita-contract Details---------------------------------------------------------------
                         GetContractGridSection(organization);
-
+                        usSpinnerService.stop('spinner-29');
 
                         var str = "<div class='row row-padding'>" +
                             "<div class='gadget color-my' style = 'height: 733px;' >" +
@@ -4973,7 +4973,6 @@
                 function GetContractGridSection(selOrganization, selectedContractID) { //Aditya :: Add selected contract ID for keeping the contract selected after save :: 27092022 
 
                     $('#wbsGridView').html('');
-
                     if (selOrganization.children != undefined && selOrganization.children.length > 0) {
                         var strContract = "";
                         strContract = "<div class='row'>";
@@ -4987,15 +4986,15 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<div class='gadget-content grid__Filter row' style='flex-wrap: nowrap'> <div title='Client Filter' style='width: 28%; padding:0; margin-left:15px;' class='form-group col-md-3 col-sm-3'><select class='input-medium form-control' id='clientFilter'></select></div>";
+                        strContract += "<table class='gadget-content grid__Filter'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
-                        strContract += "<div style='width: 28%; padding:0; margin-left:15px;' title='Contract Filter' class='form-group col-md-3 col-sm-3'><select class='input-medium form-control' id='contractFilter'></select></div>";
+                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
-                        strContract += "<div style='width: 9%; padding:0;margin-right:11px; margin-left:15px;' title='Search Contract Id' class='form-group col-md-3 col-sm-3' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></div>";
+                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
                         // Original Value filter
-                        strContract += "<div title='Search for greater than entered original value' style='width: 13%; padding:0;' class='form-group col-md-3 col-sm-3'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></div> ";
+                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<div title='Search for greater than entered current value' style='width: 13%; padding:0;' class='form-group col-md-3 col-sm-3'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></div></div>";
+                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table>";
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
@@ -5112,6 +5111,7 @@
                     }
 
                     BindProject();
+                    //usSpinnerService.stop('spinner-29');
                 }
 
                 function getProjectGridSection(selContract, selProjectId) { //Aditya :: Add selected Project ID for keeping the project selected after save :: 27092022 
@@ -5407,7 +5407,7 @@
 
                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                         strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
-                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                        strPendingTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/" + response.data.result.FutureTrendList[i].TrendNumber + "/" + orgId +">" + response.data.result.FutureTrendList[i].name + "</a></td>";
                                         strPendingTrend += "<td></td>";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
@@ -5439,7 +5439,7 @@
                                 if (response.data.result.PastTrendList.length > 1) {
                                     for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                         strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
-                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                        strApproveTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/" + response.data.result.PastTrendList[i].TrendNumber + "/" + orgId +">" + response.data.result.PastTrendList[i].name + "</a></td>";
                                         strApproveTrend += "<td></td>";
                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
@@ -5623,6 +5623,7 @@
                             });
                         }
                         else {
+                            fillClientOptions(allClientList);
                             tr = $scope.allContractRowsInTable;
                             sortedProgram=allProgramList;
                         }
@@ -5665,6 +5666,7 @@
                             });
                         }
                         else {
+                            fillContractOptions(allProgramList);
                             tr = $scope.allContractRowsInTable;
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
                             sortedClient=allClientList;
