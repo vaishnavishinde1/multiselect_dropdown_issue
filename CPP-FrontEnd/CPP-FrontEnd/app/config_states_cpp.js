@@ -350,6 +350,11 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
             templateUrl: appHelper.templatePath('admin/material'),
             controller: 'MaterialCtrl'
         }).
+        state('app.admin-adminApproval', {
+            url: '/admin-adminApproval',
+            templateUrl: appHelper.templatePath('admin/adminApproval'),
+            controller: 'AdminApprovalCtrl'
+        }).
         state('app.admin-subcontractor-type', {
             url: '/admin-subcontractor-type',
             templateUrl: appHelper.templatePath('admin/subcontractor-type'),
