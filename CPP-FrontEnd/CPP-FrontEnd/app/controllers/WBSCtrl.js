@@ -5011,7 +5011,7 @@
                         for (programI = 0; programI < selOrganization.children.length; programI++) {
                             var program = selOrganization.children[programI];
                             var originalContractVal = program.ContractValue;
-                            var CurrentContractVal = parseFloat(program.ContractModificationValue) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));
+                            var CurrentContractVal = parseFloat(program.ContractModificationValue.replace("$", "").replaceAll(",", "")) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));  //Current Value shows NA on update Contract fixed :: 14102022
                             //Aditya :: for keeping the contract selected after save :: 27092022 
                             if (selectedContractID != undefined && selectedContractID == program.ProgramID && localStorage.getItem('MODE') == 'gridview') {
                                 selectedProgramID = selectedContractID;
