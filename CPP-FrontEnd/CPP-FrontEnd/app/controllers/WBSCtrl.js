@@ -5499,10 +5499,9 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewProject').html('');
                         var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                          if (strProject.Status == "Closed") {
+                        if (selectedRow.Status == "Closed") {
                               strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-
                         else if (ModifyProject == "1") {
                               strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
@@ -5529,10 +5528,10 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                        if (strElement.Status == "Closed") {
+                        if (selectedRow.Status == "Closed" || isProjectEmpty) {
                             strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        if (ModifyProjectElement == "1") {
+                        else if (ModifyProjectElement == "1") {
                             strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
