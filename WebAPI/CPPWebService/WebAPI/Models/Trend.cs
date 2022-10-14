@@ -976,6 +976,14 @@ namespace WebAPI.Models
                             tr.NextApproverEmailDate = DateTime.Now.Date; // Swapnil 18/09/2020
                             tr.LastApprover_UserID = requestingUser.UserID; // Swapnil 18/09/2020
                             ctx.SaveChanges();
+                            var approvallistforlastapproval = tr.approvedList_EmployeeID.Split();
+
+                            if (approvallistforlastapproval.Length == 1)
+                            {
+                                deductQuantity(tr);
+
+
+                            }
                             return "Official Approved";
                         }
 
@@ -1691,8 +1699,8 @@ namespace WebAPI.Models
             CostUnit costUnit = new CostUnit();
             decimal unitqunatity;
             project = ctx.Project.Where(p => p.ProjectID == tr.ProjectID).FirstOrDefault();
-
-            activitylist = ctx.Activity.Where(a => a.ProjectID == project.ProjectID).ToList();
+            var trendno = tr.TrendNumber;
+            activitylist = ctx.Activity.Where(a => a.ProjectID == project.ProjectID && a.TrendNumber == trendno).ToList();
 
             foreach (var i in activitylist)
             {

@@ -261,7 +261,7 @@ namespace WebAPI.Models
                     ProjectApproversDetails ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == PragramelementId && p.ApproverMatrixId == projectManagerApproval.Id).FirstOrDefault();
                     //Employee employeData = ctx.Employee.Where(e => e.ID == ApproversDetails.EmpId).FirstOrDefault();
                     
-                    if(ApproversDetails.EmpId != 10000) {
+                    if(ApproversDetails!= null && ApproversDetails.EmpId != 10000) {
                         projectManager = ApproversDetails.EmpName;
                     }
                     else
