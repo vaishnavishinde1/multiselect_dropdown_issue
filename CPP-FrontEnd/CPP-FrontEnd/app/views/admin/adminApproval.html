@@ -1,0 +1,92 @@
+﻿<div class="row">
+    <div class="col-centered" style="width: 1111px">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="font-size:30px;">
+                    Trend Approvers
+                </h3>
+                <a href="#/app/wbs" class="exit-button">X</a>
+            </div>
+            <div class="row" style="padding-bottom:15px">
+                <div class="col-sm-6">
+                    <label for="selectPresident">President</label>
+                    <br />
+                    <select ng-options="item as item.UserFullName for item in presidentList track by item.EmployeeID"
+                            class="input-medium form-control" ng-change="filterchangepresident()" ng-model="filterpresident" id="selectPresident">
+                    </select>
+                </div>
+                <div class="col-sm-6 h-100" style="text-align: end; padding-top: 15px;">
+                    <button type="button" class="btn btn-primary" ng-click="showHistory()">Approval History</button>
+                </div>
+            </div>
+
+            <div class="panel-body" style="height: 550px; overflow: auto">
+                <div class="gridStyle" ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav>
+
+                </div>
+            </div>
+            <div class="panel-footer" id="right_panel-footer" style="text-align:center">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary c-btn-delete" ng-click="delete()">Delete</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary c-btn-save" ng-click="save()" id="save_Material">Save</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary c-btn-back" ng-click="addRow()">New</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal fade" id="ApprovalHistoryModal" role="dialog" aria-labelledby="modal_heading" aria-hidden="true" style="z-index:9999;">
+                <div class="modal-dialog" style="width:60%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-program-element ui-draggable-handle" style="background-color: #0069d9;">
+                            <button id="closeApprovalHistoryModal" type="button" class="exit-button" ng-click="closeApprovalModal()">X</button>
+                            <h4 class="modal-title modal_heading" style="color: #fff;">Approval History</h4>
+                        </div>
+                        <div class="modal-body  p-l-15 p-r-15">
+                            <div class="_form-group">
+                                <div class="col-xs-12  col-md-12 m-b-10">
+                                    <!--<label class="control-label _bold">Search : </label>-->
+                                    <input type="text" class="form-control" id="searchDepartment" autocomplete="off" placeholder="Type to search ....">
+                                </div>
+                            </div>
+                            <div class="block-view panel-body">
+                                <div class="table-outline-wo-p" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                                    <table id="tblApprovalHistoryGrid" class="table table-striped">
+                                        <thead>
+                                            <tr class="t-head">
+                                                <th></th>
+                                                <th style="width: 20%;"> Department</th>
+                                                <th style="width: 20%;"> Department Manager</th>
+                                                <th style="width: 20%;"> Operation Manager</th>
+                                                <th style="width: 10%;"> Updated By</th>
+                                                <th style="width: 10%;"> From</th>
+                                                <th style="width: 10%;"> To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .sortable:after {
+        content: none !important;
+    }
+</style>

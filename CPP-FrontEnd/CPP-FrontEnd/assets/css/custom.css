@@ -181,8 +181,9 @@ form .form-group.has-error .help-block, form .form-group.has-error .control-labe
 }
 
 .clickableFont {
-    cursor: pointer;
+    cursor: pointer !important;
     pointer-events: auto;
+    text-decoration: underline !important;
 }
 
 ._control-label {
@@ -419,6 +420,12 @@ label input[type="checkbox"] {
     width: 230px;
     font-weight: bold;
     margin-top: 15px !important; /*changes by sarab*/
+}
+.wbs-col-heading > input {
+    width: 98% !important;
+    width: 230px;
+    font-weight: bold;
+    margin-top: 15px !important; /*Aditya :: 10102022 :: changes by sarab*/
 }
 
 #address-bar {
@@ -2026,7 +2033,7 @@ button[disabled=disabled], button:disabled {
 
 .grid__scrollable_main {
     overflow: auto;
-    height: 700px;
+    height: 658px; /*change height after adding filter*/
 }
 
 /*a:link,
@@ -2111,12 +2118,49 @@ th.sort-by {
     background-color: white !important;
     color: black !important;
 }
-
-.bom__search {
-    display: flex;
-    justify-content: space-between;
-    vertical-align: middle;
+/*Aditya:10102022:Grid Filter*/
+.grid__Filter {
+    background: linear-gradient(90deg,#719bae,#5580bc);
+    margin-top: -11px !important;
+    border-radius: 5px;
+    margin-bottom: 5px !important;
 }
+
+    .grid__Filter thead {
+        background: linear-gradient(90deg,#719bae,#5580bc);
+        text-align: center !important;
+        position: sticky !important;
+        white-space: nowrap;
+    }
+
+        .grid__Filter thead a, .grid__table th a {
+            color: #000 !important;
+            cursor: pointer;
+        }
+    .grid__Filter tr:hover {
+        background: linear-gradient(90deg,#719bae,#5580bc);
+    }
+
+    .grid__Filter th {
+        text-align: center !important;
+        font-size: 14px;
+        position: sticky !important;
+        top: 0;
+    }
+
+        .grid__Filter th > input {
+            width: 95%;
+        }
+
+        .grid__Filter th > select {
+            width: 95%;
+        }
+
+        .bom__search {
+            display: flex;
+            justify-content: space-between;
+            vertical-align: middle;
+        }
 
     .bom__search input {
         padding: 5px 10px;
