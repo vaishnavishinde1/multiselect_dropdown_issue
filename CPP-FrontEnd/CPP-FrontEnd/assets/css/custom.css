@@ -181,8 +181,9 @@ form .form-group.has-error .help-block, form .form-group.has-error .control-labe
 }
 
 .clickableFont {
-    cursor: pointer;
+    cursor: pointer !important;
     pointer-events: auto;
+    text-decoration: underline !important;
 }
 
 ._control-label {
