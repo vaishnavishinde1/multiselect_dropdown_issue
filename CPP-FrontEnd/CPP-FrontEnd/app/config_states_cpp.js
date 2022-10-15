@@ -335,6 +335,11 @@ angular.module('xenon-app').config(function($stateProvider, $httpProvider, $urlR
             templateUrl: appHelper.templatePath('userReports'),
             controller: 'UserReportManagerCtrl'
         }).
+        state('app.admin-bill-of-material-report', {
+            url: '/admin-bill-of-material-report',
+            templateUrl: appHelper.templatePath('admin/bill-of-material-report'),
+            controller: 'BillOfMaterialReportCtrl'
+        }).
         state('app.admin-odc-type', {
             url: '/admin-odc-type',
             templateUrl: appHelper.templatePath('admin/odc-type'),
