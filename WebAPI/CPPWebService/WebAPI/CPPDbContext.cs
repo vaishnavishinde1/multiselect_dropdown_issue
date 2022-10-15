@@ -102,6 +102,7 @@ namespace WebAPI
             modelBuilder.Entity<FTEPosition>().ToTable("fte_position");
             modelBuilder.Entity<ActivityCategory>().ToTable("activity_category");
             modelBuilder.Entity<Employee>().ToTable("employee");
+            modelBuilder.Entity<AdminApproval>().ToTable("admin_approval");
             modelBuilder.Entity<CostTrackType>().ToTable("cost_track_type");
             modelBuilder.Entity<Material>().ToTable("material");
             modelBuilder.Entity<Activity>().ToTable("activity");
@@ -305,6 +306,10 @@ namespace WebAPI
         public DbSet<ContractProjectManager> ContractProjectManagers { get; set; } // Narayan - 03-05-2022
 
         public DbSet<TotalBudgetForecastValue> TotalBudgetForecastValue { get; set; } // Nivedita - 29-09-2022
+
+        public DbSet<AdminApproval> AdminApproval { get; set; } // Narayan - 11-10-2022
+        public DbSet<ApprovalHistory> ApprovalHistory { get; set; } // Narayan - 11-10-2022
+        public DbSet<AdminApprovalPresident> AdminApprovalPresident { get; set; } // Narayan - 12-10-2022
 
     }
 

@@ -9730,9 +9730,9 @@ WBSTree = (function ($) {
                     debugger;
                     //code by kavita
                     if (updatedChangeOrder.ModificationTypeId == 1) {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                        //var curendt = new Date($('#program_element_PEnd_Date').val());
+                        //curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        //$('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
                     }
                     if (updatedChangeOrder.ModificationTypeId == 4) {
                         var curendt = new Date($('#program_element_PEnd_Date').val());
