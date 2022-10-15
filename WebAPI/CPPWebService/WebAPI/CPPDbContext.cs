@@ -173,6 +173,7 @@ namespace WebAPI
             modelBuilder.Entity<UserRoleRelation>().ToTable("user_role_relation");
             modelBuilder.Entity<ProgramNotes>().ToTable("program_notes");
             modelBuilder.Entity<TotalBudgetForecastValue>().ToTable("tbltotalbudgetforecastvalue"); //Nivedita29-09-2022
+            //modelBuilder.Entity<AdminApproval>().ToTable("admin_approval"); //Nivedita29-09-2022
         }
 
         public DbSet<Program> Program { get; set; }

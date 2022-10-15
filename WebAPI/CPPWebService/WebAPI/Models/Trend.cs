@@ -666,7 +666,8 @@ namespace WebAPI.Models
                         var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
                         List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
 
-                        List<AdminApproval> adminApproverDetails = ctx.AdminApprovals.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
+                        List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
+                        AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
 
                         bool firstAppend = true;
 
@@ -716,7 +717,7 @@ namespace WebAPI.Models
                             }
                             else if (approvalMatrixList[x].Id == 5)
                             {
-                                employeeId = 10580;
+                                employeeId = adminApprovalPresident.PresidentID;
                             }
 
 
@@ -894,8 +895,8 @@ namespace WebAPI.Models
                         //Nivedita 08-10-2022
                         var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
                         List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
-                        List<AdminApproval> adminApproverDetails = ctx.AdminApprovals.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
-
+                        List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
+                        AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
                         //If this guy approve successfuly, then we change the threshold to what he is associated with.
                         String lowestApproverCost = "99999999999";
                         String lowestApproverRole = "";
@@ -951,7 +952,7 @@ namespace WebAPI.Models
                         }
                         else if (lowestApprovalMatrixId == 5)
                         {
-                            nextApproverEmployeeID = 10580;
+                            nextApproverEmployeeID = adminApprovalPresident.PresidentID;
                         }
 
 
@@ -1020,6 +1021,7 @@ namespace WebAPI.Models
                                                                            p.Cost > currentThresholdTargeted &&
                                                                            applicableRoleList.Contains(p.Role)).OrderBy(p => p.Cost).ToList();
 
+
                         //To prevent limbo
                         if (approvalMatrixList.Count < 1)
                         {
@@ -1065,7 +1067,7 @@ namespace WebAPI.Models
                         }
                         else if(lowestApprovalMatrixId == 5)
                         {
-                            nextApproverEmployeeID = 10580;
+                            nextApproverEmployeeID = adminApprovalPresident.PresidentID;
                         }
                         
 

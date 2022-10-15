@@ -643,7 +643,7 @@ namespace WebAPI.Models
             ClientProjectManager = wbspe.ClientProjectManager;
 			ProjectClassName = ProjectClass.getProjectClassById(wbspe.ProjectClassID).ProjectClassName.ToString();
             ProgramElementNumber = wbspe.ProgramElementNumber;
-            ProjectForecastValue = TotalBudgetForecastValue.GetProjectForecastValue(Convert.ToInt32(ProgramElementID)).ToString(); //Nivedita 04-10-2022
+            ProjectForecastValue = TotalBudgetForecastValue.GetProjectForecastValue(Convert.ToInt32(ProgramElementID)); //Nivedita 04-10-2022
             // Jignesh-25-02-2021
             ProjectPStartDate = (wbspe.ProjectPStartDate != null ? wbspe.ProjectPStartDate.Value.ToString("yyyy-MM-dd") : "");
             ProjectPEndDate = (wbspe.ProjectPEndDate != null ? wbspe.ProjectPEndDate.Value.ToString("yyyy-MM-dd") : "");

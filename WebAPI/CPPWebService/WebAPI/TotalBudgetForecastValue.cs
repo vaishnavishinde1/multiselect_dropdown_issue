@@ -90,7 +90,7 @@ namespace WebAPI.Models
                             //totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalSubcontractorCost;
                         }
                         //register
-                        //totalBudgetForecastValue.TotalForecastValue = totalBudgetForecastValue.TotalLaborCost + totalBudgetForecastValue.TotalMaterialCost + totalBudgetForecastValue.TotalODCCost + totalBudgetForecastValue.TotalSubcontractorCost;
+                        totalBudgetForecastValue.TotalForecastValue = totalBudgetForecastValue.TotalLaborCost + totalBudgetForecastValue.TotalMaterialCost + totalBudgetForecastValue.TotalODCCost + totalBudgetForecastValue.TotalSubcontractorCost;
                         //totalBudgetForecastValue.ActivityId = 0;
                         ctx.TotalBudgetForecastValue.Add(totalBudgetForecastValue);
                         ctx.SaveChanges();
@@ -134,18 +134,19 @@ namespace WebAPI.Models
             }
         }
 
-        public static double GetProjectForecastValue(int ProjectId)
+        public static string GetProjectForecastValue(int ProjectId)
         {
-            double forecastValue = 0.00;
+            string returnForecastVal = "0.00";
+            //double forecastValue = 0.00;
             List<TotalBudgetForecastValue> totalBudgetForecastValue = new List<TotalBudgetForecastValue>();
             try
             {
                 using (var ctx = new CPPDbContext())
                 {
                     totalBudgetForecastValue = ctx.TotalBudgetForecastValue.Where(u => u.ProjectId == ProjectId).ToList();
-                    if (totalBudgetForecastValue != null)
+                    if (totalBudgetForecastValue != null && totalBudgetForecastValue.Count !=0)
                     {
-                        forecastValue = totalBudgetForecastValue.Sum(a => Convert.ToDouble(a.TotalForecastValue));
+                        returnForecastVal = totalBudgetForecastValue.Sum(a => Convert.ToDouble(a.TotalForecastValue)).ToString();
                     }
                     
                 }
@@ -159,7 +160,7 @@ namespace WebAPI.Models
             finally
             {
             }
-            return forecastValue;
+            return returnForecastVal;
         }
     }
 }
