@@ -7922,7 +7922,7 @@ WBSTree = (function ($) {
                         "ApproversDetails": approversDetails
 
                     };
-
+                    
                     //return;
 
                     wbsTree.getProject().persist().save(objToSave, function (response) {
@@ -7952,7 +7952,7 @@ WBSTree = (function ($) {
                             newNode.ProgramElementID = resultArray[2];
                             newNode.ProjectID = resultArray[3];
                             newNode.name = response.result.split(',')[4].trim() + ". " + newNode.name; // Jignesh-19-03-2021
-
+                            newNode.ProjectElementNumber = response.result.split(',')[4].trim(); // Aditya 15102022
                             var index = 0;
 
                             var apiUpload = function () {
@@ -8014,8 +8014,8 @@ WBSTree = (function ($) {
 
                             apiRegisterProjectElementMilestone();
 
-
-
+                           
+                            
                             $('#ProjectModal').modal('hide');
 
                             selectedNode = selectedNode.parent;
@@ -9730,9 +9730,9 @@ WBSTree = (function ($) {
                     debugger;
                     //code by kavita
                     if (updatedChangeOrder.ModificationTypeId == 1) {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                        //var curendt = new Date($('#program_element_PEnd_Date').val());
+                        //curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        //$('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
                     }
                     if (updatedChangeOrder.ModificationTypeId == 4) {
                         var curendt = new Date($('#program_element_PEnd_Date').val());
@@ -14676,6 +14676,11 @@ WBSTree = (function ($) {
                     //$('#edit_program_element_milestone').removeAttr('disabled');
                     //$('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
+
+                    $('#contextMenuBillOfMaterial').removeAttr('title');
+                    $('#contextMenuBillOfMaterial').removeAttr('disabled');
+                    $('#btnSpecialInstruction').removeAttr('title');
+                    $('#btnSpecialInstruction').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
                     wbsTree.setIsProgramElementNew(false);
@@ -15385,7 +15390,7 @@ WBSTree = (function ($) {
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
                     $("#delete_program_element_milestone").attr('disabled', 'disabled');
 
-
+                    
                     g_newProgramElement = true;
                     $('#g_newProgramElement').val('true');
                     wbsTree.setProgramElementFileDraft([]);
@@ -15405,6 +15410,11 @@ WBSTree = (function ($) {
                     $('#divmilestone').attr('title', "A project needs to be saved before key project milestones can be added");    //Manasi 23-02-2021
                     $('#divChangeOrder').attr('title', "A project needs to be saved before the change order can be added");    //Manasi 23-02-2021
                     $('#documentUploadProgramNewPrg').attr('title', "A project needs to be saved before the document can be uploaded");   //Manasi 23-02-2021
+
+                    $('#contextMenuBillOfMaterial').attr('disabled', true);
+                    $('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    $('#btnSpecialInstruction').attr('disabled', true);
+                    $('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
 
                     var gridUploadedDocumentProgramElement = $('#gridUploadedDocumentProgramNewPrg tbody');// modal.find('.modal-body #gridUploadedDocumentProgramElement tbody');
                     gridUploadedDocumentProgramElement.empty();

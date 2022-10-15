@@ -207,7 +207,21 @@
                 $("#ApprovalHistoryModal").modal('toggle');
 
             });
-            
+
+            $("#searchInHistory").on("keyup", function search() {
+                var tr = $('#tblApprovalHistoryGrid tbody tr');
+                let filter_Id = $(this).val();
+                for (let i = 0; i < tr.length; i++) {
+                    td = tr[i].cells;
+                    var td_Id = td[2].innerText;
+                    if (td_Id.indexOf(filter_Id) > -1) {
+                            tr[i].style.display = "";
+                        }
+                        else {
+                            tr[i].style.display = "none";
+                        }
+                }
+            });
 
             var addIndex = function (data) {
                 var i = 1;
@@ -361,6 +375,13 @@
                         let deptWiseOpeManager = [];
                         let deptManagerDD = [];
                         let opeManagerDD = [];
+
+                        if (rowEntity.Department != rowEntity.DepartmentID) {
+                            rowEntity.DepartmentManager = '';
+                            rowEntity.DeptManagerID = '';
+                            rowEntity.OpeManagerID = '';
+                            rowEntity.OperationsManager = '';
+                        }
 
                         deptWiseDeptManager = $scope.listOfDeptManagers.filter(user => user.DepartmentID == newValue);
                         deptWiseOpeManager = $scope.listOfOpeManagers.filter(user => user.DepartmentID == newValue);
