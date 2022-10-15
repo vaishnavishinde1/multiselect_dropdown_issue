@@ -121,6 +121,7 @@ angular.module('xenon.services', []).
 
 					var admin_trendsetup = admin.addItem("Trend setup", "/app/admin");
 					admin_trendsetup.addItem('Trend Approval Requirements', '-/approval-matrix');
+					admin_trendsetup.addItem('Trend Approvers', '-/adminApproval');
 					admin_trendsetup.addItem('Trend Status Code', '-/trend-status-code');
 					admin_trendsetup.addItem('Vendor', '-/vendor');
 					admin_trendsetup.addItem('Manufacturer', '-/manufacturer');
