@@ -54,6 +54,10 @@ namespace WebAPI.Models
                 {
                     TotalBudgetForecastValue retreivedTotalBudgetForecastValue = new TotalBudgetForecastValue();
                     retreivedTotalBudgetForecastValue = ctx.TotalBudgetForecastValue.Where(u => u.ProjectId == totalBudgetForecastValue.ProjectId && u.ActivityId == totalBudgetForecastValue.ActivityId).FirstOrDefault();
+                    var costfte = ctx.CostFte.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
+                    var costlumpsum = ctx.CostLumpsum.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
+                    var costodc = ctx.CostODC.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
+                    var costunitcost = ctx.CostUnit.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
 
                     var Project = ctx.Project.Where(p => p.ProjectID == totalBudgetForecastValue.ProjectId).FirstOrDefault();
                     if (retreivedTotalBudgetForecastValue == null)
@@ -62,19 +66,28 @@ namespace WebAPI.Models
 
                         if (totalBudgetForecastValue.isLoborChanged)
                         {
-                            totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalLaborCost;
+                            double sumOFFTE = costfte.Sum(f => Convert.ToDouble(f.FTEValue));
+                            double fteHour = (costfte.Sum(f => Convert.ToDouble(f.FTEHours)))/sumOFFTE;
+                            //double fteHour = Convert.ToDouble(costfte.Select(d => d.FTEHours).FirstOrDefault());
+                            double fteHourlyRate = Convert.ToDouble(costfte.Select(d => d.RawFTEHourlyRate).FirstOrDefault());
+                            double totalFteHour = sumOFFTE * (8 * fteHour);
+                            totalBudgetForecastValue.TotalForecastValue = totalFteHour * fteHourlyRate;
+                           // totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalLaborCost;
                         }
                         if (totalBudgetForecastValue.isMaterialChanged)
                         {
-                            totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalMaterialCost;
+                            totalBudgetForecastValue.TotalMaterialCost = costunitcost.Sum(c => Convert.ToDouble(c.OriginalCost));
+                            //totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalMaterialCost;
                         }
                         if (totalBudgetForecastValue.isODCChanged)
                         {
-                            totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalODCCost;
+                            totalBudgetForecastValue.TotalODCCost = costodc.Sum(c => Convert.ToDouble(c.OriginalCost));
+                           // totalBudgetForecastValue.TotalODCCost += totalBudgetForecastValue.TotalODCCost;
                         }
                         if (totalBudgetForecastValue.isSubcontractorChanged)
                         {
-                            totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalSubcontractorCost;
+                            totalBudgetForecastValue.TotalSubcontractorCost = costlumpsum.Sum(c => Convert.ToDouble(c.OriginalCost));
+                            //totalBudgetForecastValue.TotalForecastValue += totalBudgetForecastValue.TotalSubcontractorCost;
                         }
                         //register
                         //totalBudgetForecastValue.TotalForecastValue = totalBudgetForecastValue.TotalLaborCost + totalBudgetForecastValue.TotalMaterialCost + totalBudgetForecastValue.TotalODCCost + totalBudgetForecastValue.TotalSubcontractorCost;
@@ -86,19 +99,27 @@ namespace WebAPI.Models
                     {
                         if (totalBudgetForecastValue.isLoborChanged)
                         {
-                            retreivedTotalBudgetForecastValue.TotalLaborCost = totalBudgetForecastValue.TotalLaborCost;
+                            double sumOFFTE = costfte.Sum(f => Convert.ToDouble(f.FTEValue));
+                            double fteHour = (costfte.Sum(f => Convert.ToDouble(f.FTEHours))) / sumOFFTE;
+                            //double fteHour = Convert.ToDouble(costfte.Select(d => d.FTEHours).FirstOrDefault());
+                            double fteHourlyRate = Convert.ToDouble(costfte.Select(d => d.RawFTEHourlyRate).FirstOrDefault());
+                            double totalFteHour = sumOFFTE * (8 * fteHour);
+                            retreivedTotalBudgetForecastValue.TotalLaborCost = totalFteHour * fteHourlyRate;
+                            //retreivedTotalBudgetForecastValue.TotalLaborCost += totalBudgetForecastValue.TotalLaborCost;
                         }
                         if (totalBudgetForecastValue.isMaterialChanged)
                         {
-                            retreivedTotalBudgetForecastValue.TotalMaterialCost = totalBudgetForecastValue.TotalMaterialCost;
+                            retreivedTotalBudgetForecastValue.TotalMaterialCost = costunitcost.Sum(c => Convert.ToDouble(c.OriginalCost));
+                            //totalBudgetForecastValue.TotalMaterialCost = costlumpsum.Sum(c => Convert.ToDouble(c.OriginalCost));
                         }
                         if (totalBudgetForecastValue.isODCChanged)
                         {
-                            retreivedTotalBudgetForecastValue.TotalODCCost = totalBudgetForecastValue.TotalODCCost;
+                            retreivedTotalBudgetForecastValue.TotalODCCost = costodc.Sum(c => Convert.ToDouble(c.OriginalCost)); 
                         }
                         if (totalBudgetForecastValue.isSubcontractorChanged)
                         {
-                            retreivedTotalBudgetForecastValue.TotalSubcontractorCost = totalBudgetForecastValue.TotalSubcontractorCost;
+                            retreivedTotalBudgetForecastValue.TotalSubcontractorCost = costlumpsum.Sum(c => Convert.ToDouble(c.OriginalCost));
+                            //retreivedTotalBudgetForecastValue.TotalSubcontractorCost += totalBudgetForecastValue.TotalSubcontractorCost;
                         }
                         retreivedTotalBudgetForecastValue.TotalForecastValue = retreivedTotalBudgetForecastValue.TotalLaborCost + retreivedTotalBudgetForecastValue.TotalMaterialCost + retreivedTotalBudgetForecastValue.TotalODCCost + retreivedTotalBudgetForecastValue.TotalSubcontractorCost;
                         CopyUtil.CopyFields<TotalBudgetForecastValue>(retreivedTotalBudgetForecastValue,totalBudgetForecastValue);
@@ -113,9 +134,9 @@ namespace WebAPI.Models
             }
         }
 
-        public static decimal GetProjectForecastValue(int ProjectId)
+        public static double GetProjectForecastValue(int ProjectId)
         {
-            decimal forecastValue = 0;
+            double forecastValue = 0.00;
             List<TotalBudgetForecastValue> totalBudgetForecastValue = new List<TotalBudgetForecastValue>();
             try
             {
@@ -124,7 +145,7 @@ namespace WebAPI.Models
                     totalBudgetForecastValue = ctx.TotalBudgetForecastValue.Where(u => u.ProjectId == ProjectId).ToList();
                     if (totalBudgetForecastValue != null)
                     {
-                        forecastValue = totalBudgetForecastValue.Sum(a => Convert.ToDecimal(a.TotalForecastValue));
+                        forecastValue = totalBudgetForecastValue.Sum(a => Convert.ToDouble(a.TotalForecastValue));
                     }
                     
                 }

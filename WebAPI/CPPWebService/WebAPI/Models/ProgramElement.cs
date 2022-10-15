@@ -178,9 +178,7 @@ namespace WebAPI.Models
                         for (int i = 0; i < MatchedProgramElementList.Count; i++)
                         {
                             ProgramElement ele = MatchedProgramElementList[i];
-                            ele.ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == pgmEltId).ToList<ProjectApproversDetails>();
-                          
-                            
+                            ele.ApproversDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == pgmEltId && p.ApproverMatrixId == 4).ToList<ProjectApproversDetails>();
                         }
                     }
                     else if (KeyStroke != "null" && KeyStroke != null)

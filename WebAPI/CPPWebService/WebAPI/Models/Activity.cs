@@ -805,9 +805,9 @@ namespace WebAPI.Models
                                               Scale, ftePoistionID, 1, 0, EmployeeID, lineItem); //LineNumber not getting udpated
 
 
-                            if (Convert.ToInt32(FTECostList[i]) > 0)
+                            if (Convert.ToDouble(FTECostList[i]) > 0)
                             {
-                                totalFTEHours += Convert.ToInt32(FTEHoursList[i]) * 8;
+                                totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
                             }
 
                             //update_result += "";
@@ -868,9 +868,9 @@ namespace WebAPI.Models
                                                 FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTECostList[i], FTEHourlyRate, FTEHoursList[i], FTETotalCostList[i],
                                                 Scale, ftePoistionID, 1, 0, EmployeeID, lineItem);
 
-                            if (Convert.ToInt32(FTECostList[i]) > 0)
+                            if (Convert.ToDouble(FTECostList[i]) > 0)
                             {
-                                totalFTEHours += Convert.ToInt32(FTEHoursList[i]) * 8;
+                                totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
                             }
                             //Create line Item
                             //if (isExist == false)
@@ -1107,9 +1107,9 @@ namespace WebAPI.Models
                                     command.Parameters.AddWithValue("@Granularity", Granularity);
                                     command.ExecuteNonQuery();
 
-                                    if (Convert.ToInt32(FTECostList[i]) > 0)
+                                    if (Convert.ToDouble(FTECostList[i]) > 0)
                                     {
-                                        totalFTEHours += Convert.ToInt32(FTEHourList[i]) * 8;
+                                        totalFTEHours += Convert.ToDouble(FTEHourList[i]) * 8;
                                     }
                                 }
 
@@ -1214,9 +1214,9 @@ namespace WebAPI.Models
                                     command.Parameters.AddWithValue("@Granularity", Granularity);
                                     command.ExecuteNonQuery();
 
-                                    if (Convert.ToInt32(FTECostList[i]) > 0)
+                                    if (Convert.ToDouble(FTECostList[i]) > 0)
                                     {
-                                        totalFTEHours += Convert.ToInt32(FTEHourList[i]) * 8;
+                                        totalFTEHours += Convert.ToDouble(FTEHourList[i]) * 8;
                                     }
                                 }
                                 //}
@@ -1382,9 +1382,9 @@ namespace WebAPI.Models
                                             FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTEValueList[i], FTEHourlyRate, FTEHoursList[i], FTECostList[i],
                                             Granularity, ftePositionId, 1, 0, EmployeeID, CostLineItemID); //LineNumber not getting udpated
 
-                        if (Convert.ToInt32(FTECostList[i]) > 0)
+                        if (Convert.ToDouble(FTECostList[i]) > 0)
                         {
-                            totalFTEHours += Convert.ToInt32(FTEHoursList[i]) * 8;
+                            totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
                         }
                         OKForUpdate = false;
                     }
@@ -1421,9 +1421,9 @@ namespace WebAPI.Models
                                            FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTEValueList[i], FTEHourlyRate, FTEHoursList[i], FTECostList[i],
                                            Granularity, ftePositionId, 1, 0, EmployeeID, CostLineItemID); //LineNumber not getting udpated
 
-                        if (Convert.ToInt32(FTECostList[i]) > 0)
+                        if (Convert.ToDouble(FTECostList[i]) > 0)
                         {
-                            totalFTEHours += Convert.ToInt32(FTEHoursList[i]) * 8;
+                            totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
                         }
                         OKForRegister = false;
                     }
@@ -2082,9 +2082,9 @@ namespace WebAPI.Models
 
 
 
-                            if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                            if (Convert.ToDouble(LumpsumCost[i]) > 0)
                             {
-                                totalSubValue += Convert.ToInt32(LumpsumCost[i]) ;
+                                totalSubValue += Convert.ToDouble(LumpsumCost[i]) ;
                             }
 
                             //update_result += "";
@@ -2156,13 +2156,13 @@ namespace WebAPI.Models
                             Cost.saveLumpsumCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, LumpsumCostIDList[i],
                                                LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, 1, zero, SubcontractorTypeID, SubcontractorID, lineItem);
 
-                            if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                            if (Convert.ToDouble(LumpsumCost[i]) > 0)
                             {
-                                totalSubValue += Convert.ToInt32(LumpsumCost[i]) ;
+                                totalSubValue += Convert.ToDouble(LumpsumCost[i]) ;
                             }
 
                             //update_result += "TotalBudget:" + totalBudget.ToString();
-                            objTotalBudgetForecastValue.update_result += "TotalBudget:" + totalBudget.ToString();
+                            //objTotalBudgetForecastValue.update_result += "TotalBudget:" + totalBudget.ToString();
                             //Create line Item
                             //if (!costLineItem.IsExist)
                             if (!newCostLineItem.IsExist)
@@ -2360,9 +2360,9 @@ namespace WebAPI.Models
                                         Cost.saveLumpsumCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, LumpsumCostIDList[i],
                                           LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, currentCost.SubcontractorTypeID, currentCost.SubcontractorID, currentCost.CostLineItemID);
 
-                                        if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
                                         {
-                                            totalSubValue += Convert.ToInt32(LumpsumCost[i]);
+                                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
                                         }
                                     }
                                 }
@@ -2437,9 +2437,9 @@ namespace WebAPI.Models
                                         Cost.saveLumpsumCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, newLumpsumCostID,
                                       LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, currentCost.SubcontractorTypeID, currentCost.SubcontractorID, currentCost.CostLineItemID);
 
-                                        if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
                                         {
-                                            totalSubValue += Convert.ToInt32(LumpsumCost[i]);
+                                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
                                         }
                                     }
                                     //}
@@ -2584,9 +2584,9 @@ namespace WebAPI.Models
                                                   , LumpsumCostIDList[i], LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, SubcontractorTypeID, SubcontractorID, CostLineItemID);
 
                         OKForUpdate = false;
-                        if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
                         {
-                            totalSubValue += Convert.ToInt32(LumpsumCost[i]);
+                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
                         }
                     }
 
@@ -2597,9 +2597,9 @@ namespace WebAPI.Models
                         Cost.saveLumpsumCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID
                           , LumpsumCostIDList[i], LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, SubcontractorTypeID, SubcontractorID, CostLineItemID);
                         OKForRegister = false;
-                        if (Convert.ToInt32(LumpsumCost[i]) > 0)
+                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
                         {
-                            totalSubValue += Convert.ToInt32(LumpsumCost[i]);
+                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
                         }
                     }
 
@@ -3286,9 +3286,9 @@ namespace WebAPI.Models
                                                        ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], materialId, "0", ODCCostList[i],
                                                                 Scale, odcTypeID, 1, 0, lineItem); //These null values are not important for deletion
 
-                            if (Convert.ToInt32(ODCCostList[i]) > 0)
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
                             {
-                                totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
                             }
                             //update_result += "";
                             objTotalBudgetForecastValue.update_result += "";
@@ -3351,9 +3351,9 @@ namespace WebAPI.Models
                             Cost.saveODCCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i], ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], materialId, "0", ODCCostList[i],
                                                     Scale, odcTypeID, 1, zero, lineItem);
 
-                            if (Convert.ToInt32(ODCCostList[i]) > 0)
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
                             {
-                                totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
                             }
 
 
@@ -3572,9 +3572,9 @@ namespace WebAPI.Models
                                     Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                                       ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                                Scale, currentCost.ODCTypeID, 1, 0, currentCost.CostLineItemID); //These null values are not important for deletion
-                                    if (Convert.ToInt32(ODCCostList[i]) > 0)
+                                    if (Convert.ToDouble(ODCCostList[i]) > 0)
                                     {
-                                        totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                        totalODCValue += Convert.ToDouble(ODCCostList[i]);
                                     }
                                     //query = "UPDATE cost_odc SET";
                                     //query += " ODCCostID = '" + ODCCostIDList[i] + "',";
@@ -3714,9 +3714,9 @@ namespace WebAPI.Models
                                     Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                              ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                       Scale, currentCost.ODCTypeID, 1, 0, currentCost.CostLineItemID); //These null values are not important for deletion
-                                    if (Convert.ToInt32(ODCCostList[i]) > 0)
+                                    if (Convert.ToDouble(ODCCostList[i]) > 0)
                                     {
-                                        totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                        totalODCValue += Convert.ToDouble(ODCCostList[i]);
                                     }
                                 }
                                 else if (NumberOfTextbox < 0)
@@ -3848,9 +3848,9 @@ namespace WebAPI.Models
                             Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                                    ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                             Scale, odcTypeId, 1, 0, CostLineItemID); //These null values are not important for deletion
-                            if (Convert.ToInt32(ODCCostList[i]) > 0)
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
                             {
-                                totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
                             }
                         }
 
@@ -3862,9 +3862,9 @@ namespace WebAPI.Models
                                                       ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                                Scale, odcTypeId, 1, 0, CostLineItemID); //These null values are not important for deletion
                             OKForRegister = false;
-                            if (Convert.ToInt32(ODCCostList[i]) > 0)
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
                             {
-                                totalODCValue += Convert.ToInt32(ODCCostList[i]);
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
                             }
                         }
                     }
@@ -4545,7 +4545,7 @@ namespace WebAPI.Models
                                                 0, 0, lineItem);
 
 
-                            if (Convert.ToInt32(UnitCostList[i]) > 0)
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
                             {
                                 totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice);
                             }
@@ -4619,7 +4619,7 @@ namespace WebAPI.Models
                                                Scale, UnitType, unitId.ToString(), 1, 0, lineItem);
 
 
-                            if (Convert.ToInt32(UnitCostList[i]) > 0)
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
                             {
                                 totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice);
                             }
@@ -4828,7 +4828,7 @@ namespace WebAPI.Models
                                     Cost.saveUnitCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, UnitCostIDList[i], UnitStartDateList[i], UnitEndDateList[i], Description, UnitCostList[i],
                                             currentCost.MaterialCategoryID.ToString(), currentCost.MaterialID.ToString(), Base, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base)).ToString(), Scale, UnitType, unitTypeId.ToString(),
                                             CostTrackTypeID, 0, currentCost.CostLineItemID); //0 Estimated CostID
-                                    if (Convert.ToInt32(UnitCostList[i]) > 0)
+                                    if (Convert.ToDouble(UnitCostList[i]) > 0)
                                     {
                                         totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
                                     }
@@ -4912,7 +4912,7 @@ namespace WebAPI.Models
                                           currentCost.MaterialCategoryID.ToString(), currentCost.MaterialID.ToString(), Base, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base)).ToString(), Scale, UnitType, unitTypeId.ToString(),
                                          CostTrackTypeID, 0, currentCost.CostLineItemID);
 
-                                    if (Convert.ToInt32(UnitCostList[i]) > 0)
+                                    if (Convert.ToDouble(UnitCostList[i]) > 0)
                                     {
                                         totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
                                     }
@@ -5042,7 +5042,7 @@ namespace WebAPI.Models
                                         CostTrackTypeID, 0, currentCost.CostLineItemID); //0 Estimated Cost ID
 
                             OKForUpdate = false;
-                            if (Convert.ToInt32(UnitCostList[i]) > 0)
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
                             {
                                 totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
                             }
@@ -5058,7 +5058,7 @@ namespace WebAPI.Models
 
                             //}
                             OKForRegister = false;
-                            if (Convert.ToInt32(UnitCostList[i]) > 0)
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
                             {
                                 totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
                             }

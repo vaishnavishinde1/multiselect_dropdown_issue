@@ -14444,11 +14444,20 @@ WBSTree = (function ($) {
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
                     //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
                     $('#divProjectApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    var approvers; //= approversData.data.result;
+                    for (var i = 0; i < approversData.data.result.length; i++)
+                    {
+                        if (approversData.data.result[i].Id == 4)
+                        {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -14459,11 +14468,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                                //append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     var userList = wbsTree.getUserList();
                                     var employeeList = wbsTree.getEmployeeList();
@@ -14489,7 +14500,8 @@ WBSTree = (function ($) {
                                     //}));
 
 
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -14533,7 +14545,7 @@ WBSTree = (function ($) {
 
                                     //}
                                     if (j == 0) {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -14550,7 +14562,7 @@ WBSTree = (function ($) {
                                         }
                                     } else {
 
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -14571,7 +14583,8 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
                                         //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
                                         //    "<label class='control-label _bold required'></label>" +
                                         //    "<select type='text' class='form-control'>";
@@ -14580,7 +14593,7 @@ WBSTree = (function ($) {
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                                //append += "</div>";
                                 //marginBottom = marginBottom + 70;
                             }
                             $('#divProjectApprovers').append(append);
@@ -14591,6 +14604,7 @@ WBSTree = (function ($) {
                         }
 
                     }
+                    
 
                 });
                 //-------------------------------------------------------------------------------------------------
@@ -15309,7 +15323,8 @@ WBSTree = (function ($) {
                         var approversDdl = $('#ProgramElementModal').find('.modal-body #divProjectApprovers select');
 
                         for (var i = 0; i < approversDdl.length; i++) {
-                            var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                            //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                        var ApproverMatrixId = 4;
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -17083,11 +17098,19 @@ WBSTree = (function ($) {
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
 
                     $('#divProjectApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    var approvers;
+                    for (var i = 0; i < approversData.data.result.length; i++) {
+                        if (approversData.data.result[i].Id == 4) {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    //var approvers = approversData.data.result;
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -17098,11 +17121,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                               // append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     var userList = wbsTree.getUserList();
                                     var employeeList = wbsTree.getEmployeeList();
@@ -17119,7 +17144,8 @@ WBSTree = (function ($) {
                                     //    var key = Object.keys(t)[0];
                                     //    return s[key] == t[key]
                                     //}));
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -17183,7 +17209,7 @@ WBSTree = (function ($) {
                                         }
                                     } else {
 
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -17207,7 +17233,8 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
                                         //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
                                         //    "<label class='control-label _bold required'></label>" +
                                         //    "<select type='text' class='form-control'>";
@@ -17216,7 +17243,7 @@ WBSTree = (function ($) {
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                               // append += "</div>";
                                 //marginBottom = marginBottom + 70;
                             }
                             $('#divProjectApprovers').append(append);
@@ -18759,11 +18786,19 @@ WBSTree = (function ($) {
                     //await getElementApprovers();
 
                     $('#divProjectElememtApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    //var approvers = approversData.data.result;
+                    var approvers;
+                    for (var i = 0; i < approversData.data.result.length; i++) {
+                        if (approversData.data.result[i].Id == 6) {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -18775,11 +18810,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                                //append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     //------------------------------Nivedita24-12-2021------------
                                     var userList = wbsTree.getUserList();
@@ -18797,7 +18834,8 @@ WBSTree = (function ($) {
                                     //    var key = Object.keys(t)[0];
                                     //    return s[key] == t[key]
                                     //}));
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -18831,7 +18869,7 @@ WBSTree = (function ($) {
                                     //--------------------------------------------------------------------------------
 
                                     if (j == 0) {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -18847,7 +18885,7 @@ WBSTree = (function ($) {
 
                                         }
                                     } else {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -18866,12 +18904,13 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
 
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                               // append += "</div>";
                             }
                             $('#divProjectElememtApprovers').append(append);
 
@@ -19331,7 +19370,6 @@ WBSTree = (function ($) {
                     wbsTree.setIsProjectNew(false);
                     _Is_Project_New = false;
                     populateProjectElementMilestoneTable(selectedNode.ProjectID);
-
                     $('#project_element_class').prop('disabled', true);
                     $('#service_class').prop('disabled', true);
                     //$('#service_class').val(selectedNode.ServiceName);
@@ -19952,7 +19990,7 @@ WBSTree = (function ($) {
                             //const result = await getApprovalMatrix();
                             //console.log(result);
                             projEleApproverDetails = response.data.result[0].ApproversDetails;
-                            console.log("asf");
+                            //console.log("asf");
                             selectedNode.ProjectElementNumber = response.data.result[0].ProjectElementNumber;
 
                             modal.find('.modal-body #project_element_number').val(selectedNode.ProjectElementNumber);
@@ -19980,7 +20018,8 @@ WBSTree = (function ($) {
                             var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
                             for (var i = 0; i < approversDdl.length; i++) {
-                                var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                                //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                                var ApproverMatrixId = 6;
                                 for (var j = 0; j < projEleApproverDetails.length; j++) {
                                     if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
                                         for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -20297,69 +20336,66 @@ WBSTree = (function ($) {
 
                     //-------------------------Swapnil 27-10-2020-------------------------------------------------------------
 
-                    var projApproverDetails = null;
-                    angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + selectedNode.ProgramElementID).then(function (response) {
+                   // var projApproverDetails = null;
+                    //angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + selectedNode.ProgramElementID).then(function (response) {
 
-                        projApproverDetails = response.data.result[0].ApproversDetails;
 
-                        var employeeList = wbsTree.getEmployeeList();
-                        var userList = wbsTree.getUserList();
-                        var newEmployeeList = [];
+                    //    projApproverDetails = response.data.result[0].ApproversDetails;
+                        
 
-                        for (var x = 0; x < employeeList.length; x++) {
-                            if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                                newEmployeeList.push(employeeList[x]);
-                                break;
-                            }
-                        }
+                    //    var employeeList = wbsTree.getEmployeeList();
+                    //    var userList = wbsTree.getUserList();
+                    //    var newEmployeeList = [];
 
-                        for (var x = 0; x < userList.length; x++) {
-                            for (var y = 0; y < employeeList.length; y++) {
-                                if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                    newEmployeeList.push(employeeList[y]);
-                                    break;
-                                }
-                            }
-                        }
-                        employeeList = newEmployeeList;
+                    //    for (var x = 0; x < employeeList.length; x++) {
+                    //        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                    //            newEmployeeList.push(employeeList[x]);
+                    //            break;
+                    //        }
+                    //    }
 
-                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                        
+                    //    employeeList = newEmployeeList;
+                    //    //employeeList.sort(function (a, b) {
+                    //    //    return a.Name.localeCompare(b.Name);
+                    //    //});
+                    //    var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
-                        for (var i = 0; i < approversDdl.length; i++) {
-                            $('#' + approversDdl[i].id).val('');
-                            var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
-                            for (var j = 0; j < projApproverDetails.length; j++) {
-                                if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
-                                    $('#' + approversDdl[i].id).val('');
-                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
-                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
-                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                            break;
-                                        }
-                                        //else if (approversDdl[i].childNodes.length == 1 ) {
-                                        else {
-                                            $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    //    for (var i = 0; i < approversDdl.length; i++) {
+                    //        $('#' + approversDdl[i].id).val('');
+                    //        var ApproverMatrixId = 6;//$('#' + approversDdl[i].id).attr('dbid');
+                    //        for (var j = 0; j < projApproverDetails.length; j++) {
+                    //            if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
+                    //                $('#' + approversDdl[i].id).val('');
+                    //                for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                    //                    if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                    //                        $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                    //                        break;
+                    //                    }
+                    //                    //else if (approversDdl[i].childNodes.length == 1 ) {
+                    //                    else {
+                    //                        $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
-                        for (var i = 0; i < approversDdl.length; i++) {
-                            var EmpId = $('#' + approversDdl[i].id).val();;
-                            for (var x = 0; x < employeeList.length; x++) {
-                                if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
-                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
-                                        if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
-                                            $(approversDdl[i].childNodes[k]).remove();
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    });
+                    //    var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                    //    for (var i = 0; i < approversDdl.length; i++) {
+                    //        var EmpId = $('#' + approversDdl[i].id).val();;
+                    //        for (var x = 0; x < employeeList.length; x++) {
+                    //            if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
+                    //                for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                    //                    if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
+                    //                        $(approversDdl[i].childNodes[k]).remove();
+                    //                    }
+                    //                }
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+                    //});
                     //--------------------------------------------------------------------------------------
 
 
