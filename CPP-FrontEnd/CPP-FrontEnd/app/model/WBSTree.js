@@ -7952,7 +7952,7 @@ WBSTree = (function ($) {
                             newNode.ProgramElementID = resultArray[2];
                             newNode.ProjectID = resultArray[3];
                             newNode.name = response.result.split(',')[4].trim() + ". " + newNode.name; // Jignesh-19-03-2021
-
+                            newNode.ProjectElementNumber = response.result.split(',')[4].trim(); // Aditya 15102022
                             var index = 0;
 
                             var apiUpload = function () {
