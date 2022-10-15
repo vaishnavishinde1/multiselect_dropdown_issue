@@ -392,6 +392,8 @@ namespace WebAPI.Models
 
         [DataMember]
         public String Status;   //----Vaishnavi 30-03-2022----//
+
+        
         public ProjectWBSTree(Project wbspj, List<PastTrendWBSTree> trn)
         {
             ProgramID = wbspj.Program.ProgramID.ToString(); ProgramElementID = wbspj.ProgramElement.ProgramElementID.ToString();
@@ -403,6 +405,7 @@ namespace WebAPI.Models
             ForecastEndDate = (wbspj.ForecastEndDate != null ? wbspj.ForecastEndDate.Value.ToString("yyyy-MM-dd") : "");
             CurrentCost = wbspj.CurrentCost;
             ForecastCost = wbspj.ForecastCost;
+            
             LatLong = wbspj.LatLong;
             Director = wbspj.Director;
             Scheduler = wbspj.Scheduler;
@@ -465,6 +468,7 @@ namespace WebAPI.Models
             ContractStartDate = wbspj.ContractStartDate;
             LineOfBusinessID = wbspj.LineOfBusinessID;
 
+            
             TotalUnapprovedTrends = wbspj.TotalUnapprovedTrends;
             Status = wbspj.Status;   //----Vaishnavi 30-03-2022----//
         }
@@ -619,6 +623,9 @@ namespace WebAPI.Models
         public List<ProjectWBSTree> children = new List<ProjectWBSTree>();
         [DataMember]
         public String Status;    //----Vaishnavi 30-03-2022----//
+
+        [DataMember]
+        public string ProjectForecastValue; //Nivedita 04-10-2022
         public ProgramElementWBSTree(ProgramElement wbspe, List<ProjectWBSTree> prj, int uId)
         {
             ProgramElementID = wbspe.ProgramElementID.ToString(); name = wbspe.ProgramElementName; ProgramID = wbspe.Program.ProgramID.ToString();
@@ -636,7 +643,7 @@ namespace WebAPI.Models
             ClientProjectManager = wbspe.ClientProjectManager;
 			ProjectClassName = ProjectClass.getProjectClassById(wbspe.ProjectClassID).ProjectClassName.ToString();
             ProgramElementNumber = wbspe.ProgramElementNumber;
-
+            ProjectForecastValue = TotalBudgetForecastValue.GetProjectForecastValue(Convert.ToInt32(ProgramElementID)); //Nivedita 04-10-2022
             // Jignesh-25-02-2021
             ProjectPStartDate = (wbspe.ProjectPStartDate != null ? wbspe.ProjectPStartDate.Value.ToString("yyyy-MM-dd") : "");
             ProjectPEndDate = (wbspe.ProjectPEndDate != null ? wbspe.ProjectPEndDate.Value.ToString("yyyy-MM-dd") : "");
@@ -912,7 +919,7 @@ namespace WebAPI.Models
         public String Status;   //----Vaishnavi 30-03-2022----//
 
         [DataMember]
-        public string ContractModificationValue;
+        public string ContractModificationValue; //Nivedita 29-09-2022
 
         //Aditya PMDD 05052022
         //[DataMember]
@@ -981,7 +988,7 @@ namespace WebAPI.Models
             PPBondNotes = wbsprg.PPBondNotes;
             //List<ProgramNotes> ProgramNotesList = new List<ProgramNotes>();
             programnotesList = ProgramNotes.getProgramNotes(Convert.ToInt32(ProgramID));
-            ContractModificationValue = ContractModification.GetContractModificationValue(Convert.ToInt32(ProgramID)).ToString();
+            ContractModificationValue = ContractModification.GetContractModificationValue(Convert.ToInt32(ProgramID)).ToString(); //Nivedita 29-09-2022
             ProgramNote = programnotesList.Max(m => m.notes_desc);
             //ProgramNote = LatestNote.ToString(;
 

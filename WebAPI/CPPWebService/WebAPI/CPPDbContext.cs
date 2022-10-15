@@ -102,6 +102,7 @@ namespace WebAPI
             modelBuilder.Entity<FTEPosition>().ToTable("fte_position");
             modelBuilder.Entity<ActivityCategory>().ToTable("activity_category");
             modelBuilder.Entity<Employee>().ToTable("employee");
+            modelBuilder.Entity<AdminApproval>().ToTable("admin_approval");
             modelBuilder.Entity<CostTrackType>().ToTable("cost_track_type");
             modelBuilder.Entity<Material>().ToTable("material");
             modelBuilder.Entity<Activity>().ToTable("activity");
@@ -172,6 +173,8 @@ namespace WebAPI
             modelBuilder.Entity<clientPOC>().ToTable("client_poc");   //Tanmay - 15/12/2021
             modelBuilder.Entity<UserRoleRelation>().ToTable("user_role_relation");
             modelBuilder.Entity<ProgramNotes>().ToTable("program_notes");
+            modelBuilder.Entity<TotalBudgetForecastValue>().ToTable("tbltotalbudgetforecastvalue"); //Nivedita29-09-2022
+            //modelBuilder.Entity<AdminApproval>().ToTable("admin_approval"); //Nivedita29-09-2022
         }
 
         public DbSet<Program> Program { get; set; }
@@ -305,6 +308,12 @@ namespace WebAPI
         public DbSet<ContractInsurance> ContractInsurances { get; set; }   // Narayan - 07-04-2022
 
         public DbSet<ContractProjectManager> ContractProjectManagers { get; set; } // Narayan - 03-05-2022
+
+        public DbSet<TotalBudgetForecastValue> TotalBudgetForecastValue { get; set; } // Nivedita - 29-09-2022
+
+        public DbSet<AdminApproval> AdminApproval { get; set; } // Narayan - 11-10-2022
+        public DbSet<ApprovalHistory> ApprovalHistory { get; set; } // Narayan - 11-10-2022
+        public DbSet<AdminApprovalPresident> AdminApprovalPresident { get; set; } // Narayan - 12-10-2022
 
     }
 

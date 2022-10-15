@@ -1,4 +1,4 @@
-angular.module('cpp.controllers').
+﻿angular.module('cpp.controllers').
     controller('WBSCtrl', ['$state', 'ProjectTitle', 'UserName', '$http', '$location', '$scope', '$rootScope', '$uibModal', '$sce',
         'Page', 'Organization', 'Program', 'ProgramElement', 'Project', 'Trend', 'currentTrend', 'myLocalStorage', 'localStorageService',
         'RequestApproval', 'TrendStatus', 'FundType', '$location', '$stateParams', '$window', 'ProgramFund', 'usSpinnerService', '$filter',
@@ -10,11 +10,11 @@ angular.module('cpp.controllers').
             $location, $stateParams, $window, ProgramFund, usSpinnerService, $filter, ProjectScope, $timeout, PhaseCode, ProgramCategory,
             ProjectType, ProjectClass, ProjectClassByProgramId, ProjectClassByProgramElementId, Client, Prime, Location, ProjectNumber, Employee, AllEmployee, DocumentType, Document, TrendStatusCode,
             User, ProjectElementNumber, TrendId, LineOfBusiness, ProjectWhiteList, UpdateProjectWhiteList, UpdateContract, Contract, ProgramContract, Milestone, ChangeOrder,
-            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType) {
+            UpdateMilestone, UpdateChangeOrder, ServiceClass, WbsService, $cacheFactory, ClientPOC, UniqueIdentityNumber, CertifiedPayroll, Wrap, MaterialCategory, Material, Manufacturer, UnitType,) {
             Page.setTitle('Program Navigation');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
-            usSpinnerService.spin('spinner-1');//Use this if want to show spinner on data loading
+            //usSpinnerService.spin('spinner-1');//Use this if want to show spinner on data loading // removed :: loader stays spinning after auto logoout :: 12102022
             $scope.gridOPtions = {};
 
             //start spinner
@@ -52,6 +52,12 @@ angular.module('cpp.controllers').
                 return function (a, b) {
                     var valA = getCellValue(a, index),
                         valB = getCellValue(b, index);
+                    if (valA.charAt(0) == '$') {
+                        valA = parseFloat(valA.split('$')[1].replace(/,/g, ''));
+                    }
+                    if (valB.charAt(0) == '$') {
+                        valB = parseFloat(valB.split('$')[1].replace(/,/g, ''));
+                    }
                     return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
                 }
             }
@@ -226,11 +232,11 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -348,11 +354,11 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -545,11 +551,11 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' + // Aditya :: Hide Action Column :: 11102022
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -661,11 +667,11 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');
                                     }
@@ -1087,7 +1093,7 @@ angular.module('cpp.controllers').
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         //'>' + _documentList[x].ExecutionDate + '</td>' +
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -1097,7 +1103,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1208,7 +1214,7 @@ angular.module('cpp.controllers').
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         //'>' + _documentList[x].ExecutionDate + '</td>' +
                                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -1218,7 +1224,7 @@ angular.module('cpp.controllers').
                                         //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                         //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');
 
@@ -1494,13 +1500,13 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -1618,13 +1624,13 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modificatioTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2095,8 +2101,8 @@ angular.module('cpp.controllers').
                 var selectedNode = wbsTree.getSelectedNode();
                 var createdBy = _selectedNode.ProgramElementID;
                 //var modNumber = $('#modification_number').val();
-                  var title = $('#modification_title').val();
-                 var date = $('#modification_date').val();
+                var title = $('#modification_title').val();
+                var date = $('#modification_date').val();
                 var reason = $('#modification_reason').val();
                 var description = $('#modification_description').val();
                 var modType = $('#ddModificationType').val();
@@ -2128,9 +2134,9 @@ angular.module('cpp.controllers').
                 //Code end by Kavita 23/09/2022
                 //================ Jignesh-24-03-2021 Modification Changes
                 //var durationDate = $('#duration_date').val();
-              //  var scheduleImpact = $('#schedule_impact').val(); //Code by Kavita 23/09/2022
+                //  var scheduleImpact = $('#schedule_impact').val(); //Code by Kavita 23/09/2022
 
-               // var value = $('#modification_value').val(); //Code by Kavita 23/09/2022
+                // var value = $('#modification_value').val(); //Code by Kavita 23/09/2022
 
                 //if (modNumber == "" || modNumber.length == 0) {
                 //    dhtmlx.alert('Enter Modification Number.');
@@ -2421,13 +2427,13 @@ angular.module('cpp.controllers').
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modId + ' - ' + modTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
                                 }
@@ -2468,13 +2474,13 @@ angular.module('cpp.controllers').
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="viewDocumentDetail" title="View Details"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2502,7 +2508,7 @@ angular.module('cpp.controllers').
                         selectedNode.ContractModificationValue = $('#total_modification').val();
                         $scope.loadWBSData.GetContractGridSection(selectedNode);
                     }
-                    
+
 
                 });
             }
@@ -2655,13 +2661,13 @@ angular.module('cpp.controllers').
                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                             '</td > <td ' +
                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                             '>' + modId + ' - ' + modTitle + '</td>' +
                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -2677,13 +2683,13 @@ angular.module('cpp.controllers').
                                         '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                         '</td > <td ' +
                                         'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                        '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                        '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + _documentList[x].DocumentTypeName + '</td>' +
                                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                         '>' + modificatioTitle + '</td>' +
                                         //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                        '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                        //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                         '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                         '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -3061,111 +3067,111 @@ angular.module('cpp.controllers').
 
 
                         } else if (selectedNode.level === "Program") {
-                                wbsTree.getProgram().persist().save({
-                                    "Operation": 5,
-                                    "ProgramID": selectedNode.ProgramID,
-                                    "ProgramName": selectedNode.name,
-                                    "ProgramManager": selectedNode.ProgramManager,
-                                    "ProgramSponsor": selectedNode.ProgramSponsor,
-                                    "programFunds": selectedNode.programFunds,
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
+                            wbsTree.getProgram().persist().save({
+                                "Operation": 5,
+                                "ProgramID": selectedNode.ProgramID,
+                                "ProgramName": selectedNode.name,
+                                "ProgramManager": selectedNode.ProgramManager,
+                                "ProgramSponsor": selectedNode.ProgramSponsor,
+                                "programFunds": selectedNode.programFunds,
+                                "DeletedBy": wbsTree.getLocalStorage().userName
 
-                                }, function (response) {
-                                    console.log("-------DELETED PROGRAM--------");
-                                    if ($('#ProgramModal').hasClass('in'))
-                                        $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
-                                    // wbsTree.updateTreeNodes(selectedNode.parent);
-                                    ////if (!displayMap)
-                                    //wbsTree.loadFullGridView();
-                                    //wbsTree.getWBSTrendTree().trendGraph();
+                            }, function (response) {
+                                console.log("-------DELETED PROGRAM--------");
+                                if ($('#ProgramModal').hasClass('in'))
+                                    $('#ProgramModal').css({ "opacity": "1" }).modal('toggle');
+                                // wbsTree.updateTreeNodes(selectedNode.parent);
+                                ////if (!displayMap)
+                                //wbsTree.loadFullGridView();
+                                //wbsTree.getWBSTrendTree().trendGraph();
 
+                                var pgmId = $("#selectProgram").val();
+                                var orgId = $("#selectOrg").val();
+                                $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
+                            });
+                        } else if (selectedNode.level === "ProgramElement") {
+                            wbsTree.getProgramElement().persist().save({
+                                "Operation": 5,
+                                "ProgramID": selectedNode.ProgramID,
+                                "ProgramElementID": selectedNode.ProgramElementID,
+                                "ProgramElementName": selectedNode.name,
+                                "ProgramElementManager": selectedNode.ProgramElementManager,
+                                "ProgramElementSponsor": selectedNode.ProgramElementSponsor,
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+
+                            }, function (response) {
+                                console.log("-------DELETED PROGRAM ELEMENT--------");
+
+
+                                if ($('#ProgramElementModal').hasClass('in'))
+                                    $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
+                                //if (!displayMap)
+                                //wbsTree.loadFullGridView();
+                                //wbsTree.getWBSTrendTree().trendGraph();
+                                //// wbsTree.loadFullGridView();
+                                //window.location.reload();
+                                var pgmId = $("#selectProgram").val();
+                                var orgId = $("#selectOrg").val();
+                                $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
+
+                            })
+                        } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend && type == "Project") {
+
+                            wbsTree.getProject().persist().save({
+                                "Operation": 5,
+                                "ProjectID": selectedNode.ProjectID,
+                                "ProjectName": selectedNode.name,
+                                "ProjectManager": selectedNode.ProjectManager,
+                                "ProjectSponsor": selectedNode.ProjectSponsor,
+                                "LatLong": wbsTree.getProjectMap().getCoordinates(),
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+                            }, function (response) {
+                                console.log("-------DELETED PROJECT--------");
+                                console.log(selectedNode);
+
+                                var pgmId = $("#selectProgram").val();
+                                var orgId = $("#selectOrg").val();
+                                $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
+                                var firstGNode = $('#trendSvg').children()[0];
+                                //$(firstGNode).children().remove();
+                                // window.location.reload();
+                            });
+
+                        } else if ((type === "FutureTrend" || type === "PastTrend") && (selectedNodeTrend.metadata.level == "FutureTrend" || selectedNodeTrend.metadata.level == "PastTrend")) {
+                            var obj = {
+                                "Operation": 6,
+                                "OrganizationID": selectedNodeTrend.metadata.OrganizationID,
+                                "ProjectID": selectedNodeTrend.metadata.ProjectID,
+                                "ProjectName": selectedNodeTrend.metadata.ProjectName,
+                                "TrendNumber": selectedNodeTrend.metadata.TrendNumber,
+                                //Added by Nivedita on 23022022 for soft delete
+                                "DeletedBy": wbsTree.getLocalStorage().userName
+
+                            };
+                            _Trend.persist().save(obj, function (response) {
+                                //$('#FutureTrendModal').modal('hide');
+                                //$('#DeleteModal').modal('hide');
+
+                                wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
+                                    selectedNode.parent.parent.programFunds = response.result;
+                                    if ($('#FutureTrendModal').hasClass('in'))
+                                        $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                    if ($('#PastTrendModal').hasClass('in'))
+                                        $('#PastTrendModal').css({ "opacity": "1" }).modal('toggle');
+                                    wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
+                                    wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
+                                    wbsTree.getScope().trend = null;
+                                    // window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                });
-                            } else if (selectedNode.level === "ProgramElement") {
-                                wbsTree.getProgramElement().persist().save({
-                                    "Operation": 5,
-                                    "ProgramID": selectedNode.ProgramID,
-                                    "ProgramElementID": selectedNode.ProgramElementID,
-                                    "ProgramElementName": selectedNode.name,
-                                    "ProgramElementManager": selectedNode.ProgramElementManager,
-                                    "ProgramElementSponsor": selectedNode.ProgramElementSponsor,
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
-
-                                }, function (response) {
-                                    console.log("-------DELETED PROGRAM ELEMENT--------");
-
-
-                                    if ($('#ProgramElementModal').hasClass('in'))
-                                        $("#ProgramElementModal").css({ "opacity": "1" }).modal('toggle');
-                                    //if (!displayMap)
-                                    //wbsTree.loadFullGridView();
-                                    //wbsTree.getWBSTrendTree().trendGraph();
-                                    //// wbsTree.loadFullGridView();
-                                    //window.location.reload();
-                                    var pgmId = $("#selectProgram").val();
-                                    var orgId = $("#selectOrg").val();
-                                    $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-
-                                })
-                            } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend && type == "Project") {
-
-                                    wbsTree.getProject().persist().save({
-                                        "Operation": 5,
-                                        "ProjectID": selectedNode.ProjectID,
-                                        "ProjectName": selectedNode.name,
-                                        "ProjectManager": selectedNode.ProjectManager,
-                                        "ProjectSponsor": selectedNode.ProjectSponsor,
-                                        "LatLong": wbsTree.getProjectMap().getCoordinates(),
-                                        "DeletedBy": wbsTree.getLocalStorage().userName
-                                    }, function (response) {
-                                        console.log("-------DELETED PROJECT--------");
-                                        console.log(selectedNode);
-
-                                        var pgmId = $("#selectProgram").val();
-                                        var orgId = $("#selectOrg").val();
-                                        $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                        var firstGNode = $('#trendSvg').children()[0];
-                                        //$(firstGNode).children().remove();
-                                        // window.location.reload();
-                                    });
-
-                            } else if ((type === "FutureTrend" || type === "PastTrend") && (selectedNodeTrend.metadata.level == "FutureTrend" || selectedNodeTrend.metadata.level == "PastTrend")) {
-                                var obj = {
-                                    "Operation": 6,
-                                    "OrganizationID": selectedNodeTrend.metadata.OrganizationID,
-                                    "ProjectID": selectedNodeTrend.metadata.ProjectID,
-                                    "ProjectName": selectedNodeTrend.metadata.ProjectName,
-                                    "TrendNumber": selectedNodeTrend.metadata.TrendNumber,
-                                    //Added by Nivedita on 23022022 for soft delete
-                                    "DeletedBy": wbsTree.getLocalStorage().userName
-
-                                };
-                                _Trend.persist().save(obj, function (response) {
-                                    //$('#FutureTrendModal').modal('hide');
-                                    //$('#DeleteModal').modal('hide');
-
-                                    wbsTree.getProgramFund().lookup().get({ "ProgramID": selectedNode.parent.parent.ProgramID }, function (response) {
-                                        selectedNode.parent.parent.programFunds = response.result;
-                                        if ($('#FutureTrendModal').hasClass('in'))
-                                            $('#FutureTrendModal').css({ "opacity": "1" }).modal('toggle');
-                                        if ($('#PastTrendModal').hasClass('in'))
-                                            $('#PastTrendModal').css({ "opacity": "1" }).modal('toggle');
-                                        wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
-                                        wbsTree.getWBSTrendTree().trendGraph(true);  //Manasi
-                                        wbsTree.getScope().trend = null;
-                                        // window.location.reload();
-                                        var pgmId = $("#selectProgram").val();
-                                        var orgId = $("#selectOrg").val();
-                                        $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-
-                                    });
-
 
                                 });
-                                wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
-                            }
+
+
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(null);
+                        }
                         // Narayan - Commenting this section causing issue for undefined node level
                         ////Find  index of selected node
                         //if (selectedNode.level == "Root") return;
@@ -4336,7 +4342,7 @@ angular.module('cpp.controllers').
                 var selectedContract;
                 var selectedProject;
                 var selectedElement;
-                
+
                 //*******************************************
                 //$http.get(serviceBasePath + "Request/WBS/" + uID + "/" + orgId + "/" + pgmId + "/" + pgmEltId + "/" + projId + "/null/null/null/null/null/" + searchText + "/" + allData,
                 WbsService.getWBS(uID, orgId, pgmId, pgmEltId, projId, searchText, allData, deptID, clientID).get({})
@@ -4369,10 +4375,10 @@ angular.module('cpp.controllers').
                         // Rename the project and project element nodes to include project number and project element number.
 
                         organization = response;
-
+                        usSpinnerService.spin('spinner-29');
                         //-------------------------------------Nivedita-contract Details---------------------------------------------------------------
                         GetContractGridSection(organization);
-
+                        usSpinnerService.stop('spinner-29');
 
                         var str = "<div class='row row-padding'>" +
                             "<div class='gadget color-my' style = 'height: 733px;' >" +
@@ -4388,7 +4394,7 @@ angular.module('cpp.controllers').
 
                             // "</div>"+
                             " <div class='gadget-content' style='height: 91%;'>" +
-                            "    <table class='table  table-condensed'>  <thead style='position: -webkit-sticky;position: sticky;top:0; '>" +
+                            " <table class='table  table-condensed'>  <thead style='position: -webkit-sticky;position: sticky;top:0; '>" +
                             "<tr><th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Organization</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'> Contract</th>" +
                             "<th class='th-c sortable' scope='col' style='position: relative; width: 14.28%;' data-sortable='true'>Project</th>" +
@@ -4651,7 +4657,7 @@ angular.module('cpp.controllers').
                         //    }
                         //});
 
-                        
+
 
 
                         //$('#tblProject tr').on('click', function () {
@@ -4964,38 +4970,48 @@ angular.module('cpp.controllers').
                     });
 
 
-                function GetContractGridSection(selOrganization,selectedContractID) { //Aditya :: Add selected contract ID for keeping the contract selected after save :: 27092022 
+                function GetContractGridSection(selOrganization, selectedContractID) { //Aditya :: Add selected contract ID for keeping the contract selected after save :: 27092022 
 
                     $('#wbsGridView').html('');
-
                     if (selOrganization.children != undefined && selOrganization.children.length > 0) {
                         var strContract = "";
                         strContract = "<div class='row'>";
                         strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
                         if (ModifyContract == "1") {
-                            strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strContract += "<div class='grid__title' >" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
                             strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt disabledIcon'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        //Client Filter
+                        strContract += "<table class='gadget-content grid__Filter'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        //Contract Filter
+                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
+                        //Contract Number Filter
+                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
+                        // Original Value filter
+                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
+                        //current value filter
+                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table>";
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th class='sort-by' width=28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th class='sort-by' width=28%'>Name</th>" + //$scope.programList[0].program.name
-                            "<th class='sort-by' width='10%' >ID</th>" +
-                            "<th class='sort-by' width=13%'>Original Value</th>" + //$scope.programList[0].ContractNumber
-                            "<th class='sort-by' width=13%'>Current Value</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width='28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width='28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
+                            "<th class='sort-by' width='13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
                             //"<th>Current Forecast</th>" +
-                            "<th width=8%'>Action</th>" +
+                            "<th width=8%' style='display:none'>Action</th>" +
                             "</tr>";
                         strContract += "</thead>";
                         for (programI = 0; programI < selOrganization.children.length; programI++) {
                             var program = selOrganization.children[programI];
                             var originalContractVal = program.ContractValue;
-                            var CurrentContractVal = parseFloat(program.ContractModificationValue) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));
+                            var CurrentContractVal = parseFloat(program.ContractModificationValue.replace("$", "").replaceAll(",", "")) + parseFloat(originalContractVal.replace("$", "").replaceAll(",", ""));  //Current Value shows NA on update Contract fixed :: 14102022
                             //Aditya :: for keeping the contract selected after save :: 27092022 
                             if (selectedContractID != undefined && selectedContractID == program.ProgramID && localStorage.getItem('MODE') == 'gridview') {
                                 selectedProgramID = selectedContractID;
@@ -5013,43 +5029,43 @@ angular.module('cpp.controllers').
                                 strContract += "<tr class='contact-row' id=" + program.ProgramID + ">";
                             }
                             if (program.Status == "Closed") {
-                                strContract += "<td style='color:red'>" + program.ClientPOC + "</td>";
-                                strContract += "<td style='color:red' title='" + program.name + "'>" + program.name + "</td>";
-                                strContract += "<td style='color:red'>" + program.ContractNumber + "</td>";
-                                strContract += "<td style='color:red' align ='right'>$" + program.ContractValue + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ClientPOC + "'>" + program.ClientPOC + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.name + "'>" + program.name + "</td>";
+                                strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber + "'>" + program.ContractNumber + "</td>";
+                                strContract += "<td style='color:red' align ='right'>" + program.ContractValue + "</td>";
                                 strContract += "<td style='color:red' align ='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
-                                strContract += "<td>" +
+                                strContract += "<td class='text-center' style='display:none'>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
-                                   "<i class='fa-trash grid__btn-icons_hidden disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
+                                    "<i class='fa-trash grid__btn-icons_hidden disabledIcon' id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons_hidden disabledIcon' id='CloseContractGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strContract += "</tr>";
-                            } 
+                            }
                             else {
-                                strContract += "<td>" + program.ClientPOC + "</td>";
-                                strContract += "<td  style='max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap' title='"+ program.name +"'>" + program.name + "</td>";
-                                strContract += "<td>" + program.ContractNumber + "</td>";
+                                strContract += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ClientPOC + "'>" + program.ClientPOC + "</td>";
+                                strContract += "<td  style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.name + "'>" + program.name + "</td>";
+                                strContract += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber + "'>" + program.ContractNumber + "</td>";
                                 strContract += "<td align='right'>" + program.ContractValue + "</td>";
                                 strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
                                 strContract += "<td style='display:none'>" + program.Status + "</td>";
                                 //Edit Contract 
                                 if (ModifyContract == "1") {
-                                    strContract += "<td><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                    strContract += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                 }
                                 else {
                                     if (ViewContract == "1") {
-                                        strContract += "<td><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Open' aria-hidden='true'></i>";
+                                        strContract += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Open' aria-hidden='true'></i>";
                                     }
                                     else {
-                                        strContract += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                        strContract += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                     }
-                                    
+
                                 }
-                                
+
                                 //View Gantt
                                 if (ModifyContract == "1") {
                                     strContract += "<i class='icon-72647 grid__btn-icons' id='ViewGanttGridBtn' title='View Gantt'></i>";
@@ -5057,7 +5073,7 @@ angular.module('cpp.controllers').
                                 else {
                                     strContract += "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>";
                                 }
-                                
+
                                 //Delete Contract
                                 if (role == "Admin") {
                                     strContract += "<i class='fa-trash grid__btn-icons' style='display:none'  id='DeleteContractGridBtn' title='Delete' aria-hidden='true'></i>";
@@ -5088,44 +5104,47 @@ angular.module('cpp.controllers').
                         strContract += "</div>";
 
                         $('#wbsGridView').append(strContract);
+                        $scope.allContractRowsInTable = $("#tblContract tr"); // Aditya :: save contract table rows in scope
                     }
                     else {
                         emptyTablesGridSection(selOrganization);
                     }
 
                     BindProject();
+                    //usSpinnerService.stop('spinner-29');
                 }
 
                 function getProjectGridSection(selContract, selProjectId) { //Aditya :: Add selected Project ID for keeping the project selected after save :: 27092022 
 
                     var selectedProgramID = selContract.ProgramID;
                     var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
-                    
+
                     $('#wbsGridiewProject').html('');
 
                     if (selContract.children != undefined && selContract.children.length > 0) {
                         var strProject = "";
                         strProject += "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (selContract.Status == "Closed") {
-                            strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + selContract.name + "'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
 
                         else if (ModifyProject == "1") {
-                            strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project' title='" + selContract.name + "'>(" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strProject += "<div class='grid__title'>Project (" + selContract.name + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + selContract.name + "'> (" + selContract.name + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        
-                        
+
+
                         strProject += "<div class='grid__scrollable' id='projectScroll'> <table class='grid__table p-0' id='tblProject'>"; //Aditya :: 27092022 
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
                         strProject += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
-                            "<th class='sort-by' width='17%'>Value</th>" +
-                            "<th class='sort-by' width='27%'>Deparment</th>" +
-                            "<th width='12%'>Action</th>" +
+                            "<th class='sort-by' width='17%'>Value ($)</th>" +
+                        /*"<th class='sort-by' width='27%'>Department</th>" +*/
+                            "<th class='sort-by' width='27%'>Forecast ($)</th>" +
+                            "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
                         for (projectI = 0; projectI < selContract.children.length; projectI++) {
@@ -5157,24 +5176,26 @@ angular.module('cpp.controllers').
                             //strProject += "<td>" + project.ProjectClassName + "</td>";
                             //strProject += "</tr>";
                             if (project.Status == "Closed") {
-                                strProject += "<td style='color:red'title='" + project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectNumber + "</td>";
+                                strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";
-                                strProject += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
+                                /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
+                                strProject += "<td style='color:red' align ='right'>$" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
                             }
                             else {
-                                strProject += "<td title='"+ project.ProgramElementName +"'>" + project.ProgramElementName + "</td>";
-                                strProject += "<td>" + project.ProjectNumber + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
-                                strProject += "<td>" + project.ProjectClassName + "</td>";
+                                // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
+                                strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "' align ='right'>$" + project.ProjectForecastValue + "</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
-                                    strProject += "<td><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                    strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                       
                                     //Delete Project
                                     if (role == "Admin") {
@@ -5187,7 +5208,7 @@ angular.module('cpp.controllers').
                                     strProject += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i></td>";
                                 }
                                 else {
-                                    strProject += "<td>" +
+                                    strProject += "<td class='text-center' style='display:none'>" +
                                         //Edit Project
                                         "<i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                         //Delete Project
@@ -5228,25 +5249,25 @@ angular.module('cpp.controllers').
 
                     if (selProject.children != undefined && selProject.children.length > 0) {
                         var strElement = "";
-                       
+
                         strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (selProject.Status == "Closed") {
-                            strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else if (ModifyProjectElement == "1") {
-                            strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'> (" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strElement += "<div class='grid__title'>Project Element (" + selProject.ProgramElementName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + selProject.ProgramElementName + "'>(" + selProject.ProgramElementName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strElement += "<div class='grid__scrollable' id='elementScroll'> <table class='grid__table p-0' id='tblElement'>"; //Aditya :: 27092022 
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
                         strElement += "<th class='sort-by' width='29%'>Name</th>" +
                             "<th class='sort-by' width='15%'>Number</th>" +
-                            "<th class='sort-by' width='17%'>Value</th>" +
+                            "<th class='sort-by' width='17%'>Value ($)</th>" +
                             "<th class='sort-by' width='27%'>Services</th>" +
-                            "<th width='12%'>Action</th>" +
+                            "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
 
@@ -5254,13 +5275,13 @@ angular.module('cpp.controllers').
                                 var projectElement = selProject.children[projectElementI];
                                 //Aditya :: for keeping the element selected after save :: 27092022 
                                 if (selElementID != undefined && selElementID == projectElement.ProjectID && localStorage.getItem('MODE') == 'gridview') {
-                                    _selectedProjectID = selElementID;
+                                    wbsTree.setSelectedProjectID(selElementID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + selElementID + ">";
                                     getTrendGridSection(projectElement);
                                 }
                                 else if (projectElementI == 0 && selElementID == undefined) {
-                                    _selectedProjectID = projectElement.ProjectID;
+                                    wbsTree.setSelectedProjectID(projectElement.ProjectID);
                                     selectedElement = projectElement;
                                     strElement += "<tr class='selected contact-row' id=" + projectElement.ProjectID + ">";
                                     getTrendGridSection(projectElement);
@@ -5274,12 +5295,12 @@ angular.module('cpp.controllers').
                                 //strElement += "<td>" + projectElement.ServiceName + "</td>";
                                 //strElement += "</tr>";
                                 if (projectElement.Status == "Closed") {
-                                    strElement += "<td style='color:red' title='" + projectElement.name + "'>" + projectElement.name + "</td>";
-                                    strElement += "<td style='color:red'>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'  title='" + projectElement.name + "'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td style='color:red' align='right'>$" + projectElement.CurrentCost + "</td>";
-                                    strElement += "<td style='color:red'>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
-                                    strElement += "<td>" +
+                                    strElement += "<td class='text-center' style='display:none'>" +
                                         "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                         "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
                                         "<i class='fa-times grid__btn-icons disabledIcon' style='display:none' id='CloseElementGridBtn' title='Close' aria-hidden='true'></i>" +
@@ -5287,17 +5308,17 @@ angular.module('cpp.controllers').
                                     strElement += "</tr>";
                                 }
                                 else {
-                                    strElement += "<td  title='" + projectElement.name + "'>" + projectElement.name + "</td>";
-                                    strElement += "<td>" + projectElement.ProjectElementNumber + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.name + "'>" + projectElement.name + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td align='right'>$" + projectElement.CurrentCost + "</td>";
-                                    strElement += "<td>" + projectElement.ServiceName + "</td>";
+                                    strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
                                     strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
                                     //Edit Element
                                     if (ModifyProjectElement == "1") {
-                                        strElement += "<td><i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                        strElement += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                     }
                                     else {
-                                        strElement += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                        strElement += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                     }
                                     //Delete Element
                                     if (role == "Admin") {
@@ -5344,15 +5365,15 @@ angular.module('cpp.controllers').
 
                     var strTrend = "";
                     strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                  
+
                     if (selElement.Status == "Closed") {
-                        strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     else if (ModifyTrend == "1") {
-                        strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     else {
-                        strTrend += "<div class='grid__title'>Trend (" + selElement.ProjectName + ")<div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + selElement.ProjectName + "'>(" + selElement.ProjectName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                     }
                     strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                     strTrend += "<thead class='t-head'>";
@@ -5360,7 +5381,7 @@ angular.module('cpp.controllers').
                     strTrend += "<th class='sort-by' width='30%'>Name</th>" +
                         "<th class='sort-by' width='18%'>Impact</th>" +
                         "<th class='sort-by' width='30%'>Status</th>" +
-                        "<th width='12%'> Action</th>" +
+                        "<th width='12%' style='display:none'> Action</th>" +
                         "</tr></thead><tbody>";
                     _httpProvider.get(serviceBasePath + "Request/TrendGraph/" + selectedProjectElementID)
                         .then(function (response) {
@@ -5372,12 +5393,13 @@ angular.module('cpp.controllers').
                                 _baseline = response.data.result.FutureTrendList[0];
                             }
                             strTrend = "";
+                            $('#tblTrend tbody').html('');
 
                             strTrend += "<tr class='contact-row'>";
-                            strTrend += "<td><a href="+"#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
+                            strTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/0/" + orgId + ">" + _baseline.TrendDescription + "</td>";
                             strTrend += "<td></td>";
                             strTrend += "<td>" + _baseline.TrendStatus + "</td>";
-                            strTrend += "<td></td>";
+                            strTrend += "<td style='display:none'></td>";
                             strTrend += "</tr>";
                             var strApproveTrend = "", strPendingTrend = "";
                             if (_baseline.TrendStatus == "Approved") {
@@ -5385,15 +5407,15 @@ angular.module('cpp.controllers').
 
                                     for (var i = 0; i < response.data.result.FutureTrendList.length; i++) {
                                         strPendingTrend += "<tr id=" + + response.data.result.FutureTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.FutureTrendList[i].TrendStatus + ">";
-                                        strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].name + "</td>";
+                                        strPendingTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/" + response.data.result.FutureTrendList[i].TrendNumber + "/" + orgId +">" + response.data.result.FutureTrendList[i].name + "</a></td>";
                                         strPendingTrend += "<td></td>";
                                         strPendingTrend += "<td>" + response.data.result.FutureTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
                                         if (ModifyTrend == "1") {
-                                            strPendingTrend += "<td><i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                            strPendingTrend += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         else {
-                                            strPendingTrend += "<td><i class='fa-pencil grid__btn-icons disabledIcon' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                            strPendingTrend += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         //Delete Trend
                                         if (role == "Admin") {
@@ -5402,7 +5424,7 @@ angular.module('cpp.controllers').
                                         else {
                                             strPendingTrend += "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteTrendGridBtn' title='Delete' aria-hidden='true'></i>";
                                         }
-                                        
+
                                         //Close Trend
                                         if (ModifyTrend == "1") {
                                             strPendingTrend += "<i class='fa-times grid__btn-icons' style='display:none' id='CloseTrendGridBtn' title='Close' aria-hidden='true'></i></td> ";
@@ -5417,15 +5439,15 @@ angular.module('cpp.controllers').
                                 if (response.data.result.PastTrendList.length > 1) {
                                     for (var i = 1; i < response.data.result.PastTrendList.length; i++) {
                                         strApproveTrend += "<tr id=" + + response.data.result.PastTrendList[i].TrendNumber + " class='contact-row' isapproved=" + response.data.result.PastTrendList[i].TrendStatus + ">";
-                                        strApproveTrend += "<td>" + response.data.result.PastTrendList[i].name + "</td>";
+                                        strApproveTrend += "<td><a href=" + "#/app/cost-gantt/" + selectedProjectElementID + "/" + response.data.result.PastTrendList[i].TrendNumber + "/" + orgId +">" + response.data.result.PastTrendList[i].name + "</a></td>";
                                         strApproveTrend += "<td></td>";
                                         strApproveTrend += "<td>" + response.data.result.PastTrendList[i].TrendStatus + "</td>";
                                         //Edit Trend
                                         if (ModifyTrend == "1") {
-                                            strApproveTrend += "<td><i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                            strApproveTrend += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         else {
-                                            strApproveTrend += "<td><i class='fa-pencil grid__btn-icons disabledIcon'  id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
+                                            strApproveTrend += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon'  id='EditTrendGridBtn' title='Edit/Open' aria-hidden='true'></i>";
                                         }
                                         //Delete Trend
                                         if (role == "Admin") {
@@ -5489,24 +5511,24 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewProject').html('');
                         var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                          if (strProject.Status == "Closed") {
-                            strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        if (selectedRow.Status == "Closed") {
+                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                       
                         else if (ModifyProject == "1") {
-                            strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                              strProject += "<div class='grid__title'>Project  <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                              strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strProject += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblProject'>";
                         strProject += "<thead class='t-head'>";
                         strProject += "<tr>";
                         strProject += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
-                            "<th width='27%'>Deparment</th>" +
-                            "<th width='12%'>Action</th>" +
+                            "<th width='17%'>Value ($)</th>" +
+                        /*"<th width='27%'>Department</th>" +*/
+                            "<th width='27%'>Forecast ($)</th>" +
+                            "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strProject += "</table></div>";
                         strProject += "</div></div>";
@@ -5518,23 +5540,23 @@ angular.module('cpp.controllers').
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                        if (strElement.Status == "Closed") {
-                            strElement += "<div class='grid__title'>Project Element (" + tblParentName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        if (selectedRow.Status == "Closed" || isProjectEmpty) {
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
-                        if (ModifyProjectElement == "1") {
-                            strElement += "<div class='grid__title'>Project Element (" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        else if (ModifyProjectElement == "1") {
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strElement += "<div class='grid__title'>Project Element (" + tblParentName + ")<div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
                         strElement += "<tr>";
                         strElement += "<th width='29%'>Name</th>" +
                             "<th width='15%'>Number</th>" +
-                            "<th width='17%'>Value</th>" +
+                            "<th width='17%'>Value ($)</th>" +
                             "<th width='27%'>Services</th>" +
-                            "<th width='12%'>Action</th>" +
+                            "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strElement += "</table></div>";
                         strElement += "</div></div>";
@@ -5547,10 +5569,10 @@ angular.module('cpp.controllers').
 
                         var strTrend = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         if (ModifyTrend == "1") {
-                            strTrend += "<div class='grid__title'>Trend (" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")<div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strTrend += "<div class='grid__title'>Trend <span class='grid__overflow__trend' title='" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty == true || isElementEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddTrendGridBtn' disabled = " + (isProjectEmpty == true || isElementEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty == true || isElementEmpty === true ? "'Please Add an Element'" : "'Add Trend'") + " class='grid__title_rgt " + (isProjectEmpty == true || isElementEmpty === true ? "disabledIcon" : "") + "'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strTrend += "<div class='grid__title'>Trend (" + tblParentName + ")<div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strTrend += "<div class='grid__title'>Trend  <span class='grid__overflow__trend' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddTrendGridBtn' class='grid__title_rgt disabledIcon'>Add Trend<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strTrend += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblTrend'>";
                         strTrend += "<thead class='t-head'>";
@@ -5558,7 +5580,7 @@ angular.module('cpp.controllers').
                         strTrend += "<th width='30%'>Name</th>" +
                             "<th width='18%'>Impact</th>" +
                             "<th width='30%'>Status</th>" +
-                            "<th width='12%'>Action</th>" +
+                            "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         strTrend += "</table></div>";
                         strTrend += "<div class='center'>" +
@@ -5577,6 +5599,184 @@ angular.module('cpp.controllers').
                 }
 
                 function BindProject() {
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: filters code >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    //let tr = $("#tblContract tr");
+                    let tr = $scope.allContractRowsInTable;
+                    var selectClient = $('#clientFilter');
+                    var selectContract = $('#contractFilter');
+                    var allProgramList = $scope.allWbsProgramList;
+                    var allClientList = $scope.allClientList;
+
+                    fillClientOptions(allClientList);
+                    //on selecting client
+                    selectClient.on('change', function () {
+                        $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        //change contract filter
+                        var sortedProgram = [];
+                        var selectedClientID = this.selectedOptions[0].id;
+                        if ($(this).val() != "Select Client") {
+                            jQuery.each(allProgramList, function (i, program) {
+                                if (program.ClientID == selectedClientID) {
+                                    sortedProgram.push(program);
+                                }
+                            });
+                        }
+                        else {
+                            fillClientOptions(allClientList);
+                            tr = $scope.allContractRowsInTable;
+                            sortedProgram=allProgramList;
+                        }
+                        fillContractOptions(sortedProgram);
+                        //selectContract.append(contractOpt);
+
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Client = td[0].innerText;
+                            if (i != 0) {
+                                if (td_Client == filter_Id || filter_Id == "Select Client") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //Contract Name Filter
+                    //fill option in select
+                    fillContractOptions(allProgramList);
+
+                    //on selecting contract
+                    selectContract.on('change', function () {
+                        //change contract filter
+                        var sortedClient = [];
+                        var selectedContractID = this.selectedOptions[0].id;
+                        var selectedProgram = allProgramList.find(prg => prg.ProgramID == selectedContractID);
+                        if ($(this).val() != "Select Contract") {
+                            $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').attr('disabled', true);
+                            jQuery.each(allClientList, function (i, client) {
+                                //jQuery.each($scope.programList, function (j, program) {
+                                if (selectedProgram.ClientID == client.ClientID) {
+                                    sortedClient.push(client);
+                                    return false;
+                                }
+                                //});
+                            });
+                        }
+                        else {
+                            fillContractOptions(allProgramList);
+                            tr = $scope.allContractRowsInTable;
+                            $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                            sortedClient=allClientList;
+                        }
+                        fillClientOptions(sortedClient);
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Contract = td[1].innerText;
+                            if (i != 0) {
+                                if (td_Contract == filter_Id || filter_Id == "Select Contract") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //search contract number
+                    $("#contractNumberSearch").on("keyup", function search() {
+                        $('#contractOgValueFilter, #currrentContractValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Id = td[2].innerText;
+                            if (i != 0) {
+                                if (selectedClientName == 'Select Client' && td_Id.indexOf(filter_Id) > -1) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && td_Id.indexOf(filter_Id) > -1 && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+                    
+                    //search og contract value
+                    $("#contractOgValueFilter").on("keyup", function search() {
+                        $('#contractNumberSearch, #currrentContractValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        var originalValueInput;
+                        if ($(this).val() == '' || $(this).val() == '$') {
+                            originalValueInput = '0';
+                        }
+                        else {
+                            originalValueInput = $(this).val().replace('$', '').replaceAll(',', '');
+                        }
+                        originalValueInput = parseInt(originalValueInput);
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var tdOriginalValue = td[3].innerText;
+                            tdOriginalValue = tdOriginalValue.replace('$', '').replaceAll(',', '');
+                            if (i != 0) {
+                                //if (tdOriginalValue >= originalValueInput && tr[i].style.display != "none") {
+                                //    tr[i].style.display = "";
+                                //} else {
+                                //    tr[i].style.display = "none";
+                                //}
+                                if (selectedClientName == 'Select Client' && tdOriginalValue >= originalValueInput) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && tdOriginalValue >= originalValueInput && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    //search current contract value
+                    $("#currrentContractValueFilter").on("keyup", function search() {
+                        $('#contractNumberSearch, #contractOgValueFilter').val('');
+                        var selectedClientName = $('#clientFilter').val();
+                        var currentValueInput;
+                        if ($(this).val() == '' || $(this).val() == '$') {
+                            currentValueInput = '0';
+                        }
+                        else {
+                            currentValueInput = $(this).val().replace('$', '').replaceAll(',', '');
+                        }
+                        currentValueInput = parseInt(currentValueInput);
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var tdCurrentValue = td[4].innerText;
+                            tdCurrentValue = tdCurrentValue.replace('$', '').replaceAll(',', '');
+                            if (i != 0) {
+                                //if (tdCurrentValue >= currentValueInput && tr[i].style.display != "none") {
+                                //    tr[i].style.display = "";
+                                //} else {
+                                //    tr[i].style.display = "none";
+                                //}
+                                if (selectedClientName == 'Select Client' && tdCurrentValue >= currentValueInput) {
+                                    tr[i].style.display = "";
+                                }
+                                else if (selectedClientName != 'Select Client' && tdCurrentValue >= currentValueInput && td[0].innerText == selectedClientName) {
+                                    tr[i].style.display = "";
+                                }
+                                else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     //Add Contract
                     $("#AddContractGridBtn").unbind('click').on("click", function () {
                         selectedNode = Treedata;
@@ -5584,7 +5784,25 @@ angular.module('cpp.controllers').
                         $('#ProgramModal').modal({ show: true, backdrop: 'static' });
 
                     });
+                    //Code added by kavita
+                    $('#tblContract tbody tr').on('dblclick', function () {
+                        var table = $(this).closest('table');
+                        var rows = table.find('tr.contact-row')
+                        var programId = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
+                        if (programId != undefined) {
+                            $scope.modal_mode = "Update"
+                            localStorage.setItem('modal_mode', "Update");
+                            var selectedProgram = organization.children.find(x => x.ProgramID === programId);
+                            wbsTree.setSelectedNode(selectedProgram);
+                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                            if (selectedProgram.Status == "Closed") {
+                                $('#delete_program').prop('disabled', true);
+                                $("#updateBtnProgram").prop('disabled', true);
+                                $('#update_program').prop('disabled', true);
+                            }
+                        }
 
+                    });
                     //Edit/Open clicked
                     $("#tblContract").on('click', '#EditContractGridBtn', function () {
                         //$('#EditContractGridBtn').unbind('click').on('click', function () {
@@ -5595,6 +5813,7 @@ angular.module('cpp.controllers').
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                             wbsTree.setSelectedNode(selectedProgram);
                             $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+
                         }
 
                         //code started to add by kavita
@@ -5602,17 +5821,17 @@ angular.module('cpp.controllers').
                             $('#delete_program').removeClass('btn btn-black');
                             $('#delete_program').addClass('btn btn-primary c-btn-delete');
                             $('#delete_program').attr('style', 'width:150px;margin-left:15px;');
-                            $('#delete_program').prop('disabled',true);  //Manasi 24-02-2021
+                            $('#delete_program').prop('disabled', true);  //Manasi 24-02-2021
                             $('#spnBtndelete_program').removeAttr('title');  //Manasi 24-02-2021
 
                             $("#updateBtnProgram").prop('disabled', true);
                             $("#ViewAllUploadFileContracts").prop('disabled', true);
 
                             $('#update_program').prop('disabled', true);  //Manasi 24-02-2021
-                      //  $('#spnBtnupdate_program').removeAttr('title');  //Manasi 24-02-2021
+                            //  $('#spnBtnupdate_program').removeAttr('title');  //Manasi 24-02-2021
                         }
-                         //code ended to add by kavita
-                                               return false;
+                        //code ended to add by kavita
+                        return false;
                     });
 
                     //View Gantt button click
@@ -5680,14 +5899,14 @@ angular.module('cpp.controllers').
                                 $("#EditContracttGridBtn").hide();
                                 //$("#DeleteContractGridBtn").hide();
                                 $("#ViewGanttGridBtn").hide();
-                              //  $("#CloseContractGridBtn").hide();
+                                //  $("#CloseContractGridBtn").hide();
 
                             }
                             else {
                                 $("#EditContracttGridBtn").show();
-                               // $("#DeleteContractGridBtn").show();
+                                // $("#DeleteContractGridBtn").show();
                                 $("#ViewGanttGridBtn").show();
-                               // $("#CloseContractGridBtn").show();
+                                // $("#CloseContractGridBtn").show();
                             }
                         }); //close changes done by vaishnavi
                         var mydiv = document.getElementById("wbsGridiewProject");
@@ -5722,7 +5941,40 @@ angular.module('cpp.controllers').
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
 
                     });
+                    //code addded by kavita
 
+                    $('#tblProject tbody tr').on('dblclick', function () {
+                        //wbsTree.setSelectedNode(null);
+
+                        // var selectedProjectID = this.firstChild.parentElement.id;
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
+                        wbsTree.setSelectedNode(selectedProject);
+                        
+                        $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+                        //code started to add by kavita
+                        $("#btnSpecialInstruction").prop('disabled', false);
+                        $("#contextMenuBillOfMaterial").prop('disabled', false);
+
+                        if (selectedProject.Status == "Closed") {
+                            $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
+                            $('#delete_program_element').removeClass('btn btn-black');
+                            $('#delete_program_element').addClass('btn btn-primary c-btn-delete');
+                            $('#spnBtndelete_program_element').removeAttr('title');
+
+                            $("#new_program_element_milestone").prop('disabled', true);
+                            $("#updateBtnProgramPrg").prop('disabled', true);
+                            $("#ViewUploadFileProgramPrg").prop('disabled', true);
+                            $("#new_program_element_change_order").prop('disabled', true);
+                            $("#delete_program_element_change_order").prop('disabled', true);
+
+                            $("#update_program_element").prop('disabled', true);
+                            $("#btnSpecialInstruction").prop('disabled', true);
+                            $("#contextMenuBillOfMaterial").prop('disabled', true);
+
+                        }
+                    });
                     //Edit/Open Project
                     $('#tblProject').on('click', '#EditProjectGridBtn', function () {
                         //$('#EditProjectGridBtn').unbind('click').on('click', function () {
@@ -5745,7 +5997,9 @@ angular.module('cpp.controllers').
                             $("#new_program_element_change_order").prop('disabled', true);
                             $("#delete_program_element_change_order").prop('disabled', true);
 
-                               $("#update_program_element").prop('disabled', true);
+                            $("#update_program_element").prop('disabled', true);
+                            $("#btnSpecialInstruction").prop('disabled', true);
+                            $("#contextMenuBillOfMaterial").prop('disabled', true);
                         }
                         //code ended by kavita
                     });
@@ -5823,6 +6077,41 @@ angular.module('cpp.controllers').
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
                     });
 
+                    //code added by kavita
+
+                    $('#tblElement tbody tr').on('dblclick', function () {
+
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+
+                        var elementId = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
+                        wbsTree.setSelectedNode(selectedElement);
+                        $('#ProjectModal').modal({ show: true, backdrop: 'static' });
+                        //code started to add by kavita
+                        if (selectedElement.Status == "Closed") {
+
+                            $('#delete_project').removeClass('btn btn-black');
+                            $('#delete_project').addClass('btn btn-primary c-btn-delete');
+                            $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
+                            $('#delete_project').prop('disabled', true);  //Manasi 24-02-2021
+                            $('#spnBtndelete_project').removeAttr('title');
+
+                            $("#new_project_element_milestone").prop('disabled', true);
+                            $("#updateBtnProgramPrgElm").prop('disabled', true);
+                            $("#ViewAllUploadFileProgramPrgElm").prop('disabled', true);
+
+                            $('#update_project').removeClass('btn btn-black');
+                            $('#update_project').addClass('btn btn-primary c-btn-delete');
+                            $('#update_project').attr('style', 'width:150px;margin-left:15px;');
+                            $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
+                            //$('#spnBtndelete_project').removeAttr('title'); /
+
+                        }
+                    });
+
                     //Edit/Open Element
                     $('#tblElement').on('click', '#EditElementGridBtn', function () {
                         //$('#EditElementGridBtn').unbind('click').on('click', function () {
@@ -5835,27 +6124,27 @@ angular.module('cpp.controllers').
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                         wbsTree.setSelectedNode(selectedElement);
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
-                         //code started to add by kavita
+                        //code started to add by kavita
                         if (selectedElement.Status == "Closed") {
-                          
-                                $('#delete_project').removeClass('btn btn-black');
-                                $('#delete_project').addClass('btn btn-primary c-btn-delete');
-                                $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
-                                $('#delete_project').prop('disabled', true);  //Manasi 24-02-2021
+
+                            $('#delete_project').removeClass('btn btn-black');
+                            $('#delete_project').addClass('btn btn-primary c-btn-delete');
+                            $('#delete_project').attr('style', 'width:150px;margin-left:15px;');
+                            $('#delete_project').prop('disabled', true);  //Manasi 24-02-2021
                             $('#spnBtndelete_project').removeAttr('title');
 
                             $("#new_project_element_milestone").prop('disabled', true);
                             $("#updateBtnProgramPrgElm").prop('disabled', true);
                             $("#ViewAllUploadFileProgramPrgElm").prop('disabled', true);
 
-                                $('#update_project').removeClass('btn btn-black');
-                                $('#update_project').addClass('btn btn-primary c-btn-delete');
-                                $('#update_project').attr('style', 'width:150px;margin-left:15px;');
-                                $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
-                                //$('#spnBtndelete_project').removeAttr('title'); /
+                            $('#update_project').removeClass('btn btn-black');
+                            $('#update_project').addClass('btn btn-primary c-btn-delete');
+                            $('#update_project').attr('style', 'width:150px;margin-left:15px;');
+                            $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
+                            //$('#spnBtndelete_project').removeAttr('title'); /
 
                         }
-                         //code ended to add by kavita
+                        //code ended to add by kavita
                     });
 
                     //Delete Element
@@ -5908,7 +6197,7 @@ angular.module('cpp.controllers').
                     //});
 
                     $('#tblElement tbody tr').on('click', function () {
-                      
+
                         //wbsTree.setSelectedNode(null);
                         $('#tblElement tr.selected').removeClass('selected');
                         $(this).addClass('selected');
@@ -5919,6 +6208,8 @@ angular.module('cpp.controllers').
                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
                         selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedProjectElementID);
+
+                        wbsTree.setSelectedProjectID(selectedProjectElementID);
 
                         //Add Trend
                         //$("#AddTrendGridBtn").unbind('click').on("click", function () {
@@ -5949,6 +6240,9 @@ angular.module('cpp.controllers').
                 }
 
                 function BindTrendEvent(selectedProgramID, selectedProjectID, selectedElementID) {
+
+                    wbsTree.getWBSTrendTree().trendGraph(true);
+
                     //Add Trend
                     $("#AddTrendGridBtn").unbind('click').on("click", function () {
                         //var programId = $scope.GridContractId;
@@ -5964,7 +6258,6 @@ angular.module('cpp.controllers').
                         }
                         wbsTree.setNewTrend(true);
                         var s = wbsTree.getWBSTrendTree().getTrendNumber();
-                        wbsTree.getWBSTrendTree().trendGraph(true);
                         wbsTree.setSelectedNode(selectedElement);
                         var allElementTrendData = $scope.gridTrendData;
                         var selectedTrend = {};
@@ -5975,7 +6268,43 @@ angular.module('cpp.controllers').
                         $('#cancel_futuretrend').show();
 
                     });
+                    //code added by kavita
+                    $('#tblTrend tbody').on('dblclick','tr', function () {
+                         var selectedProgram = organization.children.find(x => x.ProgramID === selectedProgramID);
+                        //var projectId = $scope.GridProjectId;
+                        var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === selectedProjectID);
+                        //var elementId = $scope.GridProjectId;
+                        var selectedElement = selectedProject.children.find(x => x.ProjectID === selectedElementID);
+                        var trendNumber = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
+                        
+                        wbsTree.setSelectedNode(selectedElement);
+                        wbsTree.setNewTrend(false);
+                        var allElementTrendData = $scope.gridTrendData;
+                        var selectedTrend = {};
 
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Pending" && allElementTrendData.FutureTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.FutureTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                            $('#FutureTrendModal').modal({ show: true, backdrop: 'static' });
+                        }
+                        if (this.firstChild.parentElement.attributes.isapproved.value == "Approved" && allElementTrendData.PastTrendList.length > 0) {
+                            jQuery.each(allElementTrendData.PastTrendList, function (i, trend) {
+                                if (trend.TrendNumber == trendNumber) {
+                                    selectedTrend.metadata = trend;
+                                    return false;
+                                }
+                            });
+                            wbsTree.getWBSTrendTree().setSelectedTreeNode(selectedTrend);
+
+                            $('#PastTrendModal').modal({ show: true, backdrop: 'static' });
+                        }
+                    });
                     //Edit/Open Trend
                     $('#tblTrend').on('click', '#EditTrendGridBtn', function () {
                         //$('#EditElementGridBtn').unbind('click').on('click', function () {
@@ -6113,15 +6442,47 @@ angular.module('cpp.controllers').
                     });
 
                 }
+                // Aditya :: Fill client options
+                function fillClientOptions(clientList) {
+                    var selectClient = $('#clientFilter');
+                    var clientOpt = '';
+                    selectClient.html('');
+                    clientOpt = "<option>Select Client</option>";
+                    for (var k = 0; k < clientList.length; k++) {
+                        if (clientList.length == 1) {
+                            clientOpt += "<option selected id='" + clientList[k].ClientID + "' value='" + clientList[k].ClientName + "'>" + clientList[k].ClientName + "</option>";
+                        }
+                        else {
+                            clientOpt += "<option id='" + clientList[k].ClientID + "' value='" + clientList[k].ClientName + "'>" + clientList[k].ClientName + "</option>";
+                        }
+                    }
+                    selectClient.append(clientOpt);
+
+                }
+
+                // Aditya :: Filter Contract Options
+                function fillContractOptions(programList) {
+                    var selectContract = $('#contractFilter');
+                    var contractOpt = '';
+                    selectContract.html('');
+                    contractOpt = "<option>Select Contract</option>";
+                    for (var k = 0; k < programList.length; k++) {
+                        //if (selectedClientId == contractOptionArr[k].ClientID) {
+                        //sortedProgram.push(contractOptionArr[k]);
+                        contractOpt += "<option id='" + programList[k].ProgramID + "' value='" + programList[k].ProgramName + "'>" + programList[k].ProgramName + "</option>";
+                    }
+                    selectContract.append(contractOpt);
+
+                }
 
                 //Aditya :Application Security Permissions :22092022
                 var ViewContract = wbsTree.getLocalStorage().acl[0];
-                var ModifyContract= wbsTree.getLocalStorage().acl[1];
-                var ViewProject= wbsTree.getLocalStorage().acl[2];
-                var ModifyProject= wbsTree.getLocalStorage().acl[3];
-                var ViewProjectElement= wbsTree.getLocalStorage().acl[4];
-                var ModifyProjectElement= wbsTree.getLocalStorage().acl[5];
-                var ViewTrend= wbsTree.getLocalStorage().acl[6];
+                var ModifyContract = wbsTree.getLocalStorage().acl[1];
+                var ViewProject = wbsTree.getLocalStorage().acl[2];
+                var ModifyProject = wbsTree.getLocalStorage().acl[3];
+                var ViewProjectElement = wbsTree.getLocalStorage().acl[4];
+                var ModifyProjectElement = wbsTree.getLocalStorage().acl[5];
+                var ViewTrend = wbsTree.getLocalStorage().acl[6];
                 var ModifyTrend = wbsTree.getLocalStorage().acl[7];
                 var role = wbsTree.getLocalStorage().role;
                 //var ViewActivity= wbsTree.getLocalStorage().acl[8];
@@ -6444,9 +6805,9 @@ angular.module('cpp.controllers').
                                 });
                                 getSelectedContract();
                             }
-                            
+
                             $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
-                            
+
                         });
 
                     }
@@ -6692,7 +7053,7 @@ angular.module('cpp.controllers').
                 } else {
                     $scope.programList = $scope.allWbsProgramList;
                 }
-                
+
 
                 $http.get(serviceBasePath + "Request//ProjectByOid/" + orgId)
                     .then(function (response) {
@@ -6754,7 +7115,7 @@ angular.module('cpp.controllers').
 
                     localStorage.setItem('cliId', sortedClient[0].ClientID);
 
-                    $scope.filterClient = (sortedClient[0].ClientID).toString(); 
+                    $scope.filterClient = (sortedClient[0].ClientID).toString();
 
                 } else {
                     $scope.clientList = $scope.allClientList;

@@ -183,7 +183,7 @@ namespace WebAPI.Models
                         for (int i = 0; i < MatchedProjectList.Count; i++)
                         {
                             Project prj = MatchedProjectList[i];
-                            prj.ApproversDetails = ctx.TrendApproversDetails.Where(p => p.ProjectElementId == projectId).ToList<TrendApproversDetails>();
+                            prj.ApproversDetails = ctx.TrendApproversDetails.Where(p => p.ProjectElementId == projectId && p.ApproverMatrixId == 6).ToList<TrendApproversDetails>();
                         }
 
                     }

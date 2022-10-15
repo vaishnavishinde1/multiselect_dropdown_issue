@@ -1018,12 +1018,12 @@ WBSTrendTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
-                                '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                                //'<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="docId"><span  style="display:none;">' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
                     }
@@ -1321,12 +1321,12 @@ WBSTrendTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesTrend" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a  id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + //Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
-                                '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
+                                //'<td><i class="fa fa-eye" name="btnViewDetail" title="View Details" id="viewDocumentDetail" style="font-size:20px;"/></td>' +
+                                '<td class="docId""><span  style="display:none;>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
                     }

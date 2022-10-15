@@ -661,7 +661,14 @@ namespace WebAPI.Models
                         decimal trendCost = Convert.ToDecimal(trend.TrendCost);
                         approvalMatrixList = ctx.ApprovalMatrix.Where(p => p.Cost <= trendCost && applicableRoleList.Contains(p.Role)).OrderBy(p => p.Cost).ToList();
                         List<TrendApproversDetails> elementApproverDetails = ctx.TrendApproversDetails.Where(p=>p.ProjectElementId == trend.ProjectID).ToList();
-                        
+
+                        //Nivedita 08-10-2022
+                        var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
+
+                        List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
+                        AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
+
                         bool firstAppend = true;
 
                         for (int x = 0; x < approvalMatrixList.Count; x++)
@@ -691,22 +698,43 @@ namespace WebAPI.Models
 
                             //}
 
-                            employeeId = elementApproverDetails.Where(p => p.ApproverMatrixId == approvalMatrixList[x].Id).Select(p => p.EmpId).FirstOrDefault();
+                            //Nivedita 08-10-2022
+                            if (approvalMatrixList[x].Id == 6)
+                            {
+                                employeeId = elementApproverDetails.Where(p => p.ApproverMatrixId == approvalMatrixList[x].Id).Select(p => p.EmpId).FirstOrDefault();
+                            }
+                            else if (approvalMatrixList[x].Id == 4)
+                            {
+                                employeeId = projectApproverDetails.Where(p => p.ApproverMatrixId == approvalMatrixList[x].Id).Select(p => p.EmpId).FirstOrDefault();
+                            }
+                            else if (approvalMatrixList[x].Id == 3)
+                            {
+                                employeeId = adminApproverDetails.Select(p => p.DeptManagerID).FirstOrDefault();
+                            }
+                            else if (approvalMatrixList[x].Id == 1)
+                            {
+                                employeeId = adminApproverDetails.Select(p => p.OpeManagerID).FirstOrDefault();
+                            }
+                            else if (approvalMatrixList[x].Id == 5)
+                            {
+                                employeeId = adminApprovalPresident.PresidentID;
+                            }
 
 
 
-                                //if (approvalMatrixList[x].Role == "Project Manager")
-                                //    employeeId = pr.ProjectManagerID;
-                                //if (approvalMatrixList[x].Role == "Director")
-                                //    employeeId = pr.DirectorID;
-                                //if (approvalMatrixList[x].Role == "Scheduler")
-                                //    employeeId = pr.SchedulerID;
-                                //if (approvalMatrixList[x].Role == "Vice President")
-                                //    employeeId = pr.VicePresidentID;
-                                //if (approvalMatrixList[x].Role == "Financial Analyst")
-                                //    employeeId = pr.FinancialAnalystID;
-                                //if (approvalMatrixList[x].Role == "Capital Project Assistant")
-                                //    employeeId = pr.CapitalProjectAssistantID;
+
+                            //if (approvalMatrixList[x].Role == "Project Manager")
+                            //    employeeId = pr.ProjectManagerID;
+                            //if (approvalMatrixList[x].Role == "Director")
+                            //    employeeId = pr.DirectorID;
+                            //if (approvalMatrixList[x].Role == "Scheduler")
+                            //    employeeId = pr.SchedulerID;
+                            //if (approvalMatrixList[x].Role == "Vice President")
+                            //    employeeId = pr.VicePresidentID;
+                            //if (approvalMatrixList[x].Role == "Financial Analyst")
+                            //    employeeId = pr.FinancialAnalystID;
+                            //if (approvalMatrixList[x].Role == "Capital Project Assistant")
+                            //    employeeId = pr.CapitalProjectAssistantID;
 
 
 
@@ -863,6 +891,12 @@ namespace WebAPI.Models
                         List<ApprovalMatrix> approvalMatrixList = ApprovalMatrix.getApprovalMatrix();
                         List<TrendApproversDetails> elementApproverDetails = ctx.TrendApproversDetails.Where(p => p.ProjectElementId == trend.ProjectID).ToList();
 
+
+                        //Nivedita 08-10-2022
+                        var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
+                        List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
+                        AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
                         //If this guy approve successfuly, then we change the threshold to what he is associated with.
                         String lowestApproverCost = "99999999999";
                         String lowestApproverRole = "";
@@ -902,7 +936,25 @@ namespace WebAPI.Models
                                 break;
                             }
                         }
-                        nextApproverEmployeeID = elementApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+
+                        //Nivedita 08-10-2022
+                        if (lowestApprovalMatrixId == 6)
+                        {
+                            nextApproverEmployeeID = elementApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+                        }
+                        else if (lowestApprovalMatrixId == 4)
+                        {
+                            nextApproverEmployeeID = projectApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+                        }
+                        else if (lowestApprovalMatrixId == 3)
+                        {
+                            nextApproverEmployeeID = adminApproverDetails.Select(p => p.DeptManagerID).FirstOrDefault();
+                        }
+                        else if (lowestApprovalMatrixId == 5)
+                        {
+                            nextApproverEmployeeID = adminApprovalPresident.PresidentID;
+                        }
+
 
                         //if (lowestApproverRole == "Project Manager")
                         //    nextApproverEmployeeID = pr.ProjectManagerID;
@@ -969,6 +1021,7 @@ namespace WebAPI.Models
                                                                            p.Cost > currentThresholdTargeted &&
                                                                            applicableRoleList.Contains(p.Role)).OrderBy(p => p.Cost).ToList();
 
+
                         //To prevent limbo
                         if (approvalMatrixList.Count < 1)
                         {
@@ -976,6 +1029,14 @@ namespace WebAPI.Models
                             tr.NextApproverEmailDate = DateTime.Now.Date; // Swapnil 18/09/2020
                             tr.LastApprover_UserID = requestingUser.UserID; // Swapnil 18/09/2020
                             ctx.SaveChanges();
+                            var approvallistforlastapproval = tr.approvedList_EmployeeID.Split();
+
+                            if (approvallistforlastapproval.Length == 1)
+                            {
+                                deductQuantity(tr);
+
+
+                            }
                             return "Official Approved";
                         }
 
@@ -995,7 +1056,20 @@ namespace WebAPI.Models
                             }
                         }
 
-                        nextApproverEmployeeID = elementApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+                        //Nivedita 08-10-2022
+                        if (lowestApprovalMatrixId == 6)
+                        {
+                            nextApproverEmployeeID = elementApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+                        }
+                        else if (lowestApprovalMatrixId == 4)
+                        {
+                            nextApproverEmployeeID = projectApproverDetails.Where(p => p.ApproverMatrixId == lowestApprovalMatrixId).Select(p => p.EmpId).FirstOrDefault();
+                        }
+                        else if(lowestApprovalMatrixId == 5)
+                        {
+                            nextApproverEmployeeID = adminApprovalPresident.PresidentID;
+                        }
+                        
 
 
                         //if (lowestApproverRole == "Project Manager")
@@ -1691,8 +1765,8 @@ namespace WebAPI.Models
             CostUnit costUnit = new CostUnit();
             decimal unitqunatity;
             project = ctx.Project.Where(p => p.ProjectID == tr.ProjectID).FirstOrDefault();
-
-            activitylist = ctx.Activity.Where(a => a.ProjectID == project.ProjectID).ToList();
+            var trendno = tr.TrendNumber;
+            activitylist = ctx.Activity.Where(a => a.ProjectID == project.ProjectID && a.TrendNumber == trendno).ToList();
 
             foreach (var i in activitylist)
             {

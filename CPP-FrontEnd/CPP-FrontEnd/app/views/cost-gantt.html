@@ -430,7 +430,7 @@
         }
 
         ::-webkit-scrollbar {
-            /* width: auto !important;     changes by sarab         */
+            width: 13px !important; /*  changes by sarab         */
             height: 12px;
             background-color: #F5F5F5;
         }
@@ -462,16 +462,23 @@
         }
     </style>
 
-    <!--Css change by sarab for BOM tooltip-->
+    <!--Css change by sarab (BOM quantity tooltip)-->
     <style type="text/css">
         .tooltip {
             top: -9999px;
             left: -9999px;
             opacity: 1;
         }
-
-
-        .tooltip-inner {
+            .tooltip.in {
+                
+                opacity: 1 !important;
+            }
+        .gantt_task_progress_wrapper {
+           
+            height: 0; 
+           
+        }
+        .gantt_data_area .tooltip-inner {
             max-width: 500px;
             background-color: white;
             color: black;
@@ -485,7 +492,10 @@
             position: initial;
         }
 
-        .tooltip-arrow {
+        .gantt_data_area .tooltip-arrow {
             display: none;
+        }
+        .gantt_data_area  .tooltip.bottom {
+            margin-top: -40px !important;
         }
     </style>

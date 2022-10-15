@@ -1,3 +1,4 @@
+
 WBSTree = (function ($) {
     var obj = function WBSTree() {
         if (!this instanceof WBSTree) {
@@ -127,7 +128,7 @@ WBSTree = (function ($) {
             $('#mindmap').css('position', 'absolute');
             $('#selectProject').hide();
             $('#trendSvg').hide();
-            $('#selectProject,#selectprogramelement').hide();
+            $('#selectProject,#selectprogramelement,#selectProgram,#selectOrgDiv').hide(); // Aditya :: 10102022 :: hide contract filter in grid
             $('#wbsGridView').show();
             $('#wbsGridiewProject').show();
             $('#wbsGridiewElement').show();
@@ -146,7 +147,7 @@ WBSTree = (function ($) {
             $('#closed,#approved,#unapproved,#contract,#project').show();
             $('#selectProject').show();
             $('#trendSvg').show();
-            $('#selectProject,#selectprogramelement').show();
+            $('#selectProject,#selectprogramelement,#selectOrgDiv,#selectProgram').show();  // Aditya :: 10102022 :: hide contract filter in grid
             $('#wbsGridView').hide();
             
             $('#wbsGridiewProject').hide();
@@ -309,6 +310,9 @@ WBSTree = (function ($) {
         var g_newProgramElement = false;
         var g_program_element_milestone_draft_list = [];
 
+        var g_selectedSpecialInstruction = null;
+        var g_newSpecialInstruction = false;
+        var g_Special_instruction_draft_list = [];
         //Program Element Change Order globals
         var g_selectedProgramElementChangeOrder = null;
         var g_newProgramElement = false;
@@ -331,6 +335,12 @@ WBSTree = (function ($) {
             return function (a, b) {
                 var valA = getCellValue(a, index),
                     valB = getCellValue(b, index);
+                if (valA.charAt(0) == '$') {
+                    valA = parseFloat(valA.split('$')[1].replace(/,/g, ''));
+                }
+                if (valB.charAt(0) == '$') {
+                    valB = parseFloat(valB.split('$')[1].replace(/,/g, ''));
+                }
                 return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
             }
         }
@@ -412,7 +422,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuClosed").parent().hide();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                       
                     }
 
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
@@ -464,7 +474,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                       
                     }
                     //----Vaishnavi 30-03-2022----//
 
@@ -480,7 +490,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
 
@@ -542,7 +552,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                         
                     }
 
                 }
@@ -556,7 +566,7 @@ WBSTree = (function ($) {
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
                     localStorage.Status = "Closed";
-                    localStorage.Status1 = "Closed";      //Code added by Kavita 
+                   
 
                 }
                 //----Vaishnavi 30-03-2022----//
@@ -1343,7 +1353,7 @@ WBSTree = (function ($) {
             _selectedNode = selectedNode;
             console.log("selectedNode==");
             console.log(selectedNode);
-        }
+            program_element_total_value}
         obj.prototype.getSelectedNode = function () {
             return _selectedNode;
         }
@@ -3684,11 +3694,11 @@ WBSTree = (function ($) {
                             '<tr class="contact-row" id="' + programNotesList[x].notes_id + '" >' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
-                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + programNotesList[x].notes_desc + '</td>' +
+                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td>' +
                             '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
                             '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
                             //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            '<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
+                            //'<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
                             '</tr>'
                         );
 
@@ -3926,10 +3936,11 @@ WBSTree = (function ($) {
                     var changeOrderList = changeOrderData.result;
                     wbsTree.setChangeOrderList(changeOrderList);
                     $('#program_element_change_order_table_id tbody').empty();
+                    $('#program_element_change_order_table_id tfoot').empty();
                     //  setInterval(function () {
                     //alert(singeChangeOrder.DocumentName);
-
-                    var totalmod = 0;
+                    var flag = true; //added by kavita
+                    var  totalmod = 0;
                     var schImp = 0;
                     for (var x = 0; x < changeOrderList.length; x++) {
                         console.log(changeOrderList[x].ProgramElementID, programElementID);
@@ -3939,10 +3950,7 @@ WBSTree = (function ($) {
 
                             //Added By Amruta for locking the project end date
                             $('#program_element_PEnd_Date').attr('disabled', 'disabled');
-
-
-
-
+                            
                             var singeChangeOrder = {};
                             singeChangeOrder = changeOrderList[x];
 
@@ -3957,7 +3965,7 @@ WBSTree = (function ($) {
                             var changeOrderAmount = singeChangeOrder.ChangeOrderAmount == "" || singeChangeOrder.ChangeOrderAmount == null ? '0' : singeChangeOrder.ChangeOrderAmount;
 
                             //Manu 11/01/2022
-                            totalmod = totalmod + parseInt(changeOrderAmount.replace("$", "").replaceAll(",", ""));
+                            totalmod = totalmod + parseFloat(changeOrderAmount.replace("$", "").replaceAll(",", ""));
                             schImp += parseInt(singeChangeOrder.ScheduleImpact);
 
                             $('#program_element_change_order_table_id tbody').append(
@@ -3967,7 +3975,7 @@ WBSTree = (function ($) {
                                 '</td >' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
                                 '</td >' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
+                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;"><a  id="viewOrderDetail" title="Click to view" class="clickableFont">' + singeChangeOrder.ChangeOrderName + '</a></td>' + //Aditya :: Hide Column :: 11102022
                                 '</td >' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
@@ -3976,11 +3984,12 @@ WBSTree = (function ($) {
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
-                                '<td class="docId" style="display:none;"><span>' + singeChangeOrder.DocumentID + '</span></td>' +
-                                '</tr>'
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
+                                '<td class="docId"><span style="display:none;">' + singeChangeOrder.DocumentID + '</span></td>' +
+                                 '</tr>'
+                               
                             );
-
+                            flag = false;
                             //$('#program_element_change_order_table_id').append(
                             //    '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="fade-selection-animation clickable-row">' +
                             //    ' <td style="width: 20px">' +
@@ -3996,6 +4005,16 @@ WBSTree = (function ($) {
                             //    '</tr>'
                             //);
                         }
+                      
+                    }
+                  
+                    //change by kavita 
+                    if (flag != true) {
+
+                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+                        '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
+                            '</tr></tfoot>');
+                        flag = true;
                     }
                     // }, 3000);
 
@@ -4045,12 +4064,13 @@ WBSTree = (function ($) {
                         }
 
                         //Code added by Kavita 
-                        if (localStorage.Status1 == "Closed") {
+                        if (localStorage.Status == "Closed") {
                             $('#new_program_element_change_order').prop('disabled', true);
                             $('#edit_program_element_change_order').prop('disabled', true);
                             $('#delete_program_element_change_order').prop('disabled', true);
                             $('#downloadBtnChangeOrder').prop('disabled', true);
                             $('#ViewUploadFileChangeOrder').prop('disabled', true);
+                            localStorage.Status= "";
                         }
 
                     });
@@ -4902,7 +4922,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramModal').find('.modal-body #program_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramModal').find('.modal-body #program_billing_poc_email').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction//$('#ProgramModal').find('.modal-body #program_billing_poc_special_instruction').val();
 
                     // Aditya prime
                     newNode.PrimeParent = $('#ProgramModal').find('.modal-body #prime_dd').val();
@@ -5359,10 +5379,44 @@ WBSTree = (function ($) {
                 modal.find('.modal-body #program_element_contract_end_date').val(contract.ContractEndDate);
             }
 
+            
+            //$('#btnSpecialInstruction').unbind('click').on('click', function () {
+            //    var selectedNode = wbsTree.getSelectedNode();
+            //    console.log(selectedNode);
+            //    var projectID = selectedNode.projectID;
+            //    if (wbsTree.getSelectedOrganizationID() == null) {
+            //        wbsTree.setSelectedOrganizationID($("#selectOrg").val());
+            //    }
+            //    var SpecialInstruction = modal.find('.modal-body #program_billing_poc_special_instruction1').val();
+
+            //    if (SpecialInstruction == "" || SpecialInstruction.length == 0) {
+            //        //dhtmlx.alert('Enter Tile.');
+            //        dhtmlx.alert('Enter Specail Instruction.');   //Manasi
+            //        return;
+            //    }
+            //    if (modal_mode == 'Update') {
+            //        selectedNode.BillingPOCSpecialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+            //    }
+            //        var obj = {
+            //            "Operation": 2,
+            //            "ProjectID": selectedNode.ProjectID,
+            //            "BillingPOCSpecialInstruction": selectedNode.BillingPOCSpecialInstruction
+            //        }
+
+            //        var listToSave = [];
+            //        listToSave.push(obj);
+            //});
             //luan quest 3/22
+
+            $('#btnSpecialInstruction').unbind('click').bind('click', function () {
+                //event.preventDefault();    //Manasi 09-03-2021
+                $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
+                $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+            });
+          
             $('#update_program_element').unbind('click').on('click', function () {
                 var selectedNode = wbsTree.getSelectedNode();
-                console.log(selectedNode);
+                //rbChangeOrderconsole.log(selectedNode);
                 var scope = wbsTree.getScope();
 
                 var orgName = wbsTree.getOrgProjectName();
@@ -5457,7 +5511,7 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
 
-                    selectedNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
                     selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
 
 
@@ -6070,7 +6124,7 @@ WBSTree = (function ($) {
                         } 
                         
                     });
-
+            
                 }
 
 
@@ -6139,7 +6193,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = $('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
@@ -6271,7 +6325,7 @@ WBSTree = (function ($) {
                     newNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
 
                     //------------------------------------------------------------------------------------------------------
-
+                    newNode.ProjectForecastValue = 0;
 
                     //----------------- Swapnil save approvers details 25/10/2020------------------------------------------
 
@@ -6725,6 +6779,7 @@ WBSTree = (function ($) {
                             /////////aaa
                             // loadWBSGrid();
                             $('#ProgramElementModal').modal('hide');
+                            localStorage.specialInstruction = "";
                             selectedNode.ProjectNumber = response.result.split(',')[3].trim(); // Jignesh-19-03-2021
                             selectedNode.ProgramElementNumber = response.result.split(',')[4].trim();
                             selectedNode = selectedNode.parent;
@@ -7867,7 +7922,7 @@ WBSTree = (function ($) {
                         "ApproversDetails": approversDetails
 
                     };
-
+                    
                     //return;
 
                     wbsTree.getProject().persist().save(objToSave, function (response) {
@@ -7897,7 +7952,7 @@ WBSTree = (function ($) {
                             newNode.ProgramElementID = resultArray[2];
                             newNode.ProjectID = resultArray[3];
                             newNode.name = response.result.split(',')[4].trim() + ". " + newNode.name; // Jignesh-19-03-2021
-
+                            newNode.ProjectElementNumber = response.result.split(',')[4].trim(); // Aditya 15102022
                             var index = 0;
 
                             var apiUpload = function () {
@@ -7959,8 +8014,8 @@ WBSTree = (function ($) {
 
                             apiRegisterProjectElementMilestone();
 
-
-
+                           
+                            
                             $('#ProjectModal').modal('hide');
 
                             selectedNode = selectedNode.parent;
@@ -8370,8 +8425,7 @@ WBSTree = (function ($) {
             //===================================================================================== PROJECT ELEMENT MILESTONE START ===================================================================
             // UPDATE PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#update_project_element_milestone_modal').unbind('click').on('click', function () {
-
-                var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
+             var MileStoneTile = modal.find('.modal-body #project_element_milestone_name_modal').val();
                 var MilestoneDescp = modal.find('.modal-body #project_element_milestone_description_modal').val();
                 var MilestoneDate = modal.find('.modal-body #project_element_milestone_date_modal').val();
 
@@ -8550,20 +8604,14 @@ WBSTree = (function ($) {
 
             // SHOW PROJECT ELEMENT MILESTONE MODAL LEGACY
             $('#ProjectElementMilestoneModal').unbind().on('show.bs.modal', function (event) {
-
-                $('#message_div').hide();
+                  $('#message_div').hide();
                 defaultModalPosition();
                 var isProjectElementMilestoneUpdate = !g_newProjectElementMilestone;
-
-                //blur
+                                //blur
                 $("#ProjectModal").css({ "opacity": "0.8" });
-
-                console.log(g_selectedProjectElementMilestone);
-
-
-                modal = $(this);
+                  console.log(g_selectedProjectElementMilestone);
+               modal = $(this);
                 modal.find('.modal-body #project_element_name').focus();
-
 
                 if (isProjectElementMilestoneUpdate) {
                     //luan Jquery - luan here
@@ -8585,6 +8633,19 @@ WBSTree = (function ($) {
                     modal.find('.modal-body #project_element_milestone_description_modal').val('');
                     modal.find('.modal-body #project_element_milestone_date_modal').val('');
                 }
+            });
+         
+            $('#cancel_special_instruction_x,#cancel_special_instruction').unbind('click').on('click', function () {
+                // debugger;
+                $("#ProgramElementModal").css({ "opacity": "1" });
+               $("#SpecialInstructionModal").modal('toggle');
+
+            });
+             //code added by kavita
+            $('#update_special_instruction').unbind('click').on('click', function () {
+                localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                $("#ProgramElementModal").css({ "opacity": "1" });
+                $("#SpecialInstructionModal").modal('toggle');
             });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
@@ -8699,9 +8760,10 @@ WBSTree = (function ($) {
                 $('#delete_project_element_milestone').removeAttr('disabled');
 
                 //Code added by Kavita 
-                if (localStorage.Status1 == 'Closed') {
+                if (localStorage.Status== 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
+                    nailocalStorage.Status = "";
 
                 }
             });
@@ -8722,7 +8784,24 @@ WBSTree = (function ($) {
                     ProjectID: 0
                 }
             });
+            
+           
+            //$('#btnModification').unbind().on('click', function (event) {
 
+            //    event.preventDefault();    //Manasi 09-03-2021
+            //    g_newProjectElementMilestone = true;
+            //    $('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#program_billing_poc_special_instruction1').modal({ show: true, backdrop: 'static' });
+            //    //$('#delete_project_element_milestone_modal').hide();
+            //    //g_selectedProjectElementMilestone = {
+            //    //    MilestoneID: 0,
+            //    //    MilestoneName: 0,
+            //    //    MilestoneDescription: '',
+            //    //    MilestoneDate: '',
+            //    //    ProgramElementID: 0,
+            //    //    ProjectID: 0
+            //    //}
+            //});
             // CLICK EDIT PROJECT ELEMENT MIELSTONE LEGACY
             $('#edit_project_element_milestone').unbind().on('click', function (event) {  //Manasi
                 event.preventDefault();    //Manasi 09-03-2021
@@ -9201,9 +9280,10 @@ WBSTree = (function ($) {
                 $('#edit_program_element_milestone').removeAttr('disabled');
                 $('#delete_program_element_milestone').removeAttr('disabled');
                 //Code added by Kavita 
-                if (localStorage.Status1 == 'Closed') {
+                if (localStorage.Status == 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
+                    localStorage.Status = "";
 
                 }
             });
@@ -9244,8 +9324,8 @@ WBSTree = (function ($) {
                 }
                 //------------------------*/
                 g_newProgramElementMilestone = false;
-                //$('#delete_program_contract_modal').show();
-                $('#delete_program_element_milestone_modal').show();
+                
+               
                 if ((g_selectedProgramElementMilestone == undefined || g_selectedProgramElementMilestone == null)) {
                     g_selectedProgramElementMilestone = { MilestoneID: 0 };
                 }
@@ -9257,6 +9337,8 @@ WBSTree = (function ($) {
                 console.log(g_selectedProgramElementMilestone);
                 $('#ProgramElementMilestoneModal').modal({ show: true, backdrop: 'static' });
             });
+
+
 
 
             //Added by Amruta for delete
@@ -9648,9 +9730,9 @@ WBSTree = (function ($) {
                     debugger;
                     //code by kavita
                     if (updatedChangeOrder.ModificationTypeId == 1) {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                        //var curendt = new Date($('#program_element_PEnd_Date').val());
+                        //curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                        //$('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
                     }
                     if (updatedChangeOrder.ModificationTypeId == 4) {
                         var curendt = new Date($('#program_element_PEnd_Date').val());
@@ -10123,6 +10205,12 @@ WBSTree = (function ($) {
                 }
             });
 
+            $('#SpecialInstructionModal').unbind().on('show.bs.modal', function () {
+                defaultModalPosition();
+                //blur
+                $("#ProgramElementModal").css({ "opacity": "0.8" });
+            });
+
             // DELETE PROGRAM ELEMENT CHANGE ORDER MODAL LEGACY
 
             $('#delete_program_element_change_order_modal').unbind().on('click', function (event) {  //Manasi
@@ -10264,13 +10352,13 @@ WBSTree = (function ($) {
                 $('#edit_program_element_change_order').removeAttr('disabled');
                 $('#delete_program_element_change_order').removeAttr('disabled');
                 //Code added by Kavita 
-                if (localStorage.Status1 == "Closed") {
+                if (localStorage.Status == "Closed") {
                     $('#new_program_element_change_order').prop('disabled', true);
                     $('#edit_program_element_change_order').prop('disabled', true);
                     $('#delete_program_element_change_order').prop('disabled', true);
                     $('#downloadBtnChangeOrder').prop('disabled', true);
                     $('#ViewUploadFileChangeOrder').prop('disabled', true);
-                    // localStorage.Status1 = "";
+                    localStorage.Status= "";
                 }
 
             });
@@ -10355,7 +10443,8 @@ WBSTree = (function ($) {
             });
 
             // Narayan - on click edit button in warranty grid - 23-05-2022
-            $("#gridWarrantyList").on('click', '#update_warranty', function () {
+            //$("#gridWarrantyList").on('click', '#update_warranty', function () {
+            $("#gridWarrantyList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveWarranty').hide();
                 //$('#btnClearWarranty').hide();
                 var row = $(this).closest("tr");
@@ -10436,7 +10525,8 @@ WBSTree = (function ($) {
             });
 
             // Narayan - on click edit button in prelimnary notice - 23-05-2022
-            $("#gridNoticeList").on('click', '#update_notice', function () {
+            //$("#gridNoticeList").on('click', '#update_notice', function () {
+            $("#gridNoticeList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveNotice').hide();
                 //$('#btnClearNotice').hide();
                 var row = $(this).closest("tr");
@@ -10496,7 +10586,8 @@ WBSTree = (function ($) {
             
 
             // Narayan - on click edit button in insurance - 24-05-2022
-            $("#gridInsuranceList").on('click', '#update_insurance', function () {
+            //$("#gridInsuranceList").on('click', '#update_insurance', function () {
+            $("#gridInsuranceList").on('dblclick', 'tr', function () { // Aditya :: Edit functionality on double click tr :: 11102022
                 $('#btnSaveInsurance').hide();
 
                 var row = $(this).closest("tr");
@@ -11230,16 +11321,15 @@ WBSTree = (function ($) {
                                 gridWarranty.append('<tr class="contact-row" id="' + _WarrantyList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                    '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"<a id="view_warranty" title="Click to view" class="clickableFont">' +
+                                    '>' + _WarrantyList[x].WarrantyType + '<a></td > ' + //Aditya :: Hide Action Column :: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' + //Aditya :: Hide Action Column :: 11102022
                                     '<tr > ');
                             }
 
@@ -11364,10 +11454,10 @@ WBSTree = (function ($) {
                                     '><a>' + (x + 1) + '</a></td> ' +
                                     '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                     '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                                    '>' + _NoticeList[x].Reason + '</td>' +
+                                    '><a id="view_notice" title="Click to view" class="clickableFont">' + _NoticeList[x].Reason + '</a></td>' + // Aditya :: Hide Action Column :: 1102022
                                     '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
-                                    '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                                    //'<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' + // Aditya :: Hide Action Column :: 1102022
                                     '<tr > ');
                             }
 
@@ -11476,7 +11566,7 @@ WBSTree = (function ($) {
                                     '>' + _InsuranceList[x].Limit + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                                    '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
+                                    //'<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +  // Aditya :: Hide Action Column :: 1102022
                                     '<tr > ');
                             }
 
@@ -12264,13 +12354,13 @@ WBSTree = (function ($) {
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                     '</td > <td ' +
                                     'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                    '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + modificatioTitle + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
+                                    //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon"  title="View Details"  id="viewDocumentDetail"></i></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12287,12 +12377,13 @@ WBSTree = (function ($) {
                                     $('#downloadBtnProgram').removeAttr('disabled');
                                 }
                                 //Code added by Kavita 
-                                if (localStorage.Status1 == 'Closed') {
+                                if (localStorage.Status == 'Closed') {
 
                                     $('#DeleteUploadProgram').prop('disabled', true);
                                     $('#ViewUploadFileProgram').prop('disabled', true);
                                     $('#EditBtnProgram').prop('disabled', true);
                                     $('#downloadBtnProgram').prop('disabled', true);
+                                    localStorage.Status = "";
                                 }
                                 localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                                 //g_selectedProjectDocument = null;
@@ -12319,7 +12410,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].ProjectElementName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -12331,7 +12422,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -12359,11 +12450,12 @@ WBSTree = (function ($) {
                                 $('#downloadBtnInViewAllContracts').removeAttr('disabled');
                             }
                             //Code added by Kavita 
-                            if (localstorage.status1 == 'Closed') {
+                            if (localstorage.Status== 'Closed') {
                                 $('#DeleteUploadProgram').prop('disabled', true);
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
+                                localstorage.Status = "";
                             }
                         });
                         //============================ Jignesh-SearchField-05022021 ================================
@@ -14076,7 +14168,7 @@ WBSTree = (function ($) {
             });
 
             //$('#PdfViewerChangeorder').unbind().on('show.bs.modal', function (event) {
-            //    $("#ProgramElementModal").css({ "opacity": "0.4" });
+            //    $("#ProgramElementModal").css({ "opacity": "0.8" });
             //});
 
             $('#downloadBtnChangeOrder').unbind('click').on('click', function (event) {
@@ -14242,13 +14334,13 @@ WBSTree = (function ($) {
                                                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                                             '</td > <td ' +
                                                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                                                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                                             '>' + modificatioTitle + '</td>' +
                                                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                                             '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -14334,11 +14426,20 @@ WBSTree = (function ($) {
                     //employeeList = $filter('orderBy')(newEmployeeList.FirstName,'FirstName',false)
                     //  $scope.keys = $filter('orderBy')($scope.keys, 'key', false) 
                     $('#divProjectApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    var approvers; //= approversData.data.result;
+                    for (var i = 0; i < approversData.data.result.length; i++)
+                    {
+                        if (approversData.data.result[i].Id == 4)
+                        {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -14349,11 +14450,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                                //append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     var userList = wbsTree.getUserList();
                                     var employeeList = wbsTree.getEmployeeList();
@@ -14379,7 +14482,8 @@ WBSTree = (function ($) {
                                     //}));
 
 
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -14423,7 +14527,7 @@ WBSTree = (function ($) {
 
                                     //}
                                     if (j == 0) {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -14440,7 +14544,7 @@ WBSTree = (function ($) {
                                         }
                                     } else {
 
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -14461,7 +14565,8 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
                                         //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
                                         //    "<label class='control-label _bold required'></label>" +
                                         //    "<select type='text' class='form-control'>";
@@ -14470,7 +14575,7 @@ WBSTree = (function ($) {
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                                //append += "</div>";
                                 //marginBottom = marginBottom + 70;
                             }
                             $('#divProjectApprovers').append(append);
@@ -14481,6 +14586,7 @@ WBSTree = (function ($) {
                         }
 
                     }
+                    
 
                 });
                 //-------------------------------------------------------------------------------------------------
@@ -14570,6 +14676,11 @@ WBSTree = (function ($) {
                     //$('#edit_program_element_milestone').removeAttr('disabled');
                     //$('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
+
+                    $('#contextMenuBillOfMaterial').removeAttr('title');
+                    $('#contextMenuBillOfMaterial').removeAttr('disabled');
+                    $('#btnSpecialInstruction').removeAttr('title');
+                    $('#btnSpecialInstruction').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
                     wbsTree.setIsProgramElementNew(false);
@@ -14707,7 +14818,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].ChangeOrderName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -14719,7 +14830,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
                         }
@@ -14749,12 +14860,13 @@ WBSTree = (function ($) {
                             }
 
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgramPrg').prop('disabled', true);
                                 $('#downloadBtnProgramPrg').prop('disabled', true);
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
 
@@ -14782,7 +14894,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                                 //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 //'>' + _documentList[x].ExecutionDate + '</td>' +
                                 //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -14792,7 +14904,7 @@ WBSTree = (function ($) {
                                 //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                                 //'<td>' + _documentList[x].CreatedBy + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -14871,12 +14983,13 @@ WBSTree = (function ($) {
                             }
 
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgramPrg').prop('disabled', true);
                                 $('#downloadBtnProgramPrg').prop('disabled', true);
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
                         });
@@ -15159,6 +15272,10 @@ WBSTree = (function ($) {
 
                         if (selectedNode.BillingPOCSpecialInstruction != null && selectedNode.BillingPOCSpecialInstruction != "") {
                             modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                            localStorage.specialInstruction = selectedNode.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
+                        }
+                        else {
+                            localStorage.specialInstruction = "";
                         }
 
                         document.getElementById("program_tm_billing1").checked = selectedNode.TMBilling ? true : false;
@@ -15193,7 +15310,8 @@ WBSTree = (function ($) {
                         var approversDdl = $('#ProgramElementModal').find('.modal-body #divProjectApprovers select');
 
                         for (var i = 0; i < approversDdl.length; i++) {
-                            var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                            //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                        var ApproverMatrixId = 4;
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -15272,7 +15390,7 @@ WBSTree = (function ($) {
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
                     $("#delete_program_element_milestone").attr('disabled', 'disabled');
 
-
+                    
                     g_newProgramElement = true;
                     $('#g_newProgramElement').val('true');
                     wbsTree.setProgramElementFileDraft([]);
@@ -15292,6 +15410,11 @@ WBSTree = (function ($) {
                     $('#divmilestone').attr('title', "A project needs to be saved before key project milestones can be added");    //Manasi 23-02-2021
                     $('#divChangeOrder').attr('title', "A project needs to be saved before the change order can be added");    //Manasi 23-02-2021
                     $('#documentUploadProgramNewPrg').attr('title', "A project needs to be saved before the document can be uploaded");   //Manasi 23-02-2021
+
+                    $('#contextMenuBillOfMaterial').attr('disabled', true);
+                    $('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    $('#btnSpecialInstruction').attr('disabled', true);
+                    $('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
 
                     var gridUploadedDocumentProgramElement = $('#gridUploadedDocumentProgramNewPrg tbody');// modal.find('.modal-body #gridUploadedDocumentProgramElement tbody');
                     gridUploadedDocumentProgramElement.empty();
@@ -15711,9 +15834,9 @@ WBSTree = (function ($) {
                 window.setTimeout(function () {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
                     var offsetHeight = $('#divProjectApprovers').css("height");
-                    document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight;
+                    document.getElementById('documentUploadProgramNewPrg').style.height = offsetHeight; //13102022 uncomment
                     var offsetDocHeight = document.getElementById('documentUploadProgramNewPrg').offsetHeight - 60;
-                    document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px';
+                    document.getElementById('documentUploadProgramNewPrgTbl').style.height = offsetDocHeight + 'px'; //13102022 uncomment
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
             });
@@ -15789,7 +15912,8 @@ WBSTree = (function ($) {
 
             });
 
-            $("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+            //$("#bill_of_material_table_id").on('click', '#update_bill_of_material', function () {
+            $("#bill_of_material_table_id").on('dblclick', 'tr', function () {
 
                 var row = $(this).closest("tr");
                 var id = row[0].id;
@@ -16125,8 +16249,7 @@ WBSTree = (function ($) {
                         '>' + _BillOfMaterialList[x].CostPerItem + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
-                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;' +
-                        '<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
                         '<tr > ');
                 }
             }
@@ -16231,13 +16354,13 @@ WBSTree = (function ($) {
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                             '</td > <td ' +
                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                            '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].TrendName + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].DocumentTypeName + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                            '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                            //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
 
@@ -16256,7 +16379,7 @@ WBSTree = (function ($) {
                             $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
                         }
                         //Code added by Kavita 
-                        if (localStorage.Status1 == 'Closed') {
+                        if (localStorage.Status == 'Closed') {
 
                             $('# DeleteUploadProgramPrgElm').prop('disabled', true);
                             $('# downloadBtnProgramPrgElm').prop('disabled', true);
@@ -16264,6 +16387,7 @@ WBSTree = (function ($) {
                             $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                             $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                             $('#EditBtnProgramPrgElm').prop('disabled', true);
+                            localStorage.Status = "";
                         }
                         g_selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
@@ -16312,7 +16436,7 @@ WBSTree = (function ($) {
                             '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrg" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +//jignesh2111
                             '</td > <td ' +
                             'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                            '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                            '><a id="' + viewBtnId + '" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                             '>' + _documentList[x].ChangeOrderName + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16324,7 +16448,7 @@ WBSTree = (function ($) {
                             //'<td>' + moment(_documentList[x].CreatedDate).format('MM/DD/YYYY') + '</td>' +
                             //'<td>' + _documentList[x].CreatedBy + '</td>' +
                             //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                            '<td  class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
+                            //'<td  class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' +
                             '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                             '<tr > ');
                     }
@@ -16353,12 +16477,13 @@ WBSTree = (function ($) {
                             $('#downloadBtnInViewAllProject').removeAttr('disabled');
                         }
                         //Code added by Kavita 
-                        if (localStorage.status1 == 'Closed') {
+                        if (localStorage.Status == 'Closed') {
                             $('#DeleteUploadProgramPrg').prop('disabled', true);
                             $('#downloadBtnProgramPrg').prop('disabled', true);
                             $('#ViewUploadFileProgramPrg').prop('disabled', true);
                             $('#ViewAllUploadFileProjects').prop('disabled', true);
                             $('#EditBtnProgramPrg').prop('disabled', true);
+                            localStorage.Status = "";
                         }
 
                     });
@@ -16414,7 +16539,7 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="' + viewBtnId + '" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
@@ -16428,7 +16553,7 @@ WBSTree = (function ($) {
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="' + viewBtnId + '" style="color:white;background-color: #0c50e8;" value="View"/></td>' + // Jignesh-01-03-2021
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail"  id="' + viewBtnId + '" title="View Details"/></td>' + // Jignesh-01-03-2021
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -16965,11 +17090,19 @@ WBSTree = (function ($) {
                 angularHttp.get(serviceBasePath + 'request/approvalmatrix').then(function (approversData) {
 
                     $('#divProjectApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    var approvers;
+                    for (var i = 0; i < approversData.data.result.length; i++) {
+                        if (approversData.data.result[i].Id == 4) {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    //var approvers = approversData.data.result;
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -16980,11 +17113,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                               // append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     var userList = wbsTree.getUserList();
                                     var employeeList = wbsTree.getEmployeeList();
@@ -17001,7 +17136,8 @@ WBSTree = (function ($) {
                                     //    var key = Object.keys(t)[0];
                                     //    return s[key] == t[key]
                                     //}));
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -17065,7 +17201,7 @@ WBSTree = (function ($) {
                                         }
                                     } else {
 
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -17089,7 +17225,8 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
                                         //append += "<div class='col-xs-6' style='padding-left: 0; display:none;'>" +
                                         //    "<label class='control-label _bold required'></label>" +
                                         //    "<select type='text' class='form-control'>";
@@ -17098,7 +17235,7 @@ WBSTree = (function ($) {
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                               // append += "</div>";
                                 //marginBottom = marginBottom + 70;
                             }
                             $('#divProjectApprovers').append(append);
@@ -17165,7 +17302,7 @@ WBSTree = (function ($) {
                 $("#BillOfMaterialModal").modal('toggle');
 
             });
-
+           
 
 
             var proElePageFieldIDs = '#project_element_name,#project_element_locationName,#project_element_po_number' +
@@ -17628,10 +17765,10 @@ WBSTree = (function ($) {
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="history_notice_date">' + moment(_NoticeList[x].Date).format('MM/DD/YYYY') + '</td>' +
                             '<td id="history_notice_reason" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '>' + _NoticeList[x].Reason + '</td>' +
+                            '><a id="view_notice" title="Click to view" class="clickableFont"> ' + _NoticeList[x].Reason + '</a></td>' + // Aditya :: Hide Action Column :: 11102022
                             '<td>' + _NoticeList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_notice" title="View"></i> &nbsp;&nbsp;' +
+                            //'<i class="fa fa-edit btntbl-icon" id="update_notice" title="Edit"></i> </td >' + // Aditya :: Hide Action Column :: 11102022
                             '<tr > ');
                     }
                     //}
@@ -17668,7 +17805,7 @@ WBSTree = (function ($) {
                             '>' + _InsuranceList[x].Limit + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _InsuranceList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" id="update_insurance"  title="edit"></i> </td >' + // Aditya :: Hide Action Column :: 1102022
                             '<tr > ');
                     }
                 });
@@ -17699,15 +17836,14 @@ WBSTree = (function ($) {
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '>' + _WarrantyList[x].WarrantyType + '</td > ' +
+                            '><a id="view_warranty" title="Click to view" class="clickableFont">' + _WarrantyList[x].WarrantyType + '</a></td > ' + //Aditya :: Hide Action Column :: 11102022
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + moment(_WarrantyList[x].EndDate).format('MM/DD/YYYY') + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _WarrantyList[x].CreatedBy + '</td>' +
-                            '<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;' +
-                            '<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' +
+                            //'<td class="text-center" style="white-space: nowrap"> <i class="icons icon-doc-view btntbl-icon" id="view_warranty" title="View"></i> &nbsp;&nbsp;<i class="fa fa-edit btntbl-icon" id="update_warranty" title="Edit"></i> </td >' + //Aditya :: Hide Action Column :: 11102022
                             '<tr > ');
                     }
                 });
@@ -17762,13 +17898,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio" name="rbCategories" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + //Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modificatioTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
 
@@ -17785,11 +17921,12 @@ WBSTree = (function ($) {
                                 $('#downloadBtnProgram').removeAttr('disabled');
                             }
                             //Code added by Kavita 
-                            if (localStorage.status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgram').prop('disabled', true);
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                             //g_selectedProjectDocument = null;
@@ -17959,13 +18096,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesMod" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' +
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + //Aditya :: Hide COlumn :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + modId + ' - ' + modTitle + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');   //MM/DD/YYYY h:mm a'
                         }
@@ -18239,7 +18376,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-            $("#insurance_limit").keypress(function (e) {
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").keypress(function (e) {
                 if (e.which != 46 && e.which != 46 &&
                     !(e.which >= 48 && e.which <= 57)) {
                     return false;
@@ -18248,9 +18385,8 @@ WBSTree = (function ($) {
                     $(this).val('$' + $(this).val().replace('$', ''));
                 }
             });
-
            
-            $("#insurance_limit").on({
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").on({
                 keyup: function () {
                     formatCurrency($(this));
                 },
@@ -18640,11 +18776,19 @@ WBSTree = (function ($) {
                     //await getElementApprovers();
 
                     $('#divProjectElememtApprovers').html('');
-                    var approvers = approversData.data.result;
-                    if (approvers != null && approvers.length > 0) {
+                    //var approvers = approversData.data.result;
+                    var approvers;
+                    for (var i = 0; i < approversData.data.result.length; i++) {
+                        if (approversData.data.result[i].Id == 6) {
+                            approvers = approversData.data.result[i];
+                        }
+                    }
+                    if (approvers != null) { //&& approvers.length > 0
 
-                        var totalRows = ~~(approvers.length / 2);
-                        var remainderCol = approvers.length % 2;
+                        //var totalRows = ~~(approvers.length / 2);
+                        //var remainderCol = approvers.length % 2;
+                        var totalRows = ~~(1 / 2);
+                        var remainderCol = 1 % 2;
                         var append = '';
 
                         if (remainderCol > 0) {
@@ -18656,11 +18800,13 @@ WBSTree = (function ($) {
                             //var marginBottom = 150;
                             for (var i = 0; i < totalRows; i++) {
                                 //append += "<div class='_form-group' style='margin-bottom: " + marginBottom+"px'>";
-                                append += "<div class='_form-group'>";
+                                //append += "<div class='_form-group'>";
                                 for (var j = 0; j < 2; j++) {
-                                    var labelText = approvers[currentNum].Role;
+                                    //var labelText = approvers[currentNum].Role;
+                                    var labelText = approvers.Role;
                                     var ddlId = labelText.replace(/ +/g, "_");
-                                    var dbid = approvers[currentNum].Id;
+                                    //var dbid = approvers[currentNum].Id;
+                                    var dbid = approvers.Id;
 
                                     //------------------------------Nivedita24-12-2021------------
                                     var userList = wbsTree.getUserList();
@@ -18678,7 +18824,8 @@ WBSTree = (function ($) {
                                     //    var key = Object.keys(t)[0];
                                     //    return s[key] == t[key]
                                     //}));
-                                    var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    //var filters = [{ RoleList: approvers[currentNum].Role }]
+                                    var filters = [{ RoleList: approvers.Role }]
                                     var roleWiseUserList = userList.filter(s => filters.every(t => {
                                         var key = Object.keys(t)[0];
                                         var res = s.RoleList.indexOf(t[key]);
@@ -18712,7 +18859,7 @@ WBSTree = (function ($) {
                                     //--------------------------------------------------------------------------------
 
                                     if (j == 0) {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -18728,7 +18875,7 @@ WBSTree = (function ($) {
 
                                         }
                                     } else {
-                                        append += "<div class='col-xs-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -18747,12 +18894,13 @@ WBSTree = (function ($) {
                                     append += "</select>";
                                     append += "</div>";
                                     currentNum++;
-                                    if (currentNum == approvers.length) {
+                                    //if (currentNum == approvers.length) {
+                                    if (currentNum == 1) {
 
                                         break;
                                     }
                                 }
-                                append += "</div>";
+                               // append += "</div>";
                             }
                             $('#divProjectElememtApprovers').append(append);
 
@@ -18768,34 +18916,34 @@ WBSTree = (function ($) {
                 modal = $(this);
                 var type = localStorage.getItem('contextType');
 
-                if (displayMap) {
+                //if (displayMap) {
                     selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
-                            $.each(Treedata.children, function (i, Contract) {
-                                if (Contract.children) {
-                                    $.each(Contract.children, function (j, Project) {
-                                        if (Project.children) {
-                                            $.each(Project.children, function (k, Element) {
+                //        if (SelectedProjectId) {
+                //            $.each(Treedata.children, function (i, Contract) {
+                //                if (Contract.children) {
+                //                    $.each(Contract.children, function (j, Project) {
+                //                        if (Project.children) {
+                //                            $.each(Project.children, function (k, Element) {
 
-                                                if (Element.ProjectID == SelectedProjectId) {
-                                                    selectedNode = Element;
-                                                    wbsTree.setSelectedNode(selectedNode);
-                                                }
+                //                                if (Element.ProjectID == SelectedProjectId) {
+                //                                    selectedNode = Element;
+                //                                    wbsTree.setSelectedNode(selectedNode);
+                //                                }
 
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
+                //                            });
+                //                        }
+                //                    });
+                //                }
+                //            });
+                //        }
+                //    }
 
 
-                }
+                //}
 
                 defaultModalPosition();
 
@@ -19175,18 +19323,18 @@ WBSTree = (function ($) {
 
 
 
-                if (displayMap) {
-                    selectedNode = wbsTree.getSelectedNode();
-                }
-                else {
-                    if (type != "ProgramElement") {
+                //if (displayMap) {
+                //    selectedNode = wbsTree.getSelectedNode();
+                //}
+                //else {
+                //    if (type != "ProgramElement") {
 
-                        if (SelectedProjectId) {
+                //        if (SelectedProjectId) {
 
-                        }
-                    }
+                //        }
+                //    }
 
-                }
+                //}
                 console.log(selectedNode);
                 var s = wbsTree.getOrgProjectName();
                 _selectedProgramElement = {};
@@ -19212,7 +19360,6 @@ WBSTree = (function ($) {
                     wbsTree.setIsProjectNew(false);
                     _Is_Project_New = false;
                     populateProjectElementMilestoneTable(selectedNode.ProjectID);
-
                     $('#project_element_class').prop('disabled', true);
                     $('#service_class').prop('disabled', true);
                     //$('#service_class').val(selectedNode.ServiceName);
@@ -19336,6 +19483,7 @@ WBSTree = (function ($) {
                     //---------------------Nivedita 12/11/2021--------------------------------------------------
                     if (selectedNode.parent.parent.BillingPOCSpecialInstruction != null && selectedNode.parent.parent.BillingPOCSpecialInstruction != "") {
                         modal.find('.modal-body #program_billing_poc_special_instruction1').val(selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n'));
+                        localStorage.specialInstruction = selectedNode.parent.parent.BillingPOCSpecialInstruction.replace('u000a', '\r\n');
                     }
 
                     document.getElementById("program_tm_billing1").checked = selectedNode.parent.parent.TMBilling ? true : false;
@@ -19643,11 +19791,11 @@ WBSTree = (function ($) {
                                     '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                     '</td > <td ' +
                                     'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                    '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya ::HIde Column ::: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     '>' + _documentList[x].DocumentTypeName + '</td>' +
                                     //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                    '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                    //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                     '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                     '<tr > ');
                             }
@@ -19687,7 +19835,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                             }
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status== 'Closed') {
 
                                 $('#DeleteUploadProgramPrgElm').prop('disabled', true);
                                 $('#downloadBtnProgramPrgElm').prop('disabled', true);
@@ -19695,6 +19843,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
+                                localStorage.Status = "";
                             }
                             localStorage.selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
@@ -19719,13 +19868,13 @@ WBSTree = (function ($) {
                                 '<input id=rb' + _documentList[x].DocumentID + ' type="radio"  name="rbCategoriesPrgElm" value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '" />' + //jignesh2111
                                 '</td > <td ' +
                                 'style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '><a>' + _documentList[x].DocumentName + '</a></td> ' +
+                                '><a id="viewDocumentDetail" title="Click to view" class="clickableFont">' + _documentList[x].DocumentName + '</a></td> ' + // Aditya :: Hide Column :: 11102022
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].TrendName + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                 '>' + _documentList[x].DocumentTypeName + '</td>' +
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
-                                '<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
+                                //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
                                 '<tr > ');
 
@@ -19758,7 +19907,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                             }
                             //Code added by Kavita 
-                            if (localStorage.Status1 == 'Closed') {
+                            if (localStorage.Status == 'Closed') {
 
                                 $('# DeleteUploadProgramPrgElm').prop('disabled', true);
                                 $('# downloadBtnProgramPrgElm').prop('disabled', true);
@@ -19766,6 +19915,7 @@ WBSTree = (function ($) {
                                 $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
+                                localStorage.Status = "";
                             }
 
                         });
@@ -19830,7 +19980,7 @@ WBSTree = (function ($) {
                             //const result = await getApprovalMatrix();
                             //console.log(result);
                             projEleApproverDetails = response.data.result[0].ApproversDetails;
-                            console.log("asf");
+                            //console.log("asf");
                             selectedNode.ProjectElementNumber = response.data.result[0].ProjectElementNumber;
 
                             modal.find('.modal-body #project_element_number').val(selectedNode.ProjectElementNumber);
@@ -19858,7 +20008,8 @@ WBSTree = (function ($) {
                             var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
                             for (var i = 0; i < approversDdl.length; i++) {
-                                var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                                //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
+                                var ApproverMatrixId = 6;
                                 for (var j = 0; j < projEleApproverDetails.length; j++) {
                                     if (ApproverMatrixId == projEleApproverDetails[j].ApproverMatrixId) {
                                         for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -20175,69 +20326,66 @@ WBSTree = (function ($) {
 
                     //-------------------------Swapnil 27-10-2020-------------------------------------------------------------
 
-                    var projApproverDetails = null;
-                    angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + selectedNode.ProgramElementID).then(function (response) {
+                   // var projApproverDetails = null;
+                    //angularHttp.get(serviceBasePath + 'Request/ProgramElement/null/' + selectedNode.ProgramElementID).then(function (response) {
 
-                        projApproverDetails = response.data.result[0].ApproversDetails;
 
-                        var employeeList = wbsTree.getEmployeeList();
-                        var userList = wbsTree.getUserList();
-                        var newEmployeeList = [];
+                    //    projApproverDetails = response.data.result[0].ApproversDetails;
+                        
 
-                        for (var x = 0; x < employeeList.length; x++) {
-                            if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
-                                newEmployeeList.push(employeeList[x]);
-                                break;
-                            }
-                        }
+                    //    var employeeList = wbsTree.getEmployeeList();
+                    //    var userList = wbsTree.getUserList();
+                    //    var newEmployeeList = [];
 
-                        for (var x = 0; x < userList.length; x++) {
-                            for (var y = 0; y < employeeList.length; y++) {
-                                if (userList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
-                                    newEmployeeList.push(employeeList[y]);
-                                    break;
-                                }
-                            }
-                        }
-                        employeeList = newEmployeeList;
+                    //    for (var x = 0; x < employeeList.length; x++) {
+                    //        if (employeeList[x].ID == 10000 || employeeList[x].Name == 'TBD') {
+                    //            newEmployeeList.push(employeeList[x]);
+                    //            break;
+                    //        }
+                    //    }
 
-                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                        
+                    //    employeeList = newEmployeeList;
+                    //    //employeeList.sort(function (a, b) {
+                    //    //    return a.Name.localeCompare(b.Name);
+                    //    //});
+                    //    var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
 
-                        for (var i = 0; i < approversDdl.length; i++) {
-                            $('#' + approversDdl[i].id).val('');
-                            var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
-                            for (var j = 0; j < projApproverDetails.length; j++) {
-                                if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
-                                    $('#' + approversDdl[i].id).val('');
-                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
-                                        if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
-                                            $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
-                                            break;
-                                        }
-                                        //else if (approversDdl[i].childNodes.length == 1 ) {
-                                        else {
-                                            $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    //    for (var i = 0; i < approversDdl.length; i++) {
+                    //        $('#' + approversDdl[i].id).val('');
+                    //        var ApproverMatrixId = 6;//$('#' + approversDdl[i].id).attr('dbid');
+                    //        for (var j = 0; j < projApproverDetails.length; j++) {
+                    //            if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
+                    //                $('#' + approversDdl[i].id).val('');
+                    //                for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                    //                    if (approversDdl[i].childNodes[k].value == projApproverDetails[j].EmpId) {
+                    //                        $('#' + approversDdl[i].id).val(projApproverDetails[j].EmpId);
+                    //                        break;
+                    //                    }
+                    //                    //else if (approversDdl[i].childNodes.length == 1 ) {
+                    //                    else {
+                    //                        $('#' + approversDdl[i].id).val(approversDdl[i].childNodes[k].value);
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                        var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
-                        for (var i = 0; i < approversDdl.length; i++) {
-                            var EmpId = $('#' + approversDdl[i].id).val();;
-                            for (var x = 0; x < employeeList.length; x++) {
-                                if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
-                                    for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
-                                        if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
-                                            $(approversDdl[i].childNodes[k]).remove();
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    });
+                    //    var approversDdl = $('#ProjectModal').find('.modal-body #divProjectElememtApprovers select');
+                    //    for (var i = 0; i < approversDdl.length; i++) {
+                    //        var EmpId = $('#' + approversDdl[i].id).val();;
+                    //        for (var x = 0; x < employeeList.length; x++) {
+                    //            if (employeeList[x].ID == EmpId && employeeList[x].isActive == 0) {
+                    //                for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
+                    //                    if (approversDdl[i].childNodes[k].value == employeeList[x].ID) {
+                    //                        $(approversDdl[i].childNodes[k]).remove();
+                    //                    }
+                    //                }
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+                    //});
                     //--------------------------------------------------------------------------------------
 
 
@@ -20333,11 +20481,6 @@ WBSTree = (function ($) {
                 CloseProjectModal(selectedNode, modal);
 
             });
-
-
-
-
-
 
 
             function appendFundAndReturnTotal(selectedNode, fundTable) {
@@ -20692,7 +20835,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuClosed").parent().hide();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";  //Code added by Kavita 
+                      
                     }
                 }
                 if (node.Status == "Closed" && wbsTree.getLocalStorage().role == "Admin") {
@@ -20707,7 +20850,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";     //Code added by Kavita 
+                        
                     }
 
                     //----Vaishnavi 30-03-2022----//
@@ -20745,7 +20888,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
@@ -20762,7 +20905,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
 
 
@@ -20826,7 +20969,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuBillOfMaterial").css("display", "none");
                         localStorage.Status = "Closed";
-                        localStorage.Status1 = "Closed";      //Code added by Kavita 
+                        
                     }
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                 }
@@ -20841,7 +20984,7 @@ WBSTree = (function ($) {
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
                     localStorage.Status = "Closed";
-                    localStorage.Status1 = "Closed";      //Code added by Kavita 
+                   
                 }
                 //----Vaishnavi 30-03-2022----//
             }

@@ -428,7 +428,7 @@ namespace WebAPI.Models
             }
         }
         //From RegisterFTECostController
-        public static String updateCostFTE(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String FTECostID, String StartDate, String EndDate, String FTEPosition, String TextBoxValue, String FTEHourlyRate, String FTEHours, String FTECost, String Scale, String FTEIDList, int EmployeeID,String CostTrackTypes,String CostLineItem)
+        public static TotalBudgetForecastValue updateCostFTE(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String FTECostID, String StartDate, String EndDate, String FTEPosition, String TextBoxValue, String FTEHourlyRate, String FTEHours, String FTECost, String Scale, String FTEIDList, int EmployeeID,String CostTrackTypes,String CostLineItem)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
@@ -438,7 +438,7 @@ namespace WebAPI.Models
             MySqlDataReader duplicateCheckReader = null;
             bool duplicateOnRegisterFound = false;
             bool duplicateOnUpdateFound = false;
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             bool OKForUpdateAB = false; //  Jignesh-23-03-2021 BudVSActual-UnitcostUpdate-for-OT-DT-Reg-Hrs 
             bool OKForRegister = false;
@@ -446,6 +446,7 @@ namespace WebAPI.Models
             bool isZero = true;
             int zero = 0;
             String currentUserName = UserUtil.getCurrentUserName();
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
             // List<String> FTECostList = TextBoxValue.Split(',').ToList();
             List<String> FTECostList = (TextBoxValue != "") ? TextBoxValue.Split(',').ToList() : new List<String>();
             List<String> FTETotalCostList = FTECost.Split(',').ToList();
@@ -455,6 +456,8 @@ namespace WebAPI.Models
             List<String> FTEHoursList = FTEHours.Split(',').ToList();
             List<String> CostTrackTypeList = null;
             String lineNumber = "";
+            double totalFTEHours=0;
+            double totalBudget = 0;
             
             if (CostTrackTypes != null && CostTrackTypes != "")
                 CostTrackTypeList = CostTrackTypes.Split(',').ToList();
@@ -485,6 +488,10 @@ namespace WebAPI.Models
             var lineID = FTECostIDList[0].Split('_')[1];
             var actualCostId = 0;
             int minArrayCount = Math.Min(FTEStartDateList.Count, FTECostIDList.Count);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 1 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c=>c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             for (int j = 0; j < FTECostList.Count; j++)
             {
                 if (FTECostList[j] != "0")
@@ -507,7 +514,7 @@ namespace WebAPI.Models
             {
                 if(duplicateOnRegisterFound || duplicateOnUpdateFound)  //stop loop when know it's all duplicates
                 {
-                    return update_result;
+                    return objTotalBudgetForecastValue; //update_result
                 }
 
                 try
@@ -649,8 +656,8 @@ namespace WebAPI.Models
                             Cost.saveFTECost(3, ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID,
                                  FTECostIDList[i], "", "", "", "", "", "", "",
                                  Scale, fte.FTEPositionID, 1, 0, fte.EmployeeID, null); //Delete
-
-                            update_result += "";
+                            //update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
                         }
 
                         
@@ -661,9 +668,9 @@ namespace WebAPI.Models
                         if (duplicateOnUpdateFound)
                         {
                             Employee employee = ctx.Employee.Where(a => a.ID == EmployeeID).FirstOrDefault();
-                            update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
-
-                            return update_result;
+                            //update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -798,9 +805,13 @@ namespace WebAPI.Models
                                               Scale, ftePoistionID, 1, 0, EmployeeID, lineItem); //LineNumber not getting udpated
 
 
+                            if (Convert.ToDouble(FTECostList[i]) > 0)
+                            {
+                                totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
+                            }
 
-                        
-                            update_result += "";
+                            //update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
 
                             duplicateOnUpdateFound = false;
 
@@ -814,9 +825,10 @@ namespace WebAPI.Models
                         if (duplicateOnRegisterFound)
                         {
                             Employee employee = ctx.Employee.Where(a => a.ID == EmployeeID).FirstOrDefault();
-                            update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
+                            //update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for employee: " + FTEPosition + " - " + employee.Name + ". \n";
 
-                            return update_result;   //we done
+                            return objTotalBudgetForecastValue; // update_result;   //we done
                         }
                         else
                         {
@@ -855,6 +867,11 @@ namespace WebAPI.Models
                             Cost.saveFTECost(1, ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID,
                                                 FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTECostList[i], FTEHourlyRate, FTEHoursList[i], FTETotalCostList[i],
                                                 Scale, ftePoistionID, 1, 0, EmployeeID, lineItem);
+
+                            if (Convert.ToDouble(FTECostList[i]) > 0)
+                            {
+                                totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
+                            }
                             //Create line Item
                             //if (isExist == false)
                             //{
@@ -865,7 +882,8 @@ namespace WebAPI.Models
 
                         }
 
-                        update_result += "";
+                        //update_result += "";
+                        objTotalBudgetForecastValue.update_result += "";
 
                         duplicateOnRegisterFound = false;
 
@@ -873,13 +891,14 @@ namespace WebAPI.Models
                     }
 
                     
+                    
                 }
 
                 catch (Exception ex)
                 {
                     Employee employee = ctx.Employee.Where(a => a.ID == EmployeeID).FirstOrDefault();
-                    update_result = "Failed to update " + FTEPosition + " - " + employee.Name + ". \n";
-
+                    //update_result = "Failed to update " + FTEPosition + " - " + employee.Name + ". \n";
+                    objTotalBudgetForecastValue.update_result = "Failed to update " + FTEPosition + " - " + employee.Name + ". \n";
                     var stackTrace = new StackTrace(ex, true);
                     var line = stackTrace.GetFrame(0).GetFileLineNumber();
                     Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
@@ -941,9 +960,17 @@ namespace WebAPI.Models
              Scaling.scaling(Convert.ToInt16(ActivityID), Convert.ToInt16(lineID), Scale, "F");
             if (actualCostId > 0)
                 Scaling.scaling(Convert.ToInt16(ActivityID), actualCostId, Scale, "F");
-            return update_result;
+
+            if (totalFTEHours > 0)
+            {
+                totalBudget += totalFTEHours * (trendCostOverhead.CurrentMarkup * Convert.ToDouble(FTEHourlyRate));
+            }
+
+            //update_result += "TotalBudget:" + totalBudget.ToString();
+            objTotalBudgetForecastValue.TotalLaborCost = totalBudget;
+            return objTotalBudgetForecastValue;
         }
-        public static String updateMultipleCostFTE(int Operation, String ProgramID, String ProgramElementID,
+        public static TotalBudgetForecastValue updateMultipleCostFTE(int Operation, String ProgramID, String ProgramElementID,
                                                     String ProjectID, String TrendNumber, String ActivityID,
                                                     String FTECostID1, String FTEStartDate, String FTEEndDate,
                                                     String FTEPosition, String FTEValue, String FTEHourlyRate,
@@ -954,7 +981,8 @@ namespace WebAPI.Models
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+            //String update_result = "";
             bool OKForUpdate = false;
             var NumberOfTextbox = 0;
             var isZero = true;
@@ -966,6 +994,13 @@ namespace WebAPI.Models
             List<String> FTEHourList = FTEHours.Split(',').ToList();
 
             var ctx = new CPPDbContext();
+            double totalFTEHours = 0;
+            double totalBudget = 0;
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 1 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             var ftePositionID = 0;
             var position = ctx.FtePosition.Where(f => f.PositionDescription == FTEPosition).FirstOrDefault();
             if (position != null)
@@ -1013,7 +1048,8 @@ namespace WebAPI.Models
                                         OKForUpdate = true;
                                 }
                                 else
-                                    update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
+                                    objTotalBudgetForecastValue.update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
+                                //update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
                             }
 
                             //Update the Program
@@ -1070,6 +1106,11 @@ namespace WebAPI.Models
                                     command.Parameters.AddWithValue("@FTECostID", FTECostIDList[i]);
                                     command.Parameters.AddWithValue("@Granularity", Granularity);
                                     command.ExecuteNonQuery();
+
+                                    if (Convert.ToDouble(FTECostList[i]) > 0)
+                                    {
+                                        totalFTEHours += Convert.ToDouble(FTEHourList[i]) * 8;
+                                    }
                                 }
 
                             }
@@ -1111,7 +1152,8 @@ namespace WebAPI.Models
                                         OKForUpdate = true;
                                 }
                                 else
-                                    update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
+                                    objTotalBudgetForecastValue.update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
+                                //update_result += "Role '" + FTECostIDList[i] + "' does not exist in system";
                             }
 
                             //Update the Program
@@ -1171,6 +1213,11 @@ namespace WebAPI.Models
                                     command.Parameters.AddWithValue("@FTECostID", FTECostIDList[i]);
                                     command.Parameters.AddWithValue("@Granularity", Granularity);
                                     command.ExecuteNonQuery();
+
+                                    if (Convert.ToDouble(FTECostList[i]) > 0)
+                                    {
+                                        totalFTEHours += Convert.ToDouble(FTEHourList[i]) * 8;
+                                    }
                                 }
                                 //}
                                 else if (NumberOfTextbox < 0)
@@ -1217,24 +1264,31 @@ namespace WebAPI.Models
                 if (conn != null) conn.Close();
                 if (reader != null) reader.Close();
             }
-            
 
 
-            update_result = "Success";
+            if (totalFTEHours > 0)
+            {
+                totalBudget += totalFTEHours * (trendCostOverhead.CurrentMarkup * Convert.ToDouble(FTEHourlyRate));
+            }
+            objTotalBudgetForecastValue.TotalLaborCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             Scaling.scaling(Convert.ToInt16(ActivityID), Convert.ToInt16(FTECostID1), Granularity, "F");
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Granularity);
-            return update_result;
+            return objTotalBudgetForecastValue;
 
         }
-        public static String updateCostFTELeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String FTECostID1, String FTEStartDate, String FTEEndDate, String FTEPosition, 
+        public static TotalBudgetForecastValue updateCostFTELeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String FTECostID1, String FTEStartDate, String FTEEndDate, String FTEPosition, 
             String FTEValue, String FTEHourlyRate, String FTEHours, String FTECost, String Granularity, String FTEIDList, int EmployeeID, String CostLineItemID, int CostTrackTypeID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
             bool OKForUpdate = false;
+
             
             bool OKForRegister = false;
             bool isZero = true;
@@ -1246,6 +1300,14 @@ namespace WebAPI.Models
             List<String> FTEHoursList = FTEHours.Split(',').ToList();
             String currentUser = UserUtil.getCurrentUserName();
             var ctx = new CPPDbContext();
+
+            double totalFTEHours = 0;
+            double totalBudget = 0;
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 1 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             var ftePositionId = 0;
             var position = ctx.FtePosition.Where(f => f.PositionDescription == FTEPosition).FirstOrDefault();
             if (position != null)
@@ -1320,6 +1382,10 @@ namespace WebAPI.Models
                                             FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTEValueList[i], FTEHourlyRate, FTEHoursList[i], FTECostList[i],
                                             Granularity, ftePositionId, 1, 0, EmployeeID, CostLineItemID); //LineNumber not getting udpated
 
+                        if (Convert.ToDouble(FTECostList[i]) > 0)
+                        {
+                            totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
+                        }
                         OKForUpdate = false;
                     }
 
@@ -1355,6 +1421,10 @@ namespace WebAPI.Models
                                            FTECostIDList[i], FTEStartDateList[i], FTEEndDateList[i], FTEPosition, FTEValueList[i], FTEHourlyRate, FTEHoursList[i], FTECostList[i],
                                            Granularity, ftePositionId, 1, 0, EmployeeID, CostLineItemID); //LineNumber not getting udpated
 
+                        if (Convert.ToDouble(FTECostList[i]) > 0)
+                        {
+                            totalFTEHours += Convert.ToDouble(FTEHoursList[i]) * 8;
+                        }
                         OKForRegister = false;
                     }
 
@@ -1376,11 +1446,19 @@ namespace WebAPI.Models
 
             }
 
+            if (totalFTEHours > 0)
+            {
+                totalBudget += totalFTEHours * (trendCostOverhead.CurrentMarkup * Convert.ToDouble(FTEHourlyRate));
+            }
 
-            update_result = "Success";
+            objTotalBudgetForecastValue.TotalLaborCost = totalBudget;
+
+
+            //update_result = "Success";
+            objTotalBudgetForecastValue.update_result = "Success";
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Granularity);
             Scaling.scaling(Convert.ToInt16(ActivityID), Convert.ToInt16(FTECostID1), Granularity, "F");
-            return update_result;
+            return objTotalBudgetForecastValue;
 
         }
 
@@ -1650,7 +1728,7 @@ namespace WebAPI.Models
         }
 
         //From RegisterLumpsumCostController
-        public static String updateCostLumpsum(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String LumpsumCostID, String StartDate, String EndDate, String Description, String TextBoxValue, String Scale, String FTEIDList, int SubcontractorTypeID, int SubcontractorID,String CostTrackTypes,String CostLineID)
+        public static TotalBudgetForecastValue updateCostLumpsum(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String LumpsumCostID, String StartDate, String EndDate, String Description, String TextBoxValue, String Scale, String FTEIDList, int SubcontractorTypeID, int SubcontractorID,String CostTrackTypes,String CostLineID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
@@ -1660,7 +1738,8 @@ namespace WebAPI.Models
             MySqlDataReader duplicateCheckReader = null;
             bool duplicateOnRegisterFound = false;
             bool duplicateOnUpdateFound = false;
-            String update_result = "";
+            // String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool OKForDelete = false;
@@ -1690,7 +1769,7 @@ namespace WebAPI.Models
             List<String> LumpsumStartDateList = StartDate.Split(',').ToList();
             List<String> LumpsumEndDateList = EndDate.Split(',').ToList();
             List<String> CostTrackTypeList = null;
-           
+
             //luan duplicate check experimental
             //if (LumpsumStartDateList.Any()) //prevent IndexOutOfRangeException for empty list
             //{
@@ -1700,6 +1779,11 @@ namespace WebAPI.Models
             //{
             //    LumpsumEndDateList.RemoveAt(LumpsumEndDateList.Count - 1);
             //}
+            double totalSubValue = 0;
+            double totalBudget = 0;
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 2 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
 
             if (CostTrackTypes != null && CostTrackTypes != "")
                 CostTrackTypeList =  CostTrackTypes.Split(',').ToList();
@@ -1867,9 +1951,10 @@ namespace WebAPI.Models
                                                Scale, 0, 0, lumpsum.SubcontractorTypeID, lumpsum.SubcontractorID, null); //Delete
                         }
 
-                        update_result += "";
+                        //update_result += "";
+                        objTotalBudgetForecastValue.update_result += "";
 
-                
+
                     }
                     //Update the Program
                     if (OKForUpdate)
@@ -1878,9 +1963,10 @@ namespace WebAPI.Models
                         {
                             Subcontractor subcontractor = ctx.Subcontractor.Where(a => a.SubcontractorID == SubcontractorID).FirstOrDefault();
                             SubcontractorType subcontractorType = ctx.SubcontractorType.Where(a => a.SubcontractorTypeID == SubcontractorTypeID).FirstOrDefault();
-                            update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                            //update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -1994,9 +2080,15 @@ namespace WebAPI.Models
                             Cost.saveLumpsumCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID
                                                     , LumpsumCostIDList[i], LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, zero, zero, SubcontractorTypeID, SubcontractorID, lineItem);
 
-                
 
-                            update_result += "";
+
+                            if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                            {
+                                totalSubValue += Convert.ToDouble(LumpsumCost[i]) ;
+                            }
+
+                            //update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
 
                             duplicateOnUpdateFound = false;
 
@@ -2011,9 +2103,10 @@ namespace WebAPI.Models
                         {
                             Subcontractor subcontractor = ctx.Subcontractor.Where(a => a.SubcontractorID == SubcontractorID).FirstOrDefault();
                             SubcontractorType subcontractorType = ctx.SubcontractorType.Where(a => a.SubcontractorTypeID == SubcontractorTypeID).FirstOrDefault();
-                            update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                            //update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for contractor " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -2062,6 +2155,14 @@ namespace WebAPI.Models
 
                             Cost.saveLumpsumCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, LumpsumCostIDList[i],
                                                LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, 1, zero, SubcontractorTypeID, SubcontractorID, lineItem);
+
+                            if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                            {
+                                totalSubValue += Convert.ToDouble(LumpsumCost[i]) ;
+                            }
+
+                            //update_result += "TotalBudget:" + totalBudget.ToString();
+                            //objTotalBudgetForecastValue.update_result += "TotalBudget:" + totalBudget.ToString();
                             //Create line Item
                             //if (!costLineItem.IsExist)
                             if (!newCostLineItem.IsExist)
@@ -2071,7 +2172,8 @@ namespace WebAPI.Models
 
                             }
 
-                            update_result += "";
+                            //update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
 
                             duplicateOnRegisterFound = false;
 
@@ -2085,7 +2187,8 @@ namespace WebAPI.Models
             {
                 Subcontractor subcontractor = ctx.Subcontractor.Where(a => a.SubcontractorID == SubcontractorID).FirstOrDefault();
                 SubcontractorType subcontractorType = ctx.SubcontractorType.Where(a => a.SubcontractorTypeID == SubcontractorTypeID).FirstOrDefault();
-                update_result += "Failed to update " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                //update_result += "Failed to update " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
+                objTotalBudgetForecastValue.update_result += "Failed to update " + subcontractor.SubcontractorName + " - " + subcontractorType.SubcontractorTypeName + ". \n";
 
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
@@ -2146,8 +2249,13 @@ namespace WebAPI.Models
                 Console.Write(ex.ToString());
             }
 
-            update_result += "";
-            return update_result;
+            if (totalSubValue > 0)
+            {
+                totalBudget += totalSubValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalSubcontractorCost = totalBudget;
+            //update_result += "totalBudget:" + totalBudget;
+            return objTotalBudgetForecastValue;
         }
 
         public static void adjustLastValue(String activityId, String scale, List<CostLumpsum> costList, CPPDbContext ctx, Double total)
@@ -2183,7 +2291,7 @@ namespace WebAPI.Models
             }
 
         }
-        public static String updateMultipleCostLumpsum(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber,
+        public static TotalBudgetForecastValue updateMultipleCostLumpsum(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber,
                                                     String ActivityID, String CostID, String StartDate, String EndDate, String Description,
                                                     String TextBoxValue, String Scale, String FTEIDList, String drag_direction, String NumberOfTextboxToBeRemoved, int CostTrackTypeID, String CostLineItemId)  //Manasi 31-08-2020
         {
@@ -2191,7 +2299,7 @@ namespace WebAPI.Models
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             var NumberOfTextbox = 0;
             var isZero = true;
@@ -2204,6 +2312,15 @@ namespace WebAPI.Models
             var lineItem = LumpsumCostIDList[0].Split('_')[1];
             Activity activity = Activity.getActivityByID(ActivityID);
             var lineId = LumpsumCostIDList[0].Split('_')[1];
+
+            double totalSubValue = 0;
+            double totalBudget = 0;
+            var ctx = new CPPDbContext();
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 2 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
 
             try
             {
@@ -2222,7 +2339,8 @@ namespace WebAPI.Models
                                 if (currentCost != null)
                                     OKForUpdate = true;
                                 else
-                                    update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
+                                    objTotalBudgetForecastValue.update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
+                                //update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
 
 
                                 //Update the Program
@@ -2241,6 +2359,11 @@ namespace WebAPI.Models
 
                                         Cost.saveLumpsumCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, LumpsumCostIDList[i],
                                           LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, currentCost.SubcontractorTypeID, currentCost.SubcontractorID, currentCost.CostLineItemID);
+
+                                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                                        {
+                                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
+                                        }
                                     }
                                 }
                             }
@@ -2274,7 +2397,8 @@ namespace WebAPI.Models
                                 if (currentCost != null)
                                     OKForUpdate = true;
                                 else
-                                    update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
+                                    objTotalBudgetForecastValue.update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
+                                //update_result += "Lumpsum '" + LumpsumCostIDList[i] + "' does not exist in system";
 
 
 
@@ -2313,6 +2437,10 @@ namespace WebAPI.Models
                                         Cost.saveLumpsumCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, newLumpsumCostID,
                                       LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, currentCost.SubcontractorTypeID, currentCost.SubcontractorID, currentCost.CostLineItemID);
 
+                                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                                        {
+                                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
+                                        }
                                     }
                                     //}
                                     else if (NumberOfTextbox < 0 && currentCost != null)
@@ -2351,14 +2479,19 @@ namespace WebAPI.Models
                 if (reader != null) reader.Close();
             }
 
-            
 
-            update_result = "Success";
+            if (totalSubValue > 0)
+            {
+                totalBudget += totalSubValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalSubcontractorCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
             Scaling.scaling(Convert.ToInt16(ActivityID), Convert.ToInt16(lineId), Scale, "L");
 
             List<CostLumpsum> lumpsumCostList = new List<CostLumpsum>();
-            var ctx = new CPPDbContext();
+           // var ctx = new CPPDbContext();
             var aId = Convert.ToInt16(ActivityID);
             //var costRow = getCostRow(ActivityID, Scale, lineId, "L");
             var costRow = getCostRow(ActivityID, Scale, CostLineItemId, "L");   //Manasi 31-08-2020
@@ -2382,17 +2515,27 @@ namespace WebAPI.Models
                     adjustLastValue(ActivityID, "week", lumpsumCostList, ctx, total);
             }
 
-            return update_result;
+            return objTotalBudgetForecastValue;
 
         }
-        public static String updateCostLumpsumLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
+        public static TotalBudgetForecastValue updateCostLumpsumLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
                                 String Description, String TextBoxValue, String Scale, String FTEIDList,int SubcontractorTypeID, int SubcontractorID, int CostTrackTypeID, String CostLineItemID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+            var ctx = new CPPDbContext();
+            int pID = Convert.ToInt32(ProjectID);
+            double totalSubValue = 0;
+            double totalBudget = 0;
+
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 2 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool isZero = true;
@@ -2441,6 +2584,10 @@ namespace WebAPI.Models
                                                   , LumpsumCostIDList[i], LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, SubcontractorTypeID, SubcontractorID, CostLineItemID);
 
                         OKForUpdate = false;
+                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                        {
+                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
+                        }
                     }
 
                     //Register the program
@@ -2450,6 +2597,10 @@ namespace WebAPI.Models
                         Cost.saveLumpsumCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID
                           , LumpsumCostIDList[i], LumpsumStartDateList[i], LumpsumEndDateList[i], Description, LumpsumCost[i], Scale, CostTrackTypeID, zero, SubcontractorTypeID, SubcontractorID, CostLineItemID);
                         OKForRegister = false;
+                        if (Convert.ToDouble(LumpsumCost[i]) > 0)
+                        {
+                            totalSubValue += Convert.ToDouble(LumpsumCost[i]);
+                        }
                     }
 
                 }
@@ -2469,11 +2620,18 @@ namespace WebAPI.Models
 
             }
 
-            update_result = "Success";
+            
+            if (totalSubValue > 0)
+            {
+                totalBudget += totalSubValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalSubcontractorCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
             Scaling.scaling(Convert.ToInt16(ActivityID), Convert.ToInt16(lineId), Scale, "L");
             List<CostLumpsum> lumpsumCostList = new List<CostLumpsum>();
-            var ctx = new CPPDbContext();
+           // var ctx = new CPPDbContext();
             var aId = Convert.ToInt16(ActivityID);
             // var total = LumpsumCost.Sum(a => Convert.ToDouble(a));
             //var costRow = getCostRow(ActivityID, Scale, lineId, "L");
@@ -2499,7 +2657,7 @@ namespace WebAPI.Models
             }
 
 
-            return update_result;
+            return objTotalBudgetForecastValue;
 
         }
 
@@ -2790,7 +2948,7 @@ namespace WebAPI.Models
             return results;
         }
         //From RegisterUnitCostController
-        public static String updateCostODC(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String UnitCostID, String StartDate, String EndDate, String ODCDescription, String ODCQuantity, String ODCPrice, String Scale, String ODCType, String ODCIDList, String CostTrackTypes, String CostLineID)
+        public static TotalBudgetForecastValue updateCostODC(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String UnitCostID, String StartDate, String EndDate, String ODCDescription, String ODCQuantity, String ODCPrice, String Scale, String ODCType, String ODCIDList, String CostTrackTypes, String CostLineID)
         {
 
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -2802,7 +2960,8 @@ namespace WebAPI.Models
             bool duplicateOnRegisterFound = false;
             bool duplicateOnUpdateFound = false;
             MySqlTransaction transaction = null;
-            String update_result = "";
+            //String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool OKForDelete = false;
@@ -2855,6 +3014,13 @@ namespace WebAPI.Models
             ProgramElementID = (programElement.ProgramElementID).ToString();
             ProjectID = (project.ProjectID).ToString();
             int minArrayCount = Math.Min(ODCStartDateList.Count, ODCCostIDList.Count);
+            double totalODCValue = 0;
+            double totalBudget = 0;
+
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 3 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             CostLineItemResult costLineItem = CostLineItemResult.getCostLineItem(projectClass.Code.ToString(), project.ProjectNumber, project.ProjectElementNumber, activity.TrendNumber, phase.ActivityPhaseCode.ToString(),
                                                                    category.CategoryID, category.SubCategoryID, "ODC", null, null, odcTypeID.ToString(), null, null, null, null);
 
@@ -2992,7 +3158,8 @@ namespace WebAPI.Models
                                               null, null, null, 0, null, null, null, 0, 0, 0, null); //These null values are not important for deletion
                         }
 
-                        update_result += "";
+                        //update_result += "";
+                        objTotalBudgetForecastValue.update_result += "";
 
 
                     }
@@ -3001,9 +3168,10 @@ namespace WebAPI.Models
                     {
                         if (duplicateOnUpdateFound)
                         {
-                            update_result = "Duplicate found for ODC: " + ODCType + ". \n";
+                            //update_result = "Duplicate found for ODC: " + ODCType + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for ODC: " + ODCType + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -3118,8 +3286,12 @@ namespace WebAPI.Models
                                                        ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], materialId, "0", ODCCostList[i],
                                                                 Scale, odcTypeID, 1, 0, lineItem); //These null values are not important for deletion
 
-
-                            update_result += "";
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
+                            {
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                            }
+                            //update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
 
                             duplicateOnUpdateFound = false;
 
@@ -3132,9 +3304,10 @@ namespace WebAPI.Models
                     {
                         if (duplicateOnRegisterFound)
                         {
-                            update_result = "Duplicate found for ODC: " + ODCType + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for ODC: " + ODCType + ". \n";
+                            //update_result = "Duplicate found for ODC: " + ODCType + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;//update_result;
                         }
                         else
                         {
@@ -3178,6 +3351,12 @@ namespace WebAPI.Models
                             Cost.saveODCCost("1", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i], ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], materialId, "0", ODCCostList[i],
                                                     Scale, odcTypeID, 1, zero, lineItem);
 
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
+                            {
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                            }
+
+
                             //Create line Item
                             //if (costLineItem.IsExist == false)
                             if (newCostLineItem.IsExist == false)   //Manasi 06-11-2020
@@ -3187,7 +3366,8 @@ namespace WebAPI.Models
 
                             }
 
-                            update_result += "";
+                            objTotalBudgetForecastValue.update_result += "";
+                            //update_result += "";
 
                             duplicateOnRegisterFound = false;
 
@@ -3199,8 +3379,8 @@ namespace WebAPI.Models
             }
             catch (Exception ex)
             {
-                update_result += "Failed to update " + ODCType + ". \n";
-
+                //update_result += "Failed to update " + ODCType + ". \n";
+                objTotalBudgetForecastValue.update_result += "Failed to update " + ODCType + ". \n";
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
                 Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
@@ -3248,8 +3428,13 @@ namespace WebAPI.Models
                     //adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
             }
 
-            update_result += "";
-            return update_result;
+            if (totalODCValue > 0)
+            {
+                totalBudget += totalODCValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalODCCost = totalBudget;
+            //update_result += "totalBudget:" + totalBudget;
+            return objTotalBudgetForecastValue;
         }
         public static void adjustLastValue(String activityId, String scale, List<CostODC> costList, CPPDbContext ctx, Double totalQuantity)
         {
@@ -3288,7 +3473,7 @@ namespace WebAPI.Models
             }
             
         }
-        public static String updateMultipleCostODC(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID,
+        public static TotalBudgetForecastValue updateMultipleCostODC(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID,
                                                     String StartDate, String EndDate, String Description, String TextBoxValue, String Base, String Scale,
                                                     String ODCIDList, String drag_direction, String ODCType, String NumberOfTextboxToBeRemoved, int CostTrackTypeID, String CostLineItemId)
         {
@@ -3296,7 +3481,7 @@ namespace WebAPI.Models
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             var NumberOfTextbox = 0;
             var isZero = true;
@@ -3308,6 +3493,14 @@ namespace WebAPI.Models
             var lineId = ODCCostIDList[0].Split('_')[1];
             Activity activity = Activity.getActivityByID(ActivityID);
             var ctx = new CPPDbContext();
+            double totalODCValue = 0;
+            double totalBudget = 0;
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 3 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             var odcTypeId = 0;
             var odc = ctx.ODCType.Where(u => u.ODCTypeName == ODCType).FirstOrDefault();
             if (odc != null)
@@ -3352,7 +3545,8 @@ namespace WebAPI.Models
                             if (currentCost != null)
                                 OKForUpdate = true;
                             else
-                                update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
+                                objTotalBudgetForecastValue.update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
+                            //update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
 
                             if (OKForUpdate && currentCost != null)
                             {
@@ -3378,6 +3572,10 @@ namespace WebAPI.Models
                                     Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                                       ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                                Scale, currentCost.ODCTypeID, 1, 0, currentCost.CostLineItemID); //These null values are not important for deletion
+                                    if (Convert.ToDouble(ODCCostList[i]) > 0)
+                                    {
+                                        totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                                    }
                                     //query = "UPDATE cost_odc SET";
                                     //query += " ODCCostID = '" + ODCCostIDList[i] + "',";
                                     //query += " ODCStartDate = '" + ODCStartDateList[i] + "',";
@@ -3463,7 +3661,8 @@ namespace WebAPI.Models
                             if (currentCost != null)
                                 OKForUpdate = true;
                             else
-                                update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
+                                objTotalBudgetForecastValue.update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
+                            //update_result += "ODC '" + ODCCostIDList[i] + "' does not exist in system";
 
                             if (OKForUpdate && currentCost != null)
                             {
@@ -3515,6 +3714,10 @@ namespace WebAPI.Models
                                     Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                              ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                       Scale, currentCost.ODCTypeID, 1, 0, currentCost.CostLineItemID); //These null values are not important for deletion
+                                    if (Convert.ToDouble(ODCCostList[i]) > 0)
+                                    {
+                                        totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                                    }
                                 }
                                 else if (NumberOfTextbox < 0)
                                 {
@@ -3552,7 +3755,13 @@ namespace WebAPI.Models
                 }
             }
 
-            update_result = "Success";
+            if (totalODCValue > 0)
+            {
+                totalBudget += totalODCValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalODCCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             Scaling.scaling(Convert.ToInt32(ActivityID), Convert.ToInt16(CostID), Scale, "ODC");
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
             //var totalQuantity = ODCCostList.Sum(a => Convert.ToDouble(a));
@@ -3585,16 +3794,16 @@ namespace WebAPI.Models
             }
 
 
-            return update_result;
+            return objTotalBudgetForecastValue;
         }
-        public static String updateODCCostLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
+        public static TotalBudgetForecastValue updateODCCostLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
                 String Description, String TextBoxValue, String Base, String Scale, String ODCType, String ODCIDList, int ODCTypeID, String CostLineItemID, int CostTrackTypeID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool isZero = true;
@@ -3605,6 +3814,13 @@ namespace WebAPI.Models
             List<String> ODCCostIDList = ODCIDList.Split(',').ToList();
             var lineId = ODCCostIDList[0].Split('_')[1];
             var ctx = new CPPDbContext();
+            double totalODCValue = 0;
+            double totalBudget = 0;
+            int pID = Convert.ToInt32(ProjectID);
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 3 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
             var odcTypeId = 0;
             var odc = ctx.ODCType.Where(u => u.ODCTypeName == ODCType).FirstOrDefault();
             if (odc != null)
@@ -3632,6 +3848,10 @@ namespace WebAPI.Models
                             Cost.saveODCCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, ODCCostIDList[i],
                                                    ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                             Scale, odcTypeId, 1, 0, CostLineItemID); //These null values are not important for deletion
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
+                            {
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                            }
                         }
 
                         //Register the Program
@@ -3642,6 +3862,10 @@ namespace WebAPI.Models
                                                       ODCStartDateList[i], ODCEndDateList[i], ODCCostList[i], 0, "0", ODCCostList[i],
                                                                Scale, odcTypeId, 1, 0, CostLineItemID); //These null values are not important for deletion
                             OKForRegister = false;
+                            if (Convert.ToDouble(ODCCostList[i]) > 0)
+                            {
+                                totalODCValue += Convert.ToDouble(ODCCostList[i]);
+                            }
                         }
                     }
 
@@ -3664,7 +3888,13 @@ namespace WebAPI.Models
 
             }
 
-            update_result = "Success";
+            if (totalODCValue > 0)
+            {
+                totalBudget += totalODCValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalODCCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             Scaling.scaling(Convert.ToInt32(ActivityID), Convert.ToInt16(CostID), Scale, "ODC");
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
 
@@ -3696,7 +3926,7 @@ namespace WebAPI.Models
             }
 
 
-            return update_result;
+            return objTotalBudgetForecastValue;
         }
 
     }
@@ -3971,7 +4201,7 @@ namespace WebAPI.Models
             return RetreivedUnitCosts;
         }
         //From RegisterUnitCostController
-        public static String updateCostUnit(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String UnitCostID, String StartDate, String EndDate, String UnitDescription, String UnitQuantity, String UnitPrice, String Scale, String UnitType, String FTEIDList, int MaterialCategoryID, int MaterialID,String CostTrackTypes,String CostLineID)
+        public static TotalBudgetForecastValue updateCostUnit(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String UnitCostID, String StartDate, String EndDate, String UnitDescription, String UnitQuantity, String UnitPrice, String Scale, String UnitType, String FTEIDList, int MaterialCategoryID, int MaterialID,String CostTrackTypes,String CostLineID)
         {
 
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -3983,13 +4213,17 @@ namespace WebAPI.Models
             bool duplicateOnRegisterFound = false;
             bool duplicateOnUpdateFound = false;
             MySqlTransaction transaction = null;
-            String update_result = "";
+            //String update_result = "";
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool OKForDelete = false;
             bool isZero = true; var unitId = 0;
             var zero = 0;
             var actualCostId = 0;
+            double totalMaterialValue = 0;
+            double totalBudget = 0;
+            double UnitCost = 0;
             String LineNumber = "";
             //List<String> UnitCostList = UnitQuantity.Split(',').ToList();
             List<String> UnitCostList = (UnitQuantity != "") ? UnitQuantity.Split(',').ToList() : new List<String>();
@@ -4033,6 +4267,12 @@ namespace WebAPI.Models
             //Manasi 06-11-2020
             CostLineItemResult newCostLineItem = CostLineItemResult.getNewCostLineItem(projectClass.Code.ToString(), project.ProjectNumber, project.ProjectElementNumber, activity.TrendNumber, phase.ActivityPhaseCode.ToString(),
                                                                      category.CategoryID, category.SubCategoryID, "U", null, null, null, MaterialCategoryID.ToString(), MaterialID.ToString(), null, null, ProjectID);
+
+
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 4 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
 
             for (int j = 0; j < UnitCostList.Count; j++)
             {
@@ -4181,9 +4421,10 @@ namespace WebAPI.Models
                         }
 
 
-                        update_result += "";
+                        //update_result += "";
+                        objTotalBudgetForecastValue.update_result += "";
 
-                      
+
                     }
                     //Update the Program
                     if (OKForUpdate)
@@ -4192,9 +4433,10 @@ namespace WebAPI.Models
                         {
                             MaterialCategory materialCategoryTemp = ctx.MaterialCategory.Where(a => a.ID == MaterialCategoryID).FirstOrDefault();
                             Material materialTemp = ctx.Material.Where(a => a.ID == MaterialID).FirstOrDefault();
-                            update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                            //update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -4302,9 +4544,15 @@ namespace WebAPI.Models
                                                 MaterialCategoryID.ToString(), MaterialID.ToString(), UnitPrice, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice)).ToString(), Scale, UnitType, unitId.ToString(),
                                                 0, 0, lineItem);
 
-                    
 
-                            update_result += "";
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
+                            {
+                                totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice);
+                            }
+
+
+                            objTotalBudgetForecastValue.update_result += "";
+                            //update_result += "";
 
                             duplicateOnUpdateFound = false;
 
@@ -4319,9 +4567,10 @@ namespace WebAPI.Models
                         {
                             MaterialCategory materialCategoryTemp = ctx.MaterialCategory.Where(a => a.ID == MaterialCategoryID).FirstOrDefault();
                             Material materialTemp = ctx.Material.Where(a => a.ID == MaterialID).FirstOrDefault();
-                            update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                            objTotalBudgetForecastValue.update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                            //update_result = "Duplicate found for material: " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
 
-                            return update_result;
+                            return objTotalBudgetForecastValue;// update_result;
                         }
                         else
                         {
@@ -4369,6 +4618,11 @@ namespace WebAPI.Models
                                                UnitCostList[i], MaterialCategoryID.ToString(), MaterialID.ToString(), UnitPrice, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice)).ToString(),
                                                Scale, UnitType, unitId.ToString(), 1, 0, lineItem);
 
+
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
+                            {
+                                totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(UnitPrice);
+                            }
                             //Create line Item
                             if (isExist == false)
                             {
@@ -4376,8 +4630,9 @@ namespace WebAPI.Models
                                 //                     category.SubCategoryID, "U", null, null, null, null, null, MaterialCategoryID.ToString(), MaterialID.ToString(), LineNumber);
 
                             }
-                       
-                            update_result += "";
+
+                            objTotalBudgetForecastValue.update_result += "";
+                            //update_result += "";
 
                             duplicateOnRegisterFound = false;
 
@@ -4395,7 +4650,8 @@ namespace WebAPI.Models
             {
                 MaterialCategory materialCategoryTemp = ctx.MaterialCategory.Where(a => a.ID == MaterialCategoryID).FirstOrDefault();
                 Material materialTemp = ctx.Material.Where(a => a.ID == MaterialID).FirstOrDefault();
-                update_result += "Failed to update " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                objTotalBudgetForecastValue.update_result += "Failed to update " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
+                //update_result += "Failed to update " + materialCategoryTemp.Name + " - " + materialTemp.Name + ". \n";
 
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
@@ -4444,8 +4700,13 @@ namespace WebAPI.Models
                     adjustLastValue(ActivityID, "week", costList, ctx, totalQuantity);
             }
 
-            update_result += "";
-            return update_result;
+            if (totalMaterialValue > 0)
+            {
+                totalBudget += totalMaterialValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalMaterialCost = totalBudget;
+            //update_result += "";
+            return objTotalBudgetForecastValue;//update_result;
         }
         public static void adjustLastValue(String activityId, String scale, List<CostUnit> costList, CPPDbContext ctx, Double totalQuantity)
         {
@@ -4500,12 +4761,12 @@ namespace WebAPI.Models
             }
             return results;
         }
-        public static String updateMultipleCostUnit(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID,
+        public static TotalBudgetForecastValue updateMultipleCostUnit(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID,
                                                     String StartDate, String EndDate, String Description, String TextBoxValue, String Base, String Scale,
                                                     String FTEIDList, String drag_direction, String UnitType, String NumberOfTextboxToBeRemoved, int CostTrackTypeID, String CostLineItemId)   //Manasi 31-08-2020
         {
 
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             var NumberOfTextbox = 0;
             //List<String> FTEValueList = FTEValue.Split(',').ToList();
@@ -4515,7 +4776,16 @@ namespace WebAPI.Models
             List<String> UnitCostIDList = FTEIDList.Split(',').ToList();
             var lineId = UnitCostIDList[0].Split('_')[1];
             Activity activity = Activity.getActivityByID(ActivityID);
-            //var ctx = new CPPDbContext();
+            var ctx1 = new CPPDbContext();
+            double totalMaterialValue = 0;
+            double totalBudget = 0;
+            double UnitCost = 0;
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx1.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx1.CostOverhead.Where(c => c.CostTypeID == 4 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx1.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+
             var unitTypeId = 0;
             UnitType unit = null;
             if (unit != null)
@@ -4538,7 +4808,8 @@ namespace WebAPI.Models
                             if (currentCost != null)
                                 OKForUpdate = true;
                             else
-                                update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
+                                objTotalBudgetForecastValue.update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
+                            //update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
 
                             //Update the Program
                             if (OKForUpdate && currentCost != null)
@@ -4557,6 +4828,10 @@ namespace WebAPI.Models
                                     Cost.saveUnitCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, UnitCostIDList[i], UnitStartDateList[i], UnitEndDateList[i], Description, UnitCostList[i],
                                             currentCost.MaterialCategoryID.ToString(), currentCost.MaterialID.ToString(), Base, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base)).ToString(), Scale, UnitType, unitTypeId.ToString(),
                                             CostTrackTypeID, 0, currentCost.CostLineItemID); //0 Estimated CostID
+                                    if (Convert.ToDouble(UnitCostList[i]) > 0)
+                                    {
+                                        totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
+                                    }
                                 }
                             }
                         }
@@ -4596,7 +4871,8 @@ namespace WebAPI.Models
                             if (currentCost != null)
                                 OKForUpdate = true;
                             else
-                                update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
+                                objTotalBudgetForecastValue.update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
+                            //update_result += "Unit '" + UnitCostIDList[i] + "' does not exist in system";
 
 
                             //Update the Program
@@ -4635,6 +4911,12 @@ namespace WebAPI.Models
                                     Cost.saveUnitCost("2", ProgramID, ProgramElementID, ProjectID, TrendNumber, ActivityID, newUnitCostID, UnitStartDateList[i], UnitEndDateList[i], Description, UnitCostList[i],
                                           currentCost.MaterialCategoryID.ToString(), currentCost.MaterialID.ToString(), Base, (Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base)).ToString(), Scale, UnitType, unitTypeId.ToString(),
                                          CostTrackTypeID, 0, currentCost.CostLineItemID);
+
+                                    if (Convert.ToDouble(UnitCostList[i]) > 0)
+                                    {
+                                        totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
+                                    }
+
                                 }
                                 else if (NumberOfTextbox < 0)
                                 {
@@ -4662,7 +4944,13 @@ namespace WebAPI.Models
             }
 
             var getCtx = new CPPDbContext();
-            update_result = "Success";
+            if (totalMaterialValue > 0)
+            {
+                totalBudget += totalMaterialValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalMaterialCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             Scaling.scaling(Convert.ToInt32(ActivityID), Convert.ToInt16(CostID), Scale, "U");
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
             // var totalQuantity = UnitCostList.Sum(a => Convert.ToDouble(a));
@@ -4691,16 +4979,16 @@ namespace WebAPI.Models
             }
 
 
-            return update_result;
+            return objTotalBudgetForecastValue;
         }
-        public static String updateUnitCostLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
+        public static TotalBudgetForecastValue updateUnitCostLeftLeft(int Operation, String ProgramID, String ProgramElementID, String ProjectID, String TrendNumber, String ActivityID, String CostID, String StartDate, String EndDate,
                                             String Description, String TextBoxValue, String Base, String Scale, String UnitType, String FTEIDList, int MaterialCategoryID, int MaterialID, String CostLineItemID, int CostTrackTypeID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
             MySqlConnection conn = null;
             MySqlDataReader reader = null;
-            String update_result = "";
+            //String update_result = "";
             bool OKForUpdate = false;
             bool OKForRegister = false;
             bool isZero = true;
@@ -4711,6 +4999,15 @@ namespace WebAPI.Models
             List<String> UnitCostIDList = FTEIDList.Split(',').ToList();
             var lineId = UnitCostIDList[0].Split('_')[1];
             var ctx = new CPPDbContext();
+            double totalMaterialValue = 0;
+            double totalBudget = 0;
+            double UnitCost = 0;
+            int pID = Convert.ToInt32(ProjectID);
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
+            var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 4 && c.CostRateTypeID == 5).FirstOrDefault();
+            var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
+            TotalBudgetForecastValue objTotalBudgetForecastValue = new TotalBudgetForecastValue();
+
             var unitTypeId = 0;
             var unit = ctx.UnitType.Where(u => u.UnitName == UnitType).FirstOrDefault();
             if (unit != null)
@@ -4745,6 +5042,10 @@ namespace WebAPI.Models
                                         CostTrackTypeID, 0, currentCost.CostLineItemID); //0 Estimated Cost ID
 
                             OKForUpdate = false;
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
+                            {
+                                totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
+                            }
                         }
 
                         //Register the Program
@@ -4757,6 +5058,10 @@ namespace WebAPI.Models
 
                             //}
                             OKForRegister = false;
+                            if (Convert.ToDouble(UnitCostList[i]) > 0)
+                            {
+                                totalMaterialValue += Convert.ToDouble(UnitCostList[i]) * Convert.ToDouble(Base);
+                            }
                         }
                     }
 
@@ -4780,7 +5085,13 @@ namespace WebAPI.Models
 
             }
 
-            update_result = "Success";
+            if (totalMaterialValue > 0)
+            {
+                totalBudget += totalMaterialValue * (trendCostOverhead.CurrentMarkup);
+            }
+            objTotalBudgetForecastValue.TotalMaterialCost = totalBudget;
+            objTotalBudgetForecastValue.update_result = "Success";
+            //update_result = "Success";
             Scaling.scaling(Convert.ToInt32(ActivityID), Convert.ToInt16(CostID), Scale, "U");
             UpdateAcitivtyCost.updateActivityCost(ProjectID, TrendNumber, ActivityID, Scale);
             // var costRow = getCostRow(ActivityID, Scale, lineId, "U");
@@ -4808,7 +5119,7 @@ namespace WebAPI.Models
             }
 
 
-            return update_result;
+            return objTotalBudgetForecastValue;
         }
 
     }

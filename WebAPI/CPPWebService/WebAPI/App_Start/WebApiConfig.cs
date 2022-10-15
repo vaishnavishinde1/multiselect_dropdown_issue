@@ -196,6 +196,21 @@ namespace WebAPI
                     controller = "RegisterApprovalMatrix"
                 });
 
+            config.Routes.MapHttpRoute(
+                name: "RegisterApprover",
+                routeTemplate: "Response/adminApproval",
+                defaults: new
+                {
+                    controller = "RegisterAdminApproval"
+                });
+
+            config.Routes.MapHttpRoute(
+                name: "RequestApprover",
+                routeTemplate: "Request/adminApproval",
+                defaults: new
+                {
+                    controller = "RequestAdminApproval"
+                });
 
             config.Routes.MapHttpRoute(
             name: "RegisterProgram",
@@ -1871,6 +1886,20 @@ namespace WebAPI
                  name: "GetContractWarranty",
                  routeTemplate: "contractWarranty/getContractWarranty/{programId}",
                  defaults: new { controller = "ContractWarranty", action = "Get", programId = RouteParameter.Optional }
+             );
+
+            //Narayan - 13/10/2022
+            config.Routes.MapHttpRoute(
+                 name: "UpdateAdminPresident",
+                 routeTemplate: "adminApprovalPresident/savePresident",
+                 defaults: new { controller = "RegisterAdminPresident", action = "Post" }
+             );
+
+            //Narayan - 13/10/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetAdminPresident",
+                 routeTemplate: "adminApprovalPresident/getApprovalPresidentAndHistory",
+                 defaults: new { controller = "RegisterAdminPresident", action = "Get"}
              );
 
             //vaishnavi - 24/09/2022

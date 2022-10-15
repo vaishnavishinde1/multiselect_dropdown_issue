@@ -1804,7 +1804,7 @@ angular.module('xenon.Gantt_Controller', []).
 
                         $(cellBox).on('mouseover', function () {
                             $(this).addClass('hover');
-                            $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "right" }).tooltip('show');
+                            $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "bottom" }).tooltip('show');
                         });
                         $(cellBox).on('mouseleave', function () {
                             $(this).removeClass('hover');
@@ -12535,33 +12535,33 @@ angular.module('xenon.Gantt_Controller', []).
             function validateCostQuantity() {
                 materialnamesandmaterialquantities = [];
                 var mycond = false;
+                if ($scope.TrendNumber != 1000) {
+                    $scope.costGanttInstance.eachTask(function (item) {
 
-                $scope.costGanttInstance.eachTask(function (item) {
-
-                    if ($scope.method[item.id] == "U") {
-
-
-                        //var materialid = $scope.material_id[id].value;
+                        if ($scope.method[item.id] == "U") {
 
 
-
-                        $.each($scope.BillOfMaterialByProgramElementId, function (index) {
-
-                            if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == item.material_id && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
-                                materialname = $scope.BillOfMaterialByProgramElementId[index].MaterialName;
-                                materialquantity = $scope.BillOfMaterialByProgramElementId[index].Quantity;
-                                materialnamesandmaterialquantities.push({ materialname: materialname, materialquantity: materialquantity });
-                                mycond = true;
-                                return true;
-                            }
+                            //var materialid = $scope.material_id[id].value;
 
 
 
-                        });
+                            $.each($scope.BillOfMaterialByProgramElementId, function (index) {
 
-                    }
-                });
+                                if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == $scope.material_id[item.id].value && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
+                                    materialname = $scope.BillOfMaterialByProgramElementId[index].MaterialName;
+                                    materialquantity = $scope.BillOfMaterialByProgramElementId[index].Quantity;
+                                    materialnamesandmaterialquantities.push({ materialname: materialname, materialquantity: materialquantity });
+                                    mycond = true;
+                                    return true;
+                                }
 
+
+
+                            });
+
+                        }
+                    });
+                }
                 if (mycond == true)
                     return true;
                 else
