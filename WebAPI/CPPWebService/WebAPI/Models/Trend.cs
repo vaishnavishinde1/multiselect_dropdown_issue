@@ -663,7 +663,8 @@ namespace WebAPI.Models
                         List<TrendApproversDetails> elementApproverDetails = ctx.TrendApproversDetails.Where(p=>p.ProjectElementId == trend.ProjectID).ToList();
 
                         //Nivedita 08-10-2022
-                        var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        var project = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        var programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == project.ProgramElementID).FirstOrDefault();
                         List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
 
                         List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
@@ -776,8 +777,14 @@ namespace WebAPI.Models
                                     original_approvalList_Role += "|" + approvalMatrixList[x].Role;
                                 }
                             }
+                            else if (employeeId == 0 && (approvalMatrixList[x].Id ==3 || approvalMatrixList[x].Id == 1))//Nivedita
+                            {
+                                return "Approver for department manager or operation manager not set to given project. ";
+                            } 
+                            
 
                         }
+                        
                         //-------------- //Swapnil 09-09-2020 ---------------------------------
                         if (tbd_approvers != "")
                         {
@@ -893,7 +900,8 @@ namespace WebAPI.Models
 
 
                         //Nivedita 08-10-2022
-                        var programElement = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        var project = ctx.Project.Where(p => p.ProjectID == trend.ProjectID).FirstOrDefault();
+                        var programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == project.ProgramElementID).FirstOrDefault();
                         List<ProjectApproversDetails> projectApproverDetails = ctx.ProjectApproversDetails.Where(p => p.ProjectId == programElement.ProgramElementID).ToList();
                         List<AdminApproval> adminApproverDetails = ctx.AdminApproval.Where(p => p.DepartmentID == programElement.ProjectClassID).ToList();
                         AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
