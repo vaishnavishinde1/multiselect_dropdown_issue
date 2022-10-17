@@ -9729,19 +9729,19 @@ WBSTree = (function ($) {
                     }
                     debugger;
                     //code by kavita
-                    if (updatedChangeOrder.ModificationTypeId == 1) {
-                        //var curendt = new Date($('#program_element_PEnd_Date').val());
-                        //curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        //$('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
-                    }
-                    if (updatedChangeOrder.ModificationTypeId == 4) {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    //if (updatedChangeOrder.ModificationTypeId == 1) {
+                    //    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    //    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                    //}
+                    //if (updatedChangeOrder.ModificationTypeId == 4) {
+                    //    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    //    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
 
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
-                    }
-                    var pendDate = $('#program_element_PEnd_Date').val();
-                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+                    //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
+                    //}
+                    //var pendDate = $('#program_element_PEnd_Date').val();
+                    //var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                     $("#update_program_element_change_order_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 2,
