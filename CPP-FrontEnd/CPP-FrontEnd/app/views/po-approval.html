@@ -96,118 +96,120 @@
 <!--LEGACY-->
 <section ng-show="false" id="projectdetail-view" style="height:100%;vertical-align:middle;  ">
     <div class="row" id="draggable">
-        <form novalidate name="addForm" role="form" id="reportManagerForm">
+        <div class="panel panel-default">
+            <form novalidate name="addForm" role="form" id="reportManagerForm">
 
-            <div class="col-xs-12 col-sm-12" style="padding:0;margin-right:-15px;">
-                <div class="gadget color-my" style="height: 675px;margin-top:-5%;margin-bottom:-20px;">
+                <div class="col-xs-12 col-sm-12" style="padding:0;margin-right:-15px;">
+                    <div class="gadget color-my" style="height: 675px;margin-top:-5%;margin-bottom:-20px;">
 
-                    <div id="reportManagerGadgetHeadID" class="gadget-head" style="display: block">
-                        <h3 class="modal-title">Cost Details</h3>
-                        <button class="pull-right" data-ng-click="goBack('close')"
-                                style="background-color:red;color:white;border-radius:50px;width:40px;font-weight:bolder;margin-top:-5px;">
-                            X
-                        </button>
-                    </div>
-                    <div class="gadget-content" style="padding:10px;">
+                        <div id="reportManagerGadgetHeadID" class="gadget-head" style="display: block">
+                            <h3 class="modal-title">Cost Details</h3>
+                            <button class="pull-right" data-ng-click="goBack('close')"
+                                    style="background-color:red;color:white;border-radius:50px;width:40px;font-weight:bolder;margin-top:-5px;">
+                                X
+                            </button>
+                        </div>
+                        <div class="gadget-content" style="padding:10px;">
 
-                        <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                            <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 
-                            <table st-table="rowCollection" class="table table-striped" style="width:100%; padding: 0;">
-                                <thead>
-                                    <tr>
-                                        <th style="text-align:center !important;width:15%; padding-left:0;">PO Number</th>
-                                        <th style="text-align: center !important; width: 15%; padding-left: 0;">Project Name</th>
-                                        <th style="text-align: center !important; width: 15%; padding-left: 0;">Element Name</th>
-                                        <th style="text-align: center !important; width: 15%;">Created on</th>
-                                        <th style="text-align: center !important; width: 15%; left: 5px;">Status</th>
-                                        <th style="text-align: center !important; width: 15%; left: 5px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody style="max-height:600px;overflow-y:auto;">
-                                    <tr>
-                                        <td colspan="11" style="padding: 0;">
-                                            <div class="scrolable-table" style="overflow:auto;height:400px;overflow-x:hidden;">
-                                                <table class="table table-striped">
-                                                    <thead></thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="row in purchaseOrderDetails" ng-class="{selected : selectedRow.CostLineItemID == row.CostLineItemID}"
-                                                            ng-mouseover="selectRow(row)"
-                                                            ng-mouseleave="onMouseLeave(row)" style="text-align:center;">
-                                                            <td class="my-word-wrap" style="width:1%;text-align:left;"><input type="checkbox" style="width:15px;height:15px;" ng-model="row.check" ng-checked="all" /></td>
-                                                            <td class="my-word-wrap" style="text-align:left;width:5%;">
-                                                                <span data-toggle="tooltip" tooltip="{{row.PhaseDescription}}" tooltip-placement="top" tooltip-animation="false" tooltip-append-to-body="true">
-                                                                    {{row.PhaseDescription}}
-                                                                </span>
-                                                            </td>
-                                                            <td class="my-word-wrap" style="text-align:left;width:10%;">{{row.BudgetCategory}}</td>
-                                                            <td class="my-word-wrap" style="text-align:left;width:10%;">{{row.BudgetSubCategory}}</td>
-
-
-
-
-                                                        </tr>
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <table st-table="rowCollection" class="table table-striped" style="width:100%; padding: 0;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center !important;width:15%; padding-left:0;">PO Number</th>
+                                            <th style="text-align: center !important; width: 15%; padding-left: 0;">Project Name</th>
+                                            <th style="text-align: center !important; width: 15%; padding-left: 0;">Element Name</th>
+                                            <th style="text-align: center !important; width: 15%;">Created on</th>
+                                            <th style="text-align: center !important; width: 15%; left: 5px;">Status</th>
+                                            <th style="text-align: center !important; width: 15%; left: 5px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="max-height:600px;overflow-y:auto;">
+                                        <tr>
+                                            <td colspan="11" style="padding: 0;">
+                                                <div class="scrolable-table" style="overflow:auto;height:400px;overflow-x:hidden;">
+                                                    <table class="table table-striped">
+                                                        <thead></thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="row in purchaseOrderDetails" ng-class="{selected : selectedRow.CostLineItemID == row.CostLineItemID}"
+                                                                ng-mouseover="selectRow(row)"
+                                                                ng-mouseleave="onMouseLeave(row)" style="text-align:center;">
+                                                                <td class="my-word-wrap" style="width:1%;text-align:left;"><input type="checkbox" style="width:15px;height:15px;" ng-model="row.check" ng-checked="all" /></td>
+                                                                <td class="my-word-wrap" style="text-align:left;width:5%;">
+                                                                    <span data-toggle="tooltip" tooltip="{{row.PhaseDescription}}" tooltip-placement="top" tooltip-animation="false" tooltip-append-to-body="true">
+                                                                        {{row.PhaseDescription}}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="my-word-wrap" style="text-align:left;width:10%;">{{row.BudgetCategory}}</td>
+                                                                <td class="my-word-wrap" style="text-align:left;width:10%;">{{row.BudgetSubCategory}}</td>
 
 
-                                    <tr style="text-align:center;font-weight:bold;">
-                                        <td style="text-align:left;">Total: </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{total | currency}}</td>
-                                    </tr>
 
 
-                                </tbody>
+                                                            </tr>
+                                                        </tbody>
 
-                            </table>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                            <div ng-if="isLabor" uib-alert class="alert-warning">For Labor, 1 is full time ,0.5 is half time </div>
+
+                                        <tr style="text-align:center;font-weight:bold;">
+                                            <td style="text-align:left;">Total: </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{total | currency}}</td>
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+
+                                <div ng-if="isLabor" uib-alert class="alert-warning">For Labor, 1 is full time ,0.5 is half time </div>
+
+                            </div>
 
                         </div>
 
                     </div>
 
+                    <div style="margin-top:-60px;padding-left:10px;padding-right:10px;">
+                        <hr>
+                    </div>
+                    <div class="col-sm-12 pull-right" style="margin-right:5px;">
+
+                        <button class="btn btn-info" style="background-color:green" data-ng-click="save()">
+                            <i class="fa fa-file-pdf-o"></i>  Save
+                        </button>
+                        <button class="btn btn-info rmis-btn pull-right" data-ng-click="goBack('close')">
+                            <i class="fa fa-hand-o-left"></i>  Back
+                        </button>
+
+                    </div>
                 </div>
 
-                <div style="margin-top:-60px;padding-left:10px;padding-right:10px;">
-                    <hr>
-                </div>
-                <div class="col-sm-12 pull-right" style="margin-right:5px;">
-
-                    <button class="btn btn-info" style="background-color:green" data-ng-click="save()">
-                        <i class="fa fa-file-pdf-o"></i>  Save
-                    </button>
-                    <button class="btn btn-info rmis-btn pull-right" data-ng-click="goBack('close')">
-                        <i class="fa fa-hand-o-left"></i>  Back
-                    </button>
-
-                </div>
+            </form>
             </div>
-
-        </form>
-    </div>
+        </div>
 </section>
 
-<div>
+<div class="panel panel-default">
     <div class="modal-header">
         <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="goBack('close')">X</button>-->
         <!--<h3 class="modal-title">Purchase Order Details</h3>-->
         <!--Added by Amruta 30-07-2021-->
-        <h4 style="display:inline-block">
+        <h3 style="display:inline-block">
             Purchase Order List
-        </h4>
+        </h3>
         <div style="display:inline-block;float:right;margin-right: 15px;">
             <span style="margin-right:5px;font-size:18px;">Search:</span>
             <input class="wild-card-search purchaseordersearch" ng-model="SearchValue">
@@ -223,13 +225,13 @@
             </div>-->
             <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 
-                <table st-table="rowCollection" class="table table-striped" style="width:100%; padding: 0;">
+                <table st-table="rowCollection"  style="width:100%; padding: 0;">
                     <tbody style="max-height:600px;overflow-y:auto;">
                         <tr>
                             <td colspan="13" style="padding: 0;">
                                 <div class="scrolable-table" style="overflow:auto;height:450px;overflow-x:hidden;">
-                                    <table class="table table-striped">
-                                        <thead>
+                                    <table class="table table-striped" border="0">
+                                        <thead class="t-head" style="height:25px">
                                             <tr>
                                                 <th>PO Number</th>
                                                 <th>Project Name</th>
