@@ -18859,7 +18859,7 @@ WBSTree = (function ($) {
                                     //--------------------------------------------------------------------------------
 
                                     if (j == 0) {
-                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;'>" +
+                                        append += "<div >" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -18875,7 +18875,7 @@ WBSTree = (function ($) {
 
                                         }
                                     } else {
-                                        append += "<div class='col-xs-6 col-md-6' style='padding-left: 0;padding-right: 0;margin-bottom: 15px;'>" +
+                                        append += "<div>" +
                                             "<label class='control-label _bold required'>" + labelText + "</label>" +
                                             "<select type='text' class='form-control' id='" + ddlId + "_Project_Element_id' dbid='" + dbid + "'>";
                                         for (var x = 0; x < employeeList.length; x++) {
@@ -20459,9 +20459,9 @@ WBSTree = (function ($) {
 
                 window.setTimeout(function () {
                     // Shweta-25-11-2021 to make document's div height dynamic according to Approvers's div height.
-                    var offsetProjectHeight = document.getElementById('divProjectElememtApprovers').offsetHeight + 170;
+                  //  var offsetProjectHeight = document.getElementById('divProjectElememtApprovers').offsetHeight + 170; comment by sarab
                     document.getElementById('documentUploadProgramNewPrgElm').style.height = offsetProjectHeight + 'px';
-                    var offsetProjectDocHeight = document.getElementById('documentUploadProgramNewPrgElm').offsetHeight - 100;
+                  //  var offsetProjectDocHeight = document.getElementById('documentUploadProgramNewPrgElm').offsetHeight - 100; comment by sarab
                     document.getElementById('documentUploadProgramNewPrgElmTbl').style.height = offsetProjectDocHeight + 'px';
                     projectEditMap.initProjectEditMap(locationLatLong, wbsTree.getOrganizationList());
                 }, 1000);
