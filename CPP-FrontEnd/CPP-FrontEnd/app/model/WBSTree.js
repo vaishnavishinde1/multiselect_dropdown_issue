@@ -7501,7 +7501,7 @@ WBSTree = (function ($) {
                             //     selectedNode.LatLong = temp_node.LatLong;
                             //     wbsTree.setSelectedNode(temp_node);
                         }
-                        
+                        //scope.loadWbsData.getTrendGridSection(selectedNode.ProjectID); //use this to solve TrendDiscription undefined Issue :: 17102022
                     });
 
                 }
@@ -8111,7 +8111,7 @@ WBSTree = (function ($) {
 
                     //scope.loadWBSData(orgId, null, null, null, null, null, null);
                     wbsTree.getProjectMap().initProjectMap(selectedNode, wbsTree.getOrganizationList());
-
+                    scope.loadWbsData.getTrendGridSection(newNode.ProjectID); //use this to solve TrendDiscription undefined Issue :: 17102022
                     //var uploadBtnProject = modal.find('.modal-body #uploadBtnProject');
                     //uploadBtnProject.attr('disabled', false);
                 }
