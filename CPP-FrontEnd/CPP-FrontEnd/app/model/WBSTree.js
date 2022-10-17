@@ -422,7 +422,7 @@ WBSTree = (function ($) {
                         $("#contextMenuEdit").parent().show();
                         $("#contextMenuClosed").parent().hide();
                         localStorage.Status = "Closed";
-                       
+                        
                     }
 
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
@@ -458,7 +458,7 @@ WBSTree = (function ($) {
                     contextMenuEditText = "Open Project";
                     $("#contextMenuEdit").parent().show();
                     $("#contextMenuViewGantt").parent().hide();
-
+                    
                 }
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuEditText = "Edit/Open Project";
@@ -474,7 +474,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                       
+                        
                     }
                     //----Vaishnavi 30-03-2022----//
 
@@ -552,7 +552,7 @@ WBSTree = (function ($) {
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                         
+                        
                     }
 
                 }
@@ -566,7 +566,7 @@ WBSTree = (function ($) {
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
                     localStorage.Status = "Closed";
-                   
+
 
                 }
                 //----Vaishnavi 30-03-2022----//
@@ -15767,6 +15767,8 @@ WBSTree = (function ($) {
                     $('#update_program_element').removeClass('btn btn-primary c-btn-save');
                     $('#update_program_element').addClass('btn btn-black');
                     $('#update_program_element').attr('style', 'width:150px;');
+                    $("#btnSpecialInstruction").attr('disabled', true);
+                    $("#contextMenuBillOfMaterial").attr('disabled', true);
                     $("#update_program_element").prop('disabled', true);
 
                     // $('#ProgramElementModal :input').attr('disabled', 'disabled');
@@ -15793,7 +15795,8 @@ WBSTree = (function ($) {
                     $('#update_program_element').addClass('btn btn-black');
                     $('#update_program_element').attr('style', 'width:150px;');
                     $("#update_program_element").attr('disabled', 'disabled');
-
+                    $("#btnSpecialInstruction").attr('disabled', true);
+                    $("#contextMenuBillOfMaterial").attr('disabled', true);
                     $("#new_program_element_milestone").attr('disabled', 'disabled');
                     $("#edit_program_element_milestone").attr('disabled', 'disabled');
                     $("#delete_program_element_milestone").attr('disabled', 'disabled');
@@ -20786,7 +20789,8 @@ WBSTree = (function ($) {
                     $("#contextMenuEdit").parent().hide();
                     $("#contextMenuAdd").parent().show();
                     $("#contextMenuClosed").parent().show();   //----Vaishnavi 30-03-2022----//
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
 
                 }
             }
@@ -20794,39 +20798,47 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuAddText = "Add Project";
                     $("#contextMenuAdd").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     //----Vaishnavi 30-03-2022----//
                     if (node.Status == "Closed") {
                         $("#contextMenuAdd").parent().hide();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
                     //----Vaishnavi 30-03-2022----//
                 }
                 if (wbsTree.getLocalStorage().acl[0] == 1) {
                     contextMenuEditText = "Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
 
 
                 }
                 if (wbsTree.getLocalStorage().acl[1] == 1) {
                     contextMenuEditText = "Edit/Open Contract";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     //$("#contextMenuDelete").parent().show(); //Aditya delete option only for Admin
                     if (node.children != undefined) {
                         $("#contextMenuViewGantt").parent().show();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
                     else {
                         $("#contextMenuViewGantt").parent().hide();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
                     //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     if (node.Status == "Closed") {
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                         $("#contextMenuEdit").parent().hide();
                         //$("#contextMenuDelete").parent().hide(); //Aditya delete option only for Admin
                         $("#contextMenuViewGantt").parent().hide();
@@ -20844,7 +20856,8 @@ WBSTree = (function ($) {
                     $("#contextMenuViewGantt").parent().hide();
                     $("#contextMenuClosed").parent().hide();
                     $("#contextMenuDelete").parent().hide();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     if (wbsTree.getLocalStorage().acl[1] == 1) {
                         contextMenuEditText = "Open Contract";
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
@@ -20860,18 +20873,21 @@ WBSTree = (function ($) {
                 if (wbsTree.getLocalStorage().acl[5] == 1) {
                     contextMenuAddText = "Add Element";
                     $("#contextMenuAdd").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     //----Vaishnavi 30-03-2022----//
                     if (node.Status == "Closed") {
                         $("#contextMenuAdd").parent().hide();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
                     //----Vaishnavi 30-03-2022----//
                 }
                 if (wbsTree.getLocalStorage().acl[2] == 1) {
                     contextMenuEditText = "Open Project";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
 
                 }
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
@@ -20883,7 +20899,8 @@ WBSTree = (function ($) {
                     if (node.Status == "Closed") {
                         $("#contextMenuEdit").parent().hide();
                         $("#contextMenuClosed").parent().hide();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                         contextMenuEditText = "Open Project";
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
@@ -20899,13 +20916,15 @@ WBSTree = (function ($) {
                     $("#contextMenuViewGantt").parent().hide();
                     $("#contextMenuClosed").parent().hide();
                     $("#contextMenuDelete").parent().hide();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     if (wbsTree.getLocalStorage().acl[3] == 1) {
                         contextMenuEditText = "Open Project";
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
                         localStorage.Status = "Closed";
-                        
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
 
 
@@ -20922,7 +20941,8 @@ WBSTree = (function ($) {
                                 if (contextMenuEditText == undefined) {
                                     contextMenuEditText = "Open Project";
                                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
-                                    $("#contextMenuBillOfMaterial").css("display", "none");
+                                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                                    $("#btnSpecialInstruction").prop('disabled', true);
                                     $("#contextMenuEdit").parent().show();
                                     localStorage.dept = 1;
                                 }
@@ -20941,24 +20961,28 @@ WBSTree = (function ($) {
                     contextMenuAddText = "Add Trend";
                     $("#contextMenuAdd").parent().show();
                     $("#contextMenuViewGantt").parent().hide();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     //----Vaishnavi 30-03-2022----//
                     if (node.Status == "Closed") {
                         $("#contextMenuAdd").parent().hide();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                     }
                     //----Vaishnavi 30-03-2022----//
                 }
                 if (wbsTree.getLocalStorage().acl[4] == 1) {
                     contextMenuEditText = "Open Element";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
 
                 }
                 if (wbsTree.getLocalStorage().acl[5] == 1) {
                     contextMenuEditText = "Edit/Open Element";
                     $("#contextMenuEdit").parent().show();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     //----Vaishnavi 30-03-2022----//
                     $("#contextMenuClosed").parent().show();
                     if (node.Status == "Closed") {
@@ -20967,7 +20991,8 @@ WBSTree = (function ($) {
                         contextMenuEditText = "Open Element";
                         if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                         $("#contextMenuEdit").parent().show();
-                        $("#contextMenuBillOfMaterial").css("display", "none");
+                        $("#contextMenuBillOfMaterial").prop('disabled', true);
+                        $("#btnSpecialInstruction").prop('disabled', true);
                         localStorage.Status = "Closed";
                         
                     }
@@ -20979,7 +21004,8 @@ WBSTree = (function ($) {
                     $("#contextMenuViewGantt").parent().hide();
                     $("#contextMenuClosed").parent().hide();
                     $("#contextMenuDelete").parent().hide();
-                    $("#contextMenuBillOfMaterial").css("display", "none");
+                    $("#contextMenuBillOfMaterial").prop('disabled', true);
+                    $("#btnSpecialInstruction").prop('disabled', true);
                     contextMenuEditText = "Open Element";
                     if (contextMenuEditText) $("#contextMenuEdit").html(contextMenuEditText);
                     $("#contextMenuEdit").parent().show();
