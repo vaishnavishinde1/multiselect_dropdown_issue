@@ -777,11 +777,11 @@
                             isChecked = true;
                             var dataObj = {
                                 Operation: '3',
-                                ID: approver.ID,
-                                DepartmentID: approver.DepartmentID,
-                                DeptManagerID: approver.DeptManagerID,
-                                OpeManagerID: approver.OpeManagerID
-
+                                ID: item.ID,
+                                DepartmentID: item.DepartmentID,
+                                DeptManagerID: item.DeptManagerID,
+                                OpeManagerID: item.OpeManagerID,
+                                displayId: item.displayId
                             }
                             listToSave.push(dataObj);
                             $scope.listToDelete.push(dataObj);
