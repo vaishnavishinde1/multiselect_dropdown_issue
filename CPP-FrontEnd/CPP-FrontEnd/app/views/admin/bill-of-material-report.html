@@ -1,0 +1,128 @@
+﻿<head>
+    <style type="text/css">
+        .col-sm-7 {
+            margin-top: 0px;
+        }
+
+        .input-required {
+            border-color: #cc3f44 !important;
+        }
+
+        .label-required {
+            color: #cc3f44 !important;
+        }
+
+        div.asterik label.label-required:before {
+            content: " *";
+            color: #cc3f44;
+        }
+
+        div.asterik input.input-required:before {
+            content: " *";
+            color: #cc3f44;
+        }
+
+        .inputAsterik:after {
+            content: " *";
+            color: #cc3f44;
+            margin-right: -10px;
+        }
+
+        .btn {
+            margin-bottom: 0;
+            /*border: 1px solid !important;*/
+        }
+
+        .modal-dialog {
+            height: 100%;
+            vertical-align: middle;
+            margin-top: 5%;
+            align-self: center;
+        }
+
+        .fa {
+            color: white !important;
+        }
+
+        @media (min-width: 768px) {
+        }
+
+        .ui-select-choices-group-label {
+            padding-left: 5px;
+            font-weight: 900;
+        }
+
+        .ui-grid .ui-grid-render-container-body .ui-grid-viewport {
+            overflow-x: auto !important;
+        }
+        .text-c {
+            text-align: center;
+        }
+      /*  .gridStyle {
+            width: 500px;
+            height: 200px;
+        }*/
+
+        .red {
+            color: red;
+        }
+
+     /*   .blue {
+            color: blue;
+        }*/
+    </style>
+</head>
+<div class="container" style="width:75%">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Procurement
+            </h3>
+            <a href="#/app/wbs" class="exit-button">X</a>
+        </div>
+        <div class="row" style="padding-bottom:15px">
+            <div class="col-sm-6">
+                <label for="selectOrg">Contract</label>
+                <br />
+                <select ng-options="item as item.ProgramName for item in allProgramList track by item.ProgramID"
+                        class="input-medium form-control" ng-change="filterChangeProject()" ng-model="filterContract" id="selectContract">
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <label for="selectOrg">Project</label>
+                <br />
+                <select ng-options="item as item.ProgramElementName for item in allProgramElementList track by item.ProgramElementID"
+                        class="input-medium form-control" ng-model="filterProject" ng-change="filterProjectById()" id="selectProject">
+                </select>
+            </div>
+
+        </div>
+        <div class="panel-body" id="wbsTable" style="height: 550px; overflow: auto">
+
+            <div class="gridStyle" ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav style="height:500px;">
+
+            </div>
+        </div>
+
+        <div class="c-modal-footer">
+            <button type="button" class="btn btn-primary c-btn-save" id="SubmitBillsOfMaterial" ng-click="SubmitBillsOfMaterial()">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+ 
+ 
+	
+</script><!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

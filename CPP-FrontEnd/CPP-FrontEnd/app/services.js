@@ -140,7 +140,10 @@ angular.module('xenon.services', []).
 
                     var adminReport = this.addItem('Admin Report', '/app/admin-report', 'linecons-doc');
 
-                    var statistic = this.addItem('Statistics', '/app/admin-Chart', 'glyphicon glyphicon-signal');   //Manasi 11-09-2020
+					var statistic = this.addItem('Statistics', '/app/admin-Chart', 'glyphicon glyphicon-signal');   //Manasi 11-09-2020
+
+					var billofmaterial = this.addItem('Bill of Material', '/app/admin-bill-of-material-report', 'icons icon-bom');
+
 				}
 				//else if (localStorageService.get('authorizationData').role === "Accounting") Nivedita 22-03-2022
 				if (localStorageService.get('authorizationData').role.indexOf('Accounting') != -1)

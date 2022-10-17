@@ -1916,6 +1916,19 @@ namespace WebAPI
                  routeTemplate: "billOfMaterial/getBillOfMaterial/{programelementId}/{SearchText}",
                  defaults: new { controller = "BillOfMaterial", action = "Get", programelementId = RouteParameter.Optional, SearchText = RouteParameter.Optional }
              );
+
+            config.Routes.MapHttpRoute(
+            name: "RequestBillsOfMateralList",
+            routeTemplate: "Request/BillsOfMateralList/{ProgramElementID}",
+            defaults: new { controller = "BillsOfMaterialList", ProgramElementID = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+            name: "BillsOfMateralList",
+            routeTemplate: "Response/BillsOfMateralList",
+            defaults: new { controller = "BillsOfMaterialList"}
+            );
+
             //Narayan - 04/04/2022
             config.Routes.MapHttpRoute(
                  name: "PrelimnaryNotice",
