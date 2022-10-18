@@ -4986,7 +4986,7 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<table class='gadget-content grid__Filter'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        strContract += "<div><table class='gadget-content'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
                         strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
@@ -4994,7 +4994,7 @@
                         // Original Value filter
                         strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table>";
+                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table></div>";
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";

@@ -2120,8 +2120,8 @@ th.sort-by {
 }
 /*Aditya:10102022:Grid Filter*/
 .grid__Filter {
-   /* background: linear-gradient(90deg,#719bae,#5580bc);*/
-  /*  margin-top: -11px !important;*/
+    background: linear-gradient(90deg,#719bae,#5580bc);
+    margin-top: -11px !important;
     border-radius: 5px;
     margin-bottom: 5px !important;
 }
@@ -2138,7 +2138,7 @@ th.sort-by {
             cursor: pointer;
         }
     .grid__Filter tr:hover {
-      /*  background: linear-gradient(90deg,#719bae,#5580bc);*/
+        background: linear-gradient(90deg,#719bae,#5580bc);
     }
 
     .grid__Filter th {
