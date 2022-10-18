@@ -5107,7 +5107,7 @@
                         $scope.allContractRowsInTable = $("#tblContract tr"); // Aditya :: save contract table rows in scope
                     }
                     else {
-                        emptyTablesGridSection(selOrganization);
+                        emptyTablesGridSection(selOrganization, selOrganization.name);
                     }
 
                     BindProject();
@@ -5503,15 +5503,58 @@
                 }
 
                 function emptyTablesGridSection(selectedRow, tblParentName) {
+                    let isContractEmpty = false;
                     let isProjectEmpty = false;
                     let isElementEmpty = false;
                     var emptyTitle = " ";
+                    if (selectedRow.level === "Root" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
+                        $('#wbsGridView').html('');
+                        var strContract = "";
+                        strContract = "<div class='row'>";
+                        strContract += "<div class='container-fluid'><div class='row'><div class='col-md-12'><div class='grid__view'>";
+                        if (ModifyContract == "1") {
+                            strContract += "<div class='grid__title' >" + tblParentName + "<div id='AddContractGridBtn' class='grid__title_rgt'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
+                        else {
+                            strContract += "<div class='grid__title'>" + tblParentName + "<div id='AddContractGridBtn' class='grid__title_rgt disabledIcon'>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        }
+                        //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        //Client Filter
+                        strContract += "<table class='gadget-content grid__Filter'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter' disabled></select></th>";
+                        //Contract Filter
+                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter' disabled></select></th>";
+                        //Contract Number Filter
+                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id' disabled></th>";
+                        // Original Value filter
+                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value' disabled></th> ";
+                        //current value filter
+                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value' disabled></th></thead></table>";
+                        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                        strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
+                        strContract += "<thead class='t-head'>";
+                        strContract += "<tr>" +
+                            "<th class='sort-by' width='28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width='28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
+                            "<th class='sort-by' width='13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
+                            //"<th>Current Forecast</th>" +
+                            "<th width=8%' style='display:none'>Action</th>" +
+                            "</tr>";
+                        strContract += "</thead>";
+                        strContract += "</table></div>";
+                        strContract += "</div></div></div></div>";
+                        strContract += "</div>";
 
-                    if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0)) {
+                        $('#wbsGridView').append(strContract);
+                        isContractEmpty = isProjectEmpty = isElementEmpty = true;
+                    }
+                    if (selectedRow.level === "Program" && (selectedRow.children == undefined || selectedRow.children.length == 0) || isContractEmpty) {
                         $('#wbsGridiewProject').html('');
                         var strProject = "<div class='col-md-12 p-0'><div class='grid__view'>";
                         //strProject += "<div class='grid__title'>Project (" + tblParentName + ")<div id='AddProjectGridBtn' class='grid__title_rgt'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
-                        if (selectedRow.Status == "Closed") {
+                        if (selectedRow.Status == "Closed" || isContractEmpty) {
                               strProject += "<div class='grid__title'>Project <span class='grid__overflow__project' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddProjectGridBtn' class='grid__title_rgt disabledIcon'>Add Project<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else if (ModifyProject == "1") {
