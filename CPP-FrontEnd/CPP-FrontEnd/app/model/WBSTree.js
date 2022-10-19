@@ -9598,7 +9598,7 @@ WBSTree = (function ($) {
                         //    dhtmlx.alert('Enter Duration Date.');
                         //    return;
                         //}
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || scheduleImpact == 0) { //Aditya 19102022
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
@@ -9609,7 +9609,7 @@ WBSTree = (function ($) {
                             return;
                         }
                         // Jignesh-24-03-2021
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || scheduleImpact == 0) {//Aditya 19102022
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
@@ -17963,6 +17963,9 @@ WBSTree = (function ($) {
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
             $('#btnModification').on('click', function () {
                 _ContractModificationOperation = 1;
+                var flag = false; //Aditya 19102022
+                var totalmod = 0;//Aditya 19102022
+                var schImp = 0;//Aditya 19102022
                 //blur
                 $("#ProgramModal").css({ "opacity": "0.8" });  //Manasi 22-02-2021
                 $('#DeleteUploadContModification').attr('disabled', 'disabled');
@@ -18009,6 +18012,7 @@ WBSTree = (function ($) {
                     $('#mdlContractModification').modal({ show: true, backdrop: 'static' });
                     var gridModification = $("#gridModificationList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
                     gridModification.empty();
+                    $("#gridModificationList tfoot").empty(); //Aditya 19102022
                     _ModificationList.reverse();
                     var ModList = _ModificationList;
                     if (!_IsRootForModification) {
@@ -18023,6 +18027,18 @@ WBSTree = (function ($) {
                                     _ModificationList[x].ModificationType == 0 ? 'NA' :
                                         _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' :
                                             _ModificationList[x].ModificationType == 3 ? 'Value & Schedule Impact' : 'Scope Impact'; // Code Change by Kavita 01/09/2022
+                                //Aditya 19102022
+                                var singleModification = {};
+                                singleModification = _ModificationList[x];
+
+                                // alert(singeChangeOrder.DocumentName);
+                                console.log(singleModification);
+
+                                var ModificationAmount = singleModification.Value == "" || singleModification.Value == null ? '0' : singleModification.Value;
+
+                                
+                                totalmod = totalmod + parseFloat(ModificationAmount.replace("$", "").replaceAll(",", ""));
+                                schImp += parseInt(singleModification.ScheduleImpact);
 
                                 gridModification.append('<tr class="contact-row" id="' + _ModificationList[x].Id + '">' + '<td style="width: 20px">' +
                                     '<input id=rb' + _ModificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
@@ -18034,15 +18050,22 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + modificationType + '</td>' + // Jignesh-17-02-2021
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '>' + '$' + _ModificationList[x].Value + '</td>' +
+                                    'align="right" >' + '$' + _ModificationList[x].Value + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     //'>' + durationDate + '</td>' +
-                                    '>' + _ModificationList[x].ScheduleImpact + '</td>' +
+                                    'align="right">' + _ModificationList[x].ScheduleImpact + '</td>' +
                                     '<td>' + moment(_ModificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<tr > ');
+                                    '</tr> ');
                                 if (_ModificationList[x].ModificationNo == 0) {
                                     $('#rb' + _ModificationList[x].Id).hide();
                                 }
+                            }
+                            //Aditya 19102022
+                            if (flag != true) {
+                                $("#gridModificationList").append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td align="right" class=""  style="font-weight: bold;" align="right">' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                                    '<td class=""  style="font-weight: bold;" align="right">' + schImp + '</td><td></td>' +
+                                    '</tr></tfoot>');
+                                flag = true;
                             }
 
                             $('#gridModificationList').on('click', 'th', function () {
@@ -18080,7 +18103,7 @@ WBSTree = (function ($) {
                         }
                         //===================================================================================
                     }
-                });//selectedNode.ProgramID
+                //});//selectedNode.ProgramID //Aditya 19102022
 
                 _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
                     wbsTree.setDocumentList(response.result);
@@ -18108,7 +18131,7 @@ WBSTree = (function ($) {
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
-                                '<tr > ');   //MM/DD/YYYY h:mm a'
+                                '</tr> ');   //MM/DD/YYYY h:mm a'
                         }
 
                     }
@@ -18144,6 +18167,7 @@ WBSTree = (function ($) {
 
                 });
             });
+            });  //Aditya 19102022 for modification doc section title update
 
             // Jignesh-08-02-2021
             $('#ddModificationType').on('change', function () {
@@ -18202,7 +18226,7 @@ WBSTree = (function ($) {
                             $('#modification_description').val(response.data.Description);
                             $('#ddModificationType').val(response.data.ModificationType);
                             if (response.data.ModificationType == 1) {
-                                $('#modification_value').val(response.data.Value);
+                                $('#modification_value').val(response.data.Value); 
                                 $('#schedule_impact').val('');
                                 $('#divModificationValue').show();
                                 $('#divModDurationDate').hide();
@@ -18411,7 +18435,7 @@ WBSTree = (function ($) {
             });
 
             //negative value for modified value 18-08-2022
-            $("#modification_value,#total_modification").on({
+            $("#modification_value,#total_modification,#program_element_change_order_amount_modal,#program_element_total_modifications").on({  //Aditya 19102022 
                 change: function () {
                     //formatCurrency($(this));
                     $(this).val(getCurrecyFormat($(this).val()));

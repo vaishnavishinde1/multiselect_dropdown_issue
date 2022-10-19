@@ -2193,7 +2193,7 @@
                 }
                 if (modType != "" || modType.length != 0) {
                     if (modType == 1) {
-                        if (value == "" || value.length == 0) {
+                        if (value == "" || value.length == 0 || value.replace('$', '').replaceAll(',', '') == 0) {  //Aditya 19102022
                             dhtmlx.alert('Enter Value.');
                             return;
                         }
@@ -2204,17 +2204,17 @@
                         //    dhtmlx.alert('Enter Duration Date.');
                         //    return;
                         //}
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || scheduleImpact == 0) {  //Aditya 19102022
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
                     }
                     else if (modType == 3) {
-                        if (value == "" || value.length == 0) {
+                        if (value == "" || value.length == 0 || value.replace('$', '').replaceAll(',', '') == 0) {  //Aditya 19102022
                             dhtmlx.alert('Enter Value.');
                             return;
                         }
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || value.replace('$', '').replaceAll(',', '') == 0) {  //Aditya 19102022
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
@@ -2294,6 +2294,9 @@
             });
 
             function PerformOperationOnContractModification(contractModification) {
+                var flag = false; //Aditya 19102022
+                var totalmod = 0; //Aditya 19102022
+                var schImp = 0; //Aditya 19102022
                 debugger;
                 var request = {
                     method: 'POST',
@@ -2322,6 +2325,7 @@
                         _modificationList = d.data.data;
                         var gridModification = $("#gridModificationList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
                         gridModification.empty();
+                        $("#gridModificationList tfoot").empty(); //Aditya 19102022
                         _modificationList.reverse();
                         var ModList = _modificationList;
                         for (var x = 0; x < ModList.length; x++) {
@@ -2335,6 +2339,17 @@
                                     //_modificationList[x].ModificationType == 2 ? 'Duration' : 'Value & Duration';
                                     _modificationList[x].ModificationType == 2 ? 'Schedule Impact' :
                                         _modificationList[x].ModificationType == 3 ? 'Value & Schedule Impact' : 'Scope Impact';// Code Change by Kavita 01/09/2022
+                            //Aditya 19102022
+                            var singleModification = {};
+                            singleModification = _modificationList[x];
+
+                            // alert(singeChangeOrder.DocumentName);
+                            console.log(singleModification);
+
+                            var ModificationAmount = singleModification.Value == "" || singleModification.Value == null ? '0' : singleModification.Value;
+
+                            totalmod = totalmod + parseFloat(ModificationAmount.replace("$", "").replaceAll(",", ""));
+                            schImp += parseInt(singleModification.ScheduleImpact);
 
                             gridModification.append('<tr class="contact-row" id="' + _modificationList[x].Id + '">' + '<td style="width: 20px">' +
                                 '<input id=rb' + _modificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
@@ -2346,9 +2361,9 @@
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                 '>' + modificationType + '</td>' +  // Jignesh-17-02-2021
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '>' + '$' + _modificationList[x].Value + '</td>' +
+                                'align="right" >' + '$' + _modificationList[x].Value + '</td>' +
                                 '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                '>' + _modificationList[x].ScheduleImpact + '</td>' +
+                                'align="right" >' + _modificationList[x].ScheduleImpact + '</td>' +
                                 //'>' + durationDate + '</td>' +
                                 '<td>' + moment(_modificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
                                 '<tr > ');
@@ -2356,6 +2371,13 @@
                             if (_modificationList[x].ModificationNo == 0) {
                                 $('#rb' + _modificationList[x].Id).hide();
                             }
+                        }
+                        //Aditya 19102022
+                        if (flag != true) {
+                            $("#gridModificationList").append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td align="right" class=""  style="font-weight: bold;" align="right">' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                                '<td class=""  style="font-weight: bold;" align="right">' + schImp + '</td><td></td>' +
+                                '</tr></tfoot>');
+                            flag = true;
                         }
 
                         $('input[name=rbModHistory]').on('click', function (event) {
@@ -2417,10 +2439,10 @@
                             gridUploadedModDocument.empty();
                             for (var x = 0; x < _documentList.length; x++) {
                                 if (_documentList[x].ModificationNumber >= 0 && _documentList[x].ModificationNumber != null) {
-                                    for (var i = 0; i < _ModificationList.length; i++) {
-                                        if (_documentList[x].ModificationNumber == _ModificationList[i].ModificationNo) {
-                                            modId = _ModificationList[i].ModificationNo;
-                                            modTitle = _ModificationList[i].Title;
+                                    for (var i = 0; i < _modificationList.length; i++) {
+                                        if (_documentList[x].ModificationNumber == _modificationList[i].ModificationNo) {
+                                            modId = _modificationList[i].ModificationNo;
+                                            modTitle = _modificationList[i].Title;
                                         }
                                     }
                                     gridUploadedModDocument.append('<tr class="contact-row" id="' + _documentList[x].DocumentID + '"><td style="width: 20px">' +
