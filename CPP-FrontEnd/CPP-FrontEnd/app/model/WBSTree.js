@@ -14677,9 +14677,9 @@ WBSTree = (function ($) {
                     //$('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
 
-                    $('#contextMenuBillOfMaterial').removeAttr('title');
+                    $('#bomSpclInstrunDiv').removeAttr('title');
                     $('#contextMenuBillOfMaterial').removeAttr('disabled');
-                    $('#btnSpecialInstruction').removeAttr('title');
+                    //$('#btnSpecialInstruction').removeAttr('title');
                     $('#btnSpecialInstruction').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
@@ -15412,9 +15412,10 @@ WBSTree = (function ($) {
                     $('#documentUploadProgramNewPrg').attr('title', "A project needs to be saved before the document can be uploaded");   //Manasi 23-02-2021
 
                     $('#contextMenuBillOfMaterial').attr('disabled', true);
-                    $('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    //$('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    $('#bomSpclInstrunDiv').attr('title', 'A project needs to be saved before adding Special Instructions and Bill Of Materials');
                     $('#btnSpecialInstruction').attr('disabled', true);
-                    $('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
+                    //$('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
 
                     var gridUploadedDocumentProgramElement = $('#gridUploadedDocumentProgramNewPrg tbody');// modal.find('.modal-body #gridUploadedDocumentProgramElement tbody');
                     gridUploadedDocumentProgramElement.empty();
