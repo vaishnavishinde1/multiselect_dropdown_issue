@@ -53,6 +53,9 @@ namespace WebAPI.Models
         public String Contract_Warranty { get; set; }
         public int Deleted { get; set; }
 
+        [NotMapped]
+        public bool IsMaterialCategoryChanged { get; set; }
+
 
         public static string registerBillOfMaterial(BillOfMaterial billOfMaterialdata)
         {
@@ -177,7 +180,6 @@ namespace WebAPI.Models
                         ).ToList();
 
                     }
-
                     result = "success";
                     return billsofmaterialList;
 
