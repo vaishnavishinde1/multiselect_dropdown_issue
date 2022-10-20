@@ -1829,7 +1829,7 @@ angular.module('xenon.Gantt_Controller', []).
                             $(this).addClass('hover');
                             $(prevboxb).tooltip({ title: "Available Quanitity: " + 0, placement: "bottom" }).tooltip('show');
                             var nextEle = $(prevboxb).next();
-                            nextEle[0].textContent = "Available Quanitity: " + $scope.selectedCost.Quantity;
+                            nextEle[0].textContent = "Available Quanitity: " + $scope.selectedCost.Quantity; 
                         });
                         $(cellBox).on('mouseleave', function () {
                             $(this).removeClass('hover');
