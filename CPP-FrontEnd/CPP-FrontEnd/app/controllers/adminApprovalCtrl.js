@@ -178,26 +178,25 @@
                 var gridTableHistoryData = $('#tblApprovalHistoryGrid tbody');
                 var historyData = $scope.approversHistory;
                 gridTableHistoryData.empty();
-                
-                for (var a = 0; a < historyData.length; a++) {
+
+                for (let a = 0; a < historyData.length; a++) {
                     gridTableHistoryData.append('<tr class="contact-row" id="' + historyData[a].Id + '">' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '><a>' + (a + 1) + '</a></td> ' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + historyData[a].Department + '</td > ' +
+                        '>' + historyData[a].Department + '</td> ' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + historyData[a].DepartmentManager + '</td > ' +
+                        '>' + historyData[a].DepartmentManager + '</td> ' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + historyData[a].OperationManager + '</td > ' +
+                        '>' + historyData[a].OperationManager + '</td> ' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + historyData[a].UpdatedBy + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + moment(historyData[a].FromDate).format('MM/DD/YYYY') + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + moment(historyData[a].ToDate).format('MM/DD/YYYY') + '</td>' +
-                        '<tr > ');
+                        '</tr> ');
                 }
-
                 $('#ApprovalHistoryModal').modal({ show: true, backdrop: 'static' });
             }
 
@@ -213,13 +212,13 @@
                 let filter_Id = $(this).val();
                 for (let i = 0; i < tr.length; i++) {
                     td = tr[i].cells;
-                    var td_Id = td[2].innerText;
+                    var td_Id = td[1].innerText;
                     if (td_Id.indexOf(filter_Id) > -1) {
-                            tr[i].style.display = "";
-                        }
-                        else {
-                            tr[i].style.display = "none";
-                        }
+                        tr[i].style.display = "";
+                    }
+                    else {
+                        tr[i].style.display = "none";
+                    }
                 }
             });
 
@@ -930,16 +929,12 @@
                             if (unSavedChanges) {
                                 return unSavedChanges; // no need to look through the rest of the original array
                             }
-                            if (originalCollection[i].Id == currentObject.Id) {
+                            if (originalCollection[i].ID == currentObject.ID) {
                                 var originalObject = originalCollection[i];
                                 // compare relevant data
-                                if (originalObject.UserID !== currentObject.UserID ||
-                                    originalObject.FirstName !== currentObject.FirstName ||
-                                    originalObject.LastName !== currentObject.LastName ||
-                                    originalObject.Email !== currentObject.Email ||
-                                    originalObject.EmployeeID !== currentObject.EmployeeID ||
-                                    originalObject.DepartmentID !== currentObject.DepartmentID ||
-                                    originalObject.Role !== currentObject.Role) {
+                                if (originalObject.DepartmentID !== currentObject.DepartmentID ||
+                                    originalObject.DeptManagerID !== currentObject.DeptManagerID ||
+                                    originalObject.OpeManagerID !== currentObject.OpeManagerID) {
                                     // alert if a change has not been saved
                                     //alert("unsaved change on line" + currentCollection.displayId);
                                     unSavedChanges = true;

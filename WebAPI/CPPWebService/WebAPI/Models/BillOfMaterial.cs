@@ -50,6 +50,8 @@ namespace WebAPI.Models
 
         public String CostPerItem { get; set; }
 
+        public String OriginalCostPerItem { get; set; }
+
         public String Contract_Warranty { get; set; }
         public int Deleted { get; set; }
 

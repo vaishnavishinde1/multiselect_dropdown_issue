@@ -1750,7 +1750,12 @@ WBSTrendTree = (function ($) {
                 }
             });
             //====================================================================================================
-
+            $('input,textarea').on({
+                blur: function () {
+                    var fieldname = $(this).val().trim();
+                    $(this).val(fieldname);
+                }
+            });
 
             $('#approve_trend').unbind('click').on('click', function () {
                 if ($('#approve_trend').html().trim() === 'Approve Trend') {

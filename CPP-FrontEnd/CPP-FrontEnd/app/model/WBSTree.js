@@ -3925,7 +3925,7 @@ WBSTree = (function ($) {
 
             //Program element change order
             function populateProgramElementChangeOrderTable(programElementID) {
-
+                var selectedNode = wbsTree.getSelectedNode();
                 $('#downloadBtnChangeOrder').attr('disabled', 'disabled');
                 $('#ViewUploadFileChangeOrder').attr('disabled', 'disabled');
                 $('#edit_program_element_change_order').attr('disabled', 'disabled');
@@ -4050,6 +4050,18 @@ WBSTree = (function ($) {
                     $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
                     $('#program_element_total_current_value').focus();
                     $('#program_element_total_current_value').blur();
+                    var currProjectEndDate = new Date(selectedNode.orignalProjectEndDate);
+                    var updatedprojectEndDate = new Date();
+                    updatedprojectEndDate.setDate(currProjectEndDate.getDate() + parseInt(schImp));
+                    $('#program_element_PEnd_Date').val(moment(updatedprojectEndDate).format('MM/DD/YYYY'));
+                    if (schImp == 0) {
+                        $('#program_element_PEnd_Date').prop('disabled', false);
+                    } else {
+                        $('#program_element_PEnd_Date').prop('disabled', true);
+
+                    }
+                    $('#program_element_PEnd_Date').focus();
+                    $('#program_element_PEnd_Date').blur();
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
                         if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -9514,7 +9526,7 @@ WBSTree = (function ($) {
                // var scheduleImpact = $('#program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021  // code start by kavita 
                 var DocID = $("#DocChangeOrderID").val();
 
-                var currendDtBkp = new Date($('#program_element_PEnd_Date').val());
+                //var currendDtBkp = new Date($('#program_element_PEnd_Date').val());
                 // code start by kavita 23/09/2022 
                 if (modType == 1) {
                     var AmtOrder = $("#program_element_change_order_amount_modal").val().replace("$", "").replaceAll(",", "");
@@ -9587,7 +9599,7 @@ WBSTree = (function ($) {
 
                 if (modType != "" || modType.length != 0) {
                     if (modType == 1) {
-                        if (AmtOrder == "" || AmtOrder.length == 0) {
+                        if (AmtOrder == "" || AmtOrder.length == 0 || AmtOrder == 0) {
                             dhtmlx.alert('Enter Value.');
                             return;
                         }
@@ -9598,18 +9610,18 @@ WBSTree = (function ($) {
                         //    dhtmlx.alert('Enter Duration Date.');
                         //    return;
                         //}
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || scheduleImpact == 0) {
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
                     }
                     else if (modType == 3) {
-                        if (AmtOrder == "" || AmtOrder.length == 0) {
+                        if (AmtOrder == "" || AmtOrder.length == 0 || AmtOrder == 0) {
                             dhtmlx.alert('Enter Value.'); // Jignesh-18-02-2021
                             return;
                         }
                         // Jignesh-24-03-2021
-                        if (scheduleImpact == "" || scheduleImpact.length == 0) {
+                        if (scheduleImpact == "" || scheduleImpact.length == 0 || scheduleImpact == 0) {
                             dhtmlx.alert('Enter Schedule Impact.');
                             return;
                         }
@@ -9716,17 +9728,17 @@ WBSTree = (function ($) {
                     debugger;
                     //update- Added by Amruta to save end date on change order
 
-                    if (updatedChangeOrder.ScheduleImpact != "") {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        if (progelem_scheduleImp != "") {
-                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                        }
-                        else {
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                            curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
-                        }
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
-                    }
+                    //if (updatedChangeOrder.ScheduleImpact != "") {
+                    //    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    //    if (progelem_scheduleImp != "") {
+                    //        curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                    //    }
+                    //    else {
+                    //    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    //        curendt.setDate(curendt.getDate() + parseInt(updatedChangeOrder.ScheduleImpact));
+                    //    }
+                    //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                    //}
                     debugger;
                     //code by kavita
                     //if (updatedChangeOrder.ModificationTypeId == 1) {
@@ -9740,8 +9752,8 @@ WBSTree = (function ($) {
 
                     //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));
                     //}
-                    //var pendDate = $('#program_element_PEnd_Date').val();
-                    //var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
+                    var pendDate = $('#program_element_PEnd_Date').val();
+                    var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                     $("#update_program_element_change_order_modal").attr("disabled", true);
                     var obj = {
                         "Operation": 2,
@@ -9837,7 +9849,7 @@ WBSTree = (function ($) {
                                 });
                                 //update- Added by Amruta to save end date on change order
 
-                                $('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                                //$('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
                             }
 
                             return;  //Manasi
@@ -9861,7 +9873,7 @@ WBSTree = (function ($) {
 
                     newChangeOrder.ChangeOrderName = modal.find('.modal-body #program_element_change_order_name_modal').val();
                     newChangeOrder.ChangeOrderNumber = modal.find('.modal-body #program_element_change_order_number_modal').val();
-                    newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+                    //newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
                     newChangeOrder.ChangeOrderScheduleChange = modal.find('.modal-body #program_element_change_order_schedule_change_modal').val();
                     newChangeOrder.OrderType = modal.find('.modal-body #ChangeOrderType').val();
                     newChangeOrder.OrderDate = modal.find('.modal-body #ChangeOrderDate').val();
@@ -9869,18 +9881,34 @@ WBSTree = (function ($) {
                     newChangeOrder.Reason = modal.find('.modal-body #program_element_change_order_Reason_modal').val();
                     newChangeOrder.ModificationTypeId = modal.find('.modal-body #program_element_change_order_ddModificationType').val();
                     //newChangeOrder.DurationDate = modal.find('.modal-body #program_element_change_order_duration_date').val(); // Jignesh-24-03-2021
-                    newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
+
+                    //newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val(); // Jignesh-24-03-2021
                     //=======================================================================================
-                    var orgendt = new Date($('#program_element_PEnd_Date').val());
+                    //var orgendt = new Date($('#program_element_PEnd_Date').val());
 
-                    if (newChangeOrder.ScheduleImpact != "") {
-                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                        curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
-                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
-                        debugger;
+                    //if (newChangeOrder.ScheduleImpact != "") {
+                    //    var curendt = new Date($('#program_element_PEnd_Date').val());
+                    //    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                    //    curendt.setDate(curendt.getDate() + parseInt(newChangeOrder.ScheduleImpact));
+                    //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY'));//.change(); Added by Amruta for confirmation popup-1
+                    //    debugger;
+                    //}
+                    if (newChangeOrder.ModificationTypeId == 1) {
+                        newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+                        newChangeOrder.ScheduleImpact = ""; // Jignesh-24-03-202
                     }
-
+                    else if (newChangeOrder.ModificationTypeId == 2) {
+                        newChangeOrder.ChangeOrderAmount = "";
+                        newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val();
+                    }
+                    else if (newChangeOrder.ModificationTypeId == 3) {
+                        newChangeOrder.ChangeOrderAmount = modal.find('.modal-body #program_element_change_order_amount_modal').val();
+                        newChangeOrder.ScheduleImpact = modal.find('.modal-body #program_element_change_order_schedule_impact').val();
+                    }
+                    else if (newChangeOrder.ModificationTypeId == 4) {
+                        newChangeOrder.ChangeOrderAmount = "";
+                        newChangeOrder.ScheduleImpact = "";
+                    }
                     var pendDate = $('#program_element_PEnd_Date').val();
                     var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                     $("#update_program_element_change_order_modal").attr("disabled", true);
@@ -9948,7 +9976,7 @@ WBSTree = (function ($) {
                             if (response.result.split(',')[0].trim() === "Success") {
                                 $("#update_program_element_change_order_modal").attr("disabled", false);
                                 //Added by Amruta for populating the end date post exit modal -2
-                                selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+                                //selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
                                 wbsTree.updateTreeNodes(selectedNode);
                                 var newChangeOrderID = response.result.split(',')[1].trim();
                                 var DocumentName = $("#document_name_changeOrder").val();
@@ -10018,7 +10046,7 @@ WBSTree = (function ($) {
                                 debugger;
                                 if (response.result == '' || response.result == null || response.result == undefined) {
                                     $("#update_program_element_change_order_modal").attr("disabled", false);
-                                    $('#program_element_PEnd_Date').val(moment(orgendt).format('MM/DD/YYYY'));
+                                    //$('#program_element_PEnd_Date').val(moment(orgendt).format('MM/DD/YYYY'));
                                     dhtmlx.alert('Something went wrong. Please try again..');
                                 }
 
@@ -10029,7 +10057,7 @@ WBSTree = (function ($) {
 
                                 //update- Added by Amruta to save end date on change order
 
-                                $('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                                //$('#program_element_PEnd_Date').val(moment(currendDtBkp).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
                                 //$('#ProgramElementChangeOrderModal').modal('hide');  Manasi
                                 //$("#ProgramElementModal").css({ "opacity": "1" });
                                 return; //Manasi
@@ -10802,15 +10830,15 @@ WBSTree = (function ($) {
                                 if (result) {
                                     //update- Added by Amruta to save end date on change order
                                     debugger;
-                                    if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
-                                        debugger;
-                                        progelem_scheduleImp = parseInt(g_selectedProgramElementChangeOrder.ScheduleImpact);
-                                        var curendt = new Date($('#program_element_PEnd_Date').val());
-                                        curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
-                                        // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
-                                        $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
-                                    }
-                                    debugger;
+                                    //if (g_selectedProgramElementChangeOrder.ScheduleImpact != "") {
+                                    //    debugger;
+                                    //    progelem_scheduleImp = parseInt(g_selectedProgramElementChangeOrder.ScheduleImpact);
+                                    //    var curendt = new Date($('#program_element_PEnd_Date').val());
+                                    //    curendt.setDate(curendt.getDate() - parseInt(progelem_scheduleImp));
+                                    //    // curendt.setDate(curendt.getDate() - parseInt(updatedChangeOrder.ScheduleImpact));
+                                    //    $('#program_element_PEnd_Date').val(moment(curendt).format('MM/DD/YYYY')); //.change(); //Added by Amruta for confirmation popup
+                                    //}
+                                    //debugger;
                                     var pendDate = $('#program_element_PEnd_Date').val();
                                     var projectEndDate = moment(pendDate).format('MM/DD/YYYY');
                                     var obj = {
@@ -14677,9 +14705,9 @@ WBSTree = (function ($) {
                     //$('#delete_program_element_milestone').removeAttr('disabled');
                     $('#ViewAllUploadFileProjects').removeAttr('disabled');
 
-                    $('#contextMenuBillOfMaterial').removeAttr('title');
+                    $('#bomSpclInstrunDiv').removeAttr('title');
                     $('#contextMenuBillOfMaterial').removeAttr('disabled');
-                    $('#btnSpecialInstruction').removeAttr('title');
+                    //$('#btnSpecialInstruction').removeAttr('title');
                     $('#btnSpecialInstruction').removeAttr('disabled');
                     g_newProgramElement = false;
                     $('#g_newProgramElement').val('false');
@@ -14795,6 +14823,7 @@ WBSTree = (function ($) {
                     // Added by Amruta for invalid date issue
                     if (selectedNode.ProjectPEndDate != "")
                         modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
+                    selectedNode.orignalProjectEndDate = selectedNode.ProjectPEndDate;
 
                     //------------------------------------------------------------------------------------------------------
 
@@ -15412,9 +15441,10 @@ WBSTree = (function ($) {
                     $('#documentUploadProgramNewPrg').attr('title', "A project needs to be saved before the document can be uploaded");   //Manasi 23-02-2021
 
                     $('#contextMenuBillOfMaterial').attr('disabled', true);
-                    $('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    //$('#contextMenuBillOfMaterial').attr('title', 'A project needs to be saved before adding Bill Of Materials');
+                    $('#bomSpclInstrunDiv').attr('title', 'A project needs to be saved before adding Special Instructions and Bill Of Materials');
                     $('#btnSpecialInstruction').attr('disabled', true);
-                    $('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
+                    //$('#btnSpecialInstruction').attr('title', 'A project needs to be saved before adding Special Instructions');
 
                     var gridUploadedDocumentProgramElement = $('#gridUploadedDocumentProgramNewPrg tbody');// modal.find('.modal-body #gridUploadedDocumentProgramElement tbody');
                     gridUploadedDocumentProgramElement.empty();
@@ -15865,7 +15895,8 @@ WBSTree = (function ($) {
 
                 var SearchText;
                 $("#billofmaterialfilter").keyup(function (e) {
-                    var txtbillofmaterialfilter = $("#billofmaterialfilter").val();
+                    var txtbillofmaterialfilter = $("#billofmaterialfilter").val
+
                     _Document.getBillOfMaterialByProgramElementId().get({ programelementId: _selectedNode.ProgramElementID, SearchText: txtbillofmaterialfilter }, function (response) {
                         _BillOfMaterialList = response.data;
                         gridbillofmaterial.empty();
@@ -15992,7 +16023,7 @@ WBSTree = (function ($) {
                             $("#txtDescription").val(_BillOfMaterialList[i].Description);
                             $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
                             $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
-                            $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
+                            $("#txtCostperitem").val(getCurrecyFormat(_BillOfMaterialList[i].CostPerItem));
                             $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
 
 
@@ -16102,7 +16133,8 @@ WBSTree = (function ($) {
                         ManufacturerName: dropdownManufacturerName,
                         Quantity: txtqnty,
                         Unit_Type: txtunittype,
-                        CostPerItem: txtCostperitem,
+                        CostPerItem: txtCostperitem.replace("$", "").replaceAll(",", ""),
+                        OriginalCostPerItem: localStorage.OriginalCostPerItem.replace("$", "").replaceAll(",", ""),
                         Contract_Warranty: txtcontractwarranty,
                     };
 
@@ -16224,41 +16256,74 @@ WBSTree = (function ($) {
                         }
 
 
-                        $("#txtCostperitem").val(MaterialData[k].Cost);
+                        $("#txtCostperitem").val(getCurrecyFormat(MaterialData[k].Cost));
+
+
+                        localStorage.OriginalCostPerItem = getCurrecyFormat(MaterialData[k].Cost);
+
                     }
                 }
 
             }
 
+          
+
             function gridloadforbillofmaterial() {
                 for (var x = 0; x < BillOfMaterialList.length; x++) {
-                    gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
-                        //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
-                        //'<input type="checkbox" />' +
-                        //'</td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Description + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Quantity + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].CostPerItem + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
-                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
-                        '<tr > ');
+                    if (BillOfMaterialList[x].CostPerItem != BillOfMaterialList[x].OriginalCostPerItem) {
+                        gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
+                            //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
+                            //'<input type="checkbox" />' +
+                            //'</td> ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Description + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Quantity + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
+                            '<td title="Original Cost Per Item: ' + getCurrecyFormat(_BillOfMaterialList[x].OriginalCostPerItem) + '" style="color:green; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;font-weight:bold;"' +
+                            '>' +getCurrecyFormat(_BillOfMaterialList[x].CostPerItem) + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                            '<tr > ');
+                    }
+                    else {
+                        gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
+                            //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
+                            //'<input type="checkbox" />' +
+                            //'</td> ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Description + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Quantity + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + getCurrecyFormat(_BillOfMaterialList[x].CostPerItem) + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                            '<tr > ');
+
+                    }
                 }
             }
 
 
-
+        
 
             $('#ProgramElementModal').on('shown.bs.modal', function () {
                 $('[id$=program_element_name]').focus();
@@ -17962,6 +18027,9 @@ WBSTree = (function ($) {
             //=========================  Jignesh-ModificationPopUpChanges =====================================================
             $('#btnModification').on('click', function () {
                 _ContractModificationOperation = 1;
+                var flag = false; //Aditya 19102022
+                var totalmod = 0;//Aditya 19102022
+                var schImp = 0;//Aditya 19102022
                 //blur
                 $("#ProgramModal").css({ "opacity": "0.8" });  //Manasi 22-02-2021
                 $('#DeleteUploadContModification').attr('disabled', 'disabled');
@@ -18008,6 +18076,7 @@ WBSTree = (function ($) {
                     $('#mdlContractModification').modal({ show: true, backdrop: 'static' });
                     var gridModification = $("#gridModificationList tbody")// modal.find('#gridUploadedDocumentProgram tbody');
                     gridModification.empty();
+                    $("#gridModificationList tfoot").empty(); //Aditya 19102022
                     _ModificationList.reverse();
                     var ModList = _ModificationList;
                     if (!_IsRootForModification) {
@@ -18022,6 +18091,18 @@ WBSTree = (function ($) {
                                     _ModificationList[x].ModificationType == 0 ? 'NA' :
                                         _ModificationList[x].ModificationType == 2 ? 'Schedule Impact' :
                                             _ModificationList[x].ModificationType == 3 ? 'Value & Schedule Impact' : 'Scope Impact'; // Code Change by Kavita 01/09/2022
+                                //Aditya 19102022
+                                var singleModification = {};
+                                singleModification = _ModificationList[x];
+
+                                // alert(singeChangeOrder.DocumentName);
+                                console.log(singleModification);
+
+                                var ModificationAmount = singleModification.Value == "" || singleModification.Value == null ? '0' : singleModification.Value;
+
+                                
+                                totalmod = totalmod + parseFloat(ModificationAmount.replace("$", "").replaceAll(",", ""));
+                                schImp += parseInt(singleModification.ScheduleImpact);
 
                                 gridModification.append('<tr class="contact-row" id="' + _ModificationList[x].Id + '">' + '<td style="width: 20px">' +
                                     '<input id=rb' + _ModificationList[x].Id + ' type="radio" name="rbModHistory" />' + //value="' + serviceBasePath + 'Request/DocumentByDocID/' + _documentList[x].DocumentID + '"
@@ -18033,15 +18114,22 @@ WBSTree = (function ($) {
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + modificationType + '</td>' + // Jignesh-17-02-2021
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
-                                    '>' + '$' + _ModificationList[x].Value + '</td>' +
+                                    'align="right" >' + '$' + _ModificationList[x].Value + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; "' +
                                     //'>' + durationDate + '</td>' +
-                                    '>' + _ModificationList[x].ScheduleImpact + '</td>' +
+                                    'align="right">' + _ModificationList[x].ScheduleImpact + '</td>' +
                                     '<td>' + moment(_ModificationList[x].Date).format('MM/DD/YYYY') + '</td>' +
-                                    '<tr > ');
+                                    '</tr> ');
                                 if (_ModificationList[x].ModificationNo == 0) {
                                     $('#rb' + _ModificationList[x].Id).hide();
                                 }
+                            }
+                            //Aditya 19102022
+                            if (flag != true) {
+                                $("#gridModificationList").append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td align="right" class=""  style="font-weight: bold;" align="right">' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                                    '<td class=""  style="font-weight: bold;" align="right">' + schImp + '</td><td></td>' +
+                                    '</tr></tfoot>');
+                                flag = true;
                             }
 
                             $('#gridModificationList').on('click', 'th', function () {
@@ -18079,7 +18167,7 @@ WBSTree = (function ($) {
                         }
                         //===================================================================================
                     }
-                });//selectedNode.ProgramID
+                //});//selectedNode.ProgramID //Aditya 19102022
 
                 _Document.getDocumentByProjID().get({ DocumentSet: 'Program', ProjectID: _selectedNode.ProgramID }, function (response) {
                     wbsTree.setDocumentList(response.result);
@@ -18107,7 +18195,7 @@ WBSTree = (function ($) {
                                 //'<td><input type="button" name="btnViewDetail"  id="viewDocumentDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnViewDetail" title="View Details" id="viewDocumentDetail"/></td>' +
                                 '<td class="docId" style="display:none;"><span>' + _documentList[x].DocumentID + '</span></td>' +
-                                '<tr > ');   //MM/DD/YYYY h:mm a'
+                                '</tr> ');   //MM/DD/YYYY h:mm a'
                         }
 
                     }
@@ -18143,6 +18231,7 @@ WBSTree = (function ($) {
 
                 });
             });
+            });  //Aditya 19102022 for modification doc section title update
 
             // Jignesh-08-02-2021
             $('#ddModificationType').on('change', function () {
@@ -18201,7 +18290,7 @@ WBSTree = (function ($) {
                             $('#modification_description').val(response.data.Description);
                             $('#ddModificationType').val(response.data.ModificationType);
                             if (response.data.ModificationType == 1) {
-                                $('#modification_value').val(response.data.Value);
+                                $('#modification_value').val('$'+response.data.Value);
                                 $('#schedule_impact').val('');
                                 $('#divModificationValue').show();
                                 $('#divModDurationDate').hide();
@@ -18379,7 +18468,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").keypress(function (e) {
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter,#txtCostperitem").keypress(function (e) {
                 if (e.which != 46 && e.which != 46 &&
                     !(e.which >= 48 && e.which <= 57)) {
                     return false;
@@ -18389,7 +18478,7 @@ WBSTree = (function ($) {
                 }
             });
            
-            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").on({
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter,#txtCostperitem").on({
                 keyup: function () {
                     formatCurrency($(this));
                 },
@@ -18410,7 +18499,7 @@ WBSTree = (function ($) {
             });
 
             //negative value for modified value 18-08-2022
-            $("#modification_value,#total_modification").on({
+            $("#modification_value,#total_modification,#program_element_change_order_amount_modal,#program_element_total_modifications").on({  //Aditya 19102022 
                 change: function () {
                     //formatCurrency($(this));
                     $(this).val(getCurrecyFormat($(this).val()));
@@ -18418,6 +18507,13 @@ WBSTree = (function ($) {
                 blur: function () {
                     //formatCurrency($(this), "blur");
                     $(this).val(getCurrecyFormat($(this).val()));
+                }
+            });
+           
+            $('input,textarea').on({
+                blur: function () {
+                    var fieldname = $(this).val().trim();
+                    $(this).val(fieldname);
                 }
             });
             //============================================================================
