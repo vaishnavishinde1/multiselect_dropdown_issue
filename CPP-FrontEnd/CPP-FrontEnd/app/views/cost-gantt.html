@@ -320,7 +320,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Cost Type Category : </label>
+                                <label>Cost Type Category : <div class="tooltip" style="display:block">Tooltip</div> </label>
                                 <select style="margin-top:-5px;width:250px;" class="form-control" ng-model="CostCategory" data-ng-options="option.name as option.name for option in CostTypeCategory" ng-change="filterCostTypeCategory()">
                                 </select>
                             </div>
@@ -399,7 +399,7 @@
                             </button>
                         </span>
                         <!---------------------------------------------------------------------------------------------->
-                        <button id="exit" class="btn btn-red" ng-click="exit()" style="width:90px;margin:0px;">Exit</button>
+                        <button id="exit" class="btn btn-red" ng-click="exit()" style="width:90px;margin:0px;">Exit</button> 
                     </div>
                 </div>
                 <div class="row" id="buttonRow" style="margin-top:0.3%;">
@@ -419,8 +419,9 @@
     </div>
 
     <style>
+
         .ganttBg {
-            'Color:red';
+          Color:red;
         }
 
         .gantt_hor_scroll::-webkit-scrollbar-track {
@@ -478,26 +479,15 @@
             height: 0; 
            
         }
-        /*.gantt_data_area .tooltip-inner {
+        .gantt_task_content .tooltip {
             max-width: 500px;
-            background-color: white;
-            color: black;
+            padding:5px 10px;
+            background-color: white ;
+            color: black ;
             font-weight: 500;
             max-height: 600px;
             overflow-y: auto;
-            border: 1px solid gray;
-        }
-*/
-        
-           .gantt_task_content .tooltip {
-            max-width: 500px;
-            padding: 5px 10px;
-            background-color: white;
-            color: black;
-            font-weight: 500;
-            max-height: 600px;
-            overflow-y: auto;
-            border: 1px solid gray;
+            border: 1px solid gray ;
         }
 
 

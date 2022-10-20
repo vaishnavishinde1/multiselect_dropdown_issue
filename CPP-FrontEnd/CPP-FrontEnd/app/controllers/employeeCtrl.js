@@ -212,7 +212,7 @@ angular.module('cpp.controllers').
             $scope.gridOptions = {
                 enableColumnMenus: false,
                 enableCellEditOnFocus: true,
-                enableFiltering: true,
+                enableFiltering: true,             
                 /*data: 'userCollection',
                 enableRowSelection: false,
                 enableCellSelection: true,
@@ -303,7 +303,7 @@ angular.module('cpp.controllers').
                     editDropdownIdLabel: 'ID',
                     editDropdownValueLabel: 'value',
                     editDropdownOptionsArray: positionArray,
-                    cellClass: 'c-col-Num',  //Manasi 
+                   /* cellClass: 'c-col-Num',  //Manasi    //Sarab20-10-22 */
 
                 },
                 {

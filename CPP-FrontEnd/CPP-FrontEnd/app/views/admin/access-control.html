@@ -2,6 +2,9 @@
     table>tbody>tr>td{
         width: 132px;
     }
+    table > tbody > tr > th {
+        width: 132px;
+    }
 
 </style>
 <div class="container-fluid">
@@ -12,38 +15,36 @@
                     <h3 class="panel-title">Application Security</h3>
                     <a href="#/app/wbs" class="exit-button">X</a>
                 </div>
-                <div class="panel-body">
-                    <table class="grid__table">
-                        <thead>
-                            <tr>
-                                <th class="t-head">Role</th>
-                                <th class="t-head">View Contract</th>
-                                <th class="t-head">Modify Contract</th>
-                                <th class="t-head">View Project</th> <!--Original: View Program Element-->
-                                <th class="t-head">Modify Project</th> <!--Original: Modify Program Element-->
-                                <th class="t-head">View Project Element</th> <!--Original: View Project-->
-                                <th class="t-head">Modify Project Element</th> <!--Original: Modify Project-->
-                                <th class="t-head">View Trend</th>
-                                <th class="t-head">Modify Trend</th>
+             
+                <div class="panel-height m-t-25">
+                 
+                        <table class="grid__table table-outline-wo-p">
+                            <thead>
+                                <tr>
+                                    <th class="t-head" width="10%">Role</th>
+                                    <th class="t-head">View Contract</th>
+                                    <th class="t-head">Modify Contract</th>
+                                    <th class="t-head">View Project</th> <!--Original: View Program Element-->
+                                    <th class="t-head">Modify Project</th> <!--Original: Modify Program Element-->
+                                    <th class="t-head">View Project Element</th> <!--Original: View Project-->
+                                    <th class="t-head" width="5%">Modify Project Element</th> <!--Original: Modify Project-->
+                                    <th class="t-head">View Trend</th>
+                                    <th class="t-head">Modify Trend</th>
 
-                                <th class="t-head">View Activity</th>
-                                <th class="t-head">Modify Activity</th>
-                                <!-- <th class="c-th">Admin</th>
-                                 <!--<th class="c-th">Role Management</th>-->
-                                <!--<th class="c-th">Lookup Management</th>-->
-                                <th class="t-head">View Report</th>
-                                <!--<th class="c-th">View Chart</th>-->
-                                <th class="t-head">View Labor</th>
-                            </tr>
-                        </thead>
-                    </table>
-
-                    <div class="panel-height">
-                        <table class="grid__table " style="table-layout: fixed;">
+                                    <th class="t-head">View Activity</th>
+                                    <th class="t-head">Modify Activity</th>
+                                    <!-- <th class="c-th">Admin</th>
+             <!--<th class="c-th">Role Management</th>-->
+                                    <!--<th class="c-th">Lookup Management</th>-->
+                                    <th class="t-head">View Report</th>
+                                    <!--<th class="c-th">View Chart</th>-->
+                                    <th class="t-head">View Labor</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr id="tbl" class="fade-selection-animation" ng-repeat="row in rowCollection" ng-class="{'selected':row.Role===ACItem.Role}"
                                     ng-click="setAccessControl(row)">
-                                    <td class="td-access">{{row.Role}}</td>
+                                    <td>{{row.Role}}</td>
                                     <td class="td-access"><input ng-click="toggle(0,row)" ng-checked="{{row.AccessControlList[0]}}" type="checkbox" value=""></td>
                                     <td class="td-access"><input ng-click="toggle(1,row)" ng-checked="{{row.AccessControlList[1]}}" type="checkbox" value=""></td>
                                     <td class="td-access"><input ng-click="toggle(2,row)" ng-checked="{{row.AccessControlList[2]}}" type="checkbox" value=""></td>
@@ -63,7 +64,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+              
 
                 </div>
                 <div class=" modal-footer" id="right_panel-footer">

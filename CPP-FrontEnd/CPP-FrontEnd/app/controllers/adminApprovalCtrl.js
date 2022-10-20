@@ -181,19 +181,19 @@
 
                 for (let a = 0; a < historyData.length; a++) {
                     gridTableHistoryData.append('<tr class="contact-row" id="' + historyData[a].Id + '">' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '><a>' + (a + 1) + '</a></td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + historyData[a].Department + '</td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + historyData[a].DepartmentManager + '</td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + historyData[a].OperationManager + '</td> ' +
                         //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         //'>' + historyData[a].UpdatedBy + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + moment(historyData[a].FromDate).format('MM/DD/YYYY') + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        '<td class="ttext-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + moment(historyData[a].ToDate).format('MM/DD/YYYY') + '</td>' +
                         '</tr> ');
                 }
@@ -299,7 +299,7 @@
                         /* enableCellEditOnFocus: true,
                          editableCellTemplate: $scope.cellSelectEditableTemplate,*/
                         cellFilter: 'customFilter:this',
-                        cellClass: 'c-col-Num',
+                       /* cellClass: 'c-col-Num', Sarab 20-10-22 */
                         width: 330
 
                     },
@@ -316,7 +316,7 @@
                         /* enableCellEditOnFocus: true,
                          editableCellTemplate: $scope.cellSelectEditableTemplate,*/
                         cellFilter: 'customFilter:this',
-                        cellClass: 'c-col-Num',
+                        /*cellClass: 'c-col-Num', Sarab 20-10 - 22*/
                         width: 300
 
                     },
@@ -333,7 +333,7 @@
                         /* enableCellEditOnFocus: true,
                          editableCellTemplate: $scope.cellSelectEditableTemplate,*/
                         cellFilter: 'customFilter:this',
-                        cellClass: 'c-col-Num',
+                       /* cellClass: 'c-col-Num',  Sarab 20-10-22  */
                         width: 300
 
                     },
@@ -344,7 +344,7 @@
                         enableCellEdit: false,
                         enableFiltering: false,
                         width: 50,
-                        cellTemplate: '<input id="checkboxId[row.entity.displayId]" ng-model="checkList[row.entity.displayId]" type="checkbox" class = "c-col-check" ng-click="grid.appScope.check(row,col)" style="text-align: center;vertical-align: middle;">'
+                        cellTemplate: '<input id="checkboxId[row.entity.displayId]" ng-model="checkList[row.entity.displayId]" type="checkbox" class = "c-col-check" ng-click="grid.appScope.check(row,col)">'
 
                     }
 
