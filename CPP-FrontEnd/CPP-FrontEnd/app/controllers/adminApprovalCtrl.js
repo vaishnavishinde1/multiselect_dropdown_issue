@@ -3,7 +3,7 @@
 
     controller('AdminApprovalCtrl', ['$state', '$http', '$uibModal', 'AdminApproval', 'ApprovalPresidentAndHistory', '$rootScope', '$scope', 'Page', 'User', 'ProjectTitle', 'TrendStatus', '$location', 'AllEmployee', 'ProjectClass', '$timeout',
         function ($state, $http, $uibModal, AdminApproval, ApprovalPresidentAndHistory, $rootScope, $scope, Page, User, ProjectTitle, TrendStatus, $location, AllEmployee, ProjectClass, $timeout) {
-            Page.setTitle('Trend Approvers');
+            Page.setTitle('Approvers');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
             var url = serviceBasePath + "Response/adminApproval";
@@ -189,8 +189,8 @@
                         '>' + historyData[a].DepartmentManager + '</td> ' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + historyData[a].OperationManager + '</td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + historyData[a].UpdatedBy + '</td>' +
+                        //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                        //'>' + historyData[a].UpdatedBy + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                         '>' + moment(historyData[a].FromDate).format('MM/DD/YYYY') + '</td>' +
                         '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
@@ -209,10 +209,10 @@
 
             $("#searchInHistory").on("keyup", function search() {
                 var tr = $('#tblApprovalHistoryGrid tbody tr');
-                let filter_Id = $(this).val();
+                let filter_Id = $(this).val().toLowerCase();
                 for (let i = 0; i < tr.length; i++) {
                     td = tr[i].cells;
-                    var td_Id = td[1].innerText;
+                    var td_Id = td[1].innerText.toLowerCase();
                     if (td_Id.indexOf(filter_Id) > -1) {
                         tr[i].style.display = "";
                     }
