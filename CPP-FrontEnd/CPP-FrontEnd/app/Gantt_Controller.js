@@ -1232,7 +1232,15 @@ angular.module('xenon.Gantt_Controller', []).
                     //}
 
                     $scope.newMaterials[id] = getNewMaterials(id);
+                    $scope.selectedCost.IsMaterialCategoryChanged = false;
 
+                    //var rowBox = $("#cost-gantt .costBar[task_id='" + id + "']");
+                    //var cellBox = rowBox.find('.' + id + '_costText');
+                    //var boxb = cellBox.get(0);
+                    //$(cellBox).removeEventListener("mouseover", $scope.changedCost);
+                    //$(cellBox).removeEventListener("mouseleave", $scope.changedCost);
+
+                    //y.removeEventListener("mouseover", RespondMouseOver);
                     //console.log($scope.material_id[id], id);
 
                     var row = $("#cost-gantt .gantt_row[task_id='" + id + "']");
@@ -1522,80 +1530,80 @@ angular.module('xenon.Gantt_Controller', []).
 
                 } else if ($scope.method[id] === "U") {
                     //luan quest 3/26 TODO
-                    if ($scope.material_id[id].name == '----------Add New----------') {
-                        $scope.material_id[id] = { name: '', value: '' };   //reset
-                        $scope.newMaterials[id] = [];
-                        //Modal to add new type
-                        var scope = $rootScope.$new();
+                    //if ($scope.material_id[id].name == '----------Add New----------') {
+                    //    $scope.material_id[id] = { name: '', value: '' };   //reset
+                    //    $scope.newMaterials[id] = [];
+                    //    //Modal to add new type
+                    //    var scope = $rootScope.$new();
 
-                        scope.params = {
-                            materialCategory: $scope.description[id],
-                            unitTypes: $scope.unitTypeList,
-                            VendorList: $scope.VendorList
-                        }
-
-
-
-                        $rootScope.modalInstance = $uibModal.open({
-                            backdrop: 'static',
-                            keyboard: false,
-                            scope: scope,
-                            templateUrl: "app/views/modal/add_material_modal.html",
-                            size: "md",
-                            controller: "AddMaterialModalCtrl"
-                        });
-                        $rootScope.modalInstance.result.then(function (response) {
-                            //console.log(response);
-                            if (response.status == 'Success') {
-                                Material.get({}, function (MaterialsData) {
-                                    //$scope.newMaterials = [];
-                                    var material = {};
-                                    var selectedMaterial = {};
-                                    //console.log(MaterialsData.result);
-                                    var materialsList = filterMaterialByMaterialCategory(id, MaterialsData.result);
-                                    //console.log(materialsList);
-
-                                    // Jignesh-25-03-2021
-                                    var authRole = $scope.localStorageSrevice.get('authorizationData').role;
-                                    //if (authRole === "Admin") {
-                                    if (authRole.indexOf('Admin') != -1) {
-                                        //luan quest 3/26
-                                        material["name"] = '----------Add New----------';
-                                        material["value"] = 0;
-                                        $scope.newMaterials.push(material);
-                                    }
+                    //    scope.params = {
+                    //        materialCategory: $scope.description[id],
+                    //        unitTypes: $scope.unitTypeList,
+                    //        VendorList: $scope.VendorList
+                    //    }
 
 
-                                    for (var i = 0; i < materialsList.length; i++) {
-                                        material = {};
-                                        material["name"] = materialsList[i].name;
-                                        material["value"] = materialsList[i].value;
-                                        //console.log(material);
-                                        $scope.newMaterials.push(material);
 
-                                        if (materialsList[i].name == response.objectSaved.Name) {
-                                            selectedMaterial = material;
-                                        }
-                                    }
+                    //    $rootScope.modalInstance = $uibModal.open({
+                    //        backdrop: 'static',
+                    //        keyboard: false,
+                    //        scope: scope,
+                    //        templateUrl: "app/views/modal/add_material_modal.html",
+                    //        size: "md",
+                    //        controller: "AddMaterialModalCtrl"
+                    //    });
+                    //    $rootScope.modalInstance.result.then(function (response) {
+                    //        //console.log(response);
+                    //        if (response.status == 'Success') {
+                    //            Material.get({}, function (MaterialsData) {
+                    //                //$scope.newMaterials = [];
+                    //                var material = {};
+                    //                var selectedMaterial = {};
+                    //                //console.log(MaterialsData.result);
+                    //                var materialsList = filterMaterialByMaterialCategory(id, MaterialsData.result);
+                    //                //console.log(materialsList);
 
-                                    //console.log($scope.newMaterials, selectedMaterial, $scope.material_id);
+                    //                // Jignesh-25-03-2021
+                    //                var authRole = $scope.localStorageSrevice.get('authorizationData').role;
+                    //                //if (authRole === "Admin") {
+                    //                if (authRole.indexOf('Admin') != -1) {
+                    //                    //luan quest 3/26
+                    //                    material["name"] = '----------Add New----------';
+                    //                    material["value"] = 0;
+                    //                    $scope.newMaterials.push(material);
+                    //                }
 
-                                    //Update the static list
-                                    $scope.orgMaterials = MaterialsData.result;
-                                    delayedData[6] = MaterialsData.result;
-                                    refreshMaterials();
-                                    //select the newly added
-                                    $scope.material_id[id] = selectedMaterial;
-                                    $scope.changedName(id);
-                                });
-                            } else {
 
-                            }
-                        }, function error(response) {
-                            //console.log(response);
-                        });
-                        return;
-                    }
+                    //                for (var i = 0; i < materialsList.length; i++) {
+                    //                    material = {};
+                    //                    material["name"] = materialsList[i].name;
+                    //                    material["value"] = materialsList[i].value;
+                    //                    //console.log(material);
+                    //                    $scope.newMaterials.push(material);
+
+                    //                    if (materialsList[i].name == response.objectSaved.Name) {
+                    //                        selectedMaterial = material;
+                    //                    }
+                    //                }
+
+                    //                //console.log($scope.newMaterials, selectedMaterial, $scope.material_id);
+
+                    //                //Update the static list
+                    //                $scope.orgMaterials = MaterialsData.result;
+                    //                delayedData[6] = MaterialsData.result;
+                    //                refreshMaterials();
+                    //                //select the newly added
+                    //                $scope.material_id[id] = selectedMaterial;
+                    //                $scope.changedName(id);
+                    //            });
+                    //        } else {
+
+                    //        }
+                    //    }, function error(response) {
+                    //        //console.log(response);
+                    //    });
+                    //    return;
+                    //}
 
                     var row = $("#cost-gantt .gantt_row[task_id='" + id + "']");
                     var cells = row.find('.gantt_cell');
@@ -1791,23 +1799,41 @@ angular.module('xenon.Gantt_Controller', []).
                 }
                 else if ($scope.method[id] === "U") {
 
+                    var rowBox = $("#cost-gantt .costBar[task_id='" + id + "']");
+                    var cellBox = rowBox.find('.' + id + '_costText');
+                    var boxb = cellBox.get(0);
+
+                    var prevId = id + 1;
+                    var prevRow = $("#cost-gantt .costBar[task_id='" + prevId + "']");
+                    var prevcellBox = prevRow.find('.' + prevId + '_costText');
+                    var prevboxb = prevcellBox.get(0);
+
+                   
+
                     if ($scope.selectedCost.IsMaterialCategoryChanged == true) {
-
-                        var rowBox = $("#cost-gantt .costBar[task_id='" + id + "']");
-                        var cellBox = rowBox.find('.' + id + '_costText');
-                        var boxb = cellBox.get(0);
-
-                        var prevId = id + 1;
-                        var prevRow = $("#cost-gantt .costBar[task_id='" + prevId + "']");
-                        var prevcellBox = prevRow.find('.' + prevId + '_costText');
-                        var prevboxb = prevcellBox.get(0);
 
                         $(cellBox).on('mouseover', function () {
                             $(this).addClass('hover');
                             $(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "bottom" }).tooltip('show');
+                            var nextEle = $(prevboxb).next();
+                            nextEle[0].textContent = "Available Quanitity: " + $scope.selectedCost.Quantity;
+                            //nextEle[0].title = "Available Quanitity: " + $scope.selectedCost.Quantity;
                         });
                         $(cellBox).on('mouseleave', function () {
                             $(this).removeClass('hover');
+                            //$(prevboxb).tooltip({ title: "Available Quanitity: " + $scope.selectedCost.Quantity, placement: "bottom" }).tooltip('hide');
+                        });
+                    }
+                    else if ($scope.selectedCost.IsMaterialCategoryChanged == false) {
+                        $(cellBox).on('mouseover', function () {
+                            $(this).addClass('hover');
+                            $(prevboxb).tooltip({ title: "Available Quanitity: " + 0, placement: "bottom" }).tooltip('show');
+                            var nextEle = $(prevboxb).next();
+                            nextEle[0].textContent = "Available Quanitity: " + $scope.selectedCost.Quantity; 
+                        });
+                        $(cellBox).on('mouseleave', function () {
+                            $(this).removeClass('hover');
+                            $(prevboxb).tooltip({ title: "Available Quanitity: " + 0, placement: "bottom" }).tooltip('hide');
                         });
                     }
 
@@ -10714,9 +10740,12 @@ angular.module('xenon.Gantt_Controller', []).
                     for (var i = 0; i < numberOfBoxes; i++) {
                         var strColorTxt = '';
                         if (costType == 'F') {
-                            if (datatxt[id][i] > 1) {
-                                strColorTxt = "color:red;";
+                            if (datatxt[id][i] != undefined) {
+                                if (datatxt[id][i] > 1) {
+                                    strColorTxt = "color:red;";
+                                }
                             }
+                            
                         }
 
                         var s = i.toString(); // Jignesh-06-05-2021  id.toString() + '0' + i.toString();

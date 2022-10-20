@@ -16023,7 +16023,7 @@ WBSTree = (function ($) {
                             $("#txtDescription").val(_BillOfMaterialList[i].Description);
                             $("#txtquantity").val(_BillOfMaterialList[i].Quantity);
                             $("#txtUnittype").val(_BillOfMaterialList[i].Unit_Type);
-                            $("#txtCostperitem").val(_BillOfMaterialList[i].CostPerItem);
+                            $("#txtCostperitem").val(getCurrecyFormat(_BillOfMaterialList[i].CostPerItem));
                             $("#txtContractwarranty").val(_BillOfMaterialList[i].Contract_Warranty);
 
 
@@ -16133,7 +16133,8 @@ WBSTree = (function ($) {
                         ManufacturerName: dropdownManufacturerName,
                         Quantity: txtqnty,
                         Unit_Type: txtunittype,
-                        CostPerItem: txtCostperitem,
+                        CostPerItem: txtCostperitem.replace("$", "").replaceAll(",", ""),
+                        OriginalCostPerItem: localStorage.OriginalCostPerItem.replace("$", "").replaceAll(",", ""),
                         Contract_Warranty: txtcontractwarranty,
                     };
 
@@ -16255,41 +16256,74 @@ WBSTree = (function ($) {
                         }
 
 
-                        $("#txtCostperitem").val(MaterialData[k].Cost);
+                        $("#txtCostperitem").val(getCurrecyFormat(MaterialData[k].Cost));
+
+
+                        localStorage.OriginalCostPerItem = getCurrecyFormat(MaterialData[k].Cost);
+
                     }
                 }
 
             }
 
+          
+
             function gridloadforbillofmaterial() {
                 for (var x = 0; x < BillOfMaterialList.length; x++) {
-                    gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
-                        //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
-                        //'<input type="checkbox" />' +
-                        //'</td> ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Description + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Quantity + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].CostPerItem + '</td>' +
-                        '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                        '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
-                        '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
-                        '<tr > ');
+                    if (BillOfMaterialList[x].CostPerItem != BillOfMaterialList[x].OriginalCostPerItem) {
+                        gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
+                            //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
+                            //'<input type="checkbox" />' +
+                            //'</td> ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Description + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Quantity + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
+                            '<td title="Original Cost Per Item: ' + getCurrecyFormat(_BillOfMaterialList[x].OriginalCostPerItem) + '" style="color:green; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;font-weight:bold;"' +
+                            '>' +getCurrecyFormat(_BillOfMaterialList[x].CostPerItem) + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                            '<tr > ');
+                    }
+                    else {
+                        gridbillofmaterial.append('<tr class="contact-row" id="' + _BillOfMaterialList[x].Id + '">' +
+                            //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' +
+                            //'<input type="checkbox" />' +
+                            //'</td> ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialCategoryName + '</td > ' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].MaterialName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Description + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].ManufacturerName + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Quantity + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + getCurrecyFormat(_BillOfMaterialList[x].CostPerItem) + '</td>' +
+                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
+                            '<td class="text-center" style="white-space: nowrap"> <i class="fa fa-edit btntbl-icon" style="display:none;" id="update_bill_of_material" title="Edit"></i>&nbsp;&nbsp;<i class="fa fa-trash btntbl-icon" id="delete_bill_of_material" title="Delete"></i></td >' +
+                            '<tr > ');
+
+                    }
                 }
             }
 
 
-
+        
 
             $('#ProgramElementModal').on('shown.bs.modal', function () {
                 $('[id$=program_element_name]').focus();
@@ -18256,7 +18290,7 @@ WBSTree = (function ($) {
                             $('#modification_description').val(response.data.Description);
                             $('#ddModificationType').val(response.data.ModificationType);
                             if (response.data.ModificationType == 1) {
-                                $('#modification_value').val(response.data.Value); 
+                                $('#modification_value').val('$'+response.data.Value);
                                 $('#schedule_impact').val('');
                                 $('#divModificationValue').show();
                                 $('#divModDurationDate').hide();
@@ -18434,7 +18468,7 @@ WBSTree = (function ($) {
                     }
                 }
             });
-            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").keypress(function (e) {
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter,#txtCostperitem").keypress(function (e) {
                 if (e.which != 46 && e.which != 46 &&
                     !(e.which >= 48 && e.which <= 57)) {
                     return false;
@@ -18444,7 +18478,7 @@ WBSTree = (function ($) {
                 }
             });
            
-            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter").on({
+            $("#insurance_limit,#contractOgValueFilter,#currrentContractValueFilter,#txtCostperitem").on({
                 keyup: function () {
                     formatCurrency($(this));
                 },
@@ -18473,6 +18507,13 @@ WBSTree = (function ($) {
                 blur: function () {
                     //formatCurrency($(this), "blur");
                     $(this).val(getCurrecyFormat($(this).val()));
+                }
+            });
+           
+            $('input,textarea').on({
+                blur: function () {
+                    var fieldname = $(this).val().trim();
+                    $(this).val(fieldname);
                 }
             });
             //============================================================================
