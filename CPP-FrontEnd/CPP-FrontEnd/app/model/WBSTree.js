@@ -3981,7 +3981,7 @@ WBSTree = (function ($) {
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges
                                 // $sign added by Amruta -14022022
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
+                                '<td class="class-td-LiveView text-right" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
                                 //'<td><input type="button" name="btnviewOrderDetail"  id="viewOrderDetail" style="color:white;background-color: #0c50e8;" value="View"/></td>' +
                                 //'<td class="text-center"><i class="icons icon-doc-view btntbl-icon" name="btnviewOrderDetail"  id="viewOrderDetail" title="View Details"/></td>' +
