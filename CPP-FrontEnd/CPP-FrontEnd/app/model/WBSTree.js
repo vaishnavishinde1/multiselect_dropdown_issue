@@ -16287,7 +16287,7 @@ WBSTree = (function ($) {
                             '>' + _BillOfMaterialList[x].Quantity + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _BillOfMaterialList[x].Unit_Type + '</td>' +
-                            '<td title="Original Cost Per Item: ' + getCurrecyFormat(_BillOfMaterialList[x].OriginalCostPerItem) + '" style="color:green; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '<td title="Original Cost Per Item: ' + getCurrecyFormat(_BillOfMaterialList[x].OriginalCostPerItem) + '" style="color:green; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;font-weight:bold;"' +
                             '>' +getCurrecyFormat(_BillOfMaterialList[x].CostPerItem) + '</td>' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '>' + _BillOfMaterialList[x].Contract_Warranty + '</td>' +
