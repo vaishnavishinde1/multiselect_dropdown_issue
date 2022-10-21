@@ -117,6 +117,7 @@ namespace WebAPI.Models
         public DateTime? ProjectPStartDate { get; set; }
         public DateTime? ProjectPODate { get; set; }
         public DateTime? ProjectPEndDate { get; set; }
+        public DateTime ProjectOrgEndDate { get; set; }
 
 
         //Super project properties - getting from Project.cs - END
@@ -306,6 +307,7 @@ namespace WebAPI.Models
                         
                         pgmElt.ProjectNTPDate = DateTime.Parse(pgmElt.ProjectStartDate, DateTimeFormatInfo.InvariantInfo);
 
+                        pgmElt.ProjectOrgEndDate = Convert.ToDateTime(pgmElt.ProjectPEndDate);
 
                         //pgmElt.ProjectNTPDate = Convert.ToDateTime(pgmElt.ProjectStartDate);   //Manasi 23-10-2020
                         //pgmElt.ProjectNTPDate = DateTime.ParseExact(Convert.ToString(pgmElt.ProjectStartDate), "MM/dd/yyyy", CultureInfo.InvariantCulture);   //Jignesh 20-11-2020

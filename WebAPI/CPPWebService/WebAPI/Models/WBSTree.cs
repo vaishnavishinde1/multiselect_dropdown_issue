@@ -563,6 +563,8 @@ namespace WebAPI.Models
         public String ProjectPODate;
         [DataMember]
         public String ProjectPEndDate;
+        [DataMember]
+        public String ProjectOrgEndDate;
 
         //================================
 
@@ -647,6 +649,7 @@ namespace WebAPI.Models
             // Jignesh-25-02-2021
             ProjectPStartDate = (wbspe.ProjectPStartDate != null ? wbspe.ProjectPStartDate.Value.ToString("yyyy-MM-dd") : "");
             ProjectPEndDate = (wbspe.ProjectPEndDate != null ? wbspe.ProjectPEndDate.Value.ToString("yyyy-MM-dd") : "");
+            ProjectOrgEndDate = (wbspe.ProjectOrgEndDate != null ? wbspe.ProjectOrgEndDate.ToString("yyyy-MM-dd") : ""); //Narayan 20-10-2022
             ProjectPODate = (wbspe.ProjectPODate != null ? wbspe.ProjectPODate.Value.ToString("yyyy-MM-dd") : "");
 
             ClientPhoneNumber = wbspe.ClientPhoneNumber;
