@@ -56,6 +56,7 @@ namespace WebAPI.Models
         public int Deleted { get; set; }
 
         public List<MaterialList> materialLists { get; set; }
+
         public static string registerBillOfMaterial(BillOfMaterial billOfMaterialdata)
         {
             var status = "";
@@ -179,7 +180,6 @@ namespace WebAPI.Models
                         ).ToList();
 
                     }
-
                     result = "success";
                     return billsofmaterialList;
 

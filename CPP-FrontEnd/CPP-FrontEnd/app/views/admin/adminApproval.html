@@ -3,24 +3,24 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" style="font-size:30px;">
-                    Trend Approvers
+                    Approvers
                 </h3>
                 <a href="#/app/wbs" class="exit-button">X</a>
             </div>
-            <div class="row" style="padding-bottom:15px">
-                <div class="col-sm-6">
+            <div class="trend_app_heading ">
+                <div>
                     <label for="selectPresident">President</label>
                     <br />
                     <select ng-options="item as item.UserFullName for item in presidentList track by item.EmployeeID"
                             class="input-medium form-control" ng-change="filterchangepresident()" ng-model="filterpresident" id="selectPresident">
                     </select>
                 </div>
-                <div class="col-sm-6 h-100" style="text-align: end; padding-top: 15px;">
+                <div class="m-t-15">
                     <button type="button" class="btn btn-primary" ng-click="showHistory()">Approval History</button>
                 </div>
             </div>
 
-            <div class="panel-body" style="height: 550px; overflow: auto">
+            <div class="panel-body panel-height">
                 <div class="gridStyle" ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav>
 
                 </div>
@@ -52,7 +52,7 @@
                             <div class="_form-group">
                                 <div class="col-xs-12  col-md-12 m-b-10 m-t-10">
                                     <!--<label class="control-label _bold">Search : </label>-->
-                                    <input type="text" class="form-control" id="searchInHistory" autocomplete="off" placeholder="Type to search ....">
+                                    <input type="text" class="form-control" id="searchInHistory" autocomplete="off" placeholder="Type to search department ..">
                                 </div>
                             </div>
                             <div class="block-view panel-body">
@@ -61,12 +61,12 @@
                                         <thead>
                                             <tr class="t-head">
                                                 <th></th>
-                                                <th style="width: 20%;"> Department</th>
-                                                <th style="width: 20%;"> Department Manager</th>
-                                                <th style="width: 20%;"> Operation Manager</th>
-                                                <th style="width: 10%;"> Updated By</th>
-                                                <th style="width: 10%;"> From</th>
-                                                <th style="width: 10%;"> To</th>
+                                                <th style="width: 22%;"> Department</th>
+                                                <th style="width: 22%;"> Department Manager</th>
+                                                <th style="width: 22%;"> Operation Manager</th>
+                                                <!--<th style="width: 10%;"> Updated By</th>-->
+                                                <th style="width: 12%;"> From</th>
+                                                <th style="width: 12%;"> To</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>

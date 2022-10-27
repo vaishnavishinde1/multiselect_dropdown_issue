@@ -159,7 +159,7 @@
                         editDropdownOptionsArray: ClientArray,
                         //editDropDownChange: 'test',
                         cellFilter: 'customFilter:this',
-                        cellClass:'c-col-Num',
+                        /*cellClass:'c-col-Num',    Sarab 22-10-22*/
                         width: 200
                     },
                     {
