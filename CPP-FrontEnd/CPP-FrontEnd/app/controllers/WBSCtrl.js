@@ -4289,7 +4289,7 @@
                     }).catch(function (err) {
                         //usSpinnerService.stop('spinner-8'); // Narayan - start spinner on data get api fail - 11/07/2022
                     });
-                var sreachTxt = $('#txtQuickSearch').val();
+                var sreachTxt = $('#txtQuickSearch').val().replaceAll('%', '');;
                 $scope.SearchText = sreachTxt;
                 localStorage.setItem('SearchText', sreachTxt);
 
