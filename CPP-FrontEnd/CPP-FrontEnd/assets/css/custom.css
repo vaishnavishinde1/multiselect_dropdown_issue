@@ -198,7 +198,13 @@ form .form-group.has-error .help-block, form .form-group.has-error .control-labe
 input[type=file] {
     border: none;
 }
+.mp-tp-0{
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
 
+}
 .p-t-0 {
     padding-top: 0 !important;
 }

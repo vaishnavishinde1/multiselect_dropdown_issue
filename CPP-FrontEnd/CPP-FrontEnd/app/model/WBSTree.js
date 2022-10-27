@@ -4050,7 +4050,7 @@ WBSTree = (function ($) {
                     $('#program_element_total_current_value').val('$' + (totalmod + projvalue));
                     $('#program_element_total_current_value').focus();
                     $('#program_element_total_current_value').blur();
-                    var currProjectEndDate = new Date(selectedNode.orignalProjectEndDate);
+                    var currProjectEndDate = new Date(selectedNode.ProjectOrgEndDate);
                     var updatedprojectEndDate = new Date();
                     updatedprojectEndDate.setDate(currProjectEndDate.getDate() + parseInt(schImp));
                     $('#program_element_PEnd_Date').val(moment(updatedprojectEndDate).format('MM/DD/YYYY'));
@@ -4060,7 +4060,6 @@ WBSTree = (function ($) {
                         $('#program_element_PEnd_Date').prop('disabled', true);
 
                     }
-                    $('#program_element_PEnd_Date').focus();
                     $('#program_element_PEnd_Date').blur();
 
                     $('input[name=rbChangeOrder]').on('click', function (event) {
@@ -14823,7 +14822,6 @@ WBSTree = (function ($) {
                     // Added by Amruta for invalid date issue
                     if (selectedNode.ProjectPEndDate != "")
                         modal.find('.modal-body #program_element_PEnd_Date').val(moment(selectedNode.ProjectPEndDate).format('MM/DD/YYYY')); // Jignesh-26-02-2021
-                    selectedNode.orignalProjectEndDate = selectedNode.ProjectPEndDate;
 
                     //------------------------------------------------------------------------------------------------------
 
