@@ -10,4 +10,7 @@ angular.module('cpp.services').
     }]).
     factory('UpdateActivity',['$resource',function($resource){
         return $resource(serviceBasePath+"Response/Activity");
-    }]);
+    }]).
+factory('MaterialListByActivity', ['$resource', function ($resource) {
+    return $resource(serviceBasePath + "MaterialList/getMateriallist/:projectId/:activityid");
+}]);

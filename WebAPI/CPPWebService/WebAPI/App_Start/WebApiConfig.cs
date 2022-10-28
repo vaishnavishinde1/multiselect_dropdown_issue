@@ -1909,7 +1909,12 @@ namespace WebAPI
                  defaults: new { controller = "BillOfMaterial", action = "Post", SearchText = RouteParameter.Optional }
              );
 
-
+            //vaishnavi - 24/09/2022
+            config.Routes.MapHttpRoute(
+                 name: "GetMaterialList",
+                 routeTemplate: "MaterialList/getMateriallist/{projectId}/{activityid}",
+                 defaults: new { controller = "MaterialList", action = "Get", projectId = RouteParameter.Optional, activityid = RouteParameter.Optional }
+             );
             //vaishnavi - 24/09/2022
             config.Routes.MapHttpRoute(
                  name: "GetBillOfMaterial",
