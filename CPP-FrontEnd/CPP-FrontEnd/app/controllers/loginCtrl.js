@@ -1,6 +1,6 @@
 angular.module('cpp.controllers').
-    controller('LoginCtrl',['UserName','authService','$scope','$rootScope','$location','localStorageService','$menuItems','$state','$window',
-        function (UserName, authService, $scope, $rootScope, $location, localStorageService, $menuItems, $state, $window) {
+    controller('LoginCtrl', ['UserName', 'authService', '$scope', '$rootScope', '$location', 'localStorageService', '$menuItems', '$state', '$window','usSpinnerService',
+        function (UserName, authService, $scope, $rootScope, $location, localStorageService, $menuItems, $state, $window, usSpinnerService) {
 
             console.log(localStorage.getItem('directUrlPath'));
 
@@ -34,6 +34,7 @@ angular.module('cpp.controllers').
 
 
             $scope.login = function () {
+                usSpinnerService.spin('spinner-29'); //loader issue fix:: 20102022
                 document.getElementById("loading").style.display = "block";
                 if ($scope.loginData.userName == "") {
                     dhtmlx.alert("Please enter username.");
