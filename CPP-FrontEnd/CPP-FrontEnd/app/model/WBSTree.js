@@ -879,7 +879,7 @@ WBSTree = (function ($) {
             var pgmEltId = $("#selectProgramElement").val();
             var projId = $("#selectProject").val();
             var deptEltId = $("#selectManagingDepartment").val();
-            var sreachTxt = $('#txtQuickSearch').val();
+            var sreachTxt = $('#txtQuickSearch').val().replaceAll('%','');
             var allData = 1;
 
             if (pgmId == 'undefined' || pgmId == null || pgmId == '') {
