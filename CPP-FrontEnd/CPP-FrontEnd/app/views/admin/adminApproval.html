@@ -3,14 +3,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" style="font-size:30px;">
-                    Approvers
+                    Approvers 
                 </h3>
                 <a href="#/app/wbs" class="exit-button">X</a>
             </div>
-            <div class="trend_app_heading ">
+            <div class="trend_app_heading">
                 <div>
                     <label for="selectPresident">President</label>
-                    <br />
+                    <br /> 
                     <select ng-options="item as item.UserFullName for item in presidentList track by item.EmployeeID"
                             class="input-medium form-control" ng-change="filterchangepresident()" ng-model="filterpresident" id="selectPresident">
                     </select>
