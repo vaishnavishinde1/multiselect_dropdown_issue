@@ -2528,9 +2528,9 @@
                     }
                     if (contractModification.ModificationType == 1 || contractModification.ModificationType == 3) {
                         selectedNode.ContractModificationValue = $('#total_modification').val();
-                        usSpinnerService.spin('spinner-42');
+                        //usSpinnerService.spin('spinner-42');
                         $scope.loadWBSData.GetContractGridSection(selectedNode);
-                        usSpinnerService.stop('spinner-42');
+                        //usSpinnerService.stop('spinner-42');
                     }
 
 
@@ -3028,9 +3028,9 @@
                                     // window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    usSpinnerService.spin('spinner-43');
+                                    //usSpinnerService.spin('spinner-43');
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                    usSpinnerService.stop('spinner-43');
+                                    //usSpinnerService.stop('spinner-43');
                                 });
 
 
@@ -3112,9 +3112,9 @@
 
                                 var pgmId = $("#selectProgram").val();
                                 var orgId = $("#selectOrg").val();
-                                usSpinnerService.spin('spinner-44');
+                                //usSpinnerService.spin('spinner-44');
                                 $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                usSpinnerService.stop('spinner-44');
+                                //usSpinnerService.stop('spinner-44');
                             });
                         } else if (selectedNode.level === "ProgramElement") {
                             wbsTree.getProgramElement().persist().save({
@@ -3139,9 +3139,9 @@
                                 //window.location.reload();
                                 var pgmId = $("#selectProgram").val();
                                 var orgId = $("#selectOrg").val();
-                                usSpinnerService.spin('spinner-45');
+                                //usSpinnerService.spin('spinner-45');
                                 $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                usSpinnerService.stop('spinner-45');
+                                //usSpinnerService.stop('spinner-45');
                             })
                         } else if (selectedNode.level === "Project" && !wbsTree.getScope().trend && type == "Project") {
 
@@ -3159,9 +3159,9 @@
 
                                 var pgmId = $("#selectProgram").val();
                                 var orgId = $("#selectOrg").val();
-                                usSpinnerService.spin('spinner-46');
+                                //usSpinnerService.spin('spinner-46');
                                 $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                usSpinnerService.stop('spinner-46');
+                                //usSpinnerService.stop('spinner-46');
                                 var firstGNode = $('#trendSvg').children()[0];
                                 //$(firstGNode).children().remove();
                                 // window.location.reload();
@@ -3194,9 +3194,9 @@
                                     // window.location.reload();
                                     var pgmId = $("#selectProgram").val();
                                     var orgId = $("#selectOrg").val();
-                                    usSpinnerService.spin('spinner-47');
+                                    //usSpinnerService.spin('spinner-47');
                                     $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                                    usSpinnerService.stop('spinner-47');
+                                    //usSpinnerService.stop('spinner-47');
                                 });
 
 
@@ -4301,9 +4301,9 @@
                 var sreachTxt = $('#txtQuickSearch').val().replaceAll('%', '');;
                 $scope.SearchText = sreachTxt;
                 localStorage.setItem('SearchText', sreachTxt);
-                usSpinnerService.spin('spinner-48');
+                //usSpinnerService.spin('spinner-48');
                 var loadfunc = $scope.loadWBSData(orgId, null, null, null, $scope.SearchText, '1', null, $scope.filterClient);
-                usSpinnerService.stop('spinner-48');
+                //usSpinnerService.stop('spinner-48');
             });
             $scope.FilterTrend = function (e) {
                 var oldsvg = d3.select("#wbs-tree");
@@ -4317,17 +4317,17 @@
                     $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey');   //vaishnavi 02-03-2022
-                    usSpinnerService.spin('spinner-49');
+                    //usSpinnerService.spin('spinner-49');
                     $scope.loadWBSData(orgId, null, null, null, null, '0', null, $scope.filterClient);
-                    usSpinnerService.stop('spinner-49');
+                    //usSpinnerService.stop('spinner-49');
 
                 } else {
                     $("#FilterTrend").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").prop('disabled', 'disabled');   //vaishnavi 02-03-2022
                     $("#btnQuickSearch").css('background-color', 'darkgrey'); //vaishnavi 02-03-2022
-                    usSpinnerService.spin('spinner-50');
+                    //usSpinnerService.spin('spinner-50');
                     $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
-                    usSpinnerService.stop('spinner-50');
+                    //usSpinnerService.stop('spinner-50');
 
                 }
 
@@ -6835,9 +6835,9 @@
                                     console.log(testobj);
                                     $scope.filterProject = (testobj.ProjectID).toString();
                                     console.log('ProjectId--' + $scope.filterProject);
-                                    usSpinnerService.spin('spinner-30');
+                                    //usSpinnerService.spin('spinner-30');
                                     $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, $scope.filterProject, null, '1', null, $scope.filterClient);
-                                    usSpinnerService.stop('spinner-30');
+                                    //usSpinnerService.stop('spinner-30');
                                 });
                             });
                         });
@@ -6856,9 +6856,9 @@
                                 console.log(testobj);
                                 $scope.filterProgramElement = (testobj.ProgramElementID).toString();
                                 console.log('PrgmElmnt:' + $scope.filterProgramElement);
-                                usSpinnerService.spin('spinner-31');
+                                //usSpinnerService.spin('spinner-31');
                                 $scope.loadWBSData(orgId, $scope.filterProgramId, $scope.filterProgramElement, null, null, '1', null, $scope.filterClient);
-                                usSpinnerService.stop('spinner-31');
+                                //usSpinnerService.stop('spinner-31');
                                 Project.lookup().get({ ProgramID: $scope.filterProgramId, ProgramElementID: $scope.filterProgramElement }, function (projectData) {
                                     $scope.projectList = projectData.result;
                                 });
@@ -6886,17 +6886,17 @@
                                 });
                                 getSelectedContract();
                             }
-                            usSpinnerService.spin('spinner-32');
+                            //usSpinnerService.spin('spinner-32');
                             $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
-                            usSpinnerService.stop('spinner-32');
+                            //usSpinnerService.stop('spinner-32');
                         });
 
                     }
 
                     else {
-                        usSpinnerService.spin('spinner-33');
+                        //usSpinnerService.spin('spinner-33');
                         $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
-                        usSpinnerService.stop('spinner-33');
+                        //usSpinnerService.stop('spinner-33');
                     }
                 });
 
@@ -7086,9 +7086,9 @@
                         }
 
                     });
-                usSpinnerService.spin('spinner-34');
+                //usSpinnerService.spin('spinner-34');
                 var loadfunc = $scope.loadWBSData(orgId, null, null, null, null, '1', null, $scope.filterClient);
-                usSpinnerService.stop('spinner-34');
+                //usSpinnerService.stop('spinner-34');
 
             }
 
@@ -7158,9 +7158,9 @@
                         localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                         localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                         //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                        usSpinnerService.spin('spinner-35');
+                        //usSpinnerService.spin('spinner-35');
                         $scope.loadWBSData(orgId, $scope.filterProgramId, null, null, null, '1', null, $scope.filterClient);
-                        usSpinnerService.stop('spinner-35');
+                        //usSpinnerService.stop('spinner-35');
 
                     });
             }
@@ -7267,9 +7267,9 @@
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgram $http.get pgmId:' + pgmId + ' else...');
                             }
-                            usSpinnerService.spin('spinner-36');
+                            //usSpinnerService.spin('spinner-36');
                             $scope.loadWBSData(orgId, pgmId, null, null, null, null, null, $scope.filterClient);
-                            usSpinnerService.stop('spinner-36');
+                            //usSpinnerService.stop('spinner-36');
 
                         });
                 }
@@ -7292,9 +7292,9 @@
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgram $http.get orgId:' + orgId);
-                            usSpinnerService.spin('spinner-37');
+                            //usSpinnerService.spin('spinner-37');
                             $scope.loadWBSData(orgId, pgmId, null, null, null, '1', null, $scope.filterClient);
-                            usSpinnerService.stop('spinner-37');
+                            //usSpinnerService.stop('spinner-37');
 
                         });
                 }
@@ -7373,9 +7373,9 @@
                                 localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', null);
                                 //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId + ' pgmEltId:' + pgmEltId + ' else...');
                             }
-                            usSpinnerService.spin('spinner-38');
+                            //usSpinnerService.spin('spinner-38');
                             $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null, $scope.filterClient);
-                            usSpinnerService.stop('spinner-38');
+                            //usSpinnerService.stop('spinner-38');
                         });
                 } else {
                     $http.get(serviceBasePath + "Request/Project/" + pgmEltId)
@@ -7396,9 +7396,9 @@
                             localStorage.setItem('selectProjectFinancialAnalystIDDash', response.data.result[0].FinancialAnalystID);
                             localStorage.setItem('selectProjectCapitalProjectAssistantIDDash', response.data.result[0].CapitalProjectAssistantID);
                             //dhtmlx('at $scope.filterChangeProgramElement $http.get pgmId:' + pgmId);
-                            usSpinnerService.spin('spinner-39');
+                            //usSpinnerService.spin('spinner-39');
                             $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', null, $scope.filterClient);
-                            usSpinnerService.stop('spinner-39');
+                            //usSpinnerService.stop('spinner-39');
                         });
                 }
                 //filterChangeProject();
@@ -7422,9 +7422,9 @@
 
                 var oldsvg = d3.select("#wbs-tree");
                 oldsvg.selectAll("*").remove();
-                usSpinnerService.spin('spinner-40');
+                //usSpinnerService.spin('spinner-40');
                 $scope.loadWBSData(orgId, pgmId, pgmEltId, null, null, '1', deptEltId, $scope.filterClient);
-                usSpinnerService.stop('spinner-40');
+                //usSpinnerService.stop('spinner-40');
                 //filterChangeProject();
 
             }
@@ -7484,9 +7484,9 @@
                             //dhtmlx('at $scope.filterChangeProject $http.get pgmId:' + pgmId + ' pgmEltId:' + pgmEltId + ' projId:' + projId + ' else...');
                         });
                 }
-                usSpinnerService.spin('spinner-41');
+                //usSpinnerService.spin('spinner-41');
                 $scope.loadWBSData(orgId, pgmId, pgmEltId, projId, null, '1', null, $scope.filterClient);
-                usSpinnerService.stop('spinner-41');
+                //usSpinnerService.stop('spinner-41');
                 $('#tblContract, #tblProject, #tblElement, #tblTrend').on('click', 'th', function () {
                     var table = $(this).closest('table');
                     var rows = table.find('tr.contact-row')

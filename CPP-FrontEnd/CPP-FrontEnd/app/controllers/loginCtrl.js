@@ -34,7 +34,7 @@ angular.module('cpp.controllers').
 
 
             $scope.login = function () {
-                usSpinnerService.spin('spinner-29'); //loader issue fix:: 20102022
+                //usSpinnerService.spin('spinner-29'); //loader issue fix:: 20102022
                 document.getElementById("loading").style.display = "block";
                 if ($scope.loginData.userName == "") {
                     dhtmlx.alert("Please enter username.");
