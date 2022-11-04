@@ -188,6 +188,8 @@
                         name: 'Phone Number 1',
                         enableCellEditOnFocus: true,
                         widith: 300,
+                        cellClass:'text-right',
+                      
                         filter: {
                             condition: function (searchTerm, cellValue, test) {
                                 $scope.filterInput = searchTerm;
@@ -199,6 +201,7 @@
                         name: 'Phone Number 2',
                         enableCellEditOnFocus: true,
                         widith: 300,
+                        cellClass: 'text-right',
                         filter: {
                             condition: function (searchTerm, cellValue, test) {
                                 $scope.filterInput = searchTerm;
@@ -252,6 +255,7 @@
                     }, {
                         field: 'BillingPOCState',
                         name: 'State',
+                     
                         enableCellEditOnFocus: true,
                         widith: 300,
                         filter: {
@@ -265,6 +269,7 @@
                         name: 'Zip Code',
                         enableCellEditOnFocus: true,
                         widith: 300,
+                        cellClass: 'text-right',
                         filter: {
                             condition: function (searchTerm, cellValue, test) {
                                 $scope.filterInput = searchTerm;

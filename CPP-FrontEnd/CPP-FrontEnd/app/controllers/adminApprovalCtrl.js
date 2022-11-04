@@ -299,7 +299,7 @@
                         /* enableCellEditOnFocus: true,
                          editableCellTemplate: $scope.cellSelectEditableTemplate,*/
                         cellFilter: 'customFilter:this',
-                       /* cellClass: 'c-col-Num', Sarab 20-10-22 */
+                       /* cellClass: 'c-col-Num',  Sarab 20-10-22 */
                         width: 330
 
                     },
