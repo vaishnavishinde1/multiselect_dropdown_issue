@@ -13,6 +13,7 @@ namespace WebAPI.Models
         public int ApproverMatrixId { get; set; }
         public int EmpId { get; set; }
         public string EmpName { get; set; }
+        public int UserId { get; set; }
         public int ProjectId { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
