@@ -130,10 +130,10 @@
                                 deptWiseOpeManager = $scope.listOfOpeManagers.filter(user => user.DepartmentID == item.DepartmentID);
 
                                 angular.forEach(deptWiseDeptManager, function (user) {
-                                    deptManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName });
+                                    deptManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName, UID: user.Id });
                                 });
                                 angular.forEach(deptWiseOpeManager, function (user) {
-                                    opeManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName });
+                                    opeManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName, UID: user.Id });
                                 });
 
                                 item.departmentManagerOption = deptManagerDD;
@@ -142,6 +142,9 @@
 
                                 item.DeptManagerID = item.DeptManagerID;
                                 item.OpeManagerID = item.OpeManagerID;
+
+                                item.DeptManagerUserID = item.DeptManagerUserID;
+                                item.OpeManagerUserID = item.OpeManagerUserID;
 
                             });
                             console.log($scope.approvalMatrixCollection);
@@ -378,7 +381,9 @@
                         if (rowEntity.Department != rowEntity.DepartmentID) {
                             rowEntity.DepartmentManager = '';
                             rowEntity.DeptManagerID = '';
+                            rowEntity.DeptManagerUserID = '';
                             rowEntity.OpeManagerID = '';
+                            rowEntity.OpeManagerUserID = '';
                             rowEntity.OperationsManager = '';
                         }
 
@@ -386,10 +391,10 @@
                         deptWiseOpeManager = $scope.listOfOpeManagers.filter(user => user.DepartmentID == newValue);
 
                         angular.forEach(deptWiseDeptManager, function (user) {
-                            deptManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName });
+                            deptManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName, UID: user.Id });
                         });
                         angular.forEach(deptWiseOpeManager, function (user) {
-                            opeManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName });
+                            opeManagerDD.push({ ID: user.EmployeeID, Value: user.FirstName + " " + user.LastName, UID: user.Id });
                         });
 
                         rowEntity.departmentManagerOption = deptManagerDD;
@@ -401,6 +406,7 @@
                             if (opt.ID == newValue) {
                                 rowEntity.DepartmentManager = opt.Value;
                                 rowEntity.DeptManagerID = opt.ID;
+                                rowEntity.DeptManagerUserID = opt.UID;
                                 return false;
                             }
                         });
@@ -410,6 +416,7 @@
                             if (opt.ID == newValue) {
                                 rowEntity.OperationsManager = opt.Value;
                                 rowEntity.OpeManagerID = opt.ID;
+                                rowEntity.OpeManagerUserID = opt.UID;
                                 return false;
                             }
                         });
@@ -560,7 +567,9 @@
 
                     approver.DepartmentID = approver.Department;
                     approver.DeptManagerID = approver.DeptManagerID;
+                    approver.DeptManagerUserID = approver.DeptManagerUserID;
                     approver.OpeManagerID = approver.OpeManagerID;
+                    approver.OpeManagerUserID = approver.OpeManagerUserID;
 
 
                     //Detech change
@@ -570,7 +579,9 @@
                         if (approver.ID === orgApprover.ID &&
                             approver.DepartmentID === orgApprover.DepartmentID &&
                             approver.DeptManagerID === orgApprover.DeptManagerID &&
-                            approver.OpeManagerID === orgApprover.OpeManagerID) {
+                            approver.DeptManagerUserID === orgApprover.DeptManagerUserID &&
+                            approver.OpeManagerID === orgApprover.OpeManagerID &&
+                            approver.OpeManagerUserID === orgApprover.OpeManagerUserID) {
                             isChanged = false;
                         }
 
@@ -585,7 +596,9 @@
 
                     if (isChanged && (approver.DepartmentID == "" || approver.DepartmentID == null
                         || approver.DeptManagerID == "" || approver.DeptManagerID == null
-                        || approver.OpeManagerID == "" || approver.OpeManagerID == null)) {
+                        || approver.DeptManagerUserID == "" || approver.DeptManagerUserID == null
+                        || approver.OpeManagerID == "" || approver.OpeManagerID == null
+                        || approver.OpeManagerUserID == "" || approver.OpeManagerUserID == null)) {
                         $("#save_Material").attr("disabled", false);
                         dhtmlx.alert({
                             text: "Department, Department Manager, Operations Manager cannot be empty (Row " + approver.displayId + ")",
@@ -603,7 +616,9 @@
                             Operation: '1',
                             DepartmentID: approver.DepartmentID,
                             DeptManagerID: approver.DeptManagerID,
-                            OpeManagerID: approver.OpeManagerID
+                            DeptManagerUserID: approver.DeptManagerUserID,
+                            OpeManagerID: approver.OpeManagerID,
+                            OpeManagerUserID: approver.OpeManagerUserID
                         }
                         debugger;
                         listToSave.push(dataObj);
@@ -619,7 +634,9 @@
                                 ID: approver.ID,
                                 DepartmentID: approver.DepartmentID,
                                 DeptManagerID: approver.DeptManagerID,
-                                OpeManagerID: approver.OpeManagerID
+                                DeptManagerUserID: approver.DeptManagerUserID,
+                                OpeManagerID: approver.OpeManagerID,
+                                OpeManagerUserID: approver.OpeManagerUserID
                             }
 
                             debugger;
@@ -644,7 +661,8 @@
                     var obj = {
                         Operation: '2',
                         ID: $scope.approvalPresidentData.ID,
-                        PresidentID: $scope.filterpresident.EmployeeID
+                        PresidentID: $scope.filterpresident.EmployeeID,
+                        PresidentUserID: $scope.filterpresident.Id
                     }
 
                     $http({
@@ -779,7 +797,9 @@
                                 ID: item.ID,
                                 DepartmentID: item.DepartmentID,
                                 DeptManagerID: item.DeptManagerID,
+                                DeptManagerUserID: item.DeptManagerUserID,
                                 OpeManagerID: item.OpeManagerID,
+                                OpeManagerUserID: item.OpeManagerUserID,
                                 displayId: item.displayId
                             }
                             listToSave.push(dataObj);
@@ -934,7 +954,9 @@
                                 // compare relevant data
                                 if (originalObject.DepartmentID !== currentObject.DepartmentID ||
                                     originalObject.DeptManagerID !== currentObject.DeptManagerID ||
-                                    originalObject.OpeManagerID !== currentObject.OpeManagerID) {
+                                    originalObject.DeptManagerUserID !== currentObject.DeptManagerUserID ||
+                                    originalObject.OpeManagerID !== currentObject.OpeManagerID ||
+                                    originalObject.OpeManagerUserID !== currentObject.OpeManagerUserID) {
                                     // alert if a change has not been saved
                                     //alert("unsaved change on line" + currentCollection.displayId);
                                     unSavedChanges = true;

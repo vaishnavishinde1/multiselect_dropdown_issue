@@ -21,7 +21,9 @@ namespace WebAPI.Models
         public int DepartmentID { get; set; }
        // public int User_Role_ID { get; set; }
         public int DeptManagerID { get; set; }
+        public int DeptManagerUserID { get; set; }
         public int OpeManagerID { get; set; }
+        public int OpeManagerUserID { get; set; }
 
         public static List<AdminApproval> GetAllApprovers()
         {
@@ -64,21 +66,22 @@ namespace WebAPI.Models
                 try
                 {
                     AdminApproval retreivedadmin = new AdminApproval();
-                    retreivedadmin = ctx.AdminApproval.Where(u => u.DepartmentID == adminapproval.DepartmentID).FirstOrDefault(); ;
+                    retreivedadmin = ctx.AdminApproval.Where(u => u.DepartmentID == adminapproval.DepartmentID).FirstOrDefault(); 
+                    ProjectClass department = ctx.ProjectClass.Where(p => p.ProjectClassID == adminapproval.DepartmentID).FirstOrDefault();
 
                     if (retreivedadmin != null)
                     {
-                        result += adminapproval.DepartmentID + "' failed to be created, duplicate unique identifier found for this organization.\n";
+                        result += department.ProjectClassName + "' failed to be created, duplicate unique identifier found for this organization.\n";
                     }
                     else if (retreivedadmin == null)
                     {
                         ctx.AdminApproval.Add(adminapproval);
                         ctx.SaveChanges();
-                        result += adminapproval.DepartmentID + " has been created successfully.\n";
+                        result += department.ProjectClassName + " has been created successfully.\n";
                     }
                     else
                     {
-                        result += adminapproval.DepartmentID + " failed to be created, it already exist in the same position and organization.\n";
+                        result += department.ProjectClassName + " failed to be created, it already exist in the same position and organization.\n";
                     }
                 }
                 catch (Exception ex)
@@ -110,11 +113,14 @@ namespace WebAPI.Models
                 {
                     AdminApproval retrivedApproval = new AdminApproval();
                     retrivedApproval = ctx.AdminApproval.Where(e => e.ID.Equals(adminApproval.ID)).FirstOrDefault();
+                    ProjectClass department = ctx.ProjectClass.Where(p => p.ProjectClassID == adminApproval.DepartmentID).FirstOrDefault();
 
                     AdminApproval duplicateApprover = new AdminApproval();
                     duplicateApprover = ctx.AdminApproval.Where(d => d.DepartmentID == adminApproval.DepartmentID
                     && d.DeptManagerID == adminApproval.DeptManagerID
-                    && d.OpeManagerID == adminApproval.OpeManagerID).FirstOrDefault();
+                    && d.DeptManagerUserID == adminApproval.DeptManagerUserID
+                    && d.OpeManagerID == adminApproval.OpeManagerID
+                    && d.OpeManagerUserID == adminApproval.OpeManagerUserID).FirstOrDefault();
 
                     if (retrivedApproval.Equals(null))
                     {
@@ -123,7 +129,7 @@ namespace WebAPI.Models
                     }
                     else if (duplicateApprover != null)
                     {
-                        result += adminApproval.ID + "' failed to be updated, duplicate will be created.\n";
+                        result += department.ProjectClassName + "' failed to be updated, duplicate will be created.\n";
                     }
                     else if(retrivedApproval != null)
                     {
@@ -132,11 +138,11 @@ namespace WebAPI.Models
                         CopyUtil.CopyFields<AdminApproval>(adminApproval, retrivedApproval);
                         ctx.Entry(retrivedApproval).State = System.Data.Entity.EntityState.Modified;
                         ctx.SaveChanges();
-                        result += adminApproval.ID + " has been updated successfully.\n";
+                        result += department.ProjectClassName + " has been updated successfully.\n";
                     }
                     else
                     {
-                        result += adminApproval.ID + " failed to be updated, it does not exist.\n";
+                        result += department.ProjectClassName + " failed to be updated, it does not exist.\n";
                     }
                 }
                 catch (Exception ex)
@@ -164,24 +170,27 @@ namespace WebAPI.Models
 
             using (var ctx = new CPPDbContext())
             {
+                ProjectClass department = ctx.ProjectClass.Where(p => p.ProjectClassID == adminApproval.DepartmentID).FirstOrDefault();
+
                 try
                 {
                     AdminApproval retrivedApproval = new AdminApproval();
                     retrivedApproval = ctx.AdminApproval.Where(e => e.ID.Equals(adminApproval.ID)).FirstOrDefault();
+
                     if (retrivedApproval.Equals(null))
                     {
-                        result = adminApproval.ID + " failed to be deleted, it does not exist.\n";
+                        result = department.ProjectClassName + " failed to be deleted, it does not exist.\n";
                     }
                     else
                     {
                         ctx.AdminApproval.Remove(retrivedApproval);
                         ctx.SaveChanges();
-                        result = adminApproval.ID + " has been deleted successfully.\n";
+                        result = department.ProjectClassName + " has been deleted successfully.\n";
                     }
                 }
                 catch (Exception ex)
                 {
-                    result += adminApproval.ID + " failed to be deleted due to dependencies.\n";
+                    result += department.ProjectClassName + " failed to be deleted due to dependencies.\n";
                     var stackTrace = new StackTrace(ex, true);
                     var line = stackTrace.GetFrame(0).GetFileLineNumber();
                     Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
@@ -243,6 +252,7 @@ namespace WebAPI.Models
                 }
             }
             return result;
-        }        
+        }
+
     }
 }
