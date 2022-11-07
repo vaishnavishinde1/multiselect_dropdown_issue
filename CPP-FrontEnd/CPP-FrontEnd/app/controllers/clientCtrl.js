@@ -185,6 +185,7 @@
                     name: 'Phone Number',
                     enableCellEditOnFocus: true,
                     widith: 300,
+                    cellClass: 'text-right',
                     filter: {
                         condition: function (searchTerm, cellValue, test) {
                             //console.log(searchTerm, ' ',  cellValue, ' ', test);
@@ -275,6 +276,7 @@
                     name: 'Zip Code',
                     enableCellEditOnFocus: true,
                     widith: 300,
+                    cellClass: 'text-right',
                     filter: {
                         condition: function (searchTerm, cellValue, test) {
                             //console.log(searchTerm, ' ',  cellValue, ' ', test);

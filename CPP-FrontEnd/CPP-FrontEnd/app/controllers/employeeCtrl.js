@@ -303,7 +303,7 @@ angular.module('cpp.controllers').
                     editDropdownIdLabel: 'ID',
                     editDropdownValueLabel: 'value',
                     editDropdownOptionsArray: positionArray,
-                   /* cellClass: 'c-col-Num',  //Manasi    //Sarab20-10-22 */
+                   /* cellClass: 'c-col-Num',  //Manasi    //Sarab20-10-22  */
 
                 },
                 {
