@@ -285,6 +285,7 @@ namespace WebAPI.Models
                         CostRateType costRateType = ctx.CostRateType.Where(p => p.ID == costOverhead.CostRateTypeID).FirstOrDefault();
 
                         result += costType.Type + " - " + costRateType.RateType + " has been updated successfully.\n";
+                        UpdateCostOverhaeadHistory(retrievedCostOverhead.ID); //--Added by Namrata 03-11-2022--
                     }
                     else
                     {
@@ -310,6 +311,54 @@ namespace WebAPI.Models
 
             return result;
 
+        }
+
+        //--Added by Namrata 01-11-2022--
+        public static String UpdateCostOverhaeadHistory(int CostID)
+        {
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+
+            String result = "";
+
+            using (var ctx = new CPPDbContext())
+            {
+                try
+                {
+                    CostOverhead retrivedCostOverhaead = new CostOverhead();
+                    retrivedCostOverhaead = ctx.CostOverhead.Where(e => e.ID.Equals(CostID)).FirstOrDefault();
+
+                    CostType costType = ctx.CostType.Where(p => p.ID == retrivedCostOverhaead.CostTypeID).FirstOrDefault();
+                    CostRateType rateType = ctx.CostRateType.Where(e => e.ID == retrivedCostOverhaead.CostRateTypeID).FirstOrDefault();
+
+                    CostOverheadHistory CostoverheadHistory = new CostOverheadHistory
+                    {
+                        CostID = retrivedCostOverhaead.ID,
+                        CostType = costType.Type,
+                        RateType = rateType.RateType,
+                        MarkUp = retrivedCostOverhaead.Markup,
+                        FromDate = retrivedCostOverhaead.CreatedDate,
+                        ToDate = DateTime.UtcNow
+                    };
+
+                    ctx.CostOverheadHistory.Add(CostoverheadHistory);
+                    ctx.SaveChanges();
+
+                    //result = "entry updated sucessfully";
+                }
+                catch (Exception ex)
+                {
+                    var stackTrace = new StackTrace(ex, true);
+                    var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                    Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                    result = ex.Message;
+                }
+                finally
+                {
+                    Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Exit Point", Logger.logLevel.Debug);
+                }
+            }
+            return result;
         }
         public static String deleteCostOverhead(CostOverhead costOverhead)
         {
