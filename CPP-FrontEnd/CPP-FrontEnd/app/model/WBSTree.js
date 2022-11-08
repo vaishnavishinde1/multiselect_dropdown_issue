@@ -879,7 +879,7 @@ WBSTree = (function ($) {
             var pgmEltId = $("#selectProgramElement").val();
             var projId = $("#selectProject").val();
             var deptEltId = $("#selectManagingDepartment").val();
-            var sreachTxt = $('#txtQuickSearch').val();
+            var sreachTxt = $('#txtQuickSearch').val().replaceAll('%','');
             var allData = 1;
 
             if (pgmId == 'undefined' || pgmId == null || pgmId == '') {
@@ -5711,6 +5711,7 @@ WBSTree = (function ($) {
                         var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                         var EmpId = $('#' + approversDdl[i].id).val();
                         var EmpName = "";
+                        var UserId = $('#' + approversDdl[i].id).find(':selected').attr('data-userid'); 
                         for (var x = 0; x < employeeList.length; x++) {
                             if (employeeList[x].ID == $('#' + approversDdl[i].id).val()) {
                                 EmpName = employeeList[x].Name;
@@ -5726,7 +5727,8 @@ WBSTree = (function ($) {
                             ApproverMatrixId: ApproverMatrixId,
                             EmpId: EmpId,
                             EmpName: EmpName,
-                            ProjectId: programElementID
+                            ProjectId: programElementID,
+                            UserId: UserId
                         };
                         approversDetails.push(approver);
                         console.log(approversDetails);
@@ -6348,6 +6350,7 @@ WBSTree = (function ($) {
                         var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
                         var EmpId = $('#' + approversDdl[i].id).val();
                         var EmpName = "";
+                        var UserId = $('#' + approversDdl[i].id).find(':selected').attr('data-userid');
                         for (var x = 0; x < employeeList.length; x++) {
                             if (employeeList[x].ID == $('#' + approversDdl[i].id).val()) {
                                 EmpName = employeeList[x].Name;
@@ -6363,7 +6366,8 @@ WBSTree = (function ($) {
                             ApproverMatrixId: ApproverMatrixId,
                             EmpId: EmpId,
                             EmpName: EmpName,
-                            ProjectId: 0
+                            ProjectId: 0,
+                            UserId: UserId
                         };
                         approversDetails.push(approver);
                         console.log(approversDetails);
@@ -14520,6 +14524,7 @@ WBSTree = (function ($) {
                                         if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
                                             for (var y = 0; y < employeeList.length; y++) {
                                                 if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && employeeList[y].isActive == 1 && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    employeeList[y].rUserId = roleWiseUserList[x].Id;
                                                     newEmployeeList.push(employeeList[y]);
                                                     break;
                                                 }
@@ -14563,7 +14568,7 @@ WBSTree = (function ($) {
                                                     append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else {
-                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    append += '<option  value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                                 }
 
                                             }
@@ -14580,7 +14585,7 @@ WBSTree = (function ($) {
                                                     append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].FirstName + '</option>';//Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else {
-                                                    append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                                 }
 
                                             }
@@ -17213,6 +17218,7 @@ WBSTree = (function ($) {
                                         if (roleWiseUserList[x].DepartmentID == selectedNode.ProjectClassID) {
                                             for (var y = 0; y < employeeList.length; y++) {
                                                 if (roleWiseUserList[x].EmployeeID == employeeList[y].ID && (employeeList[y].ID != 10000 && employeeList[y].Name != 'TBD')) {
+                                                    employeeList[y].rUserId = roleWiseUserList[x].Id;
                                                     newEmployeeList.push(employeeList[y]);
                                                     break;
                                                 }
@@ -17256,10 +17262,10 @@ WBSTree = (function ($) {
                                                     append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else if (x == 0) {
-                                                    append += '<option  value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    append += '<option  value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '" selected>' + employeeList[x].Name + '</option>';
                                                 }
                                                 else {
-                                                    append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    append += '<option  value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                                 }
 
                                             }
@@ -17276,10 +17282,10 @@ WBSTree = (function ($) {
                                                     append += '<option  value="' + employeeList[x].ID + '">' + employeeList[x].FirstName + '</option>'; //Aditya: change TBD, TBD to first name only 22092022
                                                 }
                                                 else if (x == 0) {
-                                                    append += '<option value="' + employeeList[x].ID + '" selected>' + employeeList[x].Name + '</option>';
+                                                    append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '" selected>' + employeeList[x].Name + '</option>';
                                                 }
                                                 else {
-                                                    append += '<option value="' + employeeList[x].ID + '">' + employeeList[x].Name + '</option>';
+                                                    append += '<option value="' + employeeList[x].ID + '" data-userId="' + employeeList[x].rUserId + '">' + employeeList[x].Name + '</option>';
                                                 }
 
                                             }

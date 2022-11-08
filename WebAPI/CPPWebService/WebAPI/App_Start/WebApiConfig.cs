@@ -1894,7 +1894,7 @@ namespace WebAPI
                  routeTemplate: "adminApprovalPresident/savePresident",
                  defaults: new { controller = "RegisterAdminPresident", action = "Post" }
              );
-
+            
             //Narayan - 13/10/2022
             config.Routes.MapHttpRoute(
                  name: "GetAdminPresident",
@@ -1902,7 +1902,12 @@ namespace WebAPI
                  defaults: new { controller = "RegisterAdminPresident", action = "Get"}
              );
 
-
+            //Narayan - 07/11/2022
+            config.Routes.MapHttpRoute(
+                 name: "UpdateApproverTable",
+                 routeTemplate: "updateApproverTable/{actionNo}",
+                 defaults: new { controller = "RegisterAdminApproval", action = "Get", actionNo = RouteParameter.Optional }
+             );
 
             //vaishnavi - 24/09/2022
             config.Routes.MapHttpRoute(
