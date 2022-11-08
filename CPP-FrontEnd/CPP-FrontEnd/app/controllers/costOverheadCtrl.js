@@ -1,7 +1,7 @@
 ﻿angular.module('cpp.controllers').
     //Cost Overhead Controller
-    controller('CostOverheadCtrl', ['CostType', 'CostRateType', 'CostTypeRateType', 'CostOverhead', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout',
-        function (CostType, CostRateType, CostTypeRateType, CostOverhead, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout) {
+    controller('CostOverheadCtrl', ['CostType', 'CostRateType', 'CostTypeRateType', 'CostOverhead','getCostOverheadHistory' ,'$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout',
+        function (CostType, CostRateType, CostTypeRateType, CostOverhead, getCostOverheadHistory, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout) {
             Page.setTitle('Cost Overhead');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -79,6 +79,13 @@
                         });
                     });
                 });
+            });
+
+
+            //Get all Cost history added by Namrata on 07-11-2022
+            getCostOverheadHistory.get({}, function (CostOverheadHistory) {
+                $scope.CostOverheadHistoryCollection = CostOverheadHistory.result;
+
             });
 
 
@@ -205,9 +212,83 @@
                     width: 35,
                     cellTemplate: '<input type="checkbox" ng-model="checkList[row.entity.displayId]" class = "c-col-check" ng-click="grid.appScope.check(row,col)" style="text-align: center;vertical-align: middle;">'
 
-                }
+                    },
+
+                    {
+                        name: 'button',
+                        displayName: '',
+                        cellClass: 'ui-grid-vcenter text-center',
+                        enableColumnMenu: false,
+                        enableFiltering: false,
+                        enableSorting: false,
+                        width: 100,
+                        cellTemplate: '<div><button ng-click="grid.appScope.ShowCostOverheadHistory(row,col)" class="btn btn-primary">History</button></div>'
+
+
+                    }
                 ]
             }
+
+
+            //--Added by Namrata 31-10-2022---
+            $scope.ShowCostOverheadHistory = function (row, col) {
+
+
+                $http({
+                    url: serviceBasePath + 'CostOverheadHistory/getCostOverheadHistory/' + row.entity.ID,
+                    method: "GET",
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(function success(response) {
+                    if (response.data.result) {
+                        var CostOverheadHistory = response.data.result;
+
+                        var gridTableHistoryData = $('#tblCostHistoryGrid tbody');
+                        gridTableHistoryData.empty();
+
+                        for (let a = 0; a < CostOverheadHistory.length; a++) {
+                            gridTableHistoryData.append('<tr class="contact-row" id="' + CostOverheadHistory[a].Id + '">' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '><a>' + (a + 1) + '</a></td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + CostOverheadHistory[a].CostType + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + CostOverheadHistory[a].RateType + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + CostOverheadHistory[a].MarkUp + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(CostOverheadHistory[a].FromDate).format('MM/DD/YYYY') + '</td>' +
+                                '<td class="ttext-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(CostOverheadHistory[a].ToDate).format('MM/DD/YYYY') + '</td>' +
+                                '</tr> ');
+                        }
+                        $('#CostOverheadHistoryModal').modal({ show: true, backdrop: 'static' });
+
+                    }
+                    else {
+                        dhtmlx.alert('History not present');
+                    }
+
+
+
+                }, function error(response) {
+                    dhtmlx.alert("Failed to save. Please contact your Administrator.");
+                });
+               
+
+            }
+
+
+            if (!$('body').children('#CostOverheadHistoryModal').attr('id')) {
+                $('#CostOverheadHistoryModal').appendTo('body');
+            }
+            $('.main-content-view').find('#CostOverheadHistoryModal').remove();
+
+            $('#closeCostOverheadHistoryModal').unbind('click').on('click', function () {
+
+                $("#CostOverheadHistoryModal").modal('toggle');
+
+            });
+
 
             $scope.gridOptions.onRegisterApi = function (gridApi) {
                 $scope.gridApi = gridApi;
@@ -500,6 +581,12 @@
                             });
                         });
 
+                        //---get all costoverheads history added by namrata--
+                        getCostOverheadHistory.get({}, function (CostOverheadHistory) {
+                            $scope.CostOverheadHistoryCollection = CostOverheadHistory.result;
+
+                        });
+
                     }, function error(response) {
                         $("#save_Cost_Overhead").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
@@ -517,6 +604,7 @@
                 var selectedRow = false;
                 $scope.listToDelete = [];
                 var newList = [];
+                var HistoryCount = false;
                 console.log($scope.costOverheadCollection);
                 angular.forEach($scope.costOverheadCollection, function (item) {
                     if (item.checkbox == true) {
@@ -536,6 +624,12 @@
                                 EndDate: item.EndDate,
                                 displayId: item.displayId
                             }
+
+                            for (i = 0; i < $scope.CostOverheadHistoryCollection.length; i++) {
+                                if ($scope.CostOverheadHistoryCollection[i].ID == item.ID) {
+                                    HistoryCount = true;
+                                }
+                            }
                             listToSave.push(dataObj);
                             $scope.listToDelete.push(dataObj);
                             //dhtmlx.alert("Record Deleted.");P
@@ -547,38 +641,84 @@
                     dhtmlx.alert("Please select a record to delete.");
                 }
 
-                console.log(newList, $scope.listToDelete);
-                if (newList.length != 0) {
-                    for (var i = 0; i < newList.length; i++) {
+                if (HistoryCount) {
+                    dhtmlx.confirm("deleteting record will be delete the linked history", function (result) {
+                        if (result) {
+                            console.log(newList, $scope.listToDelete);
+                            if (newList.length != 0) {
+                                for (var i = 0; i < newList.length; i++) {
+                                    var ind = -1;
+                                    angular.forEach($scope.costOverheadCollection, function (item, index) {
+                                        if (item.displayId == newList[i].displayId) {
+                                            item.checkbox = false;
+                                            ind = index;
+                                        }
+                                    });
+                                    if (ind != -1) {
+                                        $scope.checkList.splice(newList[i].displayId, 1);
+                                        $scope.costOverheadCollection.splice(ind, 1);
+                                    }
+                                }
+
+                            }
+                            if (listToSave.length != 0) { }
+                            for (var i = 0; i < listToSave.length; i++) {
+                                var ind = -1;
+                                angular.forEach($scope.costOverheadCollection, function (item, index) {
+                                    if (item.displayId == listToSave[i].displayId) {
+                                        item.checkbox = false;
+                                        ind = index;
+                                    }
+                                });
+                                if (ind != -1) {
+                                    $scope.checkList.splice(listToSave[i].displayId, 1);
+                                    $scope.costOverheadCollection.splice(ind, 1);
+                                }
+                            }
+                        }
+                    });
+
+                }
+                else {
+                    console.log(newList, $scope.listToDelete);
+                    if (newList.length != 0) {
+                        for (var i = 0; i < newList.length; i++) {
+                            var ind = -1;
+                            angular.forEach($scope.costOverheadCollection, function (item, index) {
+                                if (item.displayId == newList[i].displayId) {
+                                    item.checkbox = false;
+                                    ind = index;
+                                }
+                            });
+                            if (ind != -1) {
+                                $scope.checkList.splice(newList[i].displayId, 1);
+                                $scope.costOverheadCollection.splice(ind, 1);
+                            }
+                        }
+
+                    }
+                    if (listToSave.length != 0) { }
+                    for (var i = 0; i < listToSave.length; i++) {
                         var ind = -1;
                         angular.forEach($scope.costOverheadCollection, function (item, index) {
-                            if (item.displayId == newList[i].displayId) {
+                            if (item.displayId == listToSave[i].displayId) {
                                 item.checkbox = false;
                                 ind = index;
                             }
                         });
                         if (ind != -1) {
-                            $scope.checkList.splice(newList[i].displayId, 1);
+                            $scope.checkList.splice(listToSave[i].displayId, 1);
                             $scope.costOverheadCollection.splice(ind, 1);
                         }
                     }
 
                 }
-                if (listToSave.length != 0) { }
-                for (var i = 0; i < listToSave.length; i++) {
-                    var ind = -1;
-                    angular.forEach($scope.costOverheadCollection, function (item, index) {
-                        if (item.displayId == listToSave[i].displayId) {
-                            item.checkbox = false;
-                            ind = index;
-                        }
-                    });
-                    if (ind != -1) {
-                        $scope.checkList.splice(listToSave[i].displayId, 1);
-                        $scope.costOverheadCollection.splice(ind, 1);
-                    }
-                }
+               
             }
+
+        
+
+
             $scope.checkForChanges = function () {
                 var unSavedChanges = false;
                 var originalCollection = $scope.orgCostOverheadCollection;

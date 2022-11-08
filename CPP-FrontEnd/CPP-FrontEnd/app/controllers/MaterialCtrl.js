@@ -1,7 +1,7 @@
 ﻿angular.module('cpp.controllers').
     //Material Controller
-    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor', 'Manufacturer',
-        function (MaterialCategory, Material, UnitType, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout, UniqueIdentityNumber, Vendor, Manufacturer) {
+    controller('MaterialCtrl', ['MaterialCategory', 'Material', 'getMaterialHistory', 'UnitType', '$state', '$scope', '$rootScope', 'Category', '$uibModal', 'UpdateCategory', '$http', 'Page', 'ProjectTitle', 'TrendStatus', '$location', '$timeout', 'UniqueIdentityNumber', 'Vendor', 'Manufacturer',
+        function (MaterialCategory, Material, getMaterialHistory, UnitType, $state, $scope, $rootScope, Category, $uibModal, UpdateCategory, $http, Page, ProjectTitle, TrendStatus, $location, $timeout, UniqueIdentityNumber, Vendor, Manufacturer) {
             Page.setTitle('Material');
             ProjectTitle.setTitle('');
             TrendStatus.setStatus('');
@@ -146,6 +146,13 @@
                         });
                     });
                 });
+            });
+
+
+            //Get all material history added by Namrata on 07-11-2022
+            getMaterialHistory.get({}, function (materialhistory) {
+                $scope.materialHistoryCollection = materialhistory.result;
+                
             });
 
             var addIndex = function (data) {
@@ -299,7 +306,32 @@
                     width: 35,
                     cellTemplate: '<input type="checkbox" ng-model="checkList[row.entity.displayId]" class = "c-col-check" ng-click="grid.appScope.check(row,col)" style="text-align: center;vertical-align: middle;">'
 
+                },
+                {
+                    name: 'button',
+                    displayName: '',
+                    cellClass: 'ui-grid-vcenter text-center',
+                    enableColumnMenu: false,
+                    enableFiltering: false,
+                    enableSorting: false,
+                    width: 100,
+                    cellTemplate: '<div><button ng-click="grid.appScope.ShowMaterialHistory(row,col)" class="btn btn-primary">History</button></div>'
+ 
+
                 }
+
+                    //{
+                    //       field: 'Button',
+                    //       name: '',
+                    //       enableCellEdit: false,
+                    //      enableFiltering: false,
+                    //      callback: 'MaterialHistory()',
+                    //       width: 35,
+                    //       cellTemplate: '<Button style="text-align: center;vertical-align: middle;">History</Button>'
+
+                    //}
+
+
                 ]
             }
 
@@ -319,6 +351,83 @@
                     //});
                 });
             };
+
+            //--Added by Namrata 31-10-2022---
+            $scope.ShowMaterialHistory = function (row, col) {
+
+                $http({
+                    url: serviceBasePath + 'MaterialHistory/getMaterialHistory/' + row.entity.ID,
+                    method: "GET",
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(function success(response) {
+                    if (response.data.result) {
+                        var materialHistory = response.data.result;
+
+                        var gridTableHistoryData = $('#tblMaterialHistoryGrid tbody');
+                        gridTableHistoryData.empty();
+
+                        for (let a = 0; a < materialHistory.length; a++) {
+                            gridTableHistoryData.append('<tr class="contact-row" id="' + materialHistory[a].Id + '">' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '><a>' + (a + 1) + '</a></td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].Name + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].Description + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].MaterialCategory + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].Manufacturer + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].UnitType + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].Cost + '</td> ' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + materialHistory[a].UniqueIdentityNumber + '</td> ' +
+                                //'<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                //'>' + historyData[a].UpdatedBy + '</td>' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(materialHistory[a].FromDate).format('MM/DD/YYYY') + '</td>' +
+                                '<td class="ttext-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '>' + moment(materialHistory[a].ToDate).format('MM/DD/YYYY') + '</td>' +
+                                '</tr> ');
+                        }
+                        $('#MaterialHistoryModal').modal({ show: true, backdrop: 'static' });
+
+                    }
+                    else {
+                        dhtmlx.alert('History not present');
+                    }
+
+
+
+                }, function error(response) {
+                    dhtmlx.alert("Failed to save. Please contact your Administrator.");
+                });
+
+
+
+
+
+
+
+            }
+
+
+            if (!$('body').children('#MaterialHistoryModal').attr('id')) {
+                $('#MaterialHistoryModal').appendTo('body');
+            }
+            $('.main-content-view').find('#MaterialHistoryModal').remove();
+
+            $('#closeMaterialHistoryModal').unbind('click').on('click', function () {
+
+                $("#MaterialHistoryModal").modal('toggle');
+
+            });
+
+
+
+
 
             $scope.cellClicked = function (row, col) {
                 // do with that row and col what you want
@@ -630,19 +739,29 @@
 
                             console.log($scope.materialCollection);
                         });
+                        //--Added by Namrata--
+                        getMaterialHistory.get({}, function (materialhistory) {
+                            $scope.materialHistoryCollection = materialhistory.result;
+
+                        });
                     }, function error(response) {
                         $("#save_Material").attr("disabled", false);
                         dhtmlx.alert("Failed to save. Please contact your Administrator.");
                     });
                 }
             }
+
+           
+            
             $scope.delete = function () {
+
                 var isChecked = false;
                 var unSavedChanges = false;
                 var listToSave = [];
                 var selectedRow = false;
                 $scope.listToDelete = [];
                 var newList = [];
+                var HistoryCount = false;
                 angular.forEach($scope.materialCollection, function (item) {
                     if (item.checkbox == true) {
                         selectedRow = true;
@@ -664,48 +783,100 @@
                                 ManufacturerID: item.ManufacturerID,
                                 displayId: item.displayId
                             }
+                            for (i = 0; i < $scope.materialHistoryCollection.length; i++) {
+                                if ($scope.materialHistoryCollection[i].ID == item.ID) {
+                                    HistoryCount = true;
+                                }
+                            }
+
                             listToSave.push(dataObj);
                             $scope.listToDelete.push(dataObj);
+
                             //dhtmlx.alert("Record Deleted.");
                         }
                     }
                 });
-
                 if (!selectedRow) {
                     dhtmlx.alert("Please select a record to delete.");
                 }
 
-                if (newList.length != 0) {
-                    for (var i = 0; i < newList.length; i++) {
+                if (HistoryCount) {
+                    dhtmlx.confirm("deleteting record will be delete the linked history", function (result) {
+                        if (result) {
+                            
+                            if (newList.length != 0) {
+                                for (var i = 0; i < newList.length; i++) {
+                                    var ind = -1;
+                                    angular.forEach($scope.materialCollection, function (item, index) {
+                                        if (item.displayId == newList[i].displayId) {
+                                            item.checkbox = false;
+                                            ind = index;
+                                        }
+                                    });
+                                    if (ind != -1) {
+                                        $scope.checkList.splice(newList[i].displayId, 1);
+                                        $scope.materialCollection.splice(ind, 1);
+                                    }
+                                }
+
+                            }
+                            if (listToSave.length != 0) { }
+                            for (var i = 0; i < listToSave.length; i++) {
+                                var ind = -1;
+                                angular.forEach($scope.materialCollection, function (item, index) {
+                                    if (item.displayId == listToSave[i].displayId) {
+                                        item.checkbox = false;
+                                        ind = index;
+                                    }
+                                });
+                                if (ind != -1) {
+                                    $scope.checkList.splice(listToSave[i].displayId, 1);
+                                    $scope.materialCollection.splice(ind, 1);
+                                }
+                            }
+                        }
+                    });
+
+                }
+
+                else {
+                    
+                    if (newList.length != 0) {
+                        for (var i = 0; i < newList.length; i++) {
+                            var ind = -1;
+                            angular.forEach($scope.materialCollection, function (item, index) {
+                                if (item.displayId == newList[i].displayId) {
+                                    item.checkbox = false;
+                                    ind = index;
+                                }
+                            });
+                            if (ind != -1) {
+                                $scope.checkList.splice(newList[i].displayId, 1);
+                                $scope.materialCollection.splice(ind, 1);
+                            }
+                        }
+
+                    }
+                    if (listToSave.length != 0) { }
+                    for (var i = 0; i < listToSave.length; i++) {
                         var ind = -1;
                         angular.forEach($scope.materialCollection, function (item, index) {
-                            if (item.displayId == newList[i].displayId) {
+                            if (item.displayId == listToSave[i].displayId) {
                                 item.checkbox = false;
                                 ind = index;
                             }
                         });
                         if (ind != -1) {
-                            $scope.checkList.splice(newList[i].displayId, 1);
+                            $scope.checkList.splice(listToSave[i].displayId, 1);
                             $scope.materialCollection.splice(ind, 1);
                         }
                     }
-
-                }
-                if (listToSave.length != 0) { }
-                for (var i = 0; i < listToSave.length; i++) {
-                    var ind = -1;
-                    angular.forEach($scope.materialCollection, function (item, index) {
-                        if (item.displayId == listToSave[i].displayId) {
-                            item.checkbox = false;
-                            ind = index;
-                        }
-                    });
-                    if (ind != -1) {
-                        $scope.checkList.splice(listToSave[i].displayId, 1);
-                        $scope.materialCollection.splice(ind, 1);
-                    }
-                }
+                }                  
+              
             }
+
+                 
+
             $scope.checkForChanges = function () {
                 var unSavedChanges = false;
                 var originalCollection = $scope.orgMaterialCollection;

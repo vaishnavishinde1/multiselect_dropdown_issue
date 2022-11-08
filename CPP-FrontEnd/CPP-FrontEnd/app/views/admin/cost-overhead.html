@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-centered" style="width: 1060px">
+    <div class="col-centered" style="width: 985px">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -26,6 +26,38 @@
 
                 </div>
 
+            </div>
+
+            <div class="modal fade" id="CostOverheadHistoryModal" role="dialog" aria-labelledby="modal_heading" aria-hidden="true" style="z-index:9999;">
+                <div class="modal-dialog" style="width:60%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-program-element ui-draggable-handle" style="background-color: #0069d9;">
+                            <button id="closeCostOverheadHistoryModal" type="button" class="exit-button" ng-click="closeCostModal()">X</button>
+                            <h4 class="modal-title modal_heading" style="color: #fff;">CostOverhead History</h4>
+                        </div>
+                        <div class="modal-body  p-l-15 p-r-15">
+                           
+                            <div class="block-view panel-body">
+                                <div class="table-outline-wo-p" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                                    <table id="tblCostHistoryGrid" class="table table-striped">
+                                        <thead>
+                                            <tr class="t-head">
+                                                <th style="width:5%;"></th>
+                                                <th style="width:10%;"> Cost Type</th>
+                                                <th style="width:10%;"> Cost Rate</th>
+                                                <th style="width:10%;"> Mark Up</th>
+                                                <th style="width:8%;"> From</th>
+                                                <th style="width:8%;"> To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

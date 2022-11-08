@@ -1902,6 +1902,8 @@ namespace WebAPI
                  defaults: new { controller = "RegisterAdminPresident", action = "Get"}
              );
 
+
+
             //vaishnavi - 24/09/2022
             config.Routes.MapHttpRoute(
                  name: "BillOfMaterial",
@@ -2108,6 +2110,36 @@ namespace WebAPI
                //Returns: DT_RowId, ProgramID, ProgramName, ProgramManager, ProgramSponsor		                 //Returns: DT_RowId, ProgramID, ProgramName, ProgramManager, ProgramSponsor
                defaults: new { controller = "RequestAdditionalInfo",ProgramID = RouteParameter.Optional}
              );
+
+
+            //--Added by Namrata on 01-11-2022--
+
+            config.Routes.MapHttpRoute(
+                 name: "GetMaterialHistoryByID",
+                 routeTemplate: "MaterialHistory/getMaterialHistory/{MaterialID}",
+                 defaults: new { controller = "MaterialHistory", action = "Get", MaterialID = RouteParameter.Optional }
+             );
+
+            config.Routes.MapHttpRoute(
+                name: "GetMaterialHistory",
+                routeTemplate: "MaterialHistory/getMaterialHistory",
+                defaults: new { controller = "MaterialHistory", action = "Get" }
+            );
+
+            //---Added by Namrata on 04-11-2022--
+
+            config.Routes.MapHttpRoute(
+               name: "GetCostOverheadHistory",
+               routeTemplate: "CostOverheadHistory/getCostOverheadHistory/{CostID}",
+               defaults: new { controller = "CostOverheadHistory", action = "Get", CostID = RouteParameter.Optional }
+           );
+
+            config.Routes.MapHttpRoute(
+               name: "GetAllCostOverheadHistory",
+               routeTemplate: "CostOverheadHistory/getCostOverheadHistory",
+               defaults: new { controller = "CostOverheadHistory", action = "Get" }
+           );
+
 
         }
     }
