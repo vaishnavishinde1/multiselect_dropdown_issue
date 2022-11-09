@@ -19,6 +19,7 @@ namespace WebAPI.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
+        
         public String Name { get; set; }
         public Double Cost { get; set; }
         public int UnitTypeID { get; set; }
@@ -140,6 +141,8 @@ namespace WebAPI.Models
 
             return result;
         }
+
+
         public static String updateMaterial(Material material)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -170,10 +173,14 @@ namespace WebAPI.Models
                     }
                     else if (retrievedMaterial != null)
                     {
+
+                        
                         CopyUtil.CopyFields<Material>(material, retrievedMaterial);
                         ctx.Entry(retrievedMaterial).State = System.Data.Entity.EntityState.Modified;
+                       
                         ctx.SaveChanges();
                         result += material.Name + " has been updated successfully.\n";
+                        UpdateMaterialHistory(retrievedMaterial.ID); //--Added by Namrata 01-11-2022--
                     }
                     else
                     {
@@ -213,7 +220,6 @@ namespace WebAPI.Models
                         //delete
                         List<Material> materialList = new List<Material>();
                         materialList = ctx.Material.Where(cu => cu.ID == retrievedMaterial.ID).ToList();
-
                         ctx.Material.Remove(retrievedMaterial);
                         ctx.SaveChanges();
                         result += material.Name + " has been deleted successfully.\n";
@@ -237,6 +243,61 @@ namespace WebAPI.Models
             }
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Exit Point", Logger.logLevel.Debug);
 
+            return result;
+        }
+
+
+        //--Added by Namrata 01-11-2022--
+        public static String UpdateMaterialHistory(int MaterialID)
+        {
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+
+            String result = "";
+
+            using (var ctx = new CPPDbContext())
+            {
+                try
+                {
+                    Material retrivedMaterial = new Material();
+                    retrivedMaterial = ctx.Material.Where(e => e.ID.Equals(MaterialID)).FirstOrDefault();
+
+                    UnitType UnitName = ctx.UnitType.Where(p => p.UnitID == retrivedMaterial.UnitTypeID).FirstOrDefault();
+                    Manufacturer Manufacture = ctx.Manufacturer.Where(e => e.ManufacturerID == retrivedMaterial.ManufacturerID).FirstOrDefault();
+                    MaterialCategory Name = ctx.MaterialCategory.Where(e => e.ID == retrivedMaterial.MaterialCategoryID).FirstOrDefault();
+
+
+                    MaterialHistory MaterialHistory = new MaterialHistory
+                    {
+                        MaterialID = retrivedMaterial.ID,
+                        Name = retrivedMaterial.Name,
+                        Description = retrivedMaterial.Description,
+                        Manufacturer = "",
+                        MaterialCategory = Name.Name,
+                        UnitType = UnitName.UnitName,
+                        Cost= retrivedMaterial.Cost,
+                        UniqueIdentityNumber= retrivedMaterial.UniqueIdentityNumber,
+                        FromDate = retrivedMaterial.CreatedDate,
+                        ToDate = DateTime.UtcNow
+                    };
+
+                    ctx.MaterialHistory.Add(MaterialHistory);
+                    ctx.SaveChanges();
+
+                    //result = "entry updated sucessfully";
+                }
+                catch (Exception ex)
+                {
+                    var stackTrace = new StackTrace(ex, true);
+                    var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                    Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+                    result = ex.Message;
+                }
+                finally
+                {
+                    Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Exit Point", Logger.logLevel.Debug);
+                }
+            }
             return result;
         }
 

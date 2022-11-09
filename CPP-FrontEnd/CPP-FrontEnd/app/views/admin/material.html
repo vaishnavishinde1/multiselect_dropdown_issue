@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-centered" style="width: 1450px">
+    <div class="col-centered" style="width: 1535px">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" style="font-size:30px;">
@@ -26,6 +26,42 @@
 
                 </div>
 
+            </div>
+
+            <div class="modal fade" id="MaterialHistoryModal" role="dialog" aria-labelledby="modal_heading" aria-hidden="true" style="z-index:9999;">
+                <div class="modal-dialog" style="width:60%;">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-program-element ui-draggable-handle" style="background-color: #0069d9;">
+                            <button id="closeMaterialHistoryModal" type="button" class="exit-button" ng-click="closeMaterialModal()">X</button>
+                            <h4 class="modal-title modal_heading" style="color: #fff;">Material History</h4>
+                        </div>
+                        <div class="modal-body  p-l-15 p-r-15">
+                            
+                            <div class="block-view panel-body">
+                                <div class="table-outline-wo-p" style="overflow: auto; padding-top: 0; height: 350px !important;">
+                                    <table id="tblMaterialHistoryGrid" class="table table-striped">
+                                        <thead>
+                                            <tr class="t-head">
+                                                <th></th>
+                                                <th style="width: 10%;"> Name</th>
+                                                <th style="width: 14%;"> Description</th>
+                                                <th style="width: 12%;"> Category</th>
+                                                <th style="width: 12%;"> Manufacture</th>
+                                                <th style="width: 12%;"> Unit Type</th>
+                                                <th style="width: 8%;"> Cost</th>
+                                                <th style="width: 16%;"> Unique Identifier</th>
+                                                <th style="width: 8%;"> From</th>
+                                                <th style="width: 8%;"> To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

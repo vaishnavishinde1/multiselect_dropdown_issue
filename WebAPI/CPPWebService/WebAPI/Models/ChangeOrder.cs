@@ -307,6 +307,19 @@ namespace WebAPI.Models
                             }
 
 
+                            // Narayan - on schedule impact change program element end date - 20/10/2022 
+                            if (ChangeOrder.ModificationTypeId == 2 || ChangeOrder.ModificationTypeId == 3)
+                            {
+                                ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
+                                if (programElement != null)
+                                {
+                                    programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(ChangeOrder.ScheduleImpact);
+                                    ctx.SaveChanges();
+                                }
+                            }
+
+
+
                             dbContextTransaction.Commit();
 						}
 						catch (Exception ex)
@@ -352,11 +365,13 @@ namespace WebAPI.Models
 
                     duplicateChangeOrder = ctx.ChangeOrder.Where(u => u.ChangeOrderName == ChangeOrder.ChangeOrderName
                                                                         && u.ProgramElementID == ChangeOrder.ProgramElementID
-                                                                        && u.ChangeOrderID != ChangeOrder.ChangeOrderID).FirstOrDefault();  //Manasi
+                                                                        && u.ChangeOrderID != ChangeOrder.ChangeOrderID
+                                                                        && u.IsDeleted == false).FirstOrDefault();  //Manasi
 
                     duplicateChangeOrderNo = ctx.ChangeOrder.Where(u => u.ChangeOrderNumber == ChangeOrder.ChangeOrderNumber
                                                                         && u.ProgramElementID == ChangeOrder.ProgramElementID
-                                                                        && u.ChangeOrderID != ChangeOrder.ChangeOrderID).FirstOrDefault();  //Manasi
+                                                                        && u.ChangeOrderID != ChangeOrder.ChangeOrderID
+                                                                        && u.IsDeleted == false).FirstOrDefault();  //Manasi
 
                     //if (duplicateChangeOrder != null || duplicateChangeOrderNo != null)
                     //{
@@ -374,8 +389,20 @@ namespace WebAPI.Models
                     }
                     else
                     {
+                        int ScheduleImpact;
                         if (retreivedChangeOrder != null)
                         {
+                            if (retreivedChangeOrder.ScheduleImpact > ChangeOrder.ScheduleImpact)
+                            {
+                                ScheduleImpact = (retreivedChangeOrder.ScheduleImpact - ChangeOrder.ScheduleImpact) * (-1);
+
+                            }
+                            else
+                            {
+                                ScheduleImpact = (ChangeOrder.ScheduleImpact - retreivedChangeOrder.ScheduleImpact);
+
+                            }
+
                             CopyUtil.CopyFields<ChangeOrder>(ChangeOrder, retreivedChangeOrder);
                             if (retreivedChangeOrder.ProgramElementID == 0)
                             {
@@ -387,15 +414,30 @@ namespace WebAPI.Models
                             WebAPI.Models.ProgramElement.updatePojectEndDateOnChangeOrder(ChangeOrder.ProgramElementID.GetValueOrDefault(), ChangeOrder.ProjectEndDateCO);
 
                             result = ChangeOrder.ChangeOrderName + " has been updated successfully.\n";
+
+
+                            // Narayan - on schedule impact change program element end date - 20/10/2022 
+                            if (ChangeOrder.ModificationTypeId == 2 || ChangeOrder.ModificationTypeId == 3)
+                            {
+                                ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
+                                if (programElement != null)
+                                {
+                                    programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(ScheduleImpact);
+                                    ctx.SaveChanges();
+                                }
+                            }
+
                         }
                         else
                         {
                             result += ChangeOrder.ChangeOrderName + " failed to be updated, it does not exist.\n";
                         }
-                    }
-				}
 
-			}
+                    }
+
+                }
+
+            }
 			catch (Exception ex)
 			{
 				var stackTrace = new StackTrace(ex, true);
@@ -425,10 +467,22 @@ namespace WebAPI.Models
 					ChangeOrder retreivedChangeOrder = new ChangeOrder();
 					retreivedChangeOrder = ctx.ChangeOrder.Where(u => u.ChangeOrderID == ChangeOrder.ChangeOrderID).FirstOrDefault();
 
-					if (retreivedChangeOrder != null)
+
+                    if (retreivedChangeOrder != null)
 					{
-						//Delete old list
-						List<Document> documentList = ctx.Document.Where(t => t.ChangeOrderID == retreivedChangeOrder.ChangeOrderID).ToList();
+                        // Narayan - on schedule impact change program element end date - 20/10/2022 
+                        if (retreivedChangeOrder.ModificationTypeId == 2 || retreivedChangeOrder.ModificationTypeId == 3)
+                        {
+                            ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == retreivedChangeOrder.ProgramElementID).FirstOrDefault();
+                            if (programElement != null)
+                            {
+                                programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(retreivedChangeOrder.ScheduleImpact * (-1));
+                                ctx.SaveChanges();
+                            }
+                        }
+
+                        //Delete old list
+                        List<Document> documentList = ctx.Document.Where(t => t.ChangeOrderID == retreivedChangeOrder.ChangeOrderID).ToList();
 
 						for (int x = 0; x < documentList.Count; x++)
 						{
@@ -451,9 +505,10 @@ namespace WebAPI.Models
 					{
 						result = ChangeOrder.ChangeOrderName + " failed to be deleted, it does not exist.\n";
 					}
-				}
 
-			}
+                }
+
+            }
 			catch (Exception ex)
 			{
 				result += ChangeOrder.ChangeOrderName + " failed to be deleted due to dependencies.\n";

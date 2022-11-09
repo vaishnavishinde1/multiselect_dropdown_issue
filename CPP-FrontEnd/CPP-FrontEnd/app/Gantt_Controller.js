@@ -5,11 +5,11 @@ angular.module('xenon.Gantt_Controller', []).
     controller('CostGanttCtrl', ['MainActivityCategory', 'currentTrend', 'TrendId', 'ProjectTitle', 'UnitType', 'Vendor', 'SubActivityCategory', 'Category', 'GetActivity', '$http', '$q', '$state', '$scope', '$compile', 'Program', 'ProgramElement',
         'Project', 'Trend', 'Activity', 'Cost', 'InsertCost', 'fteposition', 'FTEPositionCost', 'delayedData', 'Page', 'UpdateActivity', 'localStorageService', 'RequestApproval', 'TrendStatus',
         '$rootScope', '$uibModal', 'ProgramFund', 'TrendFund', '$timeout', 'usSpinnerService', '$filter', '$location', 'alertBox', 'usSpinnerConfig', 'GanttCategory', 'ProgramCategory', 'MaterialCategory', 'Material', 'ODCType', 'SubcontractorType', 'Subcontractor', 'PhaseCode', 'UserByEmployeeListID', 'AllEmployee', 'TrendStatusCode', '$stateParams', 'Employee', 'Document',
-        'LaborRate', 'PurchaseOrder', 'PurchaseOrderDetail', 'MFAConfiguration', 'ApprovalMatrix',
+        'LaborRate', 'PurchaseOrder', 'PurchaseOrderDetail', 'MFAConfiguration', 'ApprovalMatrix','MaterialListByActivity',
         function (MainActivityCategory, currentTrend, TrendId, ProjectTitle, UnitType, Vendor, SubActivityCategory, Category, GetActivity, $http, $q, $state, $scope, $compile, Program, ProgramElement,
             Project, Trend, Activity, Cost, InsertCost, FTEPositions, FTEPositionCost, delayedData, Page, UpdateActivity, localStorageSrevice, RequestApproval, TrendStatus,
             $rootScope, $uibModal, ProgramFund, TrendFund, $timeout, usSpinnerService, $filter, $location, alertBox, usSpinnerConfig, GanttCategory, ProgramCategory, MaterialCategory, Material, ODCType, SubcontractorType, Subcontractor, PhaseCode, UserByEmployeeListID, AllEmployee, TrendStatusCode, $stateParams, Employee, Document,
-            LaborRate, PurchaseOrder, PurchaseOrderDetail, MFAConfiguration, ApprovalMatrix) {
+            LaborRate, PurchaseOrder, PurchaseOrderDetail, MFAConfiguration, ApprovalMatrix, MaterialListByActivity) {
 
             function roundToTwo(num) {
                 return +(Math.round(num + "e+2") + "e-2");
@@ -254,6 +254,7 @@ angular.module('xenon.Gantt_Controller', []).
 
             //    //$scope.uploadFiles();
             //};
+            var mlist = false;
             var mfaDetails = "";
             var projectTitle = "";
             $scope.trend;   //store the trend information
@@ -2658,6 +2659,9 @@ angular.module('xenon.Gantt_Controller', []).
                         return;
                     }
                 }
+
+             
+              
                 var prom = [];
                 var isNothingToSave = true;
                 $scope.costitems = [];
@@ -3129,7 +3133,20 @@ angular.module('xenon.Gantt_Controller', []).
                 }
 
                 //console.log(costListToSave);
+                var res;
+                async function FetchMaterialList() {
+                if ($scope.trend.CurrentThreshold == null) {
+                 
+                   
+                    res = await validateMateriallist();
+                    if (res == true) {
+                        return;
+                    }
 
+                      
+                  
+                }
+               
                 $('#saveCost').prop('disabled', true);
                 InsertCost.save(costListToSave, function (response) {
                     //console.log(response);
@@ -3246,6 +3263,9 @@ angular.module('xenon.Gantt_Controller', []).
                     //priteshs2
                     
                 });
+                }
+                FetchMaterialList();
+               
             }
 
             // Schedule Gantt Chart Configuration
@@ -12570,10 +12590,6 @@ angular.module('xenon.Gantt_Controller', []).
                         if ($scope.method[item.id] == "U") {
 
 
-                            //var materialid = $scope.material_id[id].value;
-
-
-
                             $.each($scope.BillOfMaterialByProgramElementId, function (index) {
 
                                 if ($scope.BillOfMaterialByProgramElementId[index].MaterialID == $scope.material_id[item.id].value && $scope.totalUnits[item.id] > $scope.BillOfMaterialByProgramElementId[index].Quantity) {
@@ -12597,6 +12613,54 @@ angular.module('xenon.Gantt_Controller', []).
                     return false;
 
             }
+
+             function validateMateriallist() {
+                 materialnamesandmaterialquantities = [];
+                mlist = false;
+                var materiallist = [];
+                 return new Promise(function (resolve, reject) {
+                     $http.get(serviceBasePath + "MaterialList/getMateriallist/" + $scope.selectedProject + "/" + $scope.selectedActivity.id ).then(
+                         (response) => {
+                             materiallist = response.data.data.materialLists;
+                            $scope.costGanttInstance.eachTask(function (item) {
+                            if ($scope.method[item.id] == "U") {
+                                $.each(materiallist, function (i) {
+
+                                    if (materiallist[i].MaterialID == $scope.material_id[item.id].value) {
+                                        var leftquantity = materiallist[i].Available_Quantity- materiallist[i].UnitQuantity;
+                                        if ($scope.totalUnits[item.id] > leftquantity || $scope.totalUnits[item.id]=="0" ) {
+                                            mlist = true;
+                                            return true;
+                                        }
+
+                                    }
+
+
+                                });
+                            }
+                            });
+                             resolve(mlist);
+
+                             if (mlist == true) {
+
+                                 dhtmlx.alert({
+                                     text: "Entered Material Count Exceeded Maximum Quantity",
+                                     width: "400px"
+                                 });
+                                 return;
+                             }
+                             else {
+                                 return mlist.toString();
+                             }
+                         });
+                   
+                   
+
+                 });
+               
+            }
+
+          
 
             function getWeekDifferences(startDate, endDate) {
                 var st = moment(startDate).format(sqlDateFormat);

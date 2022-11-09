@@ -313,6 +313,9 @@ namespace WebAPI
 
         public DbSet<AdminApproval> AdminApproval { get; set; } // Narayan - 11-10-2022
         public DbSet<ApprovalHistory> ApprovalHistory { get; set; } // Narayan - 11-10-2022
+
+        public DbSet<MaterialHistory> MaterialHistory { get; set; } // Added by Namrata - 01-11-2022
+        public DbSet<CostOverheadHistory> CostOverheadHistory { get; set; } // Added by Namrata - 03-11-2022
         public DbSet<AdminApprovalPresident> AdminApprovalPresident { get; set; } // Narayan - 12-10-2022
 
     }

@@ -55,9 +55,7 @@ namespace WebAPI.Models
         public String Contract_Warranty { get; set; }
         public int Deleted { get; set; }
 
-        [NotMapped]
-        public bool IsMaterialCategoryChanged { get; set; }
-
+        public List<MaterialList> materialLists { get; set; }
 
         public static string registerBillOfMaterial(BillOfMaterial billOfMaterialdata)
         {
@@ -287,6 +285,56 @@ namespace WebAPI.Models
             return projectManager;
             
         }
+        public static BillOfMaterial GeMaterialList(int projectId, int activityId)
+        {
+            var result = "";
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            BillOfMaterial billOfMaterial = new BillOfMaterial();
+            MaterialList materials = new MaterialList();
+            List<MaterialList> materialList = new List<MaterialList>();
+            BillOfMaterial billOfMaterial1 = new BillOfMaterial();
 
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+
+
+
+                    billOfMaterial1.materialLists = ctx.Database.SqlQuery<MaterialList>("call getmateriallist(@ProjectID,@ActivityID)",
+                    new MySql.Data.MySqlClient.MySqlParameter("@ProjectID", projectId),
+                    new MySql.Data.MySqlClient.MySqlParameter("@ActivityID", activityId)).ToList();
+
+
+
+
+                    result = "success";
+                    return billOfMaterial1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                var info = ex.ToString();
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+            }
+            finally
+            {
+            }
+            return billOfMaterial1;
+        }
+
+    }
+    [NotMapped]
+    public class MaterialList
+    {
+        public String MaterialID { get; set; }
+
+        public String UnitQuantity { get; set; }
+
+        public String Available_Quantity { get; set; }
     }
 }

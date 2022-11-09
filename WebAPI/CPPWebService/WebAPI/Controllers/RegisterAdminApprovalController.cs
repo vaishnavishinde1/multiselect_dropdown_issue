@@ -50,6 +50,24 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
         }
 
+
+        public HttpResponseMessage Get(int? actionNo)
+        {
+            String status = "";
+            if (actionNo == 1001)
+            {
+                status += AdminApprovalPresident.InsertUserIdInApproverProject();
+            }
+            else if (actionNo == 2002)
+            {
+                status += AdminApprovalPresident.InsertUserIdInApproverTrend();
+            }
+            var jsonNew = new
+            {
+                result = status
+            };
+            return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
+        }
     }
 }
 
