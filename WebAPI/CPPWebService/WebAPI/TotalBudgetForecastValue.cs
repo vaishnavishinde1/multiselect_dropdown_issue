@@ -59,7 +59,7 @@ namespace WebAPI.Models
                     var costodc = ctx.CostODC.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
                     var costunitcost = ctx.CostUnit.Where(f => f.ActivityID == totalBudgetForecastValue.ActivityId && f.Granularity == "week").ToList();
 
-                    var Project = ctx.Project.Where(p => p.ProjectID == totalBudgetForecastValue.ProjectId).FirstOrDefault();
+                    var Project = ctx.Project.Where(p => p.ProjectID == totalBudgetForecastValue.ElementId).FirstOrDefault();
                     if (retreivedTotalBudgetForecastValue == null)
                     {
                         totalBudgetForecastValue.ContractId = Project.ProgramID;
