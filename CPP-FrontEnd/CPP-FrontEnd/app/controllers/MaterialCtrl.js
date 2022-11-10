@@ -784,7 +784,7 @@
                                 displayId: item.displayId
                             }
                             for (i = 0; i < $scope.materialHistoryCollection.length; i++) {
-                                if ($scope.materialHistoryCollection[i].ID == item.ID) {
+                                if ($scope.materialHistoryCollection[i].MaterialID == item.ID) {
                                     HistoryCount = true;
                                 }
                             }
