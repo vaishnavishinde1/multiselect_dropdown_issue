@@ -488,7 +488,7 @@ namespace WebAPI.Models
             var lineID = FTECostIDList[0].Split('_')[1];
             var actualCostId = 0;
             int minArrayCount = Math.Min(FTEStartDateList.Count, FTECostIDList.Count);
-            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
             var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 1 && c.CostRateTypeID == 5).FirstOrDefault();
             var trendCostOverhead = ctx.TrendCostOverhead.Where(c=>c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
 
@@ -1781,7 +1781,7 @@ namespace WebAPI.Models
             //}
             double totalSubValue = 0;
             double totalBudget = 0;
-            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
             var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 2 && c.CostRateTypeID == 5).FirstOrDefault();
             var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
 
@@ -3017,7 +3017,7 @@ namespace WebAPI.Models
             double totalODCValue = 0;
             double totalBudget = 0;
 
-            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
             var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 3 && c.CostRateTypeID == 5).FirstOrDefault();
             var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
 
@@ -4269,7 +4269,7 @@ namespace WebAPI.Models
                                                                      category.CategoryID, category.SubCategoryID, "U", null, null, null, MaterialCategoryID.ToString(), MaterialID.ToString(), null, null, ProjectID);
 
 
-            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == programElement.ProgramElementID && t.TrendNumber == "0").FirstOrDefault();
+            var trendBaseline = ctx.Trend.Where(t => t.ProjectID == pID && t.TrendNumber == "0").FirstOrDefault();
             var costOverhead = ctx.CostOverhead.Where(c => c.CostTypeID == 4 && c.CostRateTypeID == 5).FirstOrDefault();
             var trendCostOverhead = ctx.TrendCostOverhead.Where(c => c.TrendID == trendBaseline.TrendID && c.CostOverheadID == costOverhead.ID).FirstOrDefault();
 

@@ -13042,7 +13042,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         scope: scope,
                                         templateUrl: "app/views/modal/purchase_order_detail_modal.html",
                                         size: "lg",
-                                        windowClass: "w90p",
+                                        //windowClass: "w90p",
                                         controller: "PurchaseOrderDetailModalCtrl"
                                     });
                                     $rootScope.modalInstance.result.then(function (response) {

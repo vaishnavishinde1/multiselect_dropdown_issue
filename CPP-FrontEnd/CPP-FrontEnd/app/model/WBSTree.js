@@ -11352,8 +11352,8 @@ WBSTree = (function ($) {
                                 gridWarranty.append('<tr class="contact-row" id="' + _WarrantyList[x].Id + '">' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '><a>' + (x + 1) + '</a></td> ' +
-                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"<a id="view_warranty" title="Click to view" class="clickableFont">' +
-                                    '>' + _WarrantyList[x].WarrantyType + '<a></td > ' + //Aditya :: Hide Action Column :: 11102022
+                                    '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                    '><a id="view_warranty" title="Click to view" class="clickableFont">' + _WarrantyList[x].WarrantyType + '<a></td > ' + //Aditya :: Hide Action Column :: 11102022
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                     '>' + moment(_WarrantyList[x].StartDate).format('MM/DD/YYYY') + '</td>' +
                                     '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +

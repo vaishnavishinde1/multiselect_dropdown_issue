@@ -5617,14 +5617,14 @@
                         $('#wbsGridiewElement').html('');
 
                         var strElement = "<div class='col-md-12 p-0'><div class='grid__view'>";
-                        if (selectedRow.Status == "Closed" || isProjectEmpty) {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                        if (selectedRow.Status == "Closed") {
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else if (ModifyProjectElement == "1") {
                             strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' disabled = " + (isProjectEmpty === true ? "true" : "false") + " title=" + (isProjectEmpty === true ? "'Please Add Project'" : "'Add Element'") + " class='grid__title_rgt " + (isProjectEmpty === true ? "disabledIcon" : "") + "'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         else {
-                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + tblParentName + "'>(" + tblParentName + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
+                            strElement += "<div class='grid__title'>Project Element  <span class='grid__overflow__project-element' title='" + (isProjectEmpty === true ? emptyTitle : tblParentName) + "'>(" + (isProjectEmpty === true ? emptyTitle : tblParentName) + ")</span><div id='AddElementGridBtn' class='grid__title_rgt disabledIcon'>Add Element<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
                         }
                         strElement += "<div class='grid__scrollable'> <table class='grid__table p-0' id='tblElement'>";
                         strElement += "<thead class='t-head'>";
