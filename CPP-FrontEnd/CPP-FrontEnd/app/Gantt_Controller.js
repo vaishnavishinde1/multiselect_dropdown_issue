@@ -1351,13 +1351,17 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.changedName = function (id) {
                 //console.log(id);
                 //console.log($scope.description[id]);
-                if ($scope.description[id].name == '') {
-                    dhtmlx.alert('select a valid type first');
-                    $scope.employee_id[id] = { name: '', value: '' };   //reset
-                    $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
-                    $scope.material_id[id] = { name: '', value: '' };   //reset
-                    return;
+                //Nivedita remove position wise employee binding 10 - 11 - 2022
+                if ($scope.method[id] === "L") {
+                    if ($scope.description[id].name == '') {
+                        dhtmlx.alert('select a valid type first');
+                        //$scope.employee_id[id] = { name: '', value: '' };   //reset
+                        $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
+                        //$scope.material_id[id] = { name: '', value: '' };   //reset
+                        return;
+                    }
                 }
+                
 
                 if ($scope.method[id] === "F") {    //LABOR
                     //console.log($scope.newEmployees, $scope.employee_id);
@@ -1449,9 +1453,11 @@ angular.module('xenon.Gantt_Controller', []).
                     }
 
                     $scope.newEmployees[id] = getNewEmployees(id);
+                    costCalculation(id);
                     updateBuffer($scope.selectedCost);
 
-                } else if ($scope.method[id] === "L") {
+                }
+                else if ($scope.method[id] === "L") {
                     //luan quest 3/26 TODO
                     if ($scope.subcontractor_id[id].name == '----------Add New----------') {
                         $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
@@ -1529,7 +1535,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                     updateBuffer($scope.selectedCost);
 
-                } else if ($scope.method[id] === "U") {
+                }
+                else if ($scope.method[id] === "U") {
                     //luan quest 3/26 TODO
                     //if ($scope.material_id[id].name == '----------Add New----------') {
                     //    $scope.material_id[id] = { name: '', value: '' };   //reset
@@ -1644,7 +1651,8 @@ angular.module('xenon.Gantt_Controller', []).
                     //);
                     $scope.changedCost(id, 0);
                     costCalculation(id);//recalculate cost based on new FTE position
-                } else if ($scope.method[id] === "ODC") {
+                }
+                else if ($scope.method[id] === "ODC") {
                     //Nothing
                 }
             }
@@ -10810,6 +10818,8 @@ angular.module('xenon.Gantt_Controller', []).
                 var resultAr = [];
                 var allPositions = positionsList;
                 //console.log(allPositions);
+                //Nivedita remove position wise employee binding 10-11-2022
+                /*
                 for (var x = 0; x < allEmployees.length; x++) {
                     var found = false;
                     for (var y = 0; y < allPositions.length; y++) {
@@ -10823,7 +10833,7 @@ angular.module('xenon.Gantt_Controller', []).
                         allEmployees[x].FTEPositionName = 'N/A';
                     }
                 }
-
+                */
                 if ($scope.description && $scope.description[id]) {
 
                     //console.log($scope.description[1], id);
@@ -10842,13 +10852,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allEmployees.length; x++) {
                         //console.log(allEmployees[x], $scope.description[id].name);
-                        if (allEmployees[x].FTEPositionName == $scope.description[id].name) {
+                        //if (allEmployees[x].FTEPositionName == $scope.description[id].name) { //Nivedita remove position wise employee binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allEmployees[x]);
                             temp.name = allEmployees[x].Name;
                             temp.value = allEmployees[x].ID;
                             resultAr.push(temp);
-                        }
+                        //}
                     }
                 }
                 return resultAr;
@@ -10859,20 +10869,22 @@ angular.module('xenon.Gantt_Controller', []).
                 var resultAr = [];
                 var allPositions = positionsList;
                 //console.log(allPositions);
-                for (var x = 0; x < allEmployees.length; x++) {
+
+                //Nivedita remove position wise employee binding 10-11-2022
+                /*for (var x = 0; x < allEmployees.length; x++) {
                     var found = false;
                     for (var y = 0; y < allPositions.length; y++) {
                         if (allEmployees[x].FTEPositionID == allPositions[y].Id) {
                             allEmployees[x].FTEPositionName = allPositions[y].PositionDescription;
                             found = true;
-                            //console.log(allEmployees[x]);
+                           //console.log(allEmployees[x]);
                             break;
                         }
                     }
                     if (!found) {
                         allEmployees[x].FTEPositionName = 'N/A';
                     }
-                }
+                }*/
 
                 if ($scope.description && $scope.description[id]) {
 
@@ -10891,13 +10903,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allEmployees.length; x++) {
                         //console.log(allEmployees[x], $scope.description[id].name);
-                        if (allEmployees[x].FTEPositionName == $scope.description[id].name) {
+                        //if (allEmployees[x].FTEPositionName == $scope.description[id].name) { Nivedita remove position wise employee binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allEmployees[x]);
                             temp.name = allEmployees[x].Name;
                             temp.value = allEmployees[x].ID;
                             resultAr.push(temp);
-                        }
+                       // }
                     }
                 }
                 return resultAr;
@@ -11013,20 +11025,20 @@ angular.module('xenon.Gantt_Controller', []).
                 var allMaterials = materialList;
                 //console.log(allMaterialCategories);
                 //console.log(allMaterials);
-                for (var x = 0; x < allMaterials.length; x++) {
-                    var found = false;
-                    for (var y = 0; y < allMaterialCategories.length; y++) {
-                        if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
-                            allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
-                            found = true;
-                            //console.log(allMaterials[x]);
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        allMaterials[x].MaterialCategoryName = 'N/A';
-                    }
-                }
+                //for (var x = 0; x < allMaterials.length; x++) {
+                //    var found = false;
+                //    for (var y = 0; y < allMaterialCategories.length; y++) {
+                //        if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
+                //            allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
+                //            found = true;
+                //            //console.log(allMaterials[x]);
+                //            break;
+                //        }
+                //    }
+                //    if (!found) {
+                //        allMaterials[x].MaterialCategoryName = 'N/A';
+                //    }
+                //}
 
                 if ($scope.description && $scope.description[id]) {
 
@@ -11043,13 +11055,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allMaterials.length; x++) {
                         //console.log(allMaterials[x], $scope.description[id].name);
-                        if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
+                        //if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
                             var temp = { name: '', value: '' };
                             //console.log(allMaterials[x]);
                             temp.name = allMaterials[x].Name;
                             temp.value = allMaterials[x].ID;
                             resultAr.push(temp);
-                        }
+                        //}
                     }
                 }
                 return resultAr;
@@ -11115,13 +11127,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allMaterials.length; x++) {
                         //console.log(allMaterials[x], $scope.description[id].name);
-                        if (allMaterials[x].MaterialCategoryID == $scope.description[id].value) {
+                        //if (allMaterials[x].MaterialCategoryID == $scope.description[id].value) { Nivedita remove category wise material binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allMaterials[x]);
                             temp.name = allMaterials[x].MaterialName;
                             temp.value = allMaterials[x].MaterialID;
                             resultAr.push(temp);
-                        }
+                       // }
                     }
                 }
                 return resultAr;
@@ -11580,7 +11592,8 @@ angular.module('xenon.Gantt_Controller', []).
             }
 
             //luan here 4/23
-            function costCalculation(id, obj, i) {//index) {
+            function costCalculation(id, obj, i)
+            {//index) {
                 //===================================== Jignesh-CostLieneItem-13_01_2021 =====================================
                 //if (!$scope.isNewCost[id]) {
                 //    if (!$scope.IsTaskClicked) {
@@ -11783,7 +11796,7 @@ angular.module('xenon.Gantt_Controller', []).
                         $.each($scope.fteHours[id], function (index) {
                             //luan here 4/23 - use budget unit costs if clicking on a-e to edit etc
                             var unitCost = $scope.unitCost[id];
-                            if ($scope.isCostEdited[id] && !isCostSaving)
+                                    if ($scope.isCostEdited[id] && !isCostSaving)
                                 unitCost = $scope.getCostWithOverhead(unitCost, 'F');
                             //if ($scope.CostData[id - 1] && $scope.CostData[id - 1].CostType == 'F' && $scope.trend.TrendNumber == 1000) {
                             //    unitCost = ($scope.CostData[id - 2]) ? $scope.CostData[id - 2].Base : 1;
