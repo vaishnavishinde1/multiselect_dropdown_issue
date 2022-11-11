@@ -4053,12 +4053,11 @@ WBSTree = (function ($) {
                     var currProjectEndDate = new Date(selectedNode.ProjectOrgEndDate);
                     var updatedprojectEndDate = new Date();
                     updatedprojectEndDate.setDate(currProjectEndDate.getDate() + parseInt(schImp));
-                    $('#program_element_PEnd_Date').val(moment(updatedprojectEndDate).format('MM/DD/YYYY'));
                     if (schImp == 0) {
                         $('#program_element_PEnd_Date').prop('disabled', false);
                     } else {
                         $('#program_element_PEnd_Date').prop('disabled', true);
-
+                        //$('#program_element_PEnd_Date').val(moment(updatedprojectEndDate).format('MM/DD/YYYY'));k
                     }
                     $('#program_element_PEnd_Date').blur();
 
@@ -6336,6 +6335,7 @@ WBSTree = (function ($) {
                     newNode.ProjectPODate = $('#ProgramElementModal').find('.modal-body #program_element_PO_Date').val();
                     newNode.ProjectPStartDate = $('#ProgramElementModal').find('.modal-body #program_element_PStart_Date').val();
                     newNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+                    newNode.ProjectOrgEndDate = newNode.ProjectPEndDate;
 
                     //------------------------------------------------------------------------------------------------------
                     newNode.ProjectForecastValue = 0;
@@ -9789,6 +9789,8 @@ WBSTree = (function ($) {
                         if (response.result.indexOf('successfully') >= 0) {  //Manasi
                             $("#update_program_element_change_order_modal").attr("disabled", false);
                             //Added by Amruta for populating the end date post exit modal -1
+                            var updatedPEndDate = response.projectEndDate;
+                            $('#program_element_PEnd_Date').val(moment(updatedPEndDate).format('MM/DD/YYYY'));
                             selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
                             wbsTree.updateTreeNodes(selectedNode);
                             dhtmlx.alert({
@@ -9979,7 +9981,9 @@ WBSTree = (function ($) {
                             if (response.result.split(',')[0].trim() === "Success") {
                                 $("#update_program_element_change_order_modal").attr("disabled", false);
                                 //Added by Amruta for populating the end date post exit modal -2
-                                //selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
+                                var updatedPEndDate = response.projectEndDate;
+                                $('#program_element_PEnd_Date').val(moment(updatedPEndDate).format('MM/DD/YYYY'));
+                                selectedNode.ProjectPEndDate = $('#ProgramElementModal').find('.modal-body #program_element_PEnd_Date').val();
                                 wbsTree.updateTreeNodes(selectedNode);
                                 var newChangeOrderID = response.result.split(',')[1].trim();
                                 var DocumentName = $("#document_name_changeOrder").val();
@@ -10279,7 +10283,8 @@ WBSTree = (function ($) {
                             function (response) {
                                 if (response.result.split(',')[0].trim() === "Success") {
                                     //$('#ProgramModal').modal('hide');
-
+                                    var updatedPEndDate = response.projectEndDate;
+                                    $('#program_element_PEnd_Date').val(moment(updatedPEndDate).format('MM/DD/YYYY'));
                                 } else {
                                     if (response.result == '' || response.result == null || response.result == undefined)
                                         dhtmlx.alert('Something went wrong. Please try again..');
@@ -10874,6 +10879,8 @@ WBSTree = (function ($) {
                                                 $("#ProgramElementModal").css({ "opacity": "1" });
 
                                             }
+                                            var updatedPEndDate = response.projectEndDate;
+                                            $('#program_element_PEnd_Date').val(moment(updatedPEndDate).format('MM/DD/YYYY'));
                                             debugger;
                                             //Nivedita 14-01-2022
                                             populateProgramElementChangeOrderTable(ProgramElementId);
