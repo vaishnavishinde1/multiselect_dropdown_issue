@@ -15898,7 +15898,7 @@ WBSTree = (function ($) {
 
                 var SearchText;
                 $("#billofmaterialfilter").keyup(function (e) {
-                    var txtbillofmaterialfilter = $("#billofmaterialfilter").val
+                    var txtbillofmaterialfilter = $("#billofmaterialfilter").val();
 
                     _Document.getBillOfMaterialByProgramElementId().get({ programelementId: _selectedNode.ProgramElementID, SearchText: txtbillofmaterialfilter }, function (response) {
                         _BillOfMaterialList = response.data;

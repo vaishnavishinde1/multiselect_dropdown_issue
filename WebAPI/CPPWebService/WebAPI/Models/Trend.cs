@@ -1785,7 +1785,7 @@ namespace WebAPI.Models
                 {
                     unitqunatity = Convert.ToDecimal(j.UnitQuantity);
                      BillOfMaterial billOfMaterial = new BillOfMaterial();
-                    billOfMaterial = ctx.BillOfMaterial.Where(bl => bl.ProgramElementID == project.ProgramElementID && bl.MaterialID == j.MaterialID && bl.MaterialCategoryID == j.MaterialCategoryID).FirstOrDefault();
+                    billOfMaterial = ctx.BillOfMaterial.Where(bl => bl.ProgramElementID == project.ProgramElementID && bl.MaterialID == j.MaterialID && bl.MaterialCategoryID == j.MaterialCategoryID && bl.Deleted==0).FirstOrDefault();
                     billOfMaterial.Quantity = billOfMaterial.Quantity - unitqunatity;
                     ctx.SaveChanges();
                 }
