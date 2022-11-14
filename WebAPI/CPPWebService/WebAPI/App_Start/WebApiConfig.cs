@@ -2144,8 +2144,12 @@ namespace WebAPI
                routeTemplate: "CostOverheadHistory/getCostOverheadHistory",
                defaults: new { controller = "CostOverheadHistory", action = "Get" }
            );
-
-
+            config.Routes.MapHttpRoute(
+            name: "RegisterProgramNotes",
+            routeTemplate: "Response/ProgramNotes",
+            //Returns: Program 'BrdProgram' already exists in the system | Success
+            defaults: new { controller = "RegisterProgramNotes" }
+            );
         }
     }
 }

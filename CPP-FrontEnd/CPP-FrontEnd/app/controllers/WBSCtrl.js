@@ -5926,10 +5926,12 @@
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                             wbsTree.setSelectedNode(selectedProgram);
                             $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                            localStorage.Status = "";
                             if (selectedProgram.Status == "Closed") {
                                 $('#delete_program').prop('disabled', true);
                                 $("#updateBtnProgram").prop('disabled', true);
                                 $('#update_program').prop('disabled', true);
+                                localStorage.Status = "Closed";
                             }
                         }
 
@@ -6087,7 +6089,7 @@
                         //code started to add by kavita
                         $("#btnSpecialInstruction").prop('disabled', false);
                         $("#contextMenuBillOfMaterial").prop('disabled', false);
-
+                        localStorage.Status = "";
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
                             $('#delete_program_element').removeClass('btn btn-black');
@@ -6103,7 +6105,7 @@
                             $("#update_program_element").prop('disabled', true);
                             $("#btnSpecialInstruction").prop('disabled', true);
                             $("#contextMenuBillOfMaterial").prop('disabled', true);
-
+                            localStorage.Status = "Closed";
                         }
                     });
                     //Edit/Open Project
@@ -6115,6 +6117,7 @@
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+                        
                         //code started to add by kavita
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
@@ -6131,6 +6134,7 @@
                             $("#update_program_element").prop('disabled', true);
                             $("#btnSpecialInstruction").prop('disabled', true);
                             $("#contextMenuBillOfMaterial").prop('disabled', true);
+                            
                         }
                         //code ended by kavita
                     });
@@ -6222,6 +6226,7 @@
                         wbsTree.setSelectedNode(selectedElement);
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
+                        localStorage.Status = "";
                         if (selectedElement.Status == "Closed") {
 
                             $('#delete_project').removeClass('btn btn-black');
@@ -6239,6 +6244,7 @@
                             $('#update_project').attr('style', 'width:150px;margin-left:15px;');
                             $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
                             //$('#spnBtndelete_project').removeAttr('title'); /
+                            localStorage.Status = "Closed";
 
                         }
                     });

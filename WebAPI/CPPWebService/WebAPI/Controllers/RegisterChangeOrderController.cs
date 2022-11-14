@@ -31,9 +31,12 @@ namespace WebAPI.Controllers
 					status += "";
 			}
 
+			ProgramElement programElement = ProgramElement.getProgramElement(null, Convert.ToString(changeOrder_list[0].ProgramElementID), null).FirstOrDefault();
+
 			var jsonNew = new
 			{
-				result = status
+				result = status,
+				projectEndDate = programElement.ProjectPEndDate
 			};
 			return Request.CreateResponse(HttpStatusCode.OK, jsonNew);
 		}
