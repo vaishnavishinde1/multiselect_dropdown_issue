@@ -5029,7 +5029,7 @@
                         strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
                         strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
-                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='select status' id=0>Select Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Close</option></select></th></thead></table></div>"; //--Added by Namrata--
+                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Select Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Close</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
@@ -5699,6 +5699,8 @@
                     //on selecting client
                     selectClient.on('change', function () {
                         $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        $('#StatusFilter').prop('selectedIndex', 0);
+                        $('#StatusFilter').attr('disabled', false);
                         //change contract filter
                         var sortedProgram = [];
                         var selectedClientID = this.selectedOptions[0].id;
@@ -5710,6 +5712,7 @@
                             });
                         }
                         else {
+               
                             fillClientOptions(allClientList);
                             tr = $scope.allContractRowsInTable;
                             sortedProgram=allProgramList;
@@ -5735,6 +5738,7 @@
                     //on selecting Status added by Namrata--
                     selectStatus.on('change', function () {
                         $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                     /*   $('#clientFilter').prop('selectedIndex', 0);*/
                         //change contract filter
                         var sortedProgram = [];
                         var selectedStatus = this.selectedOptions[0].id;
@@ -5779,6 +5783,8 @@
                         var selectedProgram = allProgramList.find(prg => prg.ProgramID == selectedContractID);
                         if ($(this).val() != "Select Contract") {
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').attr('disabled', true);
+                            $('#StatusFilter').prop('selectedIndex', 0);
+                            $('#StatusFilter').attr('disabled', true);
                             jQuery.each(allClientList, function (i, client) {
                                 //jQuery.each($scope.programList, function (j, program) {
                                 if (selectedProgram.ClientID == client.ClientID) {
@@ -5792,6 +5798,7 @@
                             fillContractOptions(allProgramList);
                             tr = $scope.allContractRowsInTable;
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                            $('#StatusFilter').attr('disabled', false);
                             sortedClient=allClientList;
                         }
                         fillClientOptions(sortedClient);
