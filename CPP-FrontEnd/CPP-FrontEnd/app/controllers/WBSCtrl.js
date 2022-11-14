@@ -5020,7 +5020,7 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<div><table class='gadget-content'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        strContract += "<div><table class='gadget-content'><thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
                         strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
@@ -5028,7 +5028,8 @@
                         // Original Value filter
                         strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table></div>";
+                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
+                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='select status' id=0>Select Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Close</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
@@ -5038,6 +5039,7 @@
                             "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
                             "<th class='sort-by' width='13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
                             "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width=13%'>Status</th>" +
                             //"<th>Current Forecast</th>" +
                             "<th width=8%' style='display:none'>Action</th>" +
                             "</tr>";
@@ -5067,9 +5069,9 @@
                                 strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.name + "'>" + program.name + "</td>";
                                 strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber + "'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red' align ='right'>" + program.ContractValue + "</td>";
-                                strContract += "<td style='color:red' align ='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
+                                strContract += "<td style='color:red' align ='right'>" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
-                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td style='color:red'>" + program.Status + "</td>"; 
                                 strContract += "<td class='text-center' style='display:none'>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
@@ -5085,7 +5087,7 @@
                                 strContract += "<td align='right'>" + program.ContractValue + "</td>";
                                 strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
-                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>Active</td>";
                                 //Edit Contract 
                                 if (ModifyContract == "1") {
                                     strContract += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5178,6 +5180,7 @@
                             "<th class='sort-by' width='17%'>Value ($)</th>" +
                         /*"<th class='sort-by' width='27%'>Department</th>" +*/
                             "<th class='sort-by' width='27%'>Forecast ($)</th>" +
+                            "<th class='sort-by' width='27%'>Status </th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
@@ -5213,20 +5216,25 @@
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
+                              
                                 /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
                                 strProject += "<td style='color:red' align ='right'>$" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td style='color:red' align ='right'>" + project.Status + "</td>";
                                 strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
+
                             }
                             else {
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
+
                                 // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "' align ='right'>$" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td align='right'>Active</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5301,6 +5309,7 @@
                             "<th class='sort-by' width='15%'>Number</th>" +
                             "<th class='sort-by' width='17%'>Value ($)</th>" +
                             "<th class='sort-by' width='27%'>Services</th>" +
+                            "<th class='sort-by' width='27%'>Status</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
@@ -5333,7 +5342,7 @@
                                     strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td style='color:red' align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
-                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
+                                    strElement += "<td style='color:red'>" + projectElement.Status + "</td>";     //close changes done by Namrata
                                     strElement += "<td class='text-center' style='display:none'>" +
                                         "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                         "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
@@ -5346,7 +5355,7 @@
                                     strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
-                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                    strElement += "<td>Active</td>";
                                     //Edit Element
                                     if (ModifyProjectElement == "1") {
                                         strElement += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5681,8 +5690,10 @@
                     let tr = $scope.allContractRowsInTable;
                     var selectClient = $('#clientFilter');
                     var selectContract = $('#contractFilter');
+                    var selectStatus = $('#StatusFilter');
                     var allProgramList = $scope.allWbsProgramList;
                     var allClientList = $scope.allClientList;
+                   
 
                     fillClientOptions(allClientList);
                     //on selecting client
@@ -5712,6 +5723,42 @@
                             var td_Client = td[0].innerText;
                             if (i != 0) {
                                 if (td_Client == filter_Id || filter_Id == "Select Client") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
+                    
+                    //on selecting Status added by Namrata--
+                    selectStatus.on('change', function () {
+                        $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        //change contract filter
+                        var sortedProgram = [];
+                        var selectedStatus = this.selectedOptions[0].id;
+                        if ($(this).val() != "Select Status") {
+                            jQuery.each(allProgramList, function (i, program) {
+                                if (program.Status == selectedStatus) {
+                                    sortedProgram.push(program);
+                                }
+                            });
+                        }
+                        else {
+                            fillClientOptions(allClientList);
+                            tr = $scope.allContractRowsInTable;
+                            sortedProgram = allProgramList;
+                        }
+                        fillContractOptions(sortedProgram);
+                        //selectContract.append(contractOpt);
+
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Client = td[5].innerText;
+                            if (i != 0) {
+                                if (td_Client == filter_Id || filter_Id == "Select Status") {
                                     tr[i].style.display = "";
                                 } else {
                                     tr[i].style.display = "none";
