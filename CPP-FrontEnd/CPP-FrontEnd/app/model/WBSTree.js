@@ -3691,7 +3691,7 @@ WBSTree = (function ($) {
                     gridNoteslist.empty();
                     for (var x = 0; x < programNotesList.length; x++) {
                         gridNoteslist.append(
-                            '<tr class="contact-row" id="' + programNotesList[x].notes_id + '" >' +
+                            '<tr class="contact-row" id="Notes_id" value="' + programNotesList[x].Notes_id + '" >' +
                             '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                             '><a>' + (x + 1) + '</a></td> ' +
                             '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td>' +
@@ -3708,6 +3708,7 @@ WBSTree = (function ($) {
                 /* });*/
             }
             $('#gridNoticehistoryList').on('click', 'th', function () {
+
                 var table = $(this).closest('table');
                 var rows = table.find('tr.contact-row')
                     .toArray()
@@ -3720,6 +3721,10 @@ WBSTree = (function ($) {
                     table.append(rows[i]);
                 }
             });
+
+           
+
+            
 
             function populateNotesHistoryTableNew() {
                 $('#program_contract_table_body_id').empty();
@@ -10601,12 +10606,101 @@ WBSTree = (function ($) {
 
             // Narayan - on click view button in common notes - 14-04-2022
             $("#gridNoticehistoryList").on('click', '#notes_view', function () {
+                $('#NotesModal').modal({ show: true, backdrop: 'static' });
                 var row = $(this).closest("tr");
                 var desc = row.find("#notes_desc").text();
-                $('#txtprogramNotes').val(desc);
-                $('#txtprogramNotes').prop("disabled", "disabled");
-                $('#btnClearNotesDesc').show();
+                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled", true);
+                // $('#txtprogramNotes').val(desc);
+                // $('#txtprogramNotes').prop("disabled", "disabled");
+                $('#update_notes').hide();
+                $('#delete_notes').hide();
             });
+
+            $("#gridNoticehistoryList").on('dblclick', 'tr', function () {
+                $('#NotesModal').modal({ show: true, backdrop: 'static' });
+                var row = $(this).closest("tr");
+                var desc = row.find("#notes_desc").text();
+                var scope = wbsTree.getScope();
+                scope.notesID = row.attr('value');
+                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled",false);
+                // $('#txtprogramNotes').val(desc);
+                // $('#txtprogramNotes').prop("disabled", "disabled");
+                // $('#btnClearNotesDesc').show();
+                $('#update_notes').show();
+                $('#delete_notes').show();
+            });
+
+
+            $('#update_notes').unbind('click').on('click', function () {
+                var notesTxt = $('#notesTxtArea').val();
+                var scope = wbsTree.getScope();
+                var notesID = scope.notesID;
+                var programnotesdetails = {
+                    Operation: 2,
+                    Notes_id: notesID,
+                    notes_desc: notesTxt
+
+                };
+
+                var request = {
+                    method: 'POST',
+                    url: serviceBasePath + 'Response/ProgramNotes',
+                    data: programnotesdetails,
+
+                };
+                var angularHttp = wbsTree.getAngularHttp();
+                angularHttp(request).then(function success(d) {
+                    if (d.data.result != "") {
+                        dhtmlx.alert("Note Updated Successfully");
+                        $('#NotesModal').modal({ show: false, backdrop: 'static' });
+                        $("#NotesModal").modal('toggle');
+                        $("#ProgramModal").css({ "opacity": "1" });
+                        populateNotesHistoryTable(_selectedProgramID);
+                    }
+
+                });
+
+            });
+            $('#delete_notes').unbind('click').on('click', function () {
+                var notesTxt = $('#notesTxtArea').val();
+                var scope = wbsTree.getScope();
+                var notesID = scope.notesID;
+                var programnotesdetails = {
+                    Operation: 3,
+                    Notes_id: notesID,
+                    notes_desc: notesTxt
+
+                };
+
+                var request = {
+                    method: 'POST',
+                    url: serviceBasePath + 'Response/ProgramNotes',
+                    data: programnotesdetails,
+
+                };
+
+                dhtmlx.confirm("Are you sure you want to delete?", function (result) {
+                    if (result) {
+                        var angularHttp = wbsTree.getAngularHttp();
+                        angularHttp(request).then(function success(d) {
+                            if (d.data.result != "") {
+                                dhtmlx.alert("Note Deleted Successfully!!!");
+                                $('#NotesModal').modal({ show: false, backdrop: 'static' });
+                                $("#NotesModal").modal('toggle');
+                                $("#ProgramModal").css({ "opacity": "1" });
+                                populateNotesHistoryTable(_selectedProgramID);
+                            }
+
+                        });
+                    }
+                });
+              
+
+            });
+
+           
 
             // Narayan - on click clear button in common notes - 14-04-2022
             $('#btnClearNotesDesc').on('click', function () {
@@ -18366,6 +18460,11 @@ WBSTree = (function ($) {
                 }
             });
             //=======================================================================================================
+            $('#NotesModal').unbind().on('show.bs.modal', function () {
+                defaultModalPosition();
+                //blur
+                $("#ProgramModal").css({ "opacity": "0.8" });
+            });
             //================= Aditya prime dd disable on Prime ========================//
             $('.modal-body #prime_subPrime_dd').on('change', function () {
                 if ($(this).val() != "Sub") {
