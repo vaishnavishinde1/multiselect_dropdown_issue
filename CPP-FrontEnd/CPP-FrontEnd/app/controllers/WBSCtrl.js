@@ -5020,16 +5020,16 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<div><table class='gadget-content'><thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        strContract += "<div><table class='gadget-content'><thead><th class='p-0' title='Client Filter' width='27.5%';'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
-                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
+                        strContract += "<th class='p-l-r-5' width='27.5%' title='Contract Filter'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
-                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
+                        strContract += "<th class='p-l-r-5' width='10%' title='Search Contract Id'  id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
                         // Original Value filter
-                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
+                        strContract += "<th class='p-l-r-5' title='Search for greater than entered original value' width='13%'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
-                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Closed</option></select></th></thead></table></div>"; //--Added by Namrata--
+                        strContract += "<th class='p-l-r-5' title='Search for greater than entered current value' width='13%' ><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
+                        strContract += "<th class='p-0' width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Closed</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
