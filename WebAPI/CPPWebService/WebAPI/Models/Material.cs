@@ -92,7 +92,8 @@ namespace WebAPI.Models
                 using (var ctx = new CPPDbContext())
                 {
                     Material retrievedMaterial = new Material();
-                    retrievedMaterial = ctx.Material.Where(u => u.Name == material.Name && u.MaterialCategoryID == material.MaterialCategoryID).FirstOrDefault();
+                    //retrievedMaterial = ctx.Material.Where(u => u.Name == material.Name && u.MaterialCategoryID == material.MaterialCategoryID).FirstOrDefault();
+                    retrievedMaterial = ctx.Material.Where(u => u.Name == material.Name).FirstOrDefault();
                     //        Material retrievedMaterial2 = new Material();
                     //      retrievedMaterial2 = ctx.Material.Where(u => u.MaterialCategory == material.MaterialCategory).FirstOrDefault();
 
@@ -157,8 +158,10 @@ namespace WebAPI.Models
                     retrievedMaterial = ctx.Material.Where(u => u.ID == material.ID).FirstOrDefault();
 
                     Material duplicateMaterial = new Material();
+                    //duplicateMaterial = ctx.Material.Where(u => u.Name == material.Name
+                    //                                            && u.ID != material.ID && u.MaterialCategoryID == material.MaterialCategoryID).FirstOrDefault();
                     duplicateMaterial = ctx.Material.Where(u => u.Name == material.Name
-                                                                && u.ID != material.ID && u.MaterialCategoryID == material.MaterialCategoryID).FirstOrDefault();
+                                                                && u.ID != material.ID ).FirstOrDefault();
 
                     Material duplicateUniqueIdentityNumber = new Material();
                     duplicateUniqueIdentityNumber = ctx.Material.Where(u => u.UniqueIdentityNumber == material.UniqueIdentityNumber && u.ID != material.ID).FirstOrDefault();
