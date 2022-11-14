@@ -5029,7 +5029,7 @@
                         strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
                         strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
-                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Select Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Close</option></select></th></thead></table></div>"; //--Added by Namrata--
+                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Closed</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
