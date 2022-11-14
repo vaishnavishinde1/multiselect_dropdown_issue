@@ -2562,27 +2562,27 @@ WBSTree = (function ($) {
                     //----Vaishnavi 30-03-2022----//
                     if (d.level == "Program") {
                         if (d.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
+                            return "assets/js/wbs-tree/images/nodeD.png";
                         else
-                            return "assets/js/wbs-tree/images/nodeB.png";
+                            return "assets/js/wbs-tree/images/node.png";
                     }
                     if (d.level == "ProgramElement") {
                         if (d.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
+                            return "assets/js/wbs-tree/images/nodeD.png";
                         else
-                            return "assets/js/wbs-tree/images/nodeE.png";
+                            return "assets/js/wbs-tree/images/nodeG.png";
                     }
                     if (d.level == "Project" && d.TotalUnapprovedTrends == "0") {
                         if (d.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
-                        else
                             return "assets/js/wbs-tree/images/nodeD.png";
+                        else
+                            return "assets/js/wbs-tree/images/nodeB.png";
                     }
                     else {
                         if (d.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
+                            return "assets/js/wbs-tree/images/nodeD.png";
                         else
-                            return "assets/js/wbs-tree/images/nodeC.png";
+                            return "assets/js/wbs-tree/images/nodeE.png";
                     }
                     //----Vaishnavi 30-03-2022----//
                 })
@@ -12397,7 +12397,17 @@ WBSTree = (function ($) {
 
                             }
                             $('input[name=rbCategories]').on('click', function (event) {
-                                if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
+                                if (localStorage.Status == 'Closed') {
+
+                                    $('#DeleteUploadProgram').prop('disabled', true);
+                                    $('#ViewUploadFileProgram').prop('disabled', true);
+                                    $('#EditBtnProgram').prop('disabled', true);
+                                    $('#downloadBtnProgram').prop('disabled', true);
+                                   // localStorage.Status = "";
+                                }
+
+
+                              else  if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
                                     $('#ViewUploadFileProgram').removeAttr('disabled');
                                     $('#EditBtnProgram').removeAttr('disabled');
                                 }
@@ -12408,14 +12418,7 @@ WBSTree = (function ($) {
                                     $('#downloadBtnProgram').removeAttr('disabled');
                                 }
                                 //Code added by Kavita 
-                                if (localStorage.Status == 'Closed') {
-
-                                    $('#DeleteUploadProgram').prop('disabled', true);
-                                    $('#ViewUploadFileProgram').prop('disabled', true);
-                                    $('#EditBtnProgram').prop('disabled', true);
-                                    $('#downloadBtnProgram').prop('disabled', true);
-                                    localStorage.Status = "";
-                                }
+                               
                                 localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                                 //g_selectedProjectDocument = null;
                                 //g_selectedProjectDocument = $(this).closest("tr").find(".docId").text();
@@ -13219,7 +13222,7 @@ WBSTree = (function ($) {
                     $('#updateBtnProgram').attr('disabled', 'disabled');
                     $('#cancel_program').removeAttr('disabled');
                     $('#cancel_program_x').removeAttr('disabled');
-                    localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
+                   // localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
                 } else {
                     //$("#delete_program").removeAttr('disabled'); // Jignesh-23-02-2021
                     $('#update_program').removeClass('btn btn-black');
@@ -14883,14 +14886,7 @@ WBSTree = (function ($) {
 
                         $('input[name=rbCategoriesPrg]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
-                            if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
-                                $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
-                            }
-                            else {
-                                $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
-                                $('#downloadBtnInViewAllProject').removeAttr('disabled');
-                            }
-
+                          
                             //Code added by Kavita 
                             if (localStorage.Status == 'Closed') {
                                 $('#DeleteUploadProgramPrg').prop('disabled', true);
@@ -14898,8 +14894,16 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
-                                localStorage.Status = "";
+                              //  localStorage.Status = "";
                             }
+                            else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
+                                $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
+                            }
+                            else {
+                                $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
+                                $('#downloadBtnInViewAllProject').removeAttr('disabled');
+                            }
+
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
 
                         });
@@ -15003,7 +15007,16 @@ WBSTree = (function ($) {
 
                         $('input[name=rbCategoriesPrg]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
-                            if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
+                            //Code added by Kavita 
+                            if (localStorage.Status == 'Closed') {
+                                $('#DeleteUploadProgramPrg').prop('disabled', true);
+                                $('#downloadBtnProgramPrg').prop('disabled', true);
+                                $('#ViewUploadFileProgramPrg').prop('disabled', true);
+                                $('#ViewAllUploadFileProjects').prop('disabled', true);
+                                $('#EditBtnProgramPrg').prop('disabled', true);
+                                //localStorage.Status = "";
+                            }
+                            else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                                 $('#ViewUploadFileProgramPrg').removeAttr('disabled');
                                 $('#EditBtnProgramPrg').removeAttr('disabled');
                             }
@@ -15014,15 +15027,7 @@ WBSTree = (function ($) {
                                 $('#downloadBtnProgramPrg').removeAttr('disabled');
                             }
 
-                            //Code added by Kavita 
-                            if (localStorage.Status == 'Closed') {
-                                $('#DeleteUploadProgramPrg').prop('disabled', true);
-                                $('#downloadBtnProgramPrg').prop('disabled', true);
-                                $('#ViewUploadFileProgramPrg').prop('disabled', true);
-                                $('#ViewAllUploadFileProjects').prop('disabled', true);
-                                $('#EditBtnProgramPrg').prop('disabled', true);
-                                localStorage.Status = "";
-                            }
+                           
                             localStorage.selectedProgramPrgDocument = $(this).closest("tr").find(".docId").text();
                         });
                     });
@@ -15815,7 +15820,7 @@ WBSTree = (function ($) {
                     $('#delete_program_element_milestone').attr('disabled', 'disabled');
                     $('#cancel_program_element').removeAttr('disabled');
                     $('#cancel_program_element_x').removeAttr('disabled');
-                    localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
+                    //localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
                 }
                 else if (localStorage.dept == 1) {  //vaishnavi 10-03-2022
                     //Nivedita - Button changes to Grey on disabled  25-04-2022
@@ -16440,15 +16445,7 @@ WBSTree = (function ($) {
 
                     $('input[name=rbCategoriesPrgElm]').on('click', function (event) {
 
-                        if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
 
-                            $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
-                        }
-                        else {
-
-                            $('#downloadBtnInViewAllProgramElement').removeAttr('disabled');
-                            $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
-                        }
                         //Code added by Kavita 
                         if (localStorage.Status == 'Closed') {
 
@@ -16458,8 +16455,19 @@ WBSTree = (function ($) {
                             $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                             $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                             $('#EditBtnProgramPrgElm').prop('disabled', true);
-                            localStorage.Status = "";
+                           // localStorage.Status = "";
                         }
+
+                        else if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
+
+                            $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
+                        }
+                        else {
+
+                            $('#downloadBtnInViewAllProgramElement').removeAttr('disabled');
+                            $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled');
+                        }
+                        
                         g_selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
                     });
@@ -16539,14 +16547,6 @@ WBSTree = (function ($) {
                     });
 
                     $('input[name=rbCategoriesPrg]').on('click', function (event) {
-
-                        if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
-                            $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
-                        }
-                        else {
-                            $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
-                            $('#downloadBtnInViewAllProject').removeAttr('disabled');
-                        }
                         //Code added by Kavita 
                         if (localStorage.Status == 'Closed') {
                             $('#DeleteUploadProgramPrg').prop('disabled', true);
@@ -16556,6 +16556,15 @@ WBSTree = (function ($) {
                             $('#EditBtnProgramPrg').prop('disabled', true);
                             localStorage.Status = "";
                         }
+                       
+                        else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
+                            $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
+                        }
+                        else {
+                            $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
+                            $('#downloadBtnInViewAllProject').removeAttr('disabled');
+                        }
+                      
 
                     });
 
@@ -17982,7 +17991,16 @@ WBSTree = (function ($) {
 
                         }
                         $('input[name=rbCategories]').on('click', function (event) {
-                            if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
+                            
+                            //Code added by Kavita 
+                            if (localStorage.Status == 'Closed') {
+                                $('#DeleteUploadProgram').prop('disabled', true);
+                                $('#ViewUploadFileProgram').prop('disabled', true);
+                                $('#EditBtnProgram').prop('disabled', true);
+                                $('#downloadBtnProgram').prop('disabled', true);
+                                localStorage.Status = "";
+                            }
+                            else if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
                                 $('#ViewUploadFileProgram').removeAttr('disabled');
                                 $('#EditBtnProgram').removeAttr('disabled');
                             }
@@ -17992,14 +18010,7 @@ WBSTree = (function ($) {
                                 $('#EditBtnProgram').removeAttr('disabled');
                                 $('#downloadBtnProgram').removeAttr('disabled');
                             }
-                            //Code added by Kavita 
-                            if (localStorage.Status == 'Closed') {
-                                $('#DeleteUploadProgram').prop('disabled', true);
-                                $('#ViewUploadFileProgram').prop('disabled', true);
-                                $('#EditBtnProgram').prop('disabled', true);
-                                $('#downloadBtnProgram').prop('disabled', true);
-                                localStorage.Status = "";
-                            }
+                           
                             localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                             //g_selectedProjectDocument = null;
                             //g_selectedProjectDocument = $(this).closest("tr").find(".docId").text();
@@ -19924,7 +19935,21 @@ WBSTree = (function ($) {
 
                         $('input[name=rbCategoriesPrgElm]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
-                            if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
+                           
+                            
+                            //Code added by Kavita 
+                            if (localStorage.Status == 'Closed') {
+
+                                $('#DeleteUploadProgramPrgElm').prop('disabled', true);
+                                $('#downloadBtnProgramPrgElm').prop('disabled', true);
+                                $('#updateBtnProgramPrgElm').prop('disabled', true);
+                                $('#ViewUploadFileProgramPrgElm').prop('disabled', true);
+                                $('#ViewAllUploadFileProgramPrgElm').prop('disabled', true);
+                                $('#EditBtnProgramPrgElm').prop('disabled', true);
+                               // localStorage.Status = "";
+                            }
+                            
+                            else if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
                                 $('#ViewUploadFileProgramPrgElm').removeAttr('disabled');
                                 $('#EditBtnProgramPrgElm').removeAttr('disabled');
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
@@ -19937,17 +19962,7 @@ WBSTree = (function ($) {
                                 $('#downloadBtnInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                                 $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
                             }
-                            //Code added by Kavita 
-                            if (localStorage.Status== 'Closed') {
-
-                                $('#DeleteUploadProgramPrgElm').prop('disabled', true);
-                                $('#downloadBtnProgramPrgElm').prop('disabled', true);
-                                $('#updateBtnProgramPrgElm').prop('disabled', true);
-                                $('#ViewUploadFileProgramPrgElm').prop('disabled', true);
-                                $('#ViewAllUploadFileProgramPrgElm').prop('disabled', true);
-                                $('#EditBtnProgramPrgElm').prop('disabled', true);
-                                localStorage.Status = "";
-                            }
+                            
                             localStorage.selectedElementDocument = $(this).closest("tr").find(".docId").text();
 
                         });
@@ -20000,15 +20015,8 @@ WBSTree = (function ($) {
 
                         $('input[name=rbCategoriesPrgElm]').on('click', function (event) {
                             // Pritesh for Authorization added on 5th Aug 2020
-                            if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
-
-                                $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
-                            }
-                            else {
-
-                                $('#downloadBtnInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
-                                $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
-                            }
+                            
+                            
                             //Code added by Kavita 
                             if (localStorage.Status == 'Closed') {
 
@@ -20018,8 +20026,18 @@ WBSTree = (function ($) {
                                 $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
-                                localStorage.Status = "";
+                               // localStorage.Status = "";
                             }
+                            else if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
+
+                                $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
+                            }
+                            else {
+
+                                $('#downloadBtnInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
+                                $('#ViewUploadFileInViewAllProgramElement').removeAttr('disabled'); //swapnil doc management
+                            }
+                           
 
                         });
                         //============================ Jignesh-SearchField-05022021 ================================
