@@ -5704,6 +5704,7 @@
                         //change contract filter
                         var sortedProgram = [];
                         var selectedClientID = this.selectedOptions[0].id;
+                        $scope.selectedClientID = this.selectedOptions[0].id;
                         if ($(this).val() != "Select Client") {
                             jQuery.each(allProgramList, function (i, program) {
                                 if (program.ClientID == selectedClientID) {
@@ -5745,6 +5746,7 @@
                         if ($(this).val() != "Select Status") {
                             jQuery.each(allProgramList, function (i, program) {
                                 if (program.Status == selectedStatus) {
+
                                     sortedProgram.push(program);
                                 }
                             });
@@ -5756,18 +5758,38 @@
                         }
                         fillContractOptions(sortedProgram);
                         //selectContract.append(contractOpt);
-
-                        let filter_Id = $(this).val();
+                         let filter_Id = $(this).val();
                         for (let i = 0; i < tr.length; i++) {
                             td = tr[i].cells;
-                            var td_Client = td[5].innerText;
+                            var td_Status = td[5].innerText;
                             if (i != 0) {
-                                if (td_Client == filter_Id || filter_Id == "Select Status") {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
+                                if (selectClient.val() != "Select Client") {
+                                    var ClientName = selectClient.val();
+                                    var td_Client = td[0].innerText;
+                                    //    if (td_Client == ClientID) {
+                                    //        tr[i].style.display = "";
+                                    //    } else {
+                                    //        tr[i].style.display = "none";
+                                    //    }
+                                    //}
+                                        if ((td_Status == filter_Id || filter_Id == "Select Status") && td_Client == ClientName) {
+                                            tr[i].style.display = "";
+                                        } else {
+                                            tr[i].style.display = "none";
+                                        }
+                                    
+                                }
+                                else {
+                                    if ((td_Status == filter_Id || filter_Id == "Select Status")) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+
                                 }
                             }
+
+                            
                         }
                     });
 
