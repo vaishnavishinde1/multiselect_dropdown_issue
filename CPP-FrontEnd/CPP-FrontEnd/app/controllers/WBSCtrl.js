@@ -7181,32 +7181,32 @@
                 localStorage.removeItem('projId');
                 localStorage.removeItem('SearchText');
 
-                if ($scope.filterProgramId != "") {
+                //if ($scope.filterProgramId != "") {
 
-                    var allClientList = $scope.allClientList;
-                    var allPrograms = $scope.programList;
-                    var sortedClient = [];
-                    var selectedProgram = allPrograms.find(prg => prg.ProgramID == $scope.filterProgramId);
-                    jQuery.each(allClientList, function (i, client) {
+                //    var allClientList = $scope.allClientList;
+                //    var allPrograms = $scope.programList;
+                    //var sortedClient = [];
+                    //var selectedProgram = allPrograms.find(prg => prg.ProgramID == $scope.filterProgramId);
+                    //jQuery.each(allClientList, function (i, client) {
                         //jQuery.each($scope.programList, function (j, program) {
-                        if (selectedProgram.ClientID == client.ClientID) {
-                            sortedClient.push(client);
-                            return false;
-                        }
+                        //if (selectedProgram.ClientID == client.ClientID) {
+                        //    sortedClient.push(client);
+                        //    return false;
+                        //}
                         //});
-                    });
+                    //});
 
-                    $scope.clientList = sortedClient;
+                    //$scope.clientList = sortedClient;
 
                     //$("#selectClient").val(sortedClient[0].ClientID);
 
-                    localStorage.setItem('cliId', sortedClient[0].ClientID);
+                    //localStorage.setItem('cliId', sortedClient[0].ClientID);
 
-                    $scope.filterClient = (sortedClient[0].ClientID).toString();
+                    //$scope.filterClient = (sortedClient[0].ClientID).toString();
 
-                } else {
-                    $scope.clientList = $scope.allClientList;
-                }
+                //} else {
+                    //$scope.clientList = $scope.allClientList;
+                //}
 
                 if (orgId != null && pgmId != "") {
                     localStorage.setItem('pgmId', pgmId);
