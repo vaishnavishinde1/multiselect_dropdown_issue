@@ -5020,15 +5020,16 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<div><table class='gadget-content'> <thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        strContract += "<div><table class='gadget-content'><thead><th class='p-0' title='Client Filter' width='27.5%';'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
-                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
+                        strContract += "<th class='p-l-r-5' width='27.5%' title='Contract Filter'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
-                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
+                        strContract += "<th class='p-l-r-5' width='10%' title='Search Contract Id'  id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
                         // Original Value filter
-                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
+                        strContract += "<th class='p-l-r-5' title='Search for greater than entered original value' width='13%'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th></thead></table></div>";
+                        strContract += "<th class='p-l-r-5' title='Search for greater than entered current value' width='13%' ><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
+                        strContract += "<th class='p-0' width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Closed</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
@@ -5038,6 +5039,7 @@
                             "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
                             "<th class='sort-by' width='13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
                             "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width=13%'>Status</th>" +
                             //"<th>Current Forecast</th>" +
                             "<th width=8%' style='display:none'>Action</th>" +
                             "</tr>";
@@ -5067,9 +5069,9 @@
                                 strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.name + "'>" + program.name + "</td>";
                                 strContract += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + program.ContractNumber + "'>" + program.ContractNumber + "</td>";
                                 strContract += "<td style='color:red' align ='right'>" + program.ContractValue + "</td>";
-                                strContract += "<td style='color:red' align ='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
+                                strContract += "<td style='color:red' align ='right'>" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td style='color:red'>" + program.ForecastCost + "</td>";
-                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td style='color:red'>" + program.Status + "</td>"; 
                                 strContract += "<td class='text-center' style='display:none'>" +
                                     "<i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='icon-72647 grid__btn-icons disabledIcon' id='ViewGanttGridBtn' title='View Gantt'></i>" +
@@ -5085,7 +5087,7 @@
                                 strContract += "<td align='right'>" + program.ContractValue + "</td>";
                                 strContract += "<td align='right'>$" + CurrentContractVal.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "</td>";
                                 //strContract += "<td>" + program.ForecastCost + "</td>";
-                                strContract += "<td style='display:none'>" + program.Status + "</td>";
+                                strContract += "<td>Active</td>";
                                 //Edit Contract 
                                 if (ModifyContract == "1") {
                                     strContract += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditContractGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5178,6 +5180,7 @@
                             "<th class='sort-by' width='17%'>Value ($)</th>" +
                         /*"<th class='sort-by' width='27%'>Department</th>" +*/
                             "<th class='sort-by' width='27%'>Forecast ($)</th>" +
+                            "<th class='sort-by' width='27%'>Status </th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
 
@@ -5213,20 +5216,25 @@
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "' >" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td style='color:red' align='right'>$" + project.CurrentCost + "</td>";
+                              
                                 /*strProject += "<td style='color:red'>" + project.ProjectClassName + "</td>";*/
                                 strProject += "<td style='color:red' align ='right'>$" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td style='color:red' align ='right'>" + project.Status + "</td>";
                                 strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons disabledIcon' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                     "<i class='fa-trash grid__btn-icons disabledIcon' id='DeleteProjectGridBtn' title='Delete' aria-hidden='true'></i>" +
                                     "<i class='fa-times grid__btn-icons disabledIcon' id='CloseProjectGridBtn' title='Close' aria-hidden='true'></i>" +
                                     "</td>";
                                 strProject += "</tr>";
+
                             }
                             else {
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProgramElementName + "'>" + project.ProgramElementName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectNumber + "'>" + project.ProjectNumber.slice(-3) + "</td>";
                                 strProject += "<td align='right'>$" + project.CurrentCost + "</td>";
+
                                 // strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectClassName + "'>" + project.ProjectClassName + "</td>";
                                 strProject += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + project.ProjectForecastValue + "' align ='right'>$" + project.ProjectForecastValue + "</td>";
+                                strProject += "<td align='right'>Active</td>";
                                 if (ModifyProject == "1") {
                                     //Edit Project
                                     strProject += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditProjectGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5301,6 +5309,7 @@
                             "<th class='sort-by' width='15%'>Number</th>" +
                             "<th class='sort-by' width='17%'>Value ($)</th>" +
                             "<th class='sort-by' width='27%'>Services</th>" +
+                            "<th class='sort-by' width='27%'>Status</th>" +
                             "<th width='12%' style='display:none'>Action</th>" +
                             "</tr></thead>";
                         if (selProject.children.length > 0) {
@@ -5333,7 +5342,7 @@
                                     strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td style='color:red' align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='color:red; max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
-                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";     //close changes done by vaishnavi
+                                    strElement += "<td style='color:red'>" + projectElement.Status + "</td>";     //close changes done by Namrata
                                     strElement += "<td class='text-center' style='display:none'>" +
                                         "<i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>" +
                                         "<i class='fa-trash grid__btn-icons disabledIcon' style='display:none' id='DeleteElementGridBtn' title='Delete' aria-hidden='true'></i>" +
@@ -5346,7 +5355,7 @@
                                     strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ProjectElementNumber + "'>" + projectElement.ProjectElementNumber + "</td>";
                                     strElement += "<td align='right'>$" + projectElement.CurrentCost + "</td>";
                                     strElement += "<td style='max-Width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' title='" + projectElement.ServiceName + "'>" + projectElement.ServiceName + "</td>";
-                                    strElement += "<td style='display:none'>" + projectElement.Status + "</td>";
+                                    strElement += "<td>Active</td>";
                                     //Edit Element
                                     if (ModifyProjectElement == "1") {
                                         strElement += "<td class='text-center' style='display:none'><i class='fa-pencil grid__btn-icons' id='EditElementGridBtn' title='Edit/Open' aria-hidden='true'></i>";
@@ -5681,13 +5690,17 @@
                     let tr = $scope.allContractRowsInTable;
                     var selectClient = $('#clientFilter');
                     var selectContract = $('#contractFilter');
+                    var selectStatus = $('#StatusFilter');
                     var allProgramList = $scope.allWbsProgramList;
                     var allClientList = $scope.allClientList;
+                   
 
                     fillClientOptions(allClientList);
                     //on selecting client
                     selectClient.on('change', function () {
                         $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        $('#StatusFilter').prop('selectedIndex', 0);
+                        $('#StatusFilter').attr('disabled', false);
                         //change contract filter
                         var sortedProgram = [];
                         var selectedClientID = this.selectedOptions[0].id;
@@ -5699,6 +5712,7 @@
                             });
                         }
                         else {
+               
                             fillClientOptions(allClientList);
                             tr = $scope.allContractRowsInTable;
                             sortedProgram=allProgramList;
@@ -5720,6 +5734,43 @@
                         }
                     });
 
+                    
+                    //on selecting Status added by Namrata--
+                    selectStatus.on('change', function () {
+                        $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                     /*   $('#clientFilter').prop('selectedIndex', 0);*/
+                        //change contract filter
+                        var sortedProgram = [];
+                        var selectedStatus = this.selectedOptions[0].id;
+                        if ($(this).val() != "Select Status") {
+                            jQuery.each(allProgramList, function (i, program) {
+                                if (program.Status == selectedStatus) {
+                                    sortedProgram.push(program);
+                                }
+                            });
+                        }
+                        else {
+                            fillClientOptions(allClientList);
+                            tr = $scope.allContractRowsInTable;
+                            sortedProgram = allProgramList;
+                        }
+                        fillContractOptions(sortedProgram);
+                        //selectContract.append(contractOpt);
+
+                        let filter_Id = $(this).val();
+                        for (let i = 0; i < tr.length; i++) {
+                            td = tr[i].cells;
+                            var td_Client = td[5].innerText;
+                            if (i != 0) {
+                                if (td_Client == filter_Id || filter_Id == "Select Status") {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    });
+
                     //Contract Name Filter
                     //fill option in select
                     fillContractOptions(allProgramList);
@@ -5732,6 +5783,8 @@
                         var selectedProgram = allProgramList.find(prg => prg.ProgramID == selectedContractID);
                         if ($(this).val() != "Select Contract") {
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').attr('disabled', true);
+                            $('#StatusFilter').prop('selectedIndex', 0);
+                            $('#StatusFilter').attr('disabled', true);
                             jQuery.each(allClientList, function (i, client) {
                                 //jQuery.each($scope.programList, function (j, program) {
                                 if (selectedProgram.ClientID == client.ClientID) {
@@ -5745,6 +5798,7 @@
                             fillContractOptions(allProgramList);
                             tr = $scope.allContractRowsInTable;
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                            $('#StatusFilter').attr('disabled', false);
                             sortedClient=allClientList;
                         }
                         fillClientOptions(sortedClient);
@@ -5872,10 +5926,12 @@
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                             wbsTree.setSelectedNode(selectedProgram);
                             $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+                            localStorage.Status = "";
                             if (selectedProgram.Status == "Closed") {
                                 $('#delete_program').prop('disabled', true);
                                 $("#updateBtnProgram").prop('disabled', true);
                                 $('#update_program').prop('disabled', true);
+                                localStorage.Status = "Closed";
                             }
                         }
 
@@ -6033,7 +6089,7 @@
                         //code started to add by kavita
                         $("#btnSpecialInstruction").prop('disabled', false);
                         $("#contextMenuBillOfMaterial").prop('disabled', false);
-
+                        localStorage.Status = "";
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
                             $('#delete_program_element').removeClass('btn btn-black');
@@ -6049,7 +6105,7 @@
                             $("#update_program_element").prop('disabled', true);
                             $("#btnSpecialInstruction").prop('disabled', true);
                             $("#contextMenuBillOfMaterial").prop('disabled', true);
-
+                            localStorage.Status = "Closed";
                         }
                     });
                     //Edit/Open Project
@@ -6061,6 +6117,7 @@
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
+                        
                         //code started to add by kavita
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
@@ -6077,6 +6134,7 @@
                             $("#update_program_element").prop('disabled', true);
                             $("#btnSpecialInstruction").prop('disabled', true);
                             $("#contextMenuBillOfMaterial").prop('disabled', true);
+                            
                         }
                         //code ended by kavita
                     });
@@ -6168,6 +6226,7 @@
                         wbsTree.setSelectedNode(selectedElement);
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
+                        localStorage.Status = "";
                         if (selectedElement.Status == "Closed") {
 
                             $('#delete_project').removeClass('btn btn-black');
@@ -6185,6 +6244,7 @@
                             $('#update_project').attr('style', 'width:150px;margin-left:15px;');
                             $('#update_project').prop('disabled', true);  //Manasi 24-02-2021
                             //$('#spnBtndelete_project').removeAttr('title'); /
+                            localStorage.Status = "Closed";
 
                         }
                     });

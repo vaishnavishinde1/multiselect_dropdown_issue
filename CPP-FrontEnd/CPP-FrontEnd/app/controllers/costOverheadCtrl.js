@@ -626,7 +626,7 @@
                             }
 
                             for (i = 0; i < $scope.CostOverheadHistoryCollection.length; i++) {
-                                if ($scope.CostOverheadHistoryCollection[i].ID == item.ID) {
+                                if ($scope.CostOverheadHistoryCollection[i].CostID == item.ID) {
                                     HistoryCount = true;
                                 }
                             }

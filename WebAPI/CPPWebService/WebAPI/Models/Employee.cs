@@ -172,7 +172,8 @@ namespace WebAPI.Models
                 try
                 {
                     Employee retreivedEmployee = new Employee();
-                    retreivedEmployee = ctx.Employee.Where(u => u.Name == employee.Name && u.FTEPositionID == employee.FTEPositionID && u.OrganizationID == employee.OrganizationID).FirstOrDefault();
+                    //retreivedEmployee = ctx.Employee.Where(u => u.Name == employee.Name && u.FTEPositionID == employee.FTEPositionID && u.OrganizationID == employee.OrganizationID).FirstOrDefault();
+                    retreivedEmployee = ctx.Employee.Where(u => u.Name == employee.Name  && u.OrganizationID == employee.OrganizationID).FirstOrDefault();
 
                     Employee duplicateUniqueIdentityNumber = new Employee();
                     duplicateUniqueIdentityNumber = ctx.Employee.Where(u => u.UniqueIdentityNumber == employee.UniqueIdentityNumber && u.OrganizationID == employee.OrganizationID).FirstOrDefault();
@@ -189,7 +190,8 @@ namespace WebAPI.Models
                     }
                     else
                     {
-                        result += employee.Name + " failed to be created, it already exist in the same position and organization.\n";
+                        //result += employee.Name + " failed to be created, it already exist in the same position and organization.\n";
+                        result += employee.Name + " failed to be created, it already exist in the same organization.\n";
                     }
                 }
                 catch (Exception ex)

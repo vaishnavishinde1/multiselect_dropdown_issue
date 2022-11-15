@@ -693,12 +693,12 @@ angular.module('xenon.Gantt_Controller', []).
 
                     $(cells[3]).html(   //Type
                         $compile("<select ng-model='description[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                            " ng-options='option.name for option in FTEPositions track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                            " ng-change='changedDescription(" + id + ")' ng-options='option.name for option in FTEPositions track by option.value' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
                     $(cells[4]).html(   //Name
                         $compile("<select ng-model='employee_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                            " ng-options='option.name for option in newEmployees[" + id + "] track by option.value' ng-change='changedName(" + id + ")' ></select>"
+                            " ng-options='option.name for option in newEmployees[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
                     $(cells[5]).html(   //Unit Type
@@ -721,6 +721,12 @@ angular.module('xenon.Gantt_Controller', []).
                             "<input ng-model='totalCost[" + id + "]' disabled=true style='width:100%;height:100%; text-align:center; vertical-align: top;'></input>"
                         )($scope)
                     );
+
+                    
+                    $(".selectcosttype").select2({
+                       
+                    });
+
                 }
                 else if ($scope.method[id] === "L") {   //SUBCONTRACTORS
                     //console.log('here');
@@ -733,13 +739,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     //console.log($scope.subcontractor_id);
                     $(cells[3]).html(   //Type
-                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in subcontractorTypes track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in subcontractorTypes track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
 
                     $(cells[4]).html(   //Name
                         $compile("<select ng-model='subcontractor_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                            " ng-options='option.name for option in newSubcontractors[" + id + "] track by option.value' ng-change='changedName(" + id + ")'></select>"
+                            " ng-options='option.name for option in newSubcontractors[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
 
@@ -769,6 +775,10 @@ angular.module('xenon.Gantt_Controller', []).
                         )($scope)
                     );
 
+                    $(".selectcosttype").select2({
+                       
+                    });
+
                 }
                 else if ($scope.method[id] === "U") {   //MATERIALS
                     $scope.description[id] = { name: "", value: "" };
@@ -790,14 +800,14 @@ angular.module('xenon.Gantt_Controller', []).
 
 
                     $(cells[3]).html(   //Type
-                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                        $compile("<select ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
 
                     $(cells[4]).html(   //TODO: Name
                         $compile(
                             "<select ng-model='material_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                            " ng-options='option.name for option in newMaterials[" + id + "] track by option.value' ng-change='changedName(" + id + ")' ></select>"
+                            " ng-options='option.name for option in newMaterials[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                         )($scope)
                     );
 
@@ -826,6 +836,9 @@ angular.module('xenon.Gantt_Controller', []).
                         )($scope)
                     );
 
+                    $(".selectcosttype").select2({
+                      
+                    });
                 }
                 else if ($scope.method[id] === "ODC") {     //ODC   
                     $scope.description[id] = { name: "", value: "" };
@@ -1351,13 +1364,17 @@ angular.module('xenon.Gantt_Controller', []).
             $scope.changedName = function (id) {
                 //console.log(id);
                 //console.log($scope.description[id]);
-                if ($scope.description[id].name == '') {
-                    dhtmlx.alert('select a valid type first');
-                    $scope.employee_id[id] = { name: '', value: '' };   //reset
-                    $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
-                    $scope.material_id[id] = { name: '', value: '' };   //reset
-                    return;
+                //Nivedita remove position wise employee binding 10 - 11 - 2022
+                if ($scope.method[id] === "L") {
+                    if ($scope.description[id].name == '') {
+                        dhtmlx.alert('select a valid type first');
+                        //$scope.employee_id[id] = { name: '', value: '' };   //reset
+                        $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
+                        //$scope.material_id[id] = { name: '', value: '' };   //reset
+                        return;
+                    }
                 }
+                
 
                 if ($scope.method[id] === "F") {    //LABOR
                     //console.log($scope.newEmployees, $scope.employee_id);
@@ -1449,9 +1466,11 @@ angular.module('xenon.Gantt_Controller', []).
                     }
 
                     $scope.newEmployees[id] = getNewEmployees(id);
+                    costCalculation(id);
                     updateBuffer($scope.selectedCost);
 
-                } else if ($scope.method[id] === "L") {
+                }
+                else if ($scope.method[id] === "L") {
                     //luan quest 3/26 TODO
                     if ($scope.subcontractor_id[id].name == '----------Add New----------') {
                         $scope.subcontractor_id[id] = { name: '', value: '' };   //reset
@@ -1529,7 +1548,8 @@ angular.module('xenon.Gantt_Controller', []).
 
                     updateBuffer($scope.selectedCost);
 
-                } else if ($scope.method[id] === "U") {
+                }
+                else if ($scope.method[id] === "U") {
                     //luan quest 3/26 TODO
                     //if ($scope.material_id[id].name == '----------Add New----------') {
                     //    $scope.material_id[id] = { name: '', value: '' };   //reset
@@ -1644,7 +1664,8 @@ angular.module('xenon.Gantt_Controller', []).
                     //);
                     $scope.changedCost(id, 0);
                     costCalculation(id);//recalculate cost based on new FTE position
-                } else if ($scope.method[id] === "ODC") {
+                }
+                else if ($scope.method[id] === "ODC") {
                     //Nothing
                 }
             }
@@ -6858,7 +6879,8 @@ angular.module('xenon.Gantt_Controller', []).
                             }
                         },
                         { name: "cost_track_type", label: "", width: 40, hide: false, align: "center" },   //Manasi 09-03-2021 change width to 40 from 30
-                        { name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true },
+                        {
+                            name: "text", label: " Cost Type", width: 140, tree: false, align: "left", resize: true},
                         { name: "description", label: "Cost Type Category", width: 220, align: "left", resize: true },  //Replace "Type with category"  Manasi 24-07-2020
                         { name: "employee_id", label: "Name", width: 210, align: "left", resize: true }, //align: "center" Manasi
                         { name: "unit_type", label: "Unit Type", width: 70, align: "left", resize: true },  //align: "center" Manasi
@@ -9832,7 +9854,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         } else {
                                             $(this).html(
                                                 $compile(   //luan quest 3/26
-                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in FTEPositions track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in FTEPositions track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -9854,7 +9876,7 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(
                                                 $compile(
                                                     //"<input tabindex=" + index + " ng-model='description[" + id + "].name'  style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-keyup='changeDescription(" + id + ")' ng-change='changedDescription(" + id + ")'></input>"
-                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in subcontractorTypes track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in subcontractorTypes track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -9874,7 +9896,7 @@ angular.module('xenon.Gantt_Controller', []).
                                         } else {
                                             $(this).html(
                                                 $compile(
-                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in ODCTypes track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in ODCTypes track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -9895,7 +9917,7 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(
                                                 $compile(
                                                     // "<input tabindex=" + index + " ng-model='description[" + id + "].name'  style='width:100%;height:100%; text-align:center; vertical-align: top;' ng-keyup='changeDescription(" + id + ")' ng-change='changedDescription(" + id + ")'></input>"
-                                                    "<select  tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")'></select>"
+                                                    "<select  tabindex=" + index + " ng-model='description[" + id + "]' style='width:100%;height:100%; vertical-align: top;' ng-options='option.name for option in billofmateriallistUnique track by option.value' ng-change='changedDescription(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -10132,7 +10154,7 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(   //luan quest 3/26
                                                 $compile(
                                                     "<select ng-model='employee_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                                                    " ng-options='option.name for option in newEmployees[" + id + "] track by option.value' ng-change='changedName(" + id + ")' ></select>"
+                                                    " ng-options='option.name for option in newEmployees[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -10168,7 +10190,7 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(   //luan quest 3/26
                                                 $compile(
                                                     "<select ng-model='subcontractor_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top;'" +
-                                                    " ng-options='option.name for option in newSubcontractors[" + id + "] track by option.value' ng-change='changedName(" + id + ")' ></select>"
+                                                    " ng-options='option.name for option in newSubcontractors[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -10200,7 +10222,7 @@ angular.module('xenon.Gantt_Controller', []).
                                             $(this).html(   //luan quest 3/26
                                                 $compile(
                                                     "<select ng-model='material_id[" + id + "]'  style='width:100%;height:100%; vertical-align: top; -moz-appearance: none;'" +    // -webkit-appearance: none; text-align-last: center;
-                                                    " ng-options='option.name for option in newMaterials[" + id + "] track by option.value' ng-change='changedName(" + id + ")' ></select>"
+                                                    " ng-options='option.name for option in newMaterials[" + id + "] track by option.value' ng-change='changedName(" + id + ")' class='selectcosttype'><option></option></select>"
                                                 )($scope)
                                             );
                                         }
@@ -10221,6 +10243,12 @@ angular.module('xenon.Gantt_Controller', []).
                             }
                         });
 
+                       
+
+                        $(".selectcosttype").select2({
+                            
+                        });
+
                     }
 
                 }
@@ -10234,6 +10262,9 @@ angular.module('xenon.Gantt_Controller', []).
 
             });
             //customClick - END
+
+           
+           
 
             //#region init gantt
             var tasks = {
@@ -10810,6 +10841,8 @@ angular.module('xenon.Gantt_Controller', []).
                 var resultAr = [];
                 var allPositions = positionsList;
                 //console.log(allPositions);
+                //Nivedita remove position wise employee binding 10-11-2022
+                /*
                 for (var x = 0; x < allEmployees.length; x++) {
                     var found = false;
                     for (var y = 0; y < allPositions.length; y++) {
@@ -10823,7 +10856,7 @@ angular.module('xenon.Gantt_Controller', []).
                         allEmployees[x].FTEPositionName = 'N/A';
                     }
                 }
-
+                */
                 if ($scope.description && $scope.description[id]) {
 
                     //console.log($scope.description[1], id);
@@ -10842,13 +10875,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allEmployees.length; x++) {
                         //console.log(allEmployees[x], $scope.description[id].name);
-                        if (allEmployees[x].FTEPositionName == $scope.description[id].name) {
+                        //if (allEmployees[x].FTEPositionName == $scope.description[id].name) { //Nivedita remove position wise employee binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allEmployees[x]);
                             temp.name = allEmployees[x].Name;
                             temp.value = allEmployees[x].ID;
                             resultAr.push(temp);
-                        }
+                        //}
                     }
                 }
                 return resultAr;
@@ -10859,20 +10892,22 @@ angular.module('xenon.Gantt_Controller', []).
                 var resultAr = [];
                 var allPositions = positionsList;
                 //console.log(allPositions);
-                for (var x = 0; x < allEmployees.length; x++) {
+
+                //Nivedita remove position wise employee binding 10-11-2022
+                /*for (var x = 0; x < allEmployees.length; x++) {
                     var found = false;
                     for (var y = 0; y < allPositions.length; y++) {
                         if (allEmployees[x].FTEPositionID == allPositions[y].Id) {
                             allEmployees[x].FTEPositionName = allPositions[y].PositionDescription;
                             found = true;
-                            //console.log(allEmployees[x]);
+                           //console.log(allEmployees[x]);
                             break;
                         }
                     }
                     if (!found) {
                         allEmployees[x].FTEPositionName = 'N/A';
                     }
-                }
+                }*/
 
                 if ($scope.description && $scope.description[id]) {
 
@@ -10891,13 +10926,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allEmployees.length; x++) {
                         //console.log(allEmployees[x], $scope.description[id].name);
-                        if (allEmployees[x].FTEPositionName == $scope.description[id].name) {
+                        //if (allEmployees[x].FTEPositionName == $scope.description[id].name) { Nivedita remove position wise employee binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allEmployees[x]);
                             temp.name = allEmployees[x].Name;
                             temp.value = allEmployees[x].ID;
                             resultAr.push(temp);
-                        }
+                       // }
                     }
                 }
                 return resultAr;
@@ -11013,20 +11048,20 @@ angular.module('xenon.Gantt_Controller', []).
                 var allMaterials = materialList;
                 //console.log(allMaterialCategories);
                 //console.log(allMaterials);
-                for (var x = 0; x < allMaterials.length; x++) {
-                    var found = false;
-                    for (var y = 0; y < allMaterialCategories.length; y++) {
-                        if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
-                            allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
-                            found = true;
-                            //console.log(allMaterials[x]);
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        allMaterials[x].MaterialCategoryName = 'N/A';
-                    }
-                }
+                //for (var x = 0; x < allMaterials.length; x++) {
+                //    var found = false;
+                //    for (var y = 0; y < allMaterialCategories.length; y++) {
+                //        if (allMaterials[x].MaterialCategoryID == allMaterialCategories[y].ID) {
+                //            allMaterials[x].MaterialCategoryName = allMaterialCategories[y].Name;
+                //            found = true;
+                //            //console.log(allMaterials[x]);
+                //            break;
+                //        }
+                //    }
+                //    if (!found) {
+                //        allMaterials[x].MaterialCategoryName = 'N/A';
+                //    }
+                //}
 
                 if ($scope.description && $scope.description[id]) {
 
@@ -11043,13 +11078,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allMaterials.length; x++) {
                         //console.log(allMaterials[x], $scope.description[id].name);
-                        if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
+                        //if (allMaterials[x].MaterialCategoryName == $scope.description[id].name) {
                             var temp = { name: '', value: '' };
                             //console.log(allMaterials[x]);
                             temp.name = allMaterials[x].Name;
                             temp.value = allMaterials[x].ID;
                             resultAr.push(temp);
-                        }
+                        //}
                     }
                 }
                 return resultAr;
@@ -11115,13 +11150,13 @@ angular.module('xenon.Gantt_Controller', []).
 
                     for (var x = 0; x < allMaterials.length; x++) {
                         //console.log(allMaterials[x], $scope.description[id].name);
-                        if (allMaterials[x].MaterialCategoryID == $scope.description[id].value) {
+                        //if (allMaterials[x].MaterialCategoryID == $scope.description[id].value) { Nivedita remove category wise material binding 10-11-2022
                             var temp = { name: '', value: '' };
                             //console.log(allMaterials[x]);
                             temp.name = allMaterials[x].MaterialName;
                             temp.value = allMaterials[x].MaterialID;
                             resultAr.push(temp);
-                        }
+                       // }
                     }
                 }
                 return resultAr;
