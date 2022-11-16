@@ -5020,26 +5020,26 @@
                         //strContract += "<div class='grid__title'>" + selOrganization.name + "<div id='AddContractGridBtn' class='grid__title_rgt '>Add Contract<i class='fa-plus-circle' aria-hidden='true'></i></div></div>";
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Aditya :: Filters for Grid >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         //Client Filter
-                        strContract += "<div><table class='gadget-content'><thead><th title='Client Filter' width='28%';' class='form-group'><select class='input-medium form-control' id='clientFilter'></select></th>";
+                        strContract += "<div><table class='gadget-content'><thead><th class='p-0 p-r-5' title='Client Filter' width='25%';'><select class='input-medium form-control' id='clientFilter'></select></th>";
                         //Contract Filter
-                        strContract += "<th width='28%' title='Contract Filter' class='form-group'><select class='input-medium form-control' id='contractFilter'></select></th>";
+                        strContract += "<th class='p-r-5' width='24.5%' title='Contract Filter'><select class='input-medium form-control' id='contractFilter'></select></th>";
                         //Contract Number Filter
-                        strContract += "<th width='10%' title='Search Contract Id' class='form-group' id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
+                        strContract += "<th class='p-r-5' width='10%' title='Search Contract Id'  id='contractNumberDiv'><input id='contractNumberSearch' class='input-medium form-control' type='text' placeholder='Search Id'></th>";
                         // Original Value filter
-                        strContract += "<th title='Search for greater than entered original value' width='13%' class='form-group'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
+                        strContract += "<th class='p-r-5' title='Search for greater than entered original value' width='16%'><input id='contractOgValueFilter' class='input-medium form-control' type='text' placeholder='≥ Original Value'></th> ";
                         //current value filter
-                        strContract += "<th title='Search for greater than entered current value' width='13%' class='form-group'><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
-                        strContract += "<th width='20%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='select status' id=0>Select Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Close</option></select></th></thead></table></div>"; //--Added by Namrata--
+                        strContract += "<th class='p-r-5' title='Search for greater than entered current value' width='16%' ><input id='currrentContractValueFilter' class='input-medium form-control' type='text' placeholder='≥ Current Value'></th>";
+                        strContract += "<th class='p-0' width='9%' title='Status Filter' class='dropdown'><select class='input-medium form-control' id='StatusFilter'><option value='Select Status' id=0>Status</option><option value='Active' id=Active>Active</option><option value='Closed' id=Closed>Closed</option></select></th></thead></table></div>"; //--Added by Namrata--
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< filter code end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                         strContract += "<div class='grid__scrollable_main' id='contractScroll'><table class='grid__table' id='tblContract'>"; //Aditya :: 27092022 
                         strContract += "<thead class='t-head'>";
                         strContract += "<tr>" +
-                            "<th class='sort-by' width='28%'>Client Name</th>" + //$scope.programList[0].ClientPOC
-                            "<th class='sort-by' width='28%'>Name</th>" + //$scope.programList[0].program.name
+                            "<th class='sort-by' width='25%'>Client Name</th>" + //$scope.programList[0].ClientPOC
+                            "<th class='sort-by' width='25%'>Name</th>" + //$scope.programList[0].program.name
                             "<th class='sort-by' width='10%' id='contractNumber'>ID</th>" +
-                            "<th class='sort-by' width='13%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
-                            "<th class='sort-by' width=13%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
-                            "<th class='sort-by' width=13%'>Status</th>" +
+                            "<th class='sort-by' width='16%'>Original Value ($)</th>" + //$scope.programList[0].ContractNumber
+                            "<th class='sort-by' width='16%'>Current Value ($)</th>" +//$scope.programList[0].ContractValue
+                            "<th class='sort-by' width='8%'>Status</th>" +
                             //"<th>Current Forecast</th>" +
                             "<th width=8%' style='display:none'>Action</th>" +
                             "</tr>";
@@ -5699,9 +5699,12 @@
                     //on selecting client
                     selectClient.on('change', function () {
                         $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                        $('#StatusFilter').prop('selectedIndex', 0);
+                        $('#StatusFilter').attr('disabled', false);
                         //change contract filter
                         var sortedProgram = [];
                         var selectedClientID = this.selectedOptions[0].id;
+                        $scope.selectedClientID = this.selectedOptions[0].id;
                         if ($(this).val() != "Select Client") {
                             jQuery.each(allProgramList, function (i, program) {
                                 if (program.ClientID == selectedClientID) {
@@ -5710,6 +5713,7 @@
                             });
                         }
                         else {
+               
                             fillClientOptions(allClientList);
                             tr = $scope.allContractRowsInTable;
                             sortedProgram=allProgramList;
@@ -5735,12 +5739,14 @@
                     //on selecting Status added by Namrata--
                     selectStatus.on('change', function () {
                         $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                     /*   $('#clientFilter').prop('selectedIndex', 0);*/
                         //change contract filter
                         var sortedProgram = [];
                         var selectedStatus = this.selectedOptions[0].id;
                         if ($(this).val() != "Select Status") {
                             jQuery.each(allProgramList, function (i, program) {
                                 if (program.Status == selectedStatus) {
+
                                     sortedProgram.push(program);
                                 }
                             });
@@ -5752,18 +5758,38 @@
                         }
                         fillContractOptions(sortedProgram);
                         //selectContract.append(contractOpt);
-
-                        let filter_Id = $(this).val();
+                         let filter_Id = $(this).val();
                         for (let i = 0; i < tr.length; i++) {
                             td = tr[i].cells;
-                            var td_Client = td[5].innerText;
+                            var td_Status = td[5].innerText;
                             if (i != 0) {
-                                if (td_Client == filter_Id || filter_Id == "Select Status") {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
+                                if (selectClient.val() != "Select Client") {
+                                    var ClientName = selectClient.val();
+                                    var td_Client = td[0].innerText;
+                                    //    if (td_Client == ClientID) {
+                                    //        tr[i].style.display = "";
+                                    //    } else {
+                                    //        tr[i].style.display = "none";
+                                    //    }
+                                    //}
+                                        if ((td_Status == filter_Id || filter_Id == "Select Status") && td_Client == ClientName) {
+                                            tr[i].style.display = "";
+                                        } else {
+                                            tr[i].style.display = "none";
+                                        }
+                                    
+                                }
+                                else {
+                                    if ((td_Status == filter_Id || filter_Id == "Select Status")) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+
                                 }
                             }
+
+                            
                         }
                     });
 
@@ -5779,6 +5805,8 @@
                         var selectedProgram = allProgramList.find(prg => prg.ProgramID == selectedContractID);
                         if ($(this).val() != "Select Contract") {
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').attr('disabled', true);
+                            $('#StatusFilter').prop('selectedIndex', 0);
+                            $('#StatusFilter').attr('disabled', true);
                             jQuery.each(allClientList, function (i, client) {
                                 //jQuery.each($scope.programList, function (j, program) {
                                 if (selectedProgram.ClientID == client.ClientID) {
@@ -5792,6 +5820,7 @@
                             fillContractOptions(allProgramList);
                             tr = $scope.allContractRowsInTable;
                             $('#contractNumberSearch, #contractOgValueFilter, #currrentContractValueFilter').val('').removeAttr('disabled');
+                            $('#StatusFilter').attr('disabled', false);
                             sortedClient=allClientList;
                         }
                         fillClientOptions(sortedClient);
