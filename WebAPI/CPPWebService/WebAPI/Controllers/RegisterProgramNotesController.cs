@@ -13,7 +13,10 @@ namespace WebAPI.Controllers
         public HttpResponseMessage Post(ProgramNotes programNotes)
         {
             String result = "";
-            
+            if (programNotes.Operation == 1)
+            {
+                result += ProgramNotes.registerProgramNotes(programNotes);
+            }
             if (programNotes.Operation == 2)
             {
                 result += ProgramNotes.updateProgramNotes(programNotes);

@@ -1689,11 +1689,11 @@
                                         </div>-->
                                         <!--Aditya PMDD 05052022-->
                                         <div class="col-sm-6 col-md-6  p-r-0 ">
-                                            <label for="program_element_project_number" class="control-label _bold required">Contract Manager Name</label>
+                                            <label for="program_element_project_number" class="control-label _bold required">Contract Manager</label>
                                             <input type="text" class="form-control" id="program_project_manager">
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <label for="program_element_project_number" class="control-label _bold required">Project Manager</label>
+                                            <label for="program_element_project_number" class="control-label _bold required">Contract Creation Notification</label>
                                             <select type="text" class="form-control" id="program_project_manager_multiselect" multiple={true}></select>
                                         </div>
                                     </div>
@@ -2374,7 +2374,7 @@
                             <div class="col-md-12 box-content">
                                 <form id="divNotesHistory">
 
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <div class="col-md-12 " style="height:41px">
                                             <label for="" class="_control-label _bold">Notes</label>
                                             <button type="button" id="btnClearNotesDesc" class="btn btn-primary pull-right w-100 ">Clear</button>
@@ -2384,19 +2384,18 @@
                                         <div class="col-md-12 m-b-10">
                                             <textarea rows="3" type="text" class="form-control" id="txtprogramNotes"></textarea>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <!--<label for="program_element_milestone_name" id="noteshistrorylabel" class="control-label _bold" style="font-size: 14px;font-family:Verdana, Arial, sans-serif !important;display: block;text-align: center;padding: 5px 0 8px;border-bottom: 1px solid #ccc;font-weight: 600;font-size: 18px;line-height: 1.1;">Notes History</label>-->
                                     <div class="row">
                                         <div class="col-md-12 ">
                                             <div class="gadget-content " st-table="liveViews" st-safe-src="copiedLiveViews" style="height:50%;" id="noteshistorygrid">
-                                                <div class="table-outline-wo-p" style="overflow-x: hidden; height: 178px !important; ">
-                                                    <table id="gridNoticehistoryList" class="table table-striped  ">
-                                                        <thead class="t-head">
-                                                            <tr style="position:sticky">
-                                                                <th style="width: 12%;">Sr.No</th>
-                                                                <th style=" width: 42%;"> Description</th>
-                                                                <th style="width: 16%;"> Created Date</th>
-                                                                <th style=" width: 16%;"> Created By</th>
+                                                <div class="table-outline-wo-p" style="overflow-x: hidden; height: 250px !important; ">
+                                                    <table id="gridNoticehistoryList" class="table table-striped">
+                                                        <thead class="t-head" style="height: 5%; position: sticky; top: 0;">
+                                                            <tr>
+                                                                <th style="width: 4%;"></th>
+                                                                <th style=" width: 20%;">Created</th>
+                                                                <th>Notes</th>
                                                                 <!--<td style="font-weight:900;">Date of Created</td>-->
                                                                 <!--<th class="text-center">Action</th>-->  <!-- Aditya :: Hide Action Column :: 11102022-->
 
@@ -2448,6 +2447,13 @@
 
 
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="buttonRow">
+                                        <div class="col-sm-12 text-center p-b-15">
+                                            <button id="new_program_note" class="btn-icon" title="Add"><i class="fa-plus"></i></button>
+                                            <button id="edit_program_note" class="btn-icon" title="Edit" disabled><i class="fa-edit"></i></button>
+                                            <button id="delete_program_note" class="btn-icon" title="Delete" disabled><i class="fa-trash"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -2607,8 +2613,11 @@
             <div class="c-modal-footer">
                 <!--<button type="button" class="btn btn-default" id = "close_modal" data-dismiss="modal">Close</button>-->
                 <div class="row">
-                    <div class="col-sm-4 text-left" style="padding-left: 40px;">
+                    <!--<div class="col-sm-4 text-left" style="padding-left: 40px;">
                         <button type="button" class="btn btn-secondary c-btn-delete" id="delete_notes">Delete</button>
+                    </div>-->
+                    <div class="col-sm-4 text-center">
+                        <button type="button" class="btn btn-primary c-btn-save" id="save_notes">Save</button>
                     </div>
                     <div class="col-sm-4 text-center">
                         <button type="button" class="btn btn-primary c-btn-save" id="update_notes">Update</button>

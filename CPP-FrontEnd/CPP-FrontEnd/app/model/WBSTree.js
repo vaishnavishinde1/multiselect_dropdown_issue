@@ -3691,18 +3691,24 @@ WBSTree = (function ($) {
                     gridNoteslist.empty();
                     for (var x = 0; x < programNotesList.length; x++) {
                         gridNoteslist.append(
-                            '<tr class="contact-row" id="Notes_id" value="' + programNotesList[x].Notes_id + '" >' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '><a>' + (x + 1) + '</a></td> ' +
-                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td>' +
-                            '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
-                            '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
-                            //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            //'<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
+                            '<tr class="contact-row" value="' + programNotesList[x].Notes_id +'"><td>' +
+                            '<input id=rb' + programNotesList[x].Notes_id + ' type="radio"  name="rbprogramnotes" value="' + serviceBasePath + 'Request/DocumentByDocID/' + programNotesList[x].Notes_id + '" /></td> '+
+                            '<td class="class-td-LiveView">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                            '<td id="notes_desc" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td> ' +
                             '</tr>'
                         );
 
                     }
+
+                    $('input[name=rbprogramnotes]').on('click', function (event) {
+                        $('#edit_program_note').removeAttr('disabled');
+                        $('#delete_program_note').removeAttr('disabled');
+
+                    });
+
+                  
+
                 });
 
                 /* });*/
@@ -4243,17 +4249,17 @@ WBSTree = (function ($) {
                     //    selectedNode.PPBondNotes = '';
                     //}
 
-                    selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
-                    var isViewModeOn = true;
-                    isViewModeOn = $('#txtprogramNotes').is(':disabled');
-                    var modifiedNotes = selectedNode.ProgramNote;
-                    var isNotesModified = false;
-                    //if (orgNotes != modifiedNotes) {
+                    //selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                    //var isViewModeOn = true;
+                    //isViewModeOn = $('#txtprogramNotes').is(':disabled');
+                    //var modifiedNotes = selectedNode.ProgramNote;
+                    //var isNotesModified = false;
+                    ////if (orgNotes != modifiedNotes) {
+                    ////    isNotesModified = true;
+                    ////}
+                    //if (!isViewModeOn) {
                     //    isNotesModified = true;
                     //}
-                    if (!isViewModeOn) {
-                        isNotesModified = true;
-                    }
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
                     //selectedNode.ClientID = $('#ProgramModal').find('.modal-body #program_client_poc').val();
                     //Nivedita 13-01-2022
@@ -4789,7 +4795,7 @@ WBSTree = (function ($) {
                         //"IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         //"PPBondNotes": selectedNode.PPBondNotes,
                         "programNote": selectedNode.ProgramNote,
-                        "isNotesModified": isNotesModified,
+                        //"isNotesModified": isNotesModified,
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
 
@@ -10611,35 +10617,77 @@ WBSTree = (function ($) {
                 var desc = row.find("#notes_desc").text();
                 $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
                 $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled", true);
-                // $('#txtprogramNotes').val(desc);
-                // $('#txtprogramNotes').prop("disabled", "disabled");
+                $('#save_notes').hide();
                 $('#update_notes').hide();
                 $('#delete_notes').hide();
             });
 
-            $("#gridNoticehistoryList").on('dblclick', 'tr', function () {
+            //$("#gridNoticehistoryList").on('dblclick', 'tr', function () {
+            //    $('#NotesModal').modal({ show: true, backdrop: 'static' });
+            //    var row = $(this).closest("tr");
+            //    var desc = row.find("#notes_desc").text();
+            //    var scope = wbsTree.getScope();
+            //    scope.notesID = row.attr('value');
+            //    $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+            //    $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled",false);
+            //    // $('#txtprogramNotes').val(desc);
+            //    // $('#txtprogramNotes').prop("disabled", "disabled");
+            //    // $('#btnClearNotesDesc').show();
+            //    $('#update_notes').show();
+            //    $('#delete_notes').show();
+            //});
+
+            $('#new_program_note').unbind().on('click', function (event) {
+                event.preventDefault(); 
                 $('#NotesModal').modal({ show: true, backdrop: 'static' });
-                var row = $(this).closest("tr");
-                var desc = row.find("#notes_desc").text();
-                var scope = wbsTree.getScope();
-                scope.notesID = row.attr('value');
-                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#NotesModal').find('.modal-body #notesTxtArea').val('');
                 $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled",false);
-                // $('#txtprogramNotes').val(desc);
-                // $('#txtprogramNotes').prop("disabled", "disabled");
-                // $('#btnClearNotesDesc').show();
-                $('#update_notes').show();
-                $('#delete_notes').show();
+                $('#save_notes').show();
+                $('#update_notes').hide();
+               
+               
             });
 
-
+            $('#save_notes').unbind('click').on('click', function () {
+                var operation = 1;
+                programNotesOperations(operation);
+                
+            });
             $('#update_notes').unbind('click').on('click', function () {
+                var operation = 2;
+                programNotesOperations(operation);
+            });
+            $('#delete_program_note').unbind('click').on('click', function (e) {
+                e.preventDefault();
+                var operation = 3;
+                dhtmlx.confirm("Are you sure you want to delete?", function (result) {
+                    if (result) {
+                        programNotesOperations(operation);
+                    }
+                });
+              
+            });
+            $('#edit_program_note').unbind('click').on('click', function (e) {
+                e.preventDefault();
+                $('#NotesModal').modal({ show: true, backdrop: 'static' });
+                $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled", false);
+                var row = $("#gridNoticehistoryList input[name=rbprogramnotes]:checked").closest('tr');
+                var desc = row.find("#notes_desc").text();
+                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#save_notes').hide();
+                $('#update_notes').show();
+
+               
+            });
+
+            function programNotesOperations(operation) {
+                var row = $("#gridNoticehistoryList input[name=rbprogramnotes]:checked").closest('tr');
                 var notesTxt = $('#notesTxtArea').val();
-                var scope = wbsTree.getScope();
-                var notesID = scope.notesID;
+                var notesID = row.attr('value');
                 var programnotesdetails = {
-                    Operation: 2,
+                    Operation: operation,
                     Notes_id: notesID,
+                    programID: _selectedProgramID,
                     notes_desc: notesTxt
 
                 };
@@ -10653,52 +10701,20 @@ WBSTree = (function ($) {
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp(request).then(function success(d) {
                     if (d.data.result != "") {
-                        dhtmlx.alert("Note Updated Successfully");
-                        $('#NotesModal').modal({ show: false, backdrop: 'static' });
-                        $("#NotesModal").modal('toggle');
+                        dhtmlx.alert(d.data.result);
+                        if (operation != 3) {
+                            $("#NotesModal").modal('toggle');
+                        }
                         $("#ProgramModal").css({ "opacity": "1" });
                         populateNotesHistoryTable(_selectedProgramID);
+                        $('#delete_program_note').attr('disabled', true);
+                        $('#edit_program_note').attr('disabled', true);
+                        isFieldValueChanged = false;
                     }
 
                 });
 
-            });
-            $('#delete_notes').unbind('click').on('click', function () {
-                var notesTxt = $('#notesTxtArea').val();
-                var scope = wbsTree.getScope();
-                var notesID = scope.notesID;
-                var programnotesdetails = {
-                    Operation: 3,
-                    Notes_id: notesID,
-                    notes_desc: notesTxt
-
-                };
-
-                var request = {
-                    method: 'POST',
-                    url: serviceBasePath + 'Response/ProgramNotes',
-                    data: programnotesdetails,
-
-                };
-
-                dhtmlx.confirm("Are you sure you want to delete?", function (result) {
-                    if (result) {
-                        var angularHttp = wbsTree.getAngularHttp();
-                        angularHttp(request).then(function success(d) {
-                            if (d.data.result != "") {
-                                dhtmlx.alert("Note Deleted Successfully!!!");
-                                $('#NotesModal').modal({ show: false, backdrop: 'static' });
-                                $("#NotesModal").modal('toggle');
-                                $("#ProgramModal").css({ "opacity": "1" });
-                                populateNotesHistoryTable(_selectedProgramID);
-                            }
-
-                        });
-                    }
-                });
-              
-
-            });
+            }
 
            
 
@@ -11710,7 +11726,8 @@ WBSTree = (function ($) {
                 $('#downloadBtnProgram').attr('disabled', 'disabled');   //Manasi
                 $('#updateBtnProgram').removeAttr('disabled');   //Manasi
                 $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
-                ViewAllUploadFileContracts
+                $('#new_program_note').removeAttr('disabled');  
+                
 
                 //Load Document Grid
                 var gridUploadedDocument = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocument tbody');
@@ -12961,6 +12978,7 @@ WBSTree = (function ($) {
                     $("#contract_insurance *").prop('disabled', true); // Narayan - 08/04/2022
                     $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     $('#updateBtnProgram').attr('disabled', 'disabled');   //Manasi
+                    $('#new_program_note').attr('disabled', 'disabled');
                     //================ Jignesh-23-02-2021 =====================
                     //$('#delete_program').attr('disabled', 'disabled');
                     $('#btnModification').attr('disabled', 'disabled');
@@ -13326,9 +13344,11 @@ WBSTree = (function ($) {
                     if (selectedNode.level == "Program") {
                         $('#updateBtnProgram').removeAttr('disabled');
                         $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
+                        $('#new_program_note').removeAttr('disabled');
                     } else {
                         $('#updateBtnProgram').attr('disabled', 'disabled');
                         $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
+                        $('#new_program_note').attr('disabled', 'disabled');
                     }
 
                 }
@@ -17233,6 +17253,31 @@ WBSTree = (function ($) {
 
             $(progmPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
+            });
+
+            var pgmNotesFieldID = '#notesTxtArea';
+            $(pgmNotesFieldID).unbind().on('input change paste', function (e) {
+                isFieldValueChanged = true;
+            });
+
+            $('#cancel_notes_modal,#cancel_notes_modal_x').unbind('click').on('click', function () {
+                if (isFieldValueChanged) {
+                    dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
+                        if (result) {
+                            $("#NotesModal").modal('toggle');
+                            $("#ProgramModal").css({ "opacity": "1" });
+                            isFieldValueChanged = false;
+                        }
+
+                    });
+
+                }
+                else {
+                    isFieldValueChanged = false;
+                    $("#NotesModal").modal('toggle');
+                    $("#ProgramModal").css({ "opacity": "1" });
+                }
+               
             });
 
             //Narayan - onChange for Department Selection in project

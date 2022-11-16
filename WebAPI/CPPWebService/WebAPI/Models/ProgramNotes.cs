@@ -51,6 +51,35 @@ namespace WebAPI.Models
             }
             return MatchedProgramNotesList;
         }
+        public static string registerProgramNotes(ProgramNotes programNotes)
+        {
+
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
+            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
+            String result = "";
+
+            try
+            {
+                using (var ctx = new CPPDbContext())
+                {
+                    ProgramNotes pNotes = new ProgramNotes();
+                    pNotes.notes_desc = programNotes.notes_desc;
+                    pNotes.programID = programNotes.programID;
+                    ctx.ProgramNotes.Add(pNotes);
+                    ctx.SaveChanges();
+                    result = "Note Added Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex, true);
+                var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
+
+            }
+            return result;
+
+        }
 
         public static string updateProgramNotes(ProgramNotes programNotes)
         {
@@ -67,7 +96,7 @@ namespace WebAPI.Models
                     retreiveprogramnote = ctx.ProgramNotes.Where(p => p.Notes_id == programNotes.Notes_id).FirstOrDefault();
                     retreiveprogramnote.notes_desc = programNotes.notes_desc;
                     ctx.SaveChanges();
-                    result = "success";
+                    result = "Note Updated Successfully";
                 }
             }
             catch (Exception ex)
@@ -98,7 +127,7 @@ namespace WebAPI.Models
                    
                     ctx.ProgramNotes.Remove(retreiveprogramnote);
                     ctx.SaveChanges();
-                    result = "success";
+                    result = "Note Deleted Successfully";
 
                 }
             }
