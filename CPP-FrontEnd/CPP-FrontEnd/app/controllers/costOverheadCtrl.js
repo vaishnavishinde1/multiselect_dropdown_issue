@@ -221,8 +221,8 @@
                         enableColumnMenu: false,
                         enableFiltering: false,
                         enableSorting: false,
-                        width: 100,
-                        cellTemplate: '<div><button ng-click="grid.appScope.ShowCostOverheadHistory(row,col)" class="btn btn-primary">History</button></div>'
+                        width: 40,
+                        cellTemplate: '<div><button ng-click="grid.appScope.ShowCostOverheadHistory(row,col)" class="btn-icon-grid"><i class="icons icon-history" title="History"></i></button></div>'
 
 
                     }
