@@ -985,7 +985,7 @@ namespace WebAPI
             config.Routes.MapHttpRoute( //luan here - Availability Report
            name: "ResourceAvailabilityReport",
            routeTemplate: "Request/ResourceAvailabilityReport",
-           defaults: new { controller = "RequestResourceAvailabilityReport" }
+           defaults: new { controller = "RequestResourceAvailabilityReport", action = "Post" }
            );
 
             config.Routes.MapHttpRoute( //luan here - Billing Exception Report

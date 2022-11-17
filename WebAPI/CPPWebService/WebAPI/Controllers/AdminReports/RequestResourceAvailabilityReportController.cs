@@ -8,14 +8,28 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Protocols;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAPI.Controllers.AdminReports
 {
+
+    public class resourcereport
+    {
+       [NotMapped]
+      public string PositionID { get; set; }
+        [NotMapped]
+        public string FromDate { get; set; }
+        [NotMapped]
+        public string ToDate { get; set; }
+        [NotMapped]
+        public string FileType { get; set; }
+       
+    }
     public class RequestResourceAvailabilityReportController : System.Web.Http.ApiController
     {
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public HttpResponseMessage GetReport(String PositionID, String FromDate, String ToDate, String FileType)
+        public HttpResponseMessage Post(resourcereport resourcereport)
         {
             //http://devapps2.birdi-inc.io/ReportServer/Pages/ReportViewer.aspx?%2fIMS%2finterface2rdl&rs:Command=Render
             log4net.Config.XmlConfigurator.Configure();
@@ -23,7 +37,7 @@ namespace WebAPI.Controllers.AdminReports
             try
             {
                 Byte[] bytes = { };
-                bytes = generatePDF(PositionID, FromDate, ToDate, FileType, "ResourceReport");
+                bytes = generatePDF(resourcereport.PositionID, resourcereport.FromDate, resourcereport.ToDate, resourcereport.FileType, "ResourceReport");
                 String base64txt = Convert.ToBase64String(bytes);
                 result = new HttpResponseMessage(HttpStatusCode.OK);
                 result.Content = new StringContent(base64txt);
