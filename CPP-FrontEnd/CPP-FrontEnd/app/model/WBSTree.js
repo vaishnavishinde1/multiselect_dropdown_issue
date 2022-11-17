@@ -3984,7 +3984,7 @@ WBSTree = (function ($) {
                                 '</td >' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges
+                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges // Hide CO Type :: Aditya :: 15112022
                                 // $sign added by Amruta -14022022
                                 '<td class="class-td-LiveView text-right" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
@@ -4016,7 +4016,7 @@ WBSTree = (function ($) {
                     //change by kavita 
                     if (flag != true) {
 
-                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '</span></td>' + // Hide CO Type :: Aditya :: 15112022
                         '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
                             '</tr></tfoot>');
                         flag = true;
@@ -4135,7 +4135,7 @@ WBSTree = (function ($) {
                         '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' +
+                        //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' + // Hide CO Type :: Aditya :: 15112022
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderAmount + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderDate + '</td>' +
@@ -5428,7 +5428,16 @@ WBSTree = (function ($) {
             $('#btnSpecialInstruction').unbind('click').bind('click', function () {
                 //event.preventDefault();    //Manasi 09-03-2021
                 $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
-                $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                // Special Instructions :: Aditya :: 16112022
+                //$('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                var angularHttp = wbsTree.getAngularHttp();
+                var specialInst_desc = $('#SpecialInstructionModal').find('.modal-body #program_Element_special_instruction');
+                angularHttp.get(serviceBasePath + 'Request/SpecialInstructions/' + _selectedNode.ProgramElementID).then(function (response) {
+                    console.log(response.data.data[0]);
+                    var data = response.data.data[0];
+                    data ? specialInst_desc.val(data.specialInstructions_desc): specialInst_desc.val('');
+                });
+
             });
           
             $('#update_program_element').unbind('click').on('click', function () {
@@ -5528,7 +5537,7 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
 
-                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_Element_special_instruction').val();
                     selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
 
 
@@ -6212,7 +6221,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_Element_special_instruction').val();
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
@@ -8665,9 +8674,44 @@ WBSTree = (function ($) {
             });
              //code added by kavita
             $('#update_special_instruction').unbind('click').on('click', function () {
-                localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
-                $("#ProgramElementModal").css({ "opacity": "1" });
-                $("#SpecialInstructionModal").modal('toggle');
+                // Special Instructions :: Aditya :: 16112022
+                //localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_Element_special_instruction').val();
+                var specialInstructionDesc = $('#SpecialInstructionModal').find('#program_Element_special_instruction').val();
+                var ProgramElementId = parseInt(_selectedNode.ProgramElementID);
+                var angularHttp = wbsTree.getAngularHttp();
+                var specialInsDetails = {
+                    "Operation": 2,
+                    //"ID": 1, //Use for Update by ID
+                    "specialInstructions_desc": specialInstructionDesc,
+                    "ProgramElementID": ProgramElementId,
+                };
+                var request = {
+                    method: 'POST',
+                    url: serviceBasePath + 'Response/SpecialInstructions',
+                    data: specialInsDetails,
+                };
+                angularHttp(request).then(function (response) {
+                    console.log(response.data.result);
+                    try {
+                        // Check for new
+                        if (response.data.result == 'Created successfully') {
+                            dhtmlx.alert('Special Instructions Added Successfully');
+                        }
+                        // Check for update
+                        else if (response.data.result == 'Updated successfully') {
+                            dhtmlx.alert('Special Instructions Updated Successfully');
+                        }
+                    }
+                    catch (exception) {
+                        dhtmlx.alert('Error: ' + exception);
+                    }
+                    finally {
+                        $("#ProgramElementModal").css({ "opacity": "1" });
+                        $("#SpecialInstructionModal").modal('toggle');
+                    }
+                    
+                })
+                
             });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
@@ -15451,7 +15495,8 @@ WBSTree = (function ($) {
 
                         for (var i = 0; i < approversDdl.length; i++) {
                             //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
-                        var ApproverMatrixId = 4;
+                            var ApproverMatrixId = 4;
+                            if (projApproverDetails!=null)
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -17065,7 +17110,8 @@ WBSTree = (function ($) {
 
                 //==================== Jignesh-ChangeOrderPopUpChanges ==================
                 var changeOrderType = changeOrderData.ModificationTypeId == 1 ? 'Value' :
-                    changeOrderData.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
+                    //View Mode Scope Impact :: Aditya :: 15112022
+                    changeOrderData.ModificationTypeId == 2 ? 'Schedule Impact' : changeOrderData.ModificationTypeId == 3 ? 'Value & Schedule Impact' : 'Scope Impact';
 
 
 
@@ -17080,8 +17126,9 @@ WBSTree = (function ($) {
 
                 $('#change_order_view_note_modal').val(changeOrderData.ChangeOrderScheduleChange);
                 $('#program_element_change_order_Reason_modal_E').val(changeOrderData.Reason);
-                $('#change_order_view_Amount_modal').val('$' + changeOrderData.ChangeOrderAmount.replace('$', ''));
-                $('#program_element_change_order_schedule_impact_E').val(changeOrderData.ScheduleImpact); // Jignesh-24-03-2021
+                //View Mode Scope Impact :: Aditya :: 15112022
+                changeOrderData.ChangeOrderAmount ? ($('#change_order_view_Amount_modal').val('$' + changeOrderData.ChangeOrderAmount.replace('$', ''))) : $('#divValueE').hide();
+                changeOrderData.ScheduleImpact ? ($('#program_element_change_order_schedule_impact_E').val(changeOrderData.ScheduleImpact)) : $('#divDurationDateE').hide(); // Jignesh-24-03-2021
                 //$('#program_element_change_order_duration_date_E').val(moment(docData.DurationDate).format('MM/DD/YYYY')); // Jignesh-24-03-2021
 
 
@@ -17493,7 +17540,7 @@ WBSTree = (function ($) {
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,#emp_class,' +
                 '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
-                '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,#program_billing_poc_special_instruction1,' +
+                '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,' + //remove id #program_Element_special_instruction as Special Instruction saved on different button :: Aditya :: 16112022
                 '#program_tm_billing1,#program_sov_billing1,#program_monthly_billing1,#program_Lumpsum1';
 
             $(proElePageFieldIDs).unbind().on('input change paste', function (e) {

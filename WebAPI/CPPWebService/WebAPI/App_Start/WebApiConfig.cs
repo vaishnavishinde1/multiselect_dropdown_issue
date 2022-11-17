@@ -1971,6 +1971,17 @@ namespace WebAPI
                  routeTemplate: "Request/ProgramNotes/{programId}",
                  defaults: new { controller = "RequestProgramNotes", action = "Get", programId = RouteParameter.Optional }
              );
+            //Aditya 15112022
+            config.Routes.MapHttpRoute(
+                 name: "RegisterSpecialInstructions",
+                 routeTemplate: "Response/SpecialInstructions",
+                 defaults: new { controller = "RegisterSpecialInstructions"}
+             );
+            config.Routes.MapHttpRoute(
+                 name: "RequestSpecialInstructions",
+                 routeTemplate: "Request/SpecialInstructions/{ProgramElementID}",
+                 defaults: new { controller = "RequestSpecialInstructions", action = "Get", ProgramElementID = RouteParameter.Optional }
+             );
             config.Routes.MapHttpRoute(
               name: "DataMigration",
               routeTemplate: "Request/Migration",
