@@ -2801,7 +2801,7 @@
                             <div class="col-xs-12 m-b-15" style="padding-left: 0;padding-right: 0;">
                                 <!--css changes by shweta-->
                                 <label for="specailInstruction" class="_control-label _bold">Special Instructions</label>
-                                <textarea rows="3" type="text" class="form-control" id="program_billing_poc_special_instruction1"></textarea>
+                                <textarea rows="3" type="text" class="form-control" id="program_Element_special_instruction"></textarea>
                             </div>
                         </div>
 
@@ -3144,7 +3144,7 @@
                                 </div>
                                 <div class="col-xs-4 m-b-10 p-r-0" id="divValueE">
                                     <!--css changes by shweta-->
-                                    <label for="program_element_contract_number" class="control-label _bold required"> Cost($)</label>
+                                    <label for="program_element_contract_number" class="control-label _bold required"> Value ($)</label>
                                     <input type="text" class="form-control" id="change_order_view_Amount_modal" disabled>
                                 </div>
                                 <!--======================== Jignesh-24-03-2021 =============================================-->
@@ -3158,7 +3158,7 @@
                                 </div>
                             </div>
 
-                            <div class="_form-group">
+                            <div class="_form-group" style="display:inline-block;">
                                 <div class="col-xs-6 col-md-6 p-0 m-b-10">
                                     <!--css changes by shweta-->
                                     <label for="program_element_project_number" class="control-label _bold required">Reason</label>
@@ -3803,16 +3803,16 @@
                                                 <!--</table>
                                                 </div>-->
                                                 <!--Narayan - Restructure table for change order in project - 23/06/2022-->
-                                                <div class="panel-body  table-outline-wo-p p-0" style=" height: 144px !important; overflow:auto">
+                                                <div class="panel-body  table-outline-wo-p p-0" style=" height: 144px !important; overflow-x:hidden">
                                                     <table id="program_element_change_order_table_id" class="table table-striped mp-tp-0">
                                                         <thead class="t-head">
                                                             <tr>
                                                                 <th style="width: 20px;"></th>
                                                                 <th style="width: 18%;">(#)</th>
-                                                                <th style="width: 25%;">Title</th>
-                                                                <th style="width: 20%; ">Type</th>
-                                                                <th style="width: 15%;">Cost ($)</th>
-                                                                <th style=" width: 10%;">Days</th>
+                                                                <th style="width: 45%;">Title</th>
+                                                                <!--<th style="width: 20%; ">Type</th>-->
+                                                                <th style="width: 15%;">Value ($)</th>
+                                                                <th style=" width: 20%;">Days</th>
                                                                 <th style=" width: 5%;"></th>
                                                                 <!--<th class="text-center" style="width: 18%;">Detail</th>--> <!--Aditya :: Hide Column :: 11102022-->
                                                             </tr>

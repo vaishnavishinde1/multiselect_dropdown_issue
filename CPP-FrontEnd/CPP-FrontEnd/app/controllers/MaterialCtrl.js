@@ -314,8 +314,8 @@
                     enableColumnMenu: false,
                     enableFiltering: false,
                     enableSorting: false,
-                    width: 100,
-                    cellTemplate: '<div><button ng-click="grid.appScope.ShowMaterialHistory(row,col)" class="btn btn-primary">History</button></div>'
+                    width: 40,
+                    cellTemplate: '<div><button ng-click="grid.appScope.ShowMaterialHistory(row,col)" class="btn-icon-grid"><i class="icons icon-history" title="History"></i></button></div>'
  
 
                 }
@@ -388,7 +388,7 @@
                                 //'>' + historyData[a].UpdatedBy + '</td>' +
                                 '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                 '>' + moment(materialHistory[a].FromDate).format('MM/DD/YYYY') + '</td>' +
-                                '<td class="ttext-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                                '<td class="text-left" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
                                 '>' + moment(materialHistory[a].ToDate).format('MM/DD/YYYY') + '</td>' +
                                 '</tr> ');
                         }
