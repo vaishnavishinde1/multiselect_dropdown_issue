@@ -312,6 +312,7 @@
                     displayName: '',
                     cellClass: 'ui-grid-vcenter text-center',
                     enableColumnMenu: false,
+                    enableCellEdit: false,
                     enableFiltering: false,
                     enableSorting: false,
                     width: 40,

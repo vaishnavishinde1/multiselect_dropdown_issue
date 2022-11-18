@@ -220,6 +220,7 @@
                         cellClass: 'ui-grid-vcenter text-center',
                         enableColumnMenu: false,
                         enableFiltering: false,
+                        enableCellEdit: false,
                         enableSorting: false,
                         width: 40,
                         cellTemplate: '<div><button ng-click="grid.appScope.ShowCostOverheadHistory(row,col)" class="btn-icon-grid"><i class="icons icon-history" title="History"></i></button></div>'
