@@ -18,40 +18,47 @@ using WebAPI.Helper;
 
 namespace WebAPI.Models
 {
-    [Table("program_notes")]
-    public class ProgramNotes:Audit
+    [Table("specialinstructions")]
+    public class SpecialInstructions : Audit
     {
         readonly static log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Notes_id { get; set; }
-        public string notes_desc { get; set; }
-        public int programID { get; set; }
-       
         [NotMapped]
         public int Operation;
 
-        public static List<ProgramNotes> getProgramNotes(int ProgramID)
+        public int ID { get; set; }
+
+        public int ProgramElementID { get; set; }
+
+        public string specialInstructions_desc { get; set; }
+
+        public int Deleted { get; set; }
+
+        public static List<SpecialInstructions> getSpecialInstructions(int ProgramElementID)
         {
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
-            List<ProgramNotes> MatchedProgramNotesList = new List<ProgramNotes>();
-            try
-            {
-                using (var ctx = new CPPDbContext())
+            List<SpecialInstructions> MatchedSpecialInstructionsList = new List<SpecialInstructions>();
+            using (var ctx = new CPPDbContext())
+            { 
+                try
+
                 {
-                     MatchedProgramNotesList = ctx.ProgramNotes.Where(a => a.programID == ProgramID).ToList();
-                    //MatchedProgramList = test.Select(a => new Program { ProgramID = a.ProgramID, ProgramName = a.ProgramName }).ToList();
+                    MatchedSpecialInstructionsList = ctx.SpecialInstructions.Where(a => a.ProgramElementID == ProgramElementID).ToList();
+                    //MatchedProgramList = test.Select(a => new Program { ProgramElementID = a.ProgramElementID, ProgramName = a.ProgramName }).ToList();
                 }
 
-            }
+            
             catch (Exception ex)
             {
                 logger.Error(ex);
             }
-            return MatchedProgramNotesList;
+            return MatchedSpecialInstructionsList;
+                }
         }
-        public static string registerProgramNotes(ProgramNotes programNotes)
+
+        public static string updateSpecialInstructions(SpecialInstructions specialInstructions)
         {
 
             Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
@@ -62,18 +69,31 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                    ProgramNotes pNotes = new ProgramNotes();
-                    pNotes.notes_desc = programNotes.notes_desc;
-                    pNotes.programID = programNotes.programID;
-                    ctx.ProgramNotes.Add(pNotes);
-                    ctx.SaveChanges();
-                    result = "Note Added Successfully";
+                    SpecialInstructions specialInstructionsLs = new SpecialInstructions();
+                    SpecialInstructions retreivespecialInstructions = new SpecialInstructions();
+                    retreivespecialInstructions = ctx.SpecialInstructions.Where(p => /*p.ID == specialInstructions.ID &&*/ p.ProgramElementID == specialInstructions.ProgramElementID).FirstOrDefault();
+                    if (retreivespecialInstructions != null)
+                    {
+                        retreivespecialInstructions.specialInstructions_desc = specialInstructions.specialInstructions_desc;
+                        ctx.SaveChanges();
+                        result = "Updated successfully";
+                    }
+                    else if(retreivespecialInstructions == null)
+                    {
+                        specialInstructionsLs.ProgramElementID = specialInstructions.ProgramElementID;
+                        specialInstructionsLs.specialInstructions_desc = specialInstructions.specialInstructions_desc;
+                        ctx.SpecialInstructions.Add(specialInstructionsLs);
+                        ctx.SaveChanges();
+                        result = "Created successfully";
+                    }
+                    
                 }
             }
             catch (Exception ex)
             {
                 var stackTrace = new StackTrace(ex, true);
                 var line = stackTrace.GetFrame(0).GetFileLineNumber();
+                result = ex.Message;
                 Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
 
             }
@@ -81,36 +101,7 @@ namespace WebAPI.Models
 
         }
 
-        public static string updateProgramNotes(ProgramNotes programNotes)
-        {
-
-            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "Entry Point", Logger.logLevel.Info);
-            Logger.LogDebug(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, "", Logger.logLevel.Debug);
-            String result = "";
-
-            try
-            {
-                using (var ctx = new CPPDbContext())
-                {
-                    ProgramNotes retreiveprogramnote = new ProgramNotes();
-                    retreiveprogramnote = ctx.ProgramNotes.Where(p => p.Notes_id == programNotes.Notes_id).FirstOrDefault();
-                    retreiveprogramnote.notes_desc = programNotes.notes_desc;
-                    ctx.SaveChanges();
-                    result = "Note Updated Successfully";
-                }
-            }
-            catch (Exception ex)
-            {
-                var stackTrace = new StackTrace(ex, true);
-                var line = stackTrace.GetFrame(0).GetFileLineNumber();
-                Logger.LogExceptions(MethodBase.GetCurrentMethod().DeclaringType.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message, line.ToString(), Logger.logLevel.Exception);
-
-            }
-            return result;
-
-        }
-
-        public static string DeleteProgramNotes(ProgramNotes programNotes)
+        public static string DeleteSpecialInstructions(SpecialInstructions specialInstructions)
         {
             var status = "";
 
@@ -122,12 +113,12 @@ namespace WebAPI.Models
             {
                 using (var ctx = new CPPDbContext())
                 {
-                    ProgramNotes retreiveprogramnote = new ProgramNotes();
-                    retreiveprogramnote = ctx.ProgramNotes.Where(p => p.Notes_id == programNotes.Notes_id).FirstOrDefault();
-                   
-                    ctx.ProgramNotes.Remove(retreiveprogramnote);
+                    SpecialInstructions retreivespecialInstructions = new SpecialInstructions();
+                    retreivespecialInstructions = ctx.SpecialInstructions.Where(p => p.ID == specialInstructions.ID).FirstOrDefault();
+
+                    ctx.SpecialInstructions.Remove(retreivespecialInstructions);
                     ctx.SaveChanges();
-                    result = "Note Deleted Successfully";
+                    result = "success";
 
                 }
             }
@@ -141,6 +132,6 @@ namespace WebAPI.Models
             return result;
             //return status;
         }
+
     }
-    
 }

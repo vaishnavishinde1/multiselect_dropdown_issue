@@ -392,6 +392,10 @@ namespace WebAPI.Models
                         int ScheduleImpact;
                         if (retreivedChangeOrder != null)
                         {
+                            if(retreivedChangeOrder.ScheduleImpact == ChangeOrder.ScheduleImpact)
+                            {
+                                ScheduleImpact = 0;
+                            }
                             if (retreivedChangeOrder.ScheduleImpact > ChangeOrder.ScheduleImpact)
                             {
                                 ScheduleImpact = (retreivedChangeOrder.ScheduleImpact - ChangeOrder.ScheduleImpact) * (-1);
@@ -417,14 +421,11 @@ namespace WebAPI.Models
 
 
                             // Narayan - on schedule impact change program element end date - 20/10/2022 
-                            if (ChangeOrder.ModificationTypeId == 2 || ChangeOrder.ModificationTypeId == 3)
+                            ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
+                            if (programElement != null)
                             {
-                                ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == ChangeOrder.ProgramElementID).FirstOrDefault();
-                                if (programElement != null)
-                                {
-                                    programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(ScheduleImpact);
-                                    ctx.SaveChanges();
-                                }
+                                programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(ScheduleImpact);
+                                ctx.SaveChanges();
                             }
 
                         }
@@ -473,10 +474,12 @@ namespace WebAPI.Models
                         // Narayan - on schedule impact change program element end date - 20/10/2022 
                         if (retreivedChangeOrder.ModificationTypeId == 2 || retreivedChangeOrder.ModificationTypeId == 3)
                         {
+                            int ScheduleImpact;
                             ProgramElement programElement = ctx.ProgramElement.Where(p => p.ProgramElementID == retreivedChangeOrder.ProgramElementID).FirstOrDefault();
                             if (programElement != null)
                             {
-                                programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(retreivedChangeOrder.ScheduleImpact * (-1));
+                                ScheduleImpact = retreivedChangeOrder.ScheduleImpact * (-1);
+                                programElement.ProjectPEndDate = ChangeOrder.ProjectEndDateCO.AddDays(ScheduleImpact);
                                 ctx.SaveChanges();
                             }
                         }
@@ -497,7 +500,7 @@ namespace WebAPI.Models
                         //ctx.ChangeOrder.Remove(retreivedChangeOrder);
                         ctx.SaveChanges();
 
-                        WebAPI.Models.ProgramElement.updatePojectEndDateOnChangeOrder(ChangeOrder.ProgramElementID.GetValueOrDefault(), ChangeOrder.ProjectEndDateCO);
+                        //WebAPI.Models.ProgramElement.updatePojectEndDateOnChangeOrder(ChangeOrder.ProgramElementID.GetValueOrDefault(), ChangeOrder.ProjectEndDateCO);
 
                         result = ChangeOrder.ChangeOrderName + " has been deleted successfully.\n";
 					}

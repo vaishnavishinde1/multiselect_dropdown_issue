@@ -441,8 +441,21 @@ namespace WebAPI.Models
                             ctx.SaveChanges();
                         }
 
+
                         // Project Element Approvers
                         int projectId = project.ProjectID;
+
+                        //AdminApproval adminApproval = ctx.AdminApproval.Where(a => a.DepartmentID == project.ProjectClassID).FirstOrDefault();
+                        //AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
+                        //if (adminApproval != null)
+                        //{
+                        //    List<int> usersID = new List<int>();
+                        //    usersID.Add(adminApprovalPresident.PresidentUserID);
+                        //    usersID.Add(adminApproval.DeptManagerUserID);
+                        //    usersID.Add(adminApproval.OpeManagerUserID);
+                        //    AdminApprovalPresident.UpdateAccessControl(usersID, null, projectId);
+                        //}
+
                         // List<TrendApproversDetails> ApproversDetails = ctx.TrendApproversDetails.Where(p => p.ProjectElementId == projectId).ToList<TrendApproversDetails>();
                         List<TrendApproversDetails> ApproversDetails = project.ApproversDetails;
                         List<int> approverDetailsList = new List<int>();
@@ -664,15 +677,32 @@ namespace WebAPI.Models
                                     }
                                 }
 
+                                //AdminApproval adminApproval = ctx.AdminApproval.Where(a => a.DepartmentID == prj.ProjectClassID).FirstOrDefault();
+                                //AdminApprovalPresident adminApprovalPresident = ctx.AdminApprovalPresident.FirstOrDefault();
+                                //if (adminApproval != null)
+                                //{
+                                //    List<int> usersID = new List<int>();
+                                //    usersID.Add(adminApprovalPresident.PresidentUserID);
+                                //    usersID.Add(adminApproval.DeptManagerUserID);
+                                //    usersID.Add(adminApproval.OpeManagerUserID);
+                                //    AdminApprovalPresident.UpdateAccessControl(usersID, null, prj.ProjectID);
+                                //}
+
                                 // Project Element Approvers
                                 List<int> approverDetailsList = new List<int>();
 
                                 if (prj.ApproversDetails.Count > 0)
                                 {
-
+                                    TrendApproversDetails preElementManager = ApproversDetails.Where(a => a.ApproverMatrixId == 6).FirstOrDefault();
                                     for (var x = 0; x < prj.ApproversDetails.Count; x++)
                                     {
                                         int approverUserID = prj.ApproversDetails[x].EmpId;
+
+                                        //if(prj.ApproversDetails[x].ApproverMatrixId == 6 && prj.ApproversDetails[x].UserId != preElementManager.UserId)
+                                        //{
+                                        //    NotifyChangeApproversMail.ToPM(prj.ProjectID, prj.ApproversDetails[x].UserId, prj.ApproversDetails[x].EmpId, "Element Manager");
+                                        //}
+
                                         if (approverUserID != 10000) {
 
                                             //User userID = ctx.User.Where(u => u.EmployeeID == approverUserID).FirstOrDefault();

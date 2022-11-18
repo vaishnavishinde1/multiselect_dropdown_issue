@@ -509,6 +509,21 @@ namespace WebAPI.Services
             sendMailThread.Start();
         }
 
+        // Narayan - Project Manager for approvals change Mail 
+        public static void ProjectManagerChangeApprovalMail(string toEmail, string ElementName, string approverDesignation, string approverName)
+        {
+            List<string> to = new List<string>();
+            to.Add(toEmail);
+            String subject = "Approvers Change Notification - " + ElementName;
+            string message = "<html>Hello, <br><br>Program Element - <strong>" + ElementName + "</strong>, <strong>" + approverDesignation + "</strong> has been changed <strong>" + approverName + "</strong>."
+                + "<br><br><strong>Regards,<br><br> CPP Team</strong><br><br>";
+            var sendMailThread = new Task(() =>
+            {
+                SendMail(to, "", "", subject, message);
+            });
+            sendMailThread.Start();
+        }
+
         public static void SendMail(List<string> to, string cc, string bcc, string subject, string message)
         {
             //Reading sender Email credential from web.config file  
