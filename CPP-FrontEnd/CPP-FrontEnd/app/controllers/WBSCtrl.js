@@ -45,6 +45,7 @@
             $('#fileUploadProject').change(function (ev) {
                 console.log(fileUploadProject.files);
                 $("#document_name_project").val(fileUploadProject.files[0].name);
+                console.log(fileUploadProject.files);
             });
 
             //Added by Nivedita
@@ -65,6 +66,7 @@
             function getCellValue(row, index) {
                 return $(row).children('td').eq(index).text();
             }
+
 
             $('#uploadBtnProject').unbind('click').on('click', function ($files) {
                 debugger
@@ -5925,8 +5927,9 @@
                             localStorage.setItem('modal_mode', "Update");
                             var selectedProgram = organization.children.find(x => x.ProgramID === programId);
                             wbsTree.setSelectedNode(selectedProgram);
-                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
                             localStorage.Status = "";
+                            $('#ProgramModal').modal({ show: true, backdrop: 'static' });
+
                             if (selectedProgram.Status == "Closed") {
                                 $('#delete_program').prop('disabled', true);
                                 $("#updateBtnProgram").prop('disabled', true);
@@ -6084,12 +6087,12 @@
                         var projectId = $scope.GridProjectId;
                         var selectedProject = selectedProgram.children.find(x => x.ProgramElementID === projectId);
                         wbsTree.setSelectedNode(selectedProject);
-                        
+                        localStorage.Status = "";
                         $('#ProgramElementModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
                         $("#btnSpecialInstruction").prop('disabled', false);
                         $("#contextMenuBillOfMaterial").prop('disabled', false);
-                        localStorage.Status = "";
+                      
                         if (selectedProject.Status == "Closed") {
                             $("#delete_program_element").prop('disabled', true);  //Manasi 24-02-2021
                             $('#delete_program_element').removeClass('btn btn-black');
@@ -6224,9 +6227,10 @@
                         var elementId = this.firstChild.parentElement.id;//this.parentElement.parentElement.id;
                         var selectedElement = selectedProject.children.find(x => x.ProjectID === elementId);
                         wbsTree.setSelectedNode(selectedElement);
+                        localStorage.Status = "";
                         $('#ProjectModal').modal({ show: true, backdrop: 'static' });
                         //code started to add by kavita
-                        localStorage.Status = "";
+                      
                         if (selectedElement.Status == "Closed") {
 
                             $('#delete_project').removeClass('btn btn-black');

@@ -428,9 +428,9 @@ WBSTrendTree = (function ($) {
                     .attr("xlink:href", function (d) {
                         //----Vaishnavi 30-03-2022----//
                         if (node.metadata.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
+                            return "assets/js/wbs-tree/images/nodeD.png";  //code by kavita
                         else
-                            return "assets/js/wbs-tree/images/nodeB.png";
+                            return "assets/js/wbs-tree/images/nodeB.png";  //code by kavita
                         //----Vaishnavi 30-03-2022----//
 
                     })
@@ -458,9 +458,9 @@ WBSTrendTree = (function ($) {
                     .attr("xlink:href", function (d) {
                         //----Vaishnavi 30-03-2022----//
                         if (node.metadata.Status == "Closed")
-                            return "assets/js/wbs-tree/images/node.png";
+                            return "assets/js/wbs-tree/images/nodeD.png";  //code by kavita
                         else
-                            return "assets/js/wbs-tree/images/nodeC.png";
+                            return "assets/js/wbs-tree/images/nodeE.png";  //code by kavita
                         //----Vaishnavi 30-03-2022----//
                     })
                     .attr("x", "-7px")
@@ -485,7 +485,7 @@ WBSTrendTree = (function ($) {
                     ];
                 var shapeSvg = parent.append("image")
                     .attr("xlink:href", function (d) {
-                        return "assets/js/wbs-tree/images/nodeD.png"
+                        return "assets/js/wbs-tree/images/nodeB.png"
                     })
                     .attr("x", "-7px")
                     .attr("y", "7px")
@@ -1341,6 +1341,7 @@ WBSTrendTree = (function ($) {
                             $('#ViewUploadFileTrend').attr('disabled', 'disabled');
                             $('#EditBtnTrend').attr('disabled', 'disabled');
                             $('#downloadBtnTrend').attr('disabled', 'disabled');
+                            $('# ViewUploadFilePastTrend').attr('disabled', 'disabled');
                         } else {
                             $('#DeleteUploadTrend').removeAttr('disabled');
                             $('#updateDMBtnTrend').removeAttr('disabled');

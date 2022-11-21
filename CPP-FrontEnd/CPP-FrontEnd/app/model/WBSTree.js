@@ -4075,7 +4075,7 @@ WBSTree = (function ($) {
                             $('#delete_program_element_change_order').prop('disabled', true);
                             $('#downloadBtnChangeOrder').prop('disabled', true);
                             $('#ViewUploadFileChangeOrder').prop('disabled', true);
-                            //  localStorage.Status= "";
+                             // localStorage.Status= "";
                         }
                         else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                             $('#ViewUploadFileChangeOrder').removeAttr('disabled');
@@ -8785,7 +8785,7 @@ WBSTree = (function ($) {
                 if (localStorage.Status== 'Closed') {
                     $('#edit_project_element_milestone').prop('disabled', true);
                     $('#delete_project_element_milestone').prop('disabled', true);
-                    nailocalStorage.Status = "";
+                   // localStorage.Status = "";
 
                 }
             });
@@ -9305,7 +9305,7 @@ WBSTree = (function ($) {
                 if (localStorage.Status == 'Closed') {
                     $('#edit_program_element_milestone').prop('disabled', true);
                     $('#delete_program_element_milestone').prop('disabled', true);
-                   // localStorage.Status = "";
+                    //localStorage.Status = "";
 
                 }
             });
@@ -10401,7 +10401,7 @@ WBSTree = (function ($) {
                     $('#delete_program_element_change_order').prop('disabled', true);
                     $('#downloadBtnChangeOrder').prop('disabled', true);
                     $('#ViewUploadFileChangeOrder').prop('disabled', true);
-                   // localStorage.Status= "";
+                  //  localStorage.Status= "";
                 }
 
             });
@@ -12500,13 +12500,14 @@ WBSTree = (function ($) {
 
                             }
                             $('input[name=rbCategories]').on('click', function (event) {
+                                //Code added by Kavita 
                                 if (localStorage.Status == 'Closed') {
 
                                     $('#DeleteUploadProgram').prop('disabled', true);
                                     $('#ViewUploadFileProgram').prop('disabled', true);
                                     $('#EditBtnProgram').prop('disabled', true);
                                     $('#downloadBtnProgram').prop('disabled', true);
-                                   // localStorage.Status = "";
+                                //  localStorage.Status = "";
                                 }
 
 
@@ -12520,7 +12521,7 @@ WBSTree = (function ($) {
                                     $('#EditBtnProgram').removeAttr('disabled');
                                     $('#downloadBtnProgram').removeAttr('disabled');
                                 }
-                                //Code added by Kavita 
+                                
                                
                                 localStorage.selectedProjectDocument = $(this).closest("tr").find(".docId").text();
                                 //g_selectedProjectDocument = null;
@@ -12592,7 +12593,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
-                                localstorage.Status = "";
+                              //  localstorage.Status = "";
                             }
                         });
                         //============================ Jignesh-SearchField-05022021 ================================
@@ -13833,12 +13834,22 @@ WBSTree = (function ($) {
                     //$('#ExportToMPP').prop('disabled', false);
                     //document.getElementById("loading").style.display = "none";
                     dhtmlx.alert("File downloaded successfully.");
+                    //code add by kavita 
+                    if (localStorage.Status == "Closed") {
+                        $('#DeleteUploadTrend').prop('disabled',true);
+                        $('#updateDMBtnTrend').prop('disabled', true);
+                        $('#ViewUploadFileTrend').prop('disabled', true);
+                        $('#EditBtnTrend').prop('disabled', true);
+                        $('#downloadBtnTrend').prop('disabled', true);
+                    }
+                    else {
+                        $('#DeleteUploadTrend').removeAttr('disabled');
+                        $('#updateDMBtnTrend').removeAttr('disabled');
+                        $('#ViewUploadFileTrend').removeAttr('disabled');
+                        $('#EditBtnTrend').removeAttr('disabled');
+                        $('#downloadBtnTrend').removeAttr('disabled');
+                    }
 
-                    $('#DeleteUploadTrend').removeAttr('disabled');
-                    $('#updateDMBtnTrend').removeAttr('disabled');
-                    $('#ViewUploadFileTrend').removeAttr('disabled');
-                    $('#EditBtnTrend').removeAttr('disabled');
-                    $('#downloadBtnTrend').removeAttr('disabled');
                     return;
 
                     //alert(d.fileName);
@@ -14997,7 +15008,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
-                              //  localStorage.Status = "";
+                               //localStorage.Status = "";
                             }
                             else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                                 $('#ViewUploadFileInViewAllProject').removeAttr('disabled');
@@ -15117,7 +15128,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrg').prop('disabled', true);
                                 $('#ViewAllUploadFileProjects').prop('disabled', true);
                                 $('#EditBtnProgramPrg').prop('disabled', true);
-                                //localStorage.Status = "";
+                             // localStorage.Status = "";
                             }
                             else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
                                 $('#ViewUploadFileProgramPrg').removeAttr('disabled');
@@ -15923,7 +15934,7 @@ WBSTree = (function ($) {
                     $('#delete_program_element_milestone').attr('disabled', 'disabled');
                     $('#cancel_program_element').removeAttr('disabled');
                     $('#cancel_program_element_x').removeAttr('disabled');
-                    //localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
+                   // localStorage.Status = "";   //----Vaishnavi 30-03-2022----//
                 }
                 else if (localStorage.dept == 1) {  //vaishnavi 10-03-2022
                     //Nivedita - Button changes to Grey on disabled  25-04-2022
@@ -16657,7 +16668,7 @@ WBSTree = (function ($) {
                             $('#ViewUploadFileProgramPrg').prop('disabled', true);
                             $('#ViewAllUploadFileProjects').prop('disabled', true);
                             $('#EditBtnProgramPrg').prop('disabled', true);
-                           // localStorage.Status = "";
+                          //localStorage.Status = "";
                         }
                        
                         else if (wbsTree.getLocalStorage().acl[2] == 1 && wbsTree.getLocalStorage().acl[3] == 0) {
@@ -18101,7 +18112,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgram').prop('disabled', true);
                                 $('#EditBtnProgram').prop('disabled', true);
                                 $('#downloadBtnProgram').prop('disabled', true);
-                              //  localStorage.Status = "";
+                              //localStorage.Status = "";
                             }
                             else if (wbsTree.getLocalStorage().acl[0] == 1 && wbsTree.getLocalStorage().acl[1] == 0) {
                                 $('#ViewUploadFileProgram').removeAttr('disabled');
@@ -20054,7 +20065,7 @@ WBSTree = (function ($) {
                                 $('#ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
-                               // localStorage.Status = "";
+                             // localStorage.Status = "";
                             }
                             
                             else if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
@@ -20134,7 +20145,7 @@ WBSTree = (function ($) {
                                 $('# ViewUploadFileProgramPrgElm').prop('disabled', true);
                                 $('# ViewAllUploadFileProgramPrgElm').prop('disabled', true);
                                 $('#EditBtnProgramPrgElm').prop('disabled', true);
-                               // localStorage.Status = "";
+                               //localStorage.Status = "";
                             }
                             else if (wbsTree.getLocalStorage().acl[4] == 1 && wbsTree.getLocalStorage().acl[5] == 0) {
 
@@ -20654,7 +20665,7 @@ WBSTree = (function ($) {
 
                     $('#cancel_project').removeAttr('disabled');
                     $('#cancel_project_x').removeAttr('disabled');
-                  //  localStorage.Status = "";  //----Vaishnavi 30-03-2022----//
+                    //localStorage.Status = "";  //----Vaishnavi 30-03-2022----//
                 } else {
                     //$("#delete_project").removeAttr('disabled'); //Manasi 24-02-2021
                     $('#update_project').removeClass('btn btn-black');
@@ -21021,6 +21032,8 @@ WBSTree = (function ($) {
                 }
             }
             else if (type == "Program") {
+
+              localStorage.Status = "";
                 if (wbsTree.getLocalStorage().acl[3] == 1) {
                     contextMenuAddText = "Add Project";
                     $("#contextMenuAdd").parent().show();
@@ -21096,6 +21109,7 @@ WBSTree = (function ($) {
                 }
             }
             else if (type == "ProgramElement") {
+              localStorage.Status = "";
                 if (wbsTree.getLocalStorage().acl[5] == 1) {
                     contextMenuAddText = "Add Element";
                     $("#contextMenuAdd").parent().show();
@@ -21183,6 +21197,7 @@ WBSTree = (function ($) {
                 });   //vaishnavi 10-03-2022
             }
             else if (type == "Project") {
+               localStorage.Status = "";
                 if (wbsTree.getLocalStorage().acl[7] == 1) {
                     contextMenuAddText = "Add Trend";
                     $("#contextMenuAdd").parent().show();

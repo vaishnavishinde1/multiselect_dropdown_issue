@@ -120,7 +120,7 @@ var svg = d3.select("#trend-tree-container").select("svg");
         shapeSvg = parent.append("image")
             .attr("xlink:href", function(d)
             {
-                return "assets/js/wbs-tree/images/nodeC.png"
+                return "assets/js/wbs-tree/images/nodeE.png"
             })
             .attr("x", "-7px")
             .attr("y", "15px")
@@ -152,7 +152,7 @@ var svg = d3.select("#trend-tree-container").select("svg");
         shapeSvg = parent.append("image")
             .attr("xlink:href", function(d)
             {
-                return "assets/js/wbs-tree/images/nodeD.png"
+                return "assets/js/wbs-tree/images/nodeB.png"
             })
             .attr("x", "-7px")
             .attr("y", "15px")

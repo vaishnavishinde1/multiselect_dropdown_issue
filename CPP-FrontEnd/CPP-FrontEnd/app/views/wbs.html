@@ -2668,8 +2668,11 @@
                         </div>
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
+
                                 <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 10px;" id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
+                                <div class="upload-container"> <!-- code by kavita -->
+                                    <input  id="fileUploadProgram" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgram" value="Upload Files" />
+                                </div>
                             </div>
                         </div>
                         <div class="_form-group" style="">
@@ -2915,7 +2918,9 @@
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
                                 <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadChangeOrder" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
+                                <div class="upload-container"> <!-- code by kavita -->
+                                    <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadChangeOrder" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
+                                </div>
                             </div>
                         </div>
                         <div class="_form-group" style="">
@@ -4033,10 +4038,12 @@
                         </div>
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
-                                <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadProgramElement" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgramElement" value="Upload Files" /> <!--css changes by shweta-->
+                                <div class="upload-container">    <!-- code by kavita -->
+                                    <label for="" class="control-label _bold required">Upload Files</label>
+                                    <input style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadProgramElement" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgramElement" value="Upload Files" /> <!--css changes by shweta-->
+                                </div>
+                                </div>
                             </div>
-                        </div>
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px; margin-top: 10px; padding-right: 0;">
                                 <!--Jignesh-17-02-2021-->
@@ -4785,8 +4792,12 @@
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
                                 <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadProject" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
-                            </div>
+                                <div class="upload-container"> <!-- code by kavita -->
+                                    <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadProject" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
+                
+                                    </div>
+                                </div>
+                                                        
                         </div>
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px; margin-top: 10px; padding-right: 0;">
@@ -5031,6 +5042,7 @@
                                                                 <th style="width:50%"> Name</th>
                                                                 <th style="width:40%">Type</th>
                                                                 <th></th>
+                                                                
                                                                 <!--<th class=" text-center">Document Detail</th>--> <!--Aditya :: Hide Column :: 11102022-->
                                                             </tr>
                                                         </thead>
@@ -5234,6 +5246,7 @@
                                                         <th style="width: 20px; padding-left:5px;"></th>
                                                         <th> Name</th>
                                                         <th>Type</th>
+                                                        <th></th>
                                                         <!--<th class="text-center">Document Detail</th>--> <!--Aditya :: Hide Column :: 11102022--> <!--Added by Jignesh (29-10-2020)-->
                                                     </tr>
                                                 </thead>
@@ -5420,7 +5433,9 @@
                         <div class="_form-group" style="">
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
                                 <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadTrend" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
+                                <div class="upload-container">  <!-- code by kavita -->
+                                    <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadTrend" sizeLimit="5MB" ngf-multiple="false" type="file" name="file" value="Upload Files" /> <!--css changes by shweta-->
+                                </div>
                             </div>
                         </div>
                         <div class="_form-group" style="">
@@ -5516,7 +5531,9 @@
                             <div class="col-xs-12" style="padding-left: 0; margin-bottom: 15px">
                                 <!--Jignesh-02-03-2020-->
                                 <label for="" class="control-label _bold required">Upload Files</label>
-                                <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadContModification" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgramElement" value="Upload Files" /> <!--css changes by shweta-->
+                                <div class="upload-container"> <!--code added by kavita-->
+                                    <input class="fileInput" style="margin-top: 5px; margin-bottom: -10px;" id="fileUploadContModification" sizeLimit="5MB" ngf-multiple="false" type="file" name="fileProgramElement" value="Upload Files" /> <!--css changes by shweta-->
+                                </div>
                             </div>
                         </div>
                         <div class="_form-group" style="">
@@ -8349,6 +8366,7 @@
     var displayMap = true;
     function toggle(x) {
         //debugger;
+       localStorage.Status = "";
         var mode = localStorage.getItem('MODE');
         if (mode == 'mindmap') displayMap = true
         else displayMap = false
@@ -8413,3 +8431,4 @@
         z-index: 9999;
     }
 </style>
+
