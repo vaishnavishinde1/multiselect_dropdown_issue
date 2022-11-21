@@ -14,6 +14,30 @@
                 }
             })();
 
+            $scope.selectPos = function (reportTypeFilter) {
+                if (reportTypeFilter.filterName == "Resource Availability Report") {
+                    var positionClassDropDown = $('#position_class');
+
+                    positionClassDropDown.empty();
+                    for (var x = 0; x < $scope.allPositionList.length; x++) {
+
+                        positionClassDropDown.append('<option id=' + $scope.allPositionList[x].Id + ' > ' + $scope.allPositionList[x].PositionDescription + '</option > ');
+                    }
+
+                    $('#position_class').multiselect({
+                        // columns: 5,
+                        clearButton: true,
+                        search: false,
+                        selectAll: true,
+                        // rebuild : true,
+                        nonSelectedText: '-- Select --',
+                        numberDisplayed: 1
+
+                    });
+
+                }
+
+            };
             //initializations
             $scope.selectedProgram = {};
             $scope.selectedProgramElement = {};
@@ -71,7 +95,7 @@
 
                 // Swapnil 24-11-2020
                 { filterName: 'QuickBooks ODC Report', reportPathName: 'QuickBooksODCReport', fileName: 'QuickBooks ODC Report' + '_' + + $scope.filedateformat, reportGroup: 'Accounting', filterLess: true },
-                
+
 
                 { filterName: 'Application Security Admin Report', reportPathName: 'ApplicationSecurityAdminReport', fileName: 'Application Security Admin Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: true },
                 { filterName: 'Client Admin Report', reportPathName: 'ClientAdminReport', fileName: 'Client Admin Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: true },
@@ -102,11 +126,11 @@
 
                 //Added by Amruta 15-03-2022
                 { filterName: 'Procurement Report', reportPathName: 'ProcurementReport', fileName: 'Procurement Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
-		
-		//Added by Amruta 
+
+                //Added by Amruta 
                 { filterName: 'Resource Availability Report', reportPathName: 'ResourceReport', fileName: 'Resource Availability Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
 
-            
+
                 { filterName: 'Billing Exception Report', reportPathName: 'BillingExceptionReport', fileName: 'Billing Exception Report' + '_' + + $scope.filedateformat, reportGroup: 'Administration', filterLess: false },
             ]
 
@@ -411,7 +435,7 @@
 
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
-                    //Added by Amruta 
+                //Added by Amruta 
                 else if ($scope.reportTypeFilter.filterName == 'Procurement Report') {            //Procurement Report - MySQL
                     baseUrl = serviceBasePath + 'Request/ProcurementReport';
 
@@ -430,7 +454,7 @@
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
 
-//Added by Amruta 
+                //Added by Amruta 
                 else if ($scope.reportTypeFilter.filterName == 'Resource Availability Report') {            //Resource Availability Report - MySQL
                     baseUrl = serviceBasePath + 'Request/ResourceAvailabilityReport';
                     if (!allFilters.FromDate) {
@@ -438,23 +462,26 @@
                         dhtmlx.alert('Must select from date');
                         return;
                     }
+                    //var a= $('#position_class');
                     if (!allFilters.ToDate) {
                         $('#adminRepRunBtn').attr('disabled', false); //Aditya
                         dhtmlx.alert('Must select to date');
                         return;
                     }
-                    var pdfUrl = baseUrl
-                        + '?PositionID=' + allFilters.positionID
-                        + '&FromDate=' + allFilters.FromDate
-                        + '&ToDate=' + allFilters.ToDate
-                        + '&FileType=' + 'PDF';
 
-                    var excelUrl = baseUrl
-                        + '?PositionID=' + allFilters.positionID
-                        + '&FromDate=' + allFilters.FromDate
-                        + '&ToDate=' + allFilters.ToDate
-                        + '&FileType=' + 'excel';
+                    var pdfUrl = {
+                        PositionID: allFilters.positionID,
+                        FromDate: allFilters.FromDate,
+                        ToDate: allFilters.ToDate,
+                        FileType: 'PDF'
+                    };
+                    var excelUrl = {
+                        PositionID: allFilters.positionID,
+                        FromDate: allFilters.FromDate,
+                        ToDate: allFilters.ToDate,
+                        FileType: 'excel'
 
+                    }
                     openReportViewer(baseUrl, pdfUrl, excelUrl, $scope.reportTypeFilter.fileName);
                 }
                 else if ($scope.reportTypeFilter.filterName == 'Billing Exception Report') {            //Procurement Report - MySQL
@@ -571,9 +598,11 @@
             }
 
             //Select positionid
+
             $scope.selectPosition = function (position) {
                 $scope.selectedPosition = position;
                 console.log($scope.selectedPosition);
+
             }
 
             //Select projectclassid
@@ -645,7 +674,7 @@
                     trendID: 0,
                     materialCategoryID: 0,
                     subcontractorTypeID: 0,
-                    positionID: 0,
+                    positionID: '',
                     CostTypeID: 'A',
                     projectClassID: 0,
                     phaseCode: 'All',
@@ -723,12 +752,28 @@
                     allFilters.subcontractorTypeID = 0;
                 }
 
+                var a = $('#position_class');
+                //a[0].selectedOptions
+                //a[0].selectedOptions.length
+                //a[0].selectedOptions[0].label
                 //Process position filter
-                if ($scope.selectedPosition != undefined && $scope.selectedPosition != null && $scope.selectedPosition.Id) {
-                    allFilters.positionID = $scope.selectedPosition.Id;
+                if (a[0].selectedOptions.length > 0) {
+                    allFilters.positionID = "";
+                    for (var i = 0; i < a[0].selectedOptions.length; i++) {
+                        //a[0].selectedOptions[0].id
+                        //a[0].selectedOptions[0].label
+                        allFilters.positionID += a[0].selectedOptions[i].id + ',';
+                    }
+                    allFilters.positionID = allFilters.positionID.substring(0, allFilters.positionID.length - 1);
                 } else {
                     allFilters.positionID = 0;
                 }
+                //Process position filter
+                //if ($scope.selectedPosition != undefined && $scope.selectedPosition != null && $scope.selectedPosition.Id) {
+                //    allFilters.positionID = $scope.selectedPosition.Id;
+                //} else {
+                //    allFilters.positionID = 0;
+                //}
 
                 //Process project class filter
                 if ($scope.selectedProjectClass != undefined && $scope.selectedProjectClass != null && $scope.selectedProjectClass.ProjectClassID) {
@@ -844,29 +889,61 @@
 
             //Reports with filter
             function openReportViewer(baseUrl, pdfUrl, excelUrl, fileName) {
-                $http.get(pdfUrl).then(function success(response) {
-                    console.log(response);
-                    $('#adminRepRunBtn').attr('disabled', false); //Aditya
-                    var scope = $rootScope.$new();
+                if (fileName == "Resource Availability Report_NaN") {
+                    $http({
+                        url: serviceBasePath + 'Request/ResourceAvailabilityReport',
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
+                        data: pdfUrl
+                    }).then(function success(response) {
+                        console.log(response);
+                        $('#adminRepRunBtn').attr('disabled', false); //Aditya
+                        var scope = $rootScope.$new();
 
-                    //Declare parameters for pdf viewer modal
-                    scope.params = {
-                        content: response.data,
-                        excelUrl: excelUrl,
-                        baseUrl: baseUrl,
-                        fileName: fileName,
-                        contentType: 'base64',
-                        excelDownloadable: true,
-                        pdfDownloadable: true
-                    };
+                        //Declare parameters for pdf viewer modal
+                        scope.params = {
+                            content: response.data,
+                            excelUrl: excelUrl,
+                            baseUrl: baseUrl,
+                            fileName: fileName,
+                            contentType: 'base64',
+                            excelDownloadable: true,
+                            pdfDownloadable: true
+                        };
 
-                    //Open pdf viewer modal
-                    openPDFViewerModal(scope);
+                        //Open pdf viewer modal
+                        openPDFViewerModal(scope);
 
-                }, function error(response) {
-                    console.log(response);
-                    $('#adminRepRunBtn').attr('disabled', false); //Aditya
-                });
+                    }, function error(response) {
+                        console.log(response);
+                        $('#adminRepRunBtn').attr('disabled', false); //Aditya
+                    });
+                }
+                else {
+                    $http.get(pdfUrl).then(function success(response) {
+                        console.log(response);
+                        $('#adminRepRunBtn').attr('disabled', false); //Aditya
+                        var scope = $rootScope.$new();
+
+                        //Declare parameters for pdf viewer modal
+                        scope.params = {
+                            content: response.data,
+                            excelUrl: excelUrl,
+                            baseUrl: baseUrl,
+                            fileName: fileName,
+                            contentType: 'base64',
+                            excelDownloadable: true,
+                            pdfDownloadable: true
+                        };
+
+                        //Open pdf viewer modal
+                        openPDFViewerModal(scope);
+
+                    }, function error(response) {
+                        console.log(response);
+                        $('#adminRepRunBtn').attr('disabled', false); //Aditya
+                    });
+                }
             }
 
             // Jignesh 21-12-2020

@@ -1810,7 +1810,10 @@ button[disabled=disabled], button:disabled {
 .p-r-15 {
     padding-right: 15px;
 }
-
+.p-r-5{
+    padding:5px  0;
+    padding-right:5px !important;
+}
 .p-l-15 {
     padding-left: 15px;
 }
@@ -1838,15 +1841,15 @@ button[disabled=disabled], button:disabled {
 }
 @font-face {
     font-family: 'icomoon';
-    src: url('../fonts/icomoon.eot?d5jw1g');
-    src: url('../fonts/icomoon.eot?d5jw1g#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?d5jw1g') format('truetype'), url('../fonts/icomoon.woff?d5jw1g') format('woff'), url('../fonts/icomoon.svg?d5jw1g#icomoon') format('svg');
+    src: url('../fonts/icomoon.eot?64ole8');
+    src: url('../fonts/icomoon.eot?64ole8#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?64ole8') format('truetype'), url('../fonts/icomoon.woff?64ole8') format('woff'), url('../fonts/icomoon.svg?64ole8#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
 }
 
 .icons {
-    /* use !important to prevent issues with browser extensions that change fonts */
+    /* use !important to prevent issues with browser extensions that change ../../fonts */
     font-family: 'icomoon' !important;
     speak: never;
     font-style: normal;
@@ -1859,10 +1862,29 @@ button[disabled=disabled], button:disabled {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-history:before {
+    content: "\e905";
+}
+
+.icon-doc-history:before {
+    content: "\e904";
+}
+
 .icon-doc-view:before {
     content: "\e900";
 }
-
+.icon-72647 {
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .icon-72647:before {
     content: "\e901";
 }
@@ -1873,20 +1895,6 @@ button[disabled=disabled], button:disabled {
 
 .icon-program-overview:before {
     content: "\e903";
-}
-
-.icon-72647 {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -1913,6 +1921,36 @@ button[disabled=disabled], button:disabled {
     border-radius:10px;
     padding:5px;
     margin-bottom:10px;
+}
+#redtheme .grid__title {
+    background: linear-gradient(90deg,red,black);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+#lighttheme .grid__title {
+    background: linear-gradient(90deg,white,black);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+#darktheme .grid__title {
+    background: linear-gradient(90deg,black,black);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 .grid__title {
     background: linear-gradient(90deg,#719bae,#5580bc);
@@ -2061,13 +2099,15 @@ button[disabled=disabled], button:disabled {
 }
 .grid__scrollable {
     overflow: auto;
-    height: 190px;
+    height: 180px;
+    margin-bottom:10px;
 }
 
 
 .grid__scrollable_main {
     overflow: auto;
-    height: 658px; /*change height after adding filter*/
+    height: 648px; /*change height after adding filter*/
+    margin-bottom:15px;
 }
 
 /*a:link,
@@ -2232,4 +2272,63 @@ th.sort-by {
     align-content: center;
     justify-content: space-between;
     padding:15px 0;
+}
+.preview-border {
+    border: 1px solid #666;
+    padding:20px;
+    box-shadow: 0px 3px 5px -1px rgb(150 150 150 / 20%), 0px 5px 8px 0px rgb(150 150 150 / 14%), 0px 1px 14px 0px rgb(150 150 150 / 12%);
+}
+.txtfield {
+    border:1px solid #ccc;
+    background-color:#f6f6f6;
+    padding:4px;
+    font-size:14px;
+}
+.heading {
+    font-size:16px;
+    font-weight:bold;
+}
+.preview-border2 {
+    border: 1px solid #fff;
+    margin-bottom: 20px;
+    box-shadow: 0px 3px 5px -1px rgb(150 150 150 / 20%), 0px 5px 8px 0px rgb(150 150 150 / 14%), 0px 1px 14px 0px rgb(150 150 150 / 12%);
+}
+.preview-body {
+    background: linear-gradient(#1e263d,#000);
+    color:#fff;
+}
+.preview-title {
+    background: linear-gradient(90deg,#719bae,#5580bc);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.preview-table table{
+    background-color:#fff;
+    color:#000;
+}
+    .preview-table table th {
+        padding: 8px;
+        background: linear-gradient(180deg, rgba(232,242,248,1) 0%, rgba(213,232,245,1) 48%, rgba(196,224,244,1) 49%, rgba(225,240,250,1) 100%);
+        border: 1px solid #c1d7e7;
+        color: #000;
+        text-align: center !important;
+    }
+.preview-table table td {
+        padding: 8px;
+        border:1px solid #fff;
+    }
+.preview-table table tr:nth-child(even) {
+        background-color: #eef4fe;
+    }
+.btn-icon-grid {
+    border: 0px solid #ccc;
+   /* padding: 4px 8px;*/
+   background-color:transparent;
+    font-size: 20px;
+    border-radius: 5px;
+    margin: 5px 0px 0px;
+    color: #000;
 }

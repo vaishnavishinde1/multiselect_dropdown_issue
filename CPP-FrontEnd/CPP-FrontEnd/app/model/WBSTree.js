@@ -3691,18 +3691,24 @@ WBSTree = (function ($) {
                     gridNoteslist.empty();
                     for (var x = 0; x < programNotesList.length; x++) {
                         gridNoteslist.append(
-                            '<tr class="contact-row" id="Notes_id" value="' + programNotesList[x].Notes_id + '" >' +
-                            '<td style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
-                            '><a>' + (x + 1) + '</a></td> ' +
-                            '<td id="notes_desc" class="" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td>' +
-                            '<td class="class-td-LiveView" >' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
-                            '<td class="class-td-LiveView" >' + programNotesList[x].CreatedBy + '</td>' +
-                            //'<td> <button type="button" id="notes_view">view</button></td>' +
-                            //'<td class="text-center"> <i class="icons icon-doc-view btntbl-icon"  title="View"  id="notes_view"></i></td>' +
+                            '<tr class="contact-row" value="' + programNotesList[x].Notes_id +'"><td>' +
+                            '<input id=rb' + programNotesList[x].Notes_id + ' type="radio"  name="rbprogramnotes" value="' + serviceBasePath + 'Request/DocumentByDocID/' + programNotesList[x].Notes_id + '" /></td> '+
+                            '<td class="class-td-LiveView">' + (moment(programNotesList[x].CreatedDate).format('MM/DD/YYYY')) + '</td>' +
+                            '<td id="notes_desc" style="max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"' +
+                            '><a id="notes_view" title="Click to view" class="clickableFont">' + programNotesList[x].notes_desc + '</a></td> ' +
                             '</tr>'
                         );
 
                     }
+
+                    $('input[name=rbprogramnotes]').on('click', function (event) {
+                        $('#edit_program_note').removeAttr('disabled');
+                        $('#delete_program_note').removeAttr('disabled');
+
+                    });
+
+                  
+
                 });
 
                 /* });*/
@@ -3984,7 +3990,7 @@ WBSTree = (function ($) {
                                 '</td >' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' +
                                 //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
-                                '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges
+                                //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + changeOrderType + '</td>' + // Jignesh-ChangeOrderPopUpChanges // Hide CO Type :: Aditya :: 15112022
                                 // $sign added by Amruta -14022022
                                 '<td class="class-td-LiveView text-right" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + "$" + changeOrderAmount + '</td>' +
                                 '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ScheduleImpact + '</td>' +
@@ -4016,7 +4022,7 @@ WBSTree = (function ($) {
                     //change by kavita 
                     if (flag != true) {
 
-                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+ '</span></td>' +
+                        $('#program_element_change_order_table_id').append('<tfoot><tr><td></td><td></td><td style="font-weight: bold;" align="right"> Total: </td><td class="totalAmount"  style="font-weight: bold;" align="right"><span>' + "$" + totalmod.toFixed(2).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '</span></td>' + // Hide CO Type :: Aditya :: 15112022
                         '<td class="totalDays"  style="font-weight: bold;" ><span>' + schImp + '</span></td><td></td>' +
                             '</tr></tfoot>');
                         flag = true;
@@ -4135,7 +4141,7 @@ WBSTree = (function ($) {
                         '<tr id="' + singeChangeOrder.ChangeOrderID + '" class="contact-row fade-selection-animation clickable-row">' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.DocumentName + '</td>' + /**/
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderName + '</td>' +
-                        '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' +
+                        //'<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderType + '</td>' + // Hide CO Type :: Aditya :: 15112022
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderNumber + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.ChangeOrderAmount + '</td>' +
                         '<td class="class-td-LiveView" style="font-family:Verdana, Arial, sans-serif !important;color:#333 !important;text-overflow: ellipsis;white-space: nowrap;">' + singeChangeOrder.OrderDate + '</td>' +
@@ -4244,17 +4250,17 @@ WBSTree = (function ($) {
                     //    selectedNode.PPBondNotes = '';
                     //}
 
-                    selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
-                    var isViewModeOn = true;
-                    isViewModeOn = $('#txtprogramNotes').is(':disabled');
-                    var modifiedNotes = selectedNode.ProgramNote;
-                    var isNotesModified = false;
-                    //if (orgNotes != modifiedNotes) {
+                    //selectedNode.ProgramNote = $('#ProgramModal').find('.modal-body #txtprogramNotes').val();
+                    //var isViewModeOn = true;
+                    //isViewModeOn = $('#txtprogramNotes').is(':disabled');
+                    //var modifiedNotes = selectedNode.ProgramNote;
+                    //var isNotesModified = false;
+                    ////if (orgNotes != modifiedNotes) {
+                    ////    isNotesModified = true;
+                    ////}
+                    //if (!isViewModeOn) {
                     //    isNotesModified = true;
                     //}
-                    if (!isViewModeOn) {
-                        isNotesModified = true;
-                    }
                     //selectedNode.ClientPOC = $('#ProgramModal').find('.modal-body #program_client_poc').text();
                     //selectedNode.ClientID = $('#ProgramModal').find('.modal-body #program_client_poc').val();
                     //Nivedita 13-01-2022
@@ -4790,7 +4796,7 @@ WBSTree = (function ($) {
                         //"IsCostPartOfContract": selectedNode.IsCostPartOfContract,
                         //"PPBondNotes": selectedNode.PPBondNotes,
                         "programNote": selectedNode.ProgramNote,
-                        "isNotesModified": isNotesModified,
+                        //"isNotesModified": isNotesModified,
                         "PrimeParent": selectedNode.PrimeParent,
                         "PrimeSubPrime": selectedNode.PrimeSubPrime,
 
@@ -5428,7 +5434,16 @@ WBSTree = (function ($) {
             $('#btnSpecialInstruction').unbind('click').bind('click', function () {
                 //event.preventDefault();    //Manasi 09-03-2021
                 $('#SpecialInstructionModal').modal({ show: true, backdrop: 'static' });
-                $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                // Special Instructions :: Aditya :: 16112022
+                //$('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val(localStorage.specialInstruction);
+                var angularHttp = wbsTree.getAngularHttp();
+                var specialInst_desc = $('#SpecialInstructionModal').find('.modal-body #program_Element_special_instruction');
+                angularHttp.get(serviceBasePath + 'Request/SpecialInstructions/' + _selectedNode.ProgramElementID).then(function (response) {
+                    console.log(response.data.data[0]);
+                    var data = response.data.data[0];
+                    data ? specialInst_desc.val(data.specialInstructions_desc): specialInst_desc.val('');
+                });
+
             });
           
             $('#update_program_element').unbind('click').on('click', function () {
@@ -5528,7 +5543,7 @@ WBSTree = (function ($) {
 
                     selectedNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
 
-                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    selectedNode.BillingPOCSpecialInstruction = localStorage.specialInstruction;//$('#ProgramElementModal').find('.modal-body #program_Element_special_instruction').val();
                     selectedNode.ClientPONumber = $('#ProgramElementModal').find('.modal-body #project_element_po_number').val();
 
 
@@ -6212,7 +6227,7 @@ WBSTree = (function ($) {
                     newNode.BillingPOCPONo = $('#ProgramElementModal').find('.modal-body #program1_billing_poc_po_num').val();
                     //==================================================
                     newNode.BillingPOCEmail = $('#ProgramElementModal').find('.modal-body #program_billing_poc_email1').val();
-                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_billing_poc_special_instruction1').val();
+                    newNode.BillingPOCSpecialInstruction = localStorage.specialInstruction; //$('#ProgramElementModal').find('.modal-body #program_Element_special_instruction').val();
 
                     // Check
                     var program_tm_billing_checked = document.getElementById("program_tm_billing1").checked;
@@ -8665,9 +8680,44 @@ WBSTree = (function ($) {
             });
              //code added by kavita
             $('#update_special_instruction').unbind('click').on('click', function () {
-                localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_billing_poc_special_instruction1').val();
-                $("#ProgramElementModal").css({ "opacity": "1" });
-                $("#SpecialInstructionModal").modal('toggle');
+                // Special Instructions :: Aditya :: 16112022
+                //localStorage.specialInstruction = $('#SpecialInstructionModal').find('.modal-body #program_Element_special_instruction').val();
+                var specialInstructionDesc = $('#SpecialInstructionModal').find('#program_Element_special_instruction').val();
+                var ProgramElementId = parseInt(_selectedNode.ProgramElementID);
+                var angularHttp = wbsTree.getAngularHttp();
+                var specialInsDetails = {
+                    "Operation": 2,
+                    //"ID": 1, //Use for Update by ID
+                    "specialInstructions_desc": specialInstructionDesc,
+                    "ProgramElementID": ProgramElementId,
+                };
+                var request = {
+                    method: 'POST',
+                    url: serviceBasePath + 'Response/SpecialInstructions',
+                    data: specialInsDetails,
+                };
+                angularHttp(request).then(function (response) {
+                    console.log(response.data.result);
+                    try {
+                        // Check for new
+                        if (response.data.result == 'Created successfully') {
+                            dhtmlx.alert('Special Instructions Added Successfully');
+                        }
+                        // Check for update
+                        else if (response.data.result == 'Updated successfully') {
+                            dhtmlx.alert('Special Instructions Updated Successfully');
+                        }
+                    }
+                    catch (exception) {
+                        dhtmlx.alert('Error: ' + exception);
+                    }
+                    finally {
+                        $("#ProgramElementModal").css({ "opacity": "1" });
+                        $("#SpecialInstructionModal").modal('toggle');
+                    }
+                    
+                })
+                
             });
 
             // DELETE PROJECT ELEMENT MILESTONE MODAL LEGACY
@@ -10618,35 +10668,77 @@ WBSTree = (function ($) {
                 var desc = row.find("#notes_desc").text();
                 $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
                 $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled", true);
-                // $('#txtprogramNotes').val(desc);
-                // $('#txtprogramNotes').prop("disabled", "disabled");
+                $('#save_notes').hide();
                 $('#update_notes').hide();
                 $('#delete_notes').hide();
             });
 
-            $("#gridNoticehistoryList").on('dblclick', 'tr', function () {
+            //$("#gridNoticehistoryList").on('dblclick', 'tr', function () {
+            //    $('#NotesModal').modal({ show: true, backdrop: 'static' });
+            //    var row = $(this).closest("tr");
+            //    var desc = row.find("#notes_desc").text();
+            //    var scope = wbsTree.getScope();
+            //    scope.notesID = row.attr('value');
+            //    $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+            //    $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled",false);
+            //    // $('#txtprogramNotes').val(desc);
+            //    // $('#txtprogramNotes').prop("disabled", "disabled");
+            //    // $('#btnClearNotesDesc').show();
+            //    $('#update_notes').show();
+            //    $('#delete_notes').show();
+            //});
+
+            $('#new_program_note').unbind().on('click', function (event) {
+                event.preventDefault(); 
                 $('#NotesModal').modal({ show: true, backdrop: 'static' });
-                var row = $(this).closest("tr");
-                var desc = row.find("#notes_desc").text();
-                var scope = wbsTree.getScope();
-                scope.notesID = row.attr('value');
-                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#NotesModal').find('.modal-body #notesTxtArea').val('');
                 $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled",false);
-                // $('#txtprogramNotes').val(desc);
-                // $('#txtprogramNotes').prop("disabled", "disabled");
-                // $('#btnClearNotesDesc').show();
-                $('#update_notes').show();
-                $('#delete_notes').show();
+                $('#save_notes').show();
+                $('#update_notes').hide();
+               
+               
             });
 
-
+            $('#save_notes').unbind('click').on('click', function () {
+                var operation = 1;
+                programNotesOperations(operation);
+                
+            });
             $('#update_notes').unbind('click').on('click', function () {
+                var operation = 2;
+                programNotesOperations(operation);
+            });
+            $('#delete_program_note').unbind('click').on('click', function (e) {
+                e.preventDefault();
+                var operation = 3;
+                dhtmlx.confirm("Are you sure you want to delete?", function (result) {
+                    if (result) {
+                        programNotesOperations(operation);
+                    }
+                });
+              
+            });
+            $('#edit_program_note').unbind('click').on('click', function (e) {
+                e.preventDefault();
+                $('#NotesModal').modal({ show: true, backdrop: 'static' });
+                $('#NotesModal').find('.modal-body #notesTxtArea').attr("disabled", false);
+                var row = $("#gridNoticehistoryList input[name=rbprogramnotes]:checked").closest('tr');
+                var desc = row.find("#notes_desc").text();
+                $('#NotesModal').find('.modal-body #notesTxtArea').val(desc);
+                $('#save_notes').hide();
+                $('#update_notes').show();
+
+               
+            });
+
+            function programNotesOperations(operation) {
+                var row = $("#gridNoticehistoryList input[name=rbprogramnotes]:checked").closest('tr');
                 var notesTxt = $('#notesTxtArea').val();
-                var scope = wbsTree.getScope();
-                var notesID = scope.notesID;
+                var notesID = row.attr('value');
                 var programnotesdetails = {
-                    Operation: 2,
+                    Operation: operation,
                     Notes_id: notesID,
+                    programID: _selectedProgramID,
                     notes_desc: notesTxt
 
                 };
@@ -10660,52 +10752,20 @@ WBSTree = (function ($) {
                 var angularHttp = wbsTree.getAngularHttp();
                 angularHttp(request).then(function success(d) {
                     if (d.data.result != "") {
-                        dhtmlx.alert("Note Updated Successfully");
-                        $('#NotesModal').modal({ show: false, backdrop: 'static' });
-                        $("#NotesModal").modal('toggle');
+                        dhtmlx.alert(d.data.result);
+                        if (operation != 3) {
+                            $("#NotesModal").modal('toggle');
+                        }
                         $("#ProgramModal").css({ "opacity": "1" });
                         populateNotesHistoryTable(_selectedProgramID);
+                        $('#delete_program_note').attr('disabled', true);
+                        $('#edit_program_note').attr('disabled', true);
+                        isFieldValueChanged = false;
                     }
 
                 });
 
-            });
-            $('#delete_notes').unbind('click').on('click', function () {
-                var notesTxt = $('#notesTxtArea').val();
-                var scope = wbsTree.getScope();
-                var notesID = scope.notesID;
-                var programnotesdetails = {
-                    Operation: 3,
-                    Notes_id: notesID,
-                    notes_desc: notesTxt
-
-                };
-
-                var request = {
-                    method: 'POST',
-                    url: serviceBasePath + 'Response/ProgramNotes',
-                    data: programnotesdetails,
-
-                };
-
-                dhtmlx.confirm("Are you sure you want to delete?", function (result) {
-                    if (result) {
-                        var angularHttp = wbsTree.getAngularHttp();
-                        angularHttp(request).then(function success(d) {
-                            if (d.data.result != "") {
-                                dhtmlx.alert("Note Deleted Successfully!!!");
-                                $('#NotesModal').modal({ show: false, backdrop: 'static' });
-                                $("#NotesModal").modal('toggle');
-                                $("#ProgramModal").css({ "opacity": "1" });
-                                populateNotesHistoryTable(_selectedProgramID);
-                            }
-
-                        });
-                    }
-                });
-              
-
-            });
+            }
 
            
 
@@ -11719,7 +11779,8 @@ WBSTree = (function ($) {
                 $('#downloadBtnProgram').attr('disabled', 'disabled');   //Manasi
                 $('#updateBtnProgram').removeAttr('disabled');   //Manasi
                 $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
-                ViewAllUploadFileContracts
+                $('#new_program_note').removeAttr('disabled');  
+                
 
                 //Load Document Grid
                 var gridUploadedDocument = $("#gridUploadedDocumentProgramNew tbody")// modal.find('.modal-body #gridUploadedDocument tbody');
@@ -12974,6 +13035,7 @@ WBSTree = (function ($) {
                     $("#contract_insurance *").prop('disabled', true); // Narayan - 08/04/2022
                     $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
                     $('#updateBtnProgram').attr('disabled', 'disabled');   //Manasi
+                    $('#new_program_note').attr('disabled', 'disabled');
                     //================ Jignesh-23-02-2021 =====================
                     //$('#delete_program').attr('disabled', 'disabled');
                     $('#btnModification').attr('disabled', 'disabled');
@@ -13339,9 +13401,11 @@ WBSTree = (function ($) {
                     if (selectedNode.level == "Program") {
                         $('#updateBtnProgram').removeAttr('disabled');
                         $('#ViewAllUploadFileContracts').removeAttr('disabled'); //Aditya 15042022
+                        $('#new_program_note').removeAttr('disabled');
                     } else {
                         $('#updateBtnProgram').attr('disabled', 'disabled');
                         $('#ViewAllUploadFileContracts').attr('disabled', 'disabled'); //Aditya 15042022
+                        $('#new_program_note').attr('disabled', 'disabled');
                     }
 
                 }
@@ -15462,7 +15526,8 @@ WBSTree = (function ($) {
 
                         for (var i = 0; i < approversDdl.length; i++) {
                             //var ApproverMatrixId = $('#' + approversDdl[i].id).attr('dbid');
-                        var ApproverMatrixId = 4;
+                            var ApproverMatrixId = 4;
+                            if (projApproverDetails!=null)
                             for (var j = 0; j < projApproverDetails.length; j++) {
                                 if (ApproverMatrixId == projApproverDetails[j].ApproverMatrixId) {
                                     for (var k = 0; k < approversDdl[i].childNodes.length; k++) {
@@ -17076,7 +17141,8 @@ WBSTree = (function ($) {
 
                 //==================== Jignesh-ChangeOrderPopUpChanges ==================
                 var changeOrderType = changeOrderData.ModificationTypeId == 1 ? 'Value' :
-                    changeOrderData.ModificationTypeId == 2 ? 'Schedule Impact' : 'Value & Schedule Impact';
+                    //View Mode Scope Impact :: Aditya :: 15112022
+                    changeOrderData.ModificationTypeId == 2 ? 'Schedule Impact' : changeOrderData.ModificationTypeId == 3 ? 'Value & Schedule Impact' : 'Scope Impact';
 
 
 
@@ -17091,8 +17157,9 @@ WBSTree = (function ($) {
 
                 $('#change_order_view_note_modal').val(changeOrderData.ChangeOrderScheduleChange);
                 $('#program_element_change_order_Reason_modal_E').val(changeOrderData.Reason);
-                $('#change_order_view_Amount_modal').val('$' + changeOrderData.ChangeOrderAmount.replace('$', ''));
-                $('#program_element_change_order_schedule_impact_E').val(changeOrderData.ScheduleImpact); // Jignesh-24-03-2021
+                //View Mode Scope Impact :: Aditya :: 15112022
+                changeOrderData.ChangeOrderAmount ? ($('#change_order_view_Amount_modal').val('$' + changeOrderData.ChangeOrderAmount.replace('$', ''))) : $('#divValueE').hide();
+                changeOrderData.ScheduleImpact ? ($('#program_element_change_order_schedule_impact_E').val(changeOrderData.ScheduleImpact)) : $('#divDurationDateE').hide(); // Jignesh-24-03-2021
                 //$('#program_element_change_order_duration_date_E').val(moment(docData.DurationDate).format('MM/DD/YYYY')); // Jignesh-24-03-2021
 
 
@@ -17262,6 +17329,31 @@ WBSTree = (function ($) {
 
             $(progmPageFieldIDs).unbind().on('input change paste', function (e) {
                 isFieldValueChanged = true;
+            });
+
+            var pgmNotesFieldID = '#notesTxtArea';
+            $(pgmNotesFieldID).unbind().on('input change paste', function (e) {
+                isFieldValueChanged = true;
+            });
+
+            $('#cancel_notes_modal,#cancel_notes_modal_x').unbind('click').on('click', function () {
+                if (isFieldValueChanged) {
+                    dhtmlx.confirm("Unsaved data will be lost. Want to Continue?", function (result) {
+                        if (result) {
+                            $("#NotesModal").modal('toggle');
+                            $("#ProgramModal").css({ "opacity": "1" });
+                            isFieldValueChanged = false;
+                        }
+
+                    });
+
+                }
+                else {
+                    isFieldValueChanged = false;
+                    $("#NotesModal").modal('toggle');
+                    $("#ProgramModal").css({ "opacity": "1" });
+                }
+               
             });
 
             //Narayan - onChange for Department Selection in project
@@ -17504,7 +17596,7 @@ WBSTree = (function ($) {
                 '#Accounting_Project_Element_id,#Financial_Analyst_Project_Element_id,#Project_Manager_Project_Element_id,#Director_Project_Element_id,#emp_class,' +
                 '#Capital_Project_Assistant_Project_Element_id,#Vice_President_Project_Element_id,#project_element_description,#program_billing_poc1,#prime_dd,#prime_subPrime_dd' +
                 '#program_billing_poc_phone_11,#program_billing_poc_phone_21,#program_billing_poc_email1,#program1_billing_poc_address_line1,#program1_billing_poc_address_line2,' +
-                '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,#program_billing_poc_special_instruction1,' +
+                '#program1_billing_poc_city,#program1_billing_poc_state,#program1_billing_poc_po_num,' + //remove id #program_Element_special_instruction as Special Instruction saved on different button :: Aditya :: 16112022
                 '#program_tm_billing1,#program_sov_billing1,#program_monthly_billing1,#program_Lumpsum1';
 
             $(proElePageFieldIDs).unbind().on('input change paste', function (e) {
