@@ -15,7 +15,7 @@
             var OrganizationID = 75;
             $scope.Statuses = [];
             $scope.Statuses.push({ ID: "Pending", value: "Pending" }, { ID: "Order Placed", value: "Order Placed" }, { ID: "Partially Received", value: "Partially Received" },
-                { ID: "Fully Received", value: "Fully Received" });
+                { ID: "Fully Received", value: "Fully Received" }, { ID: "Quated", value: "Quated" });
             Program.lookup().get({ OrganizationID: OrganizationID }, function (response) {
                 console.log(response);
                 $scope.allProgramList = response.result;
